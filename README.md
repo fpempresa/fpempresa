@@ -1,4 +1,4 @@
 fpempresa
 =========
 
-Todo sobre el desarrollo del proyecto fpempresa
+Código fuente de la aplicación web de FPempresa

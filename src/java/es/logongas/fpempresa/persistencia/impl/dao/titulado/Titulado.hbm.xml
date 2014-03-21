@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.titulado.Titulado" >
+        
+        <cache usage="read-write" />
+        
+        <id name="idTitulado" >
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuario">
+            <column name="idUsuario"  />
+        </many-to-one>
+
+        <property name="fechaNacimiento" />
+        
+        <component name="direccion" >
+            <property name="tipoVia" >
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">es.logongas.fpempresa.modelo.comun.TipoVia</param>
+                    <param name="type">4</param>
+                </type>
+            </property>
+            <property name="nombreVia" />
+            <property name="otrosDireccion" />
+            <property name="codigoPostal" />
+            <many-to-one name="provincia">
+                <column name="idProvincia"  />
+            </many-to-one>
+            <many-to-one name="municipio">
+                <column name="idMunicipio"  />
+            </many-to-one>
+        </component>
+        
+        <property name="telefono" />
+        <property name="telefonoAlternativo" />
+        <property name="tipoDocumento" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.titulado.TipoDocumento</param>
+                <param name="type">4</param>
+            </type>    
+        </property>
+        <property name="numeroDocumento" />
+        
+        <set name="titulosIdiomas"  cascade="all" inverse="true"  >
+            <key>
+                <column name="idTitulado"  />
+            </key>
+            <one-to-many class="es.logongas.fpempresa.modelo.titulado.TituloIdioma" />
+        </set>        
+        <set name="experienciasLaborales"  cascade="all" inverse="true"  >
+            <key>
+                <column name="idTitulado"  />
+            </key>
+            <one-to-many class="es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral" />
+        </set>        
+        <set name="formacionesAcademicas"  cascade="all" inverse="true"  >
+            <key>
+                <column name="idTitulado"  />
+            </key>
+            <one-to-many class="es.logongas.fpempresa.modelo.titulado.FormacionAcademica" />
+        </set>        
+        
+        
+        
+    </class>
+</hibernate-mapping>

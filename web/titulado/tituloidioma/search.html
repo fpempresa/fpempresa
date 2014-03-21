@@ -1,0 +1,43 @@
+<div class="panel panel-titulado">
+    <div class="panel-heading">
+        <h3 class="panel-title">Idiomas</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12" >
+                <ix3-business-messages></ix3-business-messages>
+            </div>  
+        </div>
+        <div class="row">
+            <div class="col-sm-12" >
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>                      
+                        <tr>
+                            <th style="min-width:30px;text-align: center">Nivel</th>
+                            <th style="width:    100% ;text-align: center">Nombre</th>
+                            <th style="min-width:85px;text-align: center">Fecha</th>
+                            <th style="min-width:120px;text-align: center" >Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="tituloIdioma in models">
+                            <td >{{tituloIdioma.nivelIdioma}}</td>
+                            <td >{{tituloIdioma.idioma}}</td>
+                            <td >{{tituloIdioma.fecha | date:'mediumDate'}}</td>
+                            <td >
+                                <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)">Borrar</button>
+                                <button class="btn btn-success btn-xs" type="button" ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">Editar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-12">
+                <button  class="btn btn-titulado"   ng-click="buttonNew()" >Nuevo Titulo</button>
+            </div>
+        </div> 
+
+    </div>
+</div>

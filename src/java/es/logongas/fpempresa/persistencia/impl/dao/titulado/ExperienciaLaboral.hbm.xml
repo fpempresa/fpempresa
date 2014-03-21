@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral" >
+        
+        <cache usage="read-write" />
+        
+        <id name="idExperienciaLaboral" >
+            <generator class="identity" />
+        </id>
+
+        <property name="nombreEmpresa" />
+        <property name="fechaInicio" />
+        <property name="fechaFin" />
+        <property name="puestoTrabajo" />
+        <property name="descripcion" />
+     
+        <many-to-one name="titulado">
+            <column name="idTitulado"  />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

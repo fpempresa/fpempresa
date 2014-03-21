@@ -1,0 +1,471 @@
+.jumbotron {
+  color: #FFFFFF;
+  text-align: center;
+  background-color: transparent;
+}
+.marketing {
+  padding: 0px;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+.marketing .col-md-4 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-md-4 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.panel-menu-titulado {
+  border-color: #429f42;
+}
+.panel-menu-titulado > .panel-heading {
+  color: #000000;
+  background-color: #5aba5a;
+  border-color: #429f42;
+}
+.panel-menu-titulado > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #429f42;
+}
+.panel-menu-titulado > .panel-heading > .dropdown .caret {
+  border-color: #000000 transparent;
+}
+.panel-menu-titulado > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #429f42;
+}
+.panel-menu-titulado .panel-body .table tr td {
+  padding-left: 15px;
+}
+.panel-menu-titulado .panel-title .glyphicon {
+  margin-right: 10px;
+}
+.panel-menu-titulado .panel-body {
+  padding: 0px;
+}
+.panel-menu-titulado .panel-body .table {
+  margin-bottom: 0px;
+}
+.panel-menu-titulado .active {
+  font-weight: bolder;
+}
+.panel-menu-titulado .badge {
+  margin-left: 5px;
+}
+.panel-menu-empresa {
+  border-color: #4f617d;
+}
+.panel-menu-empresa > .panel-heading {
+  color: #000000;
+  background-color: #63799c;
+  border-color: #4f617d;
+}
+.panel-menu-empresa > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #4f617d;
+}
+.panel-menu-empresa > .panel-heading > .dropdown .caret {
+  border-color: #000000 transparent;
+}
+.panel-menu-empresa > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #4f617d;
+}
+.panel-menu-empresa .panel-body .table tr td {
+  padding-left: 15px;
+}
+.panel-menu-empresa .panel-title .glyphicon {
+  margin-right: 10px;
+}
+.panel-menu-empresa .panel-body {
+  padding: 0px;
+}
+.panel-menu-empresa .panel-body .table {
+  margin-bottom: 0px;
+}
+.panel-menu-empresa .active {
+  font-weight: bolder;
+}
+.panel-menu-empresa .badge {
+  margin-left: 5px;
+}
+.panel-menu-centro {
+  border-color: #f59819;
+}
+.panel-menu-centro > .panel-heading {
+  color: #000000;
+  background-color: #f7ae4a;
+  border-color: #f59819;
+}
+.panel-menu-centro > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #f59819;
+}
+.panel-menu-centro > .panel-heading > .dropdown .caret {
+  border-color: #000000 transparent;
+}
+.panel-menu-centro > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #f59819;
+}
+.panel-menu-centro .panel-body .table tr td {
+  padding-left: 15px;
+}
+.panel-menu-centro .panel-title .glyphicon {
+  margin-right: 10px;
+}
+.panel-menu-centro .panel-body {
+  padding: 0px;
+}
+.panel-menu-centro .panel-body .table {
+  margin-bottom: 0px;
+}
+.panel-menu-centro .active {
+  font-weight: bolder;
+}
+.panel-menu-centro .badge {
+  margin-left: 5px;
+}
+.panel-menu-neutro {
+  border-color: #dedede;
+}
+.panel-menu-neutro > .panel-heading {
+  color: #000000;
+  background-color: #f7f7f7;
+  border-color: #dedede;
+}
+.panel-menu-neutro > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #dedede;
+}
+.panel-menu-neutro > .panel-heading > .dropdown .caret {
+  border-color: #000000 transparent;
+}
+.panel-menu-neutro > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #dedede;
+}
+.panel-menu-neutro .panel-body .table tr td {
+  padding-left: 15px;
+}
+.panel-menu-neutro .panel-title .glyphicon {
+  margin-right: 10px;
+}
+.panel-menu-neutro .panel-body {
+  padding: 0px;
+}
+.panel-menu-neutro .panel-body .table {
+  margin-bottom: 0px;
+}
+.panel-menu-neutro .active {
+  font-weight: bolder;
+}
+.panel-menu-neutro .badge {
+  margin-left: 5px;
+}
+.panel-menu-standard {
+  border-color: #2d70b0;
+}
+.panel-menu-standard > .panel-heading {
+  color: #fefefe;
+  background-color: #428ace;
+  border-color: #2d70b0;
+}
+.panel-menu-standard > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #2d70b0;
+}
+.panel-menu-standard > .panel-heading > .dropdown .caret {
+  border-color: #fefefe transparent;
+}
+.panel-menu-standard > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #2d70b0;
+}
+.panel-menu-standard .panel-body .table tr td {
+  padding-left: 15px;
+}
+.panel-menu-standard .panel-title .glyphicon {
+  margin-right: 10px;
+}
+.panel-menu-standard .panel-body {
+  padding: 0px;
+}
+.panel-menu-standard .panel-body .table {
+  margin-bottom: 0px;
+}
+.panel-menu-standard .active {
+  font-weight: bolder;
+}
+.panel-menu-standard .badge {
+  margin-left: 5px;
+}
+.btn-titulado {
+  color: #fefefe;
+  background-color: #5aba5a;
+  border-color: #4ab14a;
+}
+.btn-titulado:hover,
+.btn-titulado:focus,
+.btn-titulado:active,
+.btn-titulado.active,
+.open .dropdown-toggle.btn-titulado {
+  color: #fefefe;
+  background-color: #45a645;
+  border-color: #388538;
+}
+.btn-titulado:active,
+.btn-titulado.active,
+.open .dropdown-toggle.btn-titulado {
+  background-image: none;
+}
+.btn-titulado.disabled,
+.btn-titulado[disabled],
+fieldset[disabled] .btn-titulado,
+.btn-titulado.disabled:hover,
+.btn-titulado[disabled]:hover,
+fieldset[disabled] .btn-titulado:hover,
+.btn-titulado.disabled:focus,
+.btn-titulado[disabled]:focus,
+fieldset[disabled] .btn-titulado:focus,
+.btn-titulado.disabled:active,
+.btn-titulado[disabled]:active,
+fieldset[disabled] .btn-titulado:active,
+.btn-titulado.disabled.active,
+.btn-titulado[disabled].active,
+fieldset[disabled] .btn-titulado.active {
+  background-color: #5aba5a;
+  border-color: #4ab14a;
+}
+.btn-titulado .badge {
+  color: #5aba5a;
+  background-color: #fefefe;
+}
+.btn-empresa {
+  color: #fefefe;
+  background-color: #63799c;
+  border-color: #596d8c;
+}
+.btn-empresa:hover,
+.btn-empresa:focus,
+.btn-empresa:active,
+.btn-empresa.active,
+.open .dropdown-toggle.btn-empresa {
+  color: #fefefe;
+  background-color: #536683;
+  border-color: #415067;
+}
+.btn-empresa:active,
+.btn-empresa.active,
+.open .dropdown-toggle.btn-empresa {
+  background-image: none;
+}
+.btn-empresa.disabled,
+.btn-empresa[disabled],
+fieldset[disabled] .btn-empresa,
+.btn-empresa.disabled:hover,
+.btn-empresa[disabled]:hover,
+fieldset[disabled] .btn-empresa:hover,
+.btn-empresa.disabled:focus,
+.btn-empresa[disabled]:focus,
+fieldset[disabled] .btn-empresa:focus,
+.btn-empresa.disabled:active,
+.btn-empresa[disabled]:active,
+fieldset[disabled] .btn-empresa:active,
+.btn-empresa.disabled.active,
+.btn-empresa[disabled].active,
+fieldset[disabled] .btn-empresa.active {
+  background-color: #63799c;
+  border-color: #596d8c;
+}
+.btn-empresa .badge {
+  color: #63799c;
+  background-color: #fefefe;
+}
+.btn-centro {
+  color: #fefefe;
+  background-color: #f7ae4a;
+  border-color: #f6a332;
+}
+.btn-centro:hover,
+.btn-centro:focus,
+.btn-centro:active,
+.btn-centro.active,
+.open .dropdown-toggle.btn-centro {
+  color: #fefefe;
+  background-color: #f59d23;
+  border-color: #e0860a;
+}
+.btn-centro:active,
+.btn-centro.active,
+.open .dropdown-toggle.btn-centro {
+  background-image: none;
+}
+.btn-centro.disabled,
+.btn-centro[disabled],
+fieldset[disabled] .btn-centro,
+.btn-centro.disabled:hover,
+.btn-centro[disabled]:hover,
+fieldset[disabled] .btn-centro:hover,
+.btn-centro.disabled:focus,
+.btn-centro[disabled]:focus,
+fieldset[disabled] .btn-centro:focus,
+.btn-centro.disabled:active,
+.btn-centro[disabled]:active,
+fieldset[disabled] .btn-centro:active,
+.btn-centro.disabled.active,
+.btn-centro[disabled].active,
+fieldset[disabled] .btn-centro.active {
+  background-color: #f7ae4a;
+  border-color: #f6a332;
+}
+.btn-centro .badge {
+  color: #f7ae4a;
+  background-color: #fefefe;
+}
+.btn-neutro {
+  color: #fefefe;
+  background-color: #f7f7f7;
+  border-color: #eaeaea;
+}
+.btn-neutro:hover,
+.btn-neutro:focus,
+.btn-neutro:active,
+.btn-neutro.active,
+.open .dropdown-toggle.btn-neutro {
+  color: #fefefe;
+  background-color: #e3e3e3;
+  border-color: #cccccc;
+}
+.btn-neutro:active,
+.btn-neutro.active,
+.open .dropdown-toggle.btn-neutro {
+  background-image: none;
+}
+.btn-neutro.disabled,
+.btn-neutro[disabled],
+fieldset[disabled] .btn-neutro,
+.btn-neutro.disabled:hover,
+.btn-neutro[disabled]:hover,
+fieldset[disabled] .btn-neutro:hover,
+.btn-neutro.disabled:focus,
+.btn-neutro[disabled]:focus,
+fieldset[disabled] .btn-neutro:focus,
+.btn-neutro.disabled:active,
+.btn-neutro[disabled]:active,
+fieldset[disabled] .btn-neutro:active,
+.btn-neutro.disabled.active,
+.btn-neutro[disabled].active,
+fieldset[disabled] .btn-neutro.active {
+  background-color: #f7f7f7;
+  border-color: #eaeaea;
+}
+.btn-neutro .badge {
+  color: #f7f7f7;
+  background-color: #fefefe;
+}
+.btn-standard {
+  color: #fefefe;
+  background-color: #428ace;
+  border-color: #337dc4;
+}
+.btn-standard:hover,
+.btn-standard:focus,
+.btn-standard:active,
+.btn-standard.active,
+.open .dropdown-toggle.btn-standard {
+  color: #fefefe;
+  background-color: #3076b8;
+  border-color: #265e93;
+}
+.btn-standard:active,
+.btn-standard.active,
+.open .dropdown-toggle.btn-standard {
+  background-image: none;
+}
+.btn-standard.disabled,
+.btn-standard[disabled],
+fieldset[disabled] .btn-standard,
+.btn-standard.disabled:hover,
+.btn-standard[disabled]:hover,
+fieldset[disabled] .btn-standard:hover,
+.btn-standard.disabled:focus,
+.btn-standard[disabled]:focus,
+fieldset[disabled] .btn-standard:focus,
+.btn-standard.disabled:active,
+.btn-standard[disabled]:active,
+fieldset[disabled] .btn-standard:active,
+.btn-standard.disabled.active,
+.btn-standard[disabled].active,
+fieldset[disabled] .btn-standard.active {
+  background-color: #428ace;
+  border-color: #337dc4;
+}
+.btn-standard .badge {
+  color: #428ace;
+  background-color: #fefefe;
+}
+.panel-titulado {
+  border-color: #5bb14a;
+}
+.panel-titulado > .panel-heading {
+  color: #fefefe;
+  background-color: #6cc26c;
+  border-color: #5bb14a;
+}
+.panel-titulado > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #5bb14a;
+}
+.panel-titulado > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #5bb14a;
+}
+.panel-empresa {
+  border-color: #59758c;
+}
+.panel-empresa > .panel-heading {
+  color: #fefefe;
+  background-color: #7386a6;
+  border-color: #59758c;
+}
+.panel-empresa > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #59758c;
+}
+.panel-empresa > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #59758c;
+}
+.panel-centro {
+  border-color: #f68232;
+}
+.panel-centro > .panel-heading {
+  color: #fefefe;
+  background-color: #f8b962;
+  border-color: #f68232;
+}
+.panel-centro > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #f68232;
+}
+.panel-centro > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #f68232;
+}
+.panel-neutro {
+  border-color: #eaeaea;
+}
+.panel-neutro > .panel-heading {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #eaeaea;
+}
+.panel-neutro > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #eaeaea;
+}
+.panel-neutro > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #eaeaea;
+}
+.panel-standard {
+  border-color: #3395c4;
+}
+.panel-standard > .panel-heading {
+  color: #fefefe;
+  background-color: #5697d3;
+  border-color: #3395c4;
+}
+.panel-standard > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #3395c4;
+}
+.panel-standard > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #3395c4;
+}

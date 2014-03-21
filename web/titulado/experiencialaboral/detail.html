@@ -1,0 +1,37 @@
+<div class="panel panel-titulado">
+    <div class="panel-heading">
+        <h3 class="panel-title">Experiencia laboral</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12" >
+                <ix3-business-messages></ix3-business-messages>
+            </div>  
+        </div>
+        <div class="row">
+            <div class="col-sm-12" >
+                <form name="mainForm" class="form-horizontal" id="mainForm" >
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <ix3-input model="nombreEmpresa" ></ix3-input>
+                        <ix3-input model="fechaInicio" ></ix3-input>
+                        <ix3-input model="fechaFin" ></ix3-input>
+                        <ix3-input model="puestoTrabajo" ></ix3-input>
+                        <div class="form-group">
+                            <label for="descripcion" class="col-sm-3 control-label">Descripci&oacute;n de las tareas realizadas</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="model.descripcion" id="descripcion" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="button" ng-class="{'btn-titulado':controllerAction !== 'DELETE','btn-danger':controllerAction === 'DELETE'}" class="btn" ng-click="buttonOK()">{{labelButtonOK}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>

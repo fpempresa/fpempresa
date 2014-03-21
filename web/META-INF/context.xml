@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/fpempresa">
+    <Resource
+          name="jdbc/fpempresa"
+          type="javax.sql.DataSource"
+          auth="Container"
+          driverClassName="com.mysql.jdbc.Driver"
+          url="jdbc:mysql://localhost:3306/fpempresa"
+          username="fpempresa" password="fpempresa"
+          maxActive="50" maxIdle="30" maxWait="10000"
+          validationQuery="SELECT 1 FROM DUAL"
+          testOnBorrow="true"
+    />    
+</Context>

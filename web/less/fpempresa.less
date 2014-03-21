@@ -1,0 +1,189 @@
+.panel-menu-variant(@background-color: #dff0d8, @text-color: #468847){
+    @panel-background-color:lighten(@background-color,0%);
+    @panel-text-color:@text-color;
+    @panel-border-color:darken(@panel-background-color, 10%);
+    
+    border-color:@panel-border-color;
+
+    > .panel-heading {
+        color: @panel-text-color;
+        background-color: @panel-background-color;
+        border-color: @panel-border-color;
+    }
+
+    > .panel-heading + .panel-collapse .panel-body {
+        border-top-color: @panel-border-color;
+    }
+    > .panel-heading > .dropdown .caret {
+        border-color: @panel-text-color transparent;
+    }
+
+    > .panel-footer + .panel-collapse .panel-body {
+        border-bottom-color: @panel-border-color;
+    }
+    .panel-body .table tr td { padding-left: 15px }
+    .panel-title .glyphicon { margin-right:10px; }
+    .panel-body { padding:0px; }
+    .panel-body .table {margin-bottom: 0px; }  
+
+    .active {
+        font-weight: bolder;
+    }
+    
+    .badge {
+        margin-left: 5px;
+    }
+}
+
+.panel-variant(@background-color,@text-color) {
+  @heading-bg-color: lighten(@background-color,5%);
+  @heading-text-color: @text-color; 
+  @border:  darken(spin(@background-color, -10), 5%);
+  @heading-border: @border;
+  border-color: @border;
+
+  & > .panel-heading {
+    color: @heading-text-color;
+    background-color: @heading-bg-color;
+    border-color: @heading-border;
+
+    + .panel-collapse .panel-body {
+      border-top-color: @border;
+    }
+  }
+  & > .panel-footer {
+    + .panel-collapse .panel-body {
+      border-bottom-color: @border;
+    }
+  }
+}
+
+.button-variant(@font-color; @background) {
+  @border:darken(@background, 5%);
+  color: @font-color;
+  background-color: @background;
+  border-color: @border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    color: @font-color;
+    background-color: darken(@background, 8%);
+        border-color: darken(@border, 12%);
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: @font-color;
+  }
+}
+
+.jumbotron {
+    color: #FFFFFF;
+    text-align: center;
+    background-color: transparent;
+}
+.marketing {
+    padding: 0px;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.marketing .col-md-4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.marketing h2 {
+    font-weight: normal;
+}
+.marketing .col-md-4 p {
+    margin-left: 10px;
+    margin-right: 10px;
+}  
+
+
+@color-titulado:#5ABA5A;
+@color-empresa:#63799C;
+@color-centro:#F7AE4A;
+@color-neutro:#F7F7F7;
+@color-standard:#428ACE;
+@color-logo:#002C5A;
+@color-logo-claro:#63799C;
+
+@color-text-light:#FEFEFE;
+@color-text-dark:#000000;
+
+
+.panel-menu-titulado {
+    .panel-menu-variant(@color-titulado,@color-text-dark);
+}
+
+.panel-menu-empresa {
+    .panel-menu-variant(@color-empresa,@color-text-dark);
+}
+
+.panel-menu-centro {
+    .panel-menu-variant(@color-centro,@color-text-dark);
+}
+
+.panel-menu-neutro {
+    .panel-menu-variant(@color-neutro,@color-text-dark);
+}
+
+.panel-menu-standard {
+    .panel-menu-variant(@color-standard,@color-text-light);
+}
+
+
+
+.btn-titulado {
+    .button-variant(@color-text-light; @color-titulado);
+}
+.btn-empresa {
+    .button-variant(@color-text-light; @color-empresa);
+}
+.btn-centro {
+    .button-variant(@color-text-light; @color-centro);
+}
+.btn-neutro {
+    .button-variant(@color-text-light; @color-neutro);
+}
+.btn-standard {
+    .button-variant(@color-text-light; @color-standard);
+}
+
+.panel-titulado { 
+    .panel-variant(@color-titulado,@color-text-light);
+}
+
+.panel-empresa { 
+    .panel-variant(@color-empresa,@color-text-light);
+}
+.panel-centro { 
+    .panel-variant(@color-centro,@color-text-light);
+}
+.panel-neutro { 
+    .panel-variant(@color-neutro,@color-text-dark);
+}
+.panel-standard { 
+    .panel-variant(@color-standard,@color-text-light);
+}

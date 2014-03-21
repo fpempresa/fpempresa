@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.titulado.FormacionAcademica" >
+        
+        <cache usage="read-write" />
+        
+        <id name="idFormacionAcademica" >
+            <generator class="identity" />
+        </id>
+
+        <property name="tipoFormacionAcademica" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.titulado.TipoFormacionAcademica</param>
+                <param name="type">4</param>
+            </type>    
+        </property> 
+
+        <property name="otroCentro" />
+        <property name="otroTitulo" />
+
+     
+        <many-to-one name="centro">
+            <column name="idCentro"  />
+        </many-to-one>
+        <many-to-one name="familia">
+            <column name="idFamilia"  />
+        </many-to-one>
+        <many-to-one name="ciclo">
+            <column name="idCiclo"  />
+        </many-to-one>     
+        <many-to-one name="titulado">
+            <column name="idTitulado"  />
+        </many-to-one>
+        
+    </class>
+</hibernate-mapping>

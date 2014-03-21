@@ -1,0 +1,40 @@
+<div class="panel panel-titulado">
+    <div class="panel-heading">
+        <h3 class="panel-title">Datos personales</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12" >
+                <ix3-business-messages></ix3-business-messages>
+            </div>  
+        </div>
+        <div class="row">
+            <div class="col-sm-12" >
+                <form name="mainForm" class="form-horizontal" id="mainForm" >
+                    <fieldset>
+                        <legend>Datos personales</legend>
+                        <ix3-input model="fechaNacimiento" ></ix3-input>
+                        <ix3-input model="telefono" ></ix3-input>
+                        <ix3-input model="telefonoAlternativo" ></ix3-input>
+                        <ix3-input model="tipoDocumento" ></ix3-input>
+                        <ix3-input model="numeroDocumento" ></ix3-input>
+                        <legend>Direcci&oacute;n</legend>
+                        <ix3-input model="direccion.tipoVia" ></ix3-input>
+                        <ix3-input model="direccion.nombreVia" ></ix3-input>
+                        <ix3-input model="direccion.otrosDireccion" ></ix3-input>
+                        <ix3-input model="direccion.codigoPostal" ></ix3-input>
+                        <ix3-input model="direccion.provincia" ></ix3-input> 
+                        <ix3-input model="direccion.municipio" ></ix3-input> 
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="button" class="btn btn-titulado" ng-click="buttonOK()">{{labelButtonOK}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>

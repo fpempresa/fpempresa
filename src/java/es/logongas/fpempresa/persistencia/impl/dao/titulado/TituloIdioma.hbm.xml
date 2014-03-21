@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.titulado.TituloIdioma" >
+        
+        <cache usage="read-write" />
+        
+        <id name="idTituloIdioma" >
+            <generator class="identity" />
+        </id>
+        <property name="fecha" />
+        <property name="idioma" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.titulado.Idioma</param>
+                <param name="type">4</param>
+            </type>    
+        </property>
+        <property name="nivelIdioma" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.titulado.NivelIdioma</param>
+                <param name="type">4</param>
+            </type>    
+        </property>        
+        
+        <many-to-one name="titulado">
+            <column name="idTitulado"  />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

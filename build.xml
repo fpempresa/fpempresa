@@ -68,4 +68,80 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    
+    <target name="deployProduction" depends="-configureAnt,-enableProduccion,dist" >
+    </target>
+
+    <target name="-configureAnt">
+        <echo>Configurando Ant</echo>
+
+        <property name="libAnt.path" value="libant" />
+
+        <path id="libAnt.classpath">
+            <fileset dir="${libAnt.path}">
+                <include name="**/*.jar" />
+            </fileset>
+            <fileset dir="lib">
+                <include name="**/*.jar" />
+            </fileset>
+        </path>
+
+        <property name="libs.CopyLibs.classpath" value="${libAnt.path}/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
+        <property name="j2ee.server.home" value="${libAnt.path}" />
+
+        <!-- Para tener el try-cath -->
+        <taskdef classpathref="libAnt.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+        <!-- Manejo de ficheros XML -->
+        <taskdef classpathref="libAnt.classpath" name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+
+        <!-- Propiedades del proyecto -->
+        <property file="nbproject/project.properties"/>
+    </target>
+
+
+
+    <target name="-pre-compile" depends="-pre-compile-configureProduccion">
+    </target>
+
+
+    <target name="-pre-compile-configureProduccion" if="enableProduccion">
+        <delete file="${build.web.dir}/META-INF/context.xml"/>
+        <delete file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml"/>
+    </target>
+
+    <target name="-pre-dist" depends="-pre-dist-configureProduccion">
+    </target>
+
+
+    <target name="-pre-dist-configureProduccion" if="enableProduccion" >
+        <!-- Poner los datos de la conexión de producción -->
+        <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
+            <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
+        </xmltask>
+        
+        <!-- Cambiar el datasource de Hibernate -->
+        <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
+ 
+
+
+    </target>
+
+    <target name="-enableProduccion"  >
+        <property name="enableProduccion" value="yes"/>
+    </target>
+
+
+
+
+
+
+
+
+
+ 
+
+
+    
+    
 </project>

@@ -76,24 +76,14 @@
     <target name="-configureAnt">
         <echo>Configurando Ant</echo>
 
-        <property name="libAnt.path" value="libant" />
 
-        <path id="libAnt.classpath">
-            <fileset dir="${libAnt.path}">
-                <include name="**/*.jar" />
-            </fileset>
-            <fileset dir="lib">
-                <include name="**/*.jar" />
-            </fileset>
-        </path>
-
-        <property name="libs.CopyLibs.classpath" value="${libAnt.path}/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
-        <property name="j2ee.server.home" value="${libAnt.path}" />
+        <property name="libs.CopyLibs.classpath" value="ant/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
+        <property name="j2ee.server.home" value="ant/lib" />
 
         <!-- Para tener el try-cath -->
-        <taskdef classpathref="libAnt.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+        <taskdef  resource="net/sf/antcontrib/antcontrib.properties"/>
         <!-- Manejo de ficheros XML -->
-        <taskdef classpathref="libAnt.classpath" name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+        <taskdef  name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
 
         <!-- Propiedades del proyecto -->
         <property file="nbproject/project.properties"/>

@@ -70,7 +70,7 @@
     -->
     
     
-    <target name="deployProduction" depends="-configureAnt,-enableProduccion,dist" >
+    <target name="distOpenShift" depends="-configureAnt,-enableProduccion,dist" >
     </target>
 
     <target name="-configureAnt">

@@ -75,6 +75,12 @@ public class FlyWayContextListener implements ServletContextListener {
     private String getDataSourceNameFromHibernate() {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setValidating(false);
+            documentBuilderFactory.setNamespaceAware(true);
+            documentBuilderFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+            documentBuilderFactory.setFeature("http://xml.org/sax/features/validation", false);
+            documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+            documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);          
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(FlyWayContextListener.class.getResourceAsStream("/hibernate.cfg.xml"));
             

@@ -1,0 +1,24 @@
+<div ng-controller="LoginController">
+    <div class="row">
+        <div class="col-sm-12" >
+            <form role="form">
+                <div class="form-group">
+                    <label>Correo electr&oacute;nico</label>
+                    <input type="text" class="form-control" style="border-radius:0px"  placeholder="Correo electr&oacute;nico" ng-model="email">
+                </div>
+                <div class="form-group">
+                    <label>Contrase&ntilde;a </label>
+                    <input type="password" class="form-control" style="border-radius:0px"  placeholder="contrase&ntilde;a" ng-model="password">
+                </div>
+                <button type="button" class="btn btn-sm btn-default" ng-click="login(email, password)" >Entrar</button>
+                <button type="button" class="btn btn-sm " ng-click="cancel()" >Cancelar</button>
+            </form>
+        </div>  
+    </div>                
+    <div class="row">
+        <div class="col-sm-12" >
+            <ix3-business-messages></ix3-business-messages>
+        </div>  
+    </div>
+</div>
+

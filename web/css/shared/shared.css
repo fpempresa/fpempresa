@@ -1,23 +1,54 @@
-.jumbotron {
+/*
+Colores usados en la aplicacion
+*/
+.fpempresa-nav {
+  background-color: #005594;
+  margin-bottom: 100px;
+}
+.navbar-default .navbar-nav > li > a {
+  padding-top: 30px;
+  color: #428ace;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
+}
+.navbar-default .navbar-nav > li > a:link {
+  color: #428ace;
+}
+.navbar-default .navbar-nav > li > a:visited {
+  color: #428ace;
+}
+.navbar-default .navbar-nav > li > a:active {
+  color: #428ace;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  color: #2d70b0;
+  text-decoration: underline;
+}
+.footer {
+  background-color: #005594;
   color: #FFFFFF;
-  text-align: center;
-  background-color: transparent;
 }
-.marketing {
-  padding: 0px;
-  padding-top: 2em;
-  padding-bottom: 2em;
+.footer a {
+  color: #428ace;
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
 }
-.marketing .col-md-4 {
-  text-align: center;
-  margin-bottom: 20px;
+.footer a:link {
+  color: #428ace;
 }
-.marketing h2 {
-  font-weight: normal;
+.footer a:visited {
+  color: #428ace;
 }
-.marketing .col-md-4 p {
-  margin-left: 10px;
-  margin-right: 10px;
+.footer a:active {
+  color: #428ace;
+}
+.footer a:hover {
+  color: #93bce3;
+  text-decoration: underline;
 }
 .panel-menu-titulado {
   border-color: #429f42;
@@ -468,4 +499,37 @@ fieldset[disabled] .btn-standard.active {
 }
 .panel-standard > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #3395c4;
+}
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-may-2014, 20:53:52
+    Author     : Lorenzo
+*/
+body.fpempresa {
+  background-color: #ffffff;
+}
+.fpempresa-container {
+  margin-top: 80px;
+}
+a.fpempresa-simple-link {
+  color: #428ace;
+  cursor: pointer;
+  text-decoration: underline;
+}
+a.fpempresa-simple-link:link {
+  color: #428ace;
+}
+a.fpempresa-simple-link:visited {
+  color: #428ace;
+}
+a.fpempresa-simple-link:active {
+  color: #428ace;
+}
+a.fpempresa-simple-link:hover {
+  color: #428ace;
+  text-decoration: underline;
 }

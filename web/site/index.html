@@ -19,8 +19,7 @@
         <link href="../lib/notify/current/css/pnotify.custom.min.css"   rel="stylesheet"> 
         
         <link href="../css/shared/shared.css"                           rel="stylesheet">
-        <link href="../css/titulado/titulado.css"                               rel="stylesheet">
-
+        <link href="../css/site/site.css"                               rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -72,30 +71,19 @@
         <script type='text/javascript' src='../shared/header/header.js'></script>
         <script type='text/javascript' src='index.js'></script>
         <script type='text/javascript' src='main.js'></script>
-        <script type='text/javascript' src='titulado/titulado.js'></script>
-        <script type='text/javascript' src='tituloidioma/tituloidioma.js'></script>
-        <script type='text/javascript' src='experiencialaboral/experiencialaboral.js'></script>
-        <script type='text/javascript' src='formacionacademica/formacionacademica.js'></script>
+        <script type='text/javascript' src='createaccount/createaccount.js'></script>
+
         <!-- endbuild --> 
 
     </head>
 
-    <body class="fpempresa">
-        
+    <body ng-controller="IndexController" class="fpempresa">      
         <ng-include src="'../shared/header/header.html'"></ng-include>
-        
-        <div class="container fpempresa-container">
-            <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                <div class="col-md-3">
-                    <ng-include src="'lateralmenu.html'"></ng-include>
-                </div>
-                <div class="col-md-9">
-                    <div ng-view></div>                     
-                </div>
-            </div>
-        </div>
-        
-        <ng-include src="'../shared/footer/footer.html'"></ng-include>
 
-</body>
+        <div class="fpempresa-container">
+            <div ng-view></div>
+        </div>
+
+        <ng-include src="'../shared/footer/footer.html'"></ng-include>      
+    </body>
 </html>

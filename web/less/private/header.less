@@ -1,0 +1,35 @@
+@color-logo:#005594;
+@color-link:#FFFFFF;
+@size-link:16px;
+
+.fpempresa-nav {
+    background-color: @color-logo;
+    margin-bottom: 100px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    padding-top: 30px;
+
+    color: @color-link;
+    font-size:@size-link;
+    font-weight: bold;
+
+    cursor: pointer; 
+    text-decoration: none;
+
+    &:link {
+        color: @color-link;
+    }
+    &:visited {
+        color: @color-link;
+    }
+    &:active {
+        color: @color-link;
+    }
+    &:hover {
+        color: darken(@color-link,10%);
+        text-decoration: underline;
+    }
+    cursor: pointer; 
+    cursor: hand;        
+}

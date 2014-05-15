@@ -1,0 +1,31 @@
+@color-logo:#005594;
+@color-link:#FFFFFF;
+@size-link:16px;
+
+.footer {
+    background-color: @color-logo;
+    color: #FFFFFF;
+    
+    a {
+        color: @color-link;
+
+        cursor: pointer; 
+        text-decoration: none;
+
+        &:link {
+            color: @color-link;
+        }
+        &:visited {
+            color: @color-link;
+        }
+        &:active {
+            color: @color-link;
+        }
+        &:hover {
+            color: lighten(@color-link,20%);
+            text-decoration: underline;
+        }
+        cursor: pointer; 
+        cursor: hand;        
+    }
+}

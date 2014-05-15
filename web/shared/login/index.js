@@ -1,10 +1,10 @@
 "use strict";
 
-angular.lazy.controller("LoginController", ['$scope', 'session', function($scope, session) {
+angular.lazy.controller("LoginController", ['$scope', 'session','$window', function($scope, session,$window) {
 
         $scope.dialog.open({
-            title:"Entrar",
-            width:400,
+            title:"Inicio de sesión",
+            width:430,
             height:"auto"
         });
 
@@ -20,5 +20,9 @@ angular.lazy.controller("LoginController", ['$scope', 'session', function($scope
             $scope.dialog.closeCancel();
         };
 
+        $scope.register = function() {
+            $scope.dialog.closeCancel();
+            $window.location.href=getContextPath() + "/createaccount.html";   
+        };        
 
     }]);

@@ -1,0 +1,64 @@
+<div class="container fpempresa-container" style="padding-top:20px;padding-bottom:20px;">
+    <div class="row" >
+        <div class="col-md-3 col-md-offset-2" >
+            <br>
+            <img ng-src="{{getContextPath()}}/img/registro.png" alt="registro">
+        </div>
+        <div class="col-md-3" >
+            <h3 style="color:#525552">FPempresa</h3>
+            <p style="color:#9C9A9C">Registr&aacute;ndote en la mayor bolsa de trabajo espec&iacute;fica de la formaci&oacute;n profesional , conseguiras una mayor visibilidad en el mundo laboral</p>
+        </div>
+        <div class="col-md-4">
+            <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
+                <h3>Crea tu cuenta</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input ng-model="model.nombre" type="text" class="form-control"  placeholder="nombre" />
+                    </div>
+                    <div class="form-group">
+                        <label>1&ordm; Apellido</label>
+                        <input ng-model="model.ape1" type="text" class="form-control"placeholder="1&ordm; apellido" />
+                    </div>
+                    <div class="form-group">
+                        <label>2&ordm; Apellido</label>
+                        <input ng-model="model.ape2" type="text" class="form-control" placeholder="2&ordm; apellido" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Correo electrónico</label>
+                        <input type="text" class="form-control"  placeholder="tu@correoelectronico.es" />
+                    </div>
+                    <div class="form-group">
+                        <label>Contrase&ntilde;a</label>
+                        <input type="password" class="form-control"  placeholder="contrase&ntilde;a" />
+                    </div>
+                    <div class="form-group">
+                        <label>Repetir contrase&ntilde;a</label>
+                        <input type="password" class="form-control"  placeholder="repetir contrase&ntilde;a" />
+                    </div>
+
+                    <div class="input-group">
+                        <div class="checkbox">
+                            <label>
+                                <input ng-model="aceptar" type="checkbox" > Acepto las <a href="#">condiciones del servicio</a> y la <a href="#">politica de privacidad</a> de FPempresa
+                            </label>
+                        </div>
+                    </div>                        
+
+                    <div style="margin-top:20px" class="form-group">
+                        <button type="button" class="btn btn-standard" ng-click="" >Registrarse</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>               
+    <div class="row">
+        <div class="col-sm-12" >
+            <ix3-business-messages></ix3-business-messages>
+        </div>  
+    </div>
+</div>
+

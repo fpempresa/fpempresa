@@ -32,7 +32,7 @@ angular.module('es.logongas.ix3').config(["$httpProvider", function($httpProvide
         });
     }]);
 
-angular.module('es.logongas.ix3').config(["$controllerProvider","$compileProvider","$filterProvider","$provide", function($controllerProvider,$compileProvider,$filterProvider,$provide) {
+angular.module('es.logongas.ix3').config(["$controllerProvider", "$compileProvider", "$filterProvider", "$provide", function($controllerProvider, $compileProvider, $filterProvider, $provide) {
         //Esto es para poder cargar a posteriori recursos de angular.
         //Se usa en las ventanas modales.
         angular.lazy = {
@@ -44,4 +44,8 @@ angular.module('es.logongas.ix3').config(["$controllerProvider","$compileProvide
         };
     }]);
 
-angular.module('es.logongas.ix3').value("apiurl", getContextPath()+"/api");
+angular.module('es.logongas.ix3').run(['$rootScope', function($rootScope) {
+        $rootScope.getContextPath = getContextPath;
+    }]);
+
+angular.module('es.logongas.ix3').value("apiurl", getContextPath() + "/api");

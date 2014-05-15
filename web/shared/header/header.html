@@ -1,0 +1,21 @@
+<div class="navbar navbar-default navbar-fixed-top fpempresa-nav" role="navigation" >
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>            
+            <a class="navbar-brand" ng-href="{{getContextPath()}}/site/index.html"><img ng-src="{{getContextPath()}}/img/logo.png" alt="logo" ></a>
+        </div>
+        <div class="navbar-collapse collapse" ng-controller="LoginController">
+            <ul class="nav navbar-nav navbar-right" >
+                <li ng-if="!user" ><a ng-click="showLogin()" ><i class="fa fa-arrow-circle-o-right"></i> Inicia sesi&oacute;n</a></li>
+                <li ng-if="!user" ><a ng-click="createAccount()" >Crea una cuenta <i class="fa fa-plus-circle"></i></a></li>
+                <li ng-if="!!user" ><a ng-click="userinfo()" ><i class="fa fa-user"></i> {{user.name}}</a></li>
+                <li ng-if="!!user" ><a ng-click="logout()" >Cerrar sesi&oacute;n <i class="fa fa-arrow-circle-o-left"></i></a></li> 	  
+            </ul>
+        </div>
+    </div>
+</div>

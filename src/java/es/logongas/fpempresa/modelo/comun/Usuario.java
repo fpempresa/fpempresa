@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.modelo.comun;
 
+import es.logongas.ix3.model.User;
 import es.logongas.ix3.persistence.services.annotations.Caption;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -24,9 +25,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Lorenzo
  */
-public class Usuario {
-
-    private int idUsuario;
+public class Usuario extends User {
     
     @Email
     @NotBlank
@@ -47,6 +46,9 @@ public class Usuario {
     @Caption("Contraseña")
     private String password;
 
+    private TipoUsuario tipoUsuario;
+    
+    
     public Usuario() {
     }
 
@@ -55,19 +57,11 @@ public class Usuario {
         return nombre + " " + ape1 + (ape2 != null ? " " + ape2 : "");
     }
 
-    /**
-     * @return the idUsuario
-     */
-    public int getIdUsuario() {
-        return idUsuario;
+    @Override
+    public String getName() {
+        return this.toString();
     }
 
-    /**
-     * @param idUsuario the idUsuario to set
-     */
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     /**
      * @return the eMail
@@ -82,7 +76,7 @@ public class Usuario {
     public void seteMail(String eMail) {
         this.eMail = eMail;
     }
-
+       
     /**
      * @return the nombre
      */
@@ -151,5 +145,19 @@ public class Usuario {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the tipoUsuario
+     */
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    /**
+     * @param tipoUsuario the tipoUsuario to set
+     */
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }

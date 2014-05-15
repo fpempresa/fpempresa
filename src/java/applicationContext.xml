@@ -17,4 +17,12 @@
         <property name="daoBasePackageName"     value="es.logongas.fpempresa.persistencia.services.dao" />
         <property name="daoImplBasePackageName" value="es.logongas.fpempresa.persistencia.impl.dao" />
     </bean>
+    
+    <bean id="authenticationManager" class="es.logongas.ix3.security.impl.authentication.AuthenticationManagerImpl"  >
+        <property name="authenticationProviders">
+            <list>
+                <bean class="es.logongas.fpempresa.security.AuthenticationProviderImplUsuario" />
+            </list>
+        </property>
+    </bean>
 </beans>

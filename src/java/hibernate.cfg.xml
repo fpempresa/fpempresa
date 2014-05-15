@@ -9,27 +9,25 @@
     <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
     <property name="hibernate.cache.use_second_level_cache">true</property>
     <property name="hibernate.cache.use_query_cache">true</property>
+    <!-- Tablas del titulado -->
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/Titulado.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/TituloIdioma.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/ExperienciaLaboral.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/FormacionAcademica.hbm.xml"/>
-    
-    
+    <!-- Tablas sobre el centro -->
+    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/centro/Centro.hbm.xml"/>
+    <!-- Tablas comunes -->
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Usuario.hbm.xml"/>
-    
-    
-    
-    
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Provincia.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Municipio.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Familia.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Ciclo.hbm.xml"/>
-    
-    
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/centro/Centro.hbm.xml"/>
-    
-    
-    
-    
+    <!-- Definición de la seguridad -->
+    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/Identity.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/GroupMember.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/ACE.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/Permission.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/SecureResource.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/SecureResourceType.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

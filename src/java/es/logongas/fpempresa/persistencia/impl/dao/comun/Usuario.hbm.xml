@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="es.logongas.fpempresa.modelo.comun.Usuario" >
-        
-        <cache usage="read-write" />
-        
-        <id name="idUsuario" >
-            <generator class="identity" />
-        </id>
-
+    <joined-subclass name="es.logongas.fpempresa.modelo.comun.Usuario" table="usuario" extends="es.logongas.ix3.model.User" >
+        <key column="idIdentity" />
         <property name="eMail" />
         <property name="nombre" />
         <property name="ape1" />
         <property name="ape2" />
         <property name="foto" />
+        <property name="tipoUsuario" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.comun.TipoUsuario</param>
+                <param name="type">4</param>
+            </type>
+        </property>
+    </joined-subclass>
       
 </hibernate-mapping>

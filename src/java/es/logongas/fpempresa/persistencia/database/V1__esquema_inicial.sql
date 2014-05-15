@@ -88,14 +88,14 @@
     );
 
     create table Usuario (
-        idUsuario integer not null auto_increment,
+        idUser integer not null auto_increment,
         eMail varchar(255),
         nombre varchar(255),
         ape1 varchar(255),
         ape2 varchar(255),
         contrasenya varchar(255),
         foto tinyblob,
-        primary key (idUsuario),
+        primary key (idUser),
         UNIQUE INDEX `eMail` (`eMail`)
     );
 
@@ -110,7 +110,7 @@
     alter table FormacionAcademica add index FK7C4E0018E6B99AB0 (idCiclo), add constraint FK7C4E0018E6B99AB0 foreign key (idCiclo) references Ciclo (idCiclo);
     alter table FormacionAcademica add index FK7C4E00184C28477E (idTitulado), add constraint FK7C4E00184C28477E foreign key (idTitulado) references Titulado (idTitulado);
     alter table Municipio add index FK863DB7CDDA49940A (idProvincia), add constraint FK863DB7CDDA49940A foreign key (idProvincia) references Provincia (idProvincia);
-    alter table Titulado add index FK94E67D96B3306F0C (idUsuario), add constraint FK94E67D96B3306F0C foreign key (idUsuario) references Usuario (idUsuario);
+    alter table Titulado add index FK94E67D96B3306F0C (idUser), add constraint FK94E67D96B3306F0C foreign key (idUser) references Usuario (idUser);
     alter table Titulado add index FK94E67D96DA49940A (idProvincia), add constraint FK94E67D96DA49940A foreign key (idProvincia) references Provincia (idProvincia);
     alter table Titulado add index FK94E67D96391E4C8A (idMunicipio), add constraint FK94E67D96391E4C8A foreign key (idMunicipio) references Municipio (idMunicipio);
     alter table TituloIdioma add index FK51BC8E0E4C28477E (idTitulado), add constraint FK51BC8E0E4C28477E foreign key (idTitulado) references Titulado (idTitulado);

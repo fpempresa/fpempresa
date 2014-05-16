@@ -1,35 +1,23 @@
-@color-logo:#005594;
-@color-link:#FFFFFF;
-@size-link:16px;
-
-.fpempresa-nav {
-    background-color: @color-logo;
-    margin-bottom: 100px;
+.navbar-default {
+   background-color: @header-color-background;
+   
 }
-
 .navbar-default .navbar-nav > li > a {
     padding-top: 30px;
 
-    color: @color-link;
-    font-size:@size-link;
+    color: @header-color;
+    font-size:@header-font-size;
     font-weight: bold;
 
     cursor: pointer; 
     text-decoration: none;
 
-    &:link {
-        color: @color-link;
+    &:link,&:visited,&:active {
+        color: @header-color-link;
     }
-    &:visited {
-        color: @color-link;
-    }
-    &:active {
-        color: @color-link;
-    }
+    
     &:hover {
-        color: darken(@color-link,10%);
+        color: darken(@header-color-link,10%);
         text-decoration: underline;
     }
-    cursor: pointer; 
-    cursor: hand;        
 }

@@ -83,22 +83,22 @@
 
     </head>
 
-    <body class="fpempresa">
-        
-        <ng-include src="'../shared/header/header.html'"></ng-include>
-        
-        <div class="container fpempresa-container">
-            <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                <div class="col-md-3">
-                    <ng-include src="'lateralmenu.html'"></ng-include>
-                </div>
-                <div class="col-md-9">
-                    <div ng-view></div>                     
+    <body>
+	<div class="bodywrapper">
+            <ng-include src="'../shared/header/header.html'"></ng-include>
+
+            <div class="container main-container">
+                <div class="row" style="padding-top:20px;padding-bottom:20px;">
+                    <div class="col-md-3">
+                        <ng-include src="'lateralmenu.html'"></ng-include>
+                    </div>
+                    <div class="col-md-9">
+                        <div ng-view></div>                     
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <ng-include src="'../shared/footer/footer.html'"></ng-include>
 
+            <ng-include src="'../shared/footer/footer.html'"></ng-include>
+        </div>
 </body>
 </html>

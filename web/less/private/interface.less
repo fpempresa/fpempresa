@@ -58,7 +58,7 @@
   }
 }
 
-.button-variant(@font-color; @background) {
+.button-variant(@background,@font-color ) {
   @border:darken(@background, 5%);
   color: @font-color;
   background-color: @background;
@@ -101,57 +101,60 @@
 
 
 .panel-menu-titulado {
-    .panel-menu-variant(@color-titulado,@color-text-dark);
+    .panel-menu-variant(@titulado-color-background,@titulado-color);
 }
 
 .panel-menu-empresa {
-    .panel-menu-variant(@color-empresa,@color-text-dark);
+    .panel-menu-variant(@empresa-color-background,@empresa-color);
 }
 
 .panel-menu-centro {
-    .panel-menu-variant(@color-centro,@color-text-dark);
+    .panel-menu-variant(@centro-color-background,@centro-color);
 }
 
 .panel-menu-neutro {
-    .panel-menu-variant(@color-neutro,@color-text-dark);
+    .panel-menu-variant(@neutro-color-background,@neutro-color);
 }
 
 .panel-menu-standard {
-    .panel-menu-variant(@color-standard,@color-text-light);
+    .panel-menu-variant(@standard-color-background,@standard-color);
 }
 
 
 
 .btn-titulado {
-    .button-variant(@color-text-light; @color-titulado);
+    .button-variant(@titulado-color-background,@titulado-color);
 }
 .btn-empresa {
-    .button-variant(@color-text-light; @color-empresa);
+    .button-variant(@empresa-color-background,@empresa-color);
 }
 .btn-centro {
-    .button-variant(@color-text-light; @color-centro);
+    .button-variant(@centro-color-background,@centro-color);
 }
 .btn-neutro {
-    .button-variant(@color-text-light; @color-neutro);
+    .button-variant(@neutro-color-background,@neutro-color);
 }
 .btn-standard {
-    .button-variant(@color-text-light; @color-standard);
+    .button-variant(@standard-color-background,@standard-color);
 }
 
+
+
+
 .panel-titulado { 
-    .panel-variant(@color-titulado,@color-text-light);
+    .panel-variant(@titulado-color-background,@titulado-color);
 }
 
 .panel-empresa { 
-    .panel-variant(@color-empresa,@color-text-light);
+    .panel-variant(@empresa-color-background,@empresa-color);
 }
 .panel-centro { 
-    .panel-variant(@color-centro,@color-text-light);
+    .panel-variant(@centro-color-background,@centro-color);
 }
 .panel-neutro { 
-    .panel-variant(@color-neutro,@color-text-dark);
+    .panel-variant(@neutro-color-background,@neutro-color);
 }
 .panel-standard { 
-    .panel-variant(@color-standard,@color-text-light);
+    .panel-variant(@standard-color-background,@standard-color);
 }
 

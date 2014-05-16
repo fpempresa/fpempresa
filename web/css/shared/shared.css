@@ -1,60 +1,47 @@
-/*
-Colores usados en la aplicacion
-*/
-.fpempresa-nav {
+.navbar-default {
   background-color: #005594;
-  margin-bottom: 100px;
 }
 .navbar-default .navbar-nav > li > a {
   padding-top: 30px;
-  color: #428ace;
+  color: #ffffff;
   font-size: 16px;
   font-weight: bold;
-  text-decoration: none;
   cursor: pointer;
-  cursor: hand;
+  text-decoration: none;
 }
-.navbar-default .navbar-nav > li > a:link {
-  color: #428ace;
-}
-.navbar-default .navbar-nav > li > a:visited {
-  color: #428ace;
-}
+.navbar-default .navbar-nav > li > a:link,
+.navbar-default .navbar-nav > li > a:visited,
 .navbar-default .navbar-nav > li > a:active {
-  color: #428ace;
+  color: #ffffff;
 }
 .navbar-default .navbar-nav > li > a:hover {
-  color: #2d70b0;
+  color: #e6e6e6;
   text-decoration: underline;
 }
 .footer {
   background-color: #005594;
-  color: #FFFFFF;
+  color: #ffffff;
+  font-size: 14px;
+  width: 100%;
+  height: 190px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
-.footer a {
-  color: #428ace;
-  text-decoration: none;
-  cursor: pointer;
-  cursor: hand;
-}
-.footer a:link {
-  color: #428ace;
-}
-.footer a:visited {
-  color: #428ace;
-}
+.footer a:link,
+.footer a:visited,
 .footer a:active {
-  color: #428ace;
+  color: #ffffff;
 }
 .footer a:hover {
-  color: #93bce3;
+  color: #e6e6e6;
   text-decoration: underline;
 }
 .panel-menu-titulado {
   border-color: #429f42;
 }
 .panel-menu-titulado > .panel-heading {
-  color: #000000;
+  color: #ffffff;
   background-color: #5aba5a;
   border-color: #429f42;
 }
@@ -62,7 +49,7 @@ Colores usados en la aplicacion
   border-top-color: #429f42;
 }
 .panel-menu-titulado > .panel-heading > .dropdown .caret {
-  border-color: #000000 transparent;
+  border-color: #ffffff transparent;
 }
 .panel-menu-titulado > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #429f42;
@@ -89,7 +76,7 @@ Colores usados en la aplicacion
   border-color: #4f617d;
 }
 .panel-menu-empresa > .panel-heading {
-  color: #000000;
+  color: #ffffff;
   background-color: #63799c;
   border-color: #4f617d;
 }
@@ -97,7 +84,7 @@ Colores usados en la aplicacion
   border-top-color: #4f617d;
 }
 .panel-menu-empresa > .panel-heading > .dropdown .caret {
-  border-color: #000000 transparent;
+  border-color: #ffffff transparent;
 }
 .panel-menu-empresa > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #4f617d;
@@ -124,7 +111,7 @@ Colores usados en la aplicacion
   border-color: #f59819;
 }
 .panel-menu-centro > .panel-heading {
-  color: #000000;
+  color: #ffffff;
   background-color: #f7ae4a;
   border-color: #f59819;
 }
@@ -132,7 +119,7 @@ Colores usados en la aplicacion
   border-top-color: #f59819;
 }
 .panel-menu-centro > .panel-heading > .dropdown .caret {
-  border-color: #000000 transparent;
+  border-color: #ffffff transparent;
 }
 .panel-menu-centro > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #f59819;
@@ -194,7 +181,7 @@ Colores usados en la aplicacion
   border-color: #2d70b0;
 }
 .panel-menu-standard > .panel-heading {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #428ace;
   border-color: #2d70b0;
 }
@@ -202,7 +189,7 @@ Colores usados en la aplicacion
   border-top-color: #2d70b0;
 }
 .panel-menu-standard > .panel-heading > .dropdown .caret {
-  border-color: #fefefe transparent;
+  border-color: #ffffff transparent;
 }
 .panel-menu-standard > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #2d70b0;
@@ -226,7 +213,7 @@ Colores usados en la aplicacion
   margin-left: 5px;
 }
 .btn-titulado {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #5aba5a;
   border-color: #4ab14a;
 }
@@ -235,7 +222,7 @@ Colores usados en la aplicacion
 .btn-titulado:active,
 .btn-titulado.active,
 .open .dropdown-toggle.btn-titulado {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #45a645;
   border-color: #388538;
 }
@@ -264,10 +251,10 @@ fieldset[disabled] .btn-titulado.active {
 }
 .btn-titulado .badge {
   color: #5aba5a;
-  background-color: #fefefe;
+  background-color: #ffffff;
 }
 .btn-empresa {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #63799c;
   border-color: #596d8c;
 }
@@ -276,7 +263,7 @@ fieldset[disabled] .btn-titulado.active {
 .btn-empresa:active,
 .btn-empresa.active,
 .open .dropdown-toggle.btn-empresa {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #536683;
   border-color: #415067;
 }
@@ -305,10 +292,10 @@ fieldset[disabled] .btn-empresa.active {
 }
 .btn-empresa .badge {
   color: #63799c;
-  background-color: #fefefe;
+  background-color: #ffffff;
 }
 .btn-centro {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #f7ae4a;
   border-color: #f6a332;
 }
@@ -317,7 +304,7 @@ fieldset[disabled] .btn-empresa.active {
 .btn-centro:active,
 .btn-centro.active,
 .open .dropdown-toggle.btn-centro {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #f59d23;
   border-color: #e0860a;
 }
@@ -346,10 +333,10 @@ fieldset[disabled] .btn-centro.active {
 }
 .btn-centro .badge {
   color: #f7ae4a;
-  background-color: #fefefe;
+  background-color: #ffffff;
 }
 .btn-neutro {
-  color: #fefefe;
+  color: #000000;
   background-color: #f7f7f7;
   border-color: #eaeaea;
 }
@@ -358,7 +345,7 @@ fieldset[disabled] .btn-centro.active {
 .btn-neutro:active,
 .btn-neutro.active,
 .open .dropdown-toggle.btn-neutro {
-  color: #fefefe;
+  color: #000000;
   background-color: #e3e3e3;
   border-color: #cccccc;
 }
@@ -387,10 +374,10 @@ fieldset[disabled] .btn-neutro.active {
 }
 .btn-neutro .badge {
   color: #f7f7f7;
-  background-color: #fefefe;
+  background-color: #000000;
 }
 .btn-standard {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #428ace;
   border-color: #337dc4;
 }
@@ -399,7 +386,7 @@ fieldset[disabled] .btn-neutro.active {
 .btn-standard:active,
 .btn-standard.active,
 .open .dropdown-toggle.btn-standard {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #3076b8;
   border-color: #265e93;
 }
@@ -428,13 +415,13 @@ fieldset[disabled] .btn-standard.active {
 }
 .btn-standard .badge {
   color: #428ace;
-  background-color: #fefefe;
+  background-color: #ffffff;
 }
 .panel-titulado {
   border-color: #5bb14a;
 }
 .panel-titulado > .panel-heading {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #6cc26c;
   border-color: #5bb14a;
 }
@@ -448,7 +435,7 @@ fieldset[disabled] .btn-standard.active {
   border-color: #59758c;
 }
 .panel-empresa > .panel-heading {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #7386a6;
   border-color: #59758c;
 }
@@ -462,7 +449,7 @@ fieldset[disabled] .btn-standard.active {
   border-color: #f68232;
 }
 .panel-centro > .panel-heading {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #f8b962;
   border-color: #f68232;
 }
@@ -490,7 +477,7 @@ fieldset[disabled] .btn-standard.active {
   border-color: #3395c4;
 }
 .panel-standard > .panel-heading {
-  color: #fefefe;
+  color: #ffffff;
   background-color: #5697d3;
   border-color: #3395c4;
 }
@@ -500,36 +487,18 @@ fieldset[disabled] .btn-standard.active {
 .panel-standard > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #3395c4;
 }
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 15-may-2014, 20:53:52
-    Author     : Lorenzo
-*/
-body.fpempresa {
-  background-color: #ffffff;
+html,
+body {
+  background-color: #FFFFFF;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-.fpempresa-container {
-  margin-top: 80px;
+.bodywrapper {
+  min-height: 100%;
+  position: relative;
 }
-a.fpempresa-simple-link {
-  color: #428ace;
-  cursor: pointer;
-  text-decoration: underline;
-}
-a.fpempresa-simple-link:link {
-  color: #428ace;
-}
-a.fpempresa-simple-link:visited {
-  color: #428ace;
-}
-a.fpempresa-simple-link:active {
-  color: #428ace;
-}
-a.fpempresa-simple-link:hover {
-  color: #428ace;
-  text-decoration: underline;
+.main-container {
+  padding-top: 80px;
+  padding-bottom: 190px;
 }

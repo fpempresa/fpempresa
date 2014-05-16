@@ -80,13 +80,15 @@
 
     </head>
 
-    <body ng-controller="IndexController" class="fpempresa">      
-        <ng-include src="'../shared/header/header.html'"></ng-include>
+    <body ng-controller="IndexController" >   
+	<div class="bodywrapper">        
+            <ng-include src="'../shared/header/header.html'"></ng-include>
 
-        <div class="fpempresa-container">
-            <div ng-view></div>
+            <div class="main-container">
+                <div ng-view></div>
+            </div>
+
+            <ng-include src="'../shared/footer/footer.html'"></ng-include> 
         </div>
-
-        <ng-include src="'../shared/footer/footer.html'"></ng-include>      
     </body>
 </html>

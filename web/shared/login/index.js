@@ -22,7 +22,7 @@ angular.lazy.controller("LoginController", ['$scope', 'session','$window', funct
 
         $scope.register = function() {
             $scope.dialog.closeCancel();
-            $window.location.href=getContextPath() + "/createaccount.html";   
+            $window.location.href=getContextPath() + "/site/index.html#/createaccount";  
         };        
 
     }]);

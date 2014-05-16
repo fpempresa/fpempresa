@@ -488,7 +488,7 @@ fieldset[disabled] .btn-standard.active {
   border-bottom-color: #3395c4;
 }
 a.default {
-  color: #006dd6;
+  color: #428bca;
   cursor: pointer;
   text-decoration: underline;
 }
@@ -496,7 +496,7 @@ a.default:link,
 a.default:visited,
 a.default:active,
 a.default:hover {
-  color: #006dd6;
+  color: #428bca;
 }
 a.default:hover {
   text-decoration: underline;

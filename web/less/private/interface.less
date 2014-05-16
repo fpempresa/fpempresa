@@ -2,7 +2,7 @@
     @panel-background-color:lighten(@background-color,0%);
     @panel-text-color:@text-color;
     @panel-border-color:darken(@panel-background-color, 10%);
-    
+
     border-color:@panel-border-color;
 
     > .panel-heading {
@@ -29,72 +29,72 @@
     .active {
         font-weight: bolder;
     }
-    
+
     .badge {
         margin-left: 5px;
     }
 }
 
 .panel-variant(@background-color,@text-color) {
-  @heading-bg-color: lighten(@background-color,5%);
-  @heading-text-color: @text-color; 
-  @border:  darken(spin(@background-color, -10), 5%);
-  @heading-border: @border;
-  border-color: @border;
+    @heading-bg-color: lighten(@background-color,5%);
+    @heading-text-color: @text-color; 
+    @border:  darken(spin(@background-color, -10), 5%);
+    @heading-border: @border;
+    border-color: @border;
 
-  & > .panel-heading {
-    color: @heading-text-color;
-    background-color: @heading-bg-color;
-    border-color: @heading-border;
+    & > .panel-heading {
+        color: @heading-text-color;
+        background-color: @heading-bg-color;
+        border-color: @heading-border;
 
-    + .panel-collapse .panel-body {
-      border-top-color: @border;
+        + .panel-collapse .panel-body {
+            border-top-color: @border;
+        }
     }
-  }
-  & > .panel-footer {
-    + .panel-collapse .panel-body {
-      border-bottom-color: @border;
+    & > .panel-footer {
+        + .panel-collapse .panel-body {
+            border-bottom-color: @border;
+        }
     }
-  }
 }
 
 .button-variant(@background,@font-color ) {
-  @border:darken(@background, 5%);
-  color: @font-color;
-  background-color: @background;
-  border-color: @border;
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
+    @border:darken(@background, 5%);
     color: @font-color;
-    background-color: darken(@background, 8%);
-        border-color: darken(@border, 12%);
-  }
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
-    background-image: none;
-  }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      background-color: @background;
-          border-color: @border;
-    }
-  }
+    background-color: @background;
+    border-color: @border;
 
-  .badge {
-    color: @background;
-    background-color: @font-color;
-  }
+    &:hover,
+        &:focus,
+        &:active,
+        &.active,
+        .open .dropdown-toggle& {
+        color: @font-color;
+        background-color: darken(@background, 8%);
+        border-color: darken(@border, 12%);
+    }
+    &:active,
+        &.active,
+        .open .dropdown-toggle& {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+            &:focus,
+            &:active,
+            &.active {
+            background-color: @background;
+            border-color: @border;
+        }
+    }
+
+    .badge {
+        color: @background;
+        background-color: @font-color;
+    }
 }
 
 
@@ -158,3 +158,16 @@
     .panel-variant(@standard-color-background,@standard-color);
 }
 
+a.default {
+    color: @link-default-color;
+    cursor: pointer; 
+    text-decoration: underline;
+
+    &:link,&:visited,&:active,&:hover {
+        color: @link-default-color;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

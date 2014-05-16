@@ -487,6 +487,20 @@ fieldset[disabled] .btn-standard.active {
 .panel-standard > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #3395c4;
 }
+a.default {
+  color: #006dd6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+a.default:link,
+a.default:visited,
+a.default:active,
+a.default:hover {
+  color: #006dd6;
+}
+a.default:hover {
+  text-decoration: underline;
+}
 html,
 body {
   background-color: #FFFFFF;

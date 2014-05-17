@@ -66,10 +66,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
     @Override
     public Principal authenticate(Credential credential) {
         
-        
         try {
-            StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-            
             if ((credential instanceof CredentialImplLoginPassword) == false) {
                 return null;
             }
@@ -84,10 +81,10 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             
             if (usuario!=null) {
                 String plainPassword=credentialImplLoginPassword.getPassword();
-                String encryptedPassword=usuarioDAO.getEncryptedPassword(usuario.getIdIdentity());
                 
-                if (passwordEncryptor.checkPassword(plainPassword, encryptedPassword)) {
-                    return usuario;
+                if (usuarioDAO.checkPassword(usuario,plainPassword)) {
+                    Principal principal=usuario;
+                    return principal;
                 } else {
                     return null;
                 }

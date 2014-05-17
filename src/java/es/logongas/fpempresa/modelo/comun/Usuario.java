@@ -18,6 +18,10 @@ package es.logongas.fpempresa.modelo.comun;
 
 import es.logongas.ix3.model.User;
 import es.logongas.ix3.persistence.services.annotations.Caption;
+import es.logongas.ix3.security.services.authentication.Principal;
+import javax.validation.constraints.NotNull;
+import org.hibernate.event.spi.PostLoadEvent;
+import org.hibernate.event.spi.PostLoadEventListener;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -25,7 +29,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Lorenzo
  */
-public class Usuario extends User {
+public class Usuario extends User  implements PostLoadEventListener,Principal {
     
     @Email
     @NotBlank
@@ -43,9 +47,12 @@ public class Usuario extends User {
     private String ape2;
     
     private byte[] foto;
+    
     @Caption("Contraseña")
     private String password;
 
+    @NotNull
+    @Caption("Tipo de usuario")
     private TipoUsuario tipoUsuario;
     
     
@@ -54,14 +61,8 @@ public class Usuario extends User {
 
     @Override
     public String toString() {
-        return nombre + " " + ape1 + (ape2 != null ? " " + ape2 : "");
+        return name;
     }
-
-    @Override
-    public String getName() {
-        return this.toString();
-    }
-
 
     /**
      * @return the eMail
@@ -75,6 +76,21 @@ public class Usuario extends User {
      */
     public void seteMail(String eMail) {
         this.eMail = eMail;
+        this.login=this.eMail;
+    }
+    /**
+     * @return the eMail
+     */
+    public String getEMail() {
+        return eMail;
+    }
+
+    /**
+     * @param eMail the eMail to set
+     */
+    public void setEMail(String eMail) {
+        this.eMail = eMail;
+        this.login=this.eMail;
     }
        
     /**
@@ -89,6 +105,7 @@ public class Usuario extends User {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        this.name=getCalculateName();
     }
 
     /**
@@ -103,6 +120,7 @@ public class Usuario extends User {
      */
     public void setApe1(String ape1) {
         this.ape1 = ape1;
+        this.name=getCalculateName();        
     }
 
     /**
@@ -117,6 +135,7 @@ public class Usuario extends User {
      */
     public void setApe2(String ape2) {
         this.ape2 = ape2;
+        this.name=getCalculateName();        
     }
 
     /**
@@ -160,4 +179,19 @@ public class Usuario extends User {
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+    
+    
+    private String getCalculateName() {
+        return nombre + " " + ape1 + (ape2 != null ? " " + ape2 : "");
+    }
+    
+    @Override
+    public void onPostLoad(PostLoadEvent ple) {
+        Usuario usuario=(Usuario)ple.getEntity();
+        //Nunca se retorna el Hash de la contraseña
+        usuario.setPassword(null);
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
+    }    
+
 }

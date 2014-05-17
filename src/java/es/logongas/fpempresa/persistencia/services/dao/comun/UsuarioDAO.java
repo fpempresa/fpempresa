@@ -28,6 +28,7 @@ import es.logongas.ix3.persistence.services.dao.GenericDAO;
  * @author Lorenzo
  */
 public interface UsuarioDAO extends GenericDAO<Usuario,Integer> {
-    String getEncryptedPassword(int idIdentity);
-    void setEncryptedPassword(int idIdentity,String encryptedPassword);
+    void updatePassword(Usuario usuario,String plainPassword);
+    boolean checkPassword(Usuario usuario,String plainPassword);
+    
 }

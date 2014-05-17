@@ -2,7 +2,7 @@
 /**
  * Servicio para gestionar la sesión en el servidor
  */
-angular.module("es.logongas.ix3").service("session", ['$http','notify','apiurl','$q', function($http,notify,apiurl,$q) {
+angular.module("es.logongas.ix3").service("session", ['$http','apiurl','$q','$rootScope', function($http,apiurl,$q,$rootScope) {
         return {
             login: function(login, password) {
                 var deferred = $q.defer();
@@ -18,8 +18,11 @@ angular.module("es.logongas.ix3").service("session", ['$http','notify','apiurl',
                     }
                 };
 
-                $http(config).success(function(data, status, headers, config) {
-                    deferred.resolve(data);
+                $http(config).success(function(user, status, headers, config) {
+                    deferred.resolve(user);
+                    if (user) {
+                        $rootScope.$broadcast("ix3.session.login",user);
+                    }
                 }).error(function(data, status, headers, config) {
                     if (status===400) {
                         deferred.reject(data);
@@ -40,6 +43,7 @@ angular.module("es.logongas.ix3").service("session", ['$http','notify','apiurl',
 
                 $http(config).success(function(data, status, headers, config) {
                     deferred.resolve(data);
+                    $rootScope.$broadcast("ix3.session.logout",undefined);
                 }).error(function(data, status, headers, config) {
                     if (status===400) {
                         deferred.reject(data);

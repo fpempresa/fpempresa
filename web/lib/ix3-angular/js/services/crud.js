@@ -9,6 +9,7 @@
             scope.filter = {};
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.metadata = {};
+            scope.businessMessages=null;
             
             scope.search = function() {
                 if (scope.parentProperty && scope.parentId) {
@@ -156,6 +157,7 @@
             scope.model = {};
             scope.models = {};
             scope.metadata = {};
+            scope.businessMessages=null;
             scope.setValue = function(obj, key, newValue) {
                 var keys = key.split('.');
                 for (var i = 0; i < keys.length - 1; i++) {

@@ -14,21 +14,21 @@
                 <h3>&iquest;Quien eres?</h3>
                 <div class="radio">
                     <label>
-                        <input ng-model="state.tipoUsuario" type="radio" name="opciones"  value="TITULADO">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones"  value="TITULADO">
                         Un titulado de formacion profesional que busca empleo
                     </label>
                 </div>
                 <br>
                 <div class="radio">
                     <label>
-                        <input ng-model="state.tipoUsuario" type="radio" name="opciones" value="EMPRESA">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="EMPRESA">
                         Una empresa que busca profesionales
                     </label>
                 </div>
                 <br>
                 <div class="radio">
                     <label>
-                        <input ng-model="state.tipoUsuario" type="radio" name="opciones" value="CENTRO">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="CENTRO">
                         Un centro educativo que quiere tener su bolsa de trabajo
                     </label>
                 </div>                       
@@ -47,13 +47,16 @@
         </div>
         <div class="col-md-3" >
             <h3 style="color:#525552">Registro</h3>
-            <p style="color:#9C9A9C" ng-if="state.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
-            <p style="color:#9C9A9C" ng-if="state.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
-            <p style="color:#9C9A9C" ng-if="state.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
+            <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
+            <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
+            <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
         </div>
         <div class="col-md-4">
             <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
                 <h3>Crea tu cuenta</h3>
+                
+                <ix3-business-messages></ix3-business-messages>
+                
                 <form>
                     <div class="form-group">
                         <label>Nombre</label>
@@ -69,21 +72,21 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Correo electrónico</label>
-                        <input type="text" class="form-control"  placeholder="tu@correoelectronico.es" />
+                        <input ng-model="model.eMail" type="text" class="form-control"  placeholder="tu@correoelectronico.es" />
                     </div>
                     <div class="form-group">
                         <label>Contrase&ntilde;a</label>
-                        <input type="password" class="form-control"  placeholder="contrase&ntilde;a" />
+                        <input ng-model="model.password" type="password" class="form-control"  placeholder="contrase&ntilde;a" />
                     </div>
                     <div class="form-group">
                         <label>Repetir contrase&ntilde;a</label>
-                        <input type="password" class="form-control"  placeholder="repetir contrase&ntilde;a" />
+                        <input ng-model="model.repeatPassword" type="password" class="form-control"  placeholder="repetir contrase&ntilde;a" />
                     </div>
 
                     <div class="input-group">
                         <div class="checkbox">
                             <label>
-                                <input ng-model="aceptar" type="checkbox" > Acepto las <a href="#">condiciones del servicio</a> y la <a href="#">politica de privacidad</a> de FPempresa
+                                <input ng-model="model.aceptar" type="checkbox" > Acepto las <a href="#">condiciones del servicio</a> y la <a href="#">politica de privacidad</a> de FPempresa
                             </label>
                         </div>
                     </div>                        
@@ -115,7 +118,7 @@
 
 
                     <div style="margin-top:20px" class="form-group">
-                        <button type="button" class="btn btn-standard" ng-click="crearCuenta()" >Inicia sesi&oacute;n</button>
+                        <button type="button" class="btn btn-standard" ng-click="login()" >Inicia sesi&oacute;n</button>
                     </div>
 
 
@@ -125,10 +128,5 @@
 
     </div>     
 
-    <div class="row">
-        <div class="col-sm-12" >
-            <ix3-business-messages></ix3-business-messages>
-        </div>  
-    </div>
 </div>
 

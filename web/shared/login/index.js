@@ -1,6 +1,7 @@
 "use strict";
 
-angular.lazy.controller("LoginController", ['$scope', 'session','$window', function($scope, session,$window) {
+angular.lazy.controller("LoginController", ['$scope', 'session','$window','goPage', function($scope, session,$window,goPage) {
+        $scope.businessMessages=null;
 
         $scope.dialog.open({
             title:"Inicio de sesión",
@@ -22,7 +23,7 @@ angular.lazy.controller("LoginController", ['$scope', 'session','$window', funct
 
         $scope.register = function() {
             $scope.dialog.closeCancel();
-            $window.location.href=getContextPath() + "/site/index.html#/createaccount";  
+            goPage.createAccount();  
         };        
 
     }]);

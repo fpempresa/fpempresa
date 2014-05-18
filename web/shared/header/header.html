@@ -11,10 +11,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right" >
-                <li ng-if="!usuario" ><a ng-click="login()" ><i class="fa fa-arrow-circle-o-right"></i> Inicia sesi&oacute;n</a></li>
-                <li ng-if="!usuario" ><a ng-click="createAccount()" >Crea una cuenta <i class="fa fa-plus-circle"></i></a></li>
-                <li ng-if="!!usuario" ><a ng-click="home()" ><i class="fa fa-user"></i> {{usuario.name}}</a></li>
-                <li ng-if="!!usuario" ><a ng-click="logout()" >Cerrar sesi&oacute;n <i class="fa fa-arrow-circle-o-left"></i></a></li> 	  
+                <li ng-if="!usuario" ><a ng-click="login()"  href=""><i class="fa fa-arrow-circle-o-right"></i> Inicia sesi&oacute;n</a></li>
+                <li ng-if="!usuario" ><a ng-click="createAccount()"  href="">Crea una cuenta <i class="fa fa-plus-circle"></i></a></li>
+                <li ng-if="!!usuario" ><a ng-click="homeUsuario()"  href=""><i class="fa fa-user"></i> {{usuario.name}}</a></li>
+                <li ng-if="!!usuario" ><a ng-click="logout()"  href="">Cerrar sesi&oacute;n <i class="fa fa-arrow-circle-o-left"></i></a></li> 	  
             </ul>
         </div>
     </div>

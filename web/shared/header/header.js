@@ -24,6 +24,10 @@ app.controller("LoginController", ['$scope','session', 'dialog','$window','goPag
 
         };
         
+        $scope.homeUsuario=function() {
+             goPage.homeUsuario();
+        }
+        
         $scope.createAccount=function() {
             goPage.createAccount();            
         }

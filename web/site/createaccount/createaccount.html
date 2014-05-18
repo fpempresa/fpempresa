@@ -1,9 +1,9 @@
 <div class="container fpempresa-container" style="padding-top:20px;padding-bottom:20px;">
 
     <div ng-if="state.step === 0">
-        <div class="col-md-3 col-md-offset-2" >
+        <div class="col-md-3 col-md-offset-2" style="text-align:right">
             <br>
-            <img ng-src="{{getContextPath()}}/img/registro.png" alt="registro">
+            <img ng-src="{{getContextPath()}}/img/titulado-empresa-centro.png" alt="registro">
         </div>
         <div class="col-md-3" >
             <h3 style="color:#525552">Tipo de usuario</h3>
@@ -41,9 +41,11 @@
     </div>
     <div class="row" ng-if="state.step === 1">
 
-        <div class="col-md-3 col-md-offset-2" >
+        <div class="col-md-3 col-md-offset-2" style="text-align:right">
             <br>
-            <img ng-src="{{getContextPath()}}/img/registro.png" alt="registro">
+            <img ng-src="{{getContextPath()}}/img/titulado.png" alt="registro" ng-if="model.tipoUsuario === 'TITULADO'">
+            <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
+            <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
         </div>
         <div class="col-md-3" >
             <h3 style="color:#525552">Registro</h3>
@@ -103,13 +105,15 @@
     </div>  
 
     <div class="row" ng-if="state.step === 2">
-        <div class="col-md-3 col-md-offset-2" >
+        <div class="col-md-3 col-md-offset-2" style="text-align:right">
             <br>
-            <img ng-src="{{getContextPath()}}/img/registro.png" alt="registro">
+            <img ng-src="{{getContextPath()}}/img/titulado.png" alt="registro" ng-if="model.tipoUsuario === 'TITULADO'">
+            <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
+            <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
         </div>
         <div class="col-md-3" >
             <h3 style="color:#525552">Felicidades</h3>
-            <p style="color:#9C9A9C">Ya ha sido creada tu nueva cuenta de FPempresa. Ahora ya puedes pulsar en "Inicia sesi&oacute;n" para comenzar a usar FPempresa</p>
+            <p style="color:#9C9A9C">Ya ha sido creada tu nueva cuenta de FPempresa. Ahora ya puedes pulsar en "Inicia sesi&oacute;n" para obtener todas las ventajas que ofrece FPempresa</p>
         </div>
         <div class="col-md-4">
             <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">

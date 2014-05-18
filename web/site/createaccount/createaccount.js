@@ -14,13 +14,16 @@ app.controller('CreateAccountController', ['$scope','$routeParams','$location','
         $scope.businessMessages=null;
         
         if ($routeParams.tipoUsuario) {
-            $scope.model.tipoUsuario=$routeParams.tipoUsuario;
+            
             if ($routeParams.fin) {
                 $scope.state.step=2;
+                $scope.model.tipoUsuario=$routeParams.tipoUsuario;
             } else {
                 $scope.state.step=1;
                 usuarioDAO.create(function(usuario) {
                     angular.extend($scope.model, usuario);
+                    //Hay que hacerlo despues el extends pq sino se sobreescribe el valor que ponemos aqui
+                    $scope.model.tipoUsuario=$routeParams.tipoUsuario;
                 },function() {
                     alert("Fallo al crear los datos");
                 })

@@ -48,14 +48,18 @@
             <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
         </div>
         <div class="col-md-3" >
-            <h3 style="color:#525552">Registro</h3>
+            <h3 style="color:#525552" ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</h3>
+            <h3 style="color:#525552" ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</h3>
+            <h3 style="color:#525552" ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro</h3>
             <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
             <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
             <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
         </div>
         <div class="col-md-5">
             <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
-                <h3>Crea tu cuenta</h3>
+                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de Titulado</h3>
+                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de Empresa</h3>
+                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de Centro</h3>
                 
                 <ix3-business-messages></ix3-business-messages>
                 
@@ -117,7 +121,9 @@
         </div>
         <div class="col-md-5">
             <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
-                <h3>Tu cuenta de FPempresa ya est&aacute; creada</h3>
+                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de FPempresa como <strong>Titulado</strong> ya est&aacute; creada</h3>
+                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de FPempresa como <strong>Empresa</strong> ya est&aacute; creada</h3>
+                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de FPempresa como <strong>Centro</strong> ya est&aacute; creada</h3>
                 <form>
 
 

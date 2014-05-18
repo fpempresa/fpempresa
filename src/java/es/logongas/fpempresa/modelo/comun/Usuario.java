@@ -57,6 +57,7 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
     
     
     public Usuario() {
+        this.tipoUsuario=TipoUsuario.TITULADO;
     }
 
     @Override

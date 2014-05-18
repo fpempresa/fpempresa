@@ -16,18 +16,23 @@ app.controller('CreateAccountController', ['$scope','$routeParams','$location','
         if ($routeParams.tipoUsuario) {
             $scope.model.tipoUsuario=$routeParams.tipoUsuario;
             if ($routeParams.fin) {
+                $scope.state.step=2;
+            } else {
+                $scope.state.step=1;
                 usuarioDAO.create(function(usuario) {
                     angular.extend($scope.model, usuario);
                 },function() {
                     alert("Fallo al crear los datos");
                 })
-                $scope.state.step=2;
-            } else {
-                $scope.state.step=1;
             }
         } else {
             $scope.state.step=0;
             $scope.model.tipoUsuario=null;
+            usuarioDAO.create(function(usuario) {
+                $scope.model.tipoUsuario=usuario.tipoUsuario;
+            },function() {
+                alert("Fallo al crear los datos");
+            })            
         }
         $scope.next=function() {
             switch ($scope.state.step) {

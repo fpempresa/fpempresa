@@ -24,7 +24,7 @@ angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'daoF
             }
         }
         function goHomeApp() {
-            $window.location.href = getContextPath();
+            $window.location.href = getContextPath()+"/site/index.html#/";
         }        
         
 

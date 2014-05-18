@@ -6,7 +6,13 @@ app.config(['$routeProvider', function($routeProvider) {
     }]);
 
 
-app.controller('MainController', ['$scope', function($scope) {
+app.controller('MainController', ['$scope','goPage', function($scope,goPage) {
+        $scope.createAccount=function(tipoUsuario) {
+            goPage.createAccount(tipoUsuario);
+        };
         
+        $scope.login=function() {
+            goPage.login();
+        };
 }]);
 

@@ -16,7 +16,7 @@
                             <div class='jumbotron'>
                                 <h1>Titulado</h1>
                                 <p class="lead" style="white-space:nowrap">La mayor bolsa de trabajo espec&iacute;fica <br>para los titulados de la FP <br>donde encontrar tu primer puesto de trabajo</p>
-                                <p><a class="btn btn-lg btn-titulado" href="#" role="button">Crea una cuenta</a>&nbsp;&nbsp;<a class="btn btn-lg btn-empresa" href="#" role="button">Ver ofertas de trabajo</a></p>
+                                <p><a class="btn btn-lg btn-titulado" href="" role="button" ng-click="createAccount('TITULADO')">Crea una cuenta</a>&nbsp;&nbsp;<a class="btn btn-lg btn-empresa" href="" role="button"  ng-click="login()" >Ver ofertas de trabajo</a></p>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                             <div class='jumbotron'>
                                 <h1>Empresa</h1>
                                 <p class="lead">Encuentra los mejores titulados <br>de la formaci&oacute;n profesional espec&iacute;fica y<br>verificados por sus propios centros.</p>
-                                <p><a class="btn btn-lg btn-empresa" href="#" role="button">Crea una cuenta</a>&nbsp;&nbsp;<a class="btn btn-lg btn-titulado" href="#" role="button">Busca candidatos</a></p>
+                                <p><a class="btn btn-lg btn-empresa" href="" role="button" ng-click="createAccount('EMPRESA')" >Crea una cuenta</a>&nbsp;&nbsp;<a class="btn btn-lg btn-titulado" href="" role="button"  ng-click="login()" >Busca candidatos</a></p>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                             <div class='jumbotron'>
                                 <h1>Centro de FP</h1>
                                 <p class="lead">La bolsa de trabajo privada para <br>tu centro, donde poder gestionar<br>tus titulados y tus ofertas de trabajo.</p>
-                                <p><a class="btn btn-lg btn-centro" href="#" role="button">Crea una cuenta</a>&nbsp;&nbsp;<a class="btn btn-lg btn-titulado" href="#" role="button">Ver tus titulados</a></p>
+                                <p><a class="btn btn-lg btn-centro" href="" role="button" ng-click="createAccount('CENTRO')">Crea una cuenta</a>&nbsp;&nbsp;<a class="btn btn-lg btn-titulado" href="" role="button"  ng-click="login()" >Ver tus titulados</a></p>
                             </div>
                         </div>
                     </div>
@@ -65,19 +65,19 @@
                 <img src="{{getContextPath()}}/img/titulado.png" alt="titulado">
                 <h2>Titulados</h2>
                 <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-                <p><a class="btn btn-lg btn-titulado" href="#" >Mi curriculum</a></p>
+                <p><a class="btn btn-lg btn-titulado" href="" ng-click="login()" >Mi curriculum</a></p>
             </div>
             <div class="col-md-4">
                 <img src="{{getContextPath()}}/img/empresa.png" alt="titulado">
                 <h2>Empresas</h2>
                 <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-                <p><a class="btn btn-lg btn-empresa" href="#" >Mis ofertas</a></p>
+                <p><a class="btn btn-lg btn-empresa" href="" ng-click="login()" >Mis ofertas</a></p>
             </div>
             <div class="col-md-4">
                 <img src="{{getContextPath()}}/img/centro.png" alt="centro">
                 <h2>Centros</h2>
                 <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-lg btn-centro" href="#" >Mi bolsa de trabajo</a></p>
+                <p><a class="btn btn-lg btn-centro" href=""  ng-click="login()"  >Mi bolsa de trabajo</a></p>
             </div>
         </div>
     </div>

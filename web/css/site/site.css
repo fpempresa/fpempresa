@@ -17,3 +17,17 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+.ayuda h1 {
+  color: #525552;
+}
+.ayuda p {
+  color: #9c9a9c;
+}
+.soft-formulario > div {
+  border: 1px solid #E7E7E7;
+  background: #F7F7F7;
+  padding: 15px;
+}
+.soft-formulario h3 {
+  color: #525552;
+}

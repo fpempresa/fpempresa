@@ -5,34 +5,35 @@
             <br>
             <img ng-src="{{getContextPath()}}/img/titulado-empresa-centro.png" alt="registro">
         </div>
-        <div class="col-md-3" >
-            <h3 style="color:#525552">Tipo de usuario</h3>
-            <p style="color:#9C9A9C">Debes elegir el tipo de usuario que eres. Segun tu elecci&oacute;n podr&aacute;s acceder a unos servicio u otros de FPempresa</p>
+        <div class="col-md-3 ayuda" >
+            <h3>Tipo de usuario</h3>
+            <p>Debes elegir el tipo de usuario que eres. Segun tu elecci&oacute;n podr&aacute;s acceder a unos servicio u otros de FPempresa</p>
         </div> 
-        <div class="col-md-5">
-            <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
+        <div class="col-md-5 soft-formulario">
+            <div>
                 <h3>&iquest;Quien eres?</h3>
                 <div class="radio">
                     <label>
                         <input ng-model="model.tipoUsuario" type="radio" name="opciones"  value="TITULADO">
-                        Un titulado de formacion profesional que busca empleo
+                        Un <strong>titulado</strong> de formacion profesional que busca empleo
                     </label>
                 </div>
                 <br>
                 <div class="radio">
                     <label>
                         <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="EMPRESA">
-                        Una empresa que busca profesionales
+                        Una <strong>empresa</strong> que busca profesionales
                     </label>
                 </div>
                 <br>
                 <div class="radio">
                     <label>
                         <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="CENTRO">
-                        Un centro educativo que quiere tener su bolsa de trabajo
+                        Un <strong>centro educativo</strong> que quiere tener su bolsa de trabajo
                     </label>
                 </div>                       
-                <div style="margin-top:20px" class="form-group">
+                <div class="form-group">
+                    <br>
                     <button type="button" class="btn btn-standard" ng-click="next()" >Siguiente</button>
                 </div>
 
@@ -47,22 +48,22 @@
             <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
             <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
         </div>
-        <div class="col-md-3" >
-            <h3 style="color:#525552" ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</h3>
-            <h3 style="color:#525552" ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</h3>
-            <h3 style="color:#525552" ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro</h3>
-            <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
-            <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
-            <p style="color:#9C9A9C" ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
+        <div class="col-md-3 ayuda" >
+            <h3 ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</h3>
+            <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</h3>
+            <h3 ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro</h3>
+            <p ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
+            <p ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
+            <p ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
         </div>
-        <div class="col-md-5">
-            <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
-                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de Titulado</h3>
-                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de Empresa</h3>
-                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de Centro</h3>
-                
+        <div class="col-md-5 soft-formulario">
+            <div>
+                <h3 ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de Titulado</h3>
+                <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de Empresa</h3>
+                <h3 ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de Centro</h3>
+
                 <ix3-business-messages></ix3-business-messages>
-                
+
                 <form>
                     <div class="form-group">
                         <label>Nombre</label>
@@ -97,7 +98,8 @@
                         </div>
                     </div>                        
 
-                    <div style="margin-top:20px" class="form-group">
+                    <div class="form-group">
+                        <br>                        
                         <button type="button" class="btn btn-standard" ng-click="next()" >Registrarse</button>
                     </div>
 
@@ -115,23 +117,20 @@
             <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
             <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
         </div>
-        <div class="col-md-3" >
-            <h3 style="color:#525552">Felicidades</h3>
-            <p style="color:#9C9A9C">Ya ha sido creada tu nueva cuenta de FPempresa. Ahora ya puedes pulsar en "Inicia sesi&oacute;n" para obtener todas las ventajas que ofrece FPempresa</p>
+        <div class="col-md-3 ayuda" >
+            <h3 >Felicidades</h3>
+            <p >Ya ha sido creada tu nueva cuenta de FPempresa. Ahora ya puedes pulsar en "Inicia sesi&oacute;n" para acceder a todas las ventajas que ofrece FPempresa</p>
         </div>
-        <div class="col-md-5">
-            <div style="border: 1px solid #E7E7E7;background: #F7F7F7; padding: 15px ">
-                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de FPempresa como <strong>Titulado</strong> ya est&aacute; creada</h3>
-                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de FPempresa como <strong>Empresa</strong> ya est&aacute; creada</h3>
-                <h3 style="color:#525552" ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de FPempresa como <strong>Centro</strong> ya est&aacute; creada</h3>
+        <div class="col-md-5 soft-formulario">
+            <div>
+                <h3 ng-if="model.tipoUsuario === 'TITULADO'">Tu cuenta de FPempresa como <strong>Titulado</strong> ya est&aacute; creada</h3>
+                <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Tu cuenta de FPempresa como <strong>Empresa</strong> ya est&aacute; creada</h3>
+                <h3 ng-if="model.tipoUsuario === 'CENTRO'">Tu cuenta de FPempresa como <strong>Centro</strong> ya est&aacute; creada</h3>
                 <form>
-
-
-                    <div style="margin-top:20px" class="form-group">
+                    <div class="form-group">
+                        <br>                       
                         <button type="button" class="btn btn-standard" ng-click="login()" >Inicia sesi&oacute;n</button>
                     </div>
-
-
                 </form>
             </div>
         </div>

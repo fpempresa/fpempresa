@@ -191,7 +191,6 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
         Usuario usuario=(Usuario)ple.getEntity();
         //Nunca se retorna el Hash de la contraseña
         usuario.setPassword(null);
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
     }    
 

@@ -91,7 +91,27 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
                 return label;
             }
 
-            this.validateForm = function(angularForm) {
+            /**
+             * Genera la propiedad Label de una lista de mensajes
+             * @param {BusinessMessages} businessMessages La lista ala que se añade la propiedad Label
+             * @param {Formelement} formElement El formulario que contiene los elementos para poder obtener de él, los labels
+             * @returns {BusinessMessages} La lista de entrada pero con la propieda label
+             */
+            function generateLabels(businessMessages, formElement) {
+                if (angular.isArray(businessMessages)) {
+                    for (var i in businessMessages) {
+                        var businessMessage = businessMessages[i];
+                        if (!businessMessage.label) {
+                            var propertyName = businessMessage.propertyName;
+                            var inputElement = $("[name='" + propertyName + "']", formElement);
+                            var label = getLabel(inputElement, propertyName);
+                            businessMessage.label = label;
+                        }
+                    }
+                }
+            }
+
+            this.validateForm = function(angularForm, customValidations) {
                 var businessMessages = [];
 
                 var formElement = $("form[name='" + angularForm.$name + "']");
@@ -104,7 +124,6 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
                                     var inputElement = $("[name='" + propertyName + "']", formElement);
                                     businessMessages.push({
                                         propertyName: propertyName,
-                                        label: getLabel(inputElement, propertyName),
                                         message: getMessage(inputElement, errorType)
                                     });
                                 }
@@ -113,6 +132,29 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
                         }
                     }
                 }
+
+                //Ejecutamos las validaciones personalizadas pero solo si no hay mensajes "normales"
+                //Esto se hace pq normalmente las validaciones personalizadas necesitan de los campos requeridos
+                if (businessMessages.length === 0) {
+                    if (angular.isArray(customValidations) === true) {
+                        for (var i in customValidations) {
+                            var customValidationFunction = customValidations[i];
+                            var newBusinessMessage = customValidationFunction();
+
+                            if (angular.isObject(newBusinessMessage)) {
+                                businessMessages.push(newBusinessMessage);
+                            }
+                        }
+                    } else if (angular.isFunction(customValidations) === true) {
+                        var newBusinessMessage = customValidations();
+
+                        if (angular.isObject(newBusinessMessage)) {
+                            businessMessages.push(newBusinessMessage);
+                        }
+                    }
+                }
+
+                generateLabels(businessMessages, formElement);
 
                 return businessMessages;
             };

@@ -1,0 +1,43 @@
+<div class="container fpempresa-container" style="padding-top:20px;padding-bottom:20px;">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1" style="text-align:right">
+            <br>
+            <img ng-src="{{getContextPath()}}/img/titulado-empresa-centro.png" alt="registro">
+        </div>
+        <div class="col-md-3 ayuda" >
+            <h3>Tipo de usuario</h3>
+            <p>Debes elegir el tipo de usuario que eres. Segun tu elecci&oacute;n podr&aacute;s acceder a unos servicio u otros de FPempresa</p>
+        </div> 
+        <div class="col-md-5 soft-formulario">
+            <div>
+                <h3>&iquest;Quien eres?</h3>
+                <div class="radio">
+                    <label>
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones"  value="TITULADO">
+                        Un <strong>titulado</strong> de formacion profesional que busca empleo
+                    </label>
+                </div>
+                <br>
+                <div class="radio">
+                    <label>
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="EMPRESA">
+                        Una <strong>empresa</strong> que busca profesionales
+                    </label>
+                </div>
+                <br>
+                <div class="radio">
+                    <label>
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="CENTRO">
+                        Un <strong>centro educativo</strong> que quiere tener su bolsa de trabajo
+                    </label>
+                </div>                       
+                <div class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-standard" ng-click="next()" >Siguiente</button>
+                </div>
+
+            </div>
+        </div> 
+    </div>
+</div>
+

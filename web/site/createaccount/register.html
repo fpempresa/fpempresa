@@ -1,0 +1,69 @@
+<div class="container fpempresa-container" style="padding-top:20px;padding-bottom:20px;">
+    <div class="row" >
+
+        <div class="col-md-3 col-md-offset-1" style="text-align:right">
+            <br>
+            <img ng-src="{{getContextPath()}}/img/titulado.png" alt="registro" ng-if="model.tipoUsuario === 'TITULADO'">
+            <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
+            <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
+        </div>
+        <div class="col-md-3 ayuda" >
+            <h3 ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</h3>
+            <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</h3>
+            <h3 ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro Educativo</h3>
+            <p ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
+            <p ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
+            <p ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
+        </div>
+        <div class="col-md-5 soft-formulario">
+            <div>
+                <h3 ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de Titulado</h3>
+                <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de Empresa</h3>
+                <h3 ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de Centro Educativo</h3>
+
+                <ix3-business-messages></ix3-business-messages>
+
+                <form name="mainForm" id="mainForm">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input ng-model="model.nombre" id="nombre" name="nombre" type="text" class="form-control"  placeholder="nombre" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ape1">1&ordm; Apellido</label>
+                        <input ng-model="model.ape1"  id="ape1" name="ape1" type="text" class="form-control"placeholder="1&ordm; apellido" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ape2">2&ordm; Apellido</label>
+                        <input ng-model="model.ape2" type="text" id="ape2" name="ape2" class="form-control" placeholder="2&ordm; apellido"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="eMail">Correo electrónico</label>
+                        <input ng-model="model.eMail" type="email" id="eMail" name="eMail" class="form-control"  placeholder="tu@correoelectronico.es" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contrase&ntilde;a</label>
+                        <input ng-model="model.password" type="password" id="password" name="password" class="form-control"  placeholder="contrase&ntilde;a" ng-required="true" />
+                    </div>
+                    <div class="form-group">
+                        <label for="repeatPassword">Repetir contrase&ntilde;a</label>
+                        <input ng-model="model.repeatPassword" type="password" id="repeatPassword" name="repeatPassword" class="form-control"  placeholder="repetir contrase&ntilde;a" required />
+                    </div>
+
+                    <div class="input-group">
+                        <div class="checkbox">
+                            <label for="aceptarCondicionesPolitica">
+                                <input ng-model="model.aceptarCondicionesPolitica" type="checkbox" id="aceptarCondicionesPolitica" name="aceptarCondicionesPolitica"  > Acepto las <a href="#">condiciones del servicio</a> y la <a href="#">politica de privacidad</a> de FPempresa
+                            </label>
+                        </div>
+                    </div>                        
+                </form> 
+
+                <br>                        
+                <button type="button" class="btn btn-standard" ng-click="registrarse()" >Registrarse</button>
+            </div>
+
+        </div>
+
+    </div>  
+</div>
+

@@ -1,0 +1,30 @@
+<div class="container fpempresa-container" style="padding-top:20px;padding-bottom:20px;">
+    <div class="row" >
+        <div class="col-md-3 col-md-offset-1" style="text-align:right">
+            <br>
+            <img ng-src="{{getContextPath()}}/img/titulado.png" alt="registro" ng-if="model.tipoUsuario === 'TITULADO'">
+            <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
+            <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
+        </div>
+        <div class="col-md-3 ayuda" >
+            <h3 >Felicidades</h3>
+            <p >Ya ha sido creada tu nueva cuenta de FPempresa. Ahora ya puedes pulsar en "Inicia sesi&oacute;n" para acceder a todas las ventajas que ofrece FPempresa</p>
+        </div>
+        <div class="col-md-5 soft-formulario">
+            <div>
+                <h3 ng-if="model.tipoUsuario === 'TITULADO'">Tu cuenta de FPempresa como <strong>Titulado</strong> ya est&aacute; creada</h3>
+                <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Tu cuenta de FPempresa como <strong>Empresa</strong> ya est&aacute; creada</h3>
+                <h3 ng-if="model.tipoUsuario === 'CENTRO'">Tu cuenta de FPempresa como <strong>Centro Educativo</strong> ya est&aacute; creada</h3>
+                <form>
+                    <div class="form-group">
+                        <br>                       
+                        <button type="button" class="btn btn-standard" ng-click="login()" >Inicia sesi&oacute;n</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>     
+
+</div>
+

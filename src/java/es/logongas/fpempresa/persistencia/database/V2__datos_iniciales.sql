@@ -8,5 +8,3 @@ INSERT INTO `centro` (`descripcion`,`fpempresa`) VALUES ('CIPFP Mislata',1);
 INSERT INTO `familia` (`descripcion`) VALUES ('Informática');
 INSERT INTO `ciclo` (`descripcion`, `idFamilia`) VALUES ('DAW', 1);
 INSERT INTO `ciclo` (`descripcion`, `idFamilia`) VALUES ('ASIR', 1);
-INSERT INTO `usuario` (`eMail`, `nombre`, `ape1`, `ape2`) VALUES ('pruebas@fpempresa.net', 'Juan', 'Pérez', 'García');
-INSERT INTO `titulado` (`idUsuario`) VALUES (1);

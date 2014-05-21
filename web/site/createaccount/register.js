@@ -34,12 +34,12 @@ app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$l
 
 
         function validateEqualPasswords() {
-            if ($scope.model.password === $scope.model.repeatPassword) {
+            if ($scope.model.password === $scope.model.confirmPassword) {
                 return null;
             } else {
                 return {
-                    propertyName:"repeatPassword",
-                    message: 'No coincide con la contraseña'
+                    propertyName:"confirmPassword",
+                    message: 'No es igual a la contraseña'
                 };
             }
         }

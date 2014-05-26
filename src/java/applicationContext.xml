@@ -13,11 +13,11 @@
     <!-- <context:component-scan base-package="es.fpmislata.examen.datos"/> -->
 
     <bean class="es.logongas.ix3.persistence.impl.hibernate.dao.DAOFactoryImplHibernate" >
-        <property name="domainBasePackageName"  value="es.logongas.fpempresa.modelo" />
-        <property name="daoBasePackageName"     value="es.logongas.fpempresa.persistencia.services.dao" />
-        <property name="daoImplBasePackageName" value="es.logongas.fpempresa.persistencia.impl.dao" />
+        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.persistencia.services.dao" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.persistencia.impl.dao" />
     </bean>
-    
+
     <bean id="authenticationManager" class="es.logongas.ix3.security.impl.authentication.AuthenticationManagerImpl"  >
         <property name="authenticationProviders">
             <list>

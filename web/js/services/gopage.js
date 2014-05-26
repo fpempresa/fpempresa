@@ -11,7 +11,7 @@ angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'daoF
                     if (titulado) {
                         $window.location.href = getContextPath() + "/titulado/index.html#/";
                     } else {
-                        $window.location.href = getContextPath() + "/titulado/index.html#/titulado/new/usuario.idIdentity/" + usuario.idIdentity;
+                        $window.location.href = getContextPath() + "/titulado/index.html#/titulado/edit/" + usuario.idIdentity;
                     }
 
                 })

@@ -1,44 +1,31 @@
-<div class="panel panel-titulado">
-    <div class="panel-heading">
-        <h3 class="panel-title">Experiencia Laboral</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12" >
-                <ix3-business-messages></ix3-business-messages>
-            </div>  
+<div class="row">
+    <div class="col-sm-12 formulario-neutro" >
+        <div >
+            <h3>Experiencia Laboral</h3>
+            <hr>
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                       
+                    <tr>
+                        <th style="width:      60%;text-align: center">Empresa</th>
+                        <th style="width:      30%;text-align: center">Puesto</th>
+                        <th style="min-width:150px;text-align: center">Fechas</th>
+                        <th style="min-width:120px;text-align: center" >Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="experienciaLaboral in models">
+                        <td >{{experienciaLaboral.nombreEmpresa}}</td>
+                        <td >{{experienciaLaboral.puestoTrabajo}}</td>
+                        <td >{{experienciaLaboral.fechaInicio| date:'shortDate'}} - {{experienciaLaboral.fechaFin| date:'shortDate'}}</td>
+                        <td >
+                            <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)">Borrar</button>
+                            <button class="btn btn-standard btn-xs" type="button" ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">Editar</button>
+                        </td>                            
+                    </tr>
+                </tbody>
+            </table>                
+            <button  class="btn btn-standard"   ng-click="buttonNew()" >Nueva Experiencia Laboral</button>
         </div>
-        <div class="row">
-            <div class="col-sm-12" >
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead>                     
-                        <tr>
-                            <th style="width:      60%;text-align: center">Empresa</th>
-                            <th style="width:      30%;text-align: center">Puesto</th>
-                            <th style="min-width:150px;text-align: center">Fechas</th>
-                            <th style="min-width:120px;text-align: center" >Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="experienciaLaboral in models">
-                            <td >{{experienciaLaboral.nombreEmpresa}}</td>
-                            <td >{{experienciaLaboral.puestoTrabajo}}</td>
-                            <td >{{experienciaLaboral.fechaInicio | date:'shortDate'}} - {{experienciaLaboral.fechaFin | date:'shortDate'}}</td>
-                            <td >
-                                <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)">Borrar</button>
-                                <button class="btn btn-success btn-xs" type="button" ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">Editar</button>
-                            </td>                            
-                        </tr>
-                    </tbody>
-                </table>                
-              
-            </div>
-        </div>
-        <div class="row"> 
-            <div class="col-sm-12">
-                <button  class="btn btn-titulado"   ng-click="buttonNew()" >Nueva Experiencia Laboral</button>
-            </div>
-        </div> 
-
     </div>
 </div>

@@ -36,13 +36,23 @@
   color: #e6e6e6;
   text-decoration: underline;
 }
+.formulario-neutro > div {
+  border: 1px solid #d1d1d1;
+  background: #f7f7f7;
+  padding: 15px;
+}
+.formulario-neutro table {
+  background: #FFFFFF;
+}
 .panel-menu-titulado {
   border-color: #429f42;
+  border-radius: 0px;
 }
 .panel-menu-titulado > .panel-heading {
   color: #ffffff;
   background-color: #5aba5a;
   border-color: #429f42;
+  border-radius: 0px;
 }
 .panel-menu-titulado > .panel-heading + .panel-collapse .panel-body {
   border-top-color: #429f42;
@@ -71,13 +81,18 @@
 .panel-menu-titulado .badge {
   margin-left: 5px;
 }
+.panel-menu-titulado a {
+  color: #5aba5a;
+}
 .panel-menu-empresa {
   border-color: #4f617d;
+  border-radius: 0px;
 }
 .panel-menu-empresa > .panel-heading {
   color: #ffffff;
   background-color: #63799c;
   border-color: #4f617d;
+  border-radius: 0px;
 }
 .panel-menu-empresa > .panel-heading + .panel-collapse .panel-body {
   border-top-color: #4f617d;
@@ -106,13 +121,18 @@
 .panel-menu-empresa .badge {
   margin-left: 5px;
 }
+.panel-menu-empresa a {
+  color: #63799c;
+}
 .panel-menu-centro {
   border-color: #f59819;
+  border-radius: 0px;
 }
 .panel-menu-centro > .panel-heading {
   color: #ffffff;
   background-color: #f7ae4a;
   border-color: #f59819;
+  border-radius: 0px;
 }
 .panel-menu-centro > .panel-heading + .panel-collapse .panel-body {
   border-top-color: #f59819;
@@ -141,13 +161,18 @@
 .panel-menu-centro .badge {
   margin-left: 5px;
 }
+.panel-menu-centro a {
+  color: #f7ae4a;
+}
 .panel-menu-neutro {
   border-color: #dedede;
+  border-radius: 0px;
 }
 .panel-menu-neutro > .panel-heading {
   color: #000000;
   background-color: #f7f7f7;
   border-color: #dedede;
+  border-radius: 0px;
 }
 .panel-menu-neutro > .panel-heading + .panel-collapse .panel-body {
   border-top-color: #dedede;
@@ -176,22 +201,27 @@
 .panel-menu-neutro .badge {
   margin-left: 5px;
 }
+.panel-menu-neutro a {
+  color: #f7f7f7;
+}
 .panel-menu-standard {
-  border-color: #2d70b0;
+  border-color: #286ca1;
+  border-radius: 0px;
 }
 .panel-menu-standard > .panel-heading {
   color: #ffffff;
-  background-color: #428ace;
-  border-color: #2d70b0;
+  background-color: #3288ca;
+  border-color: #286ca1;
+  border-radius: 0px;
 }
 .panel-menu-standard > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #2d70b0;
+  border-top-color: #286ca1;
 }
 .panel-menu-standard > .panel-heading > .dropdown .caret {
   border-color: #ffffff transparent;
 }
 .panel-menu-standard > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #2d70b0;
+  border-bottom-color: #286ca1;
 }
 .panel-menu-standard .panel-body .table tr td {
   padding-left: 15px;
@@ -210,6 +240,9 @@
 }
 .panel-menu-standard .badge {
   margin-left: 5px;
+}
+.panel-menu-standard a {
+  color: #3288ca;
 }
 .btn-titulado {
   color: #ffffff;
@@ -377,8 +410,8 @@ fieldset[disabled] .btn-neutro.active {
 }
 .btn-standard {
   color: #ffffff;
-  background-color: #428ace;
-  border-color: #337dc4;
+  background-color: #3288ca;
+  border-color: #2d7ab6;
 }
 .btn-standard:hover,
 .btn-standard:focus,
@@ -386,8 +419,8 @@ fieldset[disabled] .btn-neutro.active {
 .btn-standard.active,
 .open .dropdown-toggle.btn-standard {
   color: #ffffff;
-  background-color: #3076b8;
-  border-color: #265e93;
+  background-color: #2a72a9;
+  border-color: #215985;
 }
 .btn-standard:active,
 .btn-standard.active,
@@ -409,82 +442,107 @@ fieldset[disabled] .btn-standard:active,
 .btn-standard.disabled.active,
 .btn-standard[disabled].active,
 fieldset[disabled] .btn-standard.active {
-  background-color: #428ace;
-  border-color: #337dc4;
+  background-color: #3288ca;
+  border-color: #2d7ab6;
 }
 .btn-standard .badge {
-  color: #428ace;
+  color: #3288ca;
   background-color: #ffffff;
 }
 .panel-titulado {
-  border-color: #5bb14a;
+  border-color: #429f42;
+  border-radius: 0px;
 }
 .panel-titulado > .panel-heading {
   color: #ffffff;
   background-color: #6cc26c;
-  border-color: #5bb14a;
+  border-color: #429f42;
+  border-radius: 0px;
 }
 .panel-titulado > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #5bb14a;
+  border-top-color: #429f42;
 }
 .panel-titulado > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #5bb14a;
+  border-bottom-color: #429f42;
+}
+.panel-titulado h3 {
+  color: #ffffff;
 }
 .panel-empresa {
-  border-color: #59758c;
+  border-color: #4f617d;
+  border-radius: 0px;
 }
 .panel-empresa > .panel-heading {
   color: #ffffff;
   background-color: #7386a6;
-  border-color: #59758c;
+  border-color: #4f617d;
+  border-radius: 0px;
 }
 .panel-empresa > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #59758c;
+  border-top-color: #4f617d;
 }
 .panel-empresa > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #59758c;
+  border-bottom-color: #4f617d;
+}
+.panel-empresa h3 {
+  color: #ffffff;
 }
 .panel-centro {
-  border-color: #f68232;
+  border-color: #f59819;
+  border-radius: 0px;
 }
 .panel-centro > .panel-heading {
   color: #ffffff;
   background-color: #f8b962;
-  border-color: #f68232;
+  border-color: #f59819;
+  border-radius: 0px;
 }
 .panel-centro > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #f68232;
+  border-top-color: #f59819;
 }
 .panel-centro > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #f68232;
+  border-bottom-color: #f59819;
+}
+.panel-centro h3 {
+  color: #ffffff;
 }
 .panel-neutro {
-  border-color: #eaeaea;
+  border-color: #dedede;
+  border-radius: 0px;
 }
 .panel-neutro > .panel-heading {
   color: #000000;
   background-color: #ffffff;
-  border-color: #eaeaea;
+  border-color: #dedede;
+  border-radius: 0px;
 }
 .panel-neutro > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #eaeaea;
+  border-top-color: #dedede;
 }
 .panel-neutro > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #eaeaea;
+  border-bottom-color: #dedede;
+}
+.panel-neutro h3 {
+  color: #000000;
 }
 .panel-standard {
-  border-color: #3395c4;
+  border-color: #286ca1;
+  border-radius: 0px;
 }
 .panel-standard > .panel-heading {
   color: #ffffff;
-  background-color: #5697d3;
-  border-color: #3395c4;
+  background-color: #4594d1;
+  border-color: #286ca1;
+  border-radius: 0px;
 }
 .panel-standard > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #3395c4;
+  border-top-color: #286ca1;
 }
 .panel-standard > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #3395c4;
+  border-bottom-color: #286ca1;
+}
+.panel-standard h3 {
+  color: #ffffff;
 }
 a.default {
   color: #428bca;

@@ -1,44 +1,30 @@
-<div class="panel panel-titulado">
-    <div class="panel-heading">
-        <h3 class="panel-title">Formaci&oacute;n Academica</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12" >
-                <ix3-business-messages></ix3-business-messages>
-            </div>  
-        </div>
-        <div class="row">
-            <div class="col-sm-12" >
-                <form name="mainForm" class="form-horizontal" id="mainForm" >
-                    <fieldset>
-                        <legend>Datos</legend>
-                        <ix3-input model="tipoFormacionAcademica" ></ix3-input>
+<div class="row">
+    <div class="col-sm-12 formulario-neutro" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" class="form-horizontal" id="mainForm" >
+                <fieldset>
+                    <legend>Formaci&oacute;n Academica</legend>
+                    <ix3-input model="tipoFormacionAcademica" ></ix3-input>
 
-                        <div class="row">
-                            <div class="">
-                                <ix3-input ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" model="centro" ></ix3-input>
-                            </div>
-                            <div class="">
-                                <ix3-input ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO' || model.centro.idCentro === -1" model="otroCentro" ></ix3-input>                            
-                            </div>
+                    <div class="row">
+                        <div class="">
+                            <ix3-input ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" model="centro" ></ix3-input>
                         </div>
-                        <ix3-input ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO'" model="otroTitulo" ></ix3-input>
-                        <ix3-input ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" model="familia" ></ix3-input>
-                        <ix3-input ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" model="ciclo" ></ix3-input>
+                        <div class="">
+                            <ix3-input ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO' || model.centro.idCentro === -1" model="otroCentro" ></ix3-input>                            
+                        </div>
+                    </div>
+                    <ix3-input ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO'" model="otroTitulo" ></ix3-input>
+                    <ix3-input ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" model="familia" ></ix3-input>
+                    <ix3-input ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" model="ciclo" ></ix3-input>
 
 
-                    </fieldset>
-                </form>
+                </fieldset>
+            </form>
+            <button type="button" ng-class="{'btn-standard':controllerAction !== 'DELETE','btn-danger':controllerAction === 'DELETE'}" class="btn" ng-click="buttonOK()">{{labelButtonOK}}</button>
 
 
-            </div>
         </div>
-        <div class="row"> 
-            <div class="col-sm-9 col-sm-offset-3">
-                <button type="button" ng-class="{'btn-titulado':controllerAction !== 'DELETE','btn-danger':controllerAction === 'DELETE'}" class="btn" ng-click="buttonOK()">{{labelButtonOK}}</button>
-            </div>
-        </div>
-
     </div>
 </div>

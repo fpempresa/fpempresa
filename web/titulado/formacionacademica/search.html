@@ -1,43 +1,33 @@
-<div class="panel panel-titulado">
-    <div class="panel-heading">
-        <h3 class="panel-title">Formaci&oacute;n Academica</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12" >
-                <ix3-business-messages></ix3-business-messages>
-            </div>  
-        </div>
-        <div class="row">
-            <div class="col-sm-12" >
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead>                        
-                        <tr>
-                            <th style="min-width:140px;text-align: center">Nivel</th>
-                            <th style="width:      50%;text-align: center">Titulo</th>
-                            <th style="width:      35%;text-align: center">Centro</th>
-                            <th style="min-width:120px;text-align: center" >Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="formacionAcademica in models">
-                            <td >{{getTipoTitulo(formacionAcademica)}}</td>
-                            <td >{{getNombreTitulo(formacionAcademica)}}</td>
-                            <td >{{getNombreCentro(formacionAcademica)}}</td>
-                            <td >
-                                <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(formacionAcademica.idFormacionAcademica)">Borrar</button>
-                                <button class="btn btn-success btn-xs" type="button" ng-click="buttonEdit(formacionAcademica.idFormacionAcademica)">Editar</button>
-                            </td>                             
-                        </tr>
-                    </tbody>
-                </table>                  
-            </div>
-        </div>
-        <div class="row"> 
-            <div class="col-sm-12">
-                <button  class="btn btn-titulado"   ng-click="buttonNew()" >Nueva Formaci&oacute;n Academica</button>
-            </div>
-        </div> 
 
+<div class="row">
+    <div class="col-sm-12 formulario-neutro" >
+        <div>
+            <h3 >Formaci&oacute;n Academica</h3>
+            <hr>
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr>
+                        <th style="min-width:140px;text-align: center">Nivel</th>
+                        <th style="width:      50%;text-align: center">Titulo</th>
+                        <th style="width:      35%;text-align: center">Centro</th>
+                        <th style="min-width:120px;text-align: center" >Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="formacionAcademica in models">
+                        <td >{{getTipoTitulo(formacionAcademica)}}</td>
+                        <td >{{getNombreTitulo(formacionAcademica)}}</td>
+                        <td >{{getNombreCentro(formacionAcademica)}}</td>
+                        <td >
+                            <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(formacionAcademica.idFormacionAcademica)">Borrar</button>
+                            <button class="btn btn-standard btn-xs" type="button" ng-click="buttonEdit(formacionAcademica.idFormacionAcademica)">Editar</button>
+                        </td>                             
+                    </tr>
+                </tbody>
+            </table> 
+            <button  class="btn btn-standard"   ng-click="buttonNew()" >Nueva Formaci&oacute;n Academica</button>
+        </div>
     </div>
 </div>
+

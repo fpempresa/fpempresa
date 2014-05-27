@@ -1,30 +1,18 @@
-<div class="panel panel-titulado">
-    <div class="panel-heading">
-        <h3 class="panel-title">Idioma</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12" >
-                <ix3-business-messages></ix3-business-messages>
-            </div>  
-        </div>
-        <div class="row">
-            <div class="col-sm-12" >
-                <form name="mainForm" class="form-horizontal" id="mainForm" >
-                    <fieldset>
-                        <legend>Datos</legend>
-                        <ix3-input model="nivelIdioma" ></ix3-input>
-                        <ix3-input model="idioma" ></ix3-input>
-                        <ix3-input model="fecha" ></ix3-input>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-        <div class="row"> 
-            <div class="col-sm-9 col-sm-offset-3">
-                <button type="button" ng-class="{'btn-titulado':controllerAction!=='DELETE','btn-danger':controllerAction==='DELETE'}" class="btn" ng-click="buttonOK()">{{labelButtonOK}}</button>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-sm-12 formulario-neutro" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" class="form-horizontal" id="mainForm" >
+                <fieldset>
+                    <legend>Idioma</legend>
+                    <ix3-input model="nivelIdioma" ></ix3-input>
+                    <ix3-input model="idioma" ></ix3-input>
+                    <ix3-input model="fecha" ></ix3-input>
+                </fieldset>
+            </form>
+            <button type="button" ng-class="{'btn-standard':controllerAction !== 'DELETE','btn-danger':controllerAction === 'DELETE'}" class="btn" ng-click="buttonOK()">{{labelButtonOK}}</button>
 
+        </div>
     </div>
 </div>
+

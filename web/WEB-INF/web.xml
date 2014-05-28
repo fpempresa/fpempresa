@@ -18,6 +18,7 @@
         <param-value>
             classpath:ix3.xml
             classpath:ix3security.xml
+            classpath:ix3securityimpl.xml
             classpath:ix3web.xml
             classpath:applicationContext.xml
         </param-value>

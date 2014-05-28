@@ -26,7 +26,7 @@
         </property>
     </bean>
     
-    <bean id="authorizationManager" class="es.logongas.ix3.security.impl.authorization.AuthorizationManagerImplIdentity"  >
+    <bean id="authorizationManager" class="es.logongas.ix3.security.impl.authorization.AuthorizationManagerImpl"  >
         <property name="defaultAuthorization" value="true" />
     </bean>    
     

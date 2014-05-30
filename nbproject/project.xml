@@ -143,11 +143,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${reference.ix3.jar}</file>
+                    <file>${reference.ix3security.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${reference.ix3security.jar}</file>
+                    <file>${reference.ix3dao.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
@@ -181,7 +181,7 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>ix3</foreign-project>
+                <foreign-project>ix3core</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>
@@ -189,7 +189,7 @@
                 <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>ix3core</foreign-project>
+                <foreign-project>ix3dao</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>

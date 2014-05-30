@@ -20,7 +20,7 @@
 package es.logongas.fpempresa.persistencia.services.dao.comun;
 
 import es.logongas.fpempresa.modelo.comun.Usuario;
-import es.logongas.ix3.persistence.services.dao.GenericDAO;
+import es.logongas.ix3.dao.GenericDAO;
 
 
 /**

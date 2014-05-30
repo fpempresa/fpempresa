@@ -16,7 +16,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:ix3.xml
+            classpath:ix3core.xml
+            classpath:ix3dao.xml
             classpath:ix3security.xml
             classpath:ix3securityimpl.xml
             classpath:ix3web.xml

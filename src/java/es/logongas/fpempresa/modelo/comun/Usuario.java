@@ -17,7 +17,7 @@
 package es.logongas.fpempresa.modelo.comun;
 
 import es.logongas.ix3.model.User;
-import es.logongas.ix3.persistence.services.annotations.Caption;
+import es.logongas.ix3.core.annotations.Caption;
 import es.logongas.ix3.security.services.authentication.Principal;
 import javax.validation.constraints.NotNull;
 import org.hibernate.event.spi.PostLoadEvent;

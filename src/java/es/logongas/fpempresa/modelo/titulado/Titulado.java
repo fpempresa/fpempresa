@@ -19,7 +19,7 @@ package es.logongas.fpempresa.modelo.titulado;
 
 import es.logongas.fpempresa.modelo.comun.Direccion;
 import es.logongas.fpempresa.modelo.comun.Usuario;
-import es.logongas.ix3.persistence.services.annotations.Caption;
+import es.logongas.ix3.core.annotations.Caption;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;

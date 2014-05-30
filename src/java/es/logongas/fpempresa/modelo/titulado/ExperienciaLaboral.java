@@ -19,7 +19,7 @@
 
 package es.logongas.fpempresa.modelo.titulado;
 
-import es.logongas.ix3.persistence.services.annotations.Caption;
+import es.logongas.ix3.core.annotations.Caption;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -40,12 +40,12 @@ public class ExperienciaLaboral {
     private String nombreEmpresa;
     
     @Past
-    @es.logongas.ix3.persistence.services.annotations.Date
+    @es.logongas.ix3.core.annotations.Date
     @Caption("Fecha Inicio")
     private Date fechaInicio;
     
     @Past
-    @es.logongas.ix3.persistence.services.annotations.Date
+    @es.logongas.ix3.core.annotations.Date
     @Caption("Fecha final")
     private Date fechaFin;
     

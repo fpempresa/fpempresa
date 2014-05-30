@@ -19,7 +19,7 @@
 
 package es.logongas.fpempresa.modelo.comun;
 
-import es.logongas.ix3.persistence.services.annotations.ValuesList;
+import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 

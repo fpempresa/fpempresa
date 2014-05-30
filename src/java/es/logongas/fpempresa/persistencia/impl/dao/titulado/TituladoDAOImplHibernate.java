@@ -8,7 +8,7 @@ package es.logongas.fpempresa.persistencia.impl.dao.titulado;
 
 import es.logongas.fpempresa.modelo.comun.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
-import es.logongas.ix3.persistence.impl.hibernate.dao.GenericDAOImplHibernate;
+import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import es.logongas.ix3.security.services.authentication.Principal;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;

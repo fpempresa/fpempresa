@@ -8,8 +8,8 @@ package es.logongas.fpempresa.modelo.titulado;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Ciclo;
 import es.logongas.fpempresa.modelo.comun.Familia;
-import es.logongas.ix3.persistence.services.annotations.Caption;
-import es.logongas.ix3.persistence.services.annotations.ValuesList;
+import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 

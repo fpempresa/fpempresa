@@ -7,7 +7,7 @@
 package es.logongas.fpempresa.modelo.centro;
 
 import es.logongas.fpempresa.modelo.comun.Direccion;
-import es.logongas.ix3.persistence.services.annotations.Caption;
+import es.logongas.ix3.core.annotations.Caption;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;

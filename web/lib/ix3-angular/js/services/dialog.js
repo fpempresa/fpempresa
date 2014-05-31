@@ -3,7 +3,6 @@
  * Servicio para crear ventana modales
  */
 angular.module("es.logongas.ix3").service("dialog", ['$rootScope', '$compile', '$http', '$q', function($rootScope, $compile, $http, $q) {
-        var dialogCache = [];
 
         return {
             /**

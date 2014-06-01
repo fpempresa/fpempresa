@@ -14,8 +14,8 @@
 
     <bean class="es.logongas.ix3.dao.impl.DAOFactoryImplHibernate" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
-        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.persistencia.services.dao" />
-        <property name="implBasePackageName"       value="es.logongas.fpempresa.persistencia.impl.dao" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.dao" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.dao" />
     </bean>
 
     <bean id="authenticationManager" class="es.logongas.ix3.security.impl.authentication.AuthenticationManagerImpl"  >

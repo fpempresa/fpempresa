@@ -10,18 +10,18 @@
     <property name="hibernate.cache.use_second_level_cache">true</property>
     <property name="hibernate.cache.use_query_cache">true</property>
     <!-- Tablas del titulado -->
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/Titulado.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/TituloIdioma.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/ExperienciaLaboral.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/titulado/FormacionAcademica.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/titulado/impl/Titulado.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/titulado/impl/TituloIdioma.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/titulado/impl/ExperienciaLaboral.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/titulado/impl/FormacionAcademica.hbm.xml"/>
     <!-- Tablas sobre el centro -->
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/centro/Centro.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/centro/impl/Centro.hbm.xml"/>
     <!-- Tablas comunes -->
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Usuario.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Provincia.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Municipio.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Familia.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/persistencia/impl/dao/comun/Ciclo.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Usuario.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Provincia.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Municipio.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Familia.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Ciclo.hbm.xml"/>
     <!-- Definición de la seguridad -->
     <mapping resource="es/logongas/ix3/model/persistence/impl/dao/Identity.hbm.xml"/>
     <mapping resource="es/logongas/ix3/model/persistence/impl/dao/GroupMember.hbm.xml"/>

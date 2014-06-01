@@ -16,10 +16,10 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.logongas.fpempresa.persistencia.impl.dao.comun;
+package es.logongas.fpempresa.dao.comun.impl;
 
 import es.logongas.fpempresa.modelo.comun.Usuario;
-import es.logongas.fpempresa.persistencia.services.dao.comun.UsuarioDAO;
+import es.logongas.fpempresa.dao.comun.UsuarioDAO;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;

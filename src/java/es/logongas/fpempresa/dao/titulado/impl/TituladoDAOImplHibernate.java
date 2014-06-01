@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package es.logongas.fpempresa.persistencia.impl.dao.titulado;
+package es.logongas.fpempresa.dao.titulado.impl;
 
 import es.logongas.fpempresa.modelo.comun.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;

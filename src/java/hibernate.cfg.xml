@@ -23,11 +23,11 @@
     <mapping resource="es/logongas/fpempresa/dao/comun/impl/Familia.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/impl/Ciclo.hbm.xml"/>
     <!-- Definición de la seguridad -->
-    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/Identity.hbm.xml"/>
-    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/GroupMember.hbm.xml"/>
-    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/ACE.hbm.xml"/>
-    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/Permission.hbm.xml"/>
-    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/SecureResource.hbm.xml"/>
-    <mapping resource="es/logongas/ix3/model/persistence/impl/dao/SecureResourceType.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/security/dao/impl/Identity.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/security/dao/impl/GroupMember.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/security/dao/impl/ACE.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/security/dao/impl/Permission.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/security/dao/impl/SecureResource.hbm.xml"/>
+    <mapping resource="es/logongas/ix3/security/dao/impl/SecureResourceType.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

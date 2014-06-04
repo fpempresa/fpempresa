@@ -1,25 +1,50 @@
+/* line 3, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\000033}}
 .jumbotron {
   color: #FFFFFF;
   text-align: center;
   background-color: transparent;
 }
+/* line 9, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\000039}}
 .marketing {
-  padding: 0px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
+/* line 14, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000314}}
 .marketing .col-md-4 {
   text-align: center;
   margin-bottom: 20px;
 }
+/* line 18, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000318}}
 .marketing h2 {
   font-weight: normal;
 }
+/* line 22, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000322}}
+.marketing h1 {
+  padding-bottom: 20px;
+}
+/* line 26, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000326}}
 .marketing .col-md-4 p {
   margin-left: 10px;
   margin-right: 10px;
 }
+/* line 31, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000331}}
+.marketing p {
+  line-height: 150%;
+}
+/* line 36, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000336}}
 .ayuda h1 {
   color: #525552;
 }
+/* line 40, C:\Users\Lorenzo\Documents\Desarrollo\Java\fpempresa\web\less\site\site.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Lorenzo\/Documents\/Desarrollo\/Java\/fpempresa\/web\/less\/site\/site\.less}line{font-family:\0000340}}
 .ayuda p {
   color: #9c9a9c;
 }

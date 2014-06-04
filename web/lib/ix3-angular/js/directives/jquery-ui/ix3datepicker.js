@@ -15,9 +15,20 @@ angular.module("es.logongas.ix3.datepicker.jquery").directive('ix3Datepicker', [
                 element.datepicker({
                     dateFormat: format,
                     onSelect: function() {
-                        $(this).trigger('input');
+                        $(element).trigger('input');
                     }
                 });
+
+                var nextElement=element.next();
+                if ((nextElement) && (nextElement.length>0)) {
+                    nextElement.css({
+                        cursor: "pointer"
+                    })
+                    nextElement.on("click",function() {
+                        element.datepicker( "show" );
+                    });
+                }
+
             }
         };
     }]);

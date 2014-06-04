@@ -4,52 +4,57 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
+        <script type="text/javascript" src="../../lib/jquery/js/jquery.js"></script>
         <script type='text/javascript' src='../../lib/angularjs/js/angular.js'></script>
         <script type='text/javascript' >
             var app = angular.module('app', []);
             app.controller("PruebaController", ['$scope', function($scope) {
+
+
+                    $scope.datos = [
+                        {
+                            idProvincia: 2,
+                            nombre: "Valencia",
+                            key: {
+                                idProvincia: 2
+                            }
+                        },
+                        {
+                            idProvincia: 3,
+                            nombre: "Castellon",
+                            key: {
+                                idProvincia: 3
+                            }
+                        },
+                        {
+                            idProvincia: 1,
+                            nombre: "Alicante",
+                            key: {
+                                idProvincia: 1
+                            }
+                        }
+                    ];
+
+                    $scope.provincia = {
+                        idProvincia: 2,
+                        nombre: "Valencia",
+                        key: {
+                            idProvincia: 2
+                        }
+                    }
+
+                    $scope.b = true;
+                    $scope.pk = "idProvincia";
+                    $scope.pk2 = "id";
                 }]);
 
 
-            app.directive('temporal', [function() {
+            app.directive('ix3Options', ['$compile', function($compile) {
                     return {
                         restrict: 'A',
-                        scope: false,
-                        link: function($scope, element, attributes) {
-
-                            if (attributes.temporal === "A") {
-                                $scope.datos = [
-                                    {
-                                        idProvincia: 1,
-                                        nombre: "Valencia"
-                                    },
-                                    {
-                                        idProvincia: 2,
-                                        nombre: "Castellon"
-                                    },
-                                    {
-                                        idProvincia: 3,
-                                        nombre: "Alicante"
-                                    }
-                                ];
-                            } else if (attributes.temporal === "B") {
-                                $scope.datos = [
-                                    {
-                                        idProvincia: 1,
-                                        nombre: "Cuenca"
-                                    },
-                                    {
-                                        idProvincia: 2,
-                                        nombre: "Toledo"
-                                    },
-                                    {
-                                        idProvincia: 3,
-                                        nombre: "Albacete"
-                                    }
-                                ];
-                            } else {
-                                $scope.datos = [];
-                            }
+                        priority: 99999,
+                        compile: function($scope, element, attributes) {
+                            element.ngOptions = element.ix3Options;
                         }
                     };
                 }]);
@@ -58,11 +63,11 @@
         </script>
     </head>
     <body ng-controller="PruebaController">
-        <select ng-model="provincia"  temporal="B" ng-options="provincia as provincia.nombre for provincia in datos | orderBy:'idProvincia' | limitTo: 2">
+        <select ng-model="provincia" ix3-options="provincia as provincia.nombre for provincia in datos track by (b==true?provincia.key.idProvincia:provincia.key.id)" >
             <option value="">-- Elige Provincia --</option>
         </select>
+        {{provincia|json}}
         <br>
-        {{provincia|json }}
         <br>
     </body>
 </html>

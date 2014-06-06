@@ -18,8 +18,10 @@
 
 package es.logongas.fpempresa.dao.comun.impl;
 
-import es.logongas.fpempresa.modelo.comun.Usuario;
 import es.logongas.fpempresa.dao.comun.UsuarioDAO;
+import es.logongas.fpempresa.modelo.comun.Usuario;
+import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -58,13 +60,15 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
     };
 
     @Override
-    protected void preInsertBeforeTransaction(Session session, Usuario usuario) {
+    protected void preInsertBeforeTransaction(Session session, Usuario usuario) throws BusinessException  {
         //Encriptamos el password antes de guardarlo
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
+        
+       throw new BusinessException(new BusinessMessage(null,"El registro de usuarios no está habilitado"));
     }   
 
     @Override
-    protected void preUpdateBeforeTransaction(Session session, Usuario usuario) {
+    protected void preUpdateBeforeTransaction(Session session, Usuario usuario) throws BusinessException  {
         usuario.setPassword(getEncryptedPasswordFromUsuario(usuario));
     }
     
@@ -86,5 +90,5 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
         String encryptedPassword=passwordEncryptor.encryptPassword(plainPassword); 
         
         return encryptedPassword;
-    }    
+    }  
 }

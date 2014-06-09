@@ -2,22 +2,21 @@
 (function() {
     "use strict";
 
-    function CRUD(daoFactory, $window, validator, $location, $rootScope) {
+    function CRUD(remoteServiceFactory, $window, validator, $location, $rootScope) {
         this.extendsScopeSearchController = function(scope, controllerConfig) {
             scope.idName = undefined; //Por defecto es "id"+entity
             scope.models = {};
             scope.filter = {};
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.metadata = {};
-            scope.businessMessages=null;
-            
+            scope.businessMessages = null;
+
             scope.search = function() {
                 if (scope.parentProperty && scope.parentId) {
                     scope.filter[scope.parentProperty] = scope.parentId;
                 }
 
-
-                scope.dao.search(scope.filter, scope.orderby, function(data) {
+                scope.remoteService.search(scope.filter, scope.orderby, undefined, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
                     } else {
@@ -32,38 +31,24 @@
                             throw Error("Los datos retornados por el servidor no son un objeto 'Page'");
                         }
                     }
-                }, function(error) {
-                    if (error.status === 400) {
-                        scope.businessMessages = error.data;
-                    } else {
-                        scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
-                }, undefined, scope.page.pageNumber, scope.page.pageSize);
+                }, function(businessMessages) {
+                    scope.businessMessages = businessMessages;
+                });
             };
-            scope.getMetadata = function(entity, expand,fnOK, fnError) {
+            scope.getMetadata = function(entity, expand, fnOK, fnError) {
                 fnOK = fnOK || function() {
                 };
                 fnError = fnError || function() {
-                };                
-                
-                daoFactory.getDAO(entity).metadata(function(data) {
+                };
+
+                remoteServiceFactory.getRemoteService(entity).metadata(expand).then(function(data) {
                     scope.metadata[entity] = data;
                     fnOK();
-                }, function(error) {
-                    if (error.status === 400) {
-                        scope.businessMessages = error.data;
-                    } else {
-                        scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
+                }, function(businessMessages) {
+                    scope.businessMessages = businessMessages;
                     fnError();
-                }, expand);
-            };            
+                });
+            };
             scope.buttonSearch = function() {
                 scope.page.pageNumber = 0;
                 scope.search();
@@ -124,7 +109,7 @@
             if (!scope.idName) {
                 scope.idName = "id" + scope.entity;
             }
-            scope.dao = daoFactory.getDAO(scope.entity);
+            scope.remoteService = remoteServiceFactory.getRemoteService(scope.entity);
 
             scope.$watch("page.pageNumber", function(newValue, oldValue) {
                 if (newValue === oldValue) {
@@ -157,7 +142,7 @@
             scope.model = {};
             scope.models = {};
             scope.metadata = {};
-            scope.businessMessages=null;
+            scope.businessMessages = null;
             scope.setValue = function(obj, key, newValue) {
                 var keys = key.split('.');
                 for (var i = 0; i < keys.length - 1; i++) {
@@ -168,47 +153,33 @@
                 }
                 obj[keys[keys.length - 1]] = newValue;
             };
-            scope.getMetadata = function(entity, expand,fnOK, fnError) {
+            scope.getMetadata = function(entity, expand, fnOK, fnError) {
                 fnOK = fnOK || function() {
                 };
                 fnError = fnError || function() {
-                };                
-                
-                daoFactory.getDAO(entity).metadata(function(data) {
+                };
+
+                remoteServiceFactory.getRemoteService(entity).metadata(expand).then(function(data) {
                     scope.metadata[entity] = data;
                     fnOK();
-                }, function(error) {
-                    if (error.status === 400) {
-                        scope.businessMessages = error.data;
-                    } else {
-                        scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
+                }, function(businessMessages) {
+                    scope.businessMessages = businessMessages;
                     fnError();
-                }, expand);
+                });
             };
             scope.get = function(fnOK, fnError) {
                 fnOK = fnOK || function() {
                 };
                 fnError = fnError || function() {
                 };
-                scope.dao.get(scope.id, function(data) {
+                scope.remoteService.get(scope.id, scope.expand).then(function(data) {
                     scope.model = data;
                     scope.businessMessages = null;
                     fnOK();
-                }, function(error) {
-                    if (error.status === 400) {
-                        scope.businessMessages = error.data;
-                    } else {
-                        scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
+                }, function(businessMessages) {
+                    scope.businessMessages = businessMessages;
                     fnError();
-                }, scope.expand);
+                });
             };
             scope.create = function(fnOK, fnError) {
                 fnOK = fnOK || function() {
@@ -220,21 +191,14 @@
                     parent[scope.parentProperty] = scope.parentId;
                 }
 
-                scope.dao.create(function(data) {
+                scope.remoteService.create(scope.expand, parent).then(function(data) {
                     scope.model = data;
                     scope.businessMessages = null;
                     fnOK();
-                }, function(error) {
-                    if (error.status === 400) {
-                        scope.businessMessages = error.data;
-                    } else {
-                        scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
+                }, function(businessMessages) {
+                    scope.businessMessages = businessMessages;
                     fnError();
-                }, scope.expand, parent);
+                });
             };
             scope.insert = function(fnOK, fnError) {
                 fnOK = fnOK || scope.finishOK || function() {
@@ -243,23 +207,16 @@
                 };
                 scope.businessMessages = validator.validateForm(scope.mainForm);
                 if (scope.businessMessages.length === 0) {
-                    scope.dao.insert(scope.model, function(data) {
+                    scope.remoteService.insert(scope.model, scope.expand).then(function(data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         scope.controllerAction = "EDIT";
                         scope.id = scope.model[scope.idName];
                         fnOK();
-                    }, function(error) {
-                        if (error.status === 400) {
-                            scope.businessMessages = error.data;
-                        } else {
-                            scope.businessMessages = [{
-                                    propertyName: null,
-                                    message: "Estado HTTP:" + error.status + "\n" + error.data
-                                }];
-                        }
+                    }, function(businessMessages) {
+                        scope.businessMessages = businessMessages;
                         fnError();
-                    }, scope.expand);
+                    });
                 }
             };
             scope.update = function(fnOK, fnError) {
@@ -269,21 +226,14 @@
                 };
                 scope.businessMessages = validator.validateForm(scope.mainForm);
                 if (scope.businessMessages.length === 0) {
-                    scope.dao.update(scope.id, scope.model, function(data) {
+                    scope.remoteService.update(scope.id, scope.model, scope.expand).then(function(data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         fnOK();
-                    }, function(error) {
-                        if (error.status === 400) {
-                            scope.businessMessages = error.data;
-                        } else {
-                            scope.businessMessages = [{
-                                    propertyName: null,
-                                    message: "Estado HTTP:" + error.status + "\n" + error.data
-                                }];
-                        }
+                    }, function(businessMessages) {
+                        scope.businessMessages = businessMessages;
                         fnError();
-                    }, scope.expand);
+                    });
                 }
             };
             scope.delete = function(fnOK, fnError) {
@@ -291,18 +241,11 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.dao.delete(scope.id, function(data) {
+                scope.remoteService.delete(scope.id).then(function(data) {
                     scope.businessMessages = null;
                     fnOK();
-                }, function(error) {
-                    if (error.status === 400) {
-                        scope.businessMessages = error.data;
-                    } else {
-                        scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
+                }, function(businessMessages) {
+                    scope.businessMessages = businessMessages;
                     fnError();
                 });
             };
@@ -514,8 +457,8 @@
                 }
             };
 
-            scope.dao = daoFactory.getDAO(scope.entity);
-            scope.getMetadata(scope.entity, scope.expand,function() {
+            scope.remoteService = remoteServiceFactory.getRemoteService(scope.entity);
+            scope.getMetadata(scope.entity, scope.expand, function() {
                 scope.initialAction();
             });
 
@@ -634,8 +577,8 @@
                 }
             });
         };
-        this.$get = ['daoFactory', '$window', 'validator', '$location', '$rootScope', function(daoFactory, $window, validator, $location, $rootScope) {
-                return new CRUD(daoFactory, $window, validator, $location, $rootScope);
+        this.$get = ['remoteServiceFactory', '$window', 'validator', '$location', '$rootScope', function(remoteServiceFactory, $window, validator, $location, $rootScope) {
+                return new CRUD(remoteServiceFactory, $window, validator, $location, $rootScope);
             }];
     }
 

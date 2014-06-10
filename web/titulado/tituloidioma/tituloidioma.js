@@ -1,31 +1,22 @@
 "use strict";
-app.config(['crudProvider', function(crudProvider) {
-        crudProvider.addAllRoutes("TituloIdioma");
+app.config(['crudRoutesProvider', function(crudRoutesProvider) {
+        crudRoutesProvider.addAllRoutes("TituloIdioma");
     }]);
 
-app.controller("TituloIdiomaSearchController", ['$scope', 'crudState', function($scope, crudState) {
-        crudState.extendsScopeController($scope, {
-        });
+app.controller("TituloIdiomaSearchController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
 
         $scope.search();
-
     }]);
 
-
-app.controller("TituloIdiomaNewEditController", ['$scope', 'crudState', '$location', function($scope, crudState, $location) {
-        crudState.extendsScopeController($scope, {
-        });
+app.controller("TituloIdiomaNewEditController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
     }]);
 
-app.controller("TituloIdiomaViewController", ['$scope', 'crudState', '$location', function($scope, crudState, $location) {
-        crudState.extendsScopeController($scope, {
-        });
-
-
+app.controller("TituloIdiomaViewController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
     }]);
-app.controller("TituloIdiomaDeleteController", ['$scope', 'crudState', '$location', function($scope, crudState, $location) {
-        crudState.extendsScopeController($scope, {
-        });
 
-
+app.controller("TituloIdiomaDeleteController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
     }]);

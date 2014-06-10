@@ -22,6 +22,7 @@ import es.logongas.ix3.core.annotations.Caption;
 import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -36,10 +37,12 @@ public class Direccion {
     
     @NotBlank
     @Caption("Nombre de la vía")
+    @Size(min = 3, max = 255)
     private String nombreVia;
     
     @NotBlank
     @Caption("Patio,Puerta, Nº, Bloque, etc.")
+    @Size(max = 255)    
     private String otrosDireccion;
     
     @NotBlank
@@ -52,7 +55,7 @@ public class Direccion {
     private Provincia provincia;
     
     @NotNull
-    @ValuesList(shortLength=true)
+    @ValuesList(shortLength=true,dependProperties = "provincia")
     private Municipio municipio;
 
     /**

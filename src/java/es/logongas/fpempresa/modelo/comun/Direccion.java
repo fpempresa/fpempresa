@@ -21,6 +21,7 @@ package es.logongas.fpempresa.modelo.comun;
 import es.logongas.ix3.core.annotations.Caption;
 import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -43,6 +44,7 @@ public class Direccion {
     
     @NotBlank
     @Caption("Código postal")
+    @Pattern(regexp = "\\d{5}| {0}")
     private String codigoPostal;
     
     @NotNull

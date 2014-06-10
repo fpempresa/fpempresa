@@ -1,28 +1,18 @@
 "use strict";
 
-angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
-        this.baseURL;
-        this.setBaseURL = function(baseURL) {
-            if (!baseURL) {
-                throw Error("El argumento baseURL no puede estar vacío");
-            }
-            if (typeof (baseURL) !== "string") {
-                throw Error("El argumento baseURL debe ser un String");
-            }
+angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q','apiurl',function($http,$q,apiurl) {
 
-            this.baseURL = baseURL;
-        };
 
         /**
          * Esta es la clase RemoteService verdadera que genera el Factory
          * @param {String} entityName Nombre de la entidad 
-         * @param {String} baseURL La url en la que se encuentran los servicios.
+         * @param {String} apiurl La url en la que se encuentran los servicios.
          */
-        function RemoteService(entityName, baseURL,$http,$q) {
+        function RemoteService(entityName, apiurl, $http, $q) {
             this.entityName = entityName;
-            this.baseURL = baseURL;
-            this.$http=$http;
-            this.$q=$q;
+            this.apiurl = apiurl;
+            this.$http = $http;
+            this.$q = $q;
         }
 
         RemoteService.prototype.create = function(expand, parent) {
@@ -38,7 +28,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'GET',
-                url: this.baseURL + '/' + this.entityName + "/$create",
+                url: this.apiurl + '/' + this.entityName + "/$create",
                 params: params
             };
 
@@ -64,7 +54,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'GET',
-                url: this.baseURL + '/' + this.entityName + "/" + id,
+                url: this.apiurl + '/' + this.entityName + "/" + id,
                 params: params
             };
 
@@ -80,7 +70,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             return deferred.promise;
         };
-        RemoteService.prototype.insert = function(entity,  expand) {
+        RemoteService.prototype.insert = function(entity, expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -90,9 +80,9 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'POST',
-                url: this.baseURL + '/' + this.entityName + "/",
+                url: this.apiurl + '/' + this.entityName + "/",
                 params: params,
-                data:entity
+                data: entity
             };
 
             this.$http(config).success(function(data, status, headers, config) {
@@ -117,9 +107,9 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'PUT',
-                url: this.baseURL + '/' + this.entityName + "/" + id,
+                url: this.apiurl + '/' + this.entityName + "/" + id,
                 params: params,
-                data:entity
+                data: entity
             };
 
             this.$http(config).success(function(data, status, headers, config) {
@@ -141,7 +131,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'DELETE',
-                url: this.baseURL + '/' + this.entityName + "/" + id,
+                url: this.apiurl + '/' + this.entityName + "/" + id,
                 params: params
             };
 
@@ -185,7 +175,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'GET',
-                url: this.baseURL + '/' + this.entityName,
+                url: this.apiurl + '/' + this.entityName,
                 params: params
             };
 
@@ -212,7 +202,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'GET',
-                url: this.baseURL + '/' + this.entityName + "/" + id + "/" + child,
+                url: this.apiurl + '/' + this.entityName + "/" + id + "/" + child,
                 params: params
             };
 
@@ -239,7 +229,7 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
 
             var config = {
                 method: 'GET',
-                url: this.baseURL + '/' + this.entityName + "/$metadata",
+                url: this.apiurl + '/' + this.entityName + "/$metadata",
                 params: params
             };
 
@@ -256,16 +246,14 @@ angular.module("es.logongas.ix3").provider("remoteServiceFactory", [function() {
             return deferred.promise;
         };
 
-        this.$get = ['$http','$q',function($http,$q) {
-                var baseURL=this.baseURL;
-                return {
-                    getRemoteService: function(entityName) {
-                        var remoteService = new RemoteService(entityName,baseURL,$http,$q);
-                        return remoteService;
-                    }
-                };
 
-            }];
+        return {
+            getRemoteService: function(entityName) {
+                var remoteService = new RemoteService(entityName, apiurl, $http, $q);
+                return remoteService;
+            }
+        };
+
 
     }]);
 

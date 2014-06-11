@@ -7,14 +7,14 @@ app.config(['$routeProvider', function($routeProvider) {
     }]);
 
 
-app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'remoteServiceFactory', 'goPage', 'validator', function($scope, $routeParams, $location, remoteServiceFactory, goPage, validator) {
+app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'remoteServiceFactory', 'goPage', 'formValidator', function($scope, $routeParams, $location, remoteServiceFactory, goPage, formValidator) {
         var usuarioRemoteService = remoteServiceFactory.getRemoteService("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
         $scope.model.tipoUsuario = $routeParams.tipoUsuario;
         
         $scope.registrarse = function() {
-            $scope.businessMessages = validator.validateForm($scope.mainForm, [validateEqualPasswords, validateCheckCondicioneTerminos]);
+            $scope.businessMessages = formValidator.validate($scope.mainForm, [validateEqualPasswords, validateCheckCondicioneTerminos]);
             if ($scope.businessMessages.length === 0) {
                 usuarioRemoteService.insert($scope.model).then(function() {
                     $location.path("/createaccount/end/" + $scope.model.tipoUsuario);

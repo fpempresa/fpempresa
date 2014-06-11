@@ -40,7 +40,7 @@ angular.module("es.logongas.ix3").directive('ix3Integer', [function() {
             }
         };
     }]);
-angular.module("es.logongas.ix3").config(['validatorProvider', function(validatorProvider) {
+angular.module("es.logongas.ix3").config(['formValidatorProvider', function(formValidatorProvider) {
         //Incluir el mensaje de la nueva directiva de validacion
-        validatorProvider.getMensajePatterns().integer = "El dato debe ser un número";
+        formValidatorProvider.addErrorMensajePattern("integer", "El dato debe ser un número");
     }]);

@@ -2,7 +2,7 @@
 
 (function() {
 
-    function CRUDDetail(remoteServiceFactory, $window, validator, $location) {
+    function CRUDDetail(remoteServiceFactory, $window, formValidator, $location) {
 
         this.extendsScope = function(scope, controllerConfig) {
             scope.labelButtonOK = null;
@@ -52,7 +52,7 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.businessMessages = validator.validateForm(scope.mainForm);
+                scope.businessMessages = formValidator.validate(scope.mainForm);
                 if (scope.businessMessages.length === 0) {
                     scope.remoteService.insert(scope.model, scope.expand).then(function(data) {
                         scope.model = data;
@@ -71,7 +71,7 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.businessMessages = validator.validateForm(scope.mainForm);
+                scope.businessMessages = formValidator.validate(scope.mainForm);
                 if (scope.businessMessages.length === 0) {
                     scope.remoteService.update(scope.id, scope.model, scope.expand).then(function(data) {
                         scope.model = data;
@@ -309,8 +309,8 @@
 
     }
 
-    angular.module('es.logongas.ix3').factory("crudDetail", ['remoteServiceFactory', '$window', 'validator', '$location', function(remoteServiceFactory, $window, validator, $location) {
-            return new CRUDDetail(remoteServiceFactory, $window, validator, $location);
+    angular.module('es.logongas.ix3').factory("crudDetail", ['remoteServiceFactory', '$window', 'formValidator', '$location', function(remoteServiceFactory, $window, formValidator, $location) {
+            return new CRUDDetail(remoteServiceFactory, $window, formValidator, $location);
         }]);
 
 })();

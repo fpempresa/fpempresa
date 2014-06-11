@@ -41,7 +41,7 @@ app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$l
             } else {
                 return {
                     label:"Condiciones y politicas",
-                    message: 'Debe aceptar las condiciones del servicio y la politica de privacidad de FPempresa'
+                    message: 'Debe aceptar los terminos del servicio y la política de privacidad de FPempresa'
                 };
             }
         }

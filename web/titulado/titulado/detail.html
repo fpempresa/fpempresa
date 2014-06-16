@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label for="model.tipoDocumento" class="col-sm-3  control-label">Tipo de documento</label>
                         <div class="col-sm-3">
-                            <select ng-model="model.tipoDocumento" id="model.tipoDocumento" name="model.tipoDocumento" class="form-control" ix3-options-enum ix3-validation >
+                            <select ng-model="model.tipoDocumento" id="model.tipoDocumento" name="model.tipoDocumento" class="form-control" ix3-options ix3-validation >
                                 <option value="">-- Elige Opcion --</option>
                             </select>
                         </div>
@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label for="model.direccion.tipoVia" class="col-sm-3  control-label">Tipo de via</label>
                         <div class="col-sm-3">
-                            <select ng-model="model.direccion.tipoVia" id="model.direccion.tipoVia" name="model.direccion.tipoVia" class="form-control" ix3-options-enum ix3-validation >
+                            <select ng-model="model.direccion.tipoVia" id="model.direccion.tipoVia" name="model.direccion.tipoVia" class="form-control" ix3-options ix3-validation >
                                 <option value="">-- Elige Opcion --</option>
                             </select>
                         </div>
@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <label for="model.direccion.provincia" class="col-sm-3  control-label">Provincia</label>
                         <div class="col-sm-3">
-                            <select ng-model="model.direccion.provincia" id="model.direccion.provincia" name="model.direccion.provincia" class="form-control" ix3-options-lov  ix3-validation >
+                            <select ng-model="model.direccion.provincia" id="model.direccion.provincia" name="model.direccion.provincia" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation >
                                 <option value="">-- Elige Opcion --</option>
                             </select>
                         </div>
@@ -84,7 +84,7 @@
                     <div class="form-group">
                         <label for="model.direccion.municipio" class="col-sm-3  control-label">Municipio</label>
                         <div class="col-sm-3">
-                            <select ng-model="model.direccion.municipio" id="model.direccion.municipio" name="model.direccion.municipio" class="form-control" ix3-options-lov  ix3-validation >
+                            <select ng-model="model.direccion.municipio" id="model.direccion.municipio" name="model.direccion.municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation >
                                 <option value="">-- Elige Opcion --</option>
                             </select>
                         </div>

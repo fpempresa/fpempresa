@@ -55,7 +55,7 @@ public class Direccion {
     private Provincia provincia;
     
     @NotNull
-    @ValuesList(shortLength=true,dependProperties = "provincia")
+    @ValuesList(shortLength=true,dependProperty = "provincia")
     private Municipio municipio;
 
     /**

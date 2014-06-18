@@ -36,8 +36,8 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory
                         var filters = attributes.ix3Options;
 
                         var modelProperty = {
-                            name: attributes.ngModel.replace("model.", ""),
-                            metadata: $scope.$eval("metadata[entity]." + getMetadataPropertyName(attributes.ngModel.replace("model.", ""))),
+                            name: attributes.ngModel.replace(/^model\./, ""),
+                            metadata: $scope.$eval("metadata[entity]." + getMetadataPropertyName(attributes.ngModel.replace(/^model\./, ""))),
                             scopeAccessName: attributes.ngModel
                         };
 

@@ -97,7 +97,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             return deferred.promise;
         };
-        RemoteService.prototype.update = function(id, entity, fnOK, fnError, expand) {
+        RemoteService.prototype.update = function(id, entity,expand) {
             var deferred = this.$q.defer();
 
             var params = {};

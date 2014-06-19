@@ -17,7 +17,7 @@
 package es.logongas.fpempresa.modelo.comun;
 
 import es.logongas.ix3.security.model.User;
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.security.authentication.Principal;
 import javax.validation.constraints.NotNull;
 import org.hibernate.event.spi.PostLoadEvent;
@@ -33,26 +33,26 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
     
     @Email
     @NotBlank
-    @Caption("Correo electrónico")
+    @Label("Correo electrónico")
     private String eMail;
     
     @NotBlank
     private String nombre;
     
-    @Caption("1º Apellido")
+    @Label("1º Apellido")
     @NotBlank
     private String ape1;
     
-    @Caption("2º Apellido")
+    @Label("2º Apellido")
     private String ape2;
     
     private byte[] foto;
     
-    @Caption("Contraseña")
+    @Label("Contraseña")
     private String password;
 
     @NotNull
-    @Caption("Tipo de usuario")
+    @Label("Tipo de usuario")
     private TipoUsuario tipoUsuario;
     
     

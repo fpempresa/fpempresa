@@ -19,7 +19,7 @@
 
 package es.logongas.fpempresa.modelo.titulado;
 
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -36,25 +36,25 @@ public class ExperienciaLaboral {
     private Titulado titulado;
     
     @NotBlank
-    @Caption("Nombre de la empresa")
+    @Label("Nombre de la empresa")
     private String nombreEmpresa;
     
     @Past
     @es.logongas.ix3.core.annotations.Date
-    @Caption("Fecha Inicio")
+    @Label("Fecha Inicio")
     private Date fechaInicio;
     
     @Past
     @es.logongas.ix3.core.annotations.Date
-    @Caption("Fecha final")
+    @Label("Fecha final")
     private Date fechaFin;
     
     
-    @Caption("Puesto desenpeñado")
+    @Label("Puesto desenpeñado")
     @NotBlank
     private String puestoTrabajo;
     
-    @Caption("Tareas realizadas en el puesto desempeñado")
+    @Label("Tareas realizadas en el puesto desempeñado")
     private String descripcion;
 
     /**

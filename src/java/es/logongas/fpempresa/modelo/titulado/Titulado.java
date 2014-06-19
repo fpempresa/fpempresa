@@ -19,7 +19,7 @@ package es.logongas.fpempresa.modelo.titulado;
 
 import es.logongas.fpempresa.modelo.comun.Direccion;
 import es.logongas.fpempresa.modelo.comun.Usuario;
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;
@@ -40,7 +40,7 @@ public class Titulado {
     
     @NotNull
     @Past
-    @Caption("Fecha de nacimiento")
+    @Label("Fecha de nacimiento")
     private Date fechaNacimiento;
     
     @NotNull
@@ -51,15 +51,15 @@ public class Titulado {
     private String telefono;
     
     @Pattern( regexp = "[0-9]{9}| {0}")
-    @Caption("Telefono alternativo")
+    @Label("Telefono alternativo")
     private String telefonoAlternativo;
     
     @NotNull
-    @Caption("Tipo de documento")
+    @Label("Tipo de documento")
     private TipoDocumento tipoDocumento;
     
     @NotEmpty
-    @Caption("Nº de documento")
+    @Label("Nº de documento")
     private String numeroDocumento;
     
     private Set<TituloIdioma> titulosIdiomas;

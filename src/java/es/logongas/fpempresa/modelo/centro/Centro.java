@@ -7,7 +7,7 @@
 package es.logongas.fpempresa.modelo.centro;
 
 import es.logongas.fpempresa.modelo.comun.Direccion;
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,7 +26,7 @@ public class Centro {
     @Valid
     private Direccion direccion;
     
-    @Caption("Pertenece a FPempresa")
+    @Label("Pertenece a FPempresa")
     private boolean fpempresa;
 
     public Centro() {

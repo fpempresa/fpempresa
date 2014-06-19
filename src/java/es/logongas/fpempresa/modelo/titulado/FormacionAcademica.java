@@ -8,7 +8,7 @@ package es.logongas.fpempresa.modelo.titulado;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Ciclo;
 import es.logongas.fpempresa.modelo.comun.Familia;
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -21,12 +21,12 @@ public class FormacionAcademica {
 
     private int idFormacionAcademica;
 
-    @Caption("Tipo del título")
+    @Label("Tipo del título")
     @NotNull
     private TipoFormacionAcademica tipoFormacionAcademica;
 
     @ValuesList(shortLength = true)
-    @Caption("Centro educativo")
+    @Label("Centro educativo")
     private Centro centro;
 
     @ValuesList(shortLength = true)
@@ -35,10 +35,10 @@ public class FormacionAcademica {
     @ValuesList(shortLength = true)
     private Ciclo ciclo;
 
-    @Caption("Nombre centro")
+    @Label("Nombre centro")
     private String otroCentro;
 
-    @Caption("Titulo")
+    @Label("Titulo")
     private String otroTitulo;
 
     @NotNull
@@ -53,7 +53,7 @@ public class FormacionAcademica {
     }
 
     @AssertTrue(message = "No puede estar vacio")
-    @Caption("Centro")
+    @Label("Centro")
     private boolean getValidateCentro() {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
@@ -72,7 +72,7 @@ public class FormacionAcademica {
     }
 
     @AssertTrue(message = "No puede estar vacia")
-    @Caption("Familia")
+    @Label("Familia")
     private boolean getValidateFamilia() {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
@@ -91,7 +91,7 @@ public class FormacionAcademica {
     }
 
     @AssertTrue(message = "No puede estar vacio")
-    @Caption("Ciclo")
+    @Label("Ciclo")
     private boolean getValidateCiclo() {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
@@ -110,7 +110,7 @@ public class FormacionAcademica {
     }
 
     @AssertTrue(message = "El nombre del centro no puede estar vacio")
-    @Caption("Nombre centro")
+    @Label("Nombre centro")
     private boolean getValidateOtroCentro() {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
@@ -142,7 +142,7 @@ public class FormacionAcademica {
     }
 
     @AssertTrue(message = "El titulo no puede estar vacio")
-    @Caption("Titulo")
+    @Label("Titulo")
     private boolean getValidateOtroTitulo() {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:

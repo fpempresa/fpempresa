@@ -18,7 +18,7 @@
 
 package es.logongas.fpempresa.modelo.comun;
 
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -30,19 +30,19 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Direccion {
     
     @NotNull
-    @Caption("Tipo de vía")
+    @Label("Tipo de vía")
     private TipoVia tipoVia;
     
     @NotBlank
-    @Caption("Nombre de la vía")
+    @Label("Nombre de la vía")
     private String nombreVia;
     
     @NotBlank
-    @Caption("Patio,Puerta, Nº, Bloque, etc.")
+    @Label("Patio,Puerta, Nº, Bloque, etc.")
     private String otrosDireccion;
     
     @NotBlank
-    @Caption("Código postal")
+    @Label("Código postal")
     private String codigoPostal;
     
     @NotNull

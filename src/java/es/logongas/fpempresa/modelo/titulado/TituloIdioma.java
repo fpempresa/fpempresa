@@ -17,7 +17,7 @@
  */
 package es.logongas.fpempresa.modelo.titulado;
 
-import es.logongas.ix3.core.annotations.Caption;
+import es.logongas.ix3.core.annotations.Label;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -30,14 +30,14 @@ public class TituloIdioma {
     private int idTituloIdioma;
     
     @NotNull
-    @Caption("Nivel")
+    @Label("Nivel")
     private NivelIdioma nivelIdioma;
     
     @NotNull
     private Idioma idioma;
     
     @Past
-    @Caption("Fecha de obtención del título")
+    @Label("Fecha de obtención del título")
     private Date fecha;
     
     @NotNull

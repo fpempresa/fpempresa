@@ -51,6 +51,7 @@
     create table Municipio (
         idMunicipio integer not null auto_increment,
         descripcion varchar(255),
+        codigo varchar(5),
         idProvincia integer,
         primary key (idMunicipio)
     );

@@ -38,7 +38,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory
                         var modelProperty = {
                             name: attributes.ngModel.replace(/^model\./, ""),
                             metadata: $scope.$eval("metadata[entity]." + getMetadataPropertyName(attributes.ngModel.replace(/^model\./, ""))),
-                            scopeAccessName: attributes.ngModel
+                            scopeAccessName: "$parent." + attributes.ngModel
                         };
 
                         if (angular.isArray(modelProperty.metadata.values)) {
@@ -76,29 +76,32 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory
 
 
                                             var exist = false;
-                                            var primaryKey = $scope.$eval(modelProperty.scopeAccessName)[modelProperty.metadata.primaryKeyPropertyName];
+                                            var currentObject = $scope.$eval(modelProperty.scopeAccessName);
+                                            if ((currentObject) && (currentObject[modelProperty.metadata.primaryKeyPropertyName])) {
+                                                var primaryKey = currentObject[modelProperty.metadata.primaryKeyPropertyName];
 
-                                            for (var i = 0; i < values.length; i++) {
-                                                var value = values[i];
-                                                if (value[modelProperty.metadata.primaryKeyPropertyName] === primaryKey) {
-                                                    exist = true;
-                                                    break;
+                                                for (var i = 0; i < values.length; i++) {
+                                                    var value = values[i];
+                                                    if (value[modelProperty.metadata.primaryKeyPropertyName] === primaryKey) {
+                                                        exist = true;
+                                                        break;
+                                                    }
                                                 }
-                                            }
 
-                                            if (exist === false) {
-                                                setValue($scope.$parent, modelProperty.scopeAccessName, null);
+                                                if (exist === false) {
+                                                    setValue($scope, modelProperty.scopeAccessName, null);
+                                                }
                                             }
                                         }, function(businessMessages) {
                                             //Si hay un error borramos la lista y el valor dependiente
                                             $scope.values = [];
-                                            setValue($scope.$parent, modelProperty.scopeAccessName, null);
+                                            setValue($scope, modelProperty.scopeAccessName, null);
                                             $scope.$parent.businessMessages = businessMessages;
                                         });
                                     } else {
                                         //Si no hay valor padre, borramos la lista y el valor dependiente
                                         $scope.values = [];
-                                        setValue($scope.$parent, modelProperty.scopeAccessName, null);
+                                        setValue($scope, modelProperty.scopeAccessName, null);
                                     }
                                 });
                             }

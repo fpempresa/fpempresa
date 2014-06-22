@@ -33,7 +33,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -59,7 +64,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -86,7 +96,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -113,7 +128,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -136,7 +156,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -180,7 +205,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -207,7 +237,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un array vacio
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -234,7 +269,12 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             };
 
             this.$http(config).success(function(data, status, headers, config) {
-                deferred.resolve(data);
+                if (status===204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
             }).error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);

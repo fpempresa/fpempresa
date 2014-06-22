@@ -20,7 +20,12 @@
                 fnError = fnError || function() {
                 };
                 scope.remoteService.get(scope.id, scope.expand).then(function(data) {
-                    scope.model = data;
+                    if (data===null) {
+                        //Si retornamos null, realmente lo transformamo en un objeto sin datos, pq sino fallan los select
+                        scope.model = {};
+                    } else {
+                        scope.model = data;
+                    }
                     scope.businessMessages = null;
                     fnOK();
                 }, function(businessMessages) {

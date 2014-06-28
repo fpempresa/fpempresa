@@ -52,6 +52,8 @@ INSERT INTO `provincia` (`idProvincia`, `descripcion`) VALUES
 	(51, 'Ceuta'),
 	(52, 'Melilla');
 
+
+
 INSERT INTO `municipio` (`idMunicipio`, `descripcion`, `codigo`, `idProvincia`) VALUES
 	(1, 'Alegría-Dulantzi', '001', 1),
 	(2, 'Amurrio', '002', 1),

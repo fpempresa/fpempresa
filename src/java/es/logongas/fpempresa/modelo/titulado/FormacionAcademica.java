@@ -32,7 +32,7 @@ public class FormacionAcademica {
     @ValuesList(shortLength = true)
     private Familia familia;
 
-    @ValuesList(shortLength = true)
+    @ValuesList(shortLength = true,dependProperty = "familia")
     private Ciclo ciclo;
 
     @Label("Nombre centro")

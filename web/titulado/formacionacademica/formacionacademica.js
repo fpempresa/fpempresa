@@ -1,11 +1,10 @@
 "use strict";
-app.config(['crudProvider', function(crudProvider) {
-        crudProvider.addAllRoutes("FormacionAcademica");
+app.config(['crudRoutesProvider', function(crudRoutesProvider) {
+        crudRoutesProvider.addAllRoutes("FormacionAcademica");
     }]);
 
-app.controller("FormacionAcademicaSearchController", ['$scope', 'crudState','$filter', function($scope, crudState,$filter) {
-        crudState.extendsScopeController($scope, {
-        });
+app.controller("FormacionAcademicaSearchController", ['$scope', 'crud','$filter', function($scope, crud,$filter) {
+        crud.extendScope($scope);
         
         $scope.getTipoTitulo = function(formacionAcademica) {
             if (!$scope.metadata.FormacionAcademica) {
@@ -37,20 +36,14 @@ app.controller("FormacionAcademicaSearchController", ['$scope', 'crudState','$fi
     }]);
 
 
-app.controller("FormacionAcademicaNewEditController", ['$scope', 'crudState', '$location', function($scope, crudState, $location) {
-        crudState.extendsScopeController($scope, {
-        });
+app.controller("FormacionAcademicaNewEditController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
     }]);
 
-app.controller("FormacionAcademicaViewController", ['$scope', 'crudState', '$location', function($scope, crudState, $location) {
-        crudState.extendsScopeController($scope, {
-        });
-
-
+app.controller("FormacionAcademicaViewController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
     }]);
-app.controller("FormacionAcademicaDeleteController", ['$scope', 'crudState', '$location', function($scope, crudState, $location) {
-        crudState.extendsScopeController($scope, {
-        });
 
-
+app.controller("FormacionAcademicaDeleteController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
+        crud.extendScope($scope);
     }]);

@@ -48,17 +48,21 @@
         <!-- build:js js/ix3-angular.min.js -->
         <script type='text/javascript' src='../lib/ix3-angular/js/ix3-modules.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/ix3-config.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/crud.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/daofactory.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/routes.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/list.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/detail.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/dateFormat.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/dialog.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/services/formvalidator.js'></script>        
         <script type='text/javascript' src='../lib/ix3-angular/js/services/notify.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/services/remoteservice.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/session.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/validator.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/services/utils.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3businessmessages.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3clear.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3date.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3integer.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3label.js'></script>        
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3options.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3pagination.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3validation.js'></script>
@@ -95,7 +99,6 @@
             </div>
 
             <ng-include src="'../shared/footer/footer.html'"></ng-include> 
-            <a href="https://plus.google.com/102641961838879348126" rel="publisher">Google+</a>
         </div>
     </body>
 </html>

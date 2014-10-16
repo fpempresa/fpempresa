@@ -7,29 +7,21 @@ app.config(['$routeProvider', function($routeProvider) {
     }]);
 
 
-app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'daoFactory', 'goPage', 'validator', function($scope, $routeParams, $location, daoFactory, goPage, validator) {
-        var usuarioDAO = daoFactory.getDAO("Usuario");
+app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'remoteServiceFactory', 'goPage', 'formValidator', function($scope, $routeParams, $location, remoteServiceFactory, goPage, formValidator) {
+        var usuarioRemoteService = remoteServiceFactory.getRemoteService("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
         $scope.model.tipoUsuario = $routeParams.tipoUsuario;
         
         $scope.registrarse = function() {
-            $scope.businessMessages = validator.validateForm($scope.mainForm, [validateEqualPasswords, validateCheckCondicioneTerminos]);
+            $scope.businessMessages = formValidator.validate($scope.mainForm, [validateEqualPasswords, validateCheckCondicioneTerminos]);
             if ($scope.businessMessages.length === 0) {
-                usuarioDAO.insert($scope.model, function() {
+                usuarioRemoteService.insert($scope.model).then(function() {
                     $location.path("/createaccount/end/" + $scope.model.tipoUsuario);
-                }, function(error) {
-                    if (error.status === 400) {
-                        $scope.businessMessages = error.data;
-                    } else {
-                        $scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
+                }, function(businessMessages) {
+                    $scope.businessMessages = businessMessages;
                 });
             }
-
         };
 
 
@@ -49,7 +41,7 @@ app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$l
             } else {
                 return {
                     label:"Condiciones y politicas",
-                    message: 'Debe aceptar las condiciones del servicio y la politica de privacidad de FPempresa'
+                    message: 'Debe aceptar los terminos del servicio y la política de privacidad de FPempresa'
                 };
             }
         }

@@ -63,8 +63,6 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
     protected void preInsertBeforeTransaction(Session session, Usuario usuario) throws BusinessException  {
         //Encriptamos el password antes de guardarlo
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
-        
-       throw new BusinessException(new BusinessMessage(null,"El registro de usuarios no está habilitado"));
     }   
 
     @Override

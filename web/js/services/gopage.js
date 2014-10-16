@@ -2,19 +2,19 @@
 /**
  * Servicio para ir a la página de inicio de un usuario
  */
-angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'daoFactory','dialog', function(session, $window, daoFactory,dialog) {
+angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'remoteServiceFactory','dialog', function(session, $window, remoteServiceFactory,dialog) {
 
         function goHomeUsuario(usuario) {
             if (usuario.tipoUsuario === "TITULADO") {
-                var tituladoDAO = daoFactory.getDAO("Titulado");
-                tituladoDAO.get(usuario.idIdentity, function(titulado) {
+                var tituladoRemoteService = remoteServiceFactory.getRemoteService("Titulado");
+                tituladoRemoteService.get(usuario.idIdentity).then(function(titulado) {
                     if (titulado) {
                         $window.location.href = getContextPath() + "/titulado/index.html#/";
                     } else {
                         $window.location.href = getContextPath() + "/titulado/index.html#/titulado/edit/" + usuario.idIdentity;
                     }
 
-                })
+                });
             } else if (usuario.tipoUsuario === "EMPRESA") {
                 alert("Aun no está hecha la funcionalidad de empresas");
             } else if (usuario.tipoUsuario === "CENTRO") {

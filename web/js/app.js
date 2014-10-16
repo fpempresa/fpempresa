@@ -2,12 +2,10 @@
 
 var app = angular.module('app', ['ngRoute', 'es.logongas.ix3', 'es.logongas.ix3.datepicker.jquery']);
 
-app.config(['$routeProvider', 'daoFactoryProvider', '$controllerProvider', function($routeProvider, daoFactoryProvider) {
+app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.otherwise({
             redirectTo: '/'
         });
-
-        daoFactoryProvider.setBaseURL("../api");
 
     }]);
 

@@ -1,5 +1,5 @@
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/createaccount/init', {
             templateUrl: 'createaccount/init.html',
             controller: 'CreateAccountInitController'
@@ -7,18 +7,43 @@ app.config(['$routeProvider', function($routeProvider) {
     }]);
 
 
-app.controller('CreateAccountInitController', ['$scope', '$location', 'daoFactory',  function($scope,  $location, daoFactory) {
-        var usuarioDAO = daoFactory.getDAO("Usuario");
+app.controller('CreateAccountInitController', ['$scope', '$location', 'remoteServiceFactory', 'formValidator', function ($scope, $location, remoteServiceFactory, formValidator) {
+        var usuarioRemoteService = remoteServiceFactory.getRemoteService("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
 
-        usuarioDAO.create(function(usuario) {
+        usuarioRemoteService.create().then(function (usuario) {
             $scope.model.tipoUsuario = usuario.tipoUsuario;
-        }, function() {
-            alert("Fallo al crear los datos");
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
         });
 
-        $scope.next = function() {
-            $location.path("/createaccount/register/" + $scope.model.tipoUsuario);
+        $scope.next = function () {
+
+            $scope.businessMessages = formValidator.validate($scope.mainForm, [validateDeshabilitadoCentro, validateDeshabilitadoEmpresa]);
+            if ($scope.businessMessages.length === 0) {
+                $location.path("/createaccount/register/" + $scope.model.tipoUsuario);
+            }
+
         };
+
+        function validateDeshabilitadoCentro() {
+            if ($scope.model.tipoUsuario === "CENTRO") {
+                return {
+                    message: 'El registro de Centros Educativos no está habilitado'
+                };
+            } else {
+                return null;
+            }
+        }
+        function validateDeshabilitadoEmpresa() {
+            if ($scope.model.tipoUsuario === "EMPRESA") {
+                return {
+                    message: 'El registro de Empresas no está habilitado'
+                };
+            } else {
+                return null;
+            }
+        }
+
     }]);

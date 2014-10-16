@@ -11,7 +11,7 @@ angular.module('es.logongas.ix3').directive('ix3BusinessMessages', ['bootstrap',
                     '           <strong>Se han producido los siguientes errores:</strong>' +
                     '           <ul >' +
                     '               <li data-ng-repeat="businessMessage in realScope.businessMessages">' +
-                    '                   <strong data-ng-hide="(businessMessage.propertyName == null) && (businessMessage.label == null)">{{businessMessage.label || businessMessage.propertyName}}:&nbsp;&nbsp;</strong>{{businessMessage.message}}' +
+                    '                   <strong data-ng-hide="((businessMessage.propertyName == null) || (businessMessage.propertyName == \'\')) && ((businessMessage.label == null) || (businessMessage.label == \'\'))">{{businessMessage.label || businessMessage.propertyName}}:&nbsp;&nbsp;</strong>{{businessMessage.message}}' +
                     '               </li>' +
                     '           </ul>' +
                     '       </div>' +

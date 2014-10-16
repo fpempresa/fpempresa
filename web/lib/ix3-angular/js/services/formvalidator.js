@@ -1,8 +1,8 @@
 "use strict";
 
-angular.module('es.logongas.ix3').provider("validator", [function() {
-        function ValidatorProvider() {
-            this.mensajePatterns = {
+angular.module('es.logongas.ix3').provider("formValidator", [function() {
+        function FormValidatorProvider() {
+            this.errorMensajePatterns = {
                 required: "No puede estar vacio.",
                 email: "No tiene el formato de EMail",
                 maxlength: "Debe tener un tamaño menor o igual a {{maxlength}}",
@@ -13,17 +13,17 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
                 url: "No tiene el formato de una URL",
                 integer: "El valor '{{value}}' no es un número"
             };
-            this.getMensajePatterns = function() {
-                return this.mensajePatterns;
+            this.addErrorMensajePattern = function(error,messajePattern) {
+                this.errorMensajePatterns[error]=messajePattern;
             };
             this.$get = ['$interpolate', function($interpolate) {
-                    return new Validator($interpolate, this.mensajePatterns);
+                    return new FormValidator($interpolate, this.errorMensajePatterns);
                 }];
         }
 
-        function Validator($interpolate, mensajePatterns) {
+        function FormValidator($interpolate, errorMensajePatterns) {
             var that = this;
-            this.mensajePatterns = mensajePatterns;
+            this.errorMensajePatterns = errorMensajePatterns;
 
             function getNormalizeAttributeName(attributeName) {
                 var normalizeAttributeName;
@@ -45,7 +45,7 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
 
             function getMessage(inputElement, errorType) {
                 var realInputElement = inputElement[0];
-                var messagePattern = that.mensajePatterns[errorType];
+                var messagePattern = that.errorMensajePatterns[errorType];
                 if (typeof (messagePattern) === "undefined") {
                     messagePattern = errorType;
                 }
@@ -111,7 +111,7 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
                 }
             }
 
-            this.validateForm = function(angularForm, customValidations) {
+            this.validate = function(angularForm, customValidations) {
                 var businessMessages = [];
 
                 var formElement = $("form[name='" + angularForm.$name + "']");
@@ -161,7 +161,7 @@ angular.module('es.logongas.ix3').provider("validator", [function() {
 
         }
 
-        return new ValidatorProvider();
+        return new FormValidatorProvider();
 
     }]);
 

@@ -5,7 +5,7 @@ app.config(['$routeProvider', function($routeProvider) {
         });
     }]);
 
-app.controller('MainController', ['$scope', 'daoFactory', '$filter', 'session', '$window', function($scope, daoFactory, $filter, session, $window) {
+app.controller('MainController', ['$scope', 'remoteServiceFactory', '$filter', 'session', '$window', function($scope, remoteServiceFactory, $filter, session, $window) {
         $scope.businessMessages=null;
         session.logged().then(function(user) {
             if (user) {
@@ -13,37 +13,23 @@ app.controller('MainController', ['$scope', 'daoFactory', '$filter', 'session', 
                 $scope.id = $scope.user.idIdentity;
                 $scope.expand = "titulosIdiomas,experienciasLaborales,formacionesAcademicas.centro,usuario";
                 $scope.entity = "Titulado";
-                $scope.dao = daoFactory.getDAO($scope.entity);
+                $scope.remoteService = remoteServiceFactory.getRemoteService($scope.entity);
                 $scope.metadata = {};
                 $scope.businessMessages=null;
 
-                $scope.dao.get($scope.id, function(data) {
+                $scope.remoteService.get($scope.id, $scope.expand).then(function(data) {
                     $scope.model = data;
                     $scope.businessMessages = null;
-                }, function(error) {
-                    if (error.status === 400) {
-                        $scope.businessMessages = error.data;
-                    } else {
-                        $scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
-                }, $scope.expand);
+                }, function(businessMessages) {
+                    $scope.businessMessages = businessMessages;
+                });
 
-                $scope.dao.metadata(function(data) {
+                $scope.remoteService.metadata($scope.expand).then(function(data) {
                     $scope.metadata[$scope.entity] = data;
                     $scope.businessMessages = null;
-                }, function(error) {
-                    if (error.status === 400) {
-                        $scope.businessMessages = error.data;
-                    } else {
-                        $scope.businessMessages = [{
-                                propertyName: null,
-                                message: "Estado HTTP:" + error.status + "\n" + error.data
-                            }];
-                    }
-                }, $scope.expand);
+                }, function(businessMessages) {
+                    $scope.businessMessages = businessMessages;
+                });
 
                 $scope.getTipoTitulo = function(formacionAcademica) {
                     if (!$scope.metadata.Titulado) {

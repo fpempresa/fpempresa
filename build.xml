@@ -10,6 +10,7 @@
 <project name="fpempresa" default="default" basedir=".">
     <description>Builds, tests, and runs the project fpempresa.</description>
     <import file="nbproject/build-impl.xml"/>
+    <import file="./dist.xml"/>
     <!--
 
     There exist several targets which are by default empty and which can be 
@@ -68,6 +69,7 @@
     nbproject/build-impl.xml file. 
 
     -->
+<<<<<<< HEAD
     
     
     <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
@@ -196,4 +198,7 @@
 
     
     
+=======
+      
+>>>>>>> develop
 </project>

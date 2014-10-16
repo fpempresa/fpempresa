@@ -80,10 +80,6 @@
     </target>
 
 
-
-
-
-
     <macrodef name="ix3DownloadChangeJarAll">
         <sequential>
             <property name="ix3.version" value="1.0" />
@@ -106,23 +102,7 @@
             <property name="reference.@{artifactId}.jar" value="${DEP_DIR}/@{artifactId}-${ix3.version}.jar" /> 
                
         </sequential>
-    </macrodef>
-    <macrodef name="git">
-        <!-- https://github.com/FrancisVarga/ant-git-macros/blob/master/LICENSE.md -->
-        <attribute name="command" />
-        <attribute name="options" default="" />
-        <attribute name="dir" default="" />
-        <attribute name="failerror" default="true" />
-        <element name="args" optional="true" />
-        <sequential>
-            <echo message="git dir @{dir}" />
-            <echo message="git @{command} @{options}" />
-            <exec executable="git" dir="@{dir}" failonerror="@{failerror}">
-                <arg line="@{command} @{options}" />
-                <args />
-            </exec>
-        </sequential>
-    </macrodef>   
+    </macrodef> 
 
 
 </project>

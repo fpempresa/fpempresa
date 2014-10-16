@@ -82,7 +82,7 @@
 
     <macrodef name="ix3DownloadChangeJarAll">
         <sequential>
-            <property name="ix3.version" value="1.0" />
+            <property name="ix3.version" value="1.0.2" />
             <property name="IX3_DOWNLOAD_URL_REPOSITORY" value="http://dl.bintray.com/logongas/maven/es/logongas/ix3" />
             <property name="DEP_DIR" value="${basedir}/dependencies" />
             <delete dir="${DEP_DIR}" />

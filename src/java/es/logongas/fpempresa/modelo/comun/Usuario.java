@@ -19,6 +19,7 @@ package es.logongas.fpempresa.modelo.comun;
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.security.authentication.Principal;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import org.hibernate.event.spi.PostLoadEvent;
 import org.hibernate.event.spi.PostLoadEventListener;
@@ -193,5 +194,20 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
         usuario.setPassword(null);
 
     }    
-
+    @AssertTrue(message = "El registro está deshabilitado")
+    @Label("")
+    public boolean isProhibidoNuevoUsuario() {
+        return false;
+    }
+    
+    @AssertTrue(message = "Solo se permite registrar titulados")
+    @Label("")
+    public boolean isSoloPermitidoTitulados() {
+        if (this.tipoUsuario==TipoUsuario.TITULADO) {
+            return true;
+        } else {
+            return false;
+        }
+    }    
+    
 }

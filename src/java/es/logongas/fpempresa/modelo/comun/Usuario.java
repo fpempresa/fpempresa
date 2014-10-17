@@ -202,6 +202,8 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
     private boolean isProhibidoNuevoUsuario() {
         return false;
     }
+    */
+    
     
     @AssertTrue(message = "Solo se permite registrar titulados")
     @Label("")
@@ -212,6 +214,6 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
             return false;
         }
     } 
-    */
+
     
 }

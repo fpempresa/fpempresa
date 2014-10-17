@@ -133,10 +133,7 @@
         <delete dir="${DEP_DIR}" />
     </target>
 
-    <target name="-pre-dist-configureProduccion" if="enableProduccion" >
-        
-        <echo>#######################################################################################################</echo>
-        
+    <target name="-pre-dist-configureProduccion" if="enableProduccion" >       
         <!-- Poner los datos de la conexión de producción -->
         <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
             <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
@@ -144,9 +141,6 @@
         
         <!-- Cambiar el datasource de Hibernate -->
         <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
- 
-        <echo>#######################################################################################################</echo>
-
     </target>
 
 

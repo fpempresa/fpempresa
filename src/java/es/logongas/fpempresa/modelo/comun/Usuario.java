@@ -193,21 +193,25 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
         //Nunca se retorna el Hash de la contraseña
         usuario.setPassword(null);
 
-    }    
+    }   
+    
+    
+    /*
     @AssertTrue(message = "El registro está deshabilitado")
     @Label("")
-    public boolean isProhibidoNuevoUsuario() {
+    private boolean isProhibidoNuevoUsuario() {
         return false;
     }
     
     @AssertTrue(message = "Solo se permite registrar titulados")
     @Label("")
-    public boolean isSoloPermitidoTitulados() {
+    private boolean isSoloPermitidoTitulados() {
         if (this.tipoUsuario==TipoUsuario.TITULADO) {
             return true;
         } else {
             return false;
         }
-    }    
+    } 
+    */
     
 }

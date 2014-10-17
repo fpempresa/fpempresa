@@ -70,4 +70,110 @@
 
     -->
 
+    <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
+    </target>
+    <target name="-enableProduccion"  >
+        <property name="enableProduccion" value="yes"/>
+    </target>
+    <target name="-configureAnt">
+        <echo>Configurando Ant</echo>
+        <!-- Cargar todas las variables de entorno -->
+        <property environment="env"/>
+        <!-- Si no está definida la variable la cojemos como variable de entorno -->
+        <property name="env.APP_ENVIRONMENT" value="" />
+        <property name="APP_ENVIRONMENT" value="${env.APP_ENVIRONMENT}" />
+
+	<!-- OpenShift -->
+        <taskdef  resource="es/logongas/openshift/ant/antlib.xml" />
+                
+        <property name="libs.CopyLibs.classpath" value="ant/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
+        <property name="j2ee.server.home" value="ant" />
+
+        <!-- Para tener el try-cath -->
+        <taskdef  resource="net/sf/antcontrib/antcontrib.properties"/>
+        <!-- Manejo de ficheros XML -->
+        <taskdef  name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+
+        <if>
+            <equals arg1="${APP_ENVIRONMENT}" arg2="PRODUCCION" />
+            <then>
+                <ix3DownloadChangeJarAll />
+            </then>
+            <elseif>
+                <equals arg1="${APP_ENVIRONMENT}" arg2="PREPRODUCCION" />
+                <then>
+                    <ix3DownloadChangeJarAll />
+                </then>
+            </elseif>
+            <else>
+                <git command="fetch" options="origin" dir="../ix3" />
+                <git command="checkout" options="-b develop origin/develop" dir="../ix3" />
+            </else>            
+        </if>        
+        
+        
+        <!-- Propiedades del proyecto -->
+        <property file="nbproject/project.properties"/>     
+    </target>
+
+
+
+    <target name="-pre-compile" depends="-pre-compile-configureProduccion">
+    </target>
+
+
+    <target name="-pre-compile-configureProduccion" if="enableProduccion">
+        <delete file="${build.web.dir}/META-INF/context.xml"/>
+        <delete file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml"/>
+    </target>
+
+    <target name="-pre-dist" depends="-pre-dist-configureProduccion">
+    </target>
+
+    <target name="-post-dist" >
+        <delete dir="${DEP_DIR}" />
+    </target>
+
+    <target name="-pre-dist-configureProduccion" if="enableProduccion" >
+        
+        <echo>#######################################################################################################</echo>
+        
+        <!-- Poner los datos de la conexión de producción -->
+        <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
+            <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
+        </xmltask>
+        
+        <!-- Cambiar el datasource de Hibernate -->
+        <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
+ 
+        <echo>#######################################################################################################</echo>
+
+    </target>
+
+
+
+    <macrodef name="ix3DownloadChangeJarAll">
+        <sequential>
+            <property name="ix3.version" value="1.0.2" />
+            <property name="IX3_DOWNLOAD_URL_REPOSITORY" value="http://dl.bintray.com/logongas/maven/es/logongas/ix3" />
+            <property name="DEP_DIR" value="${basedir}/dependencies" />
+            <delete dir="${DEP_DIR}" />
+            <mkdir dir="${DEP_DIR}" />            
+            <ix3DownloadChangeJar artifactId="ix3core" />
+            <ix3DownloadChangeJar artifactId="ix3dao" />
+            <ix3DownloadChangeJar artifactId="ix3security" />
+            <ix3DownloadChangeJar artifactId="ix3securityimpl" />
+            <ix3DownloadChangeJar artifactId="ix3service" />
+            <ix3DownloadChangeJar artifactId="ix3web" />
+        </sequential>
+    </macrodef>
+    <macrodef name="ix3DownloadChangeJar">
+        <attribute name="artifactId" />
+        <sequential>
+            <get src="${IX3_DOWNLOAD_URL_REPOSITORY}/@{artifactId}/${ix3.version}/@{artifactId}-${ix3.version}.jar" dest="${DEP_DIR}"/>
+            <property name="reference.@{artifactId}.jar" value="${DEP_DIR}/@{artifactId}-${ix3.version}.jar" /> 
+               
+        </sequential>
+    </macrodef> 
+
 </project>

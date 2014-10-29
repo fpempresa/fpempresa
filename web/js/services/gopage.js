@@ -48,10 +48,11 @@ angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'remo
                 goHomeApp();
             },
             createAccount:function(tipoUsuario) {
+                alert("El registro de nuevos usuarios en la bolsa de trabajo no está habilitado actualmente");
                 if (tipoUsuario) {
-                    $window.location.href = getContextPath() + "/site/index.html#/createaccount/register/"+tipoUsuario;
+                    //$window.location.href = getContextPath() + "/site/index.html#/createaccount/register/"+tipoUsuario;
                 } else {
-                    $window.location.href = getContextPath() + "/site/index.html#/createaccount/init";
+                    //$window.location.href = getContextPath() + "/site/index.html#/createaccount/init";
                 }
             },
             login:function() {

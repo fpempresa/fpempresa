@@ -69,9 +69,4 @@
 
     -->
 
-    <target name="distOpenShift">
-        <ant antfile="./dist.xml" target="distOpenShift"/>
-    </target>
-
-
 </project>

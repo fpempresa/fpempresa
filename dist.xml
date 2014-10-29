@@ -47,7 +47,7 @@
                 </then>
             </elseif>                      
             <else>
-                <fail message="La variable ${APP_ENVIRONMENT} solo pude tener los valores PRODUCCION , PREPRODUCCION , PRUEBAS pero tiene el valor '${APP_ENVIRONMENT}'"/>
+                <fail message="La variable 'APP_ENVIRONMENT' solo pude tener los valores PRODUCCION , PREPRODUCCION , PRUEBAS pero tiene el valor '${APP_ENVIRONMENT}'"/>
             </else>            
         </if>        
         

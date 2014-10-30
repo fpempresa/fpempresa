@@ -27,9 +27,7 @@ public enum Idioma {
     INGLES("Inglés"),
     FRANCES("Francés"),
     ALEMAN("Alemán"),
-    ARABE("Árabe"),
-    RUSO("Ruso"),
-    CHINO("Chino");
+    OTRO("Otro");
     
     String text;
 

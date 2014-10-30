@@ -15,6 +15,9 @@
                 <param name="type">4</param>
             </type>    
         </property>
+        
+        <property name="otroIdioma" />
+        
         <property name="nivelIdioma" >
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">es.logongas.fpempresa.modelo.titulado.NivelIdioma</param>

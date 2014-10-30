@@ -16,7 +16,7 @@
                 <tbody>
                     <tr ng-repeat="tituloIdioma in models">
                         <td >{{tituloIdioma.nivelIdioma}}</td>
-                        <td >{{tituloIdioma.idioma}}</td>
+                        <td >{{tituloIdioma.toString}}</td>
                         <td >{{tituloIdioma.fecha| date:'mediumDate'}}</td>
                         <td >
                             <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)">Borrar</button>
@@ -25,7 +25,7 @@
                     </tr>
                 </tbody>
             </table> 
-            <button  class="btn btn-standard"   ng-click="buttonNew()" >Nuevo Titulo</button>
+            <button  class="btn btn-standard"   ng-click="buttonNew()" >Nuevo Idioma</button>
         </div>
     </div>
 </div>

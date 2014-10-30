@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `tituloidioma` (
   `idTituloIdioma` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` datetime DEFAULT NULL,
   `idioma` int(11) DEFAULT NULL,
+  `otroIdioma` varchar(255) DEFAULT NULL,
   `nivelIdioma` int(11) DEFAULT NULL,
   `idTitulado` int(11) DEFAULT NULL,
   PRIMARY KEY (`idTituloIdioma`),

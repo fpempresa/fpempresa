@@ -200,7 +200,7 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
     @AssertTrue(message = "El registro está deshabilitado")
     @Label("")
     private boolean isProhibidoNuevoUsuario() {
-        return false;
+        return true;
     }
     
     

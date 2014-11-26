@@ -49,11 +49,11 @@ app.run(['$rootScope', '$location', '$timeout', function ($rootScope, $location,
                     if ($location.path() === "/") {
                         showHideMenu($timeout);
                     } else {
-                        $(".navbar-fixed-top").addClass("top-nav-collapse");
+                        showNavBar();
                     }
                 });
             } else {
-                $(".navbar-fixed-top").addClass("top-nav-collapse");
+               showNavBar();
             }
         });
 
@@ -66,22 +66,38 @@ function showHideMenu($timeout) {
 
     if (offset) {
         if (offset.top > 80) {
-            $(".navbar-fixed-top").addClass("top-nav-collapse");
+            showNavBar();
         } else {
-            $(".navbar-fixed-top").removeClass("top-nav-collapse");
+            hideNavBar();
         }
     } else {
         $timeout(function () {
             offset = $(".navbar").offset();
             if (offset.top > 80) {
-                $(".navbar-fixed-top").addClass("top-nav-collapse");
+                showNavBar();
             } else {
-                $(".navbar-fixed-top").removeClass("top-nav-collapse");
+                hideNavBar();
             }
         });
     }
 
 
+}
+
+function showNavBar() {
+    var element=$(".navbar-fixed-top");
+    var cssClass="top-nav-collapse";
+    if (!element.hasClass(cssClass)) {
+        element.addClass(cssClass);
+    }
+}
+
+function hideNavBar() {
+    var element=$(".navbar-fixed-top");
+    var cssClass="top-nav-collapse";
+    if (element.hasClass(cssClass)) {
+        element.removeClass(cssClass);
+    }    
 }
 
 

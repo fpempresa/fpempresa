@@ -1,43 +1,24 @@
-@import "../private/variables.less";
+@import "private/expose.less";
+@import "private/intro.less";
+@import "private/mixins-modifiers.less";
+@import "private/nav-bar.less";
+@import "private/section.less";
+@import "private/social.less";
+@import "private/variables.less";
 
-.jumbotron {
-    color: #FFFFFF;
-    text-align: center;
-    background-color: transparent;
+body {
+    width: 100%;
+    height: 100%;
+    margin:0; 
+    padding:0; 
+    border:0;    
 }
 
-.marketing {
-    padding-top: 50px;
-    padding-bottom: 50px;
+html {
+    width: 100%;
+    height: 100%;
 }
-
-.marketing .col-md-4 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.marketing h2 {
-    font-weight: normal;
-}
-
-.marketing h1 {
-      padding-bottom: 20px;
-}
-
-.marketing .col-md-4 p {
-    margin-left: 10px;
-    margin-right: 10px;
-}  	
-
-.marketing p {
-    line-height:150%;
-}
-
-.ayuda {
-    h1 {
-        color:#525552;
-    }
-    
-    p {
-        color:#9C9A9C
-    }
+.container-fluid {
+    padding-left:15px;
+    padding-right:15px;
 }

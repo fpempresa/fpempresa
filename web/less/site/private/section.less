@@ -1,0 +1,126 @@
+@import "variables.less";
+@import "mixins-modifiers.less";
+
+
+.section__container {
+    @padding:10px;  
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: @padding;  
+    padding-bottom: @padding;    
+    @media(min-width:767px) {
+        padding-top: @padding*2.5;
+        padding-bottom: @padding*2.5;
+    }  
+    text-align: center;
+    background-size: 100% auto;
+    
+    a {
+        color:#FFFFFF;
+    }
+
+}
+
+.section__container--padding {
+    @padding:85px;
+    padding-top: @padding;  
+    padding-bottom: @padding*0.5;    
+
+}
+
+
+.section__main-title {
+    font-size: 30px;
+    @media(min-width:767px) {
+        font-size: 40px;
+    }   
+    font-weight: bold;  
+    
+    border-bottom: solid 2px;
+    display: inline;
+    padding-bottom: 10px;
+
+}
+
+.section__text {
+    padding-top: 20px;
+    font-size: 15px;
+    @media(min-width:767px) {
+        font-size: 17px;
+    }      
+}
+
+.section__text--size-high {
+    font-size: 20px;
+    @media(min-width:767px) {
+        font-size: 22px;
+    }      
+}
+.section__text--size-low {
+    font-size: 12px;
+    @media(min-width:767px) {
+        font-size: 14px;
+    }      
+}
+
+.section__separator {   
+    height:1px;
+    border:none;
+    margin-top: 3px;
+}
+
+.section__separator--color-dark {
+    .--color-dark;
+    .--background-color-dark;
+}
+
+.section__separator--color-dark-high {
+    .--color-dark-high;
+    .--background-color-dark-high;
+
+}
+
+.section__separator--color-light {
+    .--color-light;
+    .--background-color-light;
+}
+
+.section__separator--color-light-high {
+    .--color-light-high;
+    .--background-color-light-high;
+}
+
+
+.section--color-dark {
+    .--color-dark;
+}
+
+.section--color-dark-high {
+    .--color-dark-high;
+}
+
+.section--color-light {
+    .--color-light;
+}
+
+.section--color-light-high {
+    .--color-light-high;
+}
+
+
+.section--background-color-dark {
+    .--background-color-dark;
+}
+
+.section--background-color-dark-high {
+    .--background-color-dark-high;
+}
+
+.section--background-color-light {
+    .--background-color-light;
+}
+
+.section--background-color-light-high {
+    .--background-color-light-high;
+}
+

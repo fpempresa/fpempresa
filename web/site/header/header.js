@@ -42,6 +42,7 @@ app.controller("LoginController", ['$scope', 'session', 'dialog', '$window', 'go
 
 app.run(['$rootScope', '$location', '$timeout', function ($rootScope, $location, $timeout) {
 
+        //Esto es para mostrar o ocultar la barra de navegación según si estmaos al principio o no.
         $rootScope.$on('$routeChangeSuccess', function (newRoute, oldRoute) {
             if ($location.path() === "/") {
                 showHideMenu($timeout);

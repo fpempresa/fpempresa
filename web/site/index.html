@@ -16,8 +16,7 @@
         <link href="../lib/bootstrap/css/bootstrap.css"                 rel="stylesheet">
         <link href="../lib/fontawesome/css/font-awesome.css"            rel="stylesheet">
         <link href="../lib/notify/current/css/pnotify.custom.min.css"   rel="stylesheet"> 
-        
-        <link href="../css/shared/shared.css"                           rel="stylesheet">
+
         <link href="../css/site/site.css"                               rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -27,6 +26,7 @@
 
         <!-- build:js js/jquery.js -->
         <script type="text/javascript" src="../lib/jquery/js/jquery.js"></script>
+        <script type="text/javascript" src="../lib/jquery/js/jquery.easing.min.js"></script>
         <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.js"></script>
         <script type='text/javascript' src="../lib/jquery-ui/js/jquery-ui.js"></script>
         <script type='text/javascript' src="../lib/jquery-ui/js/jquery.ui.datepicker-es.js"></script>
@@ -74,10 +74,10 @@
         <script type='text/javascript' src='../js/app.js'></script>
         <script type='text/javascript' src='../js/services/gopage.js'></script>
         <script type='text/javascript' src='../js/directives/currentdate.js'></script>
-        <script type='text/javascript' src='../shared/footer/footer.js'></script>
-        <script type='text/javascript' src='../shared/header/header.js'></script>
+        <script type='text/javascript' src='footer/footer.js'></script>
+        <script type='text/javascript' src='header/header.js'></script>
         <!-- endbuild -->
-        
+
         <!-- build:js js/myapp.min.js -->
         <script type='text/javascript' src='index.js'></script>
         <script type='text/javascript' src='main.js'></script>
@@ -86,19 +86,13 @@
         <script type='text/javascript' src='createaccount/register.js'></script>
         <script type='text/javascript' src='createaccount/end.js'></script>
         <!-- endbuild -->
-       
+
 
     </head>
 
-    <body ng-controller="IndexController" >   
-	<div class="bodywrapper">        
-            <ng-include src="'../shared/header/header.html'"></ng-include>
-
-            <div class="main-container">
-                <div ng-view></div>
-            </div>
-
-            <ng-include src="'../shared/footer/footer.html'"></ng-include> 
-        </div>
-    </body>
+    <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" ng-controller="IndexController" >   
+    <ng-include src="'header/header.html'"></ng-include>
+    <ng-view autoscroll="true"></ng-view>
+    <ng-include src="'footer/footer.html'"></ng-include> 
+</body>
 </html>

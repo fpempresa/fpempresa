@@ -56,9 +56,7 @@ angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'remo
                 }
             },
             login:function() {
-                dialog.create(getContextPath() + "/shared/login/index").then(function(usuario) {
-                    goHomeUsuario(usuario);           
-                });
+                    $window.location.href = getContextPath() + "/site/index.html#/login";  
             }
         };
     }]);

@@ -1,0 +1,114 @@
+.button-variant(@background,@font-color ) {
+    @border:darken(@background, 5%);
+    color: @font-color;
+    background-color: @background;
+    border-color: @border;
+
+    &:hover,
+        &:focus,
+        &:active,
+        &.active,
+        .open .dropdown-toggle& {
+        color: @font-color;
+        background-color: darken(@background, 8%);
+        border-color: darken(@border, 12%);
+    }
+    &:active,
+        &.active,
+        .open .dropdown-toggle& {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+            &:focus,
+            &:active,
+            &.active {
+            background-color: @background;
+            border-color: @border;
+        }
+    }
+
+    .badge {
+        color: @background;
+        background-color: @font-color;
+    }
+}
+
+@form-page-background-color:#F6F8F7;
+@form-container-border-color:#005595;
+@form-container-background-color:#F1F1F1;
+
+.form__page {
+    background-color: @form-page-background-color;
+}
+
+.form__container {
+    border: 1px solid @form-container-border-color;
+    background-color:@form-container-background-color;
+    padding: 30px;
+    
+}
+
+.form__container--margin {
+    margin-top: 50px;
+    
+}
+
+.form__main-title {
+    font-size: 30px;
+    @media(min-width:767px) {
+        font-size: 40px;
+    }   
+    font-weight: bold;  
+    
+    border-bottom: solid 2px;
+    display: inline;
+    padding-bottom: 10px;
+    text-align: center;
+
+}
+
+.form__container {
+    border: 1px solid @form-container-border-color;
+    background-color:@form-container-background-color;
+    padding: 30px;
+    
+}
+
+.form__label {
+    color: @form-container-border-color;
+    font-family:Arial, sans-serif;
+}
+
+
+.form__text {
+    color: @form-container-border-color;
+    font-family:Arial Narrow, Arial, sans-serif;
+}
+
+.form__input,form__select,form__text-area {
+    border-color:#C7C7C7;
+}
+
+.form__button {
+   
+}
+
+.form__button--ok {
+    .button-variant(#3360A1,#FFFFFF);    
+}
+
+.form__button--cancel {
+    
+}
+
+.form__button--danger {
+    
+}
+
+.form__button--alternative {
+    .button-variant(#5BBA5C,#FFFFFF);    
+}

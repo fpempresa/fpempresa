@@ -1,41 +1,3 @@
-.navbar-default {
-  background-color: #005594;
-}
-.navbar-default .navbar-nav > li > a {
-  padding-top: 30px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-}
-.navbar-default .navbar-nav > li > a:link,
-.navbar-default .navbar-nav > li > a:visited,
-.navbar-default .navbar-nav > li > a:active {
-  color: #ffffff;
-}
-.navbar-default .navbar-nav > li > a:hover {
-  text-decoration: underline;
-}
-.footer {
-  background-color: #005594;
-  color: #ffffff;
-  font-size: 14px;
-  width: 100%;
-  height: 160px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.footer a:link,
-.footer a:visited,
-.footer a:active {
-  color: #ffffff;
-}
-.footer a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
 .formulario-neutro > div {
   border: 1px solid #d1d1d1;
   background: #f7f7f7;
@@ -573,3 +535,4 @@ body {
   padding-top: 80px;
   padding-bottom: 160px;
 }
+/*# sourceMappingURL=shared.css.map */

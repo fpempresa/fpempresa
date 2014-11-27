@@ -1,3 +1,10 @@
+app.controller("HeaderController", [function () {
+        //Esto es para que se cierre el menu cuando está en un movil.
+        $('.navbar-collapse ul li a').click(function () {
+            $('.navbar-toggle:visible').click();
+        });
+    }]);
+
 
 app.controller("LoginController", ['$scope', 'session', 'dialog', '$window', 'goPage', function ($scope, session, dialog, $window, goPage) {
         $scope.usuario = null;
@@ -54,7 +61,7 @@ app.run(['$rootScope', '$location', '$timeout', function ($rootScope, $location,
                     }
                 });
             } else {
-               showNavBar();
+                showNavBar();
             }
         });
 
@@ -74,30 +81,27 @@ function showHideMenu($timeout) {
     } else {
         $timeout(function () {
             showHideMenu($timeout);
-        },1);
+        }, 1);
     }
 
 
 }
 
 function showNavBar() {
-    var element=$(".navbar-fixed-top");
-    var cssClass="top-nav-collapse";
+    var element = $(".navbar-fixed-top");
+    var cssClass = "top-nav-collapse";
     if (!element.hasClass(cssClass)) {
         element.addClass(cssClass);
     }
 }
 
 function hideNavBar() {
-    var element=$(".navbar-fixed-top");
-    var cssClass="top-nav-collapse";
+    var element = $(".navbar-fixed-top");
+    var cssClass = "top-nav-collapse";
     if (element.hasClass(cssClass)) {
         element.removeClass(cssClass);
-    }    
+    }
 }
 
 
-$('.navbar-collapse ul li a').click(function () {
-    $('.navbar-toggle:visible').click();
-});
 

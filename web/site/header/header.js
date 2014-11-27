@@ -43,8 +43,8 @@ app.controller("LoginController", ['$scope', 'session', 'dialog', '$window', 'go
 app.run(['$rootScope', '$location', '$timeout', function ($rootScope, $location, $timeout) {
 
         //Esto es para mostrar o ocultar la barra de navegación según si estmaos al principio o no.
-        $rootScope.$on('$routeChangeSuccess', function (newRoute, oldRoute) {
-            if ($location.path() === "/") {
+        $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
+            if (currentRoute.originalPath === "/") {
                 showHideMenu($timeout);
                 $(window).scroll(function () {
                     if ($location.path() === "/") {
@@ -73,13 +73,8 @@ function showHideMenu($timeout) {
         }
     } else {
         $timeout(function () {
-            offset = $(".navbar").offset();
-            if (offset.top > 80) {
-                showNavBar();
-            } else {
-                hideNavBar();
-            }
-        });
+            showHideMenu($timeout);
+        },1);
     }
 
 

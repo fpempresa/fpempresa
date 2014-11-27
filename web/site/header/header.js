@@ -53,13 +53,14 @@ app.run(['$rootScope', '$location', '$timeout', function ($rootScope, $location,
         $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
             if (currentRoute.originalPath === "/") {
                 showHideMenu($timeout);
-                $(window).scroll(function () {
-                    if ($location.path() === "/") {
-                        showHideMenu($timeout);
-                    } else {
-                        showNavBar();
-                    }
-                });
+            } else {
+                showNavBar();
+            }
+        });
+
+        $(window).scroll(function () {
+            if ($location.path() === "/") {
+                showHideMenu($timeout);
             } else {
                 showNavBar();
             }
@@ -90,17 +91,17 @@ function showHideMenu($timeout) {
 function showNavBar() {
     var element = $(".navbar-fixed-top");
     var cssClass = "top-nav-collapse";
-    if (!element.hasClass(cssClass)) {
-        element.addClass(cssClass);
-    }
+    //if (!element.hasClass(cssClass)) {
+    element.addClass(cssClass);
+    //}
 }
 
 function hideNavBar() {
     var element = $(".navbar-fixed-top");
     var cssClass = "top-nav-collapse";
-    if (element.hasClass(cssClass)) {
-        element.removeClass(cssClass);
-    }
+    //if (element.hasClass(cssClass)) {
+    element.removeClass(cssClass);
+    //}
 }
 
 

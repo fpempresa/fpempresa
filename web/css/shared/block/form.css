@@ -31,9 +31,7 @@
   color: #005595;
   font-family: Arial Narrow, Arial, sans-serif;
 }
-.form__input,
-form__select,
-form__text-area {
+.form__field {
   border-color: #C7C7C7;
 }
 .form__button--ok {

@@ -1,46 +1,54 @@
-<div class="container fpempresa-container" style="padding-top:100px;padding-bottom:20px;">
-    <div class="row">
-        <div class="col-md-3 col-md-offset-1" style="text-align:right">
+<div class="container-fluid form__page">
+    <div class="row"  >    
+        <div class="col-xs-12 form--center"  >
+            <h3 class="form__main-title" >&nbsp;&nbsp;Crea una cuenta&nbsp;&nbsp;</h3>
             <br>
-            <img ng-src="{{getContextPath()}}/img/titulado-empresa-centro.png" alt="registro">
+            <br>
+            <br>
         </div>
-        <div class="col-md-3 ayuda" >
-            <h3>Tipo de usuario</h3>
-            <p>Debes elegir el tipo de usuario que eres. Segun tu elecci&oacute;n podr&aacute;s acceder a unos servicio u otros de FPempresa</p>
-        </div> 
-        <div class="col-md-5 formulario-neutro">
-            <div>
-                <h3>&iquest;Quien eres?</h3>
-                
-                <ix3-business-messages></ix3-business-messages>
-                <form name="mainForm" id="mainForm">
+    </div>
+
+    <div class="row">
+        <div class="hidden-xs col-sm-3 col-sm-offset-1" style="text-align: right">
+            <img ng-src="{{getContextPath()}}/img/icons/titulado_blanco.png" alt="titulado">
+            <img ng-src="{{getContextPath()}}/img/icons/centro_blanco.png" alt="centro">
+            <img ng-src="{{getContextPath()}}/img/icons/empresa_blanco.png" alt="empresa">
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-7 form__container"  >
+            <ix3-business-messages></ix3-business-messages>
+            <p class="form__text">Debes elegir el tipo de usuario que eres. Segun tu elecci&oacute;n podr&aacute;s acceder a unos servicio u otros de FPempresa</p>
+            <h3>&iquest;Quien eres?</h3>
+            <form name="mainForm" id="mainForm">
                 <div class="radio">
-                    <label>
-                        <input ng-model="model.tipoUsuario" type="radio" name="opciones"  value="TITULADO">
+                    <label class="form__label">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones"  value="TITULADO" class="form__field">
                         Un <strong>titulado</strong> de formacion profesional que busca empleo
                     </label>
                 </div>
                 <br>
                 <div class="radio">
-                    <label>
-                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="EMPRESA">
+                    <label class="form__label">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="EMPRESA" class="form__field">
                         Una <strong>empresa</strong> que busca profesionales
                     </label>
                 </div>
                 <br>
                 <div class="radio">
-                    <label>
-                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="CENTRO">
+                    <label class="form__label">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="CENTRO" class="form__field">
                         Un <strong>centro educativo</strong> que quiere tener su bolsa de trabajo
                     </label>
-                </div>                       
+                </div>
+                <br>
+                <br>
                 <div class="form-group">
                     <br>
-                    <button type="button" class="btn btn-standard" ng-click="next()" >Siguiente</button>
+                    <button type="button" class="btn btn-lg form__button form__button--ok " ng-click="next()" >Siguiente</button>
                 </div>
-                </form>
-            </div>
-        </div> 
-    </div>
+            </form>
+
+        </div>        
+    </div>    
 </div>
+
 

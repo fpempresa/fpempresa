@@ -27,9 +27,19 @@
   color: #005595;
   font-family: Arial, sans-serif;
 }
+.form__title {
+  font-size: 23px;
+  color: #005595;
+  font-family: Arial Narrow, Arial, sans-serif;
+  border-color: #005595;
+}
 .form__text {
   color: #005595;
   font-family: Arial Narrow, Arial, sans-serif;
+}
+.form__text--help {
+  text-align: left;
+  padding-bottom: 10px;
 }
 .form__field {
   border-color: #C7C7C7;

@@ -1,69 +1,130 @@
-<div class="container fpempresa-container" style="padding-top:100px;padding-bottom:20px;">
-    <div class="row" >
-
-        <div class="col-md-3 col-md-offset-1" style="text-align:right">
+<div class="container-fluid form__page">
+    <div class="row"  >    
+        <div class="col-xs-12 form--center"  >
+            <x3 class="form__main-title" >&nbsp;&nbsp;Crea una cuenta&nbsp;&nbsp;</x3>
             <br>
-            <img ng-src="{{getContextPath()}}/img/titulado.png" alt="registro" ng-if="model.tipoUsuario === 'TITULADO'">
-            <img ng-src="{{getContextPath()}}/img/empresa.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'">
-            <img ng-src="{{getContextPath()}}/img/centro.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'">
+            <br>
+            <br>
         </div>
-        <div class="col-md-3 ayuda" >
-            <h3 ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</h3>
-            <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</h3>
-            <h3 ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro Educativo</h3>
-            <p ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
-            <p ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
-            <p ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>
+    </div>
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-sm-offset-1" ></div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 "  >
+            <p class="form__text form__text--help" ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
+            <p class="form__text form__text--help" ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
+            <p class="form__text form__text--help" ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>        
         </div>
-        <div class="col-md-5 formulario-neutro">
-            <div>
-                <h3 ng-if="model.tipoUsuario === 'TITULADO'">Crea tu cuenta de Titulado</h3>
-                <h3 ng-if="model.tipoUsuario === 'EMPRESA'">Crea tu cuenta de Empresa</h3>
-                <h3 ng-if="model.tipoUsuario === 'CENTRO'">Crea tu cuenta de Centro Educativo</h3>
+    </div>
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-sm-offset-1" style="text-align: right" ng-switch on="model.tipoUsuario">
+            <img ng-if="model.tipoUsuario !== 'TITULADO'" ng-src="{{getContextPath()}}/img/icons/titulado_blanco.png" alt="titulado" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'TITULADO'" ng-src="{{getContextPath()}}/img/icons/titulado_azul.png" alt="titulado" style="width: 120px;height: 120px;">
+            <br>
+            <img ng-if="model.tipoUsuario !== 'CENTRO'" ng-src="{{getContextPath()}}/img/icons/centro_blanco.png" alt="centro" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'CENTRO'" ng-src="{{getContextPath()}}/img/icons/centro_azul.png" alt="centro" style="width: 120px;height: 120px;">
+            <br>
+            <img ng-if="model.tipoUsuario !== 'EMPRESA'" ng-src="{{getContextPath()}}/img/icons/empresa_blanco.png" alt="empresa" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'EMPRESA'" ng-src="{{getContextPath()}}/img/icons/empresa_azul.png" alt="empresa" style="width: 120px;height: 120px;"> 
+
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 form__container"  >
+
+
+            <form name="mainForm" id="mainForm" >
+                <legend class="form__title" ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</legend>
+                <legend class="form__title" ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</legend>
+                <legend class="form__title" ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro Educativo</legend> 
 
                 <ix3-business-messages></ix3-business-messages>
 
-                <form name="mainForm" id="mainForm">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input ng-model="model.nombre" id="nombre" name="nombre" type="text" class="form-control"  placeholder="nombre" required />
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-3 control-label">Nombre</label>
+                            <div class="col-xs-9">
+                                <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  required>
+                            </div>
+                        </div> 
                     </div>
-                    <div class="form-group">
-                        <label for="ape1">1&ordm; Apellido</label>
-                        <input ng-model="model.ape1"  id="ape1" name="ape1" type="text" class="form-control" placeholder="1&ordm; apellido" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="ape2">2&ordm; Apellido</label>
-                        <input ng-model="model.ape2" type="text" id="ape2" name="ape2" class="form-control" placeholder="2&ordm; apellido"  />
-                    </div>
-                    <div class="form-group">
-                        <label for="eMail">Correo electrónico</label>
-                        <input ng-model="model.eMail" type="email" id="eMail" name="eMail" class="form-control"  placeholder="tu@correoelectronico.es" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contrase&ntilde;a</label>
-                        <input ng-model="model.password" type="password" id="password" name="password" class="form-control"  placeholder="contrase&ntilde;a" ng-required="true" />
-                    </div>
-                    <div class="form-group">
-                        <label for="repeatPassword">Confirmar contrase&ntilde;a</label>
-                        <input ng-model="model.confirmPassword" type="password" id="repeatPassword" name="confirmPassword" class="form-control"  placeholder="confirmar contrase&ntilde;a" required />
-                    </div>
+                </div>
 
-                    <div class="input-group">
-                        <div class="checkbox">
-                            <label for="aceptarCondicionesPolitica">
-                                <input ng-model="model.aceptarCondicionesPolitica" type="checkbox" id="aceptarCondicionesPolitica" name="aceptarCondicionesPolitica"  > Acepto los <a href="{{getContextPath()}}/site/index.html#/docs/terminos"  target="_blank">terminos del servicio</a> y la <a href="{{getContextPath()}}/site/index.html#/docs/privacidad"  target="_blank">politica de privacidad</a> de FPempresa
-                            </label>
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-3 control-label">1&ordm; Apellido</label>
+                            <div class="col-xs-9">
+                                <input ng-model="model.ape1" type="text" class="form-control" id="ape1" name="ape1"  required>
+                            </div>
+                        </div>                     
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-3 control-label">2&ordm; Apellido</label>
+                            <div class="col-xs-9">
+                                <input ng-model="model.ape2" type="text" class="form-control" id="ape2" name="ape2"  required>
+                            </div>
+                        </div>  
+                    </div>
+                </div>    
+
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-3 control-label">Correo electr&oacute;nico</label>
+                            <div class="col-xs-9">
+                                <input ng-model="model.eMail" type="text" class="form-control" id="eMail" name="eMail"  required>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="col-xs-6  form-horizontal">
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-6 control-label">Contrase&ntilde;a</label>
+                            <div class="col-xs-6">
+                                <input ng-model="model.password" type="text" class="form-control" id="password" name="password"  required>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-xs-6  form-horizontal">
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-6 control-label">Confirmar contrase&ntilde;a</label>
+                            <div class="col-xs-6">
+                                <input ng-model="model.confirmPassword" type="text" class="form-control" id="confirmPassword" name="confirmPassword"  required>
+                            </div>
+                        </div> 
+                    </div>  
+                </div>
+                <div class="row" >
+
+                    <div class="col-xs-offset-3 col-xs-6 form-horizontal"> 
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input ng-model="model.aceptarCondicionesPolitica" type="checkbox" id="aceptarCondicionesPolitica" name="aceptarCondicionesPolitica"  > Acepto los <a href="{{getContextPath()}}/site/index.html#/docs/terminos"  target="_blank">terminos del servicio</a> y la <a href="{{getContextPath()}}/site/index.html#/docs/privacidad"  target="_blank">politica de privacidad</a> de FPempresa
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                    </div>                        
-                </form> 
+                    </div>
 
-                <br>                        
-                <button type="button" class="btn btn-standard" ng-click="registrarse()" >Registrarse</button>
-            </div>
-
-        </div>
-
-    </div>  
+                    <div class="col-xs-3 form-horizontal"> 
+                        <div class="form-group">
+                            <div class="col-xs-offset-3 col-xs-9">
+                                <div class=" pull-right">
+                                    <button type="button" class="btn btn-lg form__button form__button--ok" ng-click="registrarse()" >Registrarse</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>        
+    </div>    
 </div>
 

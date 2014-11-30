@@ -5,7 +5,7 @@ angular.module('es.logongas.ix3').directive('ix3BusinessMessages', ['bootstrap',
             restrict: 'E',
             replace:true,
             template: '<div data-ng-show="realScope.businessMessages.length > 0">' +
-                    '       <div ng-class="{\'alert-error\':bootstrap.version===2,\'alert-danger\':bootstrap.version>=3}" class="alert"  >' +
+                    '       <div ng-class="{\'alert-error\':bootstrap.version===2,\'alert-danger\':bootstrap.version>=3}" style="text-align:left" class="alert"  >' +
                     '           <button type="button" class="close" ng-click="realScope.businessMessages=[]">&times;</button>' +
                     '           <strong>Se han producido los siguientes errores:</strong>' +
                     '           <ul >' +

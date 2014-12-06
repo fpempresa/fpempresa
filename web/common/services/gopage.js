@@ -2,7 +2,7 @@
 /**
  * Servicio para ir a la página de inicio de un usuario
  */
-angular.module("es.logongas.ix3").service("goPage", ['session', '$window', 'remoteServiceFactory','dialog', function(session, $window, remoteServiceFactory,dialog) {
+angular.module("common").service("goPage", ['session', '$window', 'remoteServiceFactory', function(session, $window, remoteServiceFactory) {
 
         function goHomeUsuario(usuario) {
             if (usuario.tipoUsuario === "TITULADO") {

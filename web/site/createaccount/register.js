@@ -1,13 +1,5 @@
 
-app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/createaccount/register/:tipoUsuario', {
-            templateUrl: 'createaccount/register.html',
-            controller: 'CreateAccountRegisterController'
-        });
-    }]);
-
-
-app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'remoteServiceFactory', 'goPage', 'formValidator', function($scope, $routeParams, $location, remoteServiceFactory, goPage, formValidator) {
+app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'remoteServiceFactory', 'formValidator', function($scope, $routeParams, $location, remoteServiceFactory, formValidator) {
         var usuarioRemoteService = remoteServiceFactory.getRemoteService("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;

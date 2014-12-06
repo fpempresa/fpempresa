@@ -2,20 +2,27 @@
 
 (function () {
 
-    app.directive("fpeHideOnScroll", ['$window', function ($window) {
+    app.directive("fpeHideOnScroll", ['$window','$rootScope', '$location', function ($window, $rootScope, $location) {
             var directiveDefinitionObject = {
-                template: function (tElement, tAttrs) {
-                    return "";
-                },
                 compile: function (tElement, tAttrs) {
                     return {
                         pre: function (scope, iElement, iAttrs, controller, transcludeFn) {
                         },
                         post: function (scope, iElement, iAttrs, controller, transcludeFn) {
-                            applyStyleOnScroll(iElement, "top-nav-collapse");
+                            var config={
+                                cssClassName:"top-nav-collapse",
+                                threshold:80,
+                                applyInPath:"/"
+                            }
+
+                            showHide(iElement, config, $location.path());
+
+                            $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
+                                showHide(iElement,config, currentRoute.originalPath);
+                            });
 
                             $($window).scroll(function () {
-                                applyStyleOnScroll(iElement, "top-nav-collapse");
+                                showHide(iElement, config, $location.path());
                             });
                         }
                     };
@@ -25,17 +32,17 @@
             return directiveDefinitionObject;
         }]);
 
-    function applyStyleOnScroll(iElement, cssClassName) {
-        var offset = iElement.offset();
-
-        if (offset.top > 80) {
-            showNavBar(iElement);
-            iElement.addClass(cssClassName);
+    function showHide(iElement, config, currentPath) {
+        if (currentPath === config.applyInPath) {
+            var offset = iElement.offset();
+            if (offset.top > config.threshold) {
+                iElement.addClass(config.cssClassName);
+            } else {
+                iElement.removeClass(config.cssClassName);
+            }
         } else {
-            iElement.removeClass(cssClassName);
+            iElement.addClass(config.cssClassName);
         }
     }
-
-
 
 })();

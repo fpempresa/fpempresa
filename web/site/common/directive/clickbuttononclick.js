@@ -16,7 +16,7 @@ app.directive("fpeClickButtonOnClick", ['$window', '$rootScope', '$location', fu
                     },
                     post: function (scope, iElement, iAttrs, controller, transcludeFn) {
                         iElement.on("click",function() {
-                            $("#"+iAttrs.fpeClickButtonOnClick).click();
+                            $("#"+iAttrs.fpeClickButtonOnClick+":visible").click();
                         });
                     }
                 };

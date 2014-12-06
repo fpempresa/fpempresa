@@ -1,10 +1,5 @@
 "use strict";
-app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: 'login/login.html',
-            controller: 'LoginController'
-        });
-    }]);
+
 
 
 app.controller("LoginController", ['$scope', 'session','$window','goPage', function($scope, session,$window,goPage) {

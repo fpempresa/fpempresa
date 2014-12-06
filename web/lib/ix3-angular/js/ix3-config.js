@@ -43,9 +43,3 @@ angular.module('es.logongas.ix3').config(["$controllerProvider", "$compileProvid
             service: $provide.service
         };
     }]);
-
-angular.module('es.logongas.ix3').run(['$rootScope', function($rootScope) {
-        $rootScope.getContextPath = getContextPath;
-    }]);
-
-angular.module('es.logongas.ix3').value("apiurl", getContextPath() + "/api");

@@ -1,12 +1,4 @@
 
-app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/createaccount/init', {
-            templateUrl: 'createaccount/init.html',
-            controller: 'CreateAccountInitController'
-        });
-    }]);
-
-
 app.controller('CreateAccountInitController', ['$scope', '$location', 'remoteServiceFactory', 'formValidator', function ($scope, $location, remoteServiceFactory, formValidator) {
         var usuarioRemoteService = remoteServiceFactory.getRemoteService("Usuario");
         $scope.model = {};

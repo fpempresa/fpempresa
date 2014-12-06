@@ -1,6 +1,6 @@
 "use strict";
 
-app.directive('currentdate', ['$filter',function($filter) {
+angular.module("common").directive('currentdate', ['$filter',function($filter) {
         return {
             restrict: 'E',
             replace:true,

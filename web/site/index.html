@@ -8,9 +8,7 @@
         <meta name="author" content="">
         <link rel="shortcut icon" href="">
 
-        <title>fpempresa</title>
-
-        <script type='text/javascript' src='../js/server.js.jsp'></script>        
+        <title>fpempresa</title>       
 
         <link href="../lib/jquery-ui/css/jquery-ui.css"                 rel="stylesheet"> 
         <link href="../lib/bootstrap/css/bootstrap.css"                 rel="stylesheet">
@@ -48,6 +46,7 @@
         <!-- build:js js/ix3-angular.min.js -->
         <script type='text/javascript' src='../lib/ix3-angular/js/ix3-modules.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/ix3-config.js'></script>
+        
         <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/routes.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/list.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/detail.js'></script>
@@ -58,6 +57,7 @@
         <script type='text/javascript' src='../lib/ix3-angular/js/services/remoteservice.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/session.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/utils.js'></script>
+        
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3businessmessages.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3clear.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3date.js'></script>
@@ -70,22 +70,40 @@
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/jquery-ui/ix3datepicker.js'></script>
         <!-- endbuild -->        
 
-        <!-- build:js js/application.min.js -->
-        <script type='text/javascript' src='../js/app.js'></script>
-        <script type='text/javascript' src='../js/services/gopage.js'></script>
-        <script type='text/javascript' src='../js/directives/currentdate.js'></script>
-        <script type='text/javascript' src='footer/footer.js'></script>
-        <script type='text/javascript' src='header/header.js'></script>
+        <!-- build:js js/common.min.js -->
+        <script type="text/javascript" src="../common/server.js.jsp"></script>        
+        <script type="text/javascript" src="../common/common-module.js"></script>
+        <script type="text/javascript" src="../common/directives/currentdate.js"></script>
+        <script type="text/javascript" src="../common/services/gopage.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js js/myapp.min.js -->
-        <script type='text/javascript' src='index.js'></script>
-        <script type='text/javascript' src='main.js'></script>
-        <script type='text/javascript' src='docs/docs.js'></script>
-        <script type='text/javascript' src='createaccount/init.js'></script>
-        <script type='text/javascript' src='createaccount/register.js'></script>
-        <script type='text/javascript' src='createaccount/end.js'></script>
-        <script type='text/javascript' src='login/login.js'></script>
+        <!-- build:js js/site.min.js -->
+        <script type="text/javascript" src="app.js" ></script>
+        <script type="text/javascript" src="app-constant.js" ></script>
+        <script type="text/javascript" src="app-config.js" ></script>   
+        <script type="text/javascript" src="app-route.js" ></script>        
+        <script type="text/javascript" src="app-run.js" ></script>
+        <script type="text/javascript" src="index.js"></script>
+       
+        <script type="text/javascript" src="common/directive/hideonscroll.js"></script>
+        
+        <script type="text/javascript" src="createaccount/createaccount-route.js" ></script>
+        <script type="text/javascript" src="createaccount/register.js" ></script>
+        <script type="text/javascript" src="createaccount/init.js" ></script>
+        <script type="text/javascript" src="createaccount/end.js" ></script>
+        
+        <script type="text/javascript" src="docs/docs-route.js" ></script>        
+
+        <script type='text/javascript' src='footer/footer.js'></script>
+        
+        <script type='text/javascript' src='header/header.js'></script>        
+
+        <script type="text/javascript" src="login/login-route.js"></script>
+        <script type="text/javascript" src="login/login.js"></script>
+        
+        <script type="text/javascript" src="main/main-route.js"></script>
+        <script type="text/javascript" src="main/main.js"></script>        
+        
         <!-- endbuild -->
 
 

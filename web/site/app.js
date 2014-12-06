@@ -1,6 +1,6 @@
 "user strict";
 
-var app = angular.module('app', ['ngRoute', 'es.logongas.ix3']);
+var app = angular.module('app', ['ngRoute', 'es.logongas.ix3','common']);
 
 
 

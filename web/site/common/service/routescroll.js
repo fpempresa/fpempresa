@@ -5,7 +5,7 @@
  * se pueda navegar hasta un elemento.
  * El Scroll es animado.
  */
-function RouteScroll($rootScope, $anchorScroll,animateScroll) {
+function RouteScroll($rootScope, $anchorScroll, animateScroll) {
 
     var _paramName = "$scrollTo";
 
@@ -35,13 +35,12 @@ function RouteScroll($rootScope, $anchorScroll,animateScroll) {
         });
     }
 
-
     return {
         getParamName: getParamName,
         enable: enable
     }
 
 }
-RouteScroll.$inject = ['$rootScope', '$anchorScroll','animateScroll'];
+RouteScroll.$inject = ['$rootScope', '$anchorScroll', 'animateScroll'];
 
 app.factory("routeScroll", RouteScroll);

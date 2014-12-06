@@ -21,16 +21,22 @@ function AnimateScroll($timeout) {
      * @param {Element || String} element Elemento hasta el que se hace un Scroll. Puede ser el propio elemento o un String con el "id" del elemento
      */
     var toElement = function (element) {
+        var offset;
         if (typeof (element) === "string") {
-            element = $("#" + element);
+            offset = $("#" + element).offset();
+        } else {
+            offset = element.offset();
         }
-
-        var offset = element.offset();
 
         if (offset) {
             toTop(offset.top);
         } else {
             $timeout(function () {
+                if (typeof (element) === "string") {
+                    offset = $("#" + element).offset();
+                } else {
+                    offset = element.offset();
+                }
                 toTop(offset.top);
             }, 1);
         }

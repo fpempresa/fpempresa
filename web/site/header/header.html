@@ -4,7 +4,7 @@
             <button id="buttonMenuHeader" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="#/?scrollTo=page-top">
+            <a class="navbar-brand" href ng-click="navigateWithScroll('/','top')">
                 <img src="../img/logo/logo.png"  alt="logo"  >&nbsp;
             </a>
         </div>
@@ -14,16 +14,16 @@
             <ul class="nav navbar-nav">
 
                 <li class="hidden">
-                    <a href="#/?scrollTo=page-top" fpe-click-button-on-click="buttonMenuHeader"></a>
+                    <a href ng-click="navigateWithScroll('/','top')" fpe-click-button-on-click="buttonMenuHeader"></a>
                 </li>
                 <li>
-                    <a  href="#/?scrollTo=ofrecemos" fpe-click-button-on-click="buttonMenuHeader">Que ofrecemos</a>
+                    <a  href ng-click="navigateWithScroll('/','ofrecemos')" fpe-click-button-on-click="buttonMenuHeader">Que ofrecemos</a>
                 </li>
                 <li>
-                    <a  href="#/?scrollTo=empleo" fpe-click-button-on-click="buttonMenuHeader">Por el empleo</a>
+                    <a  href ng-click="navigateWithScroll('/','empleo')" fpe-click-button-on-click="buttonMenuHeader">Por el empleo</a>
                 </li>
                 <li>
-                    <a  href="#/?scrollTo=porque" fpe-click-button-on-click="buttonMenuHeader">Por qu&eacute;</a>
+                    <a  href ng-click="navigateWithScroll('/','porque')" fpe-click-button-on-click="buttonMenuHeader">Por qu&eacute;</a>
                 </li>
                 <li>
                     <a href="#/login" fpe-click-button-on-click="buttonMenuHeader">Entrar</a>

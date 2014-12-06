@@ -1,5 +1,5 @@
 app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/main', {
+        $routeProvider.when('/', {
             templateUrl: 'main/main.html',
             controller: 'MainController'
         });

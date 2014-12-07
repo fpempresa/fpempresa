@@ -1,25 +1,25 @@
-.--color-dark {
+.generic-block--color-dark {
   color: #005594;
 }
-.--color-dark-high {
+.generic-block--color-dark-high {
   color: #000000;
 }
-.--color-light {
+.generic-block--color-light {
   color: #f7f9f8;
 }
-.--color-light-high {
+.generic-block--color-light-high {
   color: #ffffff;
 }
-.--background-color-dark {
+.generic-block--background-color-dark {
   background-color: #005594;
 }
-.--background-color-dark-high {
+.generic-block--background-color-dark-high {
   background-color: #000000;
 }
-.--background-color-light {
+.generic-block--background-color-light {
   background-color: #f7f9f8;
 }
-.--background-color-light-high {
+.generic-block--background-color-light-high {
   background-color: #ffffff;
 }
 .expose__container {
@@ -168,6 +168,12 @@
   vertical-align: middle;
   line-height: 48px;
 }
+@media (max-width: 767px) {
+  .navbar-nav li a {
+    height: 40px;
+    line-height: 24px;
+  }
+}
 .navbar-custom {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(247, 249, 248, 0.3);
@@ -198,6 +204,8 @@
   background-color: rgba(247, 249, 248, 0.3);
 }
 .navbar-custom .nav li a {
+  padding-left: 9px;
+  padding-right: 9px;
   -webkit-transition: background 0.3s ease-in-out;
   -moz-transition: background 0.3s ease-in-out;
   transition: background 0.3s ease-in-out;

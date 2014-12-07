@@ -1,25 +1,25 @@
-.--color-dark {
+.generic-block--color-dark {
   color: #005594;
 }
-.--color-dark-high {
+.generic-block--color-dark-high {
   color: #000000;
 }
-.--color-light {
+.generic-block--color-light {
   color: #f7f9f8;
 }
-.--color-light-high {
+.generic-block--color-light-high {
   color: #ffffff;
 }
-.--background-color-dark {
+.generic-block--background-color-dark {
   background-color: #005594;
 }
-.--background-color-dark-high {
+.generic-block--background-color-dark-high {
   background-color: #000000;
 }
-.--background-color-light {
+.generic-block--background-color-light {
   background-color: #f7f9f8;
 }
-.--background-color-light-high {
+.generic-block--background-color-light-high {
   background-color: #ffffff;
 }
 .expose__container {

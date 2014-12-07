@@ -10,11 +10,18 @@
         a {
             height: @navbar-height;
             vertical-align:middle;
-            line-height: @navbar-height*0.6;        
+            line-height: @navbar-height*0.6;  
+            @media(max-width:767px) {
+                height: @navbar-height/2;
+                line-height: @navbar-height*0.3;
+            }            
         }
     }
 }
-
+.navbar-collapse {
+//    padding-left: 15px;
+//    padding-right: 15px;
+}
 .navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid fade(@color-light, 30%);
@@ -46,6 +53,8 @@
                 background-color: fade(@color-light, 30%);
             }
             a {
+                padding-left: 9px;
+                padding-right: 9px;
                 -webkit-transition: background .3s ease-in-out;
                 -moz-transition: background .3s ease-in-out;
 

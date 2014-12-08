@@ -18,11 +18,6 @@
   padding-bottom: 10px;
   font-family: Arial Narrow, Arial, sans-serif;
 }
-.form__container {
-  border: 1px solid #005595;
-  background-color: #f1f1f1;
-  padding: 30px;
-}
 .form__label {
   color: #005595;
   font-family: Arial, sans-serif;
@@ -44,86 +39,127 @@
 .form__field {
   border-color: #C7C7C7;
 }
-.form__button--ok {
+.form__button--default {
   color: #ffffff;
-  background-color: #3360a1;
-  border-color: #2d548e;
+  background-color: #005594;
+  border-color: #00467b;
 }
-.form__button--ok:hover,
-.form__button--ok:focus,
-.form__button--ok:active,
-.form__button--ok.active,
-.open .dropdown-toggle.form__button--ok {
+.form__button--default:hover,
+.form__button--default:focus,
+.form__button--default:active,
+.form__button--default.active,
+.open .dropdown-toggle.form__button--default {
   color: #ffffff;
-  background-color: #294e82;
-  border-color: #1e395f;
+  background-color: #003e6b;
+  border-color: #00233d;
 }
-.form__button--ok:active,
-.form__button--ok.active,
-.open .dropdown-toggle.form__button--ok {
+.form__button--default:active,
+.form__button--default.active,
+.open .dropdown-toggle.form__button--default {
   background-image: none;
 }
-.form__button--ok.disabled,
-.form__button--ok[disabled],
-fieldset[disabled] .form__button--ok,
-.form__button--ok.disabled:hover,
-.form__button--ok[disabled]:hover,
-fieldset[disabled] .form__button--ok:hover,
-.form__button--ok.disabled:focus,
-.form__button--ok[disabled]:focus,
-fieldset[disabled] .form__button--ok:focus,
-.form__button--ok.disabled:active,
-.form__button--ok[disabled]:active,
-fieldset[disabled] .form__button--ok:active,
-.form__button--ok.disabled.active,
-.form__button--ok[disabled].active,
-fieldset[disabled] .form__button--ok.active {
-  background-color: #3360a1;
-  border-color: #2d548e;
+.form__button--default.disabled,
+.form__button--default[disabled],
+fieldset[disabled] .form__button--default,
+.form__button--default.disabled:hover,
+.form__button--default[disabled]:hover,
+fieldset[disabled] .form__button--default:hover,
+.form__button--default.disabled:focus,
+.form__button--default[disabled]:focus,
+fieldset[disabled] .form__button--default:focus,
+.form__button--default.disabled:active,
+.form__button--default[disabled]:active,
+fieldset[disabled] .form__button--default:active,
+.form__button--default.disabled.active,
+.form__button--default[disabled].active,
+fieldset[disabled] .form__button--default.active {
+  background-color: #005594;
+  border-color: #00467b;
 }
-.form__button--ok .badge {
-  color: #3360a1;
+.form__button--default .badge {
+  color: #005594;
   background-color: #ffffff;
 }
-.form__button--alternative {
+.form__button--primary {
   color: #ffffff;
-  background-color: #5bba5c;
-  border-color: #4ab14c;
+  background-color: #e68400;
+  border-color: #cd7500;
 }
-.form__button--alternative:hover,
-.form__button--alternative:focus,
-.form__button--alternative:active,
-.form__button--alternative.active,
-.open .dropdown-toggle.form__button--alternative {
+.form__button--primary:hover,
+.form__button--primary:focus,
+.form__button--primary:active,
+.form__button--primary.active,
+.open .dropdown-toggle.form__button--primary {
   color: #ffffff;
-  background-color: #46a647;
-  border-color: #388639;
+  background-color: #bd6d00;
+  border-color: #8f5200;
 }
-.form__button--alternative:active,
-.form__button--alternative.active,
-.open .dropdown-toggle.form__button--alternative {
+.form__button--primary:active,
+.form__button--primary.active,
+.open .dropdown-toggle.form__button--primary {
   background-image: none;
 }
-.form__button--alternative.disabled,
-.form__button--alternative[disabled],
-fieldset[disabled] .form__button--alternative,
-.form__button--alternative.disabled:hover,
-.form__button--alternative[disabled]:hover,
-fieldset[disabled] .form__button--alternative:hover,
-.form__button--alternative.disabled:focus,
-.form__button--alternative[disabled]:focus,
-fieldset[disabled] .form__button--alternative:focus,
-.form__button--alternative.disabled:active,
-.form__button--alternative[disabled]:active,
-fieldset[disabled] .form__button--alternative:active,
-.form__button--alternative.disabled.active,
-.form__button--alternative[disabled].active,
-fieldset[disabled] .form__button--alternative.active {
-  background-color: #5bba5c;
-  border-color: #4ab14c;
+.form__button--primary.disabled,
+.form__button--primary[disabled],
+fieldset[disabled] .form__button--primary,
+.form__button--primary.disabled:hover,
+.form__button--primary[disabled]:hover,
+fieldset[disabled] .form__button--primary:hover,
+.form__button--primary.disabled:focus,
+.form__button--primary[disabled]:focus,
+fieldset[disabled] .form__button--primary:focus,
+.form__button--primary.disabled:active,
+.form__button--primary[disabled]:active,
+fieldset[disabled] .form__button--primary:active,
+.form__button--primary.disabled.active,
+.form__button--primary[disabled].active,
+fieldset[disabled] .form__button--primary.active {
+  background-color: #e68400;
+  border-color: #cd7500;
 }
-.form__button--alternative .badge {
-  color: #5bba5c;
+.form__button--primary .badge {
+  color: #e68400;
+  background-color: #ffffff;
+}
+.form__button--warning {
+  color: #ffffff;
+  background-color: #65ce00;
+  border-color: #58b500;
+}
+.form__button--warning:hover,
+.form__button--warning:focus,
+.form__button--warning:active,
+.form__button--warning.active,
+.open .dropdown-toggle.form__button--warning {
+  color: #ffffff;
+  background-color: #51a500;
+  border-color: #3a7700;
+}
+.form__button--warning:active,
+.form__button--warning.active,
+.open .dropdown-toggle.form__button--warning {
+  background-image: none;
+}
+.form__button--warning.disabled,
+.form__button--warning[disabled],
+fieldset[disabled] .form__button--warning,
+.form__button--warning.disabled:hover,
+.form__button--warning[disabled]:hover,
+fieldset[disabled] .form__button--warning:hover,
+.form__button--warning.disabled:focus,
+.form__button--warning[disabled]:focus,
+fieldset[disabled] .form__button--warning:focus,
+.form__button--warning.disabled:active,
+.form__button--warning[disabled]:active,
+fieldset[disabled] .form__button--warning:active,
+.form__button--warning.disabled.active,
+.form__button--warning[disabled].active,
+fieldset[disabled] .form__button--warning.active {
+  background-color: #65ce00;
+  border-color: #58b500;
+}
+.form__button--warning .badge {
+  color: #65ce00;
   background-color: #ffffff;
 }
 /*# sourceMappingURL=form.css.map */

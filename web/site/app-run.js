@@ -14,6 +14,7 @@ app.run(['$rootScope', 'routeScroll', function ($rootScope, routeScroll) {
     routeScroll.enable();
 
     //Permite navegar a una ruta y a un Scroll dentro de ella
+    //Y usarlo directamente desde el HTML
     $rootScope.navigateWithScroll = function (page, scroll) {  
         routeScroll.navigateWithScroll(page, scroll);
     };

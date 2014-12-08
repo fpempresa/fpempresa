@@ -5,7 +5,7 @@
  * se pueda navegar hasta un elemento.
  * El Scroll es animado.
  */
-function RouteScroll($rootScope, $anchorScroll, animateScroll) {
+function RouteScroll($rootScope,$location, $anchorScroll, animateScroll) {
 
     var _paramName = "$scrollTo";
 
@@ -35,12 +35,42 @@ function RouteScroll($rootScope, $anchorScroll, animateScroll) {
         });
     }
 
+    //Permite navegar a una ruta y a un Scroll dentro de ella
+    //sirve pq si el usuario hace Scroll, la ruta no cambia
+    //pero al volver a navegar hay que volver a moverse hasta el scroll.
+    var navigateWithScroll=function (page, scroll) {  
+        var url;
+        if (scroll) {
+            url=page+"?"+_paramName+"="+scroll;
+        } else {
+            url=page;
+        }
+        
+        if ($location.url()===url) {
+            if (scroll) {
+                //Vamos a la misma URL pero como hay Scroll
+                //puede que el usuario se haya desplazado 
+                //y no estemos en el lugar al que queremos ir
+                //por eso hay qye volver a hacer el Scroll
+                animateScroll.toElement(scroll);
+            } else {
+                //si no hay scroll
+                //y queremos ir a la misma URL entonces
+                //seguro que no hay que hacer nada de nada
+            }
+        } else {
+            $location.url(url);
+        }
+    };
+
+
     return {
         getParamName: getParamName,
-        enable: enable
+        enable: enable,
+        navigateWithScroll:navigateWithScroll
     }
 
 }
-RouteScroll.$inject = ['$rootScope', '$anchorScroll', 'animateScroll'];
+RouteScroll.$inject = ['$rootScope','$location', '$anchorScroll', 'animateScroll'];
 
 app.factory("routeScroll", RouteScroll);

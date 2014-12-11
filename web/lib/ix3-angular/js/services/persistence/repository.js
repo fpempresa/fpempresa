@@ -115,7 +115,13 @@
         };
 
         function transform(object, transformers) {
-            if ((typeof (object) === "object") && (object!==null)) {
+            //OJO:Comporbar primeri si es un array pq un array tambien es un objeto
+             if (angular.isArray(object)) {
+                for (var i = 0; i < object.length; i++) {
+                    transform(object[i], transformers);
+                }
+
+            } else if ((typeof (object) === "object") && (object!==null)) {
                 for (var key in object) {
                     if (!object.hasOwnProperty(key)) {
                         continue;
@@ -123,16 +129,9 @@
                     var value = object[key];
                     if (typeof (value) === "object") {
                         transform(value, transformers);
-                    } else if (angular.isArray(value)) {
-                        transform(value, transformers);
                     }
                 }
                 applyTransforms(object, transformers);
-            } else if (angular.isArray(object)) {
-                for (var i = 0; i < object.length; i++) {
-                    transform(object[i], transformers);
-                }
-
             }
 
         }
@@ -146,7 +145,6 @@
             }
 
             if (className) {
-                console.log(className);
                 var entityTransformers = transformers.entity[className];
                 if (entityTransformers) {
 

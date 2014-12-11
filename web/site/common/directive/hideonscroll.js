@@ -13,21 +13,21 @@
                         },
                         post: function (scope, iElement, iAttrs, controller, transcludeFn) {
                             var defaultConfig = {
-                                cssClassName: "top-nav-collapse___",
-                                threshold: 800,
+                                cssClassName: "top-nav-collapse",
+                                threshold: 80,
                                 applyInPath: "/"
                             }
 
-                            $scope.config = $scope.config || defaultConfig;
+                            scope.config = scope.config || defaultConfig;
 
-                            showHide(iElement, $scope.config, $location.path());
+                            showHide(iElement, scope.config, $location.path());
 
                             $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
-                                showHide(iElement, $scope.config, currentRoute.originalPath);
+                                showHide(iElement, scope.config, currentRoute.originalPath);
                             });
 
                             $($window).scroll(function () {
-                                showHide(iElement, $scope.config, $location.path());
+                                showHide(iElement, scope.config, $location.path());
                             });
                         }
                     };

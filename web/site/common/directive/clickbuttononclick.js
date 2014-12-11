@@ -10,6 +10,7 @@
 //TODO: En vez de poner la directiva en cada link <a> sería mejor ponerlo e¡solo en el botón y el él, busque los elementos <a>
 app.directive("fpeClickButtonOnClick", ['$window', '$rootScope', '$location', function ($window, $rootScope, $location) {
         var directiveDefinitionObject = {
+            restrict:"A",
             compile: function (tElement, tAttrs) {
                 return {
                     pre: function (scope, iElement, iAttrs, controller, transcludeFn) {

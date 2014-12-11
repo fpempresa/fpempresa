@@ -4,9 +4,7 @@
 
     app.directive("fpeHideOnScroll", ['$window', '$rootScope', '$location', function ($window, $rootScope, $location) {
             var directiveDefinitionObject = {
-                scope: {
-                    config: "=fpeHideOnScroll"
-                },
+                restrict:"A",
                 compile: function (tElement, tAttrs) {
                     return {
                         pre: function (scope, iElement, iAttrs, controller, transcludeFn) {
@@ -18,16 +16,16 @@
                                 applyInPath: "/"
                             }
 
-                            scope.config = scope.config || defaultConfig;
+                            var config = scope.$eval(iAttrs.fpeHideOnScroll) || defaultConfig;
 
-                            showHide(iElement, scope.config, $location.path());
+                            showHide(iElement, config, $location.path());
 
                             $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
-                                showHide(iElement, scope.config, currentRoute.originalPath);
+                                showHide(iElement, config, currentRoute.originalPath);
                             });
 
                             $($window).scroll(function () {
-                                showHide(iElement, scope.config, $location.path());
+                                showHide(iElement, config, $location.path());
                             });
                         }
                     };

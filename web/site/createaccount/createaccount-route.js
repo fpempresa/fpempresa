@@ -1,6 +1,6 @@
 
 app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/createaccount/init', {
+        $routeProvider.when('/createaccount/init/:tipoUsuario?', {
             templateUrl: 'createaccount/init.html',
             controller: 'CreateAccountInitController'
         });

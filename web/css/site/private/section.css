@@ -1,25 +1,49 @@
-.--color-dark {
+.generic-block--color-dark {
   color: #005594;
 }
-.--color-dark-high {
+.generic-block--color-dark-high {
   color: #000000;
 }
-.--color-light {
+.generic-block--color-light {
   color: #f7f9f8;
 }
-.--color-light-high {
+.generic-block--color-light-high {
   color: #ffffff;
 }
-.--background-color-dark {
+.generic-block--background-color-dark {
   background-color: #005594;
 }
-.--background-color-dark-high {
+.generic-block--background-color-dark-high {
   background-color: #000000;
 }
-.--background-color-light {
+.generic-block--background-color-light {
   background-color: #f7f9f8;
 }
-.--background-color-light-high {
+.generic-block--background-color-light-high {
+  background-color: #ffffff;
+}
+.section--color-dark {
+  color: #005594;
+}
+.section--color-dark-high {
+  color: #000000;
+}
+.section--color-light {
+  color: #f7f9f8;
+}
+.section--color-light-high {
+  color: #ffffff;
+}
+.section--background-color-dark {
+  background-color: #005594;
+}
+.section--background-color-dark-high {
+  background-color: #000000;
+}
+.section--background-color-light {
+  background-color: #f7f9f8;
+}
+.section--background-color-light-high {
   background-color: #ffffff;
 }
 .section__container {
@@ -99,30 +123,6 @@
 }
 .section__separator--color-light-high {
   color: #ffffff;
-  background-color: #ffffff;
-}
-.section--color-dark {
-  color: #005594;
-}
-.section--color-dark-high {
-  color: #000000;
-}
-.section--color-light {
-  color: #f7f9f8;
-}
-.section--color-light-high {
-  color: #ffffff;
-}
-.section--background-color-dark {
-  background-color: #005594;
-}
-.section--background-color-dark-high {
-  background-color: #000000;
-}
-.section--background-color-light {
-  background-color: #f7f9f8;
-}
-.section--background-color-light-high {
   background-color: #ffffff;
 }
 /*# sourceMappingURL=section.css.map */

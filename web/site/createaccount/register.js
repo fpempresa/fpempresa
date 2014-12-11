@@ -16,6 +16,9 @@ app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$l
             }
         };
 
+        $scope.volver = function() {
+            $location.path("/createaccount/init/" + $scope.model.tipoUsuario);
+        }
 
         function validateEqualPasswords() {
             if ($scope.model.password === $scope.model.confirmPassword) {

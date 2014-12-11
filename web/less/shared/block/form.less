@@ -1,3 +1,92 @@
+@import "../variables.less";
+
+@form-page-color-background:#F6F8F7;
+@form-container-color-border:#005595;
+@form-container-color-background:#F1F1F1;
+
+@button-color-background-default:@color-primary;
+@button-color-foreground-default:#FFFFFF;    
+@button-color-background-primary:@color-complementary;
+@button-color-foreground-primary:#FFFFFF;   
+@button-color-background-warning:@color-secondary-a;
+@button-color-foreground-warning:#FFFFFF;
+
+
+.form {
+    &__page {
+        background-color: @form-page-color-background;
+        padding-top:150px;
+        padding-bottom:50px;        
+    }
+
+    &__container {
+        border: 1px solid @form-container-color-border;
+        background-color:@form-container-color-background;
+        padding: 30px;        
+    }
+
+    &--center {
+        text-align: center;
+    }    
+
+    &__main-title {
+        font-size: 30px;     
+
+        border-bottom: solid 2px;
+        display: inline;
+        padding-bottom: 10px;
+        font-family:Arial Narrow, Arial, sans-serif;
+    }    
+
+    &__label {
+        color: @form-container-color-border;
+        font-family:Arial, sans-serif;
+    }
+
+
+    &__title {
+        font-size: 23px;   
+        color: @form-container-color-border;
+        font-family:Arial Narrow, Arial, sans-serif;
+        border-color: @form-container-color-border
+    }
+
+    &__text {
+        color: @form-container-color-border;
+        font-family:Arial Narrow, Arial, sans-serif;
+    }
+
+    &__text--help {
+        text-align: left;
+        padding-bottom: 10px;
+
+    }
+
+    &__field {
+        border-color:#C7C7C7;
+    }
+
+    &__button {
+
+        &--default {
+            .button-variant(@button-color-background-default,@button-color-foreground-default);    
+        };
+        
+        &--primary {
+            .button-variant(@button-color-background-primary,@button-color-foreground-primary);    
+        };
+
+        &--warning {
+            .button-variant(@button-color-background-warning,@button-color-foreground-warning);  
+        };
+        
+        
+    } 
+
+}
+
+
+
 .button-variant(@background,@font-color ) {
     @border:darken(@background, 5%);
     color: @font-color;
@@ -35,91 +124,4 @@
         color: @background;
         background-color: @font-color;
     }
-}
-
-@form-page-background-color:#F6F8F7;
-@form-container-border-color:#005595;
-@form-container-background-color:#F1F1F1;
-
-.form__page {
-    background-color: @form-page-background-color;
-    padding-top:150px;
-    padding-bottom:50px;
-}
-
-.form__container {
-    border: 1px solid @form-container-border-color;
-    background-color:@form-container-background-color;
-    padding: 30px;
-
-}
-
-.form--center {
-    text-align: center;
-}
-
-
-.form__main-title {
-    font-size: 30px;     
-
-    border-bottom: solid 2px;
-    display: inline;
-    padding-bottom: 10px;
-    font-family:Arial Narrow, Arial, sans-serif;
-}
-
-.form__container {
-    border: 1px solid @form-container-border-color;
-    background-color:@form-container-background-color;
-    padding: 30px;
-
-}
-
-.form__label {
-    color: @form-container-border-color;
-    font-family:Arial, sans-serif;
-}
-
-
-.form__title {
-    font-size: 23px;   
-    color: @form-container-border-color;
-    font-family:Arial Narrow, Arial, sans-serif;
-    //padding: 0px;
-    border-color: @form-container-border-color
-}
-
-.form__text {
-    color: @form-container-border-color;
-    font-family:Arial Narrow, Arial, sans-serif;
-}
-
-.form__text--help {
-    text-align: left;
-    padding-bottom: 10px;
-
-}
-
-.form__field {
-    border-color:#C7C7C7;
-}
-
-.form__button {
-
-}
-
-.form__button--ok {
-    .button-variant(#3360A1,#FFFFFF);    
-}
-
-.form__button--cancel {
-
-}
-
-.form__button--danger {
-
-}
-
-.form__button--alternative {
-    .button-variant(#5BBA5C,#FFFFFF);    
 }

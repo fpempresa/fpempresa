@@ -33,7 +33,7 @@
     font-size: 25px;
   }
 }
-.btn__circle {
+.button-circle {
   width: 70px;
   height: 70px;
   margin-top: 15px;
@@ -47,19 +47,19 @@
   -moz-transition: background 0.3s ease-in-out;
   transition: background 0.3s ease-in-out;
 }
-.btn__circle:hover,
-.btn__circle:focus {
+.button-circle:hover,
+.button-circle:focus {
   outline: none;
   color: #f7f9f8;
   background: rgba(247, 249, 248, 0.1);
 }
-.btn__circle i.animated {
+.button-circle i.animated {
   -webkit-transition-property: -webkit-transform;
   -webkit-transition-duration: 1s;
   -moz-transition-property: -moz-transform;
   -moz-transition-duration: 1s;
 }
-.btn__circle:hover i.animated {
+.button-circle:hover i.animated {
   -webkit-animation-name: pulse;
   -moz-animation-name: pulse;
   -webkit-animation-duration: 1.5s;

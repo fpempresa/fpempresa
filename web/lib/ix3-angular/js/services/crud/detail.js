@@ -2,7 +2,7 @@
 
 (function() {
 
-    function CRUDDetail(remoteServiceFactory, $window, formValidator, $location) {
+    function CRUDDetail(repositoryFactory, $window, formValidator, $location) {
 
         this.extendsScope = function(scope, controllerConfig) {
             scope.labelButtonOK = null;
@@ -11,7 +11,7 @@
             scope.models = {};
             scope.businessMessages = null;
             angular.extend(scope, controllerConfig);
-            scope.remoteService = remoteServiceFactory.getRemoteService(scope.entity);
+            scope.repository = repositoryFactory.getRepository(scope.entity);
             scope.idName = scope.metadata[scope.entity].primaryKeyPropertyName;
 
             scope.get = function(fnOK, fnError) {
@@ -19,7 +19,7 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.remoteService.get(scope.id, scope.expand).then(function(data) {
+                scope.repository.get(scope.id, scope.expand).then(function(data) {
                     if (data===null) {
                         //Si retornamos null, realmente lo transformamo en un objeto sin datos, pq sino fallan los select
                         scope.model = {};
@@ -43,7 +43,7 @@
                     parent[scope.parentProperty] = scope.parentId;
                 }
 
-                scope.remoteService.create(scope.expand, parent).then(function(data) {
+                scope.repository.create(scope.expand, parent).then(function(data) {
                     scope.model = data;
                     scope.businessMessages = null;
                     fnOK();
@@ -59,7 +59,7 @@
                 };
                 scope.businessMessages = formValidator.validate(scope.mainForm);
                 if (scope.businessMessages.length === 0) {
-                    scope.remoteService.insert(scope.model, scope.expand).then(function(data) {
+                    scope.repository.insert(scope.model, scope.expand).then(function(data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         scope.controllerAction = "EDIT";
@@ -78,7 +78,7 @@
                 };
                 scope.businessMessages = formValidator.validate(scope.mainForm);
                 if (scope.businessMessages.length === 0) {
-                    scope.remoteService.update(scope.id, scope.model, scope.expand).then(function(data) {
+                    scope.repository.update(scope.id, scope.model, scope.expand).then(function(data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         fnOK();
@@ -93,7 +93,7 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.remoteService.delete(scope.id).then(function(data) {
+                scope.repository.delete(scope.id).then(function(data) {
                     scope.businessMessages = null;
                     fnOK();
                 }, function(businessMessages) {
@@ -314,8 +314,8 @@
 
     }
 
-    angular.module('es.logongas.ix3').factory("crudDetail", ['remoteServiceFactory', '$window', 'formValidator', '$location', function(remoteServiceFactory, $window, formValidator, $location) {
-            return new CRUDDetail(remoteServiceFactory, $window, formValidator, $location);
+    angular.module('es.logongas.ix3').factory("crudDetail", ['repositoryFactory', '$window', 'formValidator', '$location', function(repositoryFactory, $window, formValidator, $location) {
+            return new CRUDDetail(repositoryFactory, $window, formValidator, $location);
         }]);
 
 })();

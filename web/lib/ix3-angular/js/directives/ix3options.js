@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory', function(remoteServiceFactory) {
+angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', function(repositoryFactory) {
         function setValue(obj, key, newValue) {
             var keys = key.split('.');
             for (var i = 0; i < keys.length - 1; i++) {
@@ -51,7 +51,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory
                         if (modelProperty.metadata.type === "OBJECT") {
 
                             if ((modelProperty.metadata.dependProperty) && (modelProperty.metadata.dependProperty.length > 0)) {
-                                var remoteService = remoteServiceFactory.getRemoteService(modelProperty.metadata.className);
+                                var repository = repositoryFactory.getRepository(modelProperty.metadata.className);
                                 var parts = modelProperty.name.split(".");
                                 parts[parts.length - 1] = modelProperty.metadata.dependProperty;
                                 var dependProperty = {
@@ -71,7 +71,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory
                                     if (newValue) {
                                         var filter = {};
                                         filter[filterProperty.name + "." + filterProperty.metadata.primaryKeyPropertyName] = newValue;
-                                        remoteService.search(filter).then(function(values) {
+                                        repository.search(filter).then(function(values) {
                                             $scope.values = values;
 
 
@@ -108,9 +108,9 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['remoteServiceFactory
 
 
                             if ((filters) && (filters.trim() !== "")) {
-                                ngOptions = "value as value.toString for value in values | " + filters + " track by value." + modelProperty.metadata.primaryKeyPropertyName + "";
+                                ngOptions = "value as value.toString() for value in values | " + filters + " track by value." + modelProperty.metadata.primaryKeyPropertyName + "";
                             } else {
-                                ngOptions = "value as value.toString for value in values track by value." + modelProperty.metadata.primaryKeyPropertyName + "";
+                                ngOptions = "value as value.toString() for value in values track by value." + modelProperty.metadata.primaryKeyPropertyName + "";
                             }
 
                         } else {

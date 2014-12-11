@@ -17,8 +17,8 @@
                 <tbody>
                     <tr ng-repeat="formacionAcademica in models">
                         <td >{{getTipoTitulo(formacionAcademica)}}</td>
-                        <td >{{getNombreTitulo(formacionAcademica)}}</td>
-                        <td >{{getNombreCentro(formacionAcademica)}}</td>
+                        <td >{{formacionAcademica.getNombreTitulo()}}</td>
+                        <td >{{formacionAcademica.getNombreCentro()}}</td>
                         <td >
                             <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(formacionAcademica.idFormacionAcademica)">Borrar</button>
                             <button class="btn btn-standard btn-xs" type="button" ng-click="buttonEdit(formacionAcademica.idFormacionAcademica)">Editar</button>

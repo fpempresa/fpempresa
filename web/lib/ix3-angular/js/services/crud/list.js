@@ -2,7 +2,7 @@
 
 (function() {
 
-    function CRUDList(remoteServiceFactory, $location) {
+    function CRUDList(repositoryFactory, $location) {
         this.extendsScope = function(scope, controllerConfig) {
             scope.models = {};
             scope.filter = {};
@@ -11,7 +11,7 @@
             scope.page = {};
             scope.businessMessages = null;
             angular.extend(scope, controllerConfig);
-            scope.remoteService = remoteServiceFactory.getRemoteService(scope.entity);
+            scope.repository = repositoryFactory.getRepository(scope.entity);
             scope.idName = scope.metadata[scope.entity].primaryKeyPropertyName;
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
@@ -46,7 +46,7 @@
                     scope.filter[scope.parentProperty] = scope.parentId;
                 }
 
-                scope.remoteService.search(scope.filter, scope.orderby, undefined, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
+                scope.repository.search(scope.filter, scope.orderby, undefined, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
                     } else {
@@ -121,8 +121,8 @@
     }
 
 
-    angular.module('es.logongas.ix3').factory("crudList", ['remoteServiceFactory', '$location', function(remoteServiceFactory, $location) {
-            return new CRUDList(remoteServiceFactory, $location);
+    angular.module('es.logongas.ix3').factory("crudList", ['repositoryFactory', '$location', function(repositoryFactory, $location) {
+            return new CRUDList(repositoryFactory, $location);
         }]);
 
 }());

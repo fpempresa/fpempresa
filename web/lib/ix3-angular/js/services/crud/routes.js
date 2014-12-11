@@ -21,10 +21,10 @@
                 controller: upperCamelEntityName + 'SearchController',
                 reloadOnSearch: false,
                 resolve: {
-                    crud: ['$route', '$q', 'remoteServiceFactory', 'notify','crudList', function($route, $q, remoteServiceFactory, notify,crudList) {
+                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudList', function($route, $q, repositoryFactory, notify,crudList) {
                             var deferred = $q.defer();
-                            var remoteService = remoteServiceFactory.getRemoteService(entity);
-                            remoteService.metadata(expand).then(function(metadata) {
+                            var repository = repositoryFactory.getRepository(entity);
+                            repository.metadata(expand).then(function(metadata) {
                                 var controllerConfig={
                                         entity : entity,
                                         parentProperty : $route.current.params.parentProperty,
@@ -56,10 +56,10 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'NewEditController',
                 resolve: {
-                    crud: ['$route', '$q', 'remoteServiceFactory', 'notify','crudDetail', function($route, $q, remoteServiceFactory, notify,crudDetail) {
+                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
                             var deferred = $q.defer();
-                            var remoteService = remoteServiceFactory.getRemoteService(entity);
-                            remoteService.metadata(expand).then(function(metadata) {
+                            var repository = repositoryFactory.getRepository(entity);
+                            repository.metadata(expand).then(function(metadata) {
                                 var controllerConfig={
                                         entity : entity,
                                         controllerAction : "NEW",
@@ -92,10 +92,10 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'ViewController',
                 resolve: {
-                    crud: ['$route', '$q', 'remoteServiceFactory', 'notify','crudDetail', function($route, $q, remoteServiceFactory, notify,crudDetail) {
+                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
                             var deferred = $q.defer();
-                            var remoteService = remoteServiceFactory.getRemoteService(entity);
-                            remoteService.metadata(expand).then(function(metadata) {
+                            var repository = repositoryFactory.getRepository(entity);
+                            repository.metadata(expand).then(function(metadata) {
                                 var controllerConfig={
                                         entity : entity,
                                         controllerAction : "VIEW",
@@ -127,10 +127,10 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'NewEditController',
                 resolve: {
-                    crud: ['$route', '$q', 'remoteServiceFactory', 'notify','crudDetail', function($route, $q, remoteServiceFactory, notify,crudDetail) {
+                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
                             var deferred = $q.defer();
-                            var remoteService = remoteServiceFactory.getRemoteService(entity);
-                            remoteService.metadata(expand).then(function(metadata) {
+                            var repository = repositoryFactory.getRepository(entity);
+                            repository.metadata(expand).then(function(metadata) {
                                 var controllerConfig={
                                         entity : entity,
                                         controllerAction : "EDIT",
@@ -162,10 +162,10 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'DeleteController',
                 resolve: {
-                    crud: ['$route', '$q', 'remoteServiceFactory', 'notify','crudDetail', function($route, $q, remoteServiceFactory, notify,crudDetail) {
+                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
                             var deferred = $q.defer();
-                            var remoteService = remoteServiceFactory.getRemoteService(entity);
-                            remoteService.metadata(expand).then(function(metadata) {
+                            var repository = repositoryFactory.getRepository(entity);
+                            repository.metadata(expand).then(function(metadata) {
                                 var controllerConfig={
                                         entity : entity,
                                         controllerAction : "DELETE",

@@ -1,35 +1,40 @@
 "use strict";
 
-/**
- * configuramos que si viene un String con forma de fecha en una petición http la
- * transformamos en un objeto Date. http://aboutcode.net/2013/07/27/json-date-parsing-angularjs.html
- */
-angular.module('es.logongas.ix3').config(["$httpProvider", function($httpProvider) {
-        function convertDateStringsToDates(input) {
-            if (typeof input !== "object") {
-                return;
-            }
-
-            for (var key in input) {
-                if (!input.hasOwnProperty(key)) {
+angular.module('es.logongas.ix3').config(['repositoryFactoryProvider', function (repositoryFactoryProvider) {
+        
+        //Para transformar los Strign en fechas
+        repositoryFactoryProvider.addGlobalTransformer(function (className, object) {
+            for (var key in object) {
+                if (!object.hasOwnProperty(key)) {
                     continue;
                 }
-                var value = input[key];
+                var value = object[key];
                 if ((typeof value === "string") && (value.length === 28)) {
                     var date = moment(value, "YYYY-MM-DDTHH:mm:ss.SSSZZ", true);
                     if (date.isValid()) {
-                        input[key] = date.toDate();
+                        object[key] = date.toDate();
                     }
-                } else if (typeof (value) === "object") {
-                    convertDateStringsToDates(value);
                 }
             }
-        }
-
-        $httpProvider.defaults.transformResponse.push(function(responseData) {
-            convertDateStringsToDates(responseData);
-            return responseData;
         });
+        
+        function toStringGlobal() {
+            return this["$toString"];
+        }
+        
+        //Añadir el método toString() para que use la propiedad "$toString", pero solo si existe
+        repositoryFactoryProvider.addGlobalTransformer(function (className, object) {
+            
+            if (typeof(object['$toString'])==="string") {
+                //Definimos nuestra propia función "toString"
+               object['toString']=toStringGlobal;
+            }
+        });
+        
+        
+        
+        
+        
     }]);
 
 angular.module('es.logongas.ix3').config(["$controllerProvider", "$compileProvider", "$filterProvider", "$provide", function($controllerProvider, $compileProvider, $filterProvider, $provide) {

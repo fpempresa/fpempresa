@@ -2,12 +2,12 @@
 /**
  * Servicio para ir a la página de inicio de un usuario
  */
-angular.module("common").service("goPage", ['session', '$window', 'remoteServiceFactory', function(session, $window, remoteServiceFactory) {
+angular.module("common").service("goPage", ['session', '$window', 'repositoryFactory', function(session, $window, repositoryFactory) {
 
         function goHomeUsuario(usuario) {
             if (usuario.tipoUsuario === "TITULADO") {
-                var tituladoRemoteService = remoteServiceFactory.getRemoteService("Titulado");
-                tituladoRemoteService.get(usuario.idIdentity).then(function(titulado) {
+                var tituladoRepository = repositoryFactory.getRepository("Titulado");
+                tituladoRepository.get(usuario.idIdentity).then(function(titulado) {
                     if (titulado) {
                         $window.location.href = getContextPath() + "/titulado/index.html#/";
                     } else {

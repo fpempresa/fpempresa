@@ -1,21 +1,21 @@
-"use strict";
+(function (undefined) {
+    "use strict";
 
-angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q','apiurl',function($http,$q,apiurl) {
+    /**
+     * Esta es la clase RemoteDAO verdadera que genera el RemoteDAOFactory
+     * @param {String} entityName Nombre de la entidad 
+     * @param {String} baseUrl La url en la que se encuentran los servicios.
+     * @param {Http} $http Servicio de Http de AngularJS
+     * @param {Q} $q Servicio de promesas de AngularJS
+     */
+    function RemoteDAO(entityName, baseUrl, $http, $q) {
+        this.entityName = entityName;
+        this.baseUrl = baseUrl;
+        this.$http = $http;
+        this.$q = $q;
 
 
-        /**
-         * Esta es la clase RemoteService verdadera que genera el Factory
-         * @param {String} entityName Nombre de la entidad 
-         * @param {String} apiurl La url en la que se encuentran los servicios.
-         */
-        function RemoteService(entityName, apiurl, $http, $q) {
-            this.entityName = entityName;
-            this.apiurl = apiurl;
-            this.$http = $http;
-            this.$q = $q;
-        }
-
-        RemoteService.prototype.create = function(expand, parent) {
+        this.create = function (expand, parent) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -28,18 +28,18 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'GET',
-                url: this.apiurl + '/' + this.entityName + "/$create",
+                url: this.baseUrl + '/' + this.entityName + "/$create",
                 params: params
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -49,7 +49,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             return deferred.promise;
         };
-        RemoteService.prototype.get = function(id, expand) {
+        this.get = function (id, expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -59,18 +59,18 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'GET',
-                url: this.apiurl + '/' + this.entityName + "/" + id,
+                url: this.baseUrl + '/' + this.entityName + "/" + id,
                 params: params
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -80,7 +80,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             return deferred.promise;
         };
-        RemoteService.prototype.insert = function(entity, expand) {
+        this.insert = function (entity, expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -90,19 +90,19 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'POST',
-                url: this.apiurl + '/' + this.entityName + "/",
+                url: this.baseUrl + '/' + this.entityName + "/",
                 params: params,
                 data: entity
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -112,7 +112,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             return deferred.promise;
         };
-        RemoteService.prototype.update = function(id, entity,expand) {
+        this.update = function (id, entity, expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -122,19 +122,19 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'PUT',
-                url: this.apiurl + '/' + this.entityName + "/" + id,
+                url: this.baseUrl + '/' + this.entityName + "/" + id,
                 params: params,
                 data: entity
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -144,25 +144,25 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             return deferred.promise;
         };
-        RemoteService.prototype.delete = function(id) {
+        this.delete = function (id) {
             var deferred = this.$q.defer();
 
             var params = {};
 
             var config = {
                 method: 'DELETE',
-                url: this.apiurl + '/' + this.entityName + "/" + id,
+                url: this.baseUrl + '/' + this.entityName + "/" + id,
                 params: params
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -172,7 +172,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             return deferred.promise;
         };
-        RemoteService.prototype.search = function(filter, order, expand, pageNumber, pageSize) {
+        this.search = function (filter, order, expand, pageNumber, pageSize) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -200,18 +200,18 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'GET',
-                url: this.apiurl + '/' + this.entityName,
+                url: this.baseUrl + '/' + this.entityName,
                 params: params
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -222,7 +222,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             return deferred.promise;
         };
 
-        RemoteService.prototype.getChild = function(id, child, expand) {
+        this.getChild = function (id, child, expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -232,18 +232,18 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'GET',
-                url: this.apiurl + '/' + this.entityName + "/" + id + "/" + child,
+                url: this.baseUrl + '/' + this.entityName + "/" + id + "/" + child,
                 params: params
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un array vacio
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -254,7 +254,7 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             return deferred.promise;
         };
 
-        RemoteService.prototype.metadata = function(expand) {
+        this.metadata = function (expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -264,18 +264,18 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
 
             var config = {
                 method: 'GET',
-                url: this.apiurl + '/' + this.entityName + "/$metadata",
+                url: this.baseUrl + '/' + this.entityName + "/$metadata",
                 params: params
             };
 
-            this.$http(config).success(function(data, status, headers, config) {
-                if (status===204) {
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
                     deferred.resolve(data);
                 }
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
                 } else {
@@ -286,17 +286,27 @@ angular.module("es.logongas.ix3").factory("remoteServiceFactory", ['$http','$q',
             return deferred.promise;
         };
 
+    }
 
-        return {
-            getRemoteService: function(entityName) {
-                var remoteService = new RemoteService(entityName, apiurl, $http, $q);
-                return remoteService;
-            }
+    function RemoteDAOFactory(baseUrl, $http, $q) {
+        this.getRemoteDAO = function (entityName) {
+            return new RemoteDAO(entityName, baseUrl, $http, $q);
+        };
+    }
+
+
+    function RemoteDAOFactoryProvider() {
+        this._baseUrl = "";
+
+        this.setBaseUrl = function (baseUrl) {
+            this._baseUrl = baseUrl;
         };
 
+        this.$get = ['$http', '$q', function ($http, $q) {
+                return new RemoteDAOFactory(this._baseUrl, $http, $q);
+            }];
+    }
 
-    }]);
+    angular.module("es.logongas.ix3").provider("remoteDAOFactory", RemoteDAOFactoryProvider);
 
-
-
-
+})();

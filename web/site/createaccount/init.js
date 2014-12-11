@@ -1,10 +1,10 @@
 
-app.controller('CreateAccountInitController', ['$scope', '$location','$routeParams', 'remoteServiceFactory', 'formValidator', function ($scope, $location, $routeParams, remoteServiceFactory, formValidator) {
-        var usuarioRemoteService = remoteServiceFactory.getRemoteService("Usuario");
+app.controller('CreateAccountInitController', ['$scope', '$location','$routeParams', 'repositoryFactory', 'formValidator', function ($scope, $location, $routeParams, repositoryFactory, formValidator) {
+        var usuarioRepository = repositoryFactory.getRepository("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
 
-        usuarioRemoteService.create().then(function (usuario) {
+        usuarioRepository.create().then(function (usuario) {
             $scope.model.tipoUsuario = usuario.tipoUsuario;
             if ($routeParams.tipoUsuario) {
                 //Sobreescribimos el valor si nos los pasan en la URL

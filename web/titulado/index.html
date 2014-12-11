@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" ng-app="app">
+    
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,18 +9,14 @@
         <meta name="author" content="">
         <link rel="shortcut icon" href="">
 
-        <title>fpempresa</title>
-
-        <script type='text/javascript' src='../common/server.js.jsp'></script>        
+        <title>fpempresa</title>       
 
         <link href="../lib/jquery-ui/css/jquery-ui.css"                 rel="stylesheet"> 
         <link href="../lib/bootstrap/css/bootstrap.css"                 rel="stylesheet">
         <link href="../lib/fontawesome/css/font-awesome.css"            rel="stylesheet">
         <link href="../lib/notify/current/css/pnotify.custom.min.css"   rel="stylesheet"> 
-        
-        <link href="../css/shared/shared.css"                           rel="stylesheet">
-        <link href="../css/titulado/titulado.css"                               rel="stylesheet">
 
+        <link href="../css/site/site.css"                               rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -42,59 +39,78 @@
         <!-- build:js js/angular-all.min.js -->
         <script type='text/javascript' src='../lib/angularjs/js/angular.js'></script>
         <script type='text/javascript' src='../lib/angularjs/js/angular-locale_es-es.js'></script>
-        <script type='text/javascript' src='../lib/angularjs/js/angular-route.js'></script>
-        <script type='text/javascript' src='../lib/restangular/js/restangular.js'></script>  
+        <script type='text/javascript' src='../lib/angularjs/js/angular-route.js'></script> 
         <!-- endbuild -->  
 
         <!-- build:js js/ix3-angular.min.js -->
-        <script type='text/javascript' src='../lib/ix3-angular/js/ix3-modules.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/ix3-config.js'></script>
+        <script type='text/javascript' src='../lib/ix3-angular/js/ix3-modules.js'></script>       
         <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/routes.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/list.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/services/crud/detail.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/dateFormat.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/dialog.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/formvalidator.js'></script>        
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/notify.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/remoteservice.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/session.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/services/utils.js'></script>
+        
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/persistence/remotedao.js"></script>
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/persistence/repository.js"></script>
+        
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/presentation/dialog.js"></script>
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/presentation/notify.js"></script>
+        
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/util/dateFormat.js"></script>
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/util/utils.js"></script>
+        
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/formvalidator.js"></script>
+        <script type="text/javascript" src="../lib/ix3-angular/js/services/session.js"></script>
+        
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3businessmessages.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3clear.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3date.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3integer.js'></script>
-        <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3label.js'></script>         
+        <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3label.js'></script>        
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3options.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3pagination.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3validation.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3visibility.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/jquery-ui/ix3datepicker.js'></script>
+        
+        <script type='text/javascript' src='../lib/ix3-angular/js/ix3-config.js'></script>        
         <!-- endbuild -->        
 
-        <!-- build:js js/application.min.js -->
-        <script type='text/javascript' src='../js/app.js'></script>
-        <script type='text/javascript' src='../common/services/gopage.js'></script>
-        <script type='text/javascript' src='../common/directives/currentdate.js'></script>
-        <script type='text/javascript' src='../shared/footer/footer.js'></script>
-        <script type='text/javascript' src='../shared/header/header.js'></script>
+        <!-- build:js js/common.min.js -->
+        <script type="text/javascript" src="../common/server.js.jsp"></script>        
+        <script type="text/javascript" src="../common/common-module.js"></script>
+        <script type="text/javascript" src="../common/directives/currentdate.js"></script>
+        <script type="text/javascript" src="../common/services/gopage.js"></script>
         <!-- endbuild -->
         
-        <!-- build:js js/myapp.min.js -->
-        <script type='text/javascript' src='index.js'></script>
-        <script type='text/javascript' src='main.js'></script>
+        <!-- build:js js/titulado.min.js -->
+
+        
+        <script type="text/javascript" src="app.js" ></script>
+        <script type="text/javascript" src="app-constant.js" ></script>
+        <script type="text/javascript" src="app-config.js" ></script>   
+        <script type="text/javascript" src="app-route.js" ></script>        
+        <script type="text/javascript" src="app-run.js" ></script>
+        <script type="text/javascript" src="index.js"></script>
+       
+        <script type='text/javascript' src='experiencialaboral/experiencialaboral.js'></script>
+        <script type='text/javascript' src='footer/footer.js'></script>
+        <script type="text/javascript" src="formacionacademica/config.js"></script>
+        <script type='text/javascript' src='formacionacademica/formacionacademica.js'></script>        
+        <script type='text/javascript' src='header/header.js'></script> 
+        <script type="text/javascript" src="main/main-route.js"></script>
+        <script type="text/javascript" src="main/main.js"></script>  
         <script type='text/javascript' src='titulado/titulado.js'></script>
         <script type='text/javascript' src='tituloidioma/detail.js'></script>
         <script type='text/javascript' src='tituloidioma/search.js'></script>
         <script type='text/javascript' src='tituloidioma/route.js'></script>
-        <script type='text/javascript' src='experiencialaboral/experiencialaboral.js'></script>
-        <script type='text/javascript' src='formacionacademica/formacionacademica.js'></script>
-        <!-- endbuild --> 
+        
+      
+        
+        <!-- endbuild -->
 
-    </head>
-
+    </head>    
+    
     <body ng-controller="IndexController">
-	<div class="bodywrapper">
-            <ng-include src="'../shared/header/header.html'"></ng-include>
+            <ng-include src="'header/header.html'"></ng-include>
 
             <div class="container main-container">
                 <div class="row" style="padding-top:20px;padding-bottom:20px;">
@@ -107,7 +123,6 @@
                 </div>
             </div>
 
-            <ng-include src="'../shared/footer/footer.html'"></ng-include>
-        </div>
+            <ng-include src="'footer/footer.html'"></ng-include>
 </body>
 </html>

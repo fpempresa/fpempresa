@@ -2,27 +2,32 @@
 
 (function () {
 
-    app.directive("fpeHideOnScroll", ['$window','$rootScope', '$location', function ($window, $rootScope, $location) {
+    app.directive("fpeHideOnScroll", ['$window', '$rootScope', '$location', function ($window, $rootScope, $location) {
             var directiveDefinitionObject = {
+                scope: {
+                    config: "=fpeHideOnScroll"
+                },
                 compile: function (tElement, tAttrs) {
                     return {
                         pre: function (scope, iElement, iAttrs, controller, transcludeFn) {
                         },
                         post: function (scope, iElement, iAttrs, controller, transcludeFn) {
-                            var config={
-                                cssClassName:"top-nav-collapse",
-                                threshold:80,
-                                applyInPath:"/"
+                            var defaultConfig = {
+                                cssClassName: "top-nav-collapse___",
+                                threshold: 800,
+                                applyInPath: "/"
                             }
 
-                            showHide(iElement, config, $location.path());
+                            $scope.config = $scope.config || defaultConfig;
+
+                            showHide(iElement, $scope.config, $location.path());
 
                             $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
-                                showHide(iElement,config, currentRoute.originalPath);
+                                showHide(iElement, $scope.config, currentRoute.originalPath);
                             });
 
                             $($window).scroll(function () {
-                                showHide(iElement, config, $location.path());
+                                showHide(iElement, $scope.config, $location.path());
                             });
                         }
                     };

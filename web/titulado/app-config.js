@@ -1,9 +1,9 @@
 "use strict";
 
 
-app.config(['remoteDAOFactoryProvider', 'repositoryFactoryProvider', function (remoteDAOFactoryProvider, repositoryFactoryProvider) {
+app.config(['remoteDAOFactoryProvider', 'dateFormatProvider', function (remoteDAOFactoryProvider, dateFormatProvider) {
         remoteDAOFactoryProvider.setBaseUrl("../api");
-        repositoryFactoryProvider.addEntityTransformer("TituloIdioma",function (className, object) {
-            object.otroIdioma=object.otroIdioma+"KK";
-        });
+        dateFormatProvider.setDefaultDateFormat("dd/MM/yyyy");
+        
+        
     }]);

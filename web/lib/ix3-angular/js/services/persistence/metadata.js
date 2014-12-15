@@ -1,7 +1,7 @@
 (function (undefined) {
     "use strict";
 
-    function Metadata(repositoryFactory, $q) {
+    function MetadataEntities(repositoryFactory, $q) {
         //Aqui guardamos cada uno los metadatos de cada entidad
         var metadatasStorage = new MetadatasStorage();
 
@@ -69,10 +69,10 @@
 
 
     }
-    Metadata.$inyect = ["repositoryFactory", "$q"];
+    MetadataEntities.$inyect = ["repositoryFactory", "$q"];
 
 
-    angular.module("es.logongas.ix3").factory("metadata", Metadata);
+    angular.module("es.logongas.ix3").factory("metadataEntities", MetadataEntities);
 
 
 
@@ -95,10 +95,10 @@
 
         this.getMetadata = function (entityName) {
             var metadata = this.entities[entityName];
-            if (metadata === undefined) {
-                return null;
-            } else {
+            if (metadata) {
                 return metadata;
+            } else {
+                return null;
             }
         };
 

@@ -13,6 +13,7 @@
                 <img class="img-circle" src="../img/photo_user.png" alt="User Pic">
             </div>
             <div class="col-sm-10" >
+                <form name="mainForm" ix3-form>
                 <ix3-business-messages></ix3-business-messages>
                 <h3><a href="#/titulado/edit/{{user.idIdentity}}">Datos personales</a></h3>
                 <hr>
@@ -53,7 +54,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="formacionAcademica in model.formacionesAcademicas">
-                            <td >{{getTipoTitulo(formacionAcademica)}}</td>
+                            <td >{{formacionAcademica.tipoFormacionAcademica}}</td>
                             <td >{{formacionAcademica.getNombreTitulo()}}</td>
                             <td >{{formacionAcademica.getNombreCentro()}}</td>
                         </tr>
@@ -92,13 +93,13 @@
                     <tbody>
                         <tr ng-repeat="tituloIdioma in model.titulosIdiomas">
                             <td >{{tituloIdioma.nivelIdioma}}</td>
-                            <td >{{tituloIdioma.toString()}}</td>
+                            <td >{{tituloIdioma.getNombreIdioma()}}</td>
                             <td >{{tituloIdioma.fecha| date:'mediumDate'}}</td>
                         </tr>
                     </tbody>
                 </table>
 
-
+                </form>
             </div>    
         </div>
     </div>

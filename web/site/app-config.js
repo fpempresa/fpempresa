@@ -1,6 +1,7 @@
 "use strict";
 
 
-app.config(['remoteDAOFactoryProvider',function(remoteDAOFactoryProvider) {
+app.config(['remoteDAOFactoryProvider', 'dateFormatProvider', function (remoteDAOFactoryProvider, dateFormatProvider) {
         remoteDAOFactoryProvider.setBaseUrl("../api");
-}]);
+        dateFormatProvider.setDefaultDateFormat("dd/MM/yyyy");
+    }]);

@@ -2,7 +2,7 @@
 
 (function() {
 
-    function CRUDDetail(repositoryFactory, $window, formValidator, $location) {
+    function CRUDDetail(repositoryFactory, $window, formValidator, $location, metadataEntities) {
 
         this.extendsScope = function(scope, controllerConfig) {
             scope.labelButtonOK = null;
@@ -12,7 +12,7 @@
             scope.businessMessages = null;
             angular.extend(scope, controllerConfig);
             scope.repository = repositoryFactory.getRepository(scope.entity);
-            scope.idName = scope.metadata[scope.entity].primaryKeyPropertyName;
+            scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
 
             scope.get = function(fnOK, fnError) {
                 fnOK = fnOK || function() {
@@ -313,9 +313,8 @@
 
 
     }
+    CRUDDetail.$inject=['repositoryFactory', '$window', 'formValidator', '$location','metadataEntities'];
 
-    angular.module('es.logongas.ix3').factory("crudDetail", ['repositoryFactory', '$window', 'formValidator', '$location', function(repositoryFactory, $window, formValidator, $location) {
-            return new CRUDDetail(repositoryFactory, $window, formValidator, $location);
-        }]);
+    angular.module('es.logongas.ix3').service("crudDetail",CRUDDetail);
 
 })();

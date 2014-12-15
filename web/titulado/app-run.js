@@ -9,7 +9,7 @@ app.run(['$rootScope', function ($rootScope) {
             $rootScope.user = user;
         } else {
             alert("No has iniciado sesión o tu sesión ha caducado");
-            window.location.href = getContextPath() + "/site/index.html";            
+            window.location.href = getContextPath() + "/site/index.html#/login";            
         }
 
     }]);

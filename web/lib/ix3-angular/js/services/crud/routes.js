@@ -1,10 +1,10 @@
 "use strict";
 
-(function() {
+(function () {
 
 
     function CRUDRoutes($routeProvider) {
-        this.addAllRoutes = function(entity,expand) {
+        this.addAllRoutes = function (entity, expand) {
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -21,33 +21,24 @@
                 controller: upperCamelEntityName + 'SearchController',
                 reloadOnSearch: false,
                 resolve: {
-                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudList', function($route, $q, repositoryFactory, notify,crudList) {
-                            var deferred = $q.defer();
-                            var repository = repositoryFactory.getRepository(entity);
-                            repository.metadata(expand).then(function(metadata) {
-                                var controllerConfig={
-                                        entity : entity,
-                                        parentProperty : $route.current.params.parentProperty,
-                                        parentId : $route.current.params.parentId,
-                                        metadata : {}
-                                };
-                                controllerConfig.metadata[entity]=metadata;
-                                
-                                var crud={
-                                    extendScope:function(scope) {
-                                        crudList.extendsScope(scope,controllerConfig);
-                                    }
+                    crud: ['$route', 'crudList', function ($route, crudList) {
+                            var crud = {
+                                extendScope: function (scope) {
+                                    crudList.extendsScope(scope, {
+                                        entity: entity,
+                                        parentProperty: $route.current.params.parentProperty,
+                                        parentId: $route.current.params.parentId
+                                    });
                                 }
-                                deferred.resolve(crud);
-                            }, function(businessMessages) {
-                                notify.warning(businessMessages);
-                                deferred.reject(businessMessages);
-                            });
+                            };
 
-                            return deferred.promise;
+                            return crud;
 
-                        }]                    
-                    
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
+                        }]
+
                 }
             });
 
@@ -56,35 +47,24 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'NewEditController',
                 resolve: {
-                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
-                            var deferred = $q.defer();
-                            var repository = repositoryFactory.getRepository(entity);
-                            repository.metadata(expand).then(function(metadata) {
-                                var controllerConfig={
-                                        entity : entity,
-                                        controllerAction : "NEW",
-                                        id : null,
-                                        parentProperty : $route.current.params.parentProperty,
-                                        parentId : $route.current.params.parentId,
-                                        metadata : {}
-                                };
-                                controllerConfig.metadata[entity]=metadata;
-                                
-                                
-                                var crud={
-                                    extendScope:function(scope) {
-                                        crudDetail.extendsScope(scope,controllerConfig);
-                                    }
+                    crud: ['$route', 'crudDetail', function ($route, crudDetail) {
+                            var crud = {
+                                extendScope: function (scope) {
+                                    crudDetail.extendsScope(scope, {
+                                        entity: entity,
+                                        controllerAction: "NEW",
+                                        id: null,
+                                        parentProperty: $route.current.params.parentProperty,
+                                        parentId: $route.current.params.parentId
+                                    });
                                 }
-                                deferred.resolve(crud);
-                                
-                            }, function(businessMessages) {
-                                notify.warning(businessMessages);
-                                deferred.reject(businessMessages);
-                            });
+                            };
 
-                            return deferred.promise;
+                            return crud;
 
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
                         }]
                 }
             });
@@ -92,34 +72,24 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'ViewController',
                 resolve: {
-                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
-                            var deferred = $q.defer();
-                            var repository = repositoryFactory.getRepository(entity);
-                            repository.metadata(expand).then(function(metadata) {
-                                var controllerConfig={
-                                        entity : entity,
-                                        controllerAction : "VIEW",
-                                        id : $route.current.params.id,
-                                        parentProperty : $route.current.params.parentProperty,
-                                        parentId : $route.current.params.parentId,
-                                        metadata : {}
-                                };
-                                controllerConfig.metadata[entity]=metadata;
-                                
-                                var crud={
-                                    extendScope:function(scope) {
-                                        crudDetail.extendsScope(scope,controllerConfig);
-                                    }
+                    crud: ['$route', 'crudDetail', function ($route, crudDetail) {
+                            var crud = {
+                                extendScope: function (scope) {
+                                    crudDetail.extendsScope(scope, {
+                                        entity: entity,
+                                        controllerAction: "VIEW",
+                                        id: $route.current.params.id,
+                                        parentProperty: $route.current.params.parentProperty,
+                                        parentId: $route.current.params.parentId
+                                    });
                                 }
-                                deferred.resolve(crud);
-                                
-                            }, function(businessMessages) {
-                                notify.warning(businessMessages);
-                                deferred.reject(businessMessages);
-                            });
+                            };
 
-                            return deferred.promise;
+                            return crud;
 
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
                         }]
                 }
             });
@@ -127,34 +97,24 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'NewEditController',
                 resolve: {
-                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
-                            var deferred = $q.defer();
-                            var repository = repositoryFactory.getRepository(entity);
-                            repository.metadata(expand).then(function(metadata) {
-                                var controllerConfig={
-                                        entity : entity,
-                                        controllerAction : "EDIT",
-                                        id : $route.current.params.id,
-                                        parentProperty : $route.current.params.parentProperty,
-                                        parentId : $route.current.params.parentId,
-                                        metadata : {}
-                                };
-                                controllerConfig.metadata[entity]=metadata;
-                                
-                                var crud={
-                                    extendScope:function(scope) {
-                                        crudDetail.extendsScope(scope,controllerConfig);
-                                    }
+                    crud: ['$route', 'crudDetail', function ($route, crudDetail) {
+                            var crud = {
+                                extendScope: function (scope) {
+                                    crudDetail.extendsScope(scope, {
+                                        entity: entity,
+                                        controllerAction: "EDIT",
+                                        id: $route.current.params.id,
+                                        parentProperty: $route.current.params.parentProperty,
+                                        parentId: $route.current.params.parentId
+                                    });
                                 }
-                                deferred.resolve(crud);
-                                
-                            }, function(businessMessages) {
-                                notify.warning(businessMessages);
-                                deferred.reject(businessMessages);
-                            });
+                            };
 
-                            return deferred.promise;
+                            return crud;
 
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
                         }]
                 }
             });
@@ -162,46 +122,36 @@
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'DeleteController',
                 resolve: {
-                    crud: ['$route', '$q', 'repositoryFactory', 'notify','crudDetail', function($route, $q, repositoryFactory, notify,crudDetail) {
-                            var deferred = $q.defer();
-                            var repository = repositoryFactory.getRepository(entity);
-                            repository.metadata(expand).then(function(metadata) {
-                                var controllerConfig={
-                                        entity : entity,
-                                        controllerAction : "DELETE",
-                                        id : $route.current.params.id,
-                                        parentProperty : $route.current.params.parentProperty,
-                                        parentId : $route.current.params.parentId,
-                                        metadata : {}
-                                };
-                                controllerConfig.metadata[entity]=metadata;
-                                
-                                var crud={
-                                    extendScope:function(scope) {
-                                        crudDetail.extendsScope(scope,controllerConfig);
-                                    }
+                    crud: ['$route', 'crudDetail', function ($route, crudDetail) {
+                            var crud = {
+                                extendScope: function (scope) {
+                                    crudDetail.extendsScope(scope, {
+                                        entity: entity,
+                                        controllerAction: "DELETE",
+                                        id: $route.current.params.id,
+                                        parentProperty: $route.current.params.parentProperty,
+                                        parentId: $route.current.params.parentId
+                                    });
                                 }
-                                deferred.resolve(crud);
-                                
-                            }, function(businessMessages) {
-                                notify.warning(businessMessages);
-                                deferred.reject(businessMessages);
-                            });
+                            };
 
-                            return deferred.promise;
+                            return crud;
 
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
                         }]
                 }
             });
         };
-        this.$get=function() {
+        this.$get = function () {
             //Realmente no queremos nada aqui ero angular nos obliga.
             return {};
         }
 
     }
 
-    angular.module('es.logongas.ix3').provider("crudRoutes", ['$routeProvider',function($routeProvider) {
+    angular.module('es.logongas.ix3').provider("crudRoutes", ['$routeProvider', function ($routeProvider) {
             return new CRUDRoutes($routeProvider);
         }]);
 

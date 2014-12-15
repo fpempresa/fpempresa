@@ -1,64 +1,55 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Validation', ['$compile', function($compile) {
-        function getMetadataPropertyName(key) {
-            var keys = key.split('.');
-            var name = "";
-            for (var i = 0; i < keys.length; i++) {
-                if (name !== "") {
-                    name = name + ".";
-                }
-                name = name + "properties['" + keys[i] + "']";
-            }
-            return name;
-        }
+angular.module("es.logongas.ix3").directive('ix3Validation', ['$compile','metadataEntities', function($compile, metadataEntities) {
 
         return {
             restrict: 'A',
             terminal: true,
-            priority: 1000,
+            require:"^ix3Form",
+            priority: 10000,
             compile: function(element, attributes) {
                 return {
-                    pre: function($scope, element, attributes, controller, transcludeFn) {
+                    pre: function($scope, element, attributes) {
 
                     },
-                    post: function($scope, element, attributes) {
-                        var property = attributes.ngModel.replace("model.", "");
-                        var metadataPropertyName = getMetadataPropertyName(property);
+                    post: function($scope, element, attributes, ix3FormController) {
+                        var propertyName = attributes.ngModel.replace(/^model\./, "");
+                        var entity=ix3FormController.getConfig().entity;
+                        var metadataProperty=metadataEntities.getMetadata(entity).getMetadataProperty(propertyName);
                         
                         //Expresion regular
-                        var pattern=$scope.$eval("metadata[entity]." + metadataPropertyName + ".pattern");
-                        if (pattern!=null) {
+                        var pattern=metadataProperty.pattern;
+                        if (pattern!==null) {
                             element.attr("ng-pattern",new RegExp("^("+pattern+")$") );
                         }
                         
                         //Valor requirido
-                        var required=$scope.$eval("metadata[entity]." + metadataPropertyName + ".required");
+                        var required=metadataProperty.required;
                         if (required===true) {
                             element.attr("ng-required",required);
                         }
                         
                         //Tamaño máximo
-                        var maxLength=$scope.$eval("metadata[entity]." + metadataPropertyName + ".maxLength");
+                        var maxLength=metadataProperty.maxLength;
                         if (maxLength!==null) {
                             element.attr("ng-maxlength",maxLength);
                         }
                         
                         //Tamaño mínimo
-                        var minLength=$scope.$eval("metadata[entity]." + metadataPropertyName + ".minLength");
+                        var minLength=metadataProperty.minLength;
                         if (minLength!==null) {
                             element.attr("ng-minlength",minLength);
                         }                           
                         
                         
                         //Valor máximo
-                        var maximum=$scope.$eval("metadata[entity]." + metadataPropertyName + ".maximum");
+                        var maximum=metadataProperty.maximum;
                         if (maximum!==null) {
                             element.attr("max",maximum);
                         }
                         
                         //Valor mínimo
-                        var minimum=$scope.$eval("metadata[entity]." + metadataPropertyName + ".minimum");
+                        var minimum=metadataProperty.minimum;
                         if (minimum!==null) {
                             element.attr("min",minimum);
                         }                        

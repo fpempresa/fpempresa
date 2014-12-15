@@ -4,15 +4,7 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
     }]);
 
 app.controller("FormacionAcademicaSearchController", ['$scope', 'crud','$filter', function($scope, crud,$filter) {
-        crud.extendScope($scope);
-        
-        $scope.getTipoTitulo = function(formacionAcademica) {
-            if (!$scope.metadata.FormacionAcademica) {
-                return "";
-            }
-            var values = $filter('filter')($scope.metadata.FormacionAcademica.properties.tipoFormacionAcademica.values,{key:formacionAcademica.tipoFormacionAcademica});
-            return values[0].description;
-        };        
+        crud.extendScope($scope);      
 
         $scope.search();
 

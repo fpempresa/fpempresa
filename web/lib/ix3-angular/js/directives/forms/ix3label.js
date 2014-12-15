@@ -1,24 +1,12 @@
 "use strict";
-angular.module("es.logongas.ix3").directive('ix3Label', ['$document','utils',function($document,utils) {
-
-        function getMetadataPropertyName(key) {
-            var keys = key.split('.');
-            var name = "";
-            for (var i = 0; i < keys.length; i++) {
-                if (name !== "") {
-                    name = name + ".";
-                }
-                name = name + "properties['" + keys[i] + "']";
-            }
-            return name;
-        }
+angular.module("es.logongas.ix3").directive('ix3Label', ['$document','utils','metadataEntities',function($document,utils,metadataEntities) {
 
         return {
             restrict: 'A',
-            scope: true,
+            require:"^ix3Form",
             compile: function(element, attributes) {
                 return {
-                    pre: function($scope, element, attributes) {
+                    pre: function($scope, element, attributes, ix3FormController) {
                         var model = attributes.ix3Label;
                         if (model.trim() === "") {
                             var forId=attributes.for;
@@ -36,20 +24,17 @@ angular.module("es.logongas.ix3").directive('ix3Label', ['$document','utils',fun
                             
                         }
 
-                        var modelProperty = {
-                            name: model.replace(/^model\./, ""),
-                            metadata: $scope.$eval("metadata[entity]." + getMetadataPropertyName(model.replace(/^model\./, ""))),
-                            scopeAccessName: model
-                        };
+                        var propertyName = model.replace(/^model\./, "");
+                        var entity=ix3FormController.getConfig().entity;
+                        var metadataProperty=metadataEntities.getMetadata(entity).getMetadataProperty(propertyName);
 
-                        var value=modelProperty.metadata.label;
+                        var value=metadataProperty.label;
                         if ((value === undefined) || (value === null) || (value.trim() === ""))  {
                             //Si no está el label usamos el nombre de la propia propiedad
-                            value=modelProperty.name;
-                        } else {
-                            //La primera letra siempre se pone en mayúculas
-                            value=value.charAt(0).toUpperCase() + value.slice(1);
+                            value=propertyName;
                         }
+                        value=value.charAt(0).toUpperCase() + value.slice(1);
+                        
                         element.text(value); 
                         
                     },

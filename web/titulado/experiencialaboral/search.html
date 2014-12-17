@@ -17,7 +17,7 @@
                     <tr ng-repeat="experienciaLaboral in models">
                         <td >{{experienciaLaboral.nombreEmpresa}}</td>
                         <td >{{experienciaLaboral.puestoTrabajo}}</td>
-                        <td >{{experienciaLaboral.fechaInicio| date:'shortDate'}} - {{experienciaLaboral.fechaFin| date:'shortDate'}}</td>
+                        <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
                         <td >
                             <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)">Borrar</button>
                             <button class="btn btn-standard btn-xs" type="button" ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">Editar</button>

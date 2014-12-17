@@ -1,7 +1,7 @@
 
 "use strict";
 
-angular.module('es.logongas.ix3').config(['repositoryFactoryProvider', function (repositoryFactoryProvider) {
+app.run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
         
         function getNombreCentro() {
             if (this.tipoFormacionAcademica === "CICLO_FORMATIVO") {
@@ -26,11 +26,15 @@ angular.module('es.logongas.ix3').config(['repositoryFactoryProvider', function 
             return this.getNombreTitulo() + "-" + this.getNombreCentro();
         };        
         
+        function getTipoFormacionAcademicaDescription() {
+            return metadataEntities.getMetadataProperty(this.$propertyPath+".tipoFormacionAcademica").getValueDescription(this.tipoFormacionAcademica);
+        }
 
-        repositoryFactoryProvider.addEntityTransformer("FormacionAcademica",function (className, object) {
+        richDomain.addEntityTransformer("FormacionAcademica",function (className, object) {
             object['toString']=toStringFormacionAcademica;
             object['getNombreTitulo']=getNombreTitulo;
             object['getNombreCentro']=getNombreCentro;
+            object['getTipoFormacionAcademicaDescription']=getTipoFormacionAcademicaDescription;
         });
         
         

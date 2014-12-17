@@ -7,7 +7,8 @@
 
         var metadata = {
             load: load,
-            getMetadata: getMetadata
+            getMetadata: getMetadata,
+            getMetadataProperty: getMetadataProperty
         };
 
         return metadata;
@@ -65,6 +66,14 @@
 
         function getMetadata(entityName) {
             return metadatasStorage.getMetadata(entityName);
+        }
+
+        function getMetadataProperty(propertyPath) {
+            var arrPropertyPath = propertyPath.split(".");
+            var entityName = arrPropertyPath[0];
+            var propertyName = arrPropertyPath.slice(1, arrPropertyPath.length).join(".");
+            
+            return getMetadata(entityName).getMetadataProperty(propertyName);
         }
 
 

@@ -25,7 +25,7 @@
                         </tr>                        
                         <tr ng-show="model.fechaNacimiento">
                             <td><i class="glyphicon glyphicon-gift"></i> Fecha de nacimiento:</td>
-                            <td>{{model.fechaNacimiento| date:'longDate'}}</td>
+                            <td>{{model.fechaNacimiento| ix3Date}}</td>
                         </tr>
                         <tr  ng-show="model.telefono">
                             <td><i class="glyphicon glyphicon-earphone"></i> Telefono:</td>
@@ -37,7 +37,7 @@
                         </tr>
                         <tr ng-show="model.direccion !== null">
                             <td><i class="glyphicon glyphicon-map-marker"></i> Direccion</td>
-                            <td>{{model.direccion.tipoVia}} {{model.direccion.nombreVia}} {{model.direccion.otrosDireccion}}<br> {{model.direccion.codigoPostal}} {{model.direccion.municipio.toString()}} ({{model.direccion.provincia.toString()}})</td>
+                            <td>{{model.direccion.getTipoViaDescription()}} {{model.direccion.nombreVia}} {{model.direccion.otrosDireccion}}<br> {{model.direccion.codigoPostal}} {{model.direccion.municipio.toString()}} ({{model.direccion.provincia.toString()}})</td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,7 +54,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="formacionAcademica in model.formacionesAcademicas">
-                            <td >{{formacionAcademica.tipoFormacionAcademica}}</td>
+                            <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
                             <td >{{formacionAcademica.getNombreTitulo()}}</td>
                             <td >{{formacionAcademica.getNombreCentro()}}</td>
                         </tr>
@@ -75,7 +75,7 @@
                         <tr ng-repeat="experienciaLaboral in model.experienciasLaborales">
                             <td >{{experienciaLaboral.nombreEmpresa}}</td>
                             <td >{{experienciaLaboral.puestoTrabajo}}</td>
-                            <td >{{experienciaLaboral.fechaInicio| date:'shortDate'}} - {{experienciaLaboral.fechaFin| date:'shortDate'}}</td>
+                            <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -92,9 +92,9 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="tituloIdioma in model.titulosIdiomas">
-                            <td >{{tituloIdioma.nivelIdioma}}</td>
+                            <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
                             <td >{{tituloIdioma.getNombreIdioma()}}</td>
-                            <td >{{tituloIdioma.fecha| date:'mediumDate'}}</td>
+                            <td >{{tituloIdioma.fecha| ix3Date}}</td>
                         </tr>
                     </tbody>
                 </table>

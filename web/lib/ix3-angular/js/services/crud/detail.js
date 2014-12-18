@@ -57,7 +57,7 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.businessMessages = formValidator.validate(scope.mainForm);
+                scope.businessMessages = formValidator.validate(scope.mainForm,scope.customValidations);
                 if (scope.businessMessages.length === 0) {
                     scope.repository.insert(scope.model, scope.expand).then(function(data) {
                         scope.model = data;
@@ -76,7 +76,7 @@
                 };
                 fnError = fnError || function() {
                 };
-                scope.businessMessages = formValidator.validate(scope.mainForm);
+                scope.businessMessages = formValidator.validate(scope.mainForm,scope.customValidations);
                 if (scope.businessMessages.length === 0) {
                     scope.repository.update(scope.id, scope.model, scope.expand).then(function(data) {
                         scope.model = data;

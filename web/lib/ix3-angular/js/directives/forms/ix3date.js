@@ -82,5 +82,5 @@ angular.module("es.logongas.ix3").directive('ix3Date', ['$locale', 'dateFormat',
     }]);
 angular.module("es.logongas.ix3").config(['formValidatorProvider', function(formValidatorProvider) {
         //Incluir el mensaje de la nueva directiva de validacion
-        formValidatorProvider.addErrorMensajePattern("date", "El formato de la fecha debe ser '{{date}}'");
+        formValidatorProvider.addErrorMensajePattern("date", "El formato de la fecha debe ser '{{ix3Date}}'");
     }]);

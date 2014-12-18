@@ -11,61 +11,41 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
                 min: "Debe ser un valor mayor o igual a {{min}}",
                 max: "Debe ser un valor menor o igual a {{max}}",
                 url: "No tiene el formato de una URL",
-                integer: "El valor '{{value}}' no es un número"
+                integer: "El valor '{{$value}}' no es un número"
             };
-            this.addErrorMensajePattern = function(error,messajePattern) {
-                this.errorMensajePatterns[error]=messajePattern;
+            this.addErrorMensajePattern = function (error, messajePattern) {
+                this.errorMensajePatterns[error] = messajePattern;
             };
-            this.$get = ['$interpolate', function($interpolate) {
-                    return new FormValidator($interpolate, this.errorMensajePatterns);
+            this.$get = ['$interpolate', 'directiveUtils', function ($interpolate, directiveUtils) {
+                    return new FormValidator($interpolate, directiveUtils, this.errorMensajePatterns);
                 }];
         }
 
-        function FormValidator($interpolate, errorMensajePatterns) {
+        function FormValidator($interpolate, directiveUtils, errorMensajePatterns) {
             var that = this;
             this.errorMensajePatterns = errorMensajePatterns;
 
-            function getNormalizeAttributeName(attributeName) {
-                var normalizeAttributeName;
-                var separator;
-
-                if (attributeName.indexOf("-") >= 0) {
-                    separator = "-";
-                } else if (attributeName.indexOf(":") >= 0) {
-                    separator = ":";
-                } else {
-                    separator = undefined;
-                }
-
-                var parts = attributeName.split(separator);
-                normalizeAttributeName = parts[parts.length - 1];
-
-                return normalizeAttributeName;
-            }
-
             function getMessage(inputElement, errorType) {
-                var realInputElement = inputElement[0];
+
                 var messagePattern = that.errorMensajePatterns[errorType];
                 if (typeof (messagePattern) === "undefined") {
                     messagePattern = errorType;
                 }
 
-                var messageEvaluator = $interpolate(messagePattern);
-
-                var attributes = {
-                    value: inputElement.val()
-                };
-
-                for (var attributeIndex in realInputElement.attributes) {
-                    var attributeName = realInputElement.attributes[attributeIndex].nodeName;
-                    if (attributeName) {
-                        var value = realInputElement.attributes[attributeIndex].nodeValue;
-                        var normalizeAttributeName = getNormalizeAttributeName(attributeName);
-                        attributes[normalizeAttributeName] = value;
+                var message;
+                if (inputElement) {
+                    var attributes = {
+                        "$value": inputElement.val()
+                    };
+                    var realInputElement = inputElement[0];
+                    for (var i = 0; i < realInputElement.attributes.length; i++) {
+                        var normalizedAttributeName = directiveUtils.normalizeName(realInputElement.attributes[i].nodeName);
+                        attributes[normalizedAttributeName] = directiveUtils.getAttributeValueFromNormalizedName(realInputElement,normalizedAttributeName);
                     }
+                    message = $interpolate(messagePattern)(attributes);
+                } else {
+                    message = messagePattern;
                 }
-
-                var message = messageEvaluator(attributes);
                 return message;
             }
 
@@ -77,7 +57,7 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
             function getLabel(inputElement, defaultLabel) {
                 var label;
 
-                if (inputElement.attr('id')) {
+                if ((inputElement) && (inputElement.attr('id'))) {
                     var labelElement = $('label[for="' + inputElement.attr('id') + '"]');
                     if (labelElement.length > 0) {
                         label = $(labelElement[0]).text();
@@ -98,20 +78,22 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
              * @returns {BusinessMessages} La lista de entrada pero con la propieda label
              */
             function generateLabels(businessMessages, formElement) {
-                if (angular.isArray(businessMessages)) {
-                    for (var i in businessMessages) {
-                        var businessMessage = businessMessages[i];
-                        if (!businessMessage.label) {
-                            var propertyName = businessMessage.propertyName;
+                for (var i = 0; i < businessMessages.length; i++) {
+                    var businessMessage = businessMessages[i];
+                    if (!businessMessage.label) {
+                        var propertyName = businessMessage.propertyName;
+                        if (propertyName) {
                             var inputElement = $("[name='" + propertyName + "']", formElement);
-                            var label = getLabel(inputElement, propertyName);
-                            businessMessage.label = label;
+                            if (inputElement) {
+                                var label = getLabel(inputElement, propertyName);
+                                businessMessage.label = label;
+                            }
                         }
                     }
                 }
             }
 
-            this.validate = function(angularForm, customValidations) {
+            this.validate = function (angularForm, customValidations) {
                 var businessMessages = [];
 
                 var formElement = $("form[name='" + angularForm.$name + "']");
@@ -135,21 +117,15 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
 
                 //Ejecutamos las validaciones personalizadas pero solo si no hay mensajes "normales"
                 //Esto se hace pq normalmente las validaciones personalizadas necesitan de los campos requeridos
-                if (businessMessages.length === 0) {
-                    if (angular.isArray(customValidations) === true) {
-                        for (var i in customValidations) {
-                            var customValidationFunction = customValidations[i];
-                            var newBusinessMessage = customValidationFunction();
-
-                            if (angular.isObject(newBusinessMessage)) {
-                                businessMessages.push(newBusinessMessage);
-                            }
-                        }
-                    } else if (angular.isFunction(customValidations) === true) {
-                        var newBusinessMessage = customValidations();
-
-                        if (angular.isObject(newBusinessMessage)) {
-                            businessMessages.push(newBusinessMessage);
+                if ((businessMessages.length === 0) && (customValidations)) {
+                    for (var i = 0; i < customValidations.length; i++) {
+                        var customValidation = customValidations[i];
+                        if (customValidation.rule() === false) {
+                            businessMessages.push({
+                                propertyName: customValidation.propertyName,
+                                label: customValidation.label,
+                                message: customValidation.message
+                            });
                         }
                     }
                 }

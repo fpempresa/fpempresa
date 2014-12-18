@@ -16,30 +16,35 @@ app.controller('CreateAccountInitController', ['$scope', '$location','$routePara
 
         $scope.next = function () {
 
-            $scope.businessMessages = formValidator.validate($scope.mainForm, [validateDeshabilitadoCentro, validateDeshabilitadoEmpresa]);
+            $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.customValidations);
             if ($scope.businessMessages.length === 0) {
                 $location.path("/createaccount/register/" + $scope.model.tipoUsuario);
             }
 
         };
 
-        function validateDeshabilitadoCentro() {
-            if ($scope.model.tipoUsuario === "CENTRO") {
-                return {
-                    message: 'El registro de Centros Educativos no está habilitado'
-                };
-            } else {
-                return null;
+        $scope.customValidations = [
+            {
+                message: 'El registro de Centros Educativos no está habilitado',
+                rule: function () {
+                    if ($scope.model.tipoUsuario === "CENTRO") {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            },
+            {
+                message: 'El registro de Empresas no está habilitado',
+                rule: function () {
+                    if ($scope.model.tipoUsuario === "EMPRESA") {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
             }
-        }
-        function validateDeshabilitadoEmpresa() {
-            if ($scope.model.tipoUsuario === "EMPRESA") {
-                return {
-                    message: 'El registro de Empresas no está habilitado'
-                };
-            } else {
-                return null;
-            }
-        }
+        ];
+
 
     }]);

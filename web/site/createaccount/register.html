@@ -30,7 +30,7 @@
         <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 form__container"  >
 
 
-            <form name="mainForm" id="mainForm" >
+            <form name="mainForm" id="mainForm" ix3-form >
                 <legend class="form__title" ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</legend>
                 <legend class="form__title" ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</legend>
                 <legend class="form__title" ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro Educativo</legend> 
@@ -51,7 +51,7 @@
                 <div class="row" >
                     <div class="col-xs-12 form-horizontal"> 
                         <div class="form-group">
-                            <label for="nombre" class="col-xs-3 control-label">1&ordm; Apellido</label>
+                            <label for="ape1" class="col-xs-3 control-label">1&ordm; Apellido</label>
                             <div class="col-xs-9">
                                 <input ng-model="model.ape1" type="text" class="form-control" id="ape1" name="ape1"  required>
                             </div>
@@ -62,7 +62,7 @@
                 <div class="row" >
                     <div class="col-xs-12 form-horizontal"> 
                         <div class="form-group">
-                            <label for="nombre" class="col-xs-3 control-label">2&ordm; Apellido</label>
+                            <label for="ape2" class="col-xs-3 control-label">2&ordm; Apellido</label>
                             <div class="col-xs-9">
                                 <input ng-model="model.ape2" type="text" class="form-control" id="ape2" name="ape2"  required>
                             </div>
@@ -73,9 +73,9 @@
                 <div class="row" >
                     <div class="col-xs-12 form-horizontal"> 
                         <div class="form-group">
-                            <label for="nombre" class="col-xs-3 control-label">Correo electr&oacute;nico</label>
+                            <label for="eMail" class="col-xs-3 control-label">Correo electr&oacute;nico</label>
                             <div class="col-xs-9">
-                                <input ng-model="model.eMail" type="text" class="form-control" id="eMail" name="eMail"  required>
+                                <input x-ng-model="model.eMail" type="email" class="form-control" id="eMail" name="eMail"  required>
                             </div>
                         </div> 
                     </div>
@@ -84,17 +84,17 @@
                 <div class="row" >
                     <div class="col-xs-6  form-horizontal">
                         <div class="form-group">
-                            <label for="nombre" class="col-xs-6 control-label">Contrase&ntilde;a</label>
+                            <label for="password" class="col-xs-6 control-label">Contrase&ntilde;a</label>
                             <div class="col-xs-6">
-                                <input ng-model="model.password" type="text" class="form-control" id="password" name="password"  required>
+                                <input ng-model="model.password" type="password" class="form-control" id="password" name="password"  required>
                             </div>
                         </div> 
                     </div>
                     <div class="col-xs-6  form-horizontal">
                         <div class="form-group">
-                            <label for="nombre" class="col-xs-6 control-label">Confirmar contrase&ntilde;a</label>
+                            <label for="confirmPassword" class="col-xs-6 control-label">Confirmar contrase&ntilde;a</label>
                             <div class="col-xs-6">
-                                <input ng-model="model.confirmPassword" type="text" class="form-control" id="confirmPassword" name="confirmPassword"  required>
+                                <input ng-model="model.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword"  required>
                             </div>
                         </div> 
                     </div>  

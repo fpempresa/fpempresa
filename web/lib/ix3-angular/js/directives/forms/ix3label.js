@@ -1,5 +1,5 @@
 "use strict";
-angular.module("es.logongas.ix3").directive('ix3Label', ['$document','utils','metadataEntities',function($document,utils,metadataEntities) {
+angular.module("es.logongas.ix3").directive('ix3Label', ['$document','directiveUtils','metadataEntities',function($document,directiveUtils,metadataEntities) {
 
         return {
             restrict: 'A',
@@ -17,7 +17,7 @@ angular.module("es.logongas.ix3").directive('ix3Label', ['$document','utils','me
                             if ((inputElement === undefined) || (inputElement === null) )  {
                                 throw new Error("No existe el elemento input al que hace referencia el for del label:"+forId)
                             }
-                            model=utils.getAttributeValueFronNormalizedName(inputElement,"ngModel");
+                            model=directiveUtils.getAttributeValueFromNormalizedName(inputElement,"ngModel");
                             if ((model === undefined) || (model === null) || (model.trim() === ""))  {
                                 throw new Error("No existe o no tiene valor el atribut ngModel del elemento:"+forId);
                             }

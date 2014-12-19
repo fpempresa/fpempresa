@@ -16,12 +16,12 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
             this.addErrorMensajePattern = function (error, messajePattern) {
                 this.errorMensajePatterns[error] = messajePattern;
             };
-            this.$get = ['$interpolate', 'directiveUtils', function ($interpolate, directiveUtils) {
-                    return new FormValidator($interpolate, directiveUtils, this.errorMensajePatterns);
+            this.$get = ['$interpolate', 'directiveUtil', function ($interpolate, directiveUtil) {
+                    return new FormValidator($interpolate, directiveUtil, this.errorMensajePatterns);
                 }];
         }
 
-        function FormValidator($interpolate, directiveUtils, errorMensajePatterns) {
+        function FormValidator($interpolate, directiveUtil, errorMensajePatterns) {
             var that = this;
             this.errorMensajePatterns = errorMensajePatterns;
 
@@ -39,8 +39,8 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
                     };
                     var realInputElement = inputElement[0];
                     for (var i = 0; i < realInputElement.attributes.length; i++) {
-                        var normalizedAttributeName = directiveUtils.normalizeName(realInputElement.attributes[i].nodeName);
-                        attributes[normalizedAttributeName] = directiveUtils.getAttributeValueFromNormalizedName(realInputElement,normalizedAttributeName);
+                        var normalizedAttributeName = directiveUtil.normalizeName(realInputElement.attributes[i].nodeName);
+                        attributes[normalizedAttributeName] = directiveUtil.getAttributeValueFromNormalizedName(realInputElement,normalizedAttributeName);
                     }
                     message = $interpolate(messagePattern)(attributes);
                 } else {

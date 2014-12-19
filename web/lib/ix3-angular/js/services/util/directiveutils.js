@@ -3,7 +3,7 @@
 /**
  * 
  */
-angular.module("es.logongas.ix3").factory("directiveUtils", [function () {
+angular.module("es.logongas.ix3").factory("directiveUtil", [function () {
         
         return {
             normalizeName:normalizeName,

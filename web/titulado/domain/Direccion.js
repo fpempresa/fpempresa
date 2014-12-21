@@ -1,6 +1,6 @@
 "use strict";
 
-app.run(['richDomain','$filter','metadataEntities', function (richDomain,$filter,metadataEntities) {
+app.run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
 
         function getTipoViaDescription() {
             return metadataEntities.getMetadataProperty(this.$propertyPath+".tipoVia").getValueDescription(this.tipoVia);

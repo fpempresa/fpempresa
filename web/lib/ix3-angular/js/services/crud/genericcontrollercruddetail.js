@@ -2,15 +2,16 @@
 
 (function() {
 
-    function CRUDDetail(repositoryFactory, $window, formValidator, $location, metadataEntities) {
+    GenericControllerCrudDetail.$inject=['repositoryFactory', '$window', 'formValidator', '$location','metadataEntities'];
+    function GenericControllerCrudDetail(repositoryFactory, $window, formValidator, $location, metadataEntities) {
 
-        this.extendsScope = function(scope, controllerConfig) {
+        this.extendScope = function(scope, controllerParams) {
             scope.labelButtonOK = null;
             scope.labelButtonCancel = null;
             scope.model = {};
             scope.models = {};
             scope.businessMessages = null;
-            angular.extend(scope, controllerConfig);
+            angular.extend(scope, controllerParams);
             scope.repository = repositoryFactory.getRepository(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
 
@@ -313,8 +314,7 @@
 
 
     }
-    CRUDDetail.$inject=['repositoryFactory', '$window', 'formValidator', '$location','metadataEntities'];
 
-    angular.module('es.logongas.ix3').service("crudDetail",CRUDDetail);
+    angular.module('es.logongas.ix3').service("genericControllerCrudDetail",GenericControllerCrudDetail);
 
 })();

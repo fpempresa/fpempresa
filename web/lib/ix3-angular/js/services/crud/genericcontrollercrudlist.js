@@ -1,15 +1,16 @@
 "use strict";
 
 (function() {
-
-    function CRUDList(repositoryFactory, $location, metadataEntities) {
-        this.extendsScope = function(scope, controllerConfig) {
+    
+    GenericControllerCrudList.$inject=['repositoryFactory', '$location','metadataEntities'];
+    function GenericControllerCrudList(repositoryFactory, $location, metadataEntities) {
+        this.extendScope = function(scope, controllerParams) {
             scope.models = {};
             scope.filter = {};
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.page = {};
             scope.businessMessages = null;
-            angular.extend(scope, controllerConfig);
+            angular.extend(scope, controllerParams);
             scope.repository = repositoryFactory.getRepository(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
             //Paginacion y busqueda
@@ -118,9 +119,8 @@
 
         };
     }
-    CRUDList.$inject=['repositoryFactory', '$location','metadataEntities'];
 
-    angular.module('es.logongas.ix3').service("crudList", CRUDList);
+    angular.module('es.logongas.ix3').service("genericControllerCrudList", GenericControllerCrudList);
 
 }());
 

@@ -1,14 +1,14 @@
 "use strict";
 
 
-app.controller("TituloIdiomaNewEditController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("TituloIdiomaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+        genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("TituloIdiomaViewController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("TituloIdiomaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+        genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("TituloIdiomaDeleteController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("TituloIdiomaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+        genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

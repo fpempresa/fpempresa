@@ -1,7 +1,7 @@
 "use strict";
 
-app.controller("TituloIdiomaSearchController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("TituloIdiomaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function($scope, genericControllerCrudList, controllerParams) {
+        genericControllerCrudList.extendScope($scope, controllerParams);
 
         $scope.search();
     }]);

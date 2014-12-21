@@ -3,22 +3,21 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes("FormacionAcademica");
     }]);
 
-app.controller("FormacionAcademicaSearchController", ['$scope', 'crud','$filter', function($scope, crud,$filter) {
-        crud.extendScope($scope);      
+app.controller("FormacionAcademicaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
+        genericControllerCrudList.extendScope($scope, controllerParams);      
 
         $scope.search();
-
     }]);
 
 
-app.controller("FormacionAcademicaNewEditController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("FormacionAcademicaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+        genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("FormacionAcademicaViewController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("FormacionAcademicaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+        genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("FormacionAcademicaDeleteController", ['$scope', 'crud', '$location', function($scope, crud, $location) {
-        crud.extendScope($scope);
+app.controller("FormacionAcademicaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+        genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

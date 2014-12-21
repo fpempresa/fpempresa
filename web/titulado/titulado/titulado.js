@@ -1,7 +1,8 @@
 "use strict";
 
 app.config(['crudRoutesProvider', function(crudRoutesProvider) {
-        crudRoutesProvider.addAllRoutes("Titulado", "usuario,direccion.municipio");
+        crudRoutesProvider.addNewRoute("Titulado", "usuario,direccion.municipio");
+        crudRoutesProvider.addEditRoute("Titulado", "usuario,direccion.municipio");
     }]);
 
 app.controller("TituladoNewEditController", ['$scope', '$location', 'genericControllerCrudDetail', 'controllerParams', function($scope, $location, genericControllerCrudDetail, controllerParams) {

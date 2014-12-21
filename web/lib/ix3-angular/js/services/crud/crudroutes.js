@@ -2,9 +2,19 @@
 
 (function () {
 
-    CRUDRoutes.$inject=['$routeProvider'];
+    CRUDRoutes.$inject = ['$routeProvider'];
     function CRUDRoutes($routeProvider) {
+
         this.addAllRoutes = function (entity, expand) {
+            this.addListRoute(entity, expand);
+            this.addNewRoute(entity, expand);
+            this.addEditRoute(entity, expand);
+            this.addDeleteRoute(entity, expand);
+            this.addViewRoute(entity, expand);
+        };
+ 
+
+        this.addListRoute = function (entity, expand) {
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -35,7 +45,17 @@
 
                 }
             });
+        }
+        this.addNewRoute = function (entity, expand) {
 
+            if (!entity) {
+                throw Error("El argumento 'entity' no puede estar vacio");
+            }
+
+            var fileExtension = "html";
+            var lowerEntityName = entity.toLowerCase();
+            var camelEntityName = entity.charAt(0).toLowerCase() + entity.slice(1);
+            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
             $routeProvider.when('/' + lowerEntityName + '/new/:parentProperty?/:parentId?', {
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
@@ -56,6 +76,19 @@
                         }]
                 }
             });
+
+        }
+        this.addViewRoute = function (entity, expand) {
+
+            if (!entity) {
+                throw Error("El argumento 'entity' no puede estar vacio");
+            }
+
+            var fileExtension = "html";
+            var lowerEntityName = entity.toLowerCase();
+            var camelEntityName = entity.charAt(0).toLowerCase() + entity.slice(1);
+            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+
             $routeProvider.when('/' + lowerEntityName + '/view/:id/:parentProperty?/:parentId?', {
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'ViewController',
@@ -76,6 +109,19 @@
                         }]
                 }
             });
+
+        }
+        this.addEditRoute = function (entity, expand) {
+
+            if (!entity) {
+                throw Error("El argumento 'entity' no puede estar vacio");
+            }
+
+            var fileExtension = "html";
+            var lowerEntityName = entity.toLowerCase();
+            var camelEntityName = entity.charAt(0).toLowerCase() + entity.slice(1);
+            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+
             $routeProvider.when('/' + lowerEntityName + '/edit/:id/:parentProperty?/:parentId?', {
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'NewEditController',
@@ -96,6 +142,19 @@
                         }]
                 }
             });
+
+        }
+        this.addDeleteRoute = function (entity, expand) {
+
+            if (!entity) {
+                throw Error("El argumento 'entity' no puede estar vacio");
+            }
+
+            var fileExtension = "html";
+            var lowerEntityName = entity.toLowerCase();
+            var camelEntityName = entity.charAt(0).toLowerCase() + entity.slice(1);
+            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+
             $routeProvider.when('/' + lowerEntityName + '/delete/:id/:parentProperty?/:parentId?', {
                 templateUrl: lowerEntityName + '/detail.' + fileExtension,
                 controller: upperCamelEntityName + 'DeleteController',
@@ -120,7 +179,7 @@
         this.$get = function () {
             //Realmente no queremos nada aqui ero angular nos obliga.
             return {};
-        }
+        };
 
     }
 

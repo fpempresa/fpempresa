@@ -49,7 +49,7 @@ angular.module('es.logongas.ix3').run(['richDomain', 'langUtil', function (richD
                     break;
                 }
             }
-            if ((current === undefined) || (current === this)) {
+            if (current === undefined) {
                 return null;
             } else {
                 return current;

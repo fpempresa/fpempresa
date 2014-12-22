@@ -1,9 +1,10 @@
 (function (undefined) {
     "use strict";
-
-    function MetadataEntities(repositoryFactory, $q) {
+    
+    MetadataEntities.$inyect = ["repositoryFactory", "$q","langUtil"];
+    function MetadataEntities(repositoryFactory, $q,langUtil) {
         //Aqui guardamos cada uno los metadatos de cada entidad
-        var metadatasStorage = new MetadatasStorage();
+        var metadatasStorage = new MetadatasStorage(langUtil);
 
         var metadata = {
             load: load,
@@ -17,7 +18,7 @@
         function load(entityName, expands) {
             var deferred = $q.defer();
 
-            var arrExpands = splitValues(expands, ",");
+            var arrExpands = langUtil.splitValues(expands, ",");
 
             var exists = metadatasStorage.existsMetadata(entityName, arrExpands);
             if (exists === true) {
@@ -78,7 +79,7 @@
 
 
     }
-    MetadataEntities.$inyect = ["repositoryFactory", "$q"];
+
 
 
     angular.module("es.logongas.ix3").factory("metadataEntities", MetadataEntities);
@@ -89,7 +90,7 @@
      * Clase para gestionar varios objetos Metadata
      * Y guarda cada uno de los metadatos de cada entidad.
      */
-    function MetadatasStorage() {
+    function MetadatasStorage(langUtil) {
 
         /**
          * Aqui guardamos cada uno de los metadatos de cada entidad
@@ -149,7 +150,7 @@
             var propertyExists = "";
             var current = this.getMetadata(entityName);
 
-            var keys = splitValues(propertyName, ".");
+            var keys = langUtil.splitValues(propertyName, ".");
             for (var i = 0; i < keys.length; i++) {
                 current = current.properties[keys[i]];
                 if (current === undefined) {
@@ -166,22 +167,7 @@
 
     }
 
-    /**
-     * Hace un split pero si solo hay un elemento en el array y es "", retorna un array vacio.
-     * Si no hay nada retorna un array sin elementos.
-     * @param {String} values
-     * @param {String} separator El separador
-     * @returns {Array[String]}
-     */
-    function splitValues(values, separator) {
-        values = values || "";
-        var arrValues = values.split(separator);
-        if ((arrValues.length === 1) && (arrValues[0] === "")) {
-            return [];
-        } else {
-            return arrValues;
-        }
-    }
+
 
 
 })();

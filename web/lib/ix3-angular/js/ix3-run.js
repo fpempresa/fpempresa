@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('es.logongas.ix3').run(['richDomain', function (richDomain) {
+angular.module('es.logongas.ix3').run(['richDomain', 'langUtil', function (richDomain, langUtil) {
 
         //Para transformar los Strign en fechas
         richDomain.addGlobalTransformer(function (className, object) {
@@ -40,19 +40,16 @@ angular.module('es.logongas.ix3').run(['richDomain', function (richDomain) {
                 throw new Error("No se permiten comas en el nombre de la propiedad");
             }
 
-            var keys = propertyName.split('.');
+            var keys = langUtil.splitValues(propertyName, ".");
             var current = this;
+            for (var i = 0; i < keys.length; i++) {
+                current = current.properties[keys[i]];
 
-            if (!((keys.length === 1) && (keys[0] === ""))) {
-                for (var i = 0; i < keys.length; i++) {
-                    current = current.properties[keys[i]];
-
-                    if (current === undefined) {
-                        return null;
-                    }
+                if (current === undefined) {
+                    break;
                 }
             }
-            if (current === undefined) {
+            if ((current === undefined) || (current === this)) {
                 return null;
             } else {
                 return current;

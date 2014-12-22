@@ -21,6 +21,7 @@
     <mapping resource="es/logongas/fpempresa/dao/comun/impl/Provincia.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/impl/Municipio.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/impl/Familia.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Grado.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/impl/Ciclo.hbm.xml"/>
     <!-- Definición de la seguridad -->
     <mapping resource="es/logongas/ix3/security/dao/impl/Identity.hbm.xml"/>

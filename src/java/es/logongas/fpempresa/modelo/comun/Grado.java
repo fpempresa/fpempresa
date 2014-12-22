@@ -16,66 +16,43 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package es.logongas.fpempresa.modelo.comun;
 
-import es.logongas.ix3.core.annotations.ValuesList;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * Ciclo de FP
+ *
  * @author Lorenzo
  */
-public class Ciclo {
-    private int idCiclo;
-    
-    @ValuesList(shortLength=true)
-    @NotNull
-    private Familia familia;
-    
-    @ValuesList(shortLength=true)
-    @NotNull
-    private Grado grado;    
-    
+public class Grado implements Serializable {
+    private int idGrado;
     
     @NotBlank
-    private String descripcion;   
-    
-    public Ciclo() {
+    private String descripcion;
+
+    public Grado() {
     }
 
     @Override
     public String toString() {
         return descripcion;
     }
+
+    
     
     /**
-     * @return the idCiclo
+     * @return the idGrado
      */
-    public int getIdCiclo() {
-        return idCiclo;
+    public int getIdGrado() {
+        return idGrado;
     }
 
     /**
-     * @param idCiclo the idCiclo to set
+     * @param idGrado the idGrado to set
      */
-    public void setIdCiclo(int idCiclo) {
-        this.idCiclo = idCiclo;
-    }
-
-    /**
-     * @return the familiaProfesional
-     */
-    public Familia getFamilia() {
-        return familia;
-    }
-
-    /**
-     * @param familia the familiaProfesional to set
-     */
-    public void setFamilia(Familia familia) {
-        this.familia = familia;
+    public void setIdGrado(int idGrado) {
+        this.idGrado = idGrado;
     }
 
     /**
@@ -90,19 +67,5 @@ public class Ciclo {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    /**
-     * @return the grado
-     */
-    public Grado getGrado() {
-        return grado;
-    }
-
-    /**
-     * @param grado the grado to set
-     */
-    public void setGrado(Grado grado) {
-        this.grado = grado;
     }
 }

@@ -23,9 +23,6 @@
         <many-to-one name="centro">
             <column name="idCentro"  />
         </many-to-one>
-        <many-to-one name="familia">
-            <column name="idFamilia"  />
-        </many-to-one>
         <many-to-one name="ciclo">
             <column name="idCiclo"  />
         </many-to-one>     

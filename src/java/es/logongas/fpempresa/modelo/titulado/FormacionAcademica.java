@@ -29,10 +29,7 @@ public class FormacionAcademica {
     @Label("Centro educativo")
     private Centro centro;
 
-    @ValuesList(shortLength = true)
-    private Familia familia;
-
-    @ValuesList(shortLength = true,dependProperty = "familia")
+    @ValuesList(shortLength = false)
     private Ciclo ciclo;
 
     @Label("Nombre centro")
@@ -58,25 +55,6 @@ public class FormacionAcademica {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
                 if (centro == null) {
-                    return false;
-                } else {
-                    return true;
-                }
-            case TITULO_UNIVERSITARIO:
-                return true;
-            case OTRO_TITULO:
-                return true;
-            default:
-                throw new RuntimeException("El tipoFormacionAcademica no es válido:" + tipoFormacionAcademica);
-        }
-    }
-
-    @AssertTrue(message = "No puede estar vacia")
-    @Label("Familia")
-    private boolean getValidateFamilia() {
-        switch (tipoFormacionAcademica) {
-            case CICLO_FORMATIVO:
-                if (familia == null) {
                     return false;
                 } else {
                     return true;
@@ -228,20 +206,6 @@ public class FormacionAcademica {
      */
     public void setCentro(Centro centro) {
         this.centro = centro;
-    }
-
-    /**
-     * @return the familia
-     */
-    public Familia getFamilia() {
-        return familia;
-    }
-
-    /**
-     * @param familia the familia to set
-     */
-    public void setFamilia(Familia familia) {
-        this.familia = familia;
     }
 
     /**

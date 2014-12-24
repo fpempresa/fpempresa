@@ -49,13 +49,8 @@ public class Direccion {
     @Label("Código postal")
     @Pattern(regexp = "\\d{5}| {0}")
     private String codigoPostal;
-    
+   
     @NotNull
-    @ValuesList(shortLength=true)
-    private Provincia provincia;
-    
-    @NotNull
-    @ValuesList(shortLength=true,dependProperty = "provincia")
     private Municipio municipio;
 
     /**
@@ -112,20 +107,6 @@ public class Direccion {
      */
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
-    }
-
-    /**
-     * @return the provincia
-     */
-    public Provincia getProvincia() {
-        return provincia;
-    }
-
-    /**
-     * @param provincia the provincia to set
-     */
-    public void setProvincia(Provincia provincia) {
-        this.provincia = provincia;
     }
 
     /**

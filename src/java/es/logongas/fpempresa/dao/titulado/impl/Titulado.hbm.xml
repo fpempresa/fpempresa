@@ -24,9 +24,6 @@
             <property name="nombreVia" />
             <property name="otrosDireccion" />
             <property name="codigoPostal" />
-            <many-to-one name="provincia">
-                <column name="idProvincia"  />
-            </many-to-one>
             <many-to-one name="municipio">
                 <column name="idMunicipio"  />
             </many-to-one>

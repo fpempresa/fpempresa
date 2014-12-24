@@ -6,7 +6,7 @@ angular.module('es.logongas.ix3').run(['richDomain', 'langUtil', function (richD
 
         function getValueDescription(value) {
             if (value) {
-                if ((this.dependProperty === null) && (angular.isArray(this.values))) {
+                if (angular.isArray(this.values)) {
                     var description = undefined;
                     var values = this.values;
                     if (this.type === "OBJECT") {

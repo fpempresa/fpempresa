@@ -53,7 +53,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
 
 
                                 var promise;
-                                if (metadataProperty.shortLength === true) {
+                                if (angular.isArray(metadataProperty.values)) {
                                     //La lista de posibles valores está en los metadatos , así que no hace falta ir al servidor
                                     promise = getFilteredValuesFromMetadata(newDepend, $scope.$eval(ix3OptionsDefault), metadataProperty);
                                 } else {
@@ -108,108 +108,188 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
             }
         };
 
+        /**
+         * Este método retorna la lista de valores del "<select>" pero SOLO si están en los metadatos.
+         * @param {type} depend El objeto del que dependen
+         * @param {type} ix3OptionsDefault LAs opciones de cuando no hay datos en el objeto del que dependen
+         * @param {type} metadataProperty 
+         * @returns {Promise} Una promesa con los datos
+         */
         function getFilteredValuesFromMetadata(depend, ix3OptionsDefault, metadataProperty) {
-            var values = metadataProperty.values;
+            var filterValues;
 
-            var promise = $q.when(filterValues(values, depend, ix3OptionsDefault, metadataProperty));
+            if (isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty)) {
+                filterValues = [];
+            } else {
+                filterValues = [];
+                var values = metadataProperty.values;
+                for (var i = 0; i < values.length; i++) {
+                    var value = values[i];
+                    if (isValueInFilterList(value, depend, ix3OptionsDefault, metadataProperty)) {
+                        filterValues.push(value);
+                    }
+                }
+            }
+
+            var promise = $q.when(filterValues);
 
             return promise;
         }
 
+        /**
+         * Retorna si un valor debe o no estar en la lista de valores del "<select>"
+         * @param {type} value
+         * @param {type} depend
+         * @param {type} ix3OptionsDefault
+         * @param {type} metadataProperty
+         * @returns {Boolean}
+         */
+        function isValueInFilterList(value, depend, ix3OptionsDefault, metadataProperty) {
+            var add = true;
 
-        function filterValues(values, depend, ix3OptionsDefault, metadataProperty) {
-            var filterValues = [];
+            for (var dependPropertyName in depend) {
+                if (!depend.hasOwnProperty(dependPropertyName)) {
+                    continue;
+                }
 
-            for (var i = 0; i < values.length; i++) {
-                var value = values[i];
-                var add = true;
+                var dependMetadataProperty = metadataProperty.properties[dependPropertyName];
+                var primaryKeyPropertyName = dependMetadataProperty.primaryKeyPropertyName;
+                if (depend[dependPropertyName]) {
+                    var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
+                    if (value[dependPropertyName]) {
+                        if (value[dependPropertyName][primaryKeyPropertyName] !== primaryKeyValue) {
+                            add = false;
+                            break;
+                        }
+                    } else {
+                        add = false;
+                        break;
+                    }
+                } else {
+                    //Si no hay valor , veamos que hacemos
+                    if ((ix3OptionsDefault) && (typeof (ix3OptionsDefault) === "object") && (ix3OptionsDefault.hasOwnProperty(dependPropertyName))) {
+                        var defaultValue = ix3OptionsDefault[dependPropertyName];
+                        if ((typeof (defaultValue) === "undefined") || (defaultValue === null)) {
+                            //No filtramos por esta dependencia pq vale null o undefined
+                            continue;
+                        } else {
+                            //Aqui es que nos han puesto exactamente el valor por defecto, y puede ser un solo valor o un array
+                            if (angular.isArray(defaultValue)) {
+                                var algunoIgual = false;
+
+                                for (var i = 0; i < defaultValue.length; i++) {
+                                    if (value[dependPropertyName][primaryKeyPropertyName] === defaultValue[i]) {
+                                        algunoIgual = true;
+                                        break;
+                                    }
+                                }
+
+                                if (algunoIgual === false) {
+                                    add = false;
+                                    break;
+                                }
+
+                            } else {
+                                if (value[dependPropertyName][primaryKeyPropertyName] !== defaultValue) {
+                                    add = false;
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        //Si no hay valor y no hay opcion por defecto seguro que no añadimos este elemento
+                        add = false;
+                        break;
+                    }
+                }
+            }
+
+            return add;
+        }
+
+        /**
+         * Este método retorna la lista de valores del "<select>" pero los busca en el servidor
+         * @param {type} depend El objeto del que dependen
+         * @param {type} ix3OptionsDefault LAs opciones de cuando no hay datos en el objeto del que dependen
+         * @param {type} metadataProperty 
+         * @returns {Promise} Una promesa con los datos
+         */
+        function getFilteredValuesFromServer(depend, ix3OptionsDefault, metadataProperty) {
+            if (isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty)) {
+                var promise = $q.when([]);
+                return promise;
+            } else {
+                var filter = {};
                 for (var dependPropertyName in depend) {
                     if (!depend.hasOwnProperty(dependPropertyName)) {
                         continue;
                     }
 
-                    var dependMetadataProperty = metadataProperty.properties[dependPropertyName];
-                    var primaryKeyPropertyName = dependMetadataProperty.primaryKeyPropertyName;
-                    if (depend[dependPropertyName]) {
+                    var primaryKeyPropertyName = metadataProperty.properties[dependPropertyName].primaryKeyPropertyName;
+
+                    if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
                         var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
-                        if (value[dependPropertyName]) {
-                            if (value[dependPropertyName][primaryKeyPropertyName] !== primaryKeyValue) {
-                                add = false;
-                                break;
-                            }
-                        } else {
-                            add = false;
-                            break;
-                        }
+                        filter[dependPropertyName + "." + primaryKeyPropertyName] = primaryKeyValue;
                     } else {
-                        //Si no hay valor , veamos que hacemos
                         if ((ix3OptionsDefault) && (typeof (ix3OptionsDefault) === "object") && (ix3OptionsDefault.hasOwnProperty(dependPropertyName))) {
                             var defaultValue = ix3OptionsDefault[dependPropertyName];
                             if ((typeof (defaultValue) === "undefined") || (defaultValue === null)) {
                                 //No filtramos por esta dependencia
-                                console.log("No filtramos por:" + dependPropertyName);
                                 continue;
                             } else {
-                                //Aqui es que nos han puesto exactamente el valor por defecto, y puede ser un solo valor o un array
-                                if (angular.isArray(defaultValue)) {
-                                    var algunoIgual = false;
-
-                                    for (var j = 0; j < defaultValue.length; j++) {
-                                        if (value[dependPropertyName][primaryKeyPropertyName] === defaultValue[j]) {
-                                            algunoIgual = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (algunoIgual === false) {
-                                        add = false;
-                                        break;
-                                    }
-
-                                } else {
-                                    if (value[dependPropertyName][primaryKeyPropertyName] !== defaultValue) {
-                                        add = false;
-                                        break;
-                                    }
-                                }
+                                //Aqui es que nos han puesto exactamente el valor por defecto
+                                filter[dependPropertyName + "." + primaryKeyPropertyName] = defaultValue;
                             }
                         } else {
-                            //Si no hay valor y no hay opcion por defecto seguro que no añadimos este elemento
-                            add = false;
-                            break;
+                            //Hemos encontrado un filtro que hace que ya no 
                         }
                     }
-                }
-                if (add === true) {
-                    filterValues.push(value);
+
+
                 }
 
+                var repository = repositoryFactory.getRepository(metadataProperty.className);
+                var promise = repository.search(filter);
+
+                return promise;
             }
-
-            return filterValues;
         }
 
 
-        function getFilteredValuesFromServer(depend, ix3OptionsDefault, metadataProperty) {
-            var filter = {};
-            for (var propertyName in depend) {
-                if (!depend.hasOwnProperty(propertyName)) {
+        /**
+         * Si El filtro es imposible de cumplir por ningun elemento retorna "true"
+         * Esto se da si los valroes de los que depende son null o si no hay valores por defecto
+         * Y así nos ahorramos una llamada al servidor
+         * @param {type} depend
+         * @param {type} ix3OptionsDefault
+         * @param {type} metadataProperty
+         * @returns {Boolean}
+         */
+        function isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty) {
+            var impossibleFilter = false
+
+            for (var dependPropertyName in depend) {
+                if (!depend.hasOwnProperty(dependPropertyName)) {
                     continue;
                 }
 
-                var dependMetadataProperty = metadataProperty.properties[propertyName];
-                var primaryKeyPropertyName = dependMetadataProperty.primaryKeyPropertyName;
-                var primaryKeyValue = depend[propertyName][primaryKeyPropertyName];
-                filter[propertyName + "." + primaryKeyPropertyName] = primaryKeyValue;
+                var primaryKeyPropertyName = metadataProperty.properties[dependPropertyName].primaryKeyPropertyName;
 
+                if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
+                    continue;
+                } else {
+                    if ((ix3OptionsDefault) && (typeof (ix3OptionsDefault) === "object") && (ix3OptionsDefault.hasOwnProperty(dependPropertyName))) {
+                        continue;
+                    } else {
+                        //Hemos encontrado un filtro que no se puede cumplir
+                        impossibleFilter = true;
+                        break;
+                    }
+                }
             }
 
-            var repository = repositoryFactory.getRepository(metadataProperty.className);
-            var promise = repository.search(filter);
-
-            return promise;
+            return impossibleFilter;
         }
-
 
         function getValueFromArrayByPrimaryKey(values, valueToFind, primaryKeyPropertyName) {
             if ((valueToFind) && (valueToFind[primaryKeyPropertyName])) {
@@ -282,8 +362,6 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                     }
 
                 }
-
-                delete newValue.toString;
 
                 return newValue;
 

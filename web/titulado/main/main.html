@@ -37,7 +37,7 @@
                         </tr>
                         <tr ng-show="model.direccion !== null">
                             <td><i class="glyphicon glyphicon-map-marker"></i> Direccion</td>
-                            <td>{{model.direccion.getTipoViaDescription()}} {{model.direccion.nombreVia}} {{model.direccion.otrosDireccion}}<br> {{model.direccion.codigoPostal}} {{model.direccion.municipio.toString()}} ({{model.direccion.provincia.toString()}})</td>
+                            <td>{{model.direccion.getTipoViaDescription()}} {{model.direccion.nombreVia}} {{model.direccion.otrosDireccion}}<br> {{model.direccion.codigoPostal}} {{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</td>
                         </tr>
                     </tbody>
                 </table>

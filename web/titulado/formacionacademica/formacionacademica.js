@@ -1,6 +1,6 @@
 "use strict";
 app.config(['crudRoutesProvider', function(crudRoutesProvider) {
-        crudRoutesProvider.addAllRoutes("FormacionAcademica");
+        crudRoutesProvider.addAllRoutes("FormacionAcademica","ciclo.familia,ciclo.grado");
     }]);
 
 app.controller("FormacionAcademicaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {

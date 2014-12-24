@@ -7,7 +7,7 @@ app.run(['richDomain','metadataEntities', function (richDomain, metadataEntities
             if (this.idioma==="OTRO") {
                 return this.otroIdioma;
             } else {
-                return this.idioma;
+                return metadataEntities.getMetadataProperty(this.$propertyPath+".idioma").getValueDescription(this.idioma);
             }
         }            
 

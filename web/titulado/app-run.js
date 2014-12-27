@@ -1,15 +1,14 @@
 "use strict";
 
 
-app.run(['$rootScope', function ($rootScope) {
-        //Para que desde el HTML se pueda acceder al contextPath
+app.run(['$rootScope', 'session', function ($rootScope, session) {
+        //Obtenemos la información que hemos obtenido directamente del servidor
         $rootScope.getContextPath = getContextPath;
+        session.setUser(user);
         
-        if (user) {
-            $rootScope.user = user;
-        } else {
+        if (!$rootScope.user) {
             alert("No has iniciado sesión o tu sesión ha caducado");
-            window.location.href = getContextPath() + "/site/index.html#/login";            
+            window.location.href = getContextPath() + "/site/index.html#/login";
         }
 
     }]);

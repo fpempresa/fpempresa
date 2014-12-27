@@ -1,10 +1,10 @@
 "use strict";
 
 
-app.run(['$rootScope','$route', 'routeScroll', function ($rootScope, $route, routeScroll) {
-    //Para que desde el HTML se pueda acceder al contextPath
-    $rootScope.getContextPath = getContextPath;
-
+app.run(['$rootScope','$route', 'routeScroll','session', function ($rootScope, $route, routeScroll, session) {
+        //Obtenemos la información que hemos obtenido directamente del servidor
+        $rootScope.getContextPath = getContextPath;
+        session.setUser(user);
 }]);
 
 

@@ -17,9 +17,9 @@
  */
 
 
-package es.logongas.fpempresa.dao.comun;
+package es.logongas.fpempresa.dao.comun.usuario;
 
-import es.logongas.fpempresa.modelo.comun.Usuario;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.dao.GenericDAO;
 
 

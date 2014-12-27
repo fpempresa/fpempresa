@@ -6,8 +6,7 @@
 package es.logongas.fpempresa.modelo.titulado;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.comun.Ciclo;
-import es.logongas.fpempresa.modelo.comun.Familia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.AssertTrue;

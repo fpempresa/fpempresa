@@ -17,8 +17,8 @@
  */
 package es.logongas.fpempresa.modelo.titulado;
 
-import es.logongas.fpempresa.modelo.comun.Direccion;
-import es.logongas.fpempresa.modelo.comun.Usuario;
+import es.logongas.fpempresa.modelo.comun.geo.Direccion;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.annotations.Label;
 import java.util.Date;
 import java.util.Set;
@@ -65,7 +65,7 @@ public class Titulado {
     private Set<TituloIdioma> titulosIdiomas;
     private Set<ExperienciaLaboral> experienciasLaborales;
     private Set<FormacionAcademica> formacionesAcademicas;
-    
+
     public Titulado() {
     }
     

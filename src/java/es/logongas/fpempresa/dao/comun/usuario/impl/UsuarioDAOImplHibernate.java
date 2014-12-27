@@ -16,10 +16,10 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.logongas.fpempresa.dao.comun.impl;
+package es.logongas.fpempresa.dao.comun.usuario.impl;
 
-import es.logongas.fpempresa.dao.comun.UsuarioDAO;
-import es.logongas.fpempresa.modelo.comun.Usuario;
+import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;

@@ -6,7 +6,7 @@
 
 package es.logongas.fpempresa.modelo.centro;
 
-import es.logongas.fpempresa.modelo.comun.Direccion;
+import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

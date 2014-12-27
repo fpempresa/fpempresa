@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package es.logongas.fpempresa.modelo.comun;
+package es.logongas.fpempresa.modelo.comun.usuario;
 
 /**
  *

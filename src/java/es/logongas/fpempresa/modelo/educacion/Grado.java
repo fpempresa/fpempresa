@@ -16,21 +16,22 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.logongas.fpempresa.modelo.comun;
+package es.logongas.fpempresa.modelo.educacion;
 
+import java.io.Serializable;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author Lorenzo
  */
-public class Familia {
-    private int idFamilia;
+public class Grado implements Serializable {
+    private int idGrado;
     
     @NotBlank
     private String descripcion;
 
-    public Familia() {
+    public Grado() {
     }
 
     @Override
@@ -41,17 +42,17 @@ public class Familia {
     
     
     /**
-     * @return the idFamilia
+     * @return the idGrado
      */
-    public int getIdFamilia() {
-        return idFamilia;
+    public int getIdGrado() {
+        return idGrado;
     }
 
     /**
-     * @param idFamilia the idFamilia to set
+     * @param idGrado the idGrado to set
      */
-    public void setIdFamilia(int idFamilia) {
-        this.idFamilia = idFamilia;
+    public void setIdGrado(int idGrado) {
+        this.idGrado = idGrado;
     }
 
     /**

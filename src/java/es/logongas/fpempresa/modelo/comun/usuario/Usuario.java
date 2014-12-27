@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.modelo.comun;
+package es.logongas.fpempresa.modelo.comun.usuario;
 
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;

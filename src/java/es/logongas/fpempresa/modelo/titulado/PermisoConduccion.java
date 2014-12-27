@@ -16,24 +16,12 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-package es.logongas.fpempresa.modelo.comun;
+package es.logongas.fpempresa.modelo.titulado;
 
 /**
- * 
+ *
  * @author Lorenzo
  */
-public enum TipoCiclo {
-    MEDIO("Medio"),SUPERIOR("Superior");
-    
-    String text;
-    
-    TipoCiclo(String text) {
-        this.text=text;
-    }
-
-    @Override
-    public String toString() {
-        return text;
-    }
+public enum PermisoConduccion {
+    A1,A2,A,B,C1,C,D1,D,BE,C1E,CE,D1E,DE,Btp;
 }

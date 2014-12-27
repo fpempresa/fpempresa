@@ -16,43 +16,66 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.logongas.fpempresa.modelo.comun;
 
-import java.io.Serializable;
+package es.logongas.fpempresa.modelo.educacion;
+
+import es.logongas.ix3.core.annotations.ValuesList;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- *
+ * Ciclo de FP
  * @author Lorenzo
  */
-public class Grado implements Serializable {
-    private int idGrado;
+public class Ciclo {
+    private int idCiclo;
+    
+    @ValuesList(shortLength=true)
+    @NotNull
+    private Familia familia;
+    
+    @ValuesList(shortLength=true)
+    @NotNull
+    private Grado grado;    
+    
     
     @NotBlank
-    private String descripcion;
-
-    public Grado() {
+    private String descripcion;   
+    
+    public Ciclo() {
     }
 
     @Override
     public String toString() {
         return descripcion;
     }
-
-    
     
     /**
-     * @return the idGrado
+     * @return the idCiclo
      */
-    public int getIdGrado() {
-        return idGrado;
+    public int getIdCiclo() {
+        return idCiclo;
     }
 
     /**
-     * @param idGrado the idGrado to set
+     * @param idCiclo the idCiclo to set
      */
-    public void setIdGrado(int idGrado) {
-        this.idGrado = idGrado;
+    public void setIdCiclo(int idCiclo) {
+        this.idCiclo = idCiclo;
+    }
+
+    /**
+     * @return the familiaProfesional
+     */
+    public Familia getFamilia() {
+        return familia;
+    }
+
+    /**
+     * @param familia the familiaProfesional to set
+     */
+    public void setFamilia(Familia familia) {
+        this.familia = familia;
     }
 
     /**
@@ -67,5 +90,19 @@ public class Grado implements Serializable {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the grado
+     */
+    public Grado getGrado() {
+        return grado;
+    }
+
+    /**
+     * @param grado the grado to set
+     */
+    public void setGrado(Grado grado) {
+        this.grado = grado;
     }
 }

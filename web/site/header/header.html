@@ -26,7 +26,8 @@
                     <a  href ng-click="navigateWithScroll('/','porque')" fpe-click-button-on-click="buttonMenuHeader">Por qu&eacute;</a>
                 </li>
                 <li>
-                    <a href="#/login" fpe-click-button-on-click="buttonMenuHeader">Entrar</a>
+                    <a ng-if="!user" href="#/login" fpe-click-button-on-click="buttonMenuHeader">Entrar</a>
+                    <a ng-if="user"  href ng-click="homeUsuario()" fpe-click-button-on-click="buttonMenuHeader">{{user.name}}</a>
                 </li>
             </ul>
         </div>

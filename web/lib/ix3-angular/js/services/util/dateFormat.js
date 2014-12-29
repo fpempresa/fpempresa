@@ -1,16 +1,25 @@
 (function () {
     "use strict";
 
-    function DateFormatService($locale,defaultDateFormat) {
-        var _defaultDateFormat=defaultDateFormat;
+    DateFormat.$inject=['$locale','ix3Config']
+    function DateFormat($locale,ix3Config) {
+        
+        var _defaultDateFormat=ix3Config.format.date.default;
         var _$locale=$locale;
+        
+        return {
+            getAngularFormatFromPredefined:getAngularFormatFromPredefined,
+            getMomentFormatFromAngularJSFormat:getMomentFormatFromAngularJSFormat,
+            getJQueryDatepickerFormatFromAngularJSFormat:getJQueryDatepickerFormatFromAngularJSFormat,
+            getDefaultDateFormat:getDefaultDateFormat
+        }
 
         /**
          * Obtiene el formato de fecha de Angular correspondiente a un "localizable format"
          * @param {String} angularjsFormat Un formato de fecha de AngularJS
          * @returns {String} Si es un "localizable format" retorna es Spring correspondiente , sino retorna el mismo String
          */
-        this.getAngularFormatFromPredefined = function (angularjsFormat) {
+        function getAngularFormatFromPredefined(angularjsFormat) {
             var newFormat;
             if (angularjsFormat === "fullDate") {
                 newFormat = _$locale.DATETIME_FORMATS.fullDate;
@@ -40,7 +49,7 @@
          * @param {String} angularjsFormat El formato de fecha de AngularJS que NO sea un "localizable format"
          * @returns {String} Formato de fecha de moment.js
          */
-        this.getMomentFormatFromAngularJSFormat = function (angularjsFormat) {
+        function getMomentFormatFromAngularJSFormat(angularjsFormat) {
             var format = angularjsFormat;
             var inLiteral = false;
             var newFormat = "";
@@ -101,7 +110,7 @@
          * @param {String} angularjsFormat El formato de fecha de AngularJS que NO sea un "localizable format"
          * @returns {String} Formato de fecha de jQuery UI Datepicker
          */
-        this.getJQueryDatepickerFormatFromAngularJSFormat = function (angularjsFormat) {
+        function getJQueryDatepickerFormatFromAngularJSFormat(angularjsFormat) {
             var newFormat = angularjsFormat;
             newFormat = newFormat.replace(/([^M]|^)(M)([^M]|$)/g, function (match, p1, p2, p3, offset, string) {
                 return p1 + "m" + p3;
@@ -130,26 +139,13 @@
 
         };
 
-        this.getDefaultDateFormat = function () {
+        function getDefaultDateFormat() {
             return _defaultDateFormat;
         };
 
     }
-
-    function DateFormatProvider() {
-        this._defaultDateFormat="shortDate";
-        this.setDefaultDateFormat=function(defaultDateFormat) {
-            this._defaultDateFormat=defaultDateFormat;
-        }
-        this.$get=['$locale',function($locale) {
-            return new  DateFormatService($locale,this._defaultDateFormat);
-        }];
-
-    }
-
-
-
-    angular.module("es.logongas.ix3").provider("dateFormat",DateFormatProvider);
+    
+    angular.module("es.logongas.ix3").factory("dateFormat",DateFormat);
 
 })();
 

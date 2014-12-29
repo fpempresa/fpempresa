@@ -288,25 +288,18 @@
 
     }
 
-    function RemoteDAOFactory(baseUrl, $http, $q) {
-        this.getRemoteDAO = function (entityName) {
-            return new RemoteDAO(entityName, baseUrl, $http, $q);
-        };
+    RemoteDAOFactory.$inject = ['ix3Config', '$http', '$q'];
+    function RemoteDAOFactory(ix3Config, $http, $q) {
+
+        return {
+            getRemoteDAO: getRemoteDAO
+        }
+
+        function getRemoteDAO(entityName) {
+            return new RemoteDAO(entityName, ix3Config.server.api, $http, $q);
+        }
     }
 
-
-    function RemoteDAOFactoryProvider() {
-        this._baseUrl = "";
-
-        this.setBaseUrl = function (baseUrl) {
-            this._baseUrl = baseUrl;
-        };
-
-        this.$get = ['$http', '$q', function ($http, $q) {
-                return new RemoteDAOFactory(this._baseUrl, $http, $q);
-            }];
-    }
-
-    angular.module("es.logongas.ix3").provider("remoteDAOFactory", RemoteDAOFactoryProvider);
+    angular.module("es.logongas.ix3").factory("remoteDAOFactory", RemoteDAOFactory);
 
 })();

@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('es.logongas.ix3').directive('ix3BusinessMessages', ['bootstrap', function(bootstrap) {
+angular.module('es.logongas.ix3').directive('ix3BusinessMessages', ['ix3Config', function(ix3Config) {
         return {
             restrict: 'E',
             replace:true,
@@ -18,7 +18,7 @@ angular.module('es.logongas.ix3').directive('ix3BusinessMessages', ['bootstrap',
             scope: {
             },
             link: function($scope, element, attributes) {
-                $scope.bootstrap = bootstrap;
+                $scope.bootstrap = ix3Config.bootstrap;
                 
                 $scope.realScope=null;
                 var scope=$scope;

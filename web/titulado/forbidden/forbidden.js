@@ -2,5 +2,5 @@
 
 
 
-app.controller("LoginController", ['$scope', function ($scope) {
+app.controller("ForbiddenController", ['$scope', function ($scope) {
     }]);

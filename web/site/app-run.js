@@ -2,7 +2,7 @@
 
 
 app.run(['$rootScope','$route', 'routeScroll','session', function ($rootScope, $route, routeScroll, session) {
-        //Obtenemos la información que hemos obtenido directamente del servidor
+        //Guardamos la información que hemos obtenido directamente del servidor
         $rootScope.getContextPath = getContextPath;
         session.setUser(user);
 }]);

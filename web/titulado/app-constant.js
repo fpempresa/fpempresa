@@ -1,5 +1,5 @@
 
-app.constant("ix3UserConfig",{
+app.constant("ix3UserConfiguration",{
     bootstrap: {
         version:3
     },
@@ -12,8 +12,29 @@ app.constant("ix3UserConfig",{
         }
     },
     pages: {
-        login:getContextPath() + "/site/index.html#/login",
-        forbidden:"#/forbidden",
-        error:"#/forbidden"
+        login:{
+            absUrl:getContextPath() + "/site/index.html#/login",
+        },
+        forbidden:{
+            url:"/forbidden"
+        }
+    },
+    security:{
+        defaultStatus:401,
+        acl:[
+            ['user','routeInstance',function(user,routeInstance){
+                if (user) {
+                    if (user.tipoUsuario==="TITULADO") {
+                        return 200;
+                    } else {
+                        //Si no es un titulado prohibimos el acceso
+                        return 403;
+                    }
+                } else {
+                    //Si no hay usuario, tiene que autenticarse
+                    return 401;
+                }
+            }]
+        ]
     }
 });

@@ -1,4 +1,4 @@
-app.constant("ix3UserConfig",{
+app.constant("ix3UserConfiguration",{
     bootstrap: {
         version:3
     },
@@ -11,8 +11,17 @@ app.constant("ix3UserConfig",{
         }
     },
     pages: {
-        login:getContextPath() + "/site/index.html#/login",
-        forbidden:"#/forbidden",
-        error:"#/forbidden"
+        login:{
+            url:"/login",
+        },
+        forbidden:{
+            url:"/forbidden"
+        }
+    },
+    security:{
+        defaultStatus:200,
+        acl:[
+            
+        ]
     }
 });

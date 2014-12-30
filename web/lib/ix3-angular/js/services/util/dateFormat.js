@@ -1,10 +1,10 @@
 (function () {
     "use strict";
 
-    DateFormat.$inject=['$locale','ix3Config']
-    function DateFormat($locale,ix3Config) {
+    DateFormat.$inject=['$locale','ix3Configuration']
+    function DateFormat($locale,ix3Configuration) {
         
-        var _defaultDateFormat=ix3Config.format.date.default;
+        var _defaultDateFormat=ix3Configuration.format.date.default;
         var _$locale=$locale;
         
         return {

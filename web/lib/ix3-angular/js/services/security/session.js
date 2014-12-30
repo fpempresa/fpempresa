@@ -2,7 +2,7 @@
 /**
  * Servicio para gestionar la sesión en el servidor
  */
-angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Config', '$q', '$rootScope', function ($http, ix3Config, $q, $rootScope) {
+angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration', '$q', '$rootScope', function ($http, ix3Configuration, $q, $rootScope) {
 
         return {
             login: login,
@@ -17,7 +17,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Config', '$q'
             var deferred = $q.defer();
             var config = {
                 method: 'POST',
-                url: ix3Config.server.api + '/session',
+                url: ix3Configuration.server.api + '/session',
                 data: jQuery.param({
                     login: login,
                     password: password
@@ -46,7 +46,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Config', '$q'
 
             var config = {
                 method: 'DELETE',
-                url: ix3Config.server.api + '/session'
+                url: ix3Configuration.server.api + '/session'
             };
 
             $http(config).success(function (data, status, headers, config) {
@@ -68,7 +68,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Config', '$q'
 
             var config = {
                 method: 'GET',
-                url: ix3Config.server.api + '/session'
+                url: ix3Configuration.server.api + '/session'
             };
 
             $http(config).success(function (user, status, headers, config) {

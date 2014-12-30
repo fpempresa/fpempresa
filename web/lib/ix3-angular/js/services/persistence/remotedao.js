@@ -288,15 +288,15 @@
 
     }
 
-    RemoteDAOFactory.$inject = ['ix3Config', '$http', '$q'];
-    function RemoteDAOFactory(ix3Config, $http, $q) {
+    RemoteDAOFactory.$inject = ['ix3Configuration', '$http', '$q'];
+    function RemoteDAOFactory(ix3Configuration, $http, $q) {
 
         return {
             getRemoteDAO: getRemoteDAO
         }
 
         function getRemoteDAO(entityName) {
-            return new RemoteDAO(entityName, ix3Config.server.api, $http, $q);
+            return new RemoteDAO(entityName, ix3Configuration.server.api, $http, $q);
         }
     }
 

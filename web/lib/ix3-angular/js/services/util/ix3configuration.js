@@ -27,7 +27,7 @@
             security: {
                 defaultStatus: 200,
                 acl: [
-                    ['user,', 'routeInstance', function (user, routeInstance) {
+                    ['user', 'state', 'params', function (user, state, params) {
                             return //200,401 o 403
                         }]
                 ]

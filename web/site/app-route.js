@@ -1,6 +1,3 @@
-app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.otherwise({
-            redirectTo: '/'
-        });
-
+app.config(['$urlRouterProvider', function($urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
     }]);

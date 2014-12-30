@@ -4,8 +4,8 @@
     angular.module("es.logongas.ix3").run(['$rootScope', '$window', '$location', 'authorizationManager', 'ix3Configuration', function ($rootScope, $window, $location, authorizationManager, ix3Configuration) {
 
 
-            $rootScope.$on("$routeChangeStart", function (event, nextRoute, lastRoute) {
-                var status = authorizationManager.authorizeRoute(nextRoute);
+            $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+                var status = authorizationManager.authorizeRoute(toState, toParams);
 
                 if (status === 200) {
                     //Todo OK, así que no hacemos nada mas
@@ -48,8 +48,8 @@
             authorizeRoute: authorizeRoute
         };
 
-        function authorizeRoute(routeInstance) {
-            var path = routeInstance.originalPath;
+        function authorizeRoute(state, params) {
+            var path = state.url;
 
             if (isKnownPage(path, ix3Configuration.pages.login) || isKnownPage(path, ix3Configuration.pages.forbidden)) {
                 //Siempre se permiten las página bien conocidas como las de login o prohibido
@@ -60,7 +60,8 @@
                 var aceFn = acl[i];
                 var locals = {
                     user: $rootScope.user,
-                    routeInstance: routeInstance
+                    state:state, 
+                    params:params
                 }
                 var status = $injector.invoke(aceFn, undefined, locals);
                 if (status) {

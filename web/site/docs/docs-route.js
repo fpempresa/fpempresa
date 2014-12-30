@@ -1,17 +1,22 @@
-app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/docs/faq', {
+app.config(['$stateProvider', function($stateProvider) {
+        $stateProvider.state('/docs/faq', {
+            url:'/docs/faq',
             templateUrl: 'docs/faq.html'
         });
-        $routeProvider.when('/docs/contacto', {
+        $stateProvider.state('/docs/contacto', {
+            url:'/docs/contacto',
             templateUrl: 'docs/contacto.html'
         });
-        $routeProvider.when('/docs/privacidad', {
+        $stateProvider.state('/docs/privacidad', {
+            url:'/docs/privacidad',
             templateUrl: 'docs/privacidad.html'
         });
-        $routeProvider.when('/docs/terminos', {
+        $stateProvider.state('/docs/terminos', {
+            url:'/docs/terminos',
             templateUrl: 'docs/terminos.html'
         });
-        $routeProvider.when('/docs/asociacion', {
+        $stateProvider.state('/docs/asociacion', {
+            url:'/docs/asociacion',
             templateUrl: 'docs/asociacion.html'
         });
     }]);

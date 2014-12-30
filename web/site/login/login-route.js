@@ -1,5 +1,6 @@
-app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/login', {
+app.config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('/login', {
+            url:'/login',
             templateUrl: 'login/login.html',
             controller: 'LoginController'
         });

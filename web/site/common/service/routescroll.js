@@ -5,6 +5,7 @@
  * se pueda navegar hasta un elemento.
  * El Scroll es animado.
  */
+RouteScroll.$inject = ['$rootScope','$location', '$anchorScroll', 'animateScroll'];
 function RouteScroll($rootScope,$location, $anchorScroll, animateScroll) {
 
     var _paramName = "$scrollTo";
@@ -16,12 +17,12 @@ function RouteScroll($rootScope,$location, $anchorScroll, animateScroll) {
     var enable = function (paramName) {
         _paramName = paramName || _paramName;
 
-        $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
-            var scrollTo = currentRoute.params[_paramName];
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+            var scrollTo = $location.search()[_paramName];
 
             //Si cambiamos de página hacemos nos ponemos en la parte superior de la página pero si vamos a la misma no se hace
-            if (currentRoute && previousRoute) {
-                if (currentRoute.originalPath !== previousRoute.originalPath) {
+            if (toState && fromState) {
+                if (toState.name !== fromState.name) {
                     $anchorScroll.yOffset = 0;
                     $anchorScroll();
                 }
@@ -46,7 +47,7 @@ function RouteScroll($rootScope,$location, $anchorScroll, animateScroll) {
             url=page;
         }
         
-        if ($location.url()===url) {
+        if ($location.path()===page) {
             if (scroll) {
                 //Vamos a la misma URL pero como hay Scroll
                 //puede que el usuario se haya desplazado 
@@ -71,6 +72,6 @@ function RouteScroll($rootScope,$location, $anchorScroll, animateScroll) {
     }
 
 }
-RouteScroll.$inject = ['$rootScope','$location', '$anchorScroll', 'animateScroll'];
+
 
 app.factory("routeScroll", RouteScroll);

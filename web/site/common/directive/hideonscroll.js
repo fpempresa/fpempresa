@@ -20,8 +20,8 @@
 
                             showHide(iElement, config, $location.path());
 
-                            $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previousRoute) {
-                                showHide(iElement, config, currentRoute.originalPath);
+                            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                                showHide(iElement, config, toState.url);
                             });
 
                             $($window).scroll(function () {

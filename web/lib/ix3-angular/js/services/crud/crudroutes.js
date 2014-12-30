@@ -5,17 +5,22 @@
     CRUDRoutes.$inject = ['$stateProvider'];
     function CRUDRoutes($stateProvider) {
 
-        this.addAllRoutes = function (entity, expand) {
+        this.addAllRoutes = function (config) {
             //Al ser todas las rutas no permitimos la variable "route" ya que tendría valores distintos para cada una
-            this.addSearchRoute(entity, expand);
-            this.addNewRoute(entity, expand);
-            this.addEditRoute(entity, expand);
-            this.addDeleteRoute(entity, expand);
-            this.addViewRoute(entity, expand);
+            delete config.route;
+            this.addSearchRoute(config);
+            this.addNewRoute(config);
+            this.addEditRoute(config);
+            this.addDeleteRoute(config);
+            this.addViewRoute(config);
         };
 
 
-        this.addSearchRoute = function (entity, expand, route) {
+        this.addSearchRoute = function (config) {
+            var entity = config.entity;
+            var expand = config.expand;
+            var route = config.route;
+            var htmlBasePath = (config.htmlBasePath || ".");
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -24,12 +29,13 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
+            var name1 = "cols2." + lowerEntityName + "search";
+            var name2 = "cols2." + lowerEntityName + "searchParent";
             var path1 = '/' + lowerEntityName + '/search';
             var path2 = '/' + lowerEntityName + '/search/:parentProperty/:parentId';
             var definitiveRoute = {
-                templateUrl: lowerEntityName + '/search.html',
-                controller: upperCamelEntityName + 'SearchController',
-                reloadOnSearch: false
+                templateUrl: htmlBasePath + "/" + lowerEntityName + '/search.html',
+                controller: upperCamelEntityName + 'SearchController'
             };
             var resolve = {
                 controllerParams: ['$stateParams', function ($stateParams) {
@@ -49,16 +55,20 @@
             definitiveRoute.resolve = definitiveRoute.resolve || {};
             angular.extend(definitiveRoute.resolve, resolve);
 
-            var routeWithoutParent=angular.copy(definitiveRoute);
-            routeWithoutParent.url=path1;
-            $stateProvider.state(path1, routeWithoutParent);
-            
-            var routeWithParent=angular.copy(definitiveRoute);
-            routeWithParent.url=path2;
-            $stateProvider.state(path2, routeWithParent);            
+            var routeWithoutParent = angular.copy(definitiveRoute);
+            routeWithoutParent.url = path1;
+            $stateProvider.state(name1, routeWithoutParent);
+
+            var routeWithParent = angular.copy(definitiveRoute);
+            routeWithParent.url = path2;
+            $stateProvider.state(name2, routeWithParent);
         };
-        
-        this.addNewRoute = function (entity, expand, route) {
+
+        this.addNewRoute = function (config) {
+            var entity = config.entity;
+            var expand = config.expand;
+            var route = config.route;
+            var htmlBasePath = (config.htmlBasePath || ".");
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -67,11 +77,13 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
+            var name1 = "cols2." + lowerEntityName + "new";
+            var name2 = "cols2." + lowerEntityName + "newParent";
             var path1 = '/' + lowerEntityName + '/new';
             var path2 = '/' + lowerEntityName + '/new/:parentProperty/:parentId';
 
             var definitiveRoute = {
-                templateUrl: lowerEntityName + '/detail.html',
+                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
                 controller: upperCamelEntityName + 'NewEditController'
             };
 
@@ -95,16 +107,21 @@
             definitiveRoute.resolve = definitiveRoute.resolve || {};
             angular.extend(definitiveRoute.resolve, resolve);
 
-            var routeWithoutParent=angular.copy(definitiveRoute);
-            routeWithoutParent.url=path1;
-            $stateProvider.state(path1, routeWithoutParent);
-            
-            var routeWithParent=angular.copy(definitiveRoute);
-            routeWithParent.url=path2;
-            $stateProvider.state(path2, routeWithParent);  
+            var routeWithoutParent = angular.copy(definitiveRoute);
+            routeWithoutParent.url = path1;
+            $stateProvider.state(name1, routeWithoutParent);
+
+            var routeWithParent = angular.copy(definitiveRoute);
+            routeWithParent.url = path2;
+            $stateProvider.state(name2, routeWithParent);
 
         };
-        this.addViewRoute = function (entity, expand, route) {
+        this.addViewRoute = function (config) {
+            var entity = config.entity;
+            var expand = config.expand;
+            var route = config.route;
+            var htmlBasePath = (config.htmlBasePath || ".");
+
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -113,12 +130,13 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
-
+            var name1 = "cols2." + lowerEntityName + "view";
+            var name2 = "cols2." + lowerEntityName + "viewParent";
             var path1 = '/' + lowerEntityName + '/view/:id';
             var path2 = '/' + lowerEntityName + '/view/:id/:parentProperty/:parentId';
 
             var definitiveRoute = {
-                templateUrl: lowerEntityName + '/detail.html',
+                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
                 controller: upperCamelEntityName + 'ViewController'
             }
 
@@ -142,15 +160,20 @@
             definitiveRoute.resolve = definitiveRoute.resolve || {};
             angular.extend(definitiveRoute.resolve, resolve);
 
-            var routeWithoutParent=angular.copy(definitiveRoute);
-            routeWithoutParent.url=path1;
-            $stateProvider.state(path1, routeWithoutParent);
-            
-            var routeWithParent=angular.copy(definitiveRoute);
-            routeWithParent.url=path2;
-            $stateProvider.state(path2, routeWithParent);  
+            var routeWithoutParent = angular.copy(definitiveRoute);
+            routeWithoutParent.url = path1;
+            $stateProvider.state(name1, routeWithoutParent);
+
+            var routeWithParent = angular.copy(definitiveRoute);
+            routeWithParent.url = path2;
+            $stateProvider.state(name2, routeWithParent);
         };
-        this.addEditRoute = function (entity, expand, route) {
+        this.addEditRoute = function (config) {
+            var entity = config.entity;
+            var expand = config.expand;
+            var route = config.route;
+            var htmlBasePath = (config.htmlBasePath || ".");
+
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -159,12 +182,15 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
+            var name1 = "cols2." + lowerEntityName + "edit";
+            var name2 = "cols2." + lowerEntityName + "editParent";
             var path1 = '/' + lowerEntityName + '/edit/:id';
             var path2 = '/' + lowerEntityName + '/edit/:id/:parentProperty/:parentId';
 
             var definitiveRoute = {
-                templateUrl: lowerEntityName + '/detail.html',
+                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
                 controller: upperCamelEntityName + 'NewEditController'
+
             }
 
             var resolve = {
@@ -187,15 +213,20 @@
             definitiveRoute.resolve = definitiveRoute.resolve || {};
             angular.extend(definitiveRoute.resolve, resolve);
 
-            var routeWithoutParent=angular.copy(definitiveRoute);
-            routeWithoutParent.url=path1;
-            $stateProvider.state(path1, routeWithoutParent);
-            
-            var routeWithParent=angular.copy(definitiveRoute);
-            routeWithParent.url=path2;
-            $stateProvider.state(path2, routeWithParent);  
+            var routeWithoutParent = angular.copy(definitiveRoute);
+            routeWithoutParent.url = path1;
+            $stateProvider.state(name1, routeWithoutParent);
+
+            var routeWithParent = angular.copy(definitiveRoute);
+            routeWithParent.url = path2;
+            $stateProvider.state(name2, routeWithParent);
         };
-        this.addDeleteRoute = function (entity, expand, route) {
+        this.addDeleteRoute = function (config) {
+            var entity = config.entity;
+            var expand = config.expand;
+            var route = config.route;
+            var htmlBasePath = (config.htmlBasePath || ".");
+
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -204,11 +235,13 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
+            var name1 = "cols2." + lowerEntityName + "delete";
+            var name2 = "cols2." + lowerEntityName + "deleteParent";
             var path1 = '/' + lowerEntityName + '/delete/:id';
             var path2 = '/' + lowerEntityName + '/delete/:id/:parentProperty/:parentId';
 
             var definitiveRoute = {
-                templateUrl: lowerEntityName + '/detail.html',
+                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
                 controller: upperCamelEntityName + 'DeleteController'
             };
 
@@ -233,13 +266,13 @@
             definitiveRoute.resolve = definitiveRoute.resolve || {};
             angular.extend(definitiveRoute.resolve, resolve);
 
-            var routeWithoutParent=angular.copy(definitiveRoute);
-            routeWithoutParent.url=path1;
-            $stateProvider.state(path1, routeWithoutParent);
-            
-            var routeWithParent=angular.copy(definitiveRoute);
-            routeWithParent.url=path2;
-            $stateProvider.state(path2, routeWithParent);  
+            var routeWithoutParent = angular.copy(definitiveRoute);
+            routeWithoutParent.url = path1;
+            $stateProvider.state(name1, routeWithoutParent);
+
+            var routeWithParent = angular.copy(definitiveRoute);
+            routeWithParent.url = path2;
+            $stateProvider.state(name2, routeWithParent);
         };
         this.$get = function () {
             //Realmente no queremos nada aqui pero angular nos obliga.

@@ -1,7 +1,7 @@
 app.config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('/', {
-            url:"/",
-            templateUrl: 'main/main.html',
+        $stateProvider.state('cols2.main', {
+            url: "/",
+            templateUrl: 'views/main/main.html',
             controller: 'MainController',
             resolve: {
                 metadata: ['metadataEntities', function (metadataEntities) {

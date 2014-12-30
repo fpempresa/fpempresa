@@ -1,3 +1,4 @@
+"use strict";
 
 app.constant("ix3UserConfiguration", {
     bootstrap: {

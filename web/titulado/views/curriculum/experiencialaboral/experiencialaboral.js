@@ -1,6 +1,9 @@
 "use strict";
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
-        crudRoutesProvider.addAllRoutes("ExperienciaLaboral");
+        crudRoutesProvider.addAllRoutes({
+            entity:"ExperienciaLaboral",
+            htmlBasePath:"views/curriculum"
+        });
     }]);
 
 app.controller("ExperienciaLaboralSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {

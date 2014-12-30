@@ -98,51 +98,44 @@
         <script type="text/javascript" src="../common/services/gopage.js"></script>
         <!-- endbuild -->
         
-        <!-- build:js js/titulado.min.js -->      
+        <!-- build:js js/titulado.min.js -->  
+        <script type="text/javascript" src="common/common-module.js" ></script>
+        
         <script type="text/javascript" src="app.js" ></script>
         <script type="text/javascript" src="app-constant.js" ></script>
         <script type="text/javascript" src="app-config.js" ></script>   
         <script type="text/javascript" src="app-route.js" ></script>        
         <script type="text/javascript" src="app-run.js" ></script>
         <script type="text/javascript" src="index.js"></script>
-       
+
         <script type="text/javascript" src="domain/Direccion.js"></script>
         <script type="text/javascript" src="domain/FormacionAcademica.js"></script>
         <script type="text/javascript" src="domain/TituloIdioma.js"></script>
         
-        <script type='text/javascript' src='experiencialaboral/experiencialaboral.js'></script>
-        <script type='text/javascript' src='footer/footer.js'></script>
-        <script type="text/javascript" src="forbidden/forbidden-route.js"></script>
-        <script type="text/javascript" src="forbidden/forbidden.js"></script>
-        <script type='text/javascript' src='formacionacademica/formacionacademica.js'></script>        
-        <script type='text/javascript' src='header/header.js'></script> 
-        <script type="text/javascript" src="main/main-route.js"></script>
-        <script type="text/javascript" src="main/main.js"></script>  
-        <script type='text/javascript' src='titulado/titulado.js'></script>
-        <script type='text/javascript' src='tituloidioma/detail.js'></script>
-        <script type='text/javascript' src='tituloidioma/search.js'></script>
-        <script type='text/javascript' src='tituloidioma/route.js'></script>
+        <script type='text/javascript' src='fragments/footer/footer.js'></script>
+        <script type='text/javascript' src='fragments/header/header.js'></script>
+        <script type='text/javascript' src='fragments/lateralmenu/lateralmenu.js'></script>
         
-      
+        <script type="text/javascript" src="views/main/main-route.js"></script>
+        <script type="text/javascript" src="views/main/main.js"></script> 
+        <script type='text/javascript' src='views/curriculum/experiencialaboral/experiencialaboral.js'></script>
+        <script type='text/javascript' src='views/curriculum/formacionacademica/formacionacademica.js'></script>        
+        <script type='text/javascript' src='views/curriculum/titulado/titulado.js'></script>
+        <script type='text/javascript' src='views/curriculum/tituloidioma/detail.js'></script>
+        <script type='text/javascript' src='views/curriculum/tituloidioma/search.js'></script>
+        <script type='text/javascript' src='views/curriculum/tituloidioma/route.js'></script>
+        <script type="text/javascript" src="views/util/forbidden/forbidden-route.js"></script>
+        <script type="text/javascript" src="views/util/forbidden/forbidden.js"></script>      
         
         <!-- endbuild -->
 
     </head>    
     
     <body ng-controller="IndexController">
-            <ng-include src="'header/header.html'"></ng-include>
+            <ng-include src="'fragments/header/header.html'"></ng-include>
 
-            <div class="container main-container">
-                <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                    <div class="col-md-3">
-                        <ng-include src="'lateralmenu.html'"></ng-include>
-                    </div>
-                    <div class="col-md-9">
-                        <div ui-view></div>                     
-                    </div>
-                </div>
-            </div>
+            <ui-view></ui-view>
 
-            <ng-include src="'footer/footer.html'"></ng-include>
+            <ng-include src="'fragments/footer/footer.html'"></ng-include>
 </body>
 </html>

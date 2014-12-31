@@ -31,8 +31,7 @@
                 } else if (knownPage.url) {
                     $location.url(knownPage.url);
                 } else {
-                    //No hay definida página así que damos un error
-                    throw new Error("No se ha definido la página.");
+                    alert("No tiene permisos para acceder a la página");
                 }
             }
 

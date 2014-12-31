@@ -1,5 +1,5 @@
 app.config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('cols2.main', {
+        $stateProvider.state('lateralmenu.main', {
             url: "/",
             templateUrl: 'views/main/main.html',
             controller: 'MainController',

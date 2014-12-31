@@ -5,7 +5,7 @@
     CRUDRoutes.$inject = ['$stateProvider'];
     function CRUDRoutes($stateProvider) {
 
-        var defaultParentState="lateralmenu.";
+        this.defaultParentState="lateralmenu";
 
         this.addAllRoutes = function (config) {
             //Al ser todas las rutas no permitimos la variable "route" ya que tendría valores distintos para cada una
@@ -23,7 +23,7 @@
             var expand = config.expand;
             var route = config.route;
             var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":defaultParentState);
+            var parentState=(config.parentState?config.parentState:this.defaultParentState);
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -32,8 +32,8 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
-            var name1 = parentState + lowerEntityName + "search";
-            var name2 = parentState + lowerEntityName + "searchParent";
+            var name1 = parentState + "." + lowerEntityName + "_search";
+            var name2 = parentState + "." + lowerEntityName + "_search_parent";
             var path1 = '/' + lowerEntityName + '/search';
             var path2 = '/' + lowerEntityName + '/search/:parentProperty/:parentId';
             var definitiveRoute = {
@@ -72,7 +72,7 @@
             var expand = config.expand;
             var route = config.route;
             var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":defaultParentState);
+            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
             
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -81,8 +81,8 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
-            var name1 = parentState + lowerEntityName + "new";
-            var name2 = parentState + lowerEntityName + "newParent";
+            var name1 = parentState + "." + lowerEntityName + "_new";
+            var name2 = parentState + "." + lowerEntityName + "_new_parent";
             var path1 = '/' + lowerEntityName + '/new';
             var path2 = '/' + lowerEntityName + '/new/:parentProperty/:parentId';
 
@@ -125,7 +125,7 @@
             var expand = config.expand;
             var route = config.route;
             var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":defaultParentState);
+            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -134,8 +134,8 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
-            var name1 = parentState + lowerEntityName + "view";
-            var name2 = parentState + lowerEntityName + "viewParent";
+            var name1 = parentState + "." + lowerEntityName + "_view_";
+            var name2 = parentState + "." + lowerEntityName + "_view_parent";
             var path1 = '/' + lowerEntityName + '/view/:id';
             var path2 = '/' + lowerEntityName + '/view/:id/:parentProperty/:parentId';
 
@@ -177,7 +177,7 @@
             var expand = config.expand;
             var route = config.route;
             var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":defaultParentState);
+            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -186,8 +186,8 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
-            var name1 = parentState + lowerEntityName + "edit";
-            var name2 = parentState + lowerEntityName + "editParent";
+            var name1 = parentState + "." + lowerEntityName + "_edit_";
+            var name2 = parentState + "." + lowerEntityName + "_edit_parent";
             var path1 = '/' + lowerEntityName + '/edit/:id';
             var path2 = '/' + lowerEntityName + '/edit/:id/:parentProperty/:parentId';
 
@@ -230,7 +230,7 @@
             var expand = config.expand;
             var route = config.route;
             var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":defaultParentState);
+            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -239,8 +239,8 @@
             var lowerEntityName = entity.toLowerCase();
             var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
 
-            var name1 = parentState + lowerEntityName + "delete";
-            var name2 = parentState + lowerEntityName + "deleteParent";
+            var name1 = parentState + "." + lowerEntityName + "_delete_";
+            var name2 = parentState + "." + lowerEntityName + "_delete_parent";
             var path1 = '/' + lowerEntityName + '/delete/:id';
             var path2 = '/' + lowerEntityName + '/delete/:id/:parentProperty/:parentId';
 

@@ -6,15 +6,7 @@ angular.module("common").service("goPage", ['session', '$window', 'repositoryFac
 
         function goHomeUsuario(usuario) {
             if (usuario.tipoUsuario === "TITULADO") {
-                var tituladoRepository = repositoryFactory.getRepository("Titulado");
-                tituladoRepository.get(usuario.idIdentity).then(function(titulado) {
-                    if (titulado) {
-                        $window.location.href = getContextPath() + "/titulado/index.html#/";
-                    } else {
-                        $window.location.href = getContextPath() + "/titulado/index.html#/titulado/edit/" + usuario.idIdentity;
-                    }
-
-                });
+                $window.location.href = getContextPath() + "/titulado/index.html";
             } else if (usuario.tipoUsuario === "EMPRESA") {
                 alert("Aun no está hecha la funcionalidad de empresas");
             } else if (usuario.tipoUsuario === "CENTRO") {

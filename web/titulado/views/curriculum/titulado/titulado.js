@@ -1,10 +1,6 @@
 "use strict";
 
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
-        crudRoutesProvider.addNewRoute({
-            entity: "Titulado", 
-            expand: "usuario,direccion.municipio"
-        });
         crudRoutesProvider.addEditRoute({
             entity: "Titulado", 
             expand: "usuario,direccion.municipio"

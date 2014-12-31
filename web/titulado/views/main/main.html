@@ -32,7 +32,7 @@
                             <td>{{model.telefono}}  {{model.telefonoAlternativo}}</td>
                         </tr>
                         <tr ng-show="model.tipoDocumento">
-                            <td><i class="glyphicon glyphicon-credit-card"></i> {{model.tipoDocumento}}</td>
+                            <td><i class="glyphicon glyphicon-credit-card"></i> {{model.getTipoDocumentoDescription()}}</td>
                             <td>{{model.numeroDocumento}}</td>
                         </tr>
                         <tr ng-show="model.direccion !== null">

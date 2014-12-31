@@ -1,6 +1,6 @@
 "use strict";
 
-app.constant("ix3UserConfiguration", {
+angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration", {
     bootstrap: {
         version: 3
     },
@@ -37,5 +37,9 @@ app.constant("ix3UserConfiguration", {
                     }
                 }]
         ]
+    },
+    crud: {
+        defaultParentState:"lateralmenu",
+        defaultHtmlBasePath:"views/curriculum"
     }
 });

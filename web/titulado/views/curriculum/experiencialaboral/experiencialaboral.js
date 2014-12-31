@@ -1,8 +1,7 @@
 "use strict";
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
-            entity:"ExperienciaLaboral",
-            htmlBasePath:"views/curriculum"
+            entity:"ExperienciaLaboral"
         });
     }]);
 

@@ -2,10 +2,11 @@
 
 (function () {
 
-    CRUDRoutes.$inject = ['$stateProvider'];
-    function CRUDRoutes($stateProvider) {
+    CRUDRoutes.$inject = ['$stateProvider', 'ix3ConfigurationProvider'];
+    function CRUDRoutes($stateProvider, ix3ConfigurationProvider) {
 
-        this.defaultParentState="lateralmenu";
+        this.defaultParentState = ix3ConfigurationProvider.crud.defaultParentState;
+        this.defaultHtmlBasePath = ix3ConfigurationProvider.crud.defaultHtmlBasePath;
 
         this.addAllRoutes = function (config) {
             //Al ser todas las rutas no permitimos la variable "route" ya que tendría valores distintos para cada una
@@ -22,8 +23,8 @@
             var entity = config.entity;
             var expand = config.expand;
             var route = config.route;
-            var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState:this.defaultParentState);
+            var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
+            var parentState = config.parentState ? config.parentState : this.defaultParentState;
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -71,9 +72,9 @@
             var entity = config.entity;
             var expand = config.expand;
             var route = config.route;
-            var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
-            
+            var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
+            var parentState = config.parentState ? config.parentState : this.defaultParentState;
+
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
             }
@@ -124,8 +125,8 @@
             var entity = config.entity;
             var expand = config.expand;
             var route = config.route;
-            var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
+            var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
+            var parentState = config.parentState ? config.parentState : this.defaultParentState;
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -176,8 +177,8 @@
             var entity = config.entity;
             var expand = config.expand;
             var route = config.route;
-            var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
+            var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
+            var parentState = config.parentState ? config.parentState : this.defaultParentState;
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");
@@ -229,8 +230,8 @@
             var entity = config.entity;
             var expand = config.expand;
             var route = config.route;
-            var htmlBasePath = (config.htmlBasePath || ".");
-            var parentState=(config.parentState?config.parentState+".":this.defaultParentState+".");
+            var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
+            var parentState = config.parentState ? config.parentState : this.defaultParentState;
 
             if (!entity) {
                 throw Error("El argumento 'entity' no puede estar vacio");

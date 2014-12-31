@@ -1,4 +1,6 @@
-app.constant("ix3UserConfiguration",{
+"use strict";
+
+angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",{
     bootstrap: {
         version:3
     },
@@ -12,16 +14,10 @@ app.constant("ix3UserConfiguration",{
     },
     pages: {
         login:{
-            url:"/login",
-        },
-        forbidden:{
-            
+            url:"/login"
         }
     },
     security:{
-        defaultStatus:200,
-        acl:[
-            
-        ]
+        defaultStatus:200
     }
 });

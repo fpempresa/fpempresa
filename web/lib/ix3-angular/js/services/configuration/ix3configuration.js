@@ -1,5 +1,7 @@
 "use strict";
 
+(function() {
+    
 
 /**
         {
@@ -31,17 +33,40 @@
                             return //200,401 o 403
                         }]
                 ]
+            },
+            crud: {
+                defaultParentState:"",
+                defaultHtmlBasePath:""
             }
         };
  */
-angular.module('es.logongas.ix3').factory('ix3Configuration', ['$injector', function ($injector) {
+angular.module('es.logongas.ix3.configuration').provider('ix3Configuration', ['$injector', function ($injector) {
+
+        var ix3UserConfiguration;
+        if ($injector.has("ix3UserConfiguration")) {
+            ix3UserConfiguration = $injector.get("ix3UserConfiguration");
+        }
+            
+        var ix3Configuration=getIx3Configuration(ix3UserConfiguration);
+        
+        //Esto lo hacemos así para que el provider tenga las mismas propiedades que la ix3Configuration
+        //con lo que es transparente usar uno u otro.
+        angular.copy(ix3Configuration,this);
+        
+        this.$get=function() {
+            return ix3Configuration;
+        };
+        
+    }]);
+
+
+function getIx3Configuration(ix3UserConfiguration) {
 
         var ix3Configuration;
-        //No obligamos a que el usuario defina su propia configuración
-        if ($injector.has("ix3UserConfiguration")) {
-            ix3Configuration = angular.copy($injector.get("ix3UserConfiguration"));
+        if (ix3UserConfiguration) {
+            ix3Configuration=angular.copy(ix3UserConfiguration);
         } else {
-            ix3Configuration = {};
+            ix3Configuration={};
         }
 
         ix3Configuration.bootstrap = ix3Configuration.bootstrap || {};
@@ -57,7 +82,8 @@ angular.module('es.logongas.ix3').factory('ix3Configuration', ['$injector', func
 
         ix3Configuration.security = ix3Configuration.security || {};
         ix3Configuration.security.acl = ix3Configuration.security.acl || [];
-
+        
+        ix3Configuration.crud = ix3Configuration.crud || {};
 
         //Los valores por defecto
         ix3Configuration.bootstrap.version = ix3Configuration.bootstrap.version || 3;
@@ -66,4 +92,6 @@ angular.module('es.logongas.ix3').factory('ix3Configuration', ['$injector', func
         ix3Configuration.security.defaultStatus = ix3Configuration.security.defaultStatus || 200;
 
         return ix3Configuration;
-    }]);
+}
+
+})();

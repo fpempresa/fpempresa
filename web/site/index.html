@@ -112,34 +112,26 @@
         <script type="text/javascript" src="common/service/animatescroll.js"></script>
         <script type="text/javascript" src="common/service/routescroll.js"></script>
         
-        <script type="text/javascript" src="createaccount/createaccount-route.js" ></script>
-        <script type="text/javascript" src="createaccount/register.js" ></script>
-        <script type="text/javascript" src="createaccount/init.js" ></script>
-        <script type="text/javascript" src="createaccount/end.js" ></script>
+        <script type='text/javascript' src='fragments/footer/footer.js'></script>
+        <script type='text/javascript' src='fragments/header/header.js'></script>            
         
-        <script type="text/javascript" src="docs/docs-route.js" ></script> 
-        
-        <script type='text/javascript' src='footer/footer.js'></script>
-        
-        <script type="text/javascript" src="forbidden/forbidden-route.js"></script>
-        <script type="text/javascript" src="forbidden/forbidden.js"></script>
-        
-        <script type='text/javascript' src='header/header.js'></script>        
-
-        <script type="text/javascript" src="login/login-route.js"></script>
-        <script type="text/javascript" src="login/login.js"></script>
-        
-        <script type="text/javascript" src="main/main-route.js"></script>
-        <script type="text/javascript" src="main/main.js"></script>        
-        
+        <script type="text/javascript" src="views/createaccount/createaccount-route.js" ></script>
+        <script type="text/javascript" src="views/createaccount/register.js" ></script>
+        <script type="text/javascript" src="views/createaccount/init.js" ></script>
+        <script type="text/javascript" src="views/createaccount/end.js" ></script>
+        <script type="text/javascript" src="views/docs/docs-route.js" ></script> 
+        <script type="text/javascript" src="views/login/login-route.js"></script>
+        <script type="text/javascript" src="views/login/login.js"></script>
+        <script type="text/javascript" src="views/main/main-route.js"></script>
+        <script type="text/javascript" src="views/main/main.js"></script>        
         <!-- endbuild -->
 
 
     </head>
 
     <body id="top"  ng-controller="IndexController" >   
-    <ng-include src="'header/header.html'"></ng-include>
+    <ng-include src="'fragments/header/header.html'"></ng-include>
     <ui-view></ui-view>
-    <ng-include src="'footer/footer.html'"></ng-include> 
+    <ng-include src="'fragments/footer/footer.html'"></ng-include> 
 </body>
 </html>

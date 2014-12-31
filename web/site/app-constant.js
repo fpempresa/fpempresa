@@ -15,7 +15,7 @@ app.constant("ix3UserConfiguration",{
             url:"/login",
         },
         forbidden:{
-            url:"/forbidden"
+            
         }
     },
     security:{

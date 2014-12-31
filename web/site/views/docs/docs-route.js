@@ -1,22 +1,22 @@
 app.config(['$stateProvider', function($stateProvider) {
         $stateProvider.state('/docs/faq', {
             url:'/docs/faq',
-            templateUrl: 'docs/faq.html'
+            templateUrl: 'views/docs/faq.html'
         });
         $stateProvider.state('/docs/contacto', {
             url:'/docs/contacto',
-            templateUrl: 'docs/contacto.html'
+            templateUrl: 'views/docs/contacto.html'
         });
         $stateProvider.state('/docs/privacidad', {
             url:'/docs/privacidad',
-            templateUrl: 'docs/privacidad.html'
+            templateUrl: 'views/docs/privacidad.html'
         });
         $stateProvider.state('/docs/terminos', {
             url:'/docs/terminos',
-            templateUrl: 'docs/terminos.html'
+            templateUrl: 'views/docs/terminos.html'
         });
         $stateProvider.state('/docs/asociacion', {
             url:'/docs/asociacion',
-            templateUrl: 'docs/asociacion.html'
+            templateUrl: 'views/docs/asociacion.html'
         });
     }]);

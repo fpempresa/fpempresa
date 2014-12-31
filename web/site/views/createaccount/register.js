@@ -1,9 +1,9 @@
 
-app.controller('CreateAccountRegisterController', ['$scope', '$routeParams', '$location', 'repositoryFactory', 'formValidator', function ($scope, $routeParams, $location, repositoryFactory, formValidator) {
+app.controller('CreateAccountRegisterController', ['$scope', '$stateParams', '$location', 'repositoryFactory', 'formValidator', function ($scope, $stateParams, $location, repositoryFactory, formValidator) {
         var usuarioRepository = repositoryFactory.getRepository("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
-        $scope.model.tipoUsuario = $routeParams.tipoUsuario;
+        $scope.model.tipoUsuario = $stateParams.tipoUsuario;
 
         $scope.registrarse = function () {
             $scope.businessMessages = formValidator.validate($scope.mainForm,$scope.customValidations);

@@ -1,14 +1,14 @@
 
-app.controller('CreateAccountInitController', ['$scope', '$location','$routeParams', 'repositoryFactory', 'formValidator', function ($scope, $location, $routeParams, repositoryFactory, formValidator) {
+app.controller('CreateAccountInitController', ['$scope', '$location','$stateParams', 'repositoryFactory', 'formValidator', function ($scope, $location, $stateParams, repositoryFactory, formValidator) {
         var usuarioRepository = repositoryFactory.getRepository("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
 
         usuarioRepository.create().then(function (usuario) {
             $scope.model.tipoUsuario = usuario.tipoUsuario;
-            if ($routeParams.tipoUsuario) {
+            if ($stateParams.tipoUsuario) {
                 //Sobreescribimos el valor si nos los pasan en la URL
-                $scope.model.tipoUsuario = $routeParams.tipoUsuario;
+                $scope.model.tipoUsuario = $stateParams.tipoUsuario;
             }
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;

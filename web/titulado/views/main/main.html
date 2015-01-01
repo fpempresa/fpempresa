@@ -1,19 +1,7 @@
 <div class="formulario-neutro">
-    <div>
-        <div class="row">
-            <div class="col-sm-12" >
-                <h2><a href="#">{{model.usuario.toString()}}</a></h2>
-                <br>
-            </div>  
-        </div>
-
-
-        <div class="row">
-            <div class="col-sm-2" >
-                <img class="img-circle" src="../img/photo_user.png" alt="User Pic">
-            </div>
-            <div class="col-sm-10" >
-                <form name="mainForm" ix3-form>
+    <div class="row">
+        <div class="col-sm-12" >
+            <form name="mainForm" ix3-form>
                 <ix3-business-messages></ix3-business-messages>
                 <h3><a href="#/titulado/edit/{{user.idIdentity}}">Datos personales</a></h3>
                 <hr>
@@ -99,8 +87,7 @@
                     </tbody>
                 </table>
 
-                </form>
-            </div>    
-        </div>
+            </form>
+        </div>    
     </div>
 </div> 

@@ -3,97 +3,134 @@
 
 
 <div class="row">
-    <div class="col-sm-12 formulario-neutro" >
+    <div class="col-sm-12 form__container" >
         <div>
             <ix3-business-messages></ix3-business-messages>
-            <form name="mainForm" class="form-horizontal" id="mainForm"  ix3-form>
+            <form name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend>Datos personales</legend>
-                    <div class="form-group">
-                        <label for="model.fechaNacimiento" class="col-sm-3  control-label" ix3-label ></label>
-                        <div  class="input-group col-sm-3">
-                            <input ng-model="model.fechaNacimiento" id="model.fechaNacimiento" name="model.fechaNacimiento" class="form-control" type="text"  ix3-date ix3-datepicker ix3-validation />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <legend class="form__title">Datos personales</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6 col form-horizontal"> 
+                            <div class="form-group">
+                                <label for="fechaNacimiento" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="input-group col-xs-9 col-sm-6">
+                                    <input ng-model="model.fechaNacimiento" type="text" class="form-control" id="fechaNacimiento" name="fechaNacimiento"  ix3-date ix3-datepicker ix3-validation>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="telefono" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.telefono" type="text" class="form-control" id="telefono" name="telefono"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="telefonoAlternativo" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.telefonoAlternativo" type="text" class="form-control" id="telefonoAlternativo" name="telefonoAlternativo"  ix3-validation>
+                                </div>
+                            </div> 
                         </div>  
-                        <div  class="col-sm-3"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="model.telefono" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <input ng-model="model.telefono" id="model.telefono" name="model.telefono" class="form-control" type="text" ix3-validation  />
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="tipoDocumento" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.tipoDocumento" id="tipoDocumento" name="tipoDocumento" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="model.telefonoAlternativo" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <input ng-model="model.telefonoAlternativo" id="model.telefonoAlternativo" name="model.telefonoAlternativo" class="form-control" type="text" ix3-validation  />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="model.tipoDocumento" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <select ng-model="model.tipoDocumento" id="model.tipoDocumento" name="model.tipoDocumento" class="form-control" ix3-options ix3-validation >
-                                <option value="">-- Elige Opcion --</option>
-                            </select>
-                        </div>
-                    </div>       
-                    <div class="form-group">
-                        <label for="model.numeroDocumento" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <input ng-model="model.numeroDocumento" id="model.numeroDocumento" name="model.numeroDocumento" class="form-control" type="text"  ix3-validation   />
-                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="numeroDocumento" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.numeroDocumento" type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"  required>
+                                </div>
+                            </div> 
+                        </div>  
                     </div>                    
+                    <legend class="form__title">Direcci&oacute;n</legend>
                     
-                    <legend>Direcci&oacute;n</legend>
-                    <div class="form-group">
-                        <label for="model.direccion.tipoVia" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <select ng-model="model.direccion.tipoVia" id="model.direccion.tipoVia" name="model.direccion.tipoVia" class="form-control" ix3-options ix3-validation >
-                                <option value="">-- Elige Opcion --</option>
-                            </select>
-                        </div>
-                    </div>                    
-
-                    <div class="form-group">
-                        <label for="model.direccion.nombreVia" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <input ng-model="model.direccion.nombreVia" id="model.direccion.nombreVia" name="model.direccion.nombreVia" class="form-control" type="text"  ix3-validation  />
-                        </div>
-                    </div>                      
-                    <div class="form-group">
-                        <label for="model.direccion.otrosDireccion" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <input ng-model="model.direccion.otrosDireccion" id="model.direccion.otrosDireccion" name="model.direccion.otrosDireccion" class="form-control" type="text"  ix3-validation  />
-                        </div>
-                    </div>                      
-                    <div class="form-group">
-                        <label for="model.direccion.codigoPostal" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <input ng-model="model.direccion.codigoPostal" id="model.direccion.codigoPostal" name="model.direccion.codigoPostal" class="form-control" type="text" ix3-validation  />
-                        </div>
-                    </div>                      
                     
-                    <div class="form-group">
-                        <label for="model.direccion.municipio.provincia" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <select ng-model="model.direccion.municipio.provincia" id="model.direccion.municipio.provincia" name="model.direccion.municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation >
-                                <option value="">-- Elige Opcion --</option>
-                            </select>
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.tipoVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.direccion.tipoVia" id="direccion.tipoVia" name="direccion.tipoVia" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
                         </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.nombreVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.direccion.nombreVia" type="text" class="form-control" id="direccion.nombreVia" name="direccion.nombreVia"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>  
                     </div> 
-                    <div class="form-group">
-                        <label for="model.direccion.municipio" class="col-sm-3  control-label" ix3-label ></label>
-                        <div class="col-sm-3">
-                            <select ng-model="model.direccion.municipio" id="model.direccion.municipio" name="model.direccion.municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.direccion.municipio.provincia}" >
-                                <option value="">-- Elige Opcion --</option>
-                            </select>
+                    
+                    
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.otrosDireccion" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.direccion.otrosDireccion" type="text" class="form-control" id="direccion.otrosDireccion" name="direccion.otrosDireccion"  ix3-validation>
+                                </div>
+                            </div> 
                         </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.codigoPostal" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.direccion.codigoPostal" type="text" class="form-control" id="direccion.codigoPostal" name="direccion.codigoPostal"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+                    
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.direccion.municipio.provincia" id="direccion.municipio.provincia" name="direccion.municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'" ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.municipio" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.direccion.municipio" id="direccion.municipio" name="direccion.municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.direccion.municipio.provincia}" >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div> 
                     </div> 
-
                 </fieldset>
             </form>
             <br>
-            <button type="button" class="btn btn-standard" ng-click="buttonOK()">{{labelButtonOK}}</button>
+            <button type="button" class="btn btn-lg form__button form__button--primary" ng-click="buttonOK()">{{labelButtonOK}}</button>
         </div>
     </div>
 </div>

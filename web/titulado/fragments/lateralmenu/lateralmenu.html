@@ -1,99 +1,43 @@
-<div class="container main-container">
-    <div class="row" style="padding-top:20px;padding-bottom:20px;">
-        <div class="col-md-3">
-            <div class="panel panel-menu-standard">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-folder-close"></span>Mi curriculum
-                    </h4>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr >
-                            <td>
-                                <a href="#/">Resumen</a>
-                            </td>
-                        </tr>                                
-                        <tr >
-                            <td>
-                                <a href="#/titulado/edit/{{user.idIdentity}}">Datos personales</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#/formacionacademica/search/titulado.idTitulado/{{user.idIdentity}}">Formaci&oacute;n academica</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#/experiencialaboral/search/titulado.idTitulado/{{user.idIdentity}}">Experiencia laboral</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#/tituloidioma/search/titulado.idTitulado/{{user.idIdentity}}">Idiomas</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <br />
-            <div class="panel panel-menu-standard">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-th"></span>Empleo
-                    </h4>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <a href="#">Solicitudes de mi curriculum</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#">Ofertas inscritas</a>
-                            </td>
-                        </tr>
-                        <tr  >
-                            <td>
-                                <a href="#">Todas las ofertas</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <br />
-            <div class="panel panel-menu-standard">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-user"></span>Cuenta
-                    </h4>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <a href="#">Configuraci&oacute;n</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#">Cambiar contrase&ntilde;a</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#">Borrar cuenta</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <br />
+<div class="container-fluid form__page form__page--no-padding">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-3">
+            <img class="img-circle" src="../img/photo_user.png" alt="User Pic">
+        </div> 
+        <div class="col-sm-9 form--center">
+              <h3 class="form__main-title">Bienvenido, {{user.name}}</h3>
+              <br>
+              <br>
+              <p class="form--center form__text">
+                  Desde aqui podr&aacute;s modificar tu curriculum, buscar empleo y configurar tu cuenta
+              </p>          
         </div>
-        <div class="col-md-9">
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-3">
+            <ul>
+                <li class="lateral-menu__titulo">Mi curriculum</li>
+                <li class="lateral-menu__item"><a href="#/">Resumen</a></li>
+                <li class="lateral-menu__item"><a href="#/titulado/edit/{{user.idIdentity}}">Datos personales</a></li>
+                <li class="lateral-menu__item"><a href="#/formacionacademica/search/titulado.idTitulado/{{user.idIdentity}}">Formaci&oacute;n academica</a></li>
+                <li class="lateral-menu__item"><a href="#/experiencialaboral/search/titulado.idTitulado/{{user.idIdentity}}">Experiencia laboral</a></li>
+                <li class="lateral-menu__item"><a href="#/tituloidioma/search/titulado.idTitulado/{{user.idIdentity}}">Idiomas</a></li>
+            </ul>
+            <ul>
+                <li class="lateral-menu__titulo">Empleo</li>
+                <li class="lateral-menu__item"><a href="#/">Solicitudes de mi curriculum</a></li>
+                <li class="lateral-menu__item"><a href="#/">Ofertas inscritas</a></li>
+                <li class="lateral-menu__item"><a href="#/">Todas las ofertas</a></li>
+            </ul>
+            <ul>
+                <li class="lateral-menu__titulo">Cuenta</li>
+                <li class="lateral-menu__item"><a href="#">Configuraci&oacute;n</a></li>
+                <li class="lateral-menu__item"><a href="#">Cambiar contrase&ntilde;a</a></li>
+                <li class="lateral-menu__item"><a href="#">Borrar cuenta</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
             <div ui-view></div>                     
         </div>
     </div>

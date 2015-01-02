@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" ng-app="app">
-    
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,9 +65,9 @@
         <script type="text/javascript" src="../lib/ix3-angular/js/services/util/dateFormat.js"></script>
         <script type="text/javascript" src="../lib/ix3-angular/js/services/util/directiveutil.js"></script>
         <script type="text/javascript" src="../lib/ix3-angular/js/services/util/langutil.js"></script>
-        
+
         <script type="text/javascript" src="../lib/ix3-angular/js/filters/ix3date.js"></script>
-        
+
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/form/jquery-ui/ix3datepicker.js'></script>      
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/form/ix3businessmessages.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/form/ix3date.js'></script>
@@ -80,7 +80,7 @@
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3clear.js'></script>        
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3pagination.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/directives/ix3visibility.js'></script>
-        
+
         <script type='text/javascript' src='../lib/ix3-angular/js/ix3-config.js'></script>
         <script type='text/javascript' src='../lib/ix3-angular/js/ix3-run.js'></script>
         <!-- endbuild -->        
@@ -91,7 +91,7 @@
         <script type="text/javascript" src="../common/directives/currentdate.js"></script>
         <script type="text/javascript" src="../common/services/gopage.js"></script>
         <!-- endbuild -->
-        
+
         <!-- build:js js/titulado.min.js -->  
         <script type="text/javascript" src="app.js" ></script>
         <script type="text/javascript" src="app-constant.js" ></script>
@@ -104,11 +104,11 @@
         <script type="text/javascript" src="domain/FormacionAcademica.js"></script>
         <script type="text/javascript" src="domain/Titulado.js"></script>
         <script type="text/javascript" src="domain/TituloIdioma.js"></script>
-        
+
         <script type='text/javascript' src='fragments/footer/footer.js'></script>
         <script type='text/javascript' src='fragments/header/header.js'></script>
         <script type='text/javascript' src='fragments/lateralmenu/lateralmenu.js'></script>
-        
+
         <script type="text/javascript" src="views/main/main-route.js"></script>
         <script type="text/javascript" src="views/main/main.js"></script> 
         <script type='text/javascript' src='views/curriculum/experiencialaboral/experiencialaboral.js'></script>
@@ -122,12 +122,12 @@
         <!-- endbuild -->
 
     </head>    
-    
-    <body ng-controller="IndexController">
-            <ng-include src="'fragments/header/header.html'"></ng-include>
 
-            <ui-view></ui-view>
+    <body ng-controller="IndexController" style="background-color: #F6F8F7">
+        <ng-include src="'fragments/header/header.html'"></ng-include>
 
-            <ng-include src="'fragments/footer/footer.html'"></ng-include>
-</body>
+        <ui-view></ui-view>
+
+        <ng-include src="'fragments/footer/footer.html'"></ng-include>
+    </body>
 </html>

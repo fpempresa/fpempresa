@@ -1,10 +1,11 @@
+
 <div class="row">
-    <div class="col-sm-12 formulario-neutro" >
+    <div class="col-xs-12 form__container" >
         <div>
             <ix3-business-messages></ix3-business-messages>
-            <form name="mainForm" class="form-horizontal" id="mainForm" ix3-form >
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend>Formaci&oacute;n Academica</legend>
+                    <legend class="form__title">Formaci&oacute;n academica</legend>
                     <div class="form-group">
                         <label for="model.tipoFormacionAcademica" class="col-sm-3  control-label" ix3-label ></label>
                         <div class="col-sm-3">
@@ -59,11 +60,18 @@
                         </div>
                     </div> 
                     <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <br>
+                            <div class=" pull-right">
+                                <button type="button" class="btn form__button form__button--default" ng-click="buttonCancel()" >Volver</button>
+                                <button type="button" ng-class="{'form__button--primary':controllerAction !== 'DELETE','form__button--warning':controllerAction === 'DELETE'}" class="btn form__button" ng-click="buttonOK()">{{labelButtonOK}}</button>
+                            </div>
+                        </div>
+                    </div>                    
                 </fieldset>
             </form>
-            <button type="button" ng-class="{'btn-standard':controllerAction !== 'DELETE','btn-danger':controllerAction === 'DELETE'}" class="btn" ng-click="buttonOK()">{{labelButtonOK}}</button>
-
-
         </div>
     </div>
 </div>
+                    

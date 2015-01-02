@@ -3,6 +3,7 @@
 app.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider) {
         $urlRouterProvider.otherwise('/');
         $stateProvider.state("lateralmenu",{
-            templateUrl:"fragments/lateralmenu/lateralmenu.html"
+            templateUrl:"fragments/lateralmenu/lateralmenu.html",
+            controller:"LateralMenuController"
         });        
     }]);

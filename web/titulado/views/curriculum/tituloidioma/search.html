@@ -1,12 +1,11 @@
 <div class="row">
-    <div class="col-sm-12 formulario-neutro" >
+    <div class="col-sm-12 form__container" >
         <div>
-            <h3>Idiomas</h3>
-            <hr>
+            <legend class="form__title">Idiomas</legend>
             <ix3-business-messages></ix3-business-messages>
             <table class="table table-bordered">
-                <thead>                      
-                    <tr>
+                <thead>                        
+                    <tr class="data-table__head">
                         <th style="min-width:30px;text-align: center">Nivel</th>
                         <th style="width:    100% ;text-align: center">Nombre</th>
                         <th style="min-width:85px;text-align: center">Fecha</th>
@@ -14,19 +13,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="tituloIdioma in models">
+                    <tr ng-repeat="tituloIdioma in models" class="data-table__row">
                         <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
                         <td >{{tituloIdioma.getNombreIdioma()}}</td>
                         <td >{{tituloIdioma.fecha| ix3Date}}</td>
                         <td >
-                            <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)">Borrar</button>
-                            <button class="btn btn-standard btn-xs" type="button" ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">Editar</button>
-                        </td>
+                            <button class="btn btn-xs form__button form__button--warning" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">Editar</button>
+                        </td>                             
                     </tr>
                 </tbody>
             </table> 
-            <button  class="btn btn-standard"   ng-click="buttonNew()" >Nuevo Idioma</button>
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nueva Formaci&oacute;n Academica</button>
         </div>
     </div>
 </div>
+
 

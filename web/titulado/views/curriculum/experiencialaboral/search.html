@@ -1,12 +1,11 @@
 <div class="row">
-    <div class="col-sm-12 formulario-neutro" >
-        <div >
-            <h3>Experiencia Laboral</h3>
-            <hr>
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Experiencia laboral</legend>
             <ix3-business-messages></ix3-business-messages>
             <table class="table table-bordered">
-                <thead>                       
-                    <tr>
+                <thead>                        
+                    <tr class="data-table__head">
                         <th style="width:      60%;text-align: center">Empresa</th>
                         <th style="width:      30%;text-align: center">Puesto</th>
                         <th style="min-width:150px;text-align: center">Fechas</th>
@@ -14,18 +13,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="experienciaLaboral in models">
+                    <tr ng-repeat="experienciaLaboral in models" class="data-table__row">
                         <td >{{experienciaLaboral.nombreEmpresa}}</td>
                         <td >{{experienciaLaboral.puestoTrabajo}}</td>
                         <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
                         <td >
-                            <button class="btn btn-danger btn-xs" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)">Borrar</button>
-                            <button class="btn btn-standard btn-xs" type="button" ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">Editar</button>
-                        </td>                            
+                            <button class="btn btn-xs form__button form__button--warning" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">Editar</button>
+                        </td>                             
                     </tr>
                 </tbody>
-            </table>                
-            <button  class="btn btn-standard"   ng-click="buttonNew()" >Nueva Experiencia Laboral</button>
+            </table> 
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nueva Formaci&oacute;n Academica</button>
         </div>
     </div>
 </div>

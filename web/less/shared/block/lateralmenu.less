@@ -1,8 +1,8 @@
 @import "../variables.less";
 
-@lateralmenu-color-header:#005595;
+@lateralmenu-color-header:@color-default;
 @lateralmenu-color-item:darken(@lateralmenu-color-header,50%);
-@lateralmenu-color-line:#005595;
+@lateralmenu-color-line:@color-default;
 
 .lateral-menu__generic {
     padding: 0px 0px 0px 0px;
@@ -51,9 +51,15 @@
                 color: @lateralmenu-color-header!important;
             } 
             
-            &--selected {
-                color: @lateralmenu-color-header;
+            &:visited {
+                color: @lateralmenu-color-item;
             }
+
+            &--selected {
+                color: @lateralmenu-color-header!important;
+            }
+            
+            
         }         
     } 
     

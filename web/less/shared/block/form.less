@@ -1,15 +1,15 @@
 @import "../variables.less";
 
-@form-page-color-background:#F6F8F7;
-@form-container-color-border:#005595;
-@form-container-color-background:#F1F1F1;
+@form-page-color-background:@color-background-form-page;
+@form-container-color-border:@color-default;
+@form-container-color-background:@color-background-form;
 
-@button-color-background-default:@color-primary;
+@button-color-background-default:@color-default;
 @button-color-foreground-default:#FFFFFF;    
-@button-color-background-primary:@color-complementary;
+@button-color-background-primary:@color-alternative;
 @button-color-foreground-primary:#FFFFFF;   
-@button-color-background-warning:@color-secondary-a;
-@button-color-foreground-warning:#FFFFFF;
+@button-color-background-danger:@color-danger;
+@button-color-foreground-danger:#FFFFFF;
 
 
 .form {
@@ -92,8 +92,8 @@
             .button-variant(@button-color-background-primary,@button-color-foreground-primary);    
         };
 
-        &--warning {
-            .button-variant(@button-color-background-warning,@button-color-foreground-warning);  
+        &--danger {
+            .button-variant(@button-color-background-danger,@button-color-foreground-danger);  
         };
 
 

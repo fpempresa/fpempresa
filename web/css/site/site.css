@@ -352,7 +352,7 @@
   padding-bottom: 10px;
 }
 .form__container {
-  border: 1px solid #005595;
+  border: 1px solid #005594;
   background-color: #f1f1f1;
   padding: 30px;
 }
@@ -367,17 +367,17 @@
   font-family: Arial Narrow, Arial, sans-serif;
 }
 .form__label {
-  color: #005595;
+  color: #005594;
   font-family: Arial, sans-serif;
 }
 .form__title {
   font-size: 23px;
-  color: #005595;
+  color: #005594;
   font-family: Arial Narrow, Arial, sans-serif;
-  border-color: #005595;
+  border-color: #005594;
 }
 .form__title__link {
-  color: #005595;
+  color: #005594;
   text-decoration: none;
   cursor: pointer;
 }
@@ -385,7 +385,7 @@
   text-decoration: none;
 }
 .form__text {
-  color: #005595;
+  color: #005594;
   font-family: Arial Narrow, Arial, sans-serif;
 }
 .form__text--help {
@@ -438,8 +438,8 @@ fieldset[disabled] .form__button--default.active {
 }
 .form__button--primary {
   color: #ffffff;
-  background-color: #e68400;
-  border-color: #cd7500;
+  background-color: #f0ad4e;
+  border-color: #eea236;
 }
 .form__button--primary:hover,
 .form__button--primary:focus,
@@ -447,8 +447,8 @@ fieldset[disabled] .form__button--default.active {
 .form__button--primary.active,
 .open .dropdown-toggle.form__button--primary {
   color: #ffffff;
-  background-color: #bd6d00;
-  border-color: #8f5200;
+  background-color: #ed9c28;
+  border-color: #d58512;
 }
 .form__button--primary:active,
 .form__button--primary.active,
@@ -470,52 +470,52 @@ fieldset[disabled] .form__button--primary:active,
 .form__button--primary.disabled.active,
 .form__button--primary[disabled].active,
 fieldset[disabled] .form__button--primary.active {
-  background-color: #e68400;
-  border-color: #cd7500;
+  background-color: #f0ad4e;
+  border-color: #eea236;
 }
 .form__button--primary .badge {
-  color: #e68400;
+  color: #f0ad4e;
   background-color: #ffffff;
 }
-.form__button--warning {
+.form__button--danger {
   color: #ffffff;
-  background-color: #65ce00;
-  border-color: #58b500;
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }
-.form__button--warning:hover,
-.form__button--warning:focus,
-.form__button--warning:active,
-.form__button--warning.active,
-.open .dropdown-toggle.form__button--warning {
+.form__button--danger:hover,
+.form__button--danger:focus,
+.form__button--danger:active,
+.form__button--danger.active,
+.open .dropdown-toggle.form__button--danger {
   color: #ffffff;
-  background-color: #51a500;
-  border-color: #3a7700;
+  background-color: #d2322d;
+  border-color: #ac2925;
 }
-.form__button--warning:active,
-.form__button--warning.active,
-.open .dropdown-toggle.form__button--warning {
+.form__button--danger:active,
+.form__button--danger.active,
+.open .dropdown-toggle.form__button--danger {
   background-image: none;
 }
-.form__button--warning.disabled,
-.form__button--warning[disabled],
-fieldset[disabled] .form__button--warning,
-.form__button--warning.disabled:hover,
-.form__button--warning[disabled]:hover,
-fieldset[disabled] .form__button--warning:hover,
-.form__button--warning.disabled:focus,
-.form__button--warning[disabled]:focus,
-fieldset[disabled] .form__button--warning:focus,
-.form__button--warning.disabled:active,
-.form__button--warning[disabled]:active,
-fieldset[disabled] .form__button--warning:active,
-.form__button--warning.disabled.active,
-.form__button--warning[disabled].active,
-fieldset[disabled] .form__button--warning.active {
-  background-color: #65ce00;
-  border-color: #58b500;
+.form__button--danger.disabled,
+.form__button--danger[disabled],
+fieldset[disabled] .form__button--danger,
+.form__button--danger.disabled:hover,
+.form__button--danger[disabled]:hover,
+fieldset[disabled] .form__button--danger:hover,
+.form__button--danger.disabled:focus,
+.form__button--danger[disabled]:focus,
+fieldset[disabled] .form__button--danger:focus,
+.form__button--danger.disabled:active,
+.form__button--danger[disabled]:active,
+fieldset[disabled] .form__button--danger:active,
+.form__button--danger.disabled.active,
+.form__button--danger[disabled].active,
+fieldset[disabled] .form__button--danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }
-.form__button--warning .badge {
-  color: #65ce00;
+.form__button--danger .badge {
+  color: #d9534f;
   background-color: #ffffff;
 }
 .lateral-menu__generic,
@@ -533,7 +533,7 @@ fieldset[disabled] .form__button--warning.active {
   list-style-type: none;
 }
 .lateral-menu__header {
-  color: #005595;
+  color: #005594;
   text-transform: uppercase;
   font-size: 15px;
   font-weight: bold;
@@ -545,11 +545,11 @@ fieldset[disabled] .form__button--warning.active {
   border-bottom: 1px solid transparent;
 }
 .lateral-menu__item--selected {
-  border-bottom: 1px solid #005595;
-  color: #005595;
+  border-bottom: 1px solid #005594;
+  color: #005594;
 }
 .lateral-menu__item:hover {
-  border-bottom: 1px solid #005595;
+  border-bottom: 1px solid #005594;
 }
 .lateral-menu__item__link {
   color: #000000;
@@ -557,13 +557,16 @@ fieldset[disabled] .form__button--warning.active {
   font-size: 15px;
 }
 .lateral-menu__item__link:hover {
-  color: #005595 !important;
+  color: #005594 !important;
+}
+.lateral-menu__item__link:visited {
+  color: #000000;
 }
 .lateral-menu__item__link--selected {
-  color: #005595;
+  color: #005594 !important;
 }
 .data-table__head {
-  background-color: #005595;
+  background-color: #005594;
   color: #ffffff;
 }
 .data-table__row {

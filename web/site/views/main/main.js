@@ -3,6 +3,10 @@ app.controller('MainController', ['$scope', 'goPage', function ($scope, goPage) 
             goPage.login();
         };
 
+        $scope.createAccount = function() {
+            goPage.createAccount();  
+        };        
+
     }]);
 
 

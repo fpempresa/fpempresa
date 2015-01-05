@@ -14,7 +14,7 @@ app.controller("LoginController", ['$scope', 'session','$window','goPage', funct
         };
 
 
-        $scope.register = function() {
+        $scope.createAccount = function() {
             goPage.createAccount();  
         };        
 

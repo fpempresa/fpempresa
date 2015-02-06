@@ -14,7 +14,7 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
     },
     pages: {
         login: {
-            absUrl: getContextPath() + "/site/index.html#/login",
+            absUrl: getContextPath() + "/site/index.html#/login"
         },
         forbidden: {
             url: "/forbidden"

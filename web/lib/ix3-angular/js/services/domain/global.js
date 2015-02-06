@@ -9,8 +9,8 @@ angular.module('es.logongas.ix3').run(['richDomain', function (richDomain) {
                     continue;
                 }
                 var value = object[key];
-                if ((typeof value === "string") && (value.length === 28)) {
-                    var date = moment(value, "YYYY-MM-DDTHH:mm:ss.SSSZZ", true);
+                if ((typeof value === "string") && (value.length === 24) && (value.charAt(10)==="T") && (value.charAt(23)==="Z")) {
+                    var date = moment(value, "YYYY-MM-DDTHH:mm:ss.SSSZ", true);
                     if (date.isValid()) {
                         object[key] = date.toDate();
                     }

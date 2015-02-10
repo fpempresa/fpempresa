@@ -19,7 +19,10 @@
     </context-param>
     <context-param>
         <param-name>databasemigration.location</param-name>
-        <param-value>es.logongas.fpempresa.database</param-value>
+        <param-value>
+            es.logongas.fpempresa.database
+            es.logongas.ix3.security.database
+        </param-value>
     </context-param>    
     <listener>
         <listener-class>es.logongas.ix3.web.database.DatabaseMigrateContextListener</listener-class>

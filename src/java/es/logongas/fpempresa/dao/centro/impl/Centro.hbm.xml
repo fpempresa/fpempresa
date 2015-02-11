@@ -10,7 +10,12 @@
         </id>
 
         <property name="descripcion" />
-        <property name="fpempresa" type="boolean" />
+        <property name="estadoCentro"  >
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">es.logongas.fpempresa.modelo.centro.EstadoCentro</param>
+                    <param name="type">4</param>
+                </type>
+        </property>
         
         <component name="direccion" >
             <property name="tipoVia" >

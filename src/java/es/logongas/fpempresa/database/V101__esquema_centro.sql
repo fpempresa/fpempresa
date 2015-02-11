@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS `centro` (
+CREATE TABLE `centro` (
   `idCentro` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,
-  `fpempresa` tinyint(1) DEFAULT NULL,
+  `estadoCentro` int(11) DEFAULT NULL,
   `tipoVia` int(11) DEFAULT NULL,
   `nombreVia` varchar(255) DEFAULT NULL,
   `otrosDireccion` varchar(255) DEFAULT NULL,
@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS `centro` (
   KEY `FK7817BA05391E4C8A` (`idMunicipio`),
   CONSTRAINT `FK7817BA05391E4C8A` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),
   CONSTRAINT `FK7817BA05DA49940A` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

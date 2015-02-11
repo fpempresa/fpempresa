@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.modelo.comun.usuario;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.security.authentication.Principal;
@@ -23,6 +24,8 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import org.hibernate.event.spi.PostLoadEvent;
 import org.hibernate.event.spi.PostLoadEventListener;
+import org.hibernate.event.spi.PreInsertEvent;
+import org.hibernate.event.spi.PreInsertEventListener;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -30,7 +33,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Lorenzo
  */
-public class Usuario extends User  implements PostLoadEventListener,Principal {
+public class Usuario extends User  implements PostLoadEventListener,PreInsertEventListener,Principal {
     
     @Email
     @NotBlank
@@ -56,6 +59,10 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
     @Label("Tipo de usuario")
     private TipoUsuario tipoUsuario;
     
+    
+    private Centro centro;   
+    
+    private EstadoUsuarioCentro estadoUsuarioCentro;
     
     public Usuario() {
         this.tipoUsuario=TipoUsuario.TITULADO;
@@ -182,18 +189,39 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
         this.tipoUsuario = tipoUsuario;
     }
     
+    /**
+     * @return the centro
+     */
+    public Centro getCentro() {
+        return centro;
+    }
+
+    /**
+     * @param centro the centro to set
+     */
+    public void setCentro(Centro centro) {
+        this.centro = centro;
+    }
+
+    /**
+     * @return the estadoUsuarioCentro
+     */
+    public EstadoUsuarioCentro getEstadoUsuarioCentro() {
+        return estadoUsuarioCentro;
+    }
+
+    /**
+     * @param estadoUsuarioCentro the estadoUsuarioCentro to set
+     */
+    public void setEstadoUsuarioCentro(EstadoUsuarioCentro estadoUsuarioCentro) {
+        this.estadoUsuarioCentro = estadoUsuarioCentro;
+    }
+    
     
     private String getCalculateName() {
         return nombre + " " + ape1 + (ape2 != null ? " " + ape2 : "");
     }
     
-    @Override
-    public void onPostLoad(PostLoadEvent ple) {
-        Usuario usuario=(Usuario)ple.getEntity();
-        //Nunca se retorna el Hash de la contraseña
-        usuario.setPassword(null);
-
-    }   
     
     
     
@@ -215,5 +243,52 @@ public class Usuario extends User  implements PostLoadEventListener,Principal {
         }
     } 
 
+    @AssertTrue(message = "El centro es requerido")
+    @Label("")
+    private boolean isCentroRequerido() {
+        //Que para usuarios de centro esté el centro
+        if (tipoUsuario==TipoUsuario.CENTRO) {
+            if (centro==null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
     
+    @AssertTrue(message = "No es posible indicar el centro")
+    @Label("")
+    private boolean isCentroNoRequerido() {
+        //Que para usuarios que no son del centro que no esté el valor del centro
+        if (tipoUsuario!=TipoUsuario.CENTRO) {
+            if (centro==null) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }    
+
+    @Override
+    public boolean onPreInsert(PreInsertEvent pie) {
+        Usuario usuario=(Usuario)pie.getEntity();
+        if (usuario.tipoUsuario==TipoUsuario.CENTRO) {
+            //Al insertar un usuario de tipo Centro siempre se inserta como pendiente de aceptación del centro
+            usuario.setEstadoUsuarioCentro(EstadoUsuarioCentro.PENDIENTE_ACEPTACION_CENTRO);
+        }
+        
+        return false;
+    }
+    
+    @Override
+    public void onPostLoad(PostLoadEvent ple) {
+        Usuario usuario=(Usuario)ple.getEntity();
+        //Nunca se retorna el Hash de la contraseña
+        usuario.setPassword(null);
+
+    } 
 }

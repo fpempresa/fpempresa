@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS `titulado` (
-  `idTitulado` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `titulado` (
+  `idTitulado` int(11) NOT NULL,
   `idIdentity` int(11) DEFAULT NULL,
   `fechaNacimiento` datetime DEFAULT NULL,
   `tipoVia` int(11) DEFAULT NULL,
@@ -19,9 +19,9 @@ CREATE TABLE IF NOT EXISTS `titulado` (
   CONSTRAINT `FK94E67D96391E4C8A` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),
   CONSTRAINT `FK94E67D96B3306F0C` FOREIGN KEY (`idIdentity`) REFERENCES `usuario` (`idIdentity`),
   CONSTRAINT `FK94E67D96DA49940A` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `experiencialaboral` (
+CREATE TABLE `experiencialaboral` (
   `idExperienciaLaboral` int(11) NOT NULL AUTO_INCREMENT,
   `nombreEmpresa` varchar(255) DEFAULT NULL,
   `fechaInicio` datetime DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `experiencialaboral` (
 
 
 
-CREATE TABLE IF NOT EXISTS `formacionacademica` (
+CREATE TABLE `formacionacademica` (
   `idFormacionAcademica` int(11) NOT NULL AUTO_INCREMENT,
   `tipoFormacionAcademica` int(11) DEFAULT NULL,
   `otroCentro` varchar(255) DEFAULT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `formacionacademica` (
   CONSTRAINT `FK7C4E0018EE23894D` FOREIGN KEY (`idCentro`) REFERENCES `centro` (`idCentro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `tituloidioma` (
+CREATE TABLE `tituloidioma` (
   `idTituloIdioma` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` datetime DEFAULT NULL,
   `idioma` int(11) DEFAULT NULL,

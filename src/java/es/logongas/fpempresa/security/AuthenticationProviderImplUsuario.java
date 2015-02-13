@@ -16,15 +16,14 @@
 package es.logongas.fpempresa.security;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
+import es.logongas.fpempresa.service.comun.usuario.UsuarioService;
 import es.logongas.ix3.security.model.Identity;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.DAOFactory;
-import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.security.authentication.impl.CredentialImplLoginPassword;
 import es.logongas.ix3.security.authentication.AuthenticationProvider;
 import es.logongas.ix3.security.authentication.Credential;
 import es.logongas.ix3.security.authentication.Principal;
+import es.logongas.ix3.service.ServiceFactory;
 import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AuthenticationProviderImplUsuario implements AuthenticationProvider {
 
     @Autowired
-    DAOFactory daoFactory;
+    ServiceFactory serviceFactory;
 
     protected final Log log = LogFactory.getLog(getClass());
     
@@ -56,13 +55,13 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                 return null;
             }
             
-            UsuarioDAO usuarioDAO = (UsuarioDAO)daoFactory.getDAO(Usuario.class);
-            Usuario usuario = usuarioDAO.readByNaturalKey(credentialImplLoginPassword.getLogin());            
+            UsuarioService usuarioService = (UsuarioService)serviceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioService.readByNaturalKey(credentialImplLoginPassword.getLogin());            
             
             if (usuario!=null) {
                 String plainPassword=credentialImplLoginPassword.getPassword();
                 
-                if (usuarioDAO.checkPassword(usuario,plainPassword)) {
+                if (usuarioService.checkPassword(usuario,plainPassword)) {
                     Principal principal=usuario;
                     return principal;
                 } else {
@@ -80,14 +79,14 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
     @Override
     public Principal getPrincipalBySID(Serializable sid) throws BusinessException {
         Integer idIdentity = (Integer) sid;
-        GenericDAO<Identity, Integer> genericDAO = daoFactory.getDAO(Usuario.class);
+        UsuarioService usuarioService = (UsuarioService)serviceFactory.getService(Usuario.class);
 
-        return genericDAO.read(idIdentity);
+        return usuarioService.read(idIdentity);
     }
 
     protected Principal getPrincipalByLogin(String login) throws BusinessException {
-        GenericDAO<Identity, Integer> genericDAO = daoFactory.getDAO(Usuario.class);
-        Identity identity = genericDAO.readByNaturalKey(login);
+        UsuarioService usuarioService = (UsuarioService)serviceFactory.getService(Usuario.class);
+        Identity identity = usuarioService.readByNaturalKey(login);
 
         return identity;
     }

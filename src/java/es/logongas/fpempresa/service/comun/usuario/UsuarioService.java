@@ -1,6 +1,6 @@
 /**
  *   FPempresa
- *   Copyright (C) 2014  Lorenzo González
+ *   Copyright (C) 2015  Lorenzo González
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU Affero General Public License as
@@ -15,19 +15,16 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
-package es.logongas.fpempresa.dao.comun.usuario;
+package es.logongas.fpempresa.service.comun.usuario;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.ix3.dao.GenericDAO;
-
+import es.logongas.ix3.service.GenericService;
 
 /**
  *
- * @author Lorenzo
+ * @author Lorenzo Gonzalez
  */
-public interface UsuarioDAO extends GenericDAO<Usuario,Integer> {
-    void updateEncryptedPassword(Usuario usuario,String encriptedPassword);
-    String getEncryptedPassword(Usuario usuario);
+public interface UsuarioService extends GenericService<Usuario,Integer> {
+    void updatePassword(Usuario usuario,String plainPassword);
+    boolean checkPassword(Usuario usuario,String plainPassword);
 }

@@ -36,42 +36,20 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Integer> implements UsuarioDAO  {
 
     @Override
-    public void updatePassword(Usuario usuario,String plainPassword){
+    public void updateEncryptedPassword(Usuario usuario,String encriptedPassword){
        
         
         Session session=sessionFactory.getCurrentSession();
         
         Query query = session.createSQLQuery("UPDATE Usuario SET password=? WHERE idIdentity=?");
-        query.setString(0, getEncryptedPasswordFromPlainPassword(plainPassword));
+        query.setString(0, encriptedPassword);
         query.setInteger(1, usuario.getIdIdentity());
         
         query.executeUpdate(); 
-    };
-    
-    @Override
-    public boolean checkPassword(Usuario usuario,String plainPassword){
-        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-        
-        String encryptedPassword=getEncryptedPasswordFromUsuario(usuario);
-        
-        boolean checkOK=passwordEncryptor.checkPassword(plainPassword, encryptedPassword);
-        
-        return checkOK;
-    };
-
-    @Override
-    protected void preInsertBeforeTransaction(Session session, Usuario usuario) throws BusinessException  {
-        //Encriptamos el password antes de guardarlo
-        usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
-    }   
-
-    @Override
-    protected void preUpdateBeforeTransaction(Session session, Usuario usuario) throws BusinessException  {
-        usuario.setPassword(getEncryptedPasswordFromUsuario(usuario));
     }
     
-        
-    private String getEncryptedPasswordFromUsuario(Usuario usuario) {
+    @Override  
+    public String getEncryptedPassword(Usuario usuario) {
         Session session=sessionFactory.getCurrentSession();
         
         Query query = session.createSQLQuery("SELECT password FROM Usuario WHERE idIdentity=?");
@@ -80,13 +58,6 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
         
         return encryptedPassword;
     }
-    
-    
-    private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
-        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-        
-        String encryptedPassword=passwordEncryptor.encryptPassword(plainPassword); 
-        
-        return encryptedPassword;
-    }  
+
+ 
 }

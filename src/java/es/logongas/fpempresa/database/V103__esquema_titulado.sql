@@ -1,6 +1,5 @@
 CREATE TABLE `titulado` (
-  `idTitulado` int(11) NOT NULL,
-  `idIdentity` int(11) DEFAULT NULL,
+  `idTitulado` int(11) NOT NULL AUTO_INCREMENT,
   `fechaNacimiento` datetime DEFAULT NULL,
   `tipoVia` int(11) DEFAULT NULL,
   `nombreVia` varchar(255) DEFAULT NULL,
@@ -13,12 +12,10 @@ CREATE TABLE `titulado` (
   `tipoDocumento` int(11) DEFAULT NULL,
   `numeroDocumento` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idTitulado`),
-  KEY `FK94E67D96B3306F0C` (`idIdentity`),
-  KEY `FK94E67D96DA49940A` (`idProvincia`),
-  KEY `FK94E67D96391E4C8A` (`idMunicipio`),
-  CONSTRAINT `FK94E67D96391E4C8A` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),
-  CONSTRAINT `FK94E67D96B3306F0C` FOREIGN KEY (`idIdentity`) REFERENCES `usuario` (`idIdentity`),
-  CONSTRAINT `FK94E67D96DA49940A` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`)
+  KEY `KEY_TITULADO_PROVINCIA` (`idProvincia`),
+  KEY `KEY_TITULADO_MUNICIPIO` (`idMunicipio`),
+  CONSTRAINT `KEY_TITULADO_PROVINCIA` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`),
+  CONSTRAINT `KEY_TITULADO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `experiencialaboral` (
@@ -30,8 +27,8 @@ CREATE TABLE `experiencialaboral` (
   `descripcion` varchar(255) DEFAULT NULL,
   `idTitulado` int(11) DEFAULT NULL,
   PRIMARY KEY (`idExperienciaLaboral`),
-  KEY `FK5E73A0484C28477E` (`idTitulado`),
-  CONSTRAINT `FK5E73A0484C28477E` FOREIGN KEY (`idTitulado`) REFERENCES `titulado` (`idTitulado`)
+  KEY `KEY_EXPERIENCIALABORAL_TITULADO` (`idTitulado`),
+  CONSTRAINT `KEY_EXPERIENCIALABORAL_TITULADO` FOREIGN KEY (`idTitulado`) REFERENCES `titulado` (`idTitulado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

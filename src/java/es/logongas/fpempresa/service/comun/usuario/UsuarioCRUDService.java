@@ -15,15 +15,16 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package es.logongas.fpempresa.service.comun.usuario;
 
-package es.logongas.fpempresa.modelo.comun.usuario;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.service.CRUDService;
 
 /**
  *
- * @author Lorenzo
+ * @author Lorenzo Gonzalez
  */
-public enum EstadoUsuarioCentro {
-    OK,
-    PENDIENTE_ACEPTACION_CENTRO,
-    RECHAZADO_POR_CENTRO
+public interface UsuarioCRUDService extends CRUDService<Usuario,Integer> {
+    void updatePassword(Usuario usuario,String plainPassword);
+    boolean checkPassword(Usuario usuario,String plainPassword);
 }

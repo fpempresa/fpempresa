@@ -17,19 +17,21 @@
 package es.logongas.fpempresa.service.comun.usuario.impl;
 
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
-import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuarioCentro;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.service.comun.usuario.UsuarioService;
+import es.logongas.fpempresa.security.SecureKeyGenerator;
+import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.service.impl.GenericServiceImpl;
+import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import org.apache.commons.codec.binary.Base32;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
  *
  * @author logongas
  */
-public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Integer> implements UsuarioService {
+public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> implements UsuarioCRUDService {
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -39,7 +41,7 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Integer> imp
     public void updatePassword(Usuario usuario, String plainPassword) {
         getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(plainPassword));
     }
-    
+
     @Override
     public boolean checkPassword(Usuario usuario, String plainPassword) {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
@@ -53,32 +55,21 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Integer> imp
 
     @Override
     public void insert(Usuario usuario) throws BusinessException {
-
-        Usuario usuarioActual = (Usuario) this.principal;
-
-        if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
-            if ((usuarioActual == null) || (usuarioActual.getTipoUsuario() != TipoUsuario.ADMINISTRADOR)) {
-                //Solo los administradores pueden elegir el estado del usuario para el resto solo se permite que ete pediente de aceptación
-                usuario.setEstadoUsuarioCentro(EstadoUsuarioCentro.PENDIENTE_ACEPTACION_CENTRO);
-            }
+        if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) || (usuario.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+            //Al insertar un usuario de tipo Centro o EMPRESA siempre se inserta como pendiente de aceptación del centro o de la empresa
+            usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+        } else {
+            usuario.setEstadoUsuario(EstadoUsuario.OK);
         }
+
+       
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
+        usuario.setValidadoEmail(false);
+        usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
         getUsuarioDAO().update(usuario);
         usuario.setPassword(null);
     }
 
-    @Override
-    public boolean update(Usuario usuario) throws BusinessException {
-        usuario.setPassword(getUsuarioDAO().getEncryptedPassword(usuario));
-        boolean result = getUsuarioDAO().update(usuario);
-        usuario.setPassword(null);
-
-        return result;
-    }
-
-
-    
-    
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 

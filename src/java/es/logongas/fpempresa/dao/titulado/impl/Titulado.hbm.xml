@@ -6,11 +6,8 @@
         <cache usage="read-write" />
         
         <id name="idTitulado" >
-            <generator class="foreign">
-                <param name="property">usuario</param>
-            </generator>
+            <generator class="identity" />
         </id>
-        <one-to-one name="usuario" cascade="none" />
 
         <property name="fechaNacimiento" />
         

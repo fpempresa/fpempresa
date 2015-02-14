@@ -9,8 +9,8 @@ CREATE TABLE `centro` (
   `idProvincia` int(11) DEFAULT NULL,
   `idMunicipio` int(11) DEFAULT NULL,
   PRIMARY KEY (`idCentro`),
-  KEY `FK7817BA05DA49940A` (`idProvincia`),
-  KEY `FK7817BA05391E4C8A` (`idMunicipio`),
-  CONSTRAINT `FK7817BA05391E4C8A` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),
-  CONSTRAINT `FK7817BA05DA49940A` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`)
+  KEY `KEY_CENTRO_PROVINCIA` (`idProvincia`),
+  KEY `KEY_CENTRO_MUNICIPIO` (`idMunicipio`),
+  CONSTRAINT `KEY_CENTRO_PROVINCIA` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`),
+  CONSTRAINT `KEY_CENTRO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

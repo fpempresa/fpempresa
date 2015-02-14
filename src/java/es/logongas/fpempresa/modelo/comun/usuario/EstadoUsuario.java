@@ -15,16 +15,15 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.service.comun.usuario;
 
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.ix3.service.GenericService;
+package es.logongas.fpempresa.modelo.comun.usuario;
 
 /**
  *
- * @author Lorenzo Gonzalez
+ * @author Lorenzo
  */
-public interface UsuarioService extends GenericService<Usuario,Integer> {
-    void updatePassword(Usuario usuario,String plainPassword);
-    boolean checkPassword(Usuario usuario,String plainPassword);
+public enum EstadoUsuario {
+    OK,
+    PENDIENTE_ACEPTACION,
+    RECHAZADO
 }

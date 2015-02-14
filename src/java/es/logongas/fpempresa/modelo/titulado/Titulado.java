@@ -36,9 +36,6 @@ public class Titulado {
     private int idTitulado;
     
     @NotNull
-    private Usuario usuario;
-    
-    @NotNull
     @Past
     @Label("Fecha de nacimiento")
     private Date fechaNacimiento;
@@ -81,20 +78,6 @@ public class Titulado {
      */
     public void setIdTitulado(int idTitulado) {
         this.idTitulado = idTitulado;
-    }
-
-    /**
-     * @return the user
-     */
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    /**
-     * @param usuario the user to set
-     */
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     /**

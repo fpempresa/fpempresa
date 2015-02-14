@@ -17,15 +17,17 @@
 package es.logongas.fpempresa.modelo.comun.usuario;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.security.authentication.Principal;
+import es.logongas.ix3.web.json.annotations.ForbiddenExport;
+import es.logongas.ix3.web.json.annotations.ForbiddenImport;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import org.hibernate.event.spi.PostLoadEvent;
 import org.hibernate.event.spi.PostLoadEventListener;
-import org.hibernate.event.spi.PreInsertEvent;
-import org.hibernate.event.spi.PreInsertEventListener;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -33,39 +35,51 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Lorenzo
  */
-public class Usuario extends User  implements PostLoadEventListener,PreInsertEventListener,Principal {
-    
+public class Usuario extends User implements PostLoadEventListener, Principal {
+
     @Email
     @NotBlank
     @Label("Correo electrónico")
-    private String eMail;
-    
+    private String email;
+
     @NotBlank
     private String nombre;
-    
+
     @Label("1º Apellido")
     @NotBlank
     private String ape1;
-    
+
     @Label("2º Apellido")
     private String ape2;
-    
+
     private byte[] foto;
-    
+
     @Label("Contraseña")
     private String password;
 
     @NotNull
     @Label("Tipo de usuario")
     private TipoUsuario tipoUsuario;
+
+    private Centro centro;
+
+    private Titulado titulado;
+
+    private Empresa empresa;
+
+    @NotNull
+    @ForbiddenImport
+    private EstadoUsuario estadoUsuario;
+
+    @ForbiddenImport
+    private boolean validadoEmail;
     
-    
-    private Centro centro;   
-    
-    private EstadoUsuarioCentro estadoUsuarioCentro;
-    
+    @ForbiddenImport
+    @ForbiddenExport
+    private String claveValidacionEmail;
+
     public Usuario() {
-        this.tipoUsuario=TipoUsuario.TITULADO;
+        this.tipoUsuario = TipoUsuario.TITULADO;
     }
 
     @Override
@@ -73,35 +87,59 @@ public class Usuario extends User  implements PostLoadEventListener,PreInsertEve
         return name;
     }
 
-    /**
-     * @return the eMail
-     */
-    public String geteMail() {
-        return eMail;
+    @AssertTrue(message = "El registro está deshabilitado")
+    @Label("")
+    private boolean isProhibidoNuevoUsuario() {
+        return true;
+    }
+
+    @AssertTrue(message = "Solo se permite registrar titulados")
+    @Label("")
+    private boolean isSoloPermitidoTitulados() {
+        if (this.getTipoUsuario() == TipoUsuario.TITULADO) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public void onPostLoad(PostLoadEvent ple) {
+        Usuario usuario = (Usuario) ple.getEntity();
+        //Nunca se retorna el Hash de la contraseña
+        usuario.setPassword(null);
     }
 
     /**
-     * @param eMail the eMail to set
+     * @return the titulado
      */
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
-        this.login=this.eMail;
-    }
-    /**
-     * @return the eMail
-     */
-    public String getEMail() {
-        return eMail;
+    public Titulado getTitulado() {
+        return titulado;
     }
 
     /**
-     * @param eMail the eMail to set
+     * @param titulado the titulado to set
      */
-    public void setEMail(String eMail) {
-        this.eMail = eMail;
-        this.login=this.eMail;
+    public void setTitulado(Titulado titulado) {
+        this.titulado = titulado;
     }
-       
+
+    /**
+     * @return the eMail
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the eMail to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+        this.login=email;
+    }
+
     /**
      * @return the nombre
      */
@@ -114,7 +152,7 @@ public class Usuario extends User  implements PostLoadEventListener,PreInsertEve
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        this.name=getCalculateName();
+        this.name=nombre;
     }
 
     /**
@@ -129,7 +167,6 @@ public class Usuario extends User  implements PostLoadEventListener,PreInsertEve
      */
     public void setApe1(String ape1) {
         this.ape1 = ape1;
-        this.name=getCalculateName();        
     }
 
     /**
@@ -144,7 +181,6 @@ public class Usuario extends User  implements PostLoadEventListener,PreInsertEve
      */
     public void setApe2(String ape2) {
         this.ape2 = ape2;
-        this.name=getCalculateName();        
     }
 
     /**
@@ -188,7 +224,7 @@ public class Usuario extends User  implements PostLoadEventListener,PreInsertEve
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
+
     /**
      * @return the centro
      */
@@ -204,91 +240,58 @@ public class Usuario extends User  implements PostLoadEventListener,PreInsertEve
     }
 
     /**
-     * @return the estadoUsuarioCentro
+     * @return the empresa
      */
-    public EstadoUsuarioCentro getEstadoUsuarioCentro() {
-        return estadoUsuarioCentro;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
     /**
-     * @param estadoUsuarioCentro the estadoUsuarioCentro to set
+     * @param empresa the empresa to set
      */
-    public void setEstadoUsuarioCentro(EstadoUsuarioCentro estadoUsuarioCentro) {
-        this.estadoUsuarioCentro = estadoUsuarioCentro;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
-    
-    
-    private String getCalculateName() {
-        return nombre + " " + ape1 + (ape2 != null ? " " + ape2 : "");
-    }
-    
-    
-    
-    
-    @AssertTrue(message = "El registro está deshabilitado")
-    @Label("")
-    private boolean isProhibidoNuevoUsuario() {
-        return true;
-    }
-    
-    
-    
-    @AssertTrue(message = "Solo se permite registrar titulados")
-    @Label("")
-    private boolean isSoloPermitidoTitulados() {
-        if (this.tipoUsuario==TipoUsuario.TITULADO) {
-            return true;
-        } else {
-            return false;
-        }
-    } 
 
-    @AssertTrue(message = "El centro es requerido")
-    @Label("")
-    private boolean isCentroRequerido() {
-        //Que para usuarios de centro esté el centro
-        if (tipoUsuario==TipoUsuario.CENTRO) {
-            if (centro==null) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
+    /**
+     * @return the estadoUsuario
+     */
+    public EstadoUsuario getEstadoUsuario() {
+        return estadoUsuario;
     }
-    
-    @AssertTrue(message = "No es posible indicar el centro")
-    @Label("")
-    private boolean isCentroNoRequerido() {
-        //Que para usuarios que no son del centro que no esté el valor del centro
-        if (tipoUsuario!=TipoUsuario.CENTRO) {
-            if (centro==null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }    
 
-    @Override
-    public boolean onPreInsert(PreInsertEvent pie) {
-        Usuario usuario=(Usuario)pie.getEntity();
-        if (usuario.tipoUsuario==TipoUsuario.CENTRO) {
-            //Al insertar un usuario de tipo Centro siempre se inserta como pendiente de aceptación del centro
-            usuario.setEstadoUsuarioCentro(EstadoUsuarioCentro.PENDIENTE_ACEPTACION_CENTRO);
-        }
-        
-        return false;
+    /**
+     * @param estadoUsuario the estadoUsuario to set
+     */
+    public void setEstadoUsuario(EstadoUsuario estadoUsuario) {
+        this.estadoUsuario = estadoUsuario;
     }
-    
-    @Override
-    public void onPostLoad(PostLoadEvent ple) {
-        Usuario usuario=(Usuario)ple.getEntity();
-        //Nunca se retorna el Hash de la contraseña
-        usuario.setPassword(null);
 
-    } 
+    /**
+     * @return the validadoEMail
+     */
+    public boolean isValidadoEmail() {
+        return validadoEmail;
+    }
+
+    /**
+     * @param validadoEmail the validadoEmail to set
+     */
+    public void setValidadoEmail(boolean validadoEmail) {
+        this.validadoEmail = validadoEmail;
+    }
+
+    /**
+     * @return the claveValidacionEmail
+     */
+    public String getClaveValidacionEmail() {
+        return claveValidacionEmail;
+    }
+
+    /**
+     * @param claveValidacionEmail the claveValidacionEmail to set
+     */
+    public void setClaveValidacionEmail(String claveValidacionEmail) {
+        this.claveValidacionEmail = claveValidacionEmail;
+    }
 }

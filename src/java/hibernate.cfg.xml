@@ -28,6 +28,9 @@
     <!-- BEGIN:Tablas sobre el centro -->
     <mapping resource="es/logongas/fpempresa/dao/centro/impl/Centro.hbm.xml"/>
     <!-- END:Tablas sobre el centro -->
+    <!-- BEGIN:Tablas sobre la empresa -->
+    <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Empresa.hbm.xml"/>
+    <!-- END:Tablas sobre la empresa -->
     <!-- BEGIN:Definición de la seguridad -->
     <mapping resource="es/logongas/ix3/security/dao/impl/Identity.hbm.xml"/>
     <mapping resource="es/logongas/ix3/security/dao/impl/GroupMember.hbm.xml"/>

@@ -3,13 +3,19 @@
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addEditRoute({
             entity: "Titulado", 
-            expand: "usuario,direccion.municipio"
+            expand: "direccion.municipio"
         });
+        crudRoutesProvider.addNewRoute({
+            entity: "Titulado", 
+            expand: "direccion.municipio"
+        });        
     }]);
 
-app.controller("TituladoNewEditController", ['$scope', '$location', 'genericControllerCrudDetail', 'controllerParams', function ($scope, $location, genericControllerCrudDetail, controllerParams) {
+app.controller("TituladoNewEditController", ['$scope', '$location', 'genericControllerCrudDetail', 'controllerParams','session', function ($scope, $location, genericControllerCrudDetail, controllerParams,session) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         $scope.finishOK = function () {
-            $location.path("/");
+            session.logged().then(function() {
+                $location.path("/");
+            });
         };
     }]);

@@ -2,7 +2,7 @@
 
 app.controller('MainController', ['$scope', 'repositoryFactory', function ($scope, repositoryFactory) {
 
-        $scope.id = $scope.user.idIdentity;
+        $scope.id = $scope.user.titulado.idTitulado;
         $scope.entity = "Titulado";
         $scope.businessMessages=null;
 

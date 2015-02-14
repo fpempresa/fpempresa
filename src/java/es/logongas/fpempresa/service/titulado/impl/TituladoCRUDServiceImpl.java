@@ -11,6 +11,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
@@ -23,11 +24,17 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
     public void insert(Titulado titulado) throws BusinessException {
 
         try {
+            Usuario usuario = (Usuario) principal;         
+            
+            if ((usuario.getTipoUsuario()==TipoUsuario.TITULADO) && (usuario.getTitulado()!=null)) {
+                throw new BusinessException(new BusinessMessage(null, "Ya existe un usuario asociado a ese titulado"));
+            }
+            
+            
             transactionManager.begin();
 
             getDAO().insert(titulado);
             
-            Usuario usuario = (Usuario) principal;
             if (usuario.getTipoUsuario()==TipoUsuario.TITULADO) {
                 //Si un usuario de tipo titulado está añadiendo un titulado
                 //Decimos que ese usuario está asociado a ese titulado

@@ -1,7 +1,7 @@
 
 "use strict";
 
-app.run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
+angular.module("common").run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
         
         function getNombreCentro() {
             if (this.tipoFormacionAcademica === "CICLO_FORMATIVO") {

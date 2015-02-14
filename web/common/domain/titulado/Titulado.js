@@ -1,6 +1,6 @@
 "use strict";
 
-app.run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
+angular.module("common").run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
 
         function getTipoDocumentoDescription() {
             return metadataEntities.getMetadataProperty(this.$propertyPath+".tipoDocumento").getValueDescription(this.tipoDocumento);

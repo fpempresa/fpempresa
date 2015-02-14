@@ -1,0 +1,77 @@
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Formaci&oacute;n academica</legend>
+                    <div class="form-group">
+                        <label for="model.tipoFormacionAcademica" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-3">
+                            <select ng-model="model.tipoFormacionAcademica" id="model.tipoFormacionAcademica" name="model.tipoFormacionAcademica" class="form-control" ix3-options  required>
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.centro" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-options  >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO' || model.centro.idCentro === -1" class="form-group">
+                        <label for="model.otroCentro" class="col-sm-3  control-label" ix3-label ></label>
+                        <div  class="col-sm-7">
+                            <input ng-model="model.otroCentro" id="model.otroCentro" name="model.otroCentro" class="form-control" type="text"    />
+                        </div>  
+                    </div>
+                    <div  ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO'" class="form-group">
+                        <label for="model.otroTitulo" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <input ng-model="model.otroTitulo" id="model.otroTitulo" name="model.otroTitulo" class="form-control" type="text"    />
+                        </div>
+                    </div> 
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.ciclo.familia" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo.familia" id="model.ciclo.familia" name="model.ciclo.familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div>    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.ciclo.grado" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo.grado" id="model.ciclo.grado" name="model.ciclo.grado" class="form-control" ix3-options="removeWith:{ idGrado: 1 }"  >
+                                <option value="">-- Todos --</option>
+                            </select>
+                        </div>
+                    </div>                     
+                    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.ciclo" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo" id="model.ciclo" name="model.ciclo" class="form-control" ix3-options=" orderBy:'descripcion'" ix3-options-depend="{familia:model.ciclo.familia,grado:model.ciclo.grado}" ix3-options-default="{grado:[2,3]}" >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <br>
+                            <div class=" pull-right">
+                                <button type="button" class="btn form__button form__button--default" ng-click="buttonCancel()" >Volver</button>
+                                <button type="button" ng-class="{'form__button--primary':controllerAction !== 'DELETE','form__button--warning':controllerAction === 'DELETE'}" class="btn form__button" ng-click="buttonOK()">{{labelButtonOK}}</button>
+                            </div>
+                        </div>
+                    </div>                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+                    

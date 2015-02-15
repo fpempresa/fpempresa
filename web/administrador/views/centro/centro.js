@@ -8,7 +8,12 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
 
 app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);      
-        $scope.page.pageSize=20;
+        $scope.page.pageSize=3;
+        
+        $scope.filter={
+            idCentro__NE__:-1
+        }
+        
         $scope.search();
     }]);
 

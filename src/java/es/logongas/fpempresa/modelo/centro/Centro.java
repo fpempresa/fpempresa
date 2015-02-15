@@ -40,6 +40,7 @@ public class Centro {
     private Direccion direccion;
     
     @Label("Pertenencia a FPempresa")
+    @NotNull
     private EstadoCentro estadoCentro;
 
     public Centro() {

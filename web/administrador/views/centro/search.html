@@ -1,30 +1,37 @@
 <div class="row">
     <div class="col-sm-12 form__container" >
         <div>
-            <legend class="form__title">Formaci&oacute;n academica</legend>
+            <legend class="form__title">Centros</legend>
             <ix3-business-messages></ix3-business-messages>
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th style="min-width:140px;text-align: center">Nivel</th>
-                        <th style="width:      50%;text-align: center">Titulo</th>
-                        <th style="width:      35%;text-align: center">Centro</th>
+                        <th style="min-width:140px;text-align: center">Nombre</th>
+                        <th style="width:      50%;text-align: center">Provincia</th>
+                        <th style="width:      35%;text-align: center">Poblaci&oacute;n</th>
                         <th style="min-width:120px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="formacionAcademica in models" class="data-table__row">
-                        <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
-                        <td >{{formacionAcademica.getNombreTitulo()}}</td>
-                        <td >{{formacionAcademica.getNombreCentro()}}</td>
+                    <tr ng-repeat="centro in models" class="data-table__row">
+                        <td >{{centro.nombre}}</td>
+                        <td >{{centro.direccion.municipio.provincia.descripcion}}</td>
+                        <td >{{centro.direccion.municipio.descripcion}}</td>
                         <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(formacionAcademica.idFormacionAcademica)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(formacionAcademica.idFormacionAcademica)">Editar</button>
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(centro.idCentro)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(centro.idCentro)">Editar</button>
                         </td>                             
                     </tr>
                 </tbody>
             </table> 
-            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nueva Formaci&oacute;n Academica</button>
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination>fdgdgdfg</ix3-pagination>
+                </div>
+            </div>
+            
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nuevo Centro</button>
         </div>
     </div>
 </div>

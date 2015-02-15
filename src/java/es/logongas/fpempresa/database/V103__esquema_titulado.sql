@@ -5,16 +5,13 @@ CREATE TABLE `titulado` (
   `nombreVia` varchar(255) DEFAULT NULL,
   `otrosDireccion` varchar(255) DEFAULT NULL,
   `codigoPostal` varchar(255) DEFAULT NULL,
-  `idProvincia` int(11) DEFAULT NULL,
   `idMunicipio` int(11) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   `telefonoAlternativo` varchar(255) DEFAULT NULL,
   `tipoDocumento` int(11) DEFAULT NULL,
   `numeroDocumento` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idTitulado`),
-  KEY `KEY_TITULADO_PROVINCIA` (`idProvincia`),
   KEY `KEY_TITULADO_MUNICIPIO` (`idMunicipio`),
-  CONSTRAINT `KEY_TITULADO_PROVINCIA` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`),
   CONSTRAINT `KEY_TITULADO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

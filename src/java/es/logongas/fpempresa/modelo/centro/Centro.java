@@ -33,7 +33,7 @@ public class Centro {
     private int idCentro;
     
     @NotBlank
-    private String  descripcion;
+    private String  nombre;
     
     @NotNull
     @Valid
@@ -47,7 +47,7 @@ public class Centro {
 
     @Override
     public String toString() {
-        return descripcion;
+        return nombre;
     }
 
     
@@ -67,17 +67,17 @@ public class Centro {
     }
 
     /**
-     * @return the descripcion
+     * @return the nombre
      */
-    public String getDescripcion() {
-        return descripcion;
+    public String getNombre() {
+        return nombre;
     }
 
     /**
-     * @param descripcion the descripcion to set
+     * @param nombre the nombre to set
      */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**

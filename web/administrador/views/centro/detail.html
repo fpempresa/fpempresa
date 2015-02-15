@@ -11,14 +11,25 @@
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 
                             <div class="form-group">
-                                <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
+                                <label for="nombre" class="col-xs-3  control-label" ix3-label></label>
+                                <div class="col-xs-9 ">
                                     <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation>
                                 </div>
                             </div> 
                         </div>
                     </div>
-
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label for="estadoCentro" class="col-xs-3  control-label" ix3-label></label>
+                                <div class="col-xs-4 ">
+                                    <select ng-model="model.estadoCentro" id="estadoCentro" name="model.estadoCentro" class="form-control" ix3-options  >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select> 
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
                     <legend class="form__title">Direcci&oacute;n</legend>
 
                     <div class="row" >
@@ -99,4 +110,4 @@
         </div>
     </div>
 </div>
-                    
+

@@ -3,7 +3,7 @@
 angular.module("common").run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
 
         function getEstadoCentroDescription() {
-            return metadataEntities.getMetadataProperty(this.$propertyPath+".tipoDocumento").getValueDescription(this.tipoDocumento);
+            return metadataEntities.getMetadataProperty(this.$propertyPath+".estadoCentro").getValueDescription(this.estadoCentro);
         };
        
         

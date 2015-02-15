@@ -23,7 +23,18 @@ package es.logongas.fpempresa.modelo.centro;
  * @author Lorenzo
  */
 public enum EstadoCentro {
-    PERTENECE_A_FPEMPRESA,
-    BAJA_EN_FPEMPRESA,
-    NO_PERTENCE_A_FPEMPRESA
+    PERTENECE_A_FPEMPRESA("Pertenece a FPempresa"),
+    BAJA_EN_FPEMPRESA("Baja en FPempresa"),
+    NO_PERTENCE_A_FPEMPRESA("NO pertenece a FPempresa");
+    
+    String text;
+
+    private EstadoCentro(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }

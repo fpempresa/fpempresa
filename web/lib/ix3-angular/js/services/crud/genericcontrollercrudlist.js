@@ -46,7 +46,7 @@
                     scope.filter[scope.parentProperty] = scope.parentId;
                 }
 
-                scope.repository.search(scope.filter, scope.orderby, undefined, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
+                scope.repository.search(scope.filter, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
                     } else {

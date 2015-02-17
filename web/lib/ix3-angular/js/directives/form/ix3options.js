@@ -18,7 +18,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                         var filters = attributes.ix3Options;
                         var ix3OptionsDepend = attributes.ix3OptionsDepend;
                         var ix3OptionsDefault = attributes.ix3OptionsDefault;
-                        var propertyName = attributes.ngModel.replace(/^model\./, "")
+                        var propertyName = attributes.ngModel.replace(/^model\./, "");
                         var metadata = metadataEntities.getMetadata(ix3FormController.getConfig().entity);
                         var metadataProperty = metadata.getMetadataProperty(propertyName);
 
@@ -27,6 +27,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                             if (ix3OptionsDepend) {
                                 $scope.values = [];
                             } else {
+                                //El slice es para hacer un "clone" del array de forma rápida
                                 $scope.values = metadataProperty.values.slice();
                             }
                         } else {
@@ -34,24 +35,28 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                         }
 
                         if (ix3OptionsDepend) {
-
-                            $scope.$watch(attributes.ngModel, function (newDepend, oldDepend) {
-                                if (newDepend === oldDepend) {
+                            $scope.$watch(attributes.ngModel, function (newValue, oldValue) {
+                                if (newValue === oldValue) {
                                     return;
                                 }
 
                                 var currentValue = getModelValue($scope, attributes, ngModelController);
                                 if ($scope.values.indexOf(currentValue) >= 0) {
                                     setModelValue($scope, attributes, ngModelController, angular.copy(currentValue));
+                                } else if (oldValue) {
+                                    //No lo ponemos a null, pq al depender de otros valores de los que dependen se borrarían tambien.
+                                    //Asi que al valor ANTERIOR le quitamos la clave primaria y las clave naturales y así no se ve pero se mantiene todo
+                                    var newNullValue=cloneObjectWithClearEntityKeys(oldValue, metadataProperty);
+                                    if (angular.equals(newNullValue,oldValue)===false) {
+                                        setModelValue($scope, attributes, ngModelController, newNullValue);
+                                    }
                                 }
-                            })
+                            },true);
 
                             $scope.$watch(ix3OptionsDepend, function (newDepend, oldDepend) {
                                 if (angular.equals(newDepend, oldDepend) === true) {
                                     return;
                                 }
-
-
                                 var promise;
                                 if (angular.isArray(metadataProperty.values)) {
                                     //La lista de posibles valores está en los metadatos , así que no hace falta ir al servidor
@@ -152,7 +157,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                     continue;
                 }
 
-                var dependMetadataProperty = metadataProperty.properties[dependPropertyName];
+                var dependMetadataProperty = metadataProperty.getMetadataProperty(dependPropertyName);
                 var primaryKeyPropertyName = dependMetadataProperty.primaryKeyPropertyName;
                 if (depend[dependPropertyName]) {
                     var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
@@ -220,12 +225,13 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                 return promise;
             } else {
                 var filter = {};
+                var expand="";
                 for (var dependPropertyName in depend) {
                     if (!depend.hasOwnProperty(dependPropertyName)) {
                         continue;
                     }
 
-                    var primaryKeyPropertyName = metadataProperty.properties[dependPropertyName].primaryKeyPropertyName;
+                    var primaryKeyPropertyName = metadataProperty.getMetadataProperty(dependPropertyName).primaryKeyPropertyName;
 
                     if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
                         var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
@@ -245,11 +251,16 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                         }
                     }
 
+                    if (expand==="") {
+                        expand=dependPropertyName;
+                    } else {
+                        expand=expand + "," +dependPropertyName;
+                    }
 
                 }
 
                 var repository = repositoryFactory.getRepository(metadataProperty.className);
-                var promise = repository.search(filter);
+                var promise = repository.search(filter,undefined,expand);
 
                 return promise;
             }
@@ -266,14 +277,14 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
          * @returns {Boolean}
          */
         function isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty) {
-            var impossibleFilter = false
+            var impossibleFilter = false;
 
             for (var dependPropertyName in depend) {
                 if (!depend.hasOwnProperty(dependPropertyName)) {
                     continue;
                 }
 
-                var primaryKeyPropertyName = metadataProperty.properties[dependPropertyName].primaryKeyPropertyName;
+                var primaryKeyPropertyName = metadataProperty.getMetadataProperty(dependPropertyName).primaryKeyPropertyName;
 
                 if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
                     continue;

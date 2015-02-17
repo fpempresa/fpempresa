@@ -101,7 +101,13 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                                 ngOptions = "value.toString() for value in values track by value." + metadataProperty.primaryKeyPropertyName + "";
                             }
                         } else {
-                            ngOptions = "value.key as value.description for value in values ";
+                            if ((filters) && (filters.trim() !== "")) {
+                                ngOptions = "value.key as value.description for value in values | " + filters;
+                            } else {
+                                ngOptions = "value.key as value.description for value in values ";
+                            }
+                            
+                            
                         }
 
                         attributes.ngOptions = ngOptions;

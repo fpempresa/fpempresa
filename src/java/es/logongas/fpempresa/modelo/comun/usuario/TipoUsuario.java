@@ -23,9 +23,20 @@ package es.logongas.fpempresa.modelo.comun.usuario;
  * @author Lorenzo
  */
 public enum TipoUsuario {
-    TITULADO,
-    CENTRO,
-    EMPRESA,
-    ADMINISTRADOR,
-    DESARROLLADOR;
+    TITULADO("Titulado"),
+    CENTRO("Centro"),
+    EMPRESA("Empresa"),
+    ADMINISTRADOR("Administrador"),
+    DESARROLLADOR("Desarrollador");
+    
+    String text;
+
+    private TipoUsuario(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }    
 }

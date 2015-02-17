@@ -23,7 +23,18 @@ package es.logongas.fpempresa.modelo.comun.usuario;
  * @author Lorenzo
  */
 public enum EstadoUsuario {
-    OK,
-    PENDIENTE_ACEPTACION,
-    RECHAZADO
+    ACEPTADO("Aceptado"),
+    PENDIENTE_ACEPTACION("Pendiente de aceptación"),
+    RECHAZADO("Rechazado");
+    
+    String text;
+
+    private EstadoUsuario(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }    
 }

@@ -24,7 +24,6 @@ import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
-import org.apache.commons.codec.binary.Base32;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
@@ -59,7 +58,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             //Al insertar un usuario de tipo Centro o EMPRESA siempre se inserta como pendiente de aceptación del centro o de la empresa
             usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
         } else {
-            usuario.setEstadoUsuario(EstadoUsuario.OK);
+            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         }
 
        

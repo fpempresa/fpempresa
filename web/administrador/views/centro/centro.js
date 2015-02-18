@@ -8,24 +8,24 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
 
 app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);      
-        $scope.page.pageSize=3;
+        $scope.page.pageSize=10;
         
         $scope.filter={
             idCentro__NE__:-1
-        }
+        };
         
         $scope.search();
     }]);
 
 
-app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','repositoryFactory', function($scope, genericControllerCrudDetail, controllerParams,repositoryFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','repositoryFactory', function($scope, genericControllerCrudDetail, controllerParams,repositoryFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','repositoryFactory', function($scope, genericControllerCrudDetail, controllerParams,repositoryFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

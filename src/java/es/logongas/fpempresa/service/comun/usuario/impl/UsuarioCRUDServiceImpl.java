@@ -54,11 +54,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public void insert(Usuario usuario) throws BusinessException {
-        if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) || (usuario.getTipoUsuario() == TipoUsuario.EMPRESA)) {
-            //Al insertar un usuario de tipo Centro o EMPRESA siempre se inserta como pendiente de aceptación del centro o de la empresa
-            usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-        } else {
+        if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
+            //Al actualizar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        } else {
+            usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
         }
 
        
@@ -69,6 +69,17 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         usuario.setPassword(null);
     }
 
+    @Override
+    public boolean update(Usuario usuario) throws BusinessException {
+        if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
+            //Al actualizar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
+            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        }
+       
+        return super.update(usuario);
+    }    
+    
+    
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 

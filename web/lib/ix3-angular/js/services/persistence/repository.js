@@ -45,7 +45,7 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;            
+            return deferred.promise;
         };
         this.update = function (id, entity, expand) {
             var deferred = this.$q.defer();
@@ -58,7 +58,7 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;             
+            return deferred.promise;
         };
         this.delete = function (id) {
             var deferred = this.$q.defer();
@@ -71,7 +71,7 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;             
+            return deferred.promise;
         };
         this.search = function (filter, order, expand, pageNumber, pageSize) {
             var deferred = this.$q.defer();
@@ -84,7 +84,7 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;             
+            return deferred.promise;
         };
         this.getChild = function (id, child, expand) {
             var deferred = this.$q.defer();
@@ -97,7 +97,7 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;             
+            return deferred.promise;
         };
 
         this.metadata = function (expand) {
@@ -111,24 +111,54 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;             
+            return deferred.promise;
         };
 
 
     }
 
-    RepositoryFactory.$inyect=['remoteDAOFactory', 'richDomain', '$http', '$q'];
-    function RepositoryFactory(remoteDAOFactory, richDomain, $http, $q) {
-        this.getRepository = function (entityName) {
-            var remoteDAO = remoteDAOFactory.getRemoteDAO(entityName);
+    RepositoryFactoryProvider.$inyect = [];
+    function RepositoryFactoryProvider() {
 
-            return new Repository(entityName, remoteDAO, richDomain, $http, $q);
+        var remoteRepositories = {
         };
+
+        var extendRepository = {
+        };
+
+        this.$get = ['remoteDAOFactory', 'richDomain', '$http', '$q', '$injector',function (remoteDAOFactory, richDomain, $http, $q, $injector) {
+            return {
+                getRepository: function (entityName) {
+
+                    if (!remoteRepositories[entityName]) {
+                        var remoteDAO = remoteDAOFactory.getRemoteDAO(entityName);
+                        remoteRepositories[entityName] = new Repository(entityName, remoteDAO, richDomain, $http, $q);
+
+                        if (extendRepository[entityName]) {
+                            var locals = {
+                                repository: remoteRepositories[entityName]
+                            };
+
+                            $injector.invoke(extendRepository[entityName], extendRepository[entityName], locals);
+                        }
+
+                    }
+
+                    return remoteRepositories[entityName];
+                }
+
+            };
+        }];
+
+        this.addExtendRepository = function (entityName, fn) {
+            extendRepository[entityName] = fn;
+        };
+
     }
 
 
 
-    angular.module("es.logongas.ix3").service("repositoryFactory", RepositoryFactory);
+    angular.module("es.logongas.ix3").provider("repositoryFactory", RepositoryFactoryProvider);
 
 })();
 

@@ -288,18 +288,43 @@
 
     }
 
-    RemoteDAOFactory.$inject = ['ix3Configuration', '$http', '$q'];
-    function RemoteDAOFactory(ix3Configuration, $http, $q) {
+    RemoteDAOFactoryProvider.$inject = [];
+    function RemoteDAOFactoryProvider() {
 
-        return {
-            getRemoteDAO: getRemoteDAO
-        }
+        var remoteDAOs = {
+        };
 
-        function getRemoteDAO(entityName) {
-            return new RemoteDAO(entityName, ix3Configuration.server.api, $http, $q);
-        }
+        var extendRemoteDAO = {
+        };
+
+        this.addExtendRemoteDAO = function (entityName, fn) {
+            extendRemoteDAO[entityName] = fn;
+        };
+
+        this.$get = ['ix3Configuration', '$http', '$q', '$injector',function (ix3Configuration, $http, $q, $injector) {
+
+            return {
+                getRemoteDAO: function (entityName) {
+                    if (!remoteDAOs[entityName]) {
+                        remoteDAOs[entityName] = new RemoteDAO(entityName, ix3Configuration.server.api, $http, $q);
+
+                        if (extendRemoteDAO[entityName]) {
+                            var locals = {
+                                remoteDAO: remoteDAOs[entityName]
+                            };
+
+                            $injector.invoke(extendRemoteDAO[entityName], extendRemoteDAO[entityName], locals);
+                        }
+
+                    }
+
+
+                    return remoteDAOs[entityName];
+                }
+            };
+        }];
     }
 
-    angular.module("es.logongas.ix3").factory("remoteDAOFactory", RemoteDAOFactory);
+    angular.module("es.logongas.ix3").provider("remoteDAOFactory", RemoteDAOFactoryProvider);
 
 })();

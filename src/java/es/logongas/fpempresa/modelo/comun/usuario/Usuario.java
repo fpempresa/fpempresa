@@ -67,13 +67,13 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
 
     private Empresa empresa;
 
-    @NotNull
     @ForbiddenImport
+    @Label("Estado del usuario")
     private EstadoUsuario estadoUsuario;
 
     @ForbiddenImport
     private boolean validadoEmail;
-    
+
     @ForbiddenImport
     @ForbiddenExport
     private String claveValidacionEmail;
@@ -99,11 +99,62 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         if (this.getTipoUsuario() == TipoUsuario.TITULADO) {
             return true;
         } else {
-            return false;
+            return true;
         }
     }
 
+    @AssertTrue(message = "El centro es requerido si el usuario está aceptado")
+    @Label("")
+    private boolean isCentroRequeridoSiUsuarioAceptado() {
+        if ((this.getTipoUsuario() == TipoUsuario.CENTRO) && (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO)) {
+            if (this.centro == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
 
+    @AssertTrue(message = "La empresa es requerida si el usuario está aceptado")
+    @Label("")
+    private boolean isEmpresaRequeridaSiUsuarioAceptado() {
+        if ((this.getTipoUsuario() == TipoUsuario.EMPRESA) && (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO)) {
+            if (this.empresa == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    @AssertTrue(message = "Un administrador siempre debe estar aceptado")
+    @Label("")
+    private boolean isAdministradorAceptado() {
+        if (this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+            if (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    @AssertTrue(message = "No es posible añadir usuarios desarrolladores")
+    @Label("")
+    private boolean isDesarrollador() {
+        if (this.getTipoUsuario() == TipoUsuario.DESARROLLADOR) {
+            return false;
+        } else {
+            return true;
+        }
+    }    
+    
     @Override
     public void onPostLoad(PostLoadEvent ple) {
         Usuario usuario = (Usuario) ple.getEntity();
@@ -137,7 +188,7 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
      */
     public void setEmail(String email) {
         this.email = email;
-        this.login=email;
+        this.login = email;
     }
 
     /**
@@ -152,7 +203,7 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        this.name=nombre;
+        this.name = nombre;
     }
 
     /**

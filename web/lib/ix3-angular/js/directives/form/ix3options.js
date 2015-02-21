@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 'metadataEntities', '$q', '$filter', function (repositoryFactory, metadataEntities, $q, $filter) {
+angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 'metadataEntities', '$q', 'langUtil', function (repositoryFactory, metadataEntities, $q, langUtil) {
 
 
         return {
@@ -46,12 +46,12 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                                 } else if (oldValue) {
                                     //No lo ponemos a null, pq al depender de otros valores de los que dependen se borrarían tambien.
                                     //Asi que al valor ANTERIOR le quitamos la clave primaria y las clave naturales y así no se ve pero se mantiene todo
-                                    var newNullValue=cloneObjectWithClearEntityKeys(oldValue, metadataProperty);
-                                    if (angular.equals(newNullValue,oldValue)===false) {
+                                    var newNullValue = cloneObjectWithClearEntityKeys(oldValue, metadataProperty);
+                                    if (angular.equals(newNullValue, oldValue) === false) {
                                         setModelValue($scope, attributes, ngModelController, newNullValue);
                                     }
                                 }
-                            },true);
+                            }, true);
 
                             $scope.$watch(ix3OptionsDepend, function (newDepend, oldDepend) {
                                 if (angular.equals(newDepend, oldDepend) === true) {
@@ -106,8 +106,8 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                             } else {
                                 ngOptions = "value.key as value.description for value in values ";
                             }
-                            
-                            
+
+
                         }
 
                         attributes.ngOptions = ngOptions;
@@ -231,7 +231,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                 return promise;
             } else {
                 var filter = {};
-                var expand="";
+                var expand = "";
                 for (var dependPropertyName in depend) {
                     if (!depend.hasOwnProperty(dependPropertyName)) {
                         continue;
@@ -257,16 +257,16 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                         }
                     }
 
-                    if (expand==="") {
-                        expand=dependPropertyName;
+                    if (expand === "") {
+                        expand = dependPropertyName;
                     } else {
-                        expand=expand + "," +dependPropertyName;
+                        expand = expand + "," + dependPropertyName;
                     }
 
                 }
 
                 var repository = repositoryFactory.getRepository(metadataProperty.className);
-                var promise = repository.search(filter,undefined,expand);
+                var promise = repository.search(filter, undefined, expand);
 
                 return promise;
             }
@@ -321,21 +321,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
             return null;
         }
 
-        function setValue(obj, key, newValue) {
-            var keys = key.split('.');
-            for (var i = 0; i < keys.length - 1; i++) {
-                if (!obj[keys[i]]) {
-                    obj[keys[i]] = {};
-                }
-                obj = obj[keys[i]];
 
-            }
-            obj[keys[keys.length - 1]] = newValue;
-        }
         function setModelValue(scope, attributes, ngModelController, value) {
             //TODO: Usar ngModelController para establecer el valor
             var scopeAccessName = "$parent." + attributes.ngModel;
-            setValue(scope, scopeAccessName, value);
+            langUtil.setValue(scope, scopeAccessName, value);
         }
         function getModelValue(scope, attributes, ngModelController) {
             //TODO: Usar ngModelController para leer el valor

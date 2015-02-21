@@ -1,20 +1,10 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Clear', function() {
+angular.module("es.logongas.ix3").directive('ix3Clear', ['langUtil',function(langUtil) {
     return {
         restrict: 'A',
         link: function($scope, element, attributes) {
-            function setValue(obj, key, newValue) {
-                var keys = key.split('.');
-                for (var i = 0; i < keys.length - 1; i++) {
-                    if (!obj[keys[i]]) {
-                        obj[keys[i]] = {};
-                    }
-                    obj = obj[keys[i]];
 
-                }
-                obj[keys[keys.length - 1]] = newValue;
-            };
 
 
             var clear = attributes.ix3Clear;
@@ -25,17 +15,17 @@ angular.module("es.logongas.ix3").directive('ix3Clear', function() {
             }
 
             if ($scope.$eval(clear) === true) {
-                setValue($scope, ngModel, $scope.$eval(clearValue));
+                langUtil.setValue($scope, ngModel, $scope.$eval(clearValue));
             }
 
             $scope.$watch(clear, function(newValue, oldValue) {
                 if (newValue === true) {
-                    setValue($scope, ngModel, $scope.$eval(clearValue));
+                    langUtil.setValue($scope, ngModel, $scope.$eval(clearValue));
                 }
             });
 
         }
     };
-});
+}]);
 
 

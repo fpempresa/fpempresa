@@ -7,7 +7,8 @@ angular.module("es.logongas.ix3").factory("langUtil", [function () {
 
         return {
             getFunctionName: getFunctionName,
-            splitValues:splitValues
+            splitValues:splitValues,
+            setValue:setValue
         };
 
         /**
@@ -37,8 +38,25 @@ angular.module("es.logongas.ix3").factory("langUtil", [function () {
             }
         }        
         
+        /**
+         * Asigna un valor a un objeto pero el valor de la propiedad puede tener subpropiedades anidadas.
+         * @param {type} obj El objeto al que se le pone el valor
+         * @param {type} key El nombre de la propiedad. Se prmiten cosas como "prop1.prop2.prop3"
+         * @param {type} newValue El nuevo valor
+         */
+        function setValue(obj, key, newValue) {
+            var keys = key.split('.');
+            for (var i = 0; i < keys.length - 1; i++) {
+                if (!obj[keys[i]]) {
+                    obj[keys[i]] = {};
+                }
+                obj = obj[keys[i]];
+
+            }
+            obj[keys[keys.length - 1]] = newValue;
+        }
+        
+        
     }]);
-
-
 
 

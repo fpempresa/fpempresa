@@ -323,17 +323,6 @@
             /***************************************************/
             /************ METODOS REFERIDOS A CHILD ************/
 
-            scope.setValue = function (obj, key, newValue) {
-                var keys = key.split('.');
-                for (var i = 0; i < keys.length - 1; i++) {
-                    if (!obj[keys[i]]) {
-                        obj[keys[i]] = {};
-                    }
-                    obj = obj[keys[i]];
-                }
-                obj[keys[keys.length - 1]] = newValue;
-            };
-
 
             init();
 

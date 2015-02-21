@@ -1,17 +1,19 @@
 "use strict";
 
-angular.module("common").run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
+angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        function getEstadoCentroDescription() {
-            return metadataEntities.getMetadataProperty(this.$propertyPath+".estadoCentro").getValueDescription(this.estadoCentro);
-        };
-       
-        
+        richDomain.addEntityTransformer("Centro", ['metadataEntities', function (metadataEntities) {
+                var Centro = {
+                    getEstadoCentroDescription: function () {
+                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".estadoCentro").getValueDescription(this.estadoCentro);
+                    }
+                };
 
-        richDomain.addEntityTransformer("Centro",function (className, object) {
-            object['getEstadoCentroDescription']=getEstadoCentroDescription;
-        });
+                return function (object, propertyPath) {
+                    object.$propertyPath=propertyPath;
+                    angular.extend(object, Centro);
+                };
+            }]);
 
-        
     }]);
 

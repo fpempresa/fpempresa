@@ -1,16 +1,18 @@
 "use strict";
 
-angular.module("common").run(['richDomain','metadataEntities', function (richDomain,metadataEntities) {
+angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        function getTipoDocumentoDescription() {
-            return metadataEntities.getMetadataProperty(this.$propertyPath+".tipoDocumento").getValueDescription(this.tipoDocumento);
-        };
-       
-        
+        richDomain.addEntityTransformer("Titulado", ['metadataEntities', function (metadataEntities) {
+                var Titulado = {
+                    getTipoDocumentoDescription: function () {
+                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".tipoDocumento").getValueDescription(this.tipoDocumento);
+                    }
+                };
 
-        richDomain.addEntityTransformer("Titulado",function (className, object) {
-            object['getTipoDocumentoDescription']=getTipoDocumentoDescription;
-        });
+                return function (object, propertyPath) {
+                    object.$propertyPath=propertyPath;                    
+                    angular.extend(object, Titulado);
+                };
+            }]);
 
-        
     }]);

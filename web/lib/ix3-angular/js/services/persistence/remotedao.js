@@ -4,13 +4,14 @@
     /**
      * Esta es la clase RemoteDAO verdadera que genera el RemoteDAOFactory
      * @param {String} entityName Nombre de la entidad 
-     * @param {String} baseUrl La url en la que se encuentran los servicios.
+     * @param {String} ix3Configuration Configuracion de ix3 para obtener la URL base de API REST
      * @param {Http} $http Servicio de Http de AngularJS
      * @param {Q} $q Servicio de promesas de AngularJS
      */
-    function RemoteDAO(entityName, baseUrl, $http, $q) {
+    RemoteDAO.$inject = ['entityName', 'ix3Configuration', '$http', '$q'];
+    function RemoteDAO(entityName, ix3Configuration, $http, $q) {
         this.entityName = entityName;
-        this.baseUrl = baseUrl;
+        this.baseUrl = ix3Configuration.server.api;
         this.$http = $http;
         this.$q = $q;
 
@@ -288,41 +289,54 @@
 
     }
 
-    RemoteDAOFactoryProvider.$inject = [];
-    function RemoteDAOFactoryProvider() {
+
+    RemoteDAOFactory.$inject = ['$injector', 'extendRemoteDAO'];
+    function RemoteDAOFactory($injector, extendRemoteDAO) {
 
         var remoteDAOs = {
         };
 
+        this.getRemoteDAO = function (entityName) {
+            if (!remoteDAOs[entityName]) {
+                var locals = {
+                    entityName: entityName
+                };
+                remoteDAOs[entityName] = $injector.instantiate(RemoteDAO,locals);
+
+                if (extendRemoteDAO[entityName]) {
+                    var locals = {
+                        remoteDAO: remoteDAOs[entityName]
+                    };
+                    for(var i=0;i<extendRemoteDAO[entityName].length;i++) {
+                        $injector.invoke(extendRemoteDAO[entityName][i], undefined, locals);
+                    }
+                }
+
+            }
+
+
+            return remoteDAOs[entityName];
+        };
+    }
+
+    RemoteDAOFactoryProvider.$inject = [];
+    function RemoteDAOFactoryProvider() {
         var extendRemoteDAO = {
         };
 
         this.addExtendRemoteDAO = function (entityName, fn) {
-            extendRemoteDAO[entityName] = fn;
+            if (!extendRemoteDAO[entityName]) {
+                extendRemoteDAO[entityName]=[];
+            }
+            extendRemoteDAO[entityName].push(fn);
         };
 
-        this.$get = ['ix3Configuration', '$http', '$q', '$injector',function (ix3Configuration, $http, $q, $injector) {
-
-            return {
-                getRemoteDAO: function (entityName) {
-                    if (!remoteDAOs[entityName]) {
-                        remoteDAOs[entityName] = new RemoteDAO(entityName, ix3Configuration.server.api, $http, $q);
-
-                        if (extendRemoteDAO[entityName]) {
-                            var locals = {
-                                remoteDAO: remoteDAOs[entityName]
-                            };
-
-                            $injector.invoke(extendRemoteDAO[entityName], extendRemoteDAO[entityName], locals);
-                        }
-
-                    }
-
-
-                    return remoteDAOs[entityName];
-                }
-            };
-        }];
+        this.$get = ['$injector', function ($injector) {
+                var locals = {
+                    extendRemoteDAO: extendRemoteDAO
+                };
+                return $injector.instantiate(RemoteDAOFactory, locals);
+            }];
     }
 
     angular.module("es.logongas.ix3").provider("remoteDAOFactory", RemoteDAOFactoryProvider);

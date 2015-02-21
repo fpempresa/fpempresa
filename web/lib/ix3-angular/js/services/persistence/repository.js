@@ -76,7 +76,12 @@
             var deferred = this.$q.defer();
 
             this.remoteDAO.search(filter, order, expand, pageNumber, pageSize).then(function (data) {
-                richDomain.extend(data);
+                //OJO:!!!!!!Hay que comprobar si lo que retornamos no es un objeto "Page" pq en ese caso se enriquece solo su contenido!!!!!!
+                if ((typeof(pageNumber)!=="undefined") && (typeof(pageSize)!=="undefined") && (typeof(data.content)!=="undefined")) {
+                    richDomain.extend(data.content);
+                } else {
+                    richDomain.extend(data);
+                }
                 deferred.resolve(data);
             }, function (data) {
                 richDomain.extend(data);
@@ -128,8 +133,8 @@
             if (!repositories[entityName]) {
                 var locals = {
                     entityName: entityName
-                }
-                repositories[entityName] = $injector.instantiate(Repository, locals)
+                };
+                repositories[entityName] = $injector.instantiate(Repository, locals);
 
                 if (extendRepository[entityName]) {
                     var locals = {
@@ -144,7 +149,7 @@
             }
 
             return repositories[entityName];
-        }
+        };
     }
 
 

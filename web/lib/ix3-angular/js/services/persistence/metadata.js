@@ -74,7 +74,13 @@
             var entityName = arrPropertyPath[0];
             var propertyName = arrPropertyPath.slice(1, arrPropertyPath.length).join(".");
             
-            return getMetadata(entityName).getMetadataProperty(propertyName);
+            var metadata=getMetadata(entityName);
+            
+            if (!metadata) {
+                throw new Error("No existe la entidad para el propertyPath:"+propertyPath);
+            }
+            
+            return metadata.getMetadataProperty(propertyName);
         }
 
 

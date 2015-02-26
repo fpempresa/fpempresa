@@ -300,8 +300,8 @@ fieldset[disabled] .form__button--default.active {
 }
 .form__button--primary {
   color: #ffffff;
-  background-color: #f0ad4e;
-  border-color: #eea236;
+  background-color: #3ec03e;
+  border-color: #38ad38;
 }
 .form__button--primary:hover,
 .form__button--primary:focus,
@@ -309,8 +309,8 @@ fieldset[disabled] .form__button--default.active {
 .form__button--primary.active,
 .open .dropdown-toggle.form__button--primary {
   color: #ffffff;
-  background-color: #ed9c28;
-  border-color: #d58512;
+  background-color: #34a134;
+  border-color: #297e29;
 }
 .form__button--primary:active,
 .form__button--primary.active,
@@ -332,11 +332,11 @@ fieldset[disabled] .form__button--primary:active,
 .form__button--primary.disabled.active,
 .form__button--primary[disabled].active,
 fieldset[disabled] .form__button--primary.active {
-  background-color: #f0ad4e;
-  border-color: #eea236;
+  background-color: #3ec03e;
+  border-color: #38ad38;
 }
 .form__button--primary .badge {
-  color: #f0ad4e;
+  color: #3ec03e;
   background-color: #ffffff;
 }
 .form__button--danger {

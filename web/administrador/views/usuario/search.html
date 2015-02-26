@@ -2,6 +2,24 @@
     <div class="col-sm-12 form__container" >
         <div>
             <legend class="form__title">Usuarios</legend>
+            <div class="row">
+                <div class="col-xs-4"> 
+                    <input ng-model="filter.nombre__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
+                </div>
+                <div class="col-xs-4"> 
+                    <input ng-model="filter.ape1__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="1º Apellido"  > 
+                </div>
+                <div class="col-xs-4"> 
+                    <input ng-model="filter.ape2__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="2º Apellido"  > 
+                </div>                
+            </div>          
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>            
             <ix3-business-messages></ix3-business-messages>
             <table class="table table-bordered">
                 <thead>                        

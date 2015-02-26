@@ -2,6 +2,21 @@
     <div class="col-sm-12 form__container" >
         <div>
             <legend class="form__title">Empresas</legend>
+            <div class="row">
+                <div class="col-xs-8"> 
+                    <input ng-model="filter.nombreComercial__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre comercial"  > 
+                </div>
+                <div class="col-xs-4"> 
+                    <input ng-model="filter.cif" type="text" class="form-control" id="nombre" name="nombre" placeholder="CIF"  > 
+                </div>             
+            </div>          
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>             
             <ix3-business-messages></ix3-business-messages>
             <table class="table table-bordered">
                 <thead>                        

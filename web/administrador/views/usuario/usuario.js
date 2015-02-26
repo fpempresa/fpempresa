@@ -8,8 +8,20 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 
 app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);
-        $scope.page.pageSize = 10;
-        $scope.orderby = [{fieldName: 'nombre', orderDirection: 'ASC'}, {fieldName: 'ape1', orderDirection: 'ASC'}, {fieldName: 'ape2', orderDirection: 'ASC'}];
+        $scope.page.pageSize = 20;
+        $scope.orderby = [
+            {fieldName: 'nombre', orderDirection: 'ASC'}, 
+            {fieldName: 'ape1', orderDirection: 'ASC'}, 
+            {fieldName: 'ape2', orderDirection: 'ASC'}
+        ];
+        
+        $scope.filter={
+            nombre__LIKE__:null,
+            ape1__LIKE__:null,
+            ape2__LIKE__:null,
+            email__LIKE__:null
+        };
+        
         $scope.search();
     }]);
 

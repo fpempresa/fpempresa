@@ -8,8 +8,14 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
 
 app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);      
-        $scope.page.pageSize=10;
+        $scope.page.pageSize=20;
         
+        $scope.orderby = [
+            {
+                fieldName: 'nombreComercial', 
+                orderDirection: 'ASC'
+            }
+        ];
         
         $scope.search();
     }]);

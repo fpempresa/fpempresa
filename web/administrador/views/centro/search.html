@@ -2,6 +2,19 @@
     <div class="col-sm-12 form__container" >
         <div>
             <legend class="form__title">Centros</legend>
+
+            <div class="row">
+                <div class="col-xs-12"> 
+                    <input ng-model="filter.nombre__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del centro"  > 
+                </div>  
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>
             <ix3-business-messages></ix3-business-messages>
             <table class="table table-bordered">
                 <thead>                        
@@ -26,13 +39,13 @@
                     </tr>
                 </tbody>
             </table> 
-            
+
             <div class="row">
                 <div class="col-sm-12">
                     <ix3-pagination></ix3-pagination>
                 </div>
             </div>
-            
+
             <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nuevo Centro</button>
         </div>
     </div>

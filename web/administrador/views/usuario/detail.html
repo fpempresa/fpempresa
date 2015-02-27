@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label for="tipoUsuario" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.tipoUsuario" id="tipoUsuario" name="tipoUsuario" class="form-control" ix3-options=" omit:'key===\'DESARROLLADOR\''" ix3-validation >
+                                    <select ng-model="model.tipoUsuario" id="tipoUsuario" name="tipoUsuario" class="form-control" ix3-options=" omit:'key===\'DESARROLLADOR\'' | omit:'key===\'TITULADO\'' | omit:'key===\'EMPRESA\''" ix3-validation >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>

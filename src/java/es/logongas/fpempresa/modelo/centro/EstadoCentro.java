@@ -23,9 +23,9 @@ package es.logongas.fpempresa.modelo.centro;
  * @author Lorenzo
  */
 public enum EstadoCentro {
-    PERTENECE_A_FPEMPRESA("Pertenece a FPempresa"),
-    BAJA_EN_FPEMPRESA("Baja en FPempresa"),
-    NO_PERTENCE_A_FPEMPRESA("NO pertenece a FPempresa");
+    PERTENECE_A_FPEMPRESA("Pertenece a la asociación"),
+    BAJA_EN_FPEMPRESA("Baja en la asociación"),
+    NO_PERTENCE_A_FPEMPRESA("NO pertenece a la asociación");
     
     String text;
 

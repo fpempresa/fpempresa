@@ -24,7 +24,7 @@ package es.logongas.fpempresa.modelo.comun.usuario;
  */
 public enum EstadoUsuario {
     ACEPTADO("Aceptado"),
-    PENDIENTE_ACEPTACION("Pendiente de aceptación"),
+    PENDIENTE_ACEPTACION("Pendiente"),
     RECHAZADO("Rechazado");
     
     String text;

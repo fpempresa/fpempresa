@@ -18,7 +18,17 @@
 
 
         this.create = function (expand, parent) {
-            return this.remoteDAO.create(expand, parent);
+            var deferred = this.$q.defer();
+
+            this.remoteDAO.create(expand, parent).then(function (data) {
+                richDomain.extend(data);
+                deferred.resolve(data);
+            }, function (data) {
+                richDomain.extend(data);
+                deferred.reject(data);
+            });
+
+            return deferred.promise;            
         };
         this.get = function (id, expand) {
             var deferred = this.$q.defer();

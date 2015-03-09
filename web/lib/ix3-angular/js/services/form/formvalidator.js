@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('es.logongas.ix3').provider("formValidator", [function() {
+angular.module('es.logongas.ix3').provider("formValidator", [function () {
         function FormValidatorProvider() {
             this.errorMensajePatterns = {
                 required: "No puede estar vacio.",
@@ -16,12 +16,12 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
             this.addErrorMensajePattern = function (error, messajePattern) {
                 this.errorMensajePatterns[error] = messajePattern;
             };
-            this.$get = ['$interpolate', 'directiveUtil', function ($interpolate, directiveUtil) {
-                    return new FormValidator($interpolate, directiveUtil, this.errorMensajePatterns);
+            this.$get = ['$interpolate', '$injector', 'directiveUtil', function ($interpolate, $injector, directiveUtil) {
+                    return new FormValidator($interpolate, $injector, directiveUtil, this.errorMensajePatterns);
                 }];
         }
 
-        function FormValidator($interpolate, directiveUtil, errorMensajePatterns) {
+        function FormValidator($interpolate, $injector, directiveUtil, errorMensajePatterns) {
             var that = this;
             this.errorMensajePatterns = errorMensajePatterns;
 
@@ -40,7 +40,7 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
                     var realInputElement = inputElement[0];
                     for (var i = 0; i < realInputElement.attributes.length; i++) {
                         var normalizedAttributeName = directiveUtil.normalizeName(realInputElement.attributes[i].nodeName);
-                        attributes[normalizedAttributeName] = directiveUtil.getAttributeValueFromNormalizedName(realInputElement,normalizedAttributeName);
+                        attributes[normalizedAttributeName] = directiveUtil.getAttributeValueFromNormalizedName(realInputElement, normalizedAttributeName);
                     }
                     message = $interpolate(messagePattern)(attributes);
                 } else {
@@ -122,9 +122,9 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
                         var customValidation = validators[i];
                         if (customValidation.rule() === false) {
                             businessMessages.push({
-                                propertyName: customValidation.propertyName,
-                                label: customValidation.label,
-                                message: customValidation.message
+                                propertyName: getTextFromInterpolateStringOrFunction(customValidation.propertyName, undefined),
+                                label: getTextFromInterpolateStringOrFunction(customValidation.label, undefined),
+                                message: getTextFromInterpolateStringOrFunction(customValidation.message, undefined)
                             });
                         }
                     }
@@ -135,7 +135,28 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
                 return businessMessages;
             };
 
+            function getTextFromInterpolateStringOrFunction(stringOrFunction, thisObject) {
+                var text;
+                if (stringOrFunction) {
+                    if ((typeof (stringOrFunction) === 'function') || (Array.isArray(stringOrFunction))) {
+                        text = $injector.invoke(stringOrFunction, thisObject);
+                    } else if (typeof (stringOrFunction) === 'string') {
+                        text = $interpolate(stringOrFunction)(thisObject);
+                    } else {
+                        throw new Error("El argumento sfn debe ser una función o un String pero es de tipo:" + typeof (stringOrFunction) + " valor:" + stringOrFunction);
+                    }
+                } else {
+                    //Si no hay nada , no hay texto
+                    text = "";
+                }
+
+                return text;
+            }
+
+
         }
+
+
 
         return new FormValidatorProvider();
 

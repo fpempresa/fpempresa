@@ -57,7 +57,7 @@
             scope.doInsert = function () {
                 var defered = $q.defer();
 
-                scope.businessMessages = formValidator.validate(scope.mainForm, scope.customValidations);
+                scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
                     scope.repository.insert(scope.model, scope.expand).then(function (data) {
                         scope.model = data;
@@ -77,7 +77,7 @@
 
             scope.doUpdate = function () {
                 var defered = $q.defer();
-                scope.businessMessages = formValidator.validate(scope.mainForm, scope.customValidations);
+                scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
                     scope.repository.update(scope.id, scope.model, scope.expand).then(function (data) {
                         scope.model = data;

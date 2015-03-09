@@ -16,14 +16,14 @@ app.controller('CreateAccountInitController', ['$scope', '$location','$statePara
 
         $scope.next = function () {
 
-            $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.customValidations);
+            $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
                 $location.path("/createaccount/register/" + $scope.model.tipoUsuario);
             }
 
         };
 
-        $scope.customValidations = [
+        $scope.$validators = [
             {
                 message: 'El registro de Centros Educativos no está habilitado',
                 rule: function () {

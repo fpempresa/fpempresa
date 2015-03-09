@@ -93,7 +93,7 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
                 }
             }
 
-            this.validate = function (angularForm, customValidations) {
+            this.validate = function (angularForm, validators) {
                 var businessMessages = [];
 
                 var formElement = $("form[name='" + angularForm.$name + "']");
@@ -117,9 +117,9 @@ angular.module('es.logongas.ix3').provider("formValidator", [function() {
 
                 //Ejecutamos las validaciones personalizadas pero solo si no hay mensajes "normales"
                 //Esto se hace pq normalmente las validaciones personalizadas necesitan de los campos requeridos
-                if ((businessMessages.length === 0) && (customValidations)) {
-                    for (var i = 0; i < customValidations.length; i++) {
-                        var customValidation = customValidations[i];
+                if ((businessMessages.length === 0) && (validators)) {
+                    for (var i = 0; i < validators.length; i++) {
+                        var customValidation = validators[i];
                         if (customValidation.rule() === false) {
                             businessMessages.push({
                                 propertyName: customValidation.propertyName,

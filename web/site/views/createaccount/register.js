@@ -6,7 +6,7 @@ app.controller('CreateAccountRegisterController', ['$scope', '$stateParams', '$l
         $scope.model.tipoUsuario = $stateParams.tipoUsuario;
 
         $scope.registrarse = function () {
-            $scope.businessMessages = formValidator.validate($scope.mainForm,$scope.customValidations);
+            $scope.businessMessages = formValidator.validate($scope.mainForm,$scope.$validators);
             if ($scope.businessMessages.length === 0) {
                 usuarioRepository.insert($scope.model).then(function () {
                     $location.path("/createaccount/end/" + $scope.model.tipoUsuario);
@@ -19,32 +19,5 @@ app.controller('CreateAccountRegisterController', ['$scope', '$stateParams', '$l
         $scope.volver = function () {
             $location.path("/createaccount/init/" + $scope.model.tipoUsuario);
         }
-
-        $scope.customValidations = [
-            {
-                propertyName: 'confirmPassword',
-                message: 'No es igual a la contraseña',
-                rule: function () {
-                    if ($scope.model.password === $scope.model.confirmPassword) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            },
-            {
-                label: "Condiciones y politicas",
-                message: 'Debe aceptar los terminos del servicio y la política de privacidad de FPempresa',
-                rule: function () {
-                    if ($scope.model.aceptarCondicionesPolitica === true) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        ];
-
-
 
     }]);

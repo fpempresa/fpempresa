@@ -15,7 +15,7 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                     },
                     $validators: [
                         {
-                            propertyName: 'Confirmar Contraseña',
+                            label: 'Confirmar Contraseña',
                             message: 'No es igual a la contraseña',
                             executeInActions: ['INSERT'],
                             rule: function () {

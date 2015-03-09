@@ -46,7 +46,11 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
 app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
-        $scope.domain.aceptarCondicionesPolitica=true;
+        $scope.preInsert=function() {
+            //Al insertar un usuario siempre debe aceptar las politicas
+            //Lo hacemos aqui pq al ser el administrador el que los crea suponemos que el usuario las ha aceptado
+            $scope.model.aceptarCondicionesPolitica=true;
+        };
 
 
         $scope.updateEstadoUsuario = function (estadoUsuario) {

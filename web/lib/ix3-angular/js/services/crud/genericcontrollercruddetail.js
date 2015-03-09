@@ -14,9 +14,32 @@
             angular.extend(scope, controllerParams);
             scope.repository = repositoryFactory.getRepository(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
+            scope.preCreate = function () {
+            };
+            scope.postCreate = function () {
+            };            
+            scope.preGet = function () {
+            };
+            scope.postGet = function () {
+            };
+            scope.preInsert = function () {
+            };
+            scope.postInsert = function () {
+            };
+            scope.preUpdate = function () {
+            };
+            scope.postUpdate = function () {
+            };            
+            scope.preDelete = function () {
+            };
+            scope.postDelete = function () {
+            };
+            
 
             scope.doGet = function () {
                 var defered = $q.defer();
+                
+                scope.preGet();
                 scope.repository.get(scope.id, scope.expand).then(function (data) {
                     if (data === null) {
                         //Si retornamos null, realmente lo transformamo en un objeto sin datos, pq sino fallan los select
@@ -25,6 +48,8 @@
                         scope.model = data;
                     }
                     scope.businessMessages = null;
+                    
+                    scope.postGet();
                     defered.resolve(data);
                 }, function (businessMessages) {
                     scope.businessMessages = businessMessages;
@@ -36,15 +61,17 @@
 
             scope.doCreate = function () {
                 var defered = $q.defer();
-
+                
                 var parent = {};
                 if ((scope.parentProperty) && (scope.parentId)) {
                     parent[scope.parentProperty] = scope.parentId;
                 }
-
+                scope.preCreate();
                 scope.repository.create(scope.expand, parent).then(function (data) {
                     scope.model = data;
                     scope.businessMessages = null;
+                    
+                    scope.postCreate();
                     defered.resolve(data);
                 }, function (businessMessages) {
                     scope.businessMessages = businessMessages;
@@ -57,6 +84,7 @@
             scope.doInsert = function () {
                 var defered = $q.defer();
 
+                scope.preInsert();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
                     scope.repository.insert(scope.model, scope.expand).then(function (data) {
@@ -64,6 +92,8 @@
                         scope.businessMessages = null;
                         scope.controllerAction = "EDIT";
                         scope.id = scope.model[scope.idName];
+                        
+                        scope.postInsert();
                         defered.resolve(data);
                     }, function (businessMessages) {
                         scope.businessMessages = businessMessages;
@@ -77,11 +107,15 @@
 
             scope.doUpdate = function () {
                 var defered = $q.defer();
+                
+                scope.preUpdate();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
                     scope.repository.update(scope.id, scope.model, scope.expand).then(function (data) {
                         scope.model = data;
                         scope.businessMessages = null;
+                        
+                        scope.postUpdate();
                         defered.resolve(data);
                     }, function (businessMessages) {
                         scope.businessMessages = businessMessages;
@@ -96,8 +130,12 @@
 
             scope.doDelete = function () {
                 var defered = $q.defer();
+                
+                scope.preDelete()
                 scope.repository.delete(scope.id).then(function (data) {
                     scope.businessMessages = null;
+                    
+                    scope.postDelete();
                     defered.resolve(data);
                 }, function (businessMessages) {
                     scope.businessMessages = businessMessages;

@@ -1,9 +1,10 @@
 "user strict";
 
-app.controller("LateralMenuController", ['$scope', '$state', function ($scope, $state) {
+app.controller("LateralMenuController", ['$scope', '$state','$location', function ($scope, $state,$location) {
         $scope.isItemSelected = function (option) {
             if (option) {
-                if ($state.current.name.indexOf(option) >= 0) {
+                var regExp=new RegExp(option);
+                if (regExp.test($location.url()) === true) {
                     return true;
                 } else {
                     return false;

@@ -5,7 +5,7 @@
             <ix3-business-messages></ix3-business-messages>
             <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend class="form__title">Usuario</legend>
+                    <legend class="form__title">Usuario de tipo "{{model.getTipoUsuarioDescription()}}"</legend>
 
 
                     <div class="row" >
@@ -64,19 +64,6 @@
                             </div> 
                         </div>  
                     </div>
-
-                    <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="tipoUsuario" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.tipoUsuario" id="tipoUsuario" name="tipoUsuario" class="form-control" ix3-options=" omit:'key===\'DESARROLLADOR\'' | omit:'key===\'TITULADO\'' | omit:'key===\'EMPRESA\''" ix3-validation >
-                                        <option value="">-- Elige Opcion --</option>
-                                    </select>
-                                </div>
-                            </div> 
-                        </div> 
-                    </div> 
 
                     <legend class="form__title" ng-show="model.tipoUsuario === 'CENTRO'">Centro al que pertenece</legend>
                     <div class="row" ng-show="model.tipoUsuario === 'CENTRO'" >

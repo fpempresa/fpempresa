@@ -6,7 +6,7 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         });
     }]);
 
-app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
+app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'metadataEntities', function ($scope, genericControllerCrudList, controllerParams, metadataEntities) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.orderby = [
@@ -19,8 +19,7 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
             nombre__LIKE__: null,
             ape1__LIKE__: null,
             ape2__LIKE__: null,
-            email__LIKE__: null,
-            tipoUsuario:['CENTRO','ADMINISTRADOR']
+            email__LIKE__: null
         };
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
@@ -31,12 +30,24 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
             });
         }
 
+
+        if ($scope.parentProperty === "tipoUsuario") {
+            $scope.tipoUsuarioDescription = "de tipo \"" + metadataEntities.getMetadataProperty("Usuario.tipoUsuario").getValueDescription($scope.parentId) + "\"";
+        } else {
+            $scope.tipoUsuarioDescription = "";
+        }
+
+
+
         $scope.search();
     }]);
 
 
 app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+
+        $scope.domain.aceptarCondicionesPolitica=true;
+
 
         $scope.updateEstadoUsuario = function (estadoUsuario) {
             $scope.doUpdate().then(function () {

@@ -8,19 +8,17 @@
      * @param {RichDomain} richDomain Añadir nuevos métodos a los objetos de negocio que se leen
      * @param {Q} $q Servicio de promesas de AngularJS
      */
-    Repository.$inyect = ['entityName', 'remoteDAOFactory', 'richDomain', '$q'];
-    function Repository(entityName, remoteDAOFactory, richDomain, $q) {
+    Repository.$inyect = ['entityName', 'remoteDAOFactory', 'richDomain', '$q', 'domainValidator'];
+    function Repository(entityName, remoteDAOFactory, richDomain, $q, domainValidator) {
         var that = this;
-        this.$q = $q;
         this.entityName = entityName;
         this.remoteDAO = remoteDAOFactory.getRemoteDAO(this.entityName);
-        this.richDomain = richDomain;
 
 
         this.create = function (expand, parent) {
-            var deferred = this.$q.defer();
+            var deferred = $q.defer();
 
-            this.remoteDAO.create(expand, parent).then(function (data) {
+            that.remoteDAO.create(expand, parent).then(function (data) {
                 richDomain.extend(data);
                 deferred.resolve(data);
             }, function (data) {
@@ -28,12 +26,12 @@
                 deferred.reject(data);
             });
 
-            return deferred.promise;            
+            return deferred.promise;
         };
         this.get = function (id, expand) {
-            var deferred = this.$q.defer();
+            var deferred = $q.defer();
 
-            this.remoteDAO.get(id, expand).then(function (data) {
+            that.remoteDAO.get(id, expand).then(function (data) {
                 richDomain.extend(data);
                 deferred.resolve(data);
             }, function (data) {
@@ -44,35 +42,40 @@
             return deferred.promise;
         };
         this.insert = function (entity, expand) {
-            var deferred = this.$q.defer();
+            var deferred = $q.defer();
 
-            this.remoteDAO.insert(entity, expand).then(function (data) {
-                richDomain.extend(data);
-                deferred.resolve(data);
-            }, function (data) {
-                richDomain.extend(data);
-                deferred.reject(data);
+            domainValidator.validate(entity, "INSERT").then(function () {
+                that.remoteDAO.insert(entity, expand).then(function (data) {
+                    richDomain.extend(data);
+                    deferred.resolve(data);
+                }, function (data) {
+                    richDomain.extend(data);
+                    deferred.reject(data);
+                });
+            }, function (businessMessages) {
+                deferred.reject(businessMessages);
             });
 
             return deferred.promise;
         };
         this.update = function (id, entity, expand) {
-            var deferred = this.$q.defer();
-
-            this.remoteDAO.update(id, entity, expand).then(function (data) {
-                richDomain.extend(data);
-                deferred.resolve(data);
-            }, function (data) {
-                richDomain.extend(data);
-                deferred.reject(data);
+            var deferred = $q.defer();
+            domainValidator.validate(entity, "UPDATE").then(function () {
+                that.remoteDAO.update(id, entity, expand).then(function (data) {
+                    richDomain.extend(data);
+                    deferred.resolve(data);
+                }, function (data) {
+                    richDomain.extend(data);
+                    deferred.reject(data);
+                });
+            }, function (businessMessages) {
+                deferred.reject(businessMessages);
             });
-
             return deferred.promise;
         };
         this.delete = function (id) {
-            var deferred = this.$q.defer();
-
-            this.remoteDAO.delete(id).then(function (data) {
+            var deferred = $q.defer();
+            that.remoteDAO.delete(id).then(function (data) {
                 richDomain.extend(data);
                 deferred.resolve(data);
             }, function (data) {
@@ -83,11 +86,11 @@
             return deferred.promise;
         };
         this.search = function (filter, order, expand, pageNumber, pageSize) {
-            var deferred = this.$q.defer();
+            var deferred = $q.defer();
 
-            this.remoteDAO.search(filter, order, expand, pageNumber, pageSize).then(function (data) {
+            that.remoteDAO.search(filter, order, expand, pageNumber, pageSize).then(function (data) {
                 //OJO:!!!!!!Hay que comprobar si lo que retornamos no es un objeto "Page" pq en ese caso se enriquece solo su contenido!!!!!!
-                if ((typeof(pageNumber)!=="undefined") && (typeof(pageSize)!=="undefined") && (typeof(data.content)!=="undefined")) {
+                if ((typeof (pageNumber) !== "undefined") && (typeof (pageSize) !== "undefined") && (typeof (data.content) !== "undefined")) {
                     richDomain.extend(data.content);
                 } else {
                     richDomain.extend(data);
@@ -101,9 +104,9 @@
             return deferred.promise;
         };
         this.getChild = function (id, child, expand) {
-            var deferred = this.$q.defer();
+            var deferred = $q.defer();
 
-            this.remoteDAO.getChild(id, child, expand).then(function (data) {
+            that.remoteDAO.getChild(id, child, expand).then(function (data) {
                 richDomain.extend(data);
                 deferred.resolve(data);
             }, function (data) {
@@ -115,9 +118,9 @@
         };
 
         this.metadata = function (expand) {
-            var deferred = this.$q.defer();
+            var deferred = $q.defer();
 
-            this.remoteDAO.metadata(expand).then(function (data) {
+            that.remoteDAO.metadata(expand).then(function (data) {
                 richDomain.extend(data);
                 deferred.resolve(data);
             }, function (data) {
@@ -151,7 +154,7 @@
                         repository: repositories[entityName]
                     };
 
-                    for(var i=0;i<extendRepository[entityName].length;i++) {
+                    for (var i = 0; i < extendRepository[entityName].length; i++) {
                         $injector.invoke(extendRepository[entityName][i], undefined, locals);
                     }
                 }
@@ -171,7 +174,7 @@
 
         this.addExtendRepository = function (entityName, fn) {
             if (!extendRepository[entityName]) {
-                extendRepository[entityName]=[];
+                extendRepository[entityName] = [];
             }
             extendRepository[entityName].push(fn);
         };

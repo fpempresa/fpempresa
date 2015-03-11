@@ -24,28 +24,20 @@
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th style="width:   30%;text-align: center">Nombre</th>
+                        <th style="text-align: center">Nombre</th>
                         <th style="width:   15%;text-align: center">Correo</th>
-                        <th style="width:   15%;text-align: center">Tipo</th>
-                        <th style="width:   30%;text-align: center" title="Para usuarios de Centro y Empresa indica si han sido aceptado es su empresa o centro" >Estado</th>
+                        <th ng-if="(parentProperty==='tipoUsuario') && (parentId === 'CENTRO')" style="text-align: center">Centro</th>
+                        <th ng-if="(parentProperty==='tipoUsuario') && (parentId === 'EMPRESA')" style="text-align: center">Empresa</th>
                         <th style="width:   10%;text-align: center">Validado EMail</th>
-                        <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
+                        <th style="max-width: 120px; width: 120px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="usuario in models" class="data-table__row">
                         <td >{{usuario.getNombreCompleto()}}</td>
                         <td >{{usuario.email}}</td>
-                        <td  class="text-center">{{usuario.getTipoUsuarioDescription()}}</td>
-                        <td  class="text-center">
-                            
-                            <div ng-show="usuario.tipoUsuario === 'CENTRO' || usuario.tipoUsuario === 'EMPRESA'">
-                                {{usuario.getEstadoUsuarioDescription()}}
-                                <button href  ng-hide="usuario.estadoUsuario === 'ACEPTADO'"  class="btn btn-xs form__button form__button--default" ng-click="updateEstadoUsuario(usuario.idIdentity, 'ACEPTADO')" >Aceptar</button>                             
-                                <button href  ng-hide="usuario.estadoUsuario === 'RECHAZADO'"  class="btn btn-xs form__button form__button--default" ng-click="updateEstadoUsuario(usuario.idIdentity, 'RECHAZADO')" >Rechazar</button>                               
-                                <button href  ng-hide="usuario.estadoUsuario === 'PENDIENTE_ACEPTACION'" class="btn btn-xs form__button form__button--default"  ng-click="updateEstadoUsuario(usuario.idIdentity, 'PENDIENTE_ACEPTACION')" >Pendiente</button>
-                            </div>                            
-                        </td>                        
+                        <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.centro.nombre}}</td>                        
+                        <td  class="text-center" ng-if="usuario.tipoUsuario === 'EMPRESA'">{{usuario.empresa.nombreComercial}}</td>                        
                         <td  ng-switch    on="usuario.validadoEmail" class="text-center"><i ng-switch-default class="fa fa-square-o"></i><i ng-switch-when="true" class="fa fa-check-square-o"></i></td>
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(usuario.idIdentity)">Borrar</button>

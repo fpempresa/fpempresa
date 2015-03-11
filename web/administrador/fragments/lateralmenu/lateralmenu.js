@@ -1,9 +1,9 @@
 "user strict";
 
-app.controller("LateralMenuController", ['$scope', '$state','$location', function ($scope, $state,$location) {
+app.controller("LateralMenuController", ['$scope', '$state', '$location', 'dialog', function ($scope, $state, $location, dialog) {
         $scope.isItemSelected = function (option) {
             if (option) {
-                var regExp=new RegExp(option);
+                var regExp = new RegExp(option);
                 if (regExp.test($location.url()) === true) {
                     return true;
                 } else {
@@ -12,6 +12,10 @@ app.controller("LateralMenuController", ['$scope', '$state','$location', functio
             } else {
                 return false;
             }
+        };
+
+        $scope.cambiarContrasenya = function () {
+            dialog.create($scope.getContextPath() + "/common/views/util/cambiarcontrasenya.html", $scope.user);
         };
 
     }]);

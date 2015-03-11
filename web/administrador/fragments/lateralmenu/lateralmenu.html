@@ -27,16 +27,16 @@
                 <br>
                 <ul class="lateral-menu__menu">
                     <li class="lateral-menu__header">Usuarios</li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/ADMINISTRADOR')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/ADMINISTRADOR')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/ADMINISTRADOR">Administradores</a></li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/CENTRO')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/CENTRO')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/CENTRO">Centros</a></li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/EMPRESA')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/EMPRESA')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/EMPRESA">Empresas</a></li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/TITULADO')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/TITULADO')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/TITULADO">Titulados</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/ADMINISTRADOR')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/ADMINISTRADOR')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/ADMINISTRADOR">Administradores</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/CENTRO')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/CENTRO')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/CENTRO">Centros</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/EMPRESA')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/EMPRESA')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/EMPRESA">Empresas</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/TITULADO')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/TITULADO')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/TITULADO">Titulados</a></li>
                 </ul>
                 <br>
                 <ul class="lateral-menu__menu">
                     <li class="lateral-menu__header">Mi cuenta</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href="#">Configuraci&oacute;n</a></li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href="#">Cambiar contrase&ntilde;a</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar contrase&ntilde;a</a></li>
                     
                 </ul>
             </div>

@@ -6,7 +6,7 @@
     function GenericControllerCrudList(repositoryFactory, $location, metadataEntities) {
         this.extendScope = function(scope, controllerParams) {
             scope.models = {};
-            scope.filter = {};
+            scope.filters = [];
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.page = {};
             scope.businessMessages = null;
@@ -42,11 +42,17 @@
 
 
             scope.search = function() {
+                var filters=scope.filters; 
+
                 if (scope.parentProperty && scope.parentId) {
-                    scope.filter[scope.parentProperty] = scope.parentId;
+                    //Tenemos que hacer una copia pq sino cada vez que se busca se añadiría el filtro del "padre".
+                    filters=angular.copy(scope.filters);
+                    var parentFilter={};
+                    parentFilter[scope.parentProperty] = scope.parentId;
+                    filters.push(parentFilter);
                 }
 
-                scope.repository.search(scope.filter, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
+                scope.repository.search(filters, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
                     } else {

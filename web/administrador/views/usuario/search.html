@@ -4,13 +4,13 @@
             <legend class="form__title">Usuarios {{tipoUsuarioDescription}}</legend>
             <div class="row">
                 <div class="col-xs-4"> 
-                    <input ng-model="filter.nombre__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
+                    <input ng-model="filters[0].nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
                 </div>
                 <div class="col-xs-4"> 
-                    <input ng-model="filter.ape1__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="1º Apellido"  > 
+                    <input ng-model="filters[0].ape1" type="text" class="form-control" id="nombre" name="nombre" placeholder="1º Apellido"  > 
                 </div>
                 <div class="col-xs-4"> 
-                    <input ng-model="filter.ape2__LIKE__" type="text" class="form-control" id="nombre" name="nombre" placeholder="2º Apellido"  > 
+                    <input ng-model="filters[0].ape2" type="text" class="form-control" id="nombre" name="nombre" placeholder="2º Apellido"  > 
                 </div>                
             </div>          
             <br>

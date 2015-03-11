@@ -173,12 +173,32 @@
 
             return deferred.promise;
         };
-        this.search = function (filter, order, expand, pageNumber, pageSize) {
+        this.search = function (filters, order, expand, pageNumber, pageSize) {
             var deferred = this.$q.defer();
 
             var params = {};
-            if (filter) {
-                angular.extend(params, filter);
+            if (filters) {
+                for (var i = 0; i < filters.length; i++) {
+                    var filter = filters[i];
+                    for (var key in filter) {
+                        if (!filter.hasOwnProperty(key)) {
+                            continue;
+                        }
+
+
+                        if (key.charAt(0) !== "$") {
+                            var paramName = key;
+                            var paramValue = filter[key];
+                            if ((filter.$operator) && (filter.$operator !== "")) {
+                                paramName = paramName + "__" + filter.$operator + "__";
+                            }
+                            
+                            params[paramName]=paramValue;
+                        }
+
+                    }
+                }
+
             }
             if (order) {
                 params.$orderby = "";
@@ -301,13 +321,13 @@
                 var locals = {
                     entityName: entityName
                 };
-                remoteDAOs[entityName] = $injector.instantiate(RemoteDAO,locals);
+                remoteDAOs[entityName] = $injector.instantiate(RemoteDAO, locals);
 
                 if (extendRemoteDAO[entityName]) {
                     var locals = {
                         remoteDAO: remoteDAOs[entityName]
                     };
-                    for(var i=0;i<extendRemoteDAO[entityName].length;i++) {
+                    for (var i = 0; i < extendRemoteDAO[entityName].length; i++) {
                         $injector.invoke(extendRemoteDAO[entityName][i], undefined, locals);
                     }
                 }
@@ -326,7 +346,7 @@
 
         this.addExtendRemoteDAO = function (entityName, fn) {
             if (!extendRemoteDAO[entityName]) {
-                extendRemoteDAO[entityName]=[];
+                extendRemoteDAO[entityName] = [];
             }
             extendRemoteDAO[entityName].push(fn);
         };

@@ -230,9 +230,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                 var promise = $q.when([]);
                 return promise;
             } else {
-                var filter = {};
+                var filters = [];
                 var expand = "";
                 for (var dependPropertyName in depend) {
+                    var filter={};
+                    
                     if (!depend.hasOwnProperty(dependPropertyName)) {
                         continue;
                     }
@@ -263,10 +265,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                         expand = expand + "," + dependPropertyName;
                     }
 
+                    filters.push(filter);
                 }
 
                 var repository = repositoryFactory.getRepository(metadataProperty.className);
-                var promise = repository.search(filter, undefined, expand);
+                var promise = repository.search(filters, undefined, expand);
 
                 return promise;
             }

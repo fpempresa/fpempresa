@@ -15,12 +15,12 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
             {fieldName: 'ape2', orderDirection: 'ASC'}
         ];
 
-        $scope.filter = {
-            nombre__LIKE__: null,
-            ape1__LIKE__: null,
-            ape2__LIKE__: null,
-            email__LIKE__: null
-        };
+        $scope.filters = [
+            {
+                $operator: "LLIKER"
+            }
+        ]
+
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
             $scope.repository.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {
@@ -43,18 +43,18 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
     }]);
 
 
-app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','dialog', function ($scope, genericControllerCrudDetail, controllerParams,dialog) {
+app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, dialog) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
-        $scope.postCreate=function() {
+        $scope.postCreate = function () {
             //Cuando los crea el administrador siempre están aceptados por defecto
-            $scope.model.estadoUsuario="ACEPTADO";          
+            $scope.model.estadoUsuario = "ACEPTADO";
         }
 
-        $scope.preInsert=function() {
+        $scope.preInsert = function () {
             //Al insertar un usuario siempre debe aceptar las politicas
             //Lo hacemos aqui pq al ser el administrador el que los crea suponemos que el usuario las ha aceptado
-            $scope.model.aceptarCondicionesPolitica=true; 
+            $scope.model.aceptarCondicionesPolitica = true;
         };
 
 
@@ -70,9 +70,9 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
 
             });
         };
-        
-        $scope.cambiarContrasenya=function() {
-            dialog.create($scope.getContextPath()+"/common/views/util/cambiarcontrasenya.html",$scope.model);
+
+        $scope.cambiarContrasenya = function () {
+            dialog.create($scope.getContextPath() + "/common/views/util/cambiarcontrasenya.html", $scope.model);
         };
 
     }]);

@@ -43,13 +43,18 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
     }]);
 
 
-app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','dialog', function ($scope, genericControllerCrudDetail, controllerParams,dialog) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+
+        $scope.postCreate=function() {
+            //Cuando los crea el administrador siempre están aceptados por defecto
+            $scope.model.estadoUsuario="ACEPTADO";          
+        }
 
         $scope.preInsert=function() {
             //Al insertar un usuario siempre debe aceptar las politicas
             //Lo hacemos aqui pq al ser el administrador el que los crea suponemos que el usuario las ha aceptado
-            $scope.model.aceptarCondicionesPolitica=true;
+            $scope.model.aceptarCondicionesPolitica=true; 
         };
 
 
@@ -64,7 +69,11 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
                 });
 
             });
-        }
+        };
+        
+        $scope.cambiarContrasenya=function() {
+            dialog.create($scope.getContextPath()+"/common/views/util/cambiarcontrasenya.html",$scope.model);
+        };
 
     }]);
 

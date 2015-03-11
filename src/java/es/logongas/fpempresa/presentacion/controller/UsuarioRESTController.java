@@ -74,7 +74,6 @@ public class UsuarioRESTController  extends AbstractRESTController {
                 }
                 UsuarioCRUDService usuarioCrudService=(UsuarioCRUDService)crudServiceFactory.getService(metaData.getType());
                
-                
                 Usuario usuario=usuarioCrudService.read(idUsuario);
                 usuario.setEstadoUsuario(estadoUsuario);
                 usuarioCrudService.update(usuario);
@@ -85,4 +84,69 @@ public class UsuarioRESTController  extends AbstractRESTController {
         });
 
     }
+    
+    
+    @RequestMapping(value = {"/Usuario/{idUsuario}/updatePassword"}, method = RequestMethod.PATCH,produces = "application/json")
+    public void updatePassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,final @PathVariable("idUsuario") int idUsuario,final @RequestBody String jsonIn) {
+
+        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+
+            @Override
+            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+                MetaData metaData = metaDataFactory.getMetaData("Usuario");
+                if (metaData == null) {
+                    throw new BusinessException(new BusinessMessage(null, "No existe la entidad 'Usuario'"));
+                }
+                UsuarioCRUDService usuarioCrudService=(UsuarioCRUDService)crudServiceFactory.getService(metaData.getType());
+                JsonReader jsonReader = jsonFactory.getJsonReader(ChangePassword.class);
+                ChangePassword changePassword = (ChangePassword) jsonReader.fromJson(jsonIn);
+                Usuario usuario=usuarioCrudService.read(idUsuario);
+                usuarioCrudService.updatePassword(usuario, changePassword.getCurrentPassword(), changePassword.getNewPassword());
+                
+                return null;
+
+            }
+        });
+
+    }    
+    
+    
+    private static class ChangePassword {
+        private String currentPassword;
+        private String newPassword;
+
+        public ChangePassword() {
+        }
+
+        /**
+         * @return the currentPassword
+         */
+        public String getCurrentPassword() {
+            return currentPassword;
+        }
+
+        /**
+         * @param currentPassword the currentPassword to set
+         */
+        public void setCurrentPassword(String currentPassword) {
+            this.currentPassword = currentPassword;
+        }
+
+        /**
+         * @return the newPassword
+         */
+        public String getNewPassword() {
+            return newPassword;
+        }
+
+        /**
+         * @param newPassword the newPassword to set
+         */
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+        
+        
+    }
+    
 }

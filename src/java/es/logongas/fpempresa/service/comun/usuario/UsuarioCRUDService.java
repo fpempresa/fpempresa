@@ -18,6 +18,7 @@
 package es.logongas.fpempresa.service.comun.usuario;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.service.CRUDService;
 
 /**
@@ -25,6 +26,7 @@ import es.logongas.ix3.service.CRUDService;
  * @author Lorenzo Gonzalez
  */
 public interface UsuarioCRUDService extends CRUDService<Usuario,Integer> {
-    void updatePassword(Usuario usuario,String plainPassword);
-    boolean checkPassword(Usuario usuario,String plainPassword);
+    void updatePassword(Usuario usuario,String currentPassword,String newPassword) throws BusinessException ;
+    boolean checkPassword(Usuario usuario,String password) throws BusinessException ;
+    
 }

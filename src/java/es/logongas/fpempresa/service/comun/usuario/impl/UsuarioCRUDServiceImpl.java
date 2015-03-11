@@ -23,6 +23,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -36,50 +37,117 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         return (UsuarioDAO) getDAO();
     }
 
-    @Override
-    public void updatePassword(Usuario usuario, String plainPassword) {
-        getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(plainPassword));
+    private Usuario getPrincipal() {
+        return (Usuario) principal;
     }
 
     @Override
-    public boolean checkPassword(Usuario usuario, String plainPassword) {
+    public void updatePassword(Usuario usuario, String currentPassword, String newPassword) throws BusinessException {
+
+        if (usuario==null) {
+            throw new BusinessException(new BusinessMessage(null, "No hay usuario al que cambiar la contraseña"));
+        } else if (getPrincipal()==null) {
+            throw new BusinessException(new BusinessMessage(null, "Debes haber entrado para cambiar la contraseña"));
+        } else if (usuario == getPrincipal()) {
+            if (checkPassword(usuario, currentPassword)) {
+                getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
+            } else {
+                throw new BusinessException(new BusinessMessage(null, "La contraseña actual no es válida"));
+            }
+        } else if (getPrincipal().getTipoUsuario()==TipoUsuario.ADMINISTRADOR) {
+            //Si eres administrador no necesitas la contraseña actual
+            getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
+        } else  {
+            throw new BusinessException(new BusinessMessage(null, "Solo un Administrador o el propio usuario puede cambiar la contraseña"));
+        }
+    }
+
+    @Override
+    public boolean checkPassword(Usuario usuario, String password) throws BusinessException {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
         String encryptedPassword = getUsuarioDAO().getEncryptedPassword(usuario);
 
-        boolean checkOK = passwordEncryptor.checkPassword(plainPassword, encryptedPassword);
+        boolean checkOK = passwordEncryptor.checkPassword(password, encryptedPassword);
 
         return checkOK;
     }
 
     @Override
     public void insert(Usuario usuario) throws BusinessException {
+
         if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
-            //Al actualizar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
+            //Al insertar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         } else {
-            usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            }
         }
 
-       
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
         usuario.setValidadoEmail(false);
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
-        getUsuarioDAO().update(usuario);
+        getUsuarioDAO().insert(usuario);
         usuario.setPassword(null);
     }
 
     @Override
     public boolean update(Usuario usuario) throws BusinessException {
-        if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
-            //Al actualizar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
-            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        Usuario usuarioOriginal = getUsuarioDAO().readOriginal(usuario.getIdIdentity());
+
+        if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
+
+            if (getPrincipal().getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                //Si el usuario no está aceptado no le dejamos cambiar el estado
+                throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado del usuario ya que TU no estás aceptado"));
+            }
+
+            switch (getPrincipal().getTipoUsuario()) {
+                case ADMINISTRADOR:
+                    //No es necesario hace nada pq el administrador siempre puede modificarlo
+                    break;
+                case CENTRO:
+                    //Solo puede si no es el mismo 
+                    if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
+                        throw new BusinessException(new BusinessMessage(null, "Tu mismo no te puedes modificar el estado"));
+                    }
+
+                    if (usuario.getTipoUsuario() != TipoUsuario.CENTRO) {
+                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que no sean de tipo CENTRO"));
+                    }
+
+                    if (usuario.getCentro() != getPrincipal().getCentro()) {
+                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que sean de centros distintos al tuyo"));
+                    }
+
+                    break;
+                case EMPRESA:
+                    //Solo puede si no es el mismo 
+                    if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
+                        throw new BusinessException(new BusinessMessage(null, "Tu mismo no te puedes modificar el estado"));
+                    }
+
+                    if (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) {
+                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que no sean de tipo EMPRESA"));
+                    }
+
+                    if (usuario.getEmpresa() != getPrincipal().getEmpresa()) {
+                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya"));
+                    }
+
+                    break;
+                case TITULADO:
+                    throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO"));
+                default:
+                    throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado del usuario"));
+            }
+
         }
-       
+
         return super.update(usuario);
-    }    
-    
-    
+    }
+
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 

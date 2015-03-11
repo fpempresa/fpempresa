@@ -67,7 +67,6 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
 
     private Empresa empresa;
 
-    @ForbiddenImport
     @Label("Estado del usuario")
     private EstadoUsuario estadoUsuario;
 

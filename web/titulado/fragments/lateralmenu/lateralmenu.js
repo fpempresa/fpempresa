@@ -1,6 +1,6 @@
 "user strict";
 
-app.controller("LateralMenuController", ['$scope', '$state', function ($scope, $state) {
+app.controller("LateralMenuController", ['$scope', '$state','dialog', function ($scope, $state, dialog) {
         $scope.isItemSelected = function (option) {
             if (option) {
                 if ($state.current.name.indexOf(option) >= 0) {
@@ -12,5 +12,10 @@ app.controller("LateralMenuController", ['$scope', '$state', function ($scope, $
                 return false;
             }
         };
+        
+        
+        $scope.cambiarContrasenya=function() {
+            dialog.create($scope.getContextPath()+"/common/views/util/cambiarcontrasenya.html",$scope.user);
+        }
 
     }]);

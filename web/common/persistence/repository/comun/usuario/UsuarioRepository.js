@@ -15,6 +15,22 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     return deferred.promise;
 
                 };
+                
+                repository.updatePassword = function (idIdentity, currentPassword,newPassword) {
+                    var deferred = $q.defer();
+
+                    this.remoteDAO.updatePassword(idIdentity, currentPassword,newPassword).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+
+                    return deferred.promise;
+
+                };
+                                
+                
             }]);
 
     }]);

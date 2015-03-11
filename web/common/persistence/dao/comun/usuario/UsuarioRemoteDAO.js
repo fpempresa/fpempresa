@@ -32,6 +32,35 @@ angular.module("common").config(['remoteDAOFactoryProvider',function(remoteDAOFa
 
                 return deferred.promise;
             };
+            remoteDAO.updatePassword=function(idIdentity, currentPassword,newPassword) {
+                var deferred = this.$q.defer();
+
+                var data = {
+                    currentPassword:currentPassword,
+                    newPassword:newPassword
+                };
+
+                var config = {
+                    method: 'PATCH',
+                    url: this.baseUrl + '/' + this.entityName + "/" + idIdentity + "/updatePassword",
+                    data: data
+                };
+
+                this.$http(config).success(function (data, status, headers, config) {
+                    deferred.resolve(null);
+                }).error(function (data, status, headers, config) {
+                    if (status === 400) {
+                        deferred.reject(data);
+                    } else {
+                        throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
+                    }
+                });
+
+                return deferred.promise;
+            };            
+            
+            
+            
         }]);
         
 }]);

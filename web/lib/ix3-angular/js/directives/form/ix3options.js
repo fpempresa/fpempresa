@@ -230,11 +230,9 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                 var promise = $q.when([]);
                 return promise;
             } else {
-                var filters = [];
+                var filters = {};
                 var expand = "";
-                for (var dependPropertyName in depend) {
-                    var filter={};
-                    
+                for (var dependPropertyName in depend) {                   
                     if (!depend.hasOwnProperty(dependPropertyName)) {
                         continue;
                     }
@@ -243,7 +241,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
 
                     if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
                         var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
-                        filter[dependPropertyName + "." + primaryKeyPropertyName] = primaryKeyValue;
+                        filters[dependPropertyName + "." + primaryKeyPropertyName] = primaryKeyValue;
                     } else {
                         if ((ix3OptionsDefault) && (typeof (ix3OptionsDefault) === "object") && (ix3OptionsDefault.hasOwnProperty(dependPropertyName))) {
                             var defaultValue = ix3OptionsDefault[dependPropertyName];
@@ -252,7 +250,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                                 continue;
                             } else {
                                 //Aqui es que nos han puesto exactamente el valor por defecto
-                                filter[dependPropertyName + "." + primaryKeyPropertyName] = defaultValue;
+                                filters[dependPropertyName + "." + primaryKeyPropertyName] = defaultValue;
                             }
                         } else {
                             //Hemos encontrado un filtro que hace que ya no 
@@ -264,8 +262,6 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                     } else {
                         expand = expand + "," + dependPropertyName;
                     }
-
-                    filters.push(filter);
                 }
 
                 var repository = repositoryFactory.getRepository(metadataProperty.className);

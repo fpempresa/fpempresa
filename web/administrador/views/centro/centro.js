@@ -10,19 +10,12 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.orderby = [
-            {fieldName: 'nombre', orderDirection: 'ASC'}
+            {fieldName: 'nombre', orderDirection: 'ASC'},
+            {fieldName: 'direccion.municipio.provincia.descripcion', orderDirection: 'ASC'},
+            {fieldName: 'direccion.municipio.descripcion', orderDirection: 'ASC'}
         ];
 
-        $scope.filters = [
-            {
-                nombre: "",
-                $operator: "LLIKER"
-            },            
-            {
-                idCentro: -1,
-                $operator: "NE"
-            }
-        ];
+        $scope.filters.$ne.idCentro=-1; 
 
         $scope.search();
     }]);

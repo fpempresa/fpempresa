@@ -5,7 +5,7 @@
 
             <div class="row">
                 <div class="col-xs-12"> 
-                    <input ng-model="filters[0].nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del centro"  > 
+                    <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del centro"  > 
                 </div>  
             </div>
             <br>
@@ -31,7 +31,7 @@
                         <td >{{centro.nombre}}</td>
                         <td >{{centro.direccion.municipio.provincia.descripcion}}</td>
                         <td >{{centro.direccion.municipio.descripcion}}</td>
-                        <td style="text-align: right" >{{centro.getEstadoCentroDescription()}}</td>
+                        <td style="text-align: left" >{{centro.getEstadoCentroDescription()}}</td>
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(centro.idCentro)">Borrar</button>
                             <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(centro.idCentro)">Editar</button>

@@ -15,12 +15,6 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
             {fieldName: 'ape2', orderDirection: 'ASC'}
         ];
 
-        $scope.filters = [
-            {
-                $operator: "LLIKER"
-            }
-        ]
-
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
             $scope.repository.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {

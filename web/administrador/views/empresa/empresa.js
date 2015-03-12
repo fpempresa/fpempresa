@@ -17,16 +17,6 @@ app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList'
             }
         ];
         
-        $scope.filters=[
-            {
-                nombreComercial:"",
-                $operator:"LLIKER"
-            },
-            {
-                cif:""
-            }
-        ];
-        
         $scope.search();
     }]);
 

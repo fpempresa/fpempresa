@@ -178,25 +178,29 @@
 
             var params = {};
             if (filters) {
-                for (var i = 0; i < filters.length; i++) {
-                    var filter = filters[i];
-                    for (var key in filter) {
-                        if (!filter.hasOwnProperty(key)) {
-                            continue;
-                        }
 
-
-                        if (key.charAt(0) !== "$") {
-                            var paramName = key;
-                            var paramValue = filter[key];
-                            if ((filter.$operator) && (filter.$operator !== "")) {
-                                paramName = paramName + "__" + filter.$operator + "__";
-                            }
-                            
-                            params[paramName]=paramValue;
-                        }
-
+                for (var key in filters) {
+                    if (!filters.hasOwnProperty(key)) {
+                        continue;
                     }
+
+
+                    if (key.charAt(0) === "$") {
+                        var operator=key.substr(1).toUpperCase();
+                        var filtersWithOperator=filters[key];  //Objeto con filtros cuya operador es "operator"
+                        
+                        for (var propertyName in filtersWithOperator) {
+                            if (!filtersWithOperator.hasOwnProperty(propertyName)) {
+                                continue;
+                            }
+
+                            params[propertyName + "__" + operator + "__" ] = filtersWithOperator[propertyName];
+                        }
+                    } else {
+                        //Los filtros que cuelgan directamente son del tipo "EQ" y no hace falta poner nada.
+                        params[key] = filters[key];
+                    }
+
                 }
 
             }

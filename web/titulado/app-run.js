@@ -1,9 +1,10 @@
 "use strict";
 
 
-app.run(['$rootScope', 'session', '$location', 'repositoryFactory', function ($rootScope, session, $location, repositoryFactory) {
+app.run(['$rootScope', 'session', '$location', 'richDomain', function ($rootScope, session, $location, richDomain) {
         //Guardamos la información que hemos obtenido directamente del servidor
         $rootScope.getContextPath = getContextPath;
+        richDomain.extend(user);
         session.setUser(user);
 
 

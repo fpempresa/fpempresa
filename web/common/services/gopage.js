@@ -10,7 +10,7 @@ angular.module("common").service("goPage", ['session', '$window', 'repositoryFac
             } else if (usuario.tipoUsuario === "EMPRESA") {
                 alert("Aun no está hecha la funcionalidad de empresas");
             } else if (usuario.tipoUsuario === "CENTRO") {
-                alert("Aun no está hecha la funcionalidad de centros");
+                $window.location.href = getContextPath() + "/centro/index.html";
             } else if (usuario.tipoUsuario === "ADMINISTRADOR") {
                 $window.location.href = getContextPath() + "/administrador/index.html";             
             } else {

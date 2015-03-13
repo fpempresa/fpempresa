@@ -2,8 +2,8 @@
 
 (function() {
     
-    GenericControllerCrudList.$inject=['repositoryFactory', '$location','metadataEntities'];
-    function GenericControllerCrudList(repositoryFactory, $location, metadataEntities) {
+    GenericControllerCrudList.$inject=['serviceFactory', '$location','metadataEntities'];
+    function GenericControllerCrudList(serviceFactory, $location, metadataEntities) {
         this.extendScope = function(scope, controllerParams) {
             scope.models = {};
             scope.filters = {
@@ -22,7 +22,7 @@
             scope.page = {};
             scope.businessMessages = null;
             angular.extend(scope, controllerParams);
-            scope.repository = repositoryFactory.getRepository(scope.entity);
+            scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
@@ -59,7 +59,7 @@
                     filters[scope.parentProperty] = scope.parentId;
                 }
 
-                scope.repository.search(filters, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
+                scope.service.search(filters, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
                     } else {

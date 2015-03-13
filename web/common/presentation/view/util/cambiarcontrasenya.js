@@ -1,8 +1,8 @@
 (function (undefined) {
     "use strict";
 
-    CambiarContrasenyaController.$inject = ['$scope', 'repositoryFactory', 'formValidator'];
-    function CambiarContrasenyaController($scope, repositoryFactory, formValidator) {
+    CambiarContrasenyaController.$inject = ['$scope', 'serviceFactory', 'formValidator'];
+    function CambiarContrasenyaController($scope, serviceFactory, formValidator) {
         $scope.businessMessages = [];
         $scope.usuario=$scope.dialog.data;
         
@@ -19,11 +19,11 @@
         };
 
         $scope.buttonOK = function () {
-            var usuarioRepository = repositoryFactory.getRepository("Usuario");
+            var usuarioService = serviceFactory.getService("Usuario");
 
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
-                usuarioRepository.updatePassword($scope.usuario.idIdentity, $scope.model.currentPassword, $scope.model.newPassword).then(function () {
+                usuarioService.updatePassword($scope.usuario.idIdentity, $scope.model.currentPassword, $scope.model.newPassword).then(function () {
                     alert("Su contraseña ha sido cambiada correctamente");
                     $scope.dialog.closeOK();
                 }, function (businessMessages) {

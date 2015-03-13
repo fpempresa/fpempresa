@@ -2,8 +2,8 @@
 
 (function () {
 
-    GenericControllerCrudDetail.$inject = ['repositoryFactory', '$window', 'formValidator', '$location', 'metadataEntities', '$q', ];
-    function GenericControllerCrudDetail(repositoryFactory, $window, formValidator, $location, metadataEntities, $q) {
+    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'metadataEntities', '$q', ];
+    function GenericControllerCrudDetail(serviceFactory, $window, formValidator, $location, metadataEntities, $q) {
 
         this.extendScope = function (scope, controllerParams) {
             scope.labelButtonOK = null;
@@ -12,7 +12,7 @@
             scope.models = {};
             scope.businessMessages = null;
             angular.extend(scope, controllerParams);
-            scope.repository = repositoryFactory.getRepository(scope.entity);
+            scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
             scope.preCreate = function () {
             };
@@ -40,7 +40,7 @@
                 var defered = $q.defer();
                 
                 scope.preGet();
-                scope.repository.get(scope.id, scope.expand).then(function (data) {
+                scope.service.get(scope.id, scope.expand).then(function (data) {
                     if (data === null) {
                         //Si retornamos null, realmente lo transformamo en un objeto sin datos, pq sino fallan los select
                         scope.model = {};
@@ -67,7 +67,7 @@
                     parent[scope.parentProperty] = scope.parentId;
                 }
                 scope.preCreate();
-                scope.repository.create(scope.expand, parent).then(function (data) {
+                scope.service.create(scope.expand, parent).then(function (data) {
                     scope.model = data;
                     scope.businessMessages = null;
                     
@@ -87,7 +87,7 @@
                 scope.preInsert();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
-                    scope.repository.insert(scope.model, scope.expand).then(function (data) {
+                    scope.service.insert(scope.model, scope.expand).then(function (data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         scope.controllerAction = "EDIT";
@@ -111,7 +111,7 @@
                 scope.preUpdate();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
-                    scope.repository.update(scope.id, scope.model, scope.expand).then(function (data) {
+                    scope.service.update(scope.id, scope.model, scope.expand).then(function (data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         
@@ -132,7 +132,7 @@
                 var defered = $q.defer();
                 
                 scope.preDelete()
-                scope.repository.delete(scope.id).then(function (data) {
+                scope.service.delete(scope.id).then(function (data) {
                     scope.businessMessages = null;
                     
                     scope.postDelete();

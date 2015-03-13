@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 'metadataEntities', '$q', 'langUtil', function (repositoryFactory, metadataEntities, $q, langUtil) {
+angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'metadataEntities', '$q', 'langUtil', function (serviceFactory, metadataEntities, $q, langUtil) {
 
 
         return {
@@ -264,8 +264,8 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['repositoryFactory', 
                     }
                 }
 
-                var repository = repositoryFactory.getRepository(metadataProperty.className);
-                var promise = repository.search(filters, undefined, expand);
+                var service = serviceFactory.getService(metadataProperty.className);
+                var promise = service.search(filters, undefined, expand);
 
                 return promise;
             }

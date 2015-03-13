@@ -17,7 +17,7 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
 
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
-            $scope.repository.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {
+            $scope.service.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {
                 $scope.search();
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
@@ -55,7 +55,7 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         $scope.updateEstadoUsuario = function (estadoUsuario) {
             $scope.doUpdate().then(function () {
 
-                $scope.repository.updateEstadoUsuario($scope.model.idIdentity, estadoUsuario, $scope.expand).then(function (data) {
+                $scope.service.updateEstadoUsuario($scope.model.idIdentity, estadoUsuario, $scope.expand).then(function (data) {
                     $scope.model = data;
                     $scope.businessMessages = null;
                 }, function (businessMessages) {
@@ -66,7 +66,7 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         };
 
         $scope.cambiarContrasenya = function () {
-            dialog.create($scope.getContextPath() + "/common/views/util/cambiarcontrasenya.html", $scope.model);
+            dialog.create($scope.getContextPath() + "/common/presentation/view/util/cambiarcontrasenya.html", $scope.model);
         };
 
     }]);

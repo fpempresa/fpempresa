@@ -13,7 +13,7 @@ angular.lazy.controller("LoginController", ['$scope', 'dialog', '$timeout', func
 
 
         $scope.newDialog = function() {
-            dialog.create(getContextPath() + "/test/modalmemory/modal", 10).then(function(resultado) {
+            dialog.create(getContextPath() + "/test/modalmemory/modal.html", 10).then(function(resultado) {
                 if (resultado === 20) {
                     $scope.newDialog();
                 }

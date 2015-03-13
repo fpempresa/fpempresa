@@ -5,13 +5,13 @@
             <legend class="form__title"><a class="form__title__link" href="#/titulado/edit/{{user.titulado.idTitulado}}">Datos personales</a></legend>
             <table class="table table-bordered">
                 <tbody>
-                    <tr ng-show="user.name" class="data-table__row">
+                    <tr class="data-table__row">
                         <td><i class="glyphicon glyphicon-user"></i> Nombre y apellidos:</td>
-                        <td>{{user.getNombreCompleto()}}</td>
+                        <td>{{model.usuario.getNombreCompleto()}}</td>
                     </tr>                     
-                    <tr ng-show="model.fechaNacimiento" class="data-table__row">
+                    <tr class="data-table__row">
                         <td><i class="glyphicon glyphicon-envelope"></i> Correo electronico:</td>
-                        <td>{{user.email}}</td>
+                        <td>{{model.usuario.email}}</td>
                     </tr>                        
                     <tr ng-show="model.fechaNacimiento" class="data-table__row">
                         <td><i class="glyphicon glyphicon-gift"></i> Fecha de nacimiento:</td>

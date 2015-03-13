@@ -17,7 +17,7 @@ angular.lazy.controller("LoginController", ['$scope', 'dialog', function($scope,
         };
 
         $scope.newDialog = function() {
-            dialog.create(getContextPath()+"/test/modal/modal",$scope.enviado).then(function(resultado){
+            dialog.create(getContextPath()+"/test/modal/modal.html",$scope.enviado).then(function(resultado){
                 if (resultado) {
                     $scope.recibidoSiguiente=resultado;
                 }

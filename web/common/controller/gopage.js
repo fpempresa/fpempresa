@@ -2,7 +2,7 @@
 /**
  * Servicio para ir a la página de inicio de un usuario
  */
-angular.module("common").service("goPage", ['session', '$window', 'repositoryFactory','$rootScope', function(session, $window, repositoryFactory, $rootScope) {
+angular.module("common").service("goPage", ['session', '$window', '$rootScope', function(session, $window, $rootScope) {
 
         function goHomeUsuario(usuario) {
             if (usuario.tipoUsuario === "TITULADO") {

@@ -1,6 +1,6 @@
 
 
-app.controller('MainController', ['$scope', 'repositoryFactory', function ($scope, repositoryFactory) {
+app.controller('MainController', ['$scope', function ($scope) {
 
         $scope.estadisticas = {
             numTitulados: 10,

@@ -21,14 +21,14 @@ app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList'
     }]);
 
 
-app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','repositoryFactory', function($scope, genericControllerCrudDetail, controllerParams,repositoryFactory) {
+app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','repositoryFactory', function($scope, genericControllerCrudDetail, controllerParams,repositoryFactory) {
+app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("EmpresaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','repositoryFactory', function($scope, genericControllerCrudDetail, controllerParams,repositoryFactory) {
+app.controller("EmpresaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

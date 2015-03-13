@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="usuario in models" class="data-table__row">
-                        <td >{{usuario.getNombreCompleto()}}</td>
+                        <td ><a href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a></td>
                         <td >{{usuario.email}}</td>
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.centro.nombre}}</td>                        
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'EMPRESA'">{{usuario.empresa.nombreComercial}}</td>                        

@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="empresa in models" class="data-table__row">
-                        <td >{{empresa.nombreComercial}}</td>
+                        <td ><a href ng-click="buttonEdit(empresa.idEmpresa)">{{empresa.nombreComercial}}</a></td>
                         <td >{{empresa.cif}}</td>
                         <td >{{empresa.direccion.municipio.descripcion}}</td>                   
                         <td >

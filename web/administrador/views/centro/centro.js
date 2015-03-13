@@ -21,14 +21,14 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
     }]);
 
 
-app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'repositoryFactory', function ($scope, genericControllerCrudDetail, controllerParams, repositoryFactory) {
+app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'repositoryFactory', function ($scope, genericControllerCrudDetail, controllerParams, repositoryFactory) {
+app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'repositoryFactory', function ($scope, genericControllerCrudDetail, controllerParams, repositoryFactory) {
+app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

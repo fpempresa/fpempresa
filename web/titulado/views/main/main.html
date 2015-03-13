@@ -7,11 +7,11 @@
                 <tbody>
                     <tr ng-show="user.name" class="data-table__row">
                         <td><i class="glyphicon glyphicon-user"></i> Nombre y apellidos:</td>
-                        <td>{{user.name}}</td>
+                        <td>{{user.getNombreCompleto()}}</td>
                     </tr>                     
                     <tr ng-show="model.fechaNacimiento" class="data-table__row">
                         <td><i class="glyphicon glyphicon-envelope"></i> Correo electronico:</td>
-                        <td>{{model.usuario.eMail}}</td>
+                        <td>{{user.email}}</td>
                     </tr>                        
                     <tr ng-show="model.fechaNacimiento" class="data-table__row">
                         <td><i class="glyphicon glyphicon-gift"></i> Fecha de nacimiento:</td>

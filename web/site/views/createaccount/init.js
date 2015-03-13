@@ -28,7 +28,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 message: 'El registro de Centros Educativos no está habilitado',
                 rule: function () {
                     if ($scope.model.tipoUsuario === "CENTRO") {
-                        return false;
+                        return true;
                     } else {
                         return true;
                     }

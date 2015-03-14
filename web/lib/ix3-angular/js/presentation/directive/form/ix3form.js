@@ -5,7 +5,7 @@
 
             return {
                 restrict: 'A',
-                controller:function($scope, $element, $attrs) {
+                controller:['$scope','$element','$attrs',function($scope, $element, $attrs) {
                     var config=$attrs.ix3Form || "{entity:entity}";
                     
                     this.config=$scope.$eval(config);
@@ -14,7 +14,7 @@
                         return this.config;
                     }
                     
-                },
+                }],
                 compile: function (element, attributes) {
                     return {
                         pre: function (scope, iElement, iAttrs) {

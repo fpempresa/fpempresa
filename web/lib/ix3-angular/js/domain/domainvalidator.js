@@ -3,7 +3,7 @@
     /**
      * Valida un objeto de dominio
      */
-    DomainValidator.$inyect = ['$injector', '$q', '$interpolate'];
+    DomainValidator.$inject = ['$injector', '$q', '$interpolate'];
     function DomainValidator($injector, $q, $interpolate) {
 
         this.validate = function (domainObject, action) {
@@ -112,7 +112,7 @@
     }
 
 
-    DomainValidatorProvider.$inyect = [];
+    DomainValidatorProvider.$inject = [];
     function DomainValidatorProvider() {
         this.$get = ['$injector', function ($injector) {
                 var locals = {

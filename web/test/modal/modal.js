@@ -1,6 +1,6 @@
 "use strict";
 
-angular.lazy.controller("LoginController", ['$scope', 'dialog', function($scope, dialog) {
+app.controller("LoginController", ['$scope', 'dialog', function($scope, dialog) {
 
         $scope.dialog.open({
             title:"Nueva Ventana:" + Math.random()

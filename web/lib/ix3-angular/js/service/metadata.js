@@ -1,7 +1,7 @@
 (function (undefined) {
     "use strict";
     
-    MetadataEntities.$inyect = ["repositoryFactory", "$q","langUtil"];
+    MetadataEntities.$inject = ["repositoryFactory", "$q","langUtil"];
     function MetadataEntities(repositoryFactory, $q,langUtil) {
         //Aqui guardamos cada uno los metadatos de cada entidad
         var metadatasStorage = new MetadatasStorage(langUtil);

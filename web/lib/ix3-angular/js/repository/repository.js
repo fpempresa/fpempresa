@@ -8,7 +8,7 @@
      * @param {RichDomain} richDomain Añadir nuevos métodos a los objetos de negocio que se leen
      * @param {Q} $q Servicio de promesas de AngularJS
      */
-    Repository.$inyect = ['entityName', 'remoteDAOFactory', 'richDomain', '$q', 'domainValidator'];
+    Repository.$inject = ['entityName', 'remoteDAOFactory', 'richDomain', '$q', 'domainValidator'];
     function Repository(entityName, remoteDAOFactory, richDomain, $q, domainValidator) {
         var that = this;
         this.entityName = entityName;
@@ -135,7 +135,7 @@
     }
 
 
-    RepositoryFactory.$inyect = ['extendRepository', '$injector'];
+    RepositoryFactory.$inject = ['extendRepository', '$injector'];
     function RepositoryFactory(extendRepository, $injector) {
 
         var repositories = {
@@ -166,7 +166,7 @@
     }
 
 
-    RepositoryFactoryProvider.$inyect = [];
+    RepositoryFactoryProvider.$inject = [];
     function RepositoryFactoryProvider() {
 
         var extendRepository = {

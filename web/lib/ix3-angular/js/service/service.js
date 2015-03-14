@@ -7,7 +7,7 @@
      * @param {repository} repositoryFactory La factoria del reposotory para acceder a los datos
      * @param {Q} $q Servicio de promesas de AngularJS
      */
-    Service.$inyect = ['entityName', 'repositoryFactory', '$q', 'domainValidator'];
+    Service.$inject = ['entityName', 'repositoryFactory', '$q', 'domainValidator'];
     function Service(entityName, repositoryFactory, $q, domainValidator) {
         var that = this;
         this.entityName = entityName;
@@ -111,7 +111,7 @@
     }
 
 
-    ServiceFactory.$inyect = ['extendService', '$injector'];
+    ServiceFactory.$inject = ['extendService', '$injector'];
     function ServiceFactory(extendService, $injector) {
 
         var repositories = {
@@ -142,7 +142,7 @@
     }
 
 
-    ServiceFactoryProvider.$inyect = [];
+    ServiceFactoryProvider.$inject = [];
     function ServiceFactoryProvider() {
 
         var extendService = {

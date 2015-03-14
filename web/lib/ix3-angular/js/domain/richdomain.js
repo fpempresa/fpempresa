@@ -4,7 +4,7 @@
     /**
      * Enriquece objetos de dominio con nuevos métodos y transformaciones
      */
-    RichDomain.$inyect = ['transformers'];
+    RichDomain.$inject = ['transformers'];
     function RichDomain(transformers) {
 
         this.extend = function (object) {
@@ -59,7 +59,7 @@
     }
 
 
-    RichDomainProvider.$inyect = [];
+    RichDomainProvider.$inject = [];
     function RichDomainProvider() {
 
         var transformers = {

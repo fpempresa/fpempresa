@@ -80,7 +80,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             //Al insertar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         } else {
-            if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+            if ((getPrincipal()==null) || (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR)) {
                 usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
             }
         }

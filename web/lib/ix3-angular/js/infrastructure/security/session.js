@@ -8,9 +8,11 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
             login: login,
             logout: logout,
             logged: logged,
-            setUser: setUser
+            setUser: setUser,
+            getUser: getUser
         }
 
+        var currentUser=null;
         
         function login(login, password) {
             var that=this;
@@ -87,12 +89,18 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
 
         function setUser(user) {
             if (user) {
+                currentUser=user;
                 $rootScope.user = user;
                 $rootScope.$broadcast("ix3.session.login", user);
             } else {
+                currentUser=null;
                 $rootScope.user = null;
                 $rootScope.$broadcast("ix3.session.logout", null);
             }
+        }
+        
+        function getUser() {
+            return currentUser;
         }
 
     }]);

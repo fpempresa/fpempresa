@@ -5,7 +5,6 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
         richDomain.addEntityTransformer("TituloIdioma", ['metadataEntities', function (metadataEntities) {
                 var TituloIdioma = {
                     getNombreIdioma: function () {
-                        alert(this.$propertyPath)
                         if (this.idioma === "OTRO") {
                             return this.otroIdioma;
                         } else {

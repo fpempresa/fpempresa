@@ -11,7 +11,7 @@
                     function getExpands(expands) {
                         var tituladoExpand = [];
                         var usuarioExpand = [];
-                        var expandUsuario = false; //Indica si hay o no que cargar el usuario
+                        var expandUsuario = true; //Indica si hay o no que cargar el usuario. siempre vale TRUE pq siempre se expandiria desde el servidor
 
                         if (expands) {
                             var arrExpands = langUtil.splitValues(expands, ",");

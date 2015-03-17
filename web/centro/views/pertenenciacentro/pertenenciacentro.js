@@ -21,24 +21,22 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'genericControlle
 
         $scope.buttonPertenenciaCentro = function (idCentro) {
             $scope.pertenenciaCentro(idCentro);
-        }
+        };
         $scope.pertenenciaCentro = function (idCentro) {
             var usuarioService = serviceFactory.getService("Usuario");
 
-            var promise = $scope.service.get(idCentro)
+            var promise = $scope.service.get(idCentro);
             promise.then(function (centro) {
                 return centro;
             }).then(function (centro) {
 
-                var ok = confirm("¿Realmente quieres cambiar al centro  '" + centro.toString() + "'?.\nNo podras volver a entrar hasta que acepten o rechacen tu solicitud")
+                var ok = confirm("¿Realmente quieres cambiar al centro  '" + centro.toString() + "'?.\nNo podras volver a entrar hasta que acepten o rechacen tu solicitud");
                 
                 if (ok === true) {
                     return  usuarioService.get($scope.user.idIdentity);
                 } else {
                     //Tenemos que cancelar la promesa para que se ejecute el catch!!
-                    var defered = $q.defer();
-                    defered.reject([]);
-                    return defered.promise;
+                    return $q.reject([]);
                 }
             }).then(function (usuario) {
                 usuario.centro = {

@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Titulados</legend>
+            <div class="row">
+                <div class="col-xs-4"> 
+                    <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
+                </div>
+                <div class="col-xs-4"> 
+                    <input ng-model="filters.$lliker.ape1" type="text" class="form-control" id="nombre" name="nombre" placeholder="1º Apellido"  > 
+                </div>
+                <div class="col-xs-4"> 
+                    <input ng-model="filters.$lliker.ape2" type="text" class="form-control" id="nombre" name="nombre" placeholder="2º Apellido"  > 
+                </div>                
+            </div>          
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>            
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th style="text-align: center">Nombre</th>
+                        <th style="width:   15%;text-align: center">Correo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="usuario in models" class="data-table__row">
+                        <td ><a href="#/titulado/view/{{usuario.idIdentity}}">{{usuario.getNombreCompleto()}}</a></td>
+                        <td >{{usuario.email}}</td>                                                   
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>

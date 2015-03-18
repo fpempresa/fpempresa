@@ -40,6 +40,6 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
     },
     crud: {
         defaultParentState:"lateralmenu",
-        defaultHtmlBasePath:"views/curriculum"
+        defaultHtmlBasePath:"views"
     }
 });

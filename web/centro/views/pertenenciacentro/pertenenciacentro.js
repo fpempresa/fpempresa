@@ -1,11 +1,6 @@
 
 
-app.controller("PertenenciaCentroController", ['$scope', '$q', 'genericControllerCrudList', 'serviceFactory', 'goPage', 'session', function ($scope, $q, genericControllerCrudList, serviceFactory, goPage, session) {
-        var controllerParams = {
-            entity: "Centro",
-            expand: "direccion.municipio.provincia"
-        };
-
+app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams', 'genericControllerCrudList', 'serviceFactory', 'goPage', 'session', function ($scope, $q, controllerParams, genericControllerCrudList, serviceFactory, goPage, session) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.orderby = [
@@ -16,8 +11,6 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'genericControlle
 
         $scope.filters.$gt.idCentro = 0;
         $scope.filters.estadoCentro = "PERTENECE_A_FPEMPRESA";
-
-        $scope.search();
 
         $scope.buttonPertenenciaCentro = function (idCentro) {
             $scope.pertenenciaCentro(idCentro);
@@ -52,6 +45,6 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'genericControlle
             });
         };
 
-
+        $scope.search();
 
     }]);

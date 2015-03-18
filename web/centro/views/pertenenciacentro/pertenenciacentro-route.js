@@ -1,12 +1,8 @@
-app.config(['$stateProvider', function ($stateProvider) {
+app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, crudRoutesProvider) {
         $stateProvider.state('lateralmenu.pertenenciacentro', {
             url: "/pertenenciacentro",
             templateUrl: 'views/pertenenciacentro/pertenenciacentro.html',
             controller: 'PertenenciaCentroController',
-            resolve: {
-                metadata: ['metadataEntities', function (metadataEntities) {
-                        return metadataEntities.load("Centro");
-                    }]
-            }
+            resolve: crudRoutesProvider.getResolve("Centro","direccion.municipio.provincia") 
         });
     }]);

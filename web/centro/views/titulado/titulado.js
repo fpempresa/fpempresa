@@ -5,7 +5,8 @@ app.controller("TituladoSearchController", ['$scope', 'genericControllerCrudList
         $scope.page.pageSize = 20;
 
         $scope.filters.tipoUsuario="TITULADO";
-
+        $scope.filters['titulado.formacionesAcademicas.centro.idCentro']=$scope.user.centro.idCentro;
+        
         $scope.search();
     }]);
 

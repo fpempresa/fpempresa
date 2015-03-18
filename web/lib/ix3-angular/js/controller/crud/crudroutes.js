@@ -9,8 +9,6 @@
         this.defaultHtmlBasePath = ix3ConfigurationProvider.crud.defaultHtmlBasePath;
 
         this.addAllRoutes = function (config) {
-            //Al ser todas las rutas no permitimos la variable "route" ya que tendría valores distintos para cada una
-            delete config.route;
             this.addSearchRoute(config);
             this.addNewRoute(config);
             this.addEditRoute(config);
@@ -20,265 +18,190 @@
 
 
         this.addSearchRoute = function (config) {
-            var entity = config.entity;
-            var expand = config.expand;
-            var route = config.route;
+            if (!config) {
+                throw Error("El parámetro 'config' no puede estar vacio");
+            }            
+            if (!config.entity) {
+                throw Error("El parámetro 'config.entity' no puede estar vacio");
+            }            
+
+
             var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
-            var parentState = config.parentState ? config.parentState : this.defaultParentState;
+            var parentState = config.parentState || this.defaultParentState;
 
-            if (!entity) {
-                throw Error("El argumento 'entity' no puede estar vacio");
-            }
 
-            var lowerEntityName = entity.toLowerCase();
-            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_search_parent", {
+                url: '/' + config.entity.toLowerCase() + '/search/:parentProperty/:parentId',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/search.html',
+                controller: config.entity + 'SearchController',
+                resolve: this.getResolve(config.entity, config.expand)
+            });
 
-            var name1 = parentState + "." + lowerEntityName + "_search";
-            var name2 = parentState + "." + lowerEntityName + "_search_parent";
-            var path1 = '/' + lowerEntityName + '/search';
-            var path2 = '/' + lowerEntityName + '/search/:parentProperty/:parentId';
-            var definitiveRoute = {
-                templateUrl: htmlBasePath + "/" + lowerEntityName + '/search.html',
-                controller: upperCamelEntityName + 'SearchController'
-            };
-            var resolve = {
-                controllerParams: ['$stateParams', function ($stateParams) {
-                        return {
-                            entity: entity,
-                            parentProperty: $stateParams.parentProperty,
-                            parentId: $stateParams.parentId,
-                            expand: expand
-                        };
-                    }],
-                metadata: ['metadataEntities', function (metadataEntities) {
-                        return metadataEntities.load(entity, expand);
-                    }]
-            };
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_search", {
+                url: '/' + config.entity.toLowerCase() + '/search',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/search.html',
+                controller: config.entity + 'SearchController',
+                resolve: this.getResolve(config.entity, config.expand)
+            });
 
-            angular.extend(definitiveRoute, route);
-            definitiveRoute.resolve = definitiveRoute.resolve || {};
-            angular.extend(definitiveRoute.resolve, resolve);
-
-            var routeWithoutParent = angular.copy(definitiveRoute);
-            routeWithoutParent.url = path1;
-            $stateProvider.state(name1, routeWithoutParent);
-
-            var routeWithParent = angular.copy(definitiveRoute);
-            routeWithParent.url = path2;
-            $stateProvider.state(name2, routeWithParent);
         };
+
 
         this.addNewRoute = function (config) {
-            var entity = config.entity;
-            var expand = config.expand;
-            var route = config.route;
+            if (!config) {
+                throw Error("El parámetro 'config' no puede estar vacio");
+            }            
+            if (!config.entity) {
+                throw Error("El parámetro 'config.entity' no puede estar vacio");
+            }            
+
+
             var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
-            var parentState = config.parentState ? config.parentState : this.defaultParentState;
+            var parentState = config.parentState || this.defaultParentState;
 
-            if (!entity) {
-                throw Error("El argumento 'entity' no puede estar vacio");
-            }
 
-            var lowerEntityName = entity.toLowerCase();
-            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_new_parent", {
+                url: '/' + config.entity.toLowerCase() + '/new/:parentProperty/:parentId',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'NewEditController',
+                resolve: this.getResolve(config.entity, config.expand, "NEW")
+            });
 
-            var name1 = parentState + "." + lowerEntityName + "_new";
-            var name2 = parentState + "." + lowerEntityName + "_new_parent";
-            var path1 = '/' + lowerEntityName + '/new';
-            var path2 = '/' + lowerEntityName + '/new/:parentProperty/:parentId';
-
-            var definitiveRoute = {
-                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
-                controller: upperCamelEntityName + 'NewEditController'
-            };
-
-            var resolve = {
-                controllerParams: ['$stateParams', function ($stateParams) {
-                        return {
-                            entity: entity,
-                            controllerAction: "NEW",
-                            id: null,
-                            parentProperty: $stateParams.parentProperty,
-                            parentId: $stateParams.parentId,
-                            expand: expand
-                        };
-                    }],
-                metadata: ['metadataEntities', function (metadataEntities) {
-                        return metadataEntities.load(entity, expand);
-                    }]
-            };
-
-            angular.extend(definitiveRoute, route);
-            definitiveRoute.resolve = definitiveRoute.resolve || {};
-            angular.extend(definitiveRoute.resolve, resolve);
-
-            var routeWithoutParent = angular.copy(definitiveRoute);
-            routeWithoutParent.url = path1;
-            $stateProvider.state(name1, routeWithoutParent);
-
-            var routeWithParent = angular.copy(definitiveRoute);
-            routeWithParent.url = path2;
-            $stateProvider.state(name2, routeWithParent);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_new_", {
+                url: '/' + config.entity.toLowerCase() + '/new',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'NewEditController',
+                resolve: this.getResolve(config.entity, config.expand, "NEW")
+            });
 
         };
+        
+        
         this.addViewRoute = function (config) {
-            var entity = config.entity;
-            var expand = config.expand;
-            var route = config.route;
+            if (!config) {
+                throw Error("El parámetro 'config' no puede estar vacio");
+            }            
+            if (!config.entity) {
+                throw Error("El parámetro 'config.entity' no puede estar vacio");
+            }             
+            
+            
             var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
-            var parentState = config.parentState ? config.parentState : this.defaultParentState;
+            var parentState = config.parentState || this.defaultParentState;
 
-            if (!entity) {
-                throw Error("El argumento 'entity' no puede estar vacio");
-            }
 
-            var lowerEntityName = entity.toLowerCase();
-            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_view_parent", {
+                url: '/' + config.entity.toLowerCase() + '/view/:id/:parentProperty/:parentId',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'ViewController',
+                resolve: this.getResolve(config.entity, config.expand, "VIEW")
+            });
 
-            var name1 = parentState + "." + lowerEntityName + "_view_";
-            var name2 = parentState + "." + lowerEntityName + "_view_parent";
-            var path1 = '/' + lowerEntityName + '/view/:id';
-            var path2 = '/' + lowerEntityName + '/view/:id/:parentProperty/:parentId';
-
-            var definitiveRoute = {
-                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
-                controller: upperCamelEntityName + 'ViewController'
-            }
-
-            var resolve = {
-                controllerParams: ['$stateParams', function ($stateParams) {
-                        return {
-                            entity: entity,
-                            controllerAction: "VIEW",
-                            id: $stateParams.id,
-                            parentProperty: $stateParams.parentProperty,
-                            parentId: $stateParams.parentId,
-                            expand: expand
-                        };
-                    }],
-                metadata: ['metadataEntities', function (metadataEntities) {
-                        return metadataEntities.load(entity, expand);
-                    }]
-            };
-
-            angular.extend(definitiveRoute, route);
-            definitiveRoute.resolve = definitiveRoute.resolve || {};
-            angular.extend(definitiveRoute.resolve, resolve);
-
-            var routeWithoutParent = angular.copy(definitiveRoute);
-            routeWithoutParent.url = path1;
-            $stateProvider.state(name1, routeWithoutParent);
-
-            var routeWithParent = angular.copy(definitiveRoute);
-            routeWithParent.url = path2;
-            $stateProvider.state(name2, routeWithParent);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_view_", {
+                url: '/' + config.entity.toLowerCase() + '/view/:id',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'ViewController',
+                resolve: this.getResolve(config.entity, config.expand, "VIEW")
+            });
         };
+        
+        
         this.addEditRoute = function (config) {
-            var entity = config.entity;
-            var expand = config.expand;
-            var route = config.route;
+            if (!config) {
+                throw Error("El parámetro 'config' no puede estar vacio");
+            }            
+            if (!config.entity) {
+                throw Error("El parámetro 'config.entity' no puede estar vacio");
+            }             
+
+
             var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
-            var parentState = config.parentState ? config.parentState : this.defaultParentState;
+            var parentState = config.parentState || this.defaultParentState;
 
-            if (!entity) {
-                throw Error("El argumento 'entity' no puede estar vacio");
-            }
 
-            var lowerEntityName = entity.toLowerCase();
-            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_edit_parent", {
+                url: '/' + config.entity.toLowerCase() + '/edit/:id/:parentProperty/:parentId',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'NewEditController',
+                resolve: this.getResolve(config.entity, config.expand, "EDIT")
+            });
 
-            var name1 = parentState + "." + lowerEntityName + "_edit_";
-            var name2 = parentState + "." + lowerEntityName + "_edit_parent";
-            var path1 = '/' + lowerEntityName + '/edit/:id';
-            var path2 = '/' + lowerEntityName + '/edit/:id/:parentProperty/:parentId';
-
-            var definitiveRoute = {
-                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
-                controller: upperCamelEntityName + 'NewEditController'
-
-            }
-
-            var resolve = {
-                controllerParams: ['$stateParams', function ($stateParams) {
-                        return {
-                            entity: entity,
-                            controllerAction: "EDIT",
-                            id: $stateParams.id,
-                            parentProperty: $stateParams.parentProperty,
-                            parentId: $stateParams.parentId,
-                            expand: expand
-                        };
-                    }],
-                metadata: ['metadataEntities', function (metadataEntities) {
-                        return metadataEntities.load(entity, expand);
-                    }]
-            };
-
-            angular.extend(definitiveRoute, route);
-            definitiveRoute.resolve = definitiveRoute.resolve || {};
-            angular.extend(definitiveRoute.resolve, resolve);
-
-            var routeWithoutParent = angular.copy(definitiveRoute);
-            routeWithoutParent.url = path1;
-            $stateProvider.state(name1, routeWithoutParent);
-
-            var routeWithParent = angular.copy(definitiveRoute);
-            routeWithParent.url = path2;
-            $stateProvider.state(name2, routeWithParent);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_edit_", {
+                url: '/' + config.entity.toLowerCase() + '/edit/:id',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'NewEditController',
+                resolve: this.getResolve(config.entity, config.expand, "EDIT")
+            });
         };
+        
+        
         this.addDeleteRoute = function (config) {
-            var entity = config.entity;
-            var expand = config.expand;
-            var route = config.route;
+            if (!config) {
+                throw Error("El parámetro 'config' no puede estar vacio");
+            }            
+            if (!config.entity) {
+                throw Error("El parámetro 'config.entity' no puede estar vacio");
+            } 
+
+
             var htmlBasePath = config.htmlBasePath || this.defaultHtmlBasePath;
-            var parentState = config.parentState ? config.parentState : this.defaultParentState;
-
-            if (!entity) {
-                throw Error("El argumento 'entity' no puede estar vacio");
-            }
-
-            var lowerEntityName = entity.toLowerCase();
-            var upperCamelEntityName = entity.charAt(0).toUpperCase() + entity.slice(1);
-
-            var name1 = parentState + "." + lowerEntityName + "_delete_";
-            var name2 = parentState + "." + lowerEntityName + "_delete_parent";
-            var path1 = '/' + lowerEntityName + '/delete/:id';
-            var path2 = '/' + lowerEntityName + '/delete/:id/:parentProperty/:parentId';
-
-            var definitiveRoute = {
-                templateUrl: htmlBasePath + "/" + lowerEntityName + '/detail.html',
-                controller: upperCamelEntityName + 'DeleteController'
-            };
+            var parentState = config.parentState || this.defaultParentState;
 
 
-            var resolve = {
-                controllerParams: ['$stateParams', function ($stateParams) {
-                        return {
-                            entity: entity,
-                            controllerAction: "DELETE",
-                            id: $stateParams.id,
-                            parentProperty: $stateParams.parentProperty,
-                            parentId: $stateParams.parentId,
-                            expand: expand
-                        };
-                    }],
-                metadata: ['metadataEntities', function (metadataEntities) {
-                        return metadataEntities.load(entity, expand);
-                    }]
-            };
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_delete_parent", {
+                url: '/' + config.entity.toLowerCase() + '/delete/:id/:parentProperty/:parentId',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'DeleteController',
+                resolve: this.getResolve(config.entity, config.expand, "DELETE")
+            });
 
-            angular.extend(definitiveRoute, route);
-            definitiveRoute.resolve = definitiveRoute.resolve || {};
-            angular.extend(definitiveRoute.resolve, resolve);
-
-            var routeWithoutParent = angular.copy(definitiveRoute);
-            routeWithoutParent.url = path1;
-            $stateProvider.state(name1, routeWithoutParent);
-
-            var routeWithParent = angular.copy(definitiveRoute);
-            routeWithParent.url = path2;
-            $stateProvider.state(name2, routeWithParent);
+            $stateProvider.state(parentState + "." + config.entity.toLowerCase() + "_delete_", {
+                url: '/' + config.entity.toLowerCase() + '/delete/:id',
+                templateUrl: htmlBasePath + "/" + config.entity.toLowerCase() + '/detail.html',
+                controller: config.entity + 'DeleteController',
+                resolve: this.getResolve(config.entity, config.expand, "DELETE")
+            });
         };
+        
+        
+        this.getResolve = function (entity, expand, controllerAction) {
+            var resolve;
+            if (controllerAction) {
+                resolve = {
+                    controllerParams: ['$stateParams', function ($stateParams) {
+                            return {
+                                entity: entity,
+                                controllerAction: controllerAction,
+                                id: $stateParams.id,
+                                parentProperty: $stateParams.parentProperty,
+                                parentId: $stateParams.parentId,
+                                expand: expand
+                            };
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
+                        }]
+                };
+            } else {
+                //El resolve del "search"
+                resolve = {
+                    controllerParams: ['$stateParams', function ($stateParams) {
+                            return {
+                                entity: entity,
+                                parentProperty: $stateParams.parentProperty,
+                                parentId: $stateParams.parentId,
+                                expand: expand
+                            };
+                        }],
+                    metadata: ['metadataEntities', function (metadataEntities) {
+                            return metadataEntities.load(entity, expand);
+                        }]
+                };
+            }
+            return resolve;
+        };        
+        
+        
         this.$get = function () {
             //Realmente no queremos nada aqui pero angular nos obliga.
             return {};

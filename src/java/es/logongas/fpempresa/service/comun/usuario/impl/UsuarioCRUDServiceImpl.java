@@ -22,10 +22,12 @@ import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -33,6 +35,9 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
  */
 public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> implements UsuarioCRUDService {
 
+    @Autowired
+    MailService mailService;
+    
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
     }
@@ -88,6 +93,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
         usuario.setValidadoEmail(false);
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
+        sendMailValidacionEMail(usuario);
         getUsuarioDAO().insert(usuario);
         usuario.setPassword(null);
     }
@@ -96,6 +102,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public boolean update(Usuario usuario) throws BusinessException {
         Usuario usuarioOriginal = getUsuarioDAO().readOriginal(usuario.getIdIdentity());
 
+        //REGLA SEGURIDAD: No se puede modificar el tipo del usuario
+         if (usuarioOriginal.getTipoUsuario() != usuario.getTipoUsuario()) {
+             throw new BusinessException(new BusinessMessage(null, "No es posible modificar el tipo del usuario"));
+         }
+        
+        //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
         if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
 
             if (getPrincipal().getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
@@ -143,7 +155,30 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                     throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado del usuario"));
             }
 
-        }
+        }         
+         
+         
+         //REGLA NEGOCIO:Si cambiamos de centro hay que volver a poner el usuario como pendiete de aceptación
+         if (usuario.getTipoUsuario()==TipoUsuario.CENTRO) {
+            if (usuarioOriginal.getCentro().getIdCentro() != usuario.getCentro().getIdCentro()) {
+                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            }
+         }
+         
+         //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiete de aceptación
+         if (usuario.getTipoUsuario()==TipoUsuario.EMPRESA) {
+            if (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa()) {
+                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            }
+         }         
+         
+         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
+         if (!usuarioOriginal.getEmail().equals(usuario.getEmail())) {
+            usuario.setValidadoEmail(false);
+            usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
+            sendMailValidacionEMail(usuario);
+         }         
+
 
         return super.update(usuario);
     }
@@ -154,5 +189,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         String encryptedPassword = passwordEncryptor.encryptPassword(plainPassword);
 
         return encryptedPassword;
+    }
+
+    private void sendMailValidacionEMail(Usuario usuario) {
+        //Enviar el Mail de Verificación
+        
+        
+        
     }
 }

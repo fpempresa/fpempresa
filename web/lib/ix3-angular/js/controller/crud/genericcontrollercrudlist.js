@@ -24,6 +24,7 @@
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
+            scope.prefixRoute="/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
                 scope.page.pageNumber = 0;
@@ -87,19 +88,19 @@
                 scope.search();
             };
             scope.buttonNew = function() {
-                var newPath = getPathAction("new", scope.entity, undefined, scope.parentProperty, scope.parentId);
+                var newPath = getPathAction("new", scope.prefixRoute, undefined, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
             scope.buttonEdit = function(id) {
-                var newPath = getPathAction("edit", scope.entity, id, scope.parentProperty, scope.parentId);
+                var newPath = getPathAction("edit", scope.prefixRoute, id, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
             scope.buttonDelete = function(id) {
-                var newPath = getPathAction("delete", scope.entity, id, scope.parentProperty, scope.parentId);
+                var newPath = getPathAction("delete", scope.prefixRoute, id, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
             scope.buttonView = function(id) {
-                var newPath = getPathAction("view", scope.entity, id, scope.parentProperty, scope.parentId);
+                var newPath = getPathAction("view", scope.prefixRoute, id, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
 
@@ -107,14 +108,14 @@
             /**
              * Obtiene el path a navegar para una acción  un formulario
              * @param {String} actionName La accion:"new","edit","delete" o "view". Corresponde a las parte del path de las rutas.
-             * @param {String} entity El nombre de la entidad 
+             * @param {String} prefixRoute como empieza la URL de la ruta. Debe incluir el "/"
              * @param {Object} pk El valor de la clave primaria
              * @param {String} parentProperty El nombre de la propiedad padre que se asocia
              * @param {Object} parentId El valor de la propiedad 'parentProperty'
              * @returns {String} El Path a navegar. No se incluye la "#".
              */
-            function getPathAction(actionName, entity, pk, parentProperty, parentId) {
-                var path = "/" + entity.toLowerCase() + "/" + actionName;
+            function getPathAction(actionName, prefixRoute, pk, parentProperty, parentId) {
+                var path = prefixRoute + "/" + actionName;
                 if (pk) {
                     path = path + "/" + pk;
                 }

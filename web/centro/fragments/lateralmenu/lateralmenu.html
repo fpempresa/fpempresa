@@ -22,20 +22,20 @@
         <div class="row">
             <div class="col-xs-12 col-sm-2" style="padding-right: 0px!important;">
                 <ul class="lateral-menu__menu">
-                    <li class="lateral-menu__header">Mi Centro</li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/centro/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/centro/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/centro/search">Mis datos</a></li>
+                    <li class="lateral-menu__header">Centro</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/centro/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/centro/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/centro/edit/{{user.centro.idCentro}}">Mi centro</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/titulado/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/titulado/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/titulado/search">Mis Titulados</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/profesor/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/profesor/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/profesor/search">Mis Profesores</a></li>
                 </ul>
                 <br>
                 <ul class="lateral-menu__menu">
-                    <li class="lateral-menu__header">Mi empleo</li>
+                    <li class="lateral-menu__header">Empleo</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/ADMINISTRADOR')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/ADMINISTRADOR')}"  class="lateral-menu__item__link" href="#/empresa/search/idCentro/centro">Mis Empresas</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/CENTRO')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/CENTRO')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/CENTRO">Mis Ofertas</a></li>
                 </ul>
                 <br>
                 <ul class="lateral-menu__menu">
-                    <li class="lateral-menu__header">Mi cuenta</li>
+                    <li class="lateral-menu__header">Cuenta</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href="#">Configuraci&oacute;n</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar contrase&ntilde;a</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/pertenenciacentro')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/pertenenciacentro')}"  class="lateral-menu__item__link" href="#/pertenenciacentro" >Cambiar a un nuevo centro</a></li>

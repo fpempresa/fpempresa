@@ -129,7 +129,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                         throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que no sean de tipo CENTRO"));
                     }
 
-                    if (usuario.getCentro() != getPrincipal().getCentro()) {
+                    if (usuario.getCentro().getIdCentro() != getPrincipal().getCentro().getIdCentro()) {
                         throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que sean de centros distintos al tuyo"));
                     }
 
@@ -144,7 +144,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                         throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que no sean de tipo EMPRESA"));
                     }
 
-                    if (usuario.getEmpresa() != getPrincipal().getEmpresa()) {
+                    if (usuario.getEmpresa().getIdEmpresa() != getPrincipal().getEmpresa().getIdEmpresa()) {
                         throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya"));
                     }
 

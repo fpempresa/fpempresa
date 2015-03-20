@@ -36,4 +36,6 @@
         <property name="defaultAuthorization" value="true" />
     </bean>    
     
+    
+     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
 </beans>

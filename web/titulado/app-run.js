@@ -1,13 +1,13 @@
 "use strict";
 
 
-app.run(['$rootScope', 'session', '$location', 'richDomain', function ($rootScope, session, $location, richDomain) {
-        //Guardamos la información que hemos obtenido directamente del servidor
-        $rootScope.getContextPath = getContextPath;
+app.run(['session', 'richDomain', function (session, richDomain) {
         richDomain.extend(user);
         session.setUser(user);
+    }]);
 
 
+app.run(['$rootScope', '$location', function ($rootScope, $location) {
         //Obligamos a ir a la página de los datos del titulado si  
         //aun no ha puesto los datos del titulado
         $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {

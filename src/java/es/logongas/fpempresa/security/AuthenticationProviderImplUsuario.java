@@ -56,7 +56,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             }
             
             UsuarioCRUDService usuarioService = (UsuarioCRUDService)crudServiceFactory.getService(Usuario.class);
-            Usuario usuario = usuarioService.readByNaturalKey(credentialImplLoginPassword.getLogin());            
+            Usuario usuario = usuarioService.readOriginalByNaturalKey(credentialImplLoginPassword.getLogin());            
             
             if (usuario!=null) {
                 String plainPassword=credentialImplLoginPassword.getPassword();
@@ -81,12 +81,12 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         Integer idIdentity = (Integer) sid;
         UsuarioCRUDService usuarioService = (UsuarioCRUDService)crudServiceFactory.getService(Usuario.class);
 
-        return usuarioService.read(idIdentity);
+        return usuarioService.readOriginal(idIdentity);
     }
 
     protected Principal getPrincipalByLogin(String login) throws BusinessException {
         UsuarioCRUDService usuarioService = (UsuarioCRUDService)crudServiceFactory.getService(Usuario.class);
-        Identity identity = usuarioService.readByNaturalKey(login);
+        Identity identity = usuarioService.readOriginalByNaturalKey(login);
 
         return identity;
     }

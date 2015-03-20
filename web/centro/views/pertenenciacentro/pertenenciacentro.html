@@ -25,6 +25,7 @@
                         <th style="width:      20%;text-align: center">Provincia</th>
                         <th style="width:      25%;text-align: center">Poblaci&oacute;n</th>
                         <th style="width:      25%;text-align: center">Direccion</th>
+                        <th style="min-width:90px;width:90px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +33,12 @@
                         <td ><a href ng-click="buttonPertenenciaCentro(centro.idCentro)">{{centro.nombre}}</a></td>
                         <td >{{centro.direccion.municipio.provincia.descripcion}}</td>
                         <td >{{centro.direccion.municipio.descripcion}}</td>
-                        <td >{{centro.direccion.getTipoViaDescription()}} {{centro.direccion.nombreVia}} {{centro.direccion.otrosDireccion}}</td>                            
+                        <td >{{centro.direccion.getTipoViaDescription()}} {{centro.direccion.nombreVia}} {{centro.direccion.otrosDireccion}}</td>      
+                        <td>
+                            <div style="text-align:center" >
+                                <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonPertenenciaCentro(centro.idCentro)">Pertenecer</button>                                
+                            </div>
+                        </td>                         
                     </tr>
                 </tbody>
             </table> 

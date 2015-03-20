@@ -14,6 +14,7 @@
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
+            scope.childPrefixRoute="/" + scope.entity.toLowerCase();
             scope.preCreate = function () {
             };
             scope.postCreate = function () {
@@ -280,20 +281,20 @@
                         scope.doInsert().then(function () {
                             //Tenemos OBLIGATORIAMENTE AQUI que calcular el valor del path pq al ser un INSERT
                             //aun no había clave primaria y aqui lo volvemos a calcular
-                            $location.path(getPathChildAction(scope, actionName, entity, pk, parentProperty, parentId)).search({});
+                            $location.path(getPathChildAction(scope, actionName, scope.childPrefixRoute, pk, parentProperty, parentId)).search({});
                         });
                         break;
                     case "EDIT":
                         //Antes de hacer cualquier accion hay que actualizar la fila
                         scope.doUpdate().then(function () {
-                            $location.path(getPathChildAction(scope, actionName, entity, pk, parentProperty, parentId)).search({});
+                            $location.path(getPathChildAction(scope, actionName, scope.childPrefixRoute, pk, parentProperty, parentId)).search({});
                         });
                         break;
                     case "VIEW":
-                        $location.path(getPathChildAction(scope, actionName, entity, pk, parentProperty, parentId)).search({});
+                        $location.path(getPathChildAction(scope, actionName, scope.childPrefixRoute, pk, parentProperty, parentId)).search({});
                         break;
                     case "DELETE":
-                        $location.path(getPathChildAction(scope, actionName, entity, pk, parentProperty, parentId)).search({});
+                        $location.path(getPathChildAction(scope, actionName, scope.childPrefixRoute, pk, parentProperty, parentId)).search({});
                         break;
                     default:
                         throw Error("scope.controllerAction desconocida:" + scope.controllerAction);
@@ -304,14 +305,14 @@
              * Obtiene el path a navegar para una acción "hija" de un formulario
              * @param {Scope} scope El scope para obtener los datos de la PK
              * @param {String} actionName La accion:"new","edit","delete" o "view". Corresponde a las parte del path de las rutas.
-             * @param {String} entity El nombre de la entidad 
+             * @param {String} childPrefixRoute Como empieza la URL de la ruta. Debe incluir el "/"
              * @param {Object} pk El valor de la clave primaria
              * @param {String} parentProperty El nombre de la propiedad padre que se asocia
              * @param {Object} parentId El valor de la propiedad 'parentProperty'
              * @returns {String} El Path a navegar. No se incluye la "#".
              */
-            function getPathChildAction(scope, actionName, entity, pk, parentProperty, parentId) {
-                var path = "/" + entity.toLowerCase() + "/" + actionName;
+            function getPathChildAction(scope, actionName, childPrefixRoute, pk, parentProperty, parentId) {
+                var path = childPrefixRoute + "/" + actionName;
                 if (pk) {
                     path = path + "/" + pk;
                 }

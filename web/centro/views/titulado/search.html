@@ -26,12 +26,18 @@
                     <tr class="data-table__head">
                         <th style="text-align: center">Nombre</th>
                         <th style="width:   15%;text-align: center">Correo</th>
+                        <th style="min-width:90px;width:90px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="usuario in models" class="data-table__row">
                         <td ><a href="#/titulado/view/{{usuario.idIdentity}}">{{usuario.getNombreCompleto()}}</a></td>
-                        <td >{{usuario.email}}</td>                                                   
+                        <td >{{usuario.email}}</td>
+                        <td>
+                            <div style="text-align:center" >
+                                <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonView(usuario.idIdentity)">Ver</button>                                
+                            </div>
+                        </td>                           
                     </tr>
                 </tbody>
             </table> 

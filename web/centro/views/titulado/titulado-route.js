@@ -1,13 +1,13 @@
 app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, crudRoutesProvider) {
 
-        $stateProvider.state('lateralmenu.titulado_search', {
+        $stateProvider.state('lateralmenu.titulado_search_', {
             url: "/titulado/search",
             templateUrl: 'views/titulado/search.html',
             controller: 'TituladoSearchController',
             resolve: crudRoutesProvider.getResolve("Usuario","titulado.direccion.municipio.provincia") 
         });
         
-        $stateProvider.state('lateralmenu.titulado_view', {
+        $stateProvider.state('lateralmenu.titulado_view_', {
             url: "/titulado/view/:id",
             templateUrl: 'views/titulado/detail.html',
             controller: 'TituladoViewController',

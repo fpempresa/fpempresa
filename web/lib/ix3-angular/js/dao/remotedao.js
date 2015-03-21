@@ -43,6 +43,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
                 } else {
                     throw new Error("Fallo al crear la entidad los datos:" + status + "\n" + data);
                 }
@@ -74,6 +76,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                    
                 } else {
                     throw new Error("Fallo al obtener la entidad:" + status + "\n" + data);
                 }
@@ -106,6 +110,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                     
                 } else {
                     throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
                 }
@@ -138,6 +144,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                     
                 } else {
                     throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
                 }
@@ -166,6 +174,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                     
                 } else {
                     throw new Error("Fallo al borrar la entidad:" + status + "\n" + data);
                 }
@@ -239,6 +249,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                     
                 } else {
                     throw new Error("Fallo al buscar los datos:" + status + "\n" + data);
                 }
@@ -271,6 +283,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                     
                 } else {
                     throw new Error("Fallo al obtener la entidad hija:" + status + "\n" + data);
                 }
@@ -303,6 +317,8 @@
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página                     
                 } else {
                     throw new Error("Fallo al obtener los metadatos:" + status + "\n" + data);
                 }

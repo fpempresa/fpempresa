@@ -11,7 +11,7 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
         //Obligamos a ir a la página de los datos del titulado si  
         //aun no ha puesto los datos del titulado
         $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-            if (!$rootScope.user.centro) {
+            if (($rootScope.user) && (!$rootScope.user.centro)) {
                 $location.url("/pertenenciacentro");
             }
         });

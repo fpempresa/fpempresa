@@ -5,12 +5,6 @@ app.controller("ProfesorSearchController", ['$scope', 'genericControllerCrudList
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.prefixRoute="/profesor";
         $scope.page.pageSize = 20;
-        $scope.orderby = [
-            {fieldName: 'nombre', orderDirection: 'ASC'},
-            {fieldName: 'ape1', orderDirection: 'ASC'},
-            {fieldName: 'ape2', orderDirection: 'ASC'}
-        ];
-
 
         $scope.filters['centro.idCentro']=$scope.user.centro.idCentro;
 

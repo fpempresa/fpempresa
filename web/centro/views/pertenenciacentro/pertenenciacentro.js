@@ -3,11 +3,6 @@
 app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams', 'genericControllerCrudList', 'serviceFactory', 'goPage', 'session', function ($scope, $q, controllerParams, genericControllerCrudList, serviceFactory, goPage, session) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
-        $scope.orderby = [
-            {fieldName: 'nombre', orderDirection: 'ASC'},
-            {fieldName: 'direccion.municipio.provincia.descripcion', orderDirection: 'ASC'},
-            {fieldName: 'direccion.municipio.descripcion', orderDirection: 'ASC'}
-        ];
 
         $scope.filters.$gt.idCentro = 0;
         $scope.filters.$ne.idCentro = $scope.user.centro.idCentro; //No debe salir el propio centro al que pertenece.

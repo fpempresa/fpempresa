@@ -9,12 +9,6 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'metadataEntities', function ($scope, genericControllerCrudList, controllerParams, metadataEntities) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
-        $scope.orderby = [
-            {fieldName: 'nombre', orderDirection: 'ASC'},
-            {fieldName: 'ape1', orderDirection: 'ASC'},
-            {fieldName: 'ape2', orderDirection: 'ASC'}
-        ];
-
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
             $scope.service.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {

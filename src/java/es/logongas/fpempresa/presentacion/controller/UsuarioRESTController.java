@@ -70,7 +70,7 @@ public class UsuarioRESTController  extends AbstractRESTController {
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
                 MetaData metaData = metaDataFactory.getMetaData("Usuario");
                 if (metaData == null) {
-                    throw new BusinessException(new BusinessMessage(null, "No existe la entidad 'Usuario'"));
+                    throw new BusinessException("No existe la entidad 'Usuario'");
                 }
                 UsuarioCRUDService usuarioCrudService=(UsuarioCRUDService)crudServiceFactory.getService(metaData.getType());
                
@@ -95,7 +95,7 @@ public class UsuarioRESTController  extends AbstractRESTController {
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
                 MetaData metaData = metaDataFactory.getMetaData("Usuario");
                 if (metaData == null) {
-                    throw new BusinessException(new BusinessMessage(null, "No existe la entidad 'Usuario'"));
+                    throw new BusinessException("No existe la entidad 'Usuario'");
                 }
                 UsuarioCRUDService usuarioCrudService=(UsuarioCRUDService)crudServiceFactory.getService(metaData.getType());
                 JsonReader jsonReader = jsonFactory.getJsonReader(ChangePassword.class);

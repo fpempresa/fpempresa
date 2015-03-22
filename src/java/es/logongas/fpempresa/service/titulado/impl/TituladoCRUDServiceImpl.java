@@ -27,7 +27,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
             Usuario usuario = (Usuario) principal;         
             
             if ((usuario.getTipoUsuario()==TipoUsuario.TITULADO) && (usuario.getTitulado()!=null)) {
-                throw new BusinessException(new BusinessMessage(null, "Ya existe un usuario asociado a ese titulado"));
+                throw new BusinessException("Ya existe un usuario asociado a ese titulado");
             }
             
             

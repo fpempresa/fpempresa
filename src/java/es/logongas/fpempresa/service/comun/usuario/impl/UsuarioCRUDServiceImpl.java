@@ -50,20 +50,20 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public void updatePassword(Usuario usuario, String currentPassword, String newPassword) throws BusinessException {
 
         if (usuario==null) {
-            throw new BusinessException(new BusinessMessage(null, "No hay usuario al que cambiar la contraseña"));
+            throw new BusinessException("No hay usuario al que cambiar la contraseña");
         } else if (getPrincipal()==null) {
-            throw new BusinessException(new BusinessMessage(null, "Debes haber entrado para cambiar la contraseña"));
+            throw new BusinessException("Debes haber entrado para cambiar la contraseña");
         } else if (usuario == getPrincipal()) {
             if (checkPassword(usuario, currentPassword)) {
                 getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
             } else {
-                throw new BusinessException(new BusinessMessage(null, "La contraseña actual no es válida"));
+                throw new BusinessException("La contraseña actual no es válida");
             }
         } else if (getPrincipal().getTipoUsuario()==TipoUsuario.ADMINISTRADOR) {
             //Si eres administrador no necesitas la contraseña actual
             getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
         } else  {
-            throw new BusinessException(new BusinessMessage(null, "Solo un Administrador o el propio usuario puede cambiar la contraseña"));
+            throw new BusinessException("Solo un Administrador o el propio usuario puede cambiar la contraseña");
         }
     }
 
@@ -104,7 +104,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
         //REGLA SEGURIDAD: No se puede modificar el tipo del usuario
          if (usuarioOriginal.getTipoUsuario() != usuario.getTipoUsuario()) {
-             throw new BusinessException(new BusinessMessage(null, "No es posible modificar el tipo del usuario"));
+             throw new BusinessException("No es posible modificar el tipo del usuario");
          }
         
         //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
@@ -112,7 +112,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
             if (getPrincipal().getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
                 //Si el usuario no está aceptado no le dejamos cambiar el estado
-                throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado del usuario ya que TU no estás aceptado"));
+                throw new BusinessException("No es posible modificar el estado del usuario ya que TU no estás aceptado");
             }
 
             switch (getPrincipal().getTipoUsuario()) {
@@ -122,37 +122,37 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 case CENTRO:
                     //Solo puede si no es el mismo 
                     if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
-                        throw new BusinessException(new BusinessMessage(null, "Tu mismo no te puedes modificar el estado"));
+                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
                     }
 
                     if (usuario.getTipoUsuario() != TipoUsuario.CENTRO) {
-                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que no sean de tipo CENTRO"));
+                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo CENTRO");
                     }
 
                     if (usuario.getCentro().getIdCentro() != getPrincipal().getCentro().getIdCentro()) {
-                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que sean de centros distintos al tuyo"));
+                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de centros distintos al tuyo");
                     }
 
                     break;
                 case EMPRESA:
                     //Solo puede si no es el mismo 
                     if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
-                        throw new BusinessException(new BusinessMessage(null, "Tu mismo no te puedes modificar el estado"));
+                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
                     }
 
                     if (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) {
-                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que no sean de tipo EMPRESA"));
+                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo EMPRESA");
                     }
 
                     if (usuario.getEmpresa().getIdEmpresa() != getPrincipal().getEmpresa().getIdEmpresa()) {
-                        throw new BusinessException(new BusinessMessage(null, "No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya"));
+                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya");
                     }
 
                     break;
                 case TITULADO:
-                    throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO"));
+                    throw new BusinessException("No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO");
                 default:
-                    throw new BusinessException(new BusinessMessage(null, "No es posible modificar el estado del usuario"));
+                    throw new BusinessException("No es posible modificar el estado del usuario");
             }
 
         }         

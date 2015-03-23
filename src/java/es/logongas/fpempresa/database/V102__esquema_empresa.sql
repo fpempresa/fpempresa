@@ -3,7 +3,7 @@ CREATE TABLE `empresa` (
   `nombreComercial` varchar(255) DEFAULT NULL,
   `razonSocial` varchar(255) DEFAULT NULL,
   `cif` varchar(9) DEFAULT NULL,
-  `tipoVia` int(11) DEFAULT NULL,
+  `tipoVia` varchar(20) DEFAULT NULL,
   `nombreVia` varchar(255) DEFAULT NULL,
   `otrosDireccion` varchar(255) DEFAULT NULL,
   `codigoPostal` varchar(255) DEFAULT NULL,

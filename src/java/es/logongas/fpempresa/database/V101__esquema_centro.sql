@@ -1,8 +1,8 @@
 CREATE TABLE `centro` (
   `idCentro` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) DEFAULT NULL,
-  `estadoCentro` int(11) DEFAULT NULL,
-  `tipoVia` int(11) DEFAULT NULL,
+  `estadoCentro` varchar(25) DEFAULT NULL,
+  `tipoVia` varchar(20) DEFAULT NULL,
   `nombreVia` varchar(255) DEFAULT NULL,
   `otrosDireccion` varchar(255) DEFAULT NULL,
   `codigoPostal` varchar(255) DEFAULT NULL,

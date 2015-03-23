@@ -12,7 +12,7 @@
         <property name="idioma" >
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">es.logongas.fpempresa.modelo.titulado.Idioma</param>
-                <param name="type">4</param>
+                <param name="type">12</param>
             </type>    
         </property>
         
@@ -21,7 +21,7 @@
         <property name="nivelIdioma" >
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">es.logongas.fpempresa.modelo.titulado.NivelIdioma</param>
-                <param name="type">4</param>
+                <param name="type">12</param>
             </type>    
         </property>        
         

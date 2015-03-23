@@ -12,7 +12,7 @@
     <property name="tipoUsuario" >
       <type name="org.hibernate.type.EnumType">
         <param name="enumClass">es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario</param>
-        <param name="type">4</param>
+        <param name="type">12</param>
       </type>
     </property>
     
@@ -31,7 +31,7 @@
     <property name="estadoUsuario"  >
       <type name="org.hibernate.type.EnumType">
         <param name="enumClass">es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario</param>
-        <param name="type">4</param>
+        <param name="type">12</param>
       </type>
     </property>    
     

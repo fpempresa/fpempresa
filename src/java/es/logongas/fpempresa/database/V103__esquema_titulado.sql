@@ -1,14 +1,14 @@
 CREATE TABLE `titulado` (
   `idTitulado` int(11) NOT NULL AUTO_INCREMENT,
   `fechaNacimiento` datetime DEFAULT NULL,
-  `tipoVia` int(11) DEFAULT NULL,
+  `tipoVia` varchar(25) DEFAULT NULL,
   `nombreVia` varchar(255) DEFAULT NULL,
   `otrosDireccion` varchar(255) DEFAULT NULL,
   `codigoPostal` varchar(255) DEFAULT NULL,
   `idMunicipio` int(11) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   `telefonoAlternativo` varchar(255) DEFAULT NULL,
-  `tipoDocumento` int(11) DEFAULT NULL,
+  `tipoDocumento` varchar(15) DEFAULT NULL,
   `numeroDocumento` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idTitulado`),
   KEY `KEY_TITULADO_MUNICIPIO` (`idMunicipio`),
@@ -32,7 +32,7 @@ CREATE TABLE `experiencialaboral` (
 
 CREATE TABLE `formacionacademica` (
   `idFormacionAcademica` int(11) NOT NULL AUTO_INCREMENT,
-  `tipoFormacionAcademica` int(11) DEFAULT NULL,
+  `tipoFormacionAcademica` varchar(25) DEFAULT NULL,
   `otroCentro` varchar(255) DEFAULT NULL,
   `otroTitulo` varchar(255) DEFAULT NULL,
   `idCentro` int(11) DEFAULT NULL,
@@ -50,9 +50,9 @@ CREATE TABLE `formacionacademica` (
 CREATE TABLE `tituloidioma` (
   `idTituloIdioma` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` datetime DEFAULT NULL,
-  `idioma` int(11) DEFAULT NULL,
+  `idioma` varchar(15) DEFAULT NULL,
   `otroIdioma` varchar(255) DEFAULT NULL,
-  `nivelIdioma` int(11) DEFAULT NULL,
+  `nivelIdioma` varchar(10) DEFAULT NULL,
   `idTitulado` int(11) DEFAULT NULL,
   PRIMARY KEY (`idTituloIdioma`),
   KEY `FK51BC8E0E4C28477E` (`idTitulado`),

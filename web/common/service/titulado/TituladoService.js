@@ -49,7 +49,7 @@
 
                         service.repository.get(id, expands.tituladoExpand).then(function (titulado) {
 
-                            if (expands.expandUsuario) {
+                            if ((expands.expandUsuario) && (titulado)) {
                                 service.usuarioRepository.search({"titulado.idTitulado": titulado.idTitulado}, undefined, expands.usuarioExpand).then(function (usuarios) {
 
                                     if (usuarios.length > 1) {

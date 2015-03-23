@@ -9,8 +9,10 @@ import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
+import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 /**
  *
@@ -39,7 +41,12 @@ public class FormacionAcademica {
 
     @NotNull
     private Titulado titulado;
-
+    
+    @Past
+    @NotNull
+    @Label("Fecha de obtención del título")
+    private Date fecha;
+    
     public FormacionAcademica() {
     }
 
@@ -261,5 +268,19 @@ public class FormacionAcademica {
      */
     public void setTitulado(Titulado titulado) {
         this.titulado = titulado;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

@@ -9,6 +9,10 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 app.controller("ExperienciaLaboralSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);
 
+        $scope.orderby=[
+            {fieldName:"fechaInicio",orderDirection:"ASC"}
+        ];
+
         $scope.search();
     }]);
 

@@ -29,6 +29,6 @@
         <many-to-one name="titulado">
             <column name="idTitulado"  />
         </many-to-one>
-        
+        <property name="fecha" />
     </class>
 </hibernate-mapping>

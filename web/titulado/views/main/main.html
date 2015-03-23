@@ -39,13 +39,15 @@
                         <th style="min-width:140px;text-align: left">Nivel</th>
                         <th style="width:      50%;text-align: left">Titulo</th>
                         <th style="width:      35%;text-align: left">Centro</th>
+                        <th style="min-width:85px;text-align: left">Fecha</th>                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="formacionAcademica in model.formacionesAcademicas" class="data-table__row">
+                    <tr ng-repeat="formacionAcademica in model.formacionesAcademicas | orderBy:'fecha' " class="data-table__row">
                         <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
                         <td >{{formacionAcademica.getNombreTitulo()}}</td>
                         <td >{{formacionAcademica.getNombreCentro()}}</td>
+                        <td >{{formacionAcademica.fecha | ix3Date}}</td>
                     </tr>
                 </tbody>
             </table>                
@@ -60,7 +62,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="experienciaLaboral in model.experienciasLaborales" class="data-table__row">
+                    <tr ng-repeat="experienciaLaboral in model.experienciasLaborales | orderBy:'fechaInicio' " class="data-table__row">
                         <td >{{experienciaLaboral.nombreEmpresa}}</td>
                         <td >{{experienciaLaboral.puestoTrabajo}}</td>
                         <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
@@ -78,7 +80,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="tituloIdioma in model.titulosIdiomas" class="data-table__row">
+                    <tr ng-repeat="tituloIdioma in model.titulosIdiomas | orderBy:'fecha' " class="data-table__row">
                         <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
                         <td >{{tituloIdioma.getNombreIdioma()}}</td>
                         <td >{{tituloIdioma.fecha| ix3Date}}</td>

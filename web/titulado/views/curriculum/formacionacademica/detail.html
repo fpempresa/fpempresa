@@ -59,6 +59,14 @@
                             </select>
                         </div>
                     </div> 
+                    <div ng-show="model.tipoFormacionAcademica"  class="form-group">
+                        <label for="model.fecha" class="col-sm-3  control-label" ix3-label ></label>
+                        <div  class="input-group col-sm-3">
+                            <input ng-model="model.fecha" id="model.fecha" name="model.fecha" class="form-control" type="text"  ix3-date ix3-datepicker required />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>  
+                        <div  class="col-sm-3"></div>
+                    </div>  
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 ">

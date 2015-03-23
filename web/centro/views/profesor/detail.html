@@ -6,8 +6,24 @@
             <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
                     <legend class="form__title">Profesores</legend>
-
-
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation ng-disabled="true">
+                                </div>
+                            </div> 
+                        </div>                          
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="apellidos" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation ng-disabled="true">
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
                     <div class="row" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">
@@ -17,34 +33,7 @@
                                 </div>
                             </div> 
                         </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation ng-disabled="true">
-                                </div>
-                            </div> 
-                        </div>  
-                    </div>
-
-                    <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="ape1" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.ape1" type="text" class="form-control" id="ape1" name="ape1"  ix3-validation ng-disabled="true">
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="ape2" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.ape2" type="text" class="form-control" id="ape2" name="ape2"  ix3-validation ng-disabled="true">
-                                </div>
-                            </div> 
-                        </div>  
-                    </div>
+                    </div>                    
                     <br>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6  form-horizontal" ng-show="(model.tipoUsuario === 'CENTRO' || model.tipoUsuario === 'EMPRESA')">

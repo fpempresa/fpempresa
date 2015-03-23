@@ -5,7 +5,7 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
         richDomain.addEntityTransformer("Usuario", ['metadataEntities', function (metadataEntities) {
                 var Usuario = {
                     getNombreCompleto: function () {
-                        return this.nombre + (this.ape1 ? " " + this.ape1 : "") + (this.ape2 ? " " + this.ape2 : "");
+                        return this.nombre + (this.ape1 ? " " + this.ape1 : "");
                     },
                     getEstadoUsuarioDescription: function () {
                         return metadataEntities.getMetadataProperty(this.$propertyPath + ".estadoUsuario").getValueDescription(this.estadoUsuario);

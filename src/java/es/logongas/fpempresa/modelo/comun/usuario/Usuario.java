@@ -45,12 +45,9 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
     @NotBlank
     private String nombre;
 
-    @Label("1º Apellido")
+    @Label("Apellidos")
     @NotBlank
-    private String ape1;
-
-    @Label("2º Apellido")
-    private String ape2;
+    private String apellidos;
 
     private byte[] foto;
 
@@ -206,31 +203,17 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
     }
 
     /**
-     * @return the ape1
+     * @return the apellidos
      */
-    public String getApe1() {
-        return ape1;
+    public String getApellidos() {
+        return apellidos;
     }
 
     /**
-     * @param ape1 the ape1 to set
+     * @param apellidos the apellidos to set
      */
-    public void setApe1(String ape1) {
-        this.ape1 = ape1;
-    }
-
-    /**
-     * @return the ape2
-     */
-    public String getApe2() {
-        return ape2;
-    }
-
-    /**
-     * @param ape2 the ape2 to set
-     */
-    public void setApe2(String ape2) {
-        this.ape2 = ape2;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     /**

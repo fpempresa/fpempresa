@@ -5,8 +5,7 @@
     <key column="idIdentity"/>
     <property name="email" />
     <property name="nombre"/>
-    <property name="ape1"/>
-    <property name="ape2"/>
+    <property name="apellidos"/>
     <property name="foto"/>
     <property name="password" update="false"/>
     <property name="tipoUsuario" >

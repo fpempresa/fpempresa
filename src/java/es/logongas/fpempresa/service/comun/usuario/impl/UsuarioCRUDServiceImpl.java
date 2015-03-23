@@ -24,7 +24,6 @@ import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Autowired
     MailService mailService;
-    
+
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
     }
@@ -49,9 +48,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     @Override
     public void updatePassword(Usuario usuario, String currentPassword, String newPassword) throws BusinessException {
 
-        if (usuario==null) {
+        if (usuario == null) {
             throw new BusinessException("No hay usuario al que cambiar la contraseña");
-        } else if (getPrincipal()==null) {
+        } else if (getPrincipal() == null) {
             throw new BusinessException("Debes haber entrado para cambiar la contraseña");
         } else if (usuario == getPrincipal()) {
             if (checkPassword(usuario, currentPassword)) {
@@ -59,10 +58,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             } else {
                 throw new BusinessException("La contraseña actual no es válida");
             }
-        } else if (getPrincipal().getTipoUsuario()==TipoUsuario.ADMINISTRADOR) {
+        } else if (getPrincipal().getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
             //Si eres administrador no necesitas la contraseña actual
             getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
-        } else  {
+        } else {
             throw new BusinessException("Solo un Administrador o el propio usuario puede cambiar la contraseña");
         }
     }
@@ -85,7 +84,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             //Al insertar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         } else {
-            if ((getPrincipal()==null) || (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR)) {
+            if ((getPrincipal() == null) || (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR)) {
                 usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
             }
         }
@@ -103,10 +102,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         Usuario usuarioOriginal = getUsuarioDAO().readOriginal(usuario.getIdIdentity());
 
         //REGLA SEGURIDAD: No se puede modificar el tipo del usuario
-         if (usuarioOriginal.getTipoUsuario() != usuario.getTipoUsuario()) {
-             throw new BusinessException("No es posible modificar el tipo del usuario");
-         }
-        
+        if (usuarioOriginal.getTipoUsuario() != usuario.getTipoUsuario()) {
+            throw new BusinessException("No es posible modificar el tipo del usuario");
+        }
+
         //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
         if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
 
@@ -155,30 +154,38 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                     throw new BusinessException("No es posible modificar el estado del usuario");
             }
 
-        }         
-         
-         
-         //REGLA NEGOCIO:Si cambiamos de centro hay que volver a poner el usuario como pendiete de aceptación
-         if (usuario.getTipoUsuario()==TipoUsuario.CENTRO) {
-            if (usuarioOriginal.getCentro().getIdCentro() != usuario.getCentro().getIdCentro()) {
-                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+        }
+
+        //REGLA NEGOCIO:Si cambiamos de centro hay que volver a poner el usuario como pendiente de aceptación
+        if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+            if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
+                if (((usuarioOriginal.getCentro() == null) && (usuario.getCentro() != null))
+                        || ((usuarioOriginal.getCentro() != null) && (usuario.getCentro() == null))
+                        || (usuarioOriginal.getCentro().getIdCentro() != usuario.getCentro().getIdCentro())) {
+                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                }
             }
-         }
-         
-         //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiete de aceptación
-         if (usuario.getTipoUsuario()==TipoUsuario.EMPRESA) {
-            if (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa()) {
-                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+        }
+
+        //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiente de aceptación
+        if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+            if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
+                if (((usuarioOriginal.getEmpresa() == null) && (usuario.getEmpresa() != null))
+                        || ((usuarioOriginal.getEmpresa() != null) && (usuario.getEmpresa() == null))
+                        || (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa())) {
+
+                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                }
             }
-         }         
-         
-         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
-         if (!usuarioOriginal.getEmail().equals(usuario.getEmail())) {
+        }
+
+        //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
+        if (!usuarioOriginal.getEmail()
+                .equals(usuario.getEmail())) {
             usuario.setValidadoEmail(false);
             usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
             sendMailValidacionEMail(usuario);
-         }         
-
+        }
 
         return super.update(usuario);
     }
@@ -193,8 +200,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     private void sendMailValidacionEMail(Usuario usuario) {
         //Enviar el Mail de Verificación
-        
-        
-        
+
     }
 }

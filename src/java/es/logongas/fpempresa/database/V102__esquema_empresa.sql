@@ -7,14 +7,11 @@ CREATE TABLE `empresa` (
   `nombreVia` varchar(255) DEFAULT NULL,
   `otrosDireccion` varchar(255) DEFAULT NULL,
   `codigoPostal` varchar(255) DEFAULT NULL,
-  `idProvincia` int(11) DEFAULT NULL,
   `idMunicipio` int(11) DEFAULT NULL,
   `idCentro` int(11) DEFAULT NULL,
   PRIMARY KEY (`idEmpresa`),
-  KEY `KEY_EMPRESA_PROVINCIA` (`idProvincia`),
   KEY `KEY_EMPRESA_MUNICIPIO` (`idMunicipio`),
-  CONSTRAINT `KEY_EMPRESA_MUNICIPIO` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`idProvincia`),
-  CONSTRAINT `KEY_EMPRESA_PROVINCIA` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),
+  CONSTRAINT `KEY_EMPRESA_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),
   KEY `KEY_EMPRESA_Centro` (`idCentro`),
   CONSTRAINT `KEY_EMPRESA_Centro` FOREIGN KEY (`idCentro`) REFERENCES `centro` (`idCentro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

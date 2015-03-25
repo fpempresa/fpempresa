@@ -106,6 +106,30 @@
                             </div> 
                         </div> 
                     </div> 
+                    
+                    <legend class="form__title" >Centro al que pertenece</legend>
+                    <div class="row"  >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="model.centro.direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.centro.direccion.municipio.provincia" id="model.centro.direccion.municipio.provincia" name="model.centro.direccion.municipio.provincia" class="form-control" ix3-options  >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>                    
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="model.centro" class="col-xs-3 col-sm-6 control-label" >Nombre</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-clear="model.tipoUsuario!=='CENTRO'" ix3-options ix3-validation ix3-options-depend='{"direccion.municipio.provincia":model.centro.direccion.municipio.provincia}' >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div> 
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 ">

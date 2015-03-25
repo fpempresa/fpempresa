@@ -17,6 +17,7 @@
 
 package es.logongas.fpempresa.modelo.empresa;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -43,6 +44,8 @@ public class Empresa {
     @Valid
     private Direccion direccion;
     
+    
+    private Centro centro;
 
     public Empresa() {
     }
@@ -120,6 +123,20 @@ public class Empresa {
      */
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
+    }
+
+    /**
+     * @return the centro
+     */
+    public Centro getCentro() {
+        return centro;
+    }
+
+    /**
+     * @param centro the centro to set
+     */
+    public void setCentro(Centro centro) {
+        this.centro = centro;
     }
     
 }

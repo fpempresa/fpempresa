@@ -28,7 +28,10 @@
                 <column name="idMunicipio"  />
             </many-to-one>
         </component>
-
+        
+        <many-to-one name="centro">
+          <column name="idCentro"/>
+        </many-to-one> 
 
     </class>
 </hibernate-mapping>

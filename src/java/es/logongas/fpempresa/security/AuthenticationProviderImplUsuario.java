@@ -15,6 +15,9 @@
  */
 package es.logongas.fpempresa.security;
 
+import es.logongas.fpempresa.modelo.centro.EstadoCentro;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
+import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.security.model.Identity;
@@ -40,59 +43,66 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
     CRUDServiceFactory crudServiceFactory;
 
     protected final Log log = LogFactory.getLog(getClass());
-    
+
     
     @Override
-    public Principal authenticate(Credential credential) {
-        
-        try {
-            if ((credential instanceof CredentialImplLoginPassword) == false) {
-                return null;
-            }
-            CredentialImplLoginPassword credentialImplLoginPassword = (CredentialImplLoginPassword) credential;
-            
-            if ((credentialImplLoginPassword.getLogin()==null) ||(credentialImplLoginPassword.getLogin().trim().isEmpty())) {
-                return null;
-            }
-            
-            UsuarioCRUDService usuarioService = (UsuarioCRUDService)crudServiceFactory.getService(Usuario.class);
-            Usuario usuario = usuarioService.readOriginalByNaturalKey(credentialImplLoginPassword.getLogin());            
-            
-            if (usuario!=null) {
-                String plainPassword=credentialImplLoginPassword.getPassword();
-                
-                if (usuarioService.checkPassword(usuario,plainPassword)) {
-                    Principal principal=usuario;
-                    return principal;
-                } else {
-                    return null;
+    public Principal authenticate(Credential credential) throws BusinessException {
+
+        if ((credential instanceof CredentialImplLoginPassword) == false) {
+            return null;
+        }
+        CredentialImplLoginPassword credentialImplLoginPassword = (CredentialImplLoginPassword) credential;
+
+        if ((credentialImplLoginPassword.getLogin() == null) || (credentialImplLoginPassword.getLogin().trim().isEmpty())) {
+            return null;
+        }
+
+        UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
+        Usuario usuario = usuarioService.readOriginalByNaturalKey(credentialImplLoginPassword.getLogin());
+
+        if (usuario != null) {
+            String plainPassword = credentialImplLoginPassword.getPassword();
+
+            if (usuarioService.checkPassword(usuario, plainPassword)) {
+
+                if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                    if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
+                        throw new BusinessException("Debes estar 'Aceptado' en el centro para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
+                    } else if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
+                        throw new BusinessException("Debes estar 'Aceptado' en la empresa para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
+                    } else {
+                        throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
+                    }
                 }
+
+                if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) && (usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
+                    throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
+                }
+
+                Principal principal = usuario;
+                return principal;
             } else {
                 return null;
             }
-        } catch (BusinessException ex) {
-            log.info(ex.getBusinessMessages().toString());
+        } else {
             return null;
         }
+
     }
 
     @Override
     public Principal getPrincipalBySID(Serializable sid) throws BusinessException {
         Integer idIdentity = (Integer) sid;
-        UsuarioCRUDService usuarioService = (UsuarioCRUDService)crudServiceFactory.getService(Usuario.class);
+        UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
 
         return usuarioService.readOriginal(idIdentity);
     }
 
     protected Principal getPrincipalByLogin(String login) throws BusinessException {
-        UsuarioCRUDService usuarioService = (UsuarioCRUDService)crudServiceFactory.getService(Usuario.class);
+        UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
         Identity identity = usuarioService.readOriginalByNaturalKey(login);
 
         return identity;
     }
-
-
-
-
 
 }

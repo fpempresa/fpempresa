@@ -5,20 +5,18 @@
  */
 package es.logongas.fpempresa.service.titulado.impl;
 
-import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
-import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.core.BusinessMessage;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
  *
  * @author logongas
  */
-public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> implements TituladoCRUDService {
+public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> implements CRUDService<Titulado, Integer> {
 
     @Override
     public void insert(Titulado titulado) throws BusinessException {

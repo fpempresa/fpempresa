@@ -65,15 +65,41 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
             if (usuarioService.checkPassword(usuario, plainPassword)) {
 
-                if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                    if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
-                        throw new BusinessException("Debes estar 'Aceptado' en el centro para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
-                    } else if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
-                        throw new BusinessException("Debes estar 'Aceptado' en la empresa para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
-                    } else {
-                        throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
-                    }
+                switch (usuario.getTipoUsuario()) {
+                    case ADMINISTRADOR:
+                        
+                        if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
+                        }                        
+                        
+                        break;
+                    case CENTRO:
+                        
+                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getCentro()!=null)) {
+                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" +  usuario.getCentro() + "'");
+                        }
+                        
+                        if ((usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
+                            throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
+                        }
+                        
+                        break;
+                    case EMPRESA:
+                        
+                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getEmpresa()!=null)) {
+                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" +  usuario.getEmpresa() + "'");
+                        }                        
+                        
+                        break;
+                    case TITULADO:
+                        
+                        if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
+                        }
+                        
+                        break;                        
                 }
+                
 
                 if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) && (usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
                     throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");

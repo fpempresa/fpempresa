@@ -16,21 +16,18 @@
  */
 package es.logongas.fpempresa.service.centro.impl;
 
-import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.service.centro.CentroCRUDService;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.core.BusinessMessage;
-import es.logongas.ix3.dao.GenericDAO;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
  *
  * @author logongas
  */
-public class CentroCRUDServiceImpl extends CRUDServiceImpl<Centro, Integer> implements CentroCRUDService {
+public class CentroCRUDServiceImpl extends CRUDServiceImpl<Centro, Integer> implements  CRUDService<Centro, Integer> {
 
     private Usuario getPrincipal() {
         return (Usuario) principal;

@@ -5,7 +5,9 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams
         $scope.page.pageSize = 20;
 
         $scope.filters.$gt.idCentro = 0;
-        $scope.filters.$ne.idCentro = $scope.user.centro.idCentro; //No debe salir el propio centro al que pertenece.
+        if ($scope.user && $scope.user.centro) {
+            $scope.filters.$ne.idCentro = $scope.user.centro.idCentro; //No debe salir el propio centro al que pertenece.
+        }
         $scope.filters.estadoCentro = "PERTENECE_A_FPEMPRESA";
 
         $scope.buttonPertenenciaCentro = function (idCentro) {

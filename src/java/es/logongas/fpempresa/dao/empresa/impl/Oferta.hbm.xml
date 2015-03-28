@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.empresa.Oferta" >
+        
+        <cache usage="read-write" />
+        
+        <id name="idOferta" >
+            <generator class="identity" />
+        </id>
+
+        <many-to-one name="empresa">
+            <column name="idEmpresa"/>
+        </many-to-one> 
+        <property name="puesto" />
+        <property name="descripcion" type="text" />
+
+        <property name="estadoOferta" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.empresa.EstadoOferta</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+        <property name="tipoOferta" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.empresa.TipoOferta</param>
+                <param name="type">12</param>
+            </type>
+        </property>            
+
+        <property name="fecha" type="date" />
+           
+        <many-to-one name="municipio">
+            <column name="idMunicipio"  />
+        </many-to-one>    
+
+
+        <many-to-one name="familia">
+            <column name="idFamilia"  />
+        </many-to-one>    
+
+        <set name="ciclos" table="OfertaCiclo"  cascade="all" inverse="true"  >
+            <key>
+                <column name="idOferta"  />
+            </key>
+            <many-to-many column="IdCiclo" class="es.logongas.fpempresa.modelo.educacion.Ciclo" />
+        </set>
+
+
+    </class>
+</hibernate-mapping>

@@ -52,7 +52,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new BusinessException("No hay usuario al que cambiar la contraseña");
         } else if (getPrincipal() == null) {
             throw new BusinessException("Debes haber entrado para cambiar la contraseña");
-        } else if (usuario == getPrincipal()) {
+        } else if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
             if (checkPassword(usuario, currentPassword)) {
                 getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
             } else {

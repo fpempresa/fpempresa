@@ -38,7 +38,7 @@
                 var locals = {
                     $scope: dialogScope,
                     currentDialog: currentDialog,
-                    $stateParams: params
+                    $stateParams: params || {}
                 };
                 angular.extend(locals, resolve);
                 var controller = $controller(dialogDefinitionObject.controller, locals);
@@ -94,7 +94,7 @@
 
                 angular.forEach(dialogDefinitionObject.resolve, function (value, key) {
                     var locals = {
-                        $stateParams: params
+                        $stateParams:  params || {}
                     }
                     promiseResolves[key] = angular.isString(value) ? $injector.get(value) : $injector.invoke(value, null, locals, key);
                 });

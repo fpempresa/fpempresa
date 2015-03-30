@@ -60,7 +60,7 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         };
 
         $scope.cambiarContrasenya = function () {
-            dialog.create($scope.getContextPath() + "/common/presentation/view/util/cambiarcontrasenya.html", $scope.model);
+            dialog.create('cambiarContrasenya', $scope.model);
         };
 
     }]);

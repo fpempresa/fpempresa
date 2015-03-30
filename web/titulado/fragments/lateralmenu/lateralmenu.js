@@ -15,7 +15,7 @@ app.controller("LateralMenuController", ['$scope', '$state','dialog', function (
         
         
         $scope.cambiarContrasenya=function() {
-            dialog.create($scope.getContextPath()+"/common/presentation/view/util/cambiarcontrasenya.html",$scope.user);
+            dialog.create('cambiarContrasenya',$scope.user);
         }
 
     }]);

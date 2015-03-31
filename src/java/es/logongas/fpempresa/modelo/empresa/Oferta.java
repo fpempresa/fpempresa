@@ -18,6 +18,7 @@ package es.logongas.fpempresa.modelo.empresa;
 
 import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import java.util.Date;
 import java.util.List;
 
@@ -29,21 +30,23 @@ public class Oferta {
     
     private int idOferta;
     
+    private Date fecha;    
+    
     private Empresa empresa;
     
     private String puesto;
     
     private String descripcion;
+
+    private Municipio municipio;    
+    
+    private Familia familia;    
     
     private List<Ciclo> ciclos;
     
-    private EstadoOferta estadoOferta;
-    
-    private Date fecha;
-    
-    private Municipio municipio;
-    
     private TipoOferta tipoOferta;
+    
+    private EstadoOferta estadoOferta;
 
     /**
      * @return the idOferta
@@ -57,6 +60,20 @@ public class Oferta {
      */
     public void setIdOferta(int idOferta) {
         this.idOferta = idOferta;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     /**
@@ -102,34 +119,6 @@ public class Oferta {
     }
 
     /**
-     * @return the ciclos
-     */
-    public List<Ciclo> getCiclos() {
-        return ciclos;
-    }
-
-    /**
-     * @param ciclos the ciclos to set
-     */
-    public void setCiclos(List<Ciclo> ciclos) {
-        this.ciclos = ciclos;
-    }
-
-    /**
-     * @return the estadoOferta
-     */
-    public EstadoOferta getEstadoOferta() {
-        return estadoOferta;
-    }
-
-    /**
-     * @param estadoOferta the estadoOferta to set
-     */
-    public void setEstadoOferta(EstadoOferta estadoOferta) {
-        this.estadoOferta = estadoOferta;
-    }
-
-    /**
      * @return the municipio
      */
     public Municipio getMunicipio() {
@@ -141,6 +130,34 @@ public class Oferta {
      */
     public void setMunicipio(Municipio municipio) {
         this.municipio = municipio;
+    }
+
+    /**
+     * @return the familia
+     */
+    public Familia getFamilia() {
+        return familia;
+    }
+
+    /**
+     * @param familia the familia to set
+     */
+    public void setFamilia(Familia familia) {
+        this.familia = familia;
+    }
+
+    /**
+     * @return the ciclos
+     */
+    public List<Ciclo> getCiclos() {
+        return ciclos;
+    }
+
+    /**
+     * @param ciclos the ciclos to set
+     */
+    public void setCiclos(List<Ciclo> ciclos) {
+        this.ciclos = ciclos;
     }
 
     /**
@@ -158,17 +175,22 @@ public class Oferta {
     }
 
     /**
-     * @return the fecha
+     * @return the estadoOferta
      */
-    public Date getFecha() {
-        return fecha;
+    public EstadoOferta getEstadoOferta() {
+        return estadoOferta;
     }
 
     /**
-     * @param fecha the fecha to set
+     * @param estadoOferta the estadoOferta to set
      */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setEstadoOferta(EstadoOferta estadoOferta) {
+        this.estadoOferta = estadoOferta;
     }
+     
+
     
+
+
+ 
 }

@@ -13,5 +13,9 @@
     <many-to-one name="grado">
       <column name="idGrado"/>
     </many-to-one>
+    <many-to-one name="leyEducativa">
+      <column name="idLeyEducativa"/>
+    </many-to-one>    
+    
   </class>
 </hibernate-mapping>

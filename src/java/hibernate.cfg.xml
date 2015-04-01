@@ -17,6 +17,7 @@
     <!-- BEGIN:Tablas Educacion -->
     <mapping resource="es/logongas/fpempresa/dao/educacion/impl/Familia.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/educacion/impl/Grado.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/educacion/impl/LeyEducativa.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/educacion/impl/Ciclo.hbm.xml"/>
     <!-- END:Tablas Educacion -->
     <!-- BEGIN:Tablas del titulado -->

@@ -42,6 +42,10 @@ public class Ciclo {
     @NotBlank
     private String descripcion;   
     
+    @ValuesList(shortLength=true)
+    @NotNull
+    private LeyEducativa leyEducativa;    
+    
     public Ciclo() {
     }
 
@@ -104,5 +108,19 @@ public class Ciclo {
      */
     public void setGrado(Grado grado) {
         this.grado = grado;
+    }
+
+    /**
+     * @return the leyEducativa
+     */
+    public LeyEducativa getLeyEducativa() {
+        return leyEducativa;
+    }
+
+    /**
+     * @param leyEducativa the leyEducativa to set
+     */
+    public void setLeyEducativa(LeyEducativa leyEducativa) {
+        this.leyEducativa = leyEducativa;
     }
 }

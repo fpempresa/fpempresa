@@ -5,7 +5,11 @@
     function BuscarEmpresaController($scope, genericControllerCrudList, currentDialog, controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 10;
-        angular.extend($scope.filters, currentDialog.params);
+        angular.extend($scope.filters, currentDialog.params.filters);
+
+        $scope.orderby=[
+            {fieldName:"nombreComercial",orderDirection:"ASC"}
+        ];
 
         currentDialog.open({
             width: 600,
@@ -19,9 +23,13 @@
             currentDialog.closeCancel();
         };
 
-        $scope.buttonSeleccionar = function (idEmpresa) {
-            currentDialog.closeOK(idEmpresa);
+        $scope.buttonSeleccionar = function (empresa) {
+            currentDialog.closeOK(empresa);
         };
+        
+        if (currentDialog.params.initialSearch) {
+            $scope.search();
+        }
 
     }
 

@@ -27,7 +27,7 @@
             <column name="idFamilia"  />
         </many-to-one>          
         
-        <set name="ciclos" table="OfertaCiclo"  cascade="all" inverse="true"  >
+        <set name="ciclos" table="OfertaCiclo"  cascade="all" inverse="false"  lazy="false" >
             <key>
                 <column name="idOferta"  />
             </key>
@@ -41,12 +41,7 @@
             </type>
         </property>            
 
-        <property name="estadoOferta" >
-            <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">es.logongas.fpempresa.modelo.empresa.EstadoOferta</param>
-                <param name="type">12</param>
-            </type>
-        </property>
+        <property name="cerrada" />
 
     </class>
 </hibernate-mapping>

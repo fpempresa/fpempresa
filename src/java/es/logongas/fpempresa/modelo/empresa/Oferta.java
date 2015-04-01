@@ -19,8 +19,11 @@ package es.logongas.fpempresa.modelo.empresa;
 import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
+import es.logongas.ix3.core.annotations.ValuesList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Oferta de una empresa
@@ -30,23 +33,30 @@ public class Oferta {
     
     private int idOferta;
     
-    private Date fecha;    
+    private Date fecha;
     
+    @NotNull
     private Empresa empresa;
     
+    @NotEmpty
     private String puesto;
     
+    @NotEmpty
     private String descripcion;
 
+    @NotNull
     private Municipio municipio;    
     
+    @NotNull
+    @ValuesList(shortLength = true)
     private Familia familia;    
     
-    private List<Ciclo> ciclos;
+    private Set<Ciclo> ciclos;
     
+    @NotNull
     private TipoOferta tipoOferta;
     
-    private EstadoOferta estadoOferta;
+    private boolean cerrada;
 
     /**
      * @return the idOferta
@@ -149,14 +159,14 @@ public class Oferta {
     /**
      * @return the ciclos
      */
-    public List<Ciclo> getCiclos() {
+    public Set<Ciclo> getCiclos() {
         return ciclos;
     }
 
     /**
      * @param ciclos the ciclos to set
      */
-    public void setCiclos(List<Ciclo> ciclos) {
+    public void setCiclos(Set<Ciclo> ciclos) {
         this.ciclos = ciclos;
     }
 
@@ -175,18 +185,20 @@ public class Oferta {
     }
 
     /**
-     * @return the estadoOferta
+     * @return the cerrada
      */
-    public EstadoOferta getEstadoOferta() {
-        return estadoOferta;
+    public boolean isCerrada() {
+        return cerrada;
     }
 
     /**
-     * @param estadoOferta the estadoOferta to set
+     * @param cerrada the cerrada to set
      */
-    public void setEstadoOferta(EstadoOferta estadoOferta) {
-        this.estadoOferta = estadoOferta;
+    public void setCerrada(boolean cerrada) {
+        this.cerrada = cerrada;
     }
+
+
      
 
     

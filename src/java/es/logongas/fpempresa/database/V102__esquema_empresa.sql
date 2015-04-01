@@ -26,7 +26,7 @@ CREATE TABLE `oferta` (
     `idMunicipio` integer DEFAULT NULL,
     `idFamilia` integer DEFAULT NULL,
     `tipoOferta` varchar(20) DEFAULT NULL,
-    `estadoOferta` varchar(20) DEFAULT NULL,
+    `cerrada` int(11) DEFAULT NULL,
     PRIMARY KEY  (`idOferta`),
     KEY `KEY_OFERTA_EMPRESA`   (`idEmpresa`)  ,CONSTRAINT `KEY_OFERTA_EMPRESA`   FOREIGN KEY (`idEmpresa`)   REFERENCES `empresa`   (`idEmpresa`),
     KEY `KEY_OFERTA_MUNICIPIO` (`idMunicipio`),CONSTRAINT `KEY_OFERTA_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`),

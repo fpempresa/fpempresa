@@ -3,13 +3,31 @@
         <div>
             <legend class="form__title">Ofertas</legend>
             <div class="row">
-                <div class="col-xs-8"> 
-                    <input ng-model="filters.$lliker.nombreComercial" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre comercial"  > 
-                </div>
-                <div class="col-xs-4"> 
-                    <input ng-model="filters.cif" type="text" class="form-control" id="nombre" name="nombre" placeholder="CIF"  > 
+                <div class="col-xs-12"> 
+                    <input ng-model="filters.$lliker.puesto" type="text" class="form-control" id="puesto" name="puesto"  placeholder="Puesto"  > 
+                </div>          
+            </div>  
+            <br>
+            <div class="row">
+                <div class="col-xs-12"> 
+                    <input ng-model="filters.$lliker['empresa.nombreComercial']" type="text" class="form-control"  id="nombreComercial" name="nombreComercial" placeholder="Empresa"  > 
                 </div>             
-            </div>          
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-3"> 
+                    <div  class="input-group ">
+                        <input ng-model="filters.$ge.fecha" type="text" class="form-control"  id="fechaDesde" name="fechaDesde" placeholder="fecha desde" ix3-date ix3-datepicker > 
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>                     
+                </div> 
+                <div class="col-xs-3"> 
+                    <div  class="input-group ">                    
+                        <input ng-model="filters.$le.fecha" type="text" class="form-control"  id="fechaHasta" name="fechaHasta" placeholder="fecha hasta" ix3-date ix3-datepicker > 
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div> 
+                </div> 
+            </div>
             <br>
             <div class="row" >
                 <div class="col-xs-12 ">
@@ -21,20 +39,20 @@
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th ix3-order-field-names="nombreComercial" style="width:   40%;text-align: center">Nombre Comercial</th>
-                        <th ix3-order-field-names="cif" style="width:   20%;text-align: center">CIF</th>
-                        <th ix3-order-field-names="direccion.municipio.descripcion" style="width:   30%;text-align: center">Municipio</th>
+                        <th ix3-order-field-names="puesto" style="width:   40%;text-align: center">Puesto</th>
+                        <th ix3-order-field-names="empresa.nombreComercial" style="width:   20%;text-align: center">Empresa</th>
+                        <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
                         <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="empresa in models" class="data-table__row">
-                        <td ><a href ng-click="buttonEdit(empresa.idEmpresa)">{{empresa.nombreComercial}}</a></td>
-                        <td >{{empresa.cif}}</td>
-                        <td >{{empresa.direccion.municipio.descripcion}}</td>                   
+                    <tr ng-repeat="model in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(model.idOferta)">{{model.puesto}}</a></td>
+                        <td >{{model.empresa.nombreComercial}}</td>
+                        <td >{{model.familia.descripcion}}</td>                   
                         <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(empresa.idEmpresa)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(empresa.idEmpresa)">Editar</button>
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(model.idOferta)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(model.idOferta)">Editar</button>
                         </td>                             
                     </tr>
                 </tbody>
@@ -43,8 +61,8 @@
                 <div class="col-sm-12">
                     <ix3-pagination></ix3-pagination>
                 </div>
-            </div>            
-            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nueva Empresa</button>
+            </div>  
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nueva Oferta</button>
         </div>
     </div>
 </div>

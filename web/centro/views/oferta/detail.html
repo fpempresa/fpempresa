@@ -5,15 +5,40 @@
             <ix3-business-messages></ix3-business-messages>
             <form name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend class="form__title">Empresa</legend>
-
+                    <legend class="form__title">Oferta</legend>
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label  class="col-xs-3  control-label" >Tipo de Oferta</label>
+                                <div class="col-xs-9 ">
+                                    <div class="radio" ng-repeat="value in tiposOferta">
+                                        <label>
+                                            <input ng-model="model.tipoOferta" type="radio" name="{{value.key}}" id="{{value.key}}" ng-value="value.key">{{value.description}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label  class="col-xs-3  control-label" >Empresa</label>
+                                <div  class="input-group col-xs-9" ng-click="buscarEmpresa()" style="cursor: pointer">
+                                    <span class="input-group-addon"  ><i class="glyphicon glyphicon-search"></i></span>
+                                    <input ng-model="model.empresa.nombreComercial" class="form-control" type="text" ng-keypress="buscarEmpresa()"  ng-readonly="true" placeholder="Seleccione la empresa que ofrece la oferta" style="background-color: #FFFFFF;cursor: pointer" />
+                                </div> 
+                            </div> 
+                        </div>
+                    </div>
 
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 
                             <div class="form-group">
-                                <label for="nombreComercial" class="col-xs-3  control-label" ix3-label></label>
+                                <label for="puesto" class="col-xs-3  control-label" ix3-label></label>
                                 <div class="col-xs-9 ">
-                                    <input ng-model="model.nombreComercial" type="text" class="form-control" id="nombreComercial" name="nombreComercial"  ix3-validation>
+                                    <input ng-model="model.puesto" type="text" class="form-control" id="puesto" name="puesto"  ix3-validation>
                                 </div>
                             </div> 
                         </div>
@@ -22,33 +47,31 @@
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 
                             <div class="form-group">
-                                <label for="razonSocial" class="col-xs-3  control-label" ix3-label></label>
-                                <div class="col-xs-9 ">
-                                    <input ng-model="model.razonSocial" type="text" class="form-control" id="razonSocial" name="razonSocial"  ix3-validation>
+                                <label for="descripcion" class="col-xs-3  control-label" ix3-label></label>
+                                <div class="col-xs-9">
+                                    <textarea ng-model="model.descripcion" class="form-control" rows="10"  id="descripcion" name="descripcion"  ix3-validation></textarea>
                                 </div>
                             </div> 
                         </div>
-                    </div>
-                    
+                    </div>  
                     <div class="row" >
-                        <div class="col-xs-12 form-horizontal"> 
-                            <div class="form-group">
-                                <label for="cif" class="col-xs-3  control-label" ix3-label></label>
-                                <div class="col-xs-3 ">
-                                    <input ng-model="model.cif" type="text" class="form-control" id="cif" name="cif"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>                    
-                    
-                    <legend class="form__title">Direcci&oacute;n</legend>
-
+                        <div class="col-xs-12 col-xs-12 col-xs-offset-3  form-horizontal">
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="model.cerrada" type="checkbox" >
+                                    Oferta cerrada. Ya no se permitir&aacute; a&ntilde;adir nuevos candidatos.
+                                </label>
+                            </div>
+                        </div> 
+                    </div>                     
+                    <br>
+                    <legend class="form__title">Municipio del lugar de trabajo</legend>
                     <div class="row" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">
-                                <label for="direccion.tipoVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <label for="municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.direccion.tipoVia" id="direccion.tipoVia" name="direccion.tipoVia" class="form-control" ix3-options ix3-validation >
+                                    <select ng-model="model.municipio.provincia" id="municipio.provincia" name="municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'" ix3-validation >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>
@@ -56,56 +79,59 @@
                         </div>
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">
-                                <label for="direccion.nombreVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <label for="municipio" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.direccion.nombreVia" type="text" class="form-control" id="direccion.nombreVia" name="direccion.nombreVia"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>  
-                    </div> 
-
-
-                    <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.otrosDireccion" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.direccion.otrosDireccion" type="text" class="form-control" id="direccion.otrosDireccion" name="direccion.otrosDireccion"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.codigoPostal" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.direccion.codigoPostal" type="text" class="form-control" id="direccion.codigoPostal" name="direccion.codigoPostal"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>  
-                    </div>
-
-                    <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.direccion.municipio.provincia" id="direccion.municipio.provincia" name="direccion.municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'" ix3-validation >
-                                        <option value="">-- Elige Opcion --</option>
-                                    </select>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.municipio" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.direccion.municipio" id="direccion.municipio" name="direccion.municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.direccion.municipio.provincia}" >
+                                    <select ng-model="model.municipio" id="municipio" name="municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.municipio.provincia}" >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>
                             </div> 
                         </div> 
                     </div> 
+                    <legend class="form__title">Destinado a personas de</legend>                    
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label for="familia" class="col-sm-3  control-label" ix3-label ></label>
+                                <div class="col-sm-7">
+                                    <select ng-model="model.familia" id="familia" name="familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div>    
+
+
+
+
+                    <div class="row" >
+                        <div class="col-xs-12  form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-3  control-label"  >Ciclos</label>
+                                <div class="col-xs-9">
+                                    <table class="table table-bordered">
+                                        <thead>                        
+                                            <tr class="data-table__head">
+                                                <th style="width:   1%;text-align: center">&nbsp;</th>
+                                                <th style="width:   55%;text-align: center">Ciclo</th>
+                                                <th style="width:   25%;text-align: center">Grado</th>
+                                                <th style="width:   20%;text-align: center">Ley Educativa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ciclo in ciclos" class="data-table__row">
+                                                <td ><input type="checkbox" checklist-model="model.ciclos" checklist-value="ciclo" checklist-comparator="compareCiclo"></td>
+                                                <td >{{ciclo.descripcion}}</td>
+                                                <td >{{ciclo.grado.toString()}}</td>                   
+                                                <td >{{ciclo.leyEducativa.toString()}}</td>                             
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
+                            </div> 
+                        </div> 
+                    </div>                     
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 ">

@@ -38,6 +38,16 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         };
 
 
+        $scope.checkTodosCiclos=function(todosCiclos) {
+            
+            if (todosCiclos) {
+                $scope.model.ciclos=angular.copy($scope.ciclos);
+            } else {
+               $scope.model.ciclos=[]; 
+            }
+            
+        };
+
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
             
             if (newFamilia===oldFamilia) {

@@ -22,7 +22,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
     public void insert(Titulado titulado) throws BusinessException {
 
         try {
-            Usuario usuario = (Usuario) principal;         
+            Usuario usuario = (Usuario) principalLocator.getPrincipal();         
             
             if ((usuario.getTipoUsuario()==TipoUsuario.TITULADO) && (usuario.getTitulado()!=null)) {
                 throw new BusinessException("Ya existe un usuario asociado a ese titulado");

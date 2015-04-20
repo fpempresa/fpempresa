@@ -31,7 +31,7 @@ import es.logongas.ix3.service.impl.CRUDServiceImpl;
 public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> implements CRUDService<Empresa, Integer> {
 
     private Usuario getPrincipal() {
-        return (Usuario) principal;
+        return (Usuario) principalLocator.getPrincipal();
     }
 
     @Override

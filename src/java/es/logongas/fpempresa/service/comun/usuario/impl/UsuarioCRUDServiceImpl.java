@@ -42,7 +42,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     private Usuario getPrincipal() {
-        return (Usuario) principal;
+        return (Usuario) principalLocator.getPrincipal();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public void insert(Usuario usuario) throws BusinessException {
-
+        
         if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
             //Al insertar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);

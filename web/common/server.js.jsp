@@ -6,7 +6,6 @@
 <%@page import="java.io.StringWriter"%>
 <%@page import="es.logongas.ix3.web.json.JsonWriter"%>
 <%@page import="es.logongas.ix3.web.json.JsonFactory"%>
-<%@page import="es.logongas.ix3.security.util.SecurityUtil"%>
 <%@page import="es.logongas.ix3.security.authentication.Principal"%>
 <%@page import="org.springframework.beans.factory.config.AutowireCapableBeanFactory"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>

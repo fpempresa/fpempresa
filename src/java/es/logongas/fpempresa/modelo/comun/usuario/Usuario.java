@@ -19,9 +19,14 @@ package es.logongas.fpempresa.modelo.comun.usuario;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
+import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.security.authentication.Principal;
+import es.logongas.ix3.service.rules.ActionRule;
+import es.logongas.ix3.service.rules.ConstraintRule;
+import es.logongas.ix3.service.rules.RuleContext;
+import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import es.logongas.ix3.web.json.annotations.ForbiddenExport;
 import es.logongas.ix3.web.json.annotations.ForbiddenImport;
 import javax.validation.constraints.AssertTrue;
@@ -157,7 +162,142 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         //Nunca se retorna el Hash de la contraseña
         usuario.setPassword(null);
     }
+    
+    
+    @ConstraintRule(message="No es posible modificar el tipo del usuario de '${originalEntity?.tipoUsuario?.toString()}' a '${entity?.tipoUsuario?.toString()}'",groups=RuleGroupPredefined.PreUpdate.class)
+    private boolean isModificadoTipoUsuario(RuleContext<Usuario> ruleContext) {
+        if (ruleContext.getOriginalEntity().getTipoUsuario() != ruleContext.getEntity().getTipoUsuario()) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    @ConstraintRule(message="Error en el sistema de mensajes",groups=RuleGroupPredefined.PreUpdate.class)
+    private boolean isModificadosValoresUsuario(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario usuario=ruleContext.getEntity();
+        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
+        Usuario principal=(Usuario)ruleContext.getPrincipal();        
+        
+        //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
+        if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
 
+            if (principal.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                //Si el usuario no está aceptado no le dejamos cambiar el estado
+                throw new BusinessException("No es posible modificar el estado del usuario ya que TU no estás aceptado");
+            }
+
+            switch (principal.getTipoUsuario()) {
+                case ADMINISTRADOR:
+                    //No es necesario hace nada pq el administrador siempre puede modificarlo
+                    break;
+                case CENTRO:
+                    //Solo puede si no es el mismo 
+                    if (usuario.getIdIdentity() == principal.getIdIdentity()) {
+                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
+                    }
+
+                    if (usuario.getTipoUsuario() != TipoUsuario.CENTRO) {
+                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo CENTRO");
+                    }
+
+                    if (usuario.getCentro().getIdCentro() != principal.getCentro().getIdCentro()) {
+                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de centros distintos al tuyo");
+                    }
+
+                    break;
+                case EMPRESA:
+                    //Solo puede si no es el mismo 
+                    if (usuario.getIdIdentity() == principal.getIdIdentity()) {
+                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
+                    }
+
+                    if (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) {
+                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo EMPRESA");
+                    }
+
+                    if (usuario.getEmpresa().getIdEmpresa() != principal.getEmpresa().getIdEmpresa()) {
+                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya");
+                    }
+
+                    break;
+                case TITULADO:
+                    throw new BusinessException("No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO");
+                default:
+                    throw new BusinessException("No es posible modificar el estado del usuario");
+            }
+
+        }        
+        
+        
+        return true;
+    }  
+    
+    
+    @ActionRule(groups=RuleGroupPredefined.PreInsert.class)
+    private void estadoInicialDelUsuario(RuleContext<Usuario> ruleContext) {
+        Usuario usuario=ruleContext.getEntity();
+        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
+        Usuario principal=(Usuario)ruleContext.getPrincipal();
+        
+        
+        if ((principal!=null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+            if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) || (usuario.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            } else {
+                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+            }  
+        } else {
+            if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
+                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+            } else {
+                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            }
+        }      
+        
+    }
+    
+    @ActionRule(groups=RuleGroupPredefined.PreUpdate.class)
+    private void pasarAPendienteAlCambiarDeCentro(RuleContext<Usuario> ruleContext) {
+        Usuario usuario=ruleContext.getEntity();
+        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
+        Usuario principal=(Usuario)ruleContext.getPrincipal();
+        
+        if (principal.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+            if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
+                if (((usuarioOriginal.getCentro() == null) && (usuario.getCentro() != null))
+                        || ((usuarioOriginal.getCentro() != null) && (usuario.getCentro() == null))
+                        || (usuarioOriginal.getCentro().getIdCentro() != usuario.getCentro().getIdCentro())) {
+                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                }
+            }
+        }        
+    }
+    
+    @ActionRule(groups=RuleGroupPredefined.PreUpdate.class)
+    private void pasarAPendienteAlCambiarDeEmpresa(RuleContext<Usuario> ruleContext) {
+        Usuario usuario=ruleContext.getEntity();
+        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
+        Usuario principal=(Usuario)ruleContext.getPrincipal();
+        
+        
+        //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiente de aceptación
+        if (principal.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+            if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
+                if (((usuarioOriginal.getEmpresa() == null) && (usuario.getEmpresa() != null))
+                        || ((usuarioOriginal.getEmpresa() != null) && (usuario.getEmpresa() == null))
+                        || (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa())) {
+
+                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                }
+            }
+        }        
+    }
+    
+    
+    
+    
+    
     /**
      * @return the titulado
      */

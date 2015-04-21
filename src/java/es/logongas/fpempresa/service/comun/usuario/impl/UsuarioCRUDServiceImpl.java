@@ -80,14 +80,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     @Override
     public void insert(Usuario usuario) throws BusinessException {
         
-        if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
-            //Al insertar un usuario de tipo ADMINISTRADOR o TITULADO siempre se inserta como Aceptado
-            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-        } else {
-            if ((getPrincipal() == null) || (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR)) {
-                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-            }
-        }
+
 
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
         usuario.setValidadoEmail(false);
@@ -101,83 +94,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public boolean update(Usuario usuario) throws BusinessException {
         Usuario usuarioOriginal = getUsuarioDAO().readOriginal(usuario.getIdIdentity());
 
-        //REGLA SEGURIDAD: No se puede modificar el tipo del usuario
-        if (usuarioOriginal.getTipoUsuario() != usuario.getTipoUsuario()) {
-            throw new BusinessException("No es posible modificar el tipo del usuario");
-        }
-
-        //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
-        if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
-
-            if (getPrincipal().getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                //Si el usuario no está aceptado no le dejamos cambiar el estado
-                throw new BusinessException("No es posible modificar el estado del usuario ya que TU no estás aceptado");
-            }
-
-            switch (getPrincipal().getTipoUsuario()) {
-                case ADMINISTRADOR:
-                    //No es necesario hace nada pq el administrador siempre puede modificarlo
-                    break;
-                case CENTRO:
-                    //Solo puede si no es el mismo 
-                    if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
-                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
-                    }
-
-                    if (usuario.getTipoUsuario() != TipoUsuario.CENTRO) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo CENTRO");
-                    }
-
-                    if (usuario.getCentro().getIdCentro() != getPrincipal().getCentro().getIdCentro()) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de centros distintos al tuyo");
-                    }
-
-                    break;
-                case EMPRESA:
-                    //Solo puede si no es el mismo 
-                    if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
-                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
-                    }
-
-                    if (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo EMPRESA");
-                    }
-
-                    if (usuario.getEmpresa().getIdEmpresa() != getPrincipal().getEmpresa().getIdEmpresa()) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya");
-                    }
-
-                    break;
-                case TITULADO:
-                    throw new BusinessException("No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO");
-                default:
-                    throw new BusinessException("No es posible modificar el estado del usuario");
-            }
-
-        }
-
-        //REGLA NEGOCIO:Si cambiamos de centro hay que volver a poner el usuario como pendiente de aceptación
-        if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
-            if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
-                if (((usuarioOriginal.getCentro() == null) && (usuario.getCentro() != null))
-                        || ((usuarioOriginal.getCentro() != null) && (usuario.getCentro() == null))
-                        || (usuarioOriginal.getCentro().getIdCentro() != usuario.getCentro().getIdCentro())) {
-                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                }
-            }
-        }
-
-        //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiente de aceptación
-        if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
-            if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
-                if (((usuarioOriginal.getEmpresa() == null) && (usuario.getEmpresa() != null))
-                        || ((usuarioOriginal.getEmpresa() != null) && (usuario.getEmpresa() == null))
-                        || (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa())) {
-
-                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                }
-            }
-        }
 
         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
         if (!usuarioOriginal.getEmail()

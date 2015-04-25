@@ -68,6 +68,17 @@
     </target>
 
     <target name="-pre-dist" depends="-pre-dist-configureProduccion">
+<!--	
+		<exec executable="./node/bin/node.exe" osfamily="windows">
+			<arg value="-e"/>
+			<arg value="require('grunt').tasks(['default']);"/>
+		</exec>
+		
+		<exec executable="./node/bin/node" osfamily="linux">
+			<arg value="-e"/>
+			<arg value="require('grunt').tasks(['default']);"/>
+		</exec>	
+		-->
     </target>
 
     <target name="-post-dist" >

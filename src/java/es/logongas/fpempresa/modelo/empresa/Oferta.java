@@ -20,6 +20,9 @@ import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.ix3.core.annotations.ValuesList;
+import es.logongas.ix3.service.rules.ConstraintRule;
+import es.logongas.ix3.service.rules.RuleContext;
+import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
@@ -58,6 +61,10 @@ public class Oferta {
     
     private boolean cerrada;
 
+    public Oferta() {
+        this.tipoOferta=TipoOferta.LABORAL;
+    }
+    
     /**
      * @return the idOferta
      */
@@ -199,8 +206,24 @@ public class Oferta {
     }
 
 
-     
+    @ConstraintRule(message = "El tipo de oferta debe ser laboral",groups = RuleGroupPredefined.PostSave.class)
+    private boolean isTipoOfertaLaboral(RuleContext ruleContext) {
+        if (this.tipoOferta!=TipoOferta.LABORAL) {
+            return false;
+        } 
+        
+        return true;
+    }
 
+    
+    @ConstraintRule(message = "Es necesario indicar al menos un ciclo formativo",groups = RuleGroupPredefined.PostSave.class)
+    private boolean isCicloRequerido(RuleContext ruleContext) {
+        if ((this.ciclos==null) || (this.ciclos.isEmpty())) {
+            return false;
+        } 
+        
+        return true;
+    }    
     
 
 

@@ -242,11 +242,9 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         
         
         if ((principal!=null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
-            if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) || (usuario.getTipoUsuario() == TipoUsuario.EMPRESA)) {
-                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-            } else {
+            if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
                 usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-            }  
+            }
         } else {
             if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
                 usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);

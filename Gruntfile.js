@@ -1,47 +1,39 @@
 module.exports = function (grunt) {
- 
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
- 
-        clean: ["dist", '.tmp'],
- 
-        copy: {
-            main: {
-                expand: true,
-                cwd: 'app/',
-                src: ['**', '!js/**', '!lib/**', '!**/*.css'],
-                dest: 'dist/'
-            },
-            shims: {
-                expand: true,
-                cwd: 'app/lib/webshim/shims',
-                src: ['**'],
-                dest: 'dist/js/shims'
-            }
-        },
- 
-        rev: {
-            files: {
-                src: ['dist/**/*.{js,css}', '!dist/js/shims/**']
-            }
-        },
- 
+        clean: ['.tmp'],
         useminPrepare: {
-            html: 'app/index.html'
-        },
- 
-        usemin: {
-            html: ['dist/index.html']
-        },
- 
-        uglify: {
+            html: 'web/**/*.html',
             options: {
-                report: 'min',
-                mangle: false
+                dest: 'build/web'
             }
-        }
+        },
+        concat: {
+            options: {
+                separator: ';'
+            }
+        },
+        uglify: {
+
+        },
+        cssmin: {
+
+        },
+        rev: {
+
+        },        
+        usemin: {
+            html: ['build/web/**/*.html'],
+            options: {
+                assetsDirs: ['build/web/**']
+            }
+        },
+        
+
+
     });
- 
+
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -49,9 +41,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-rev');
     grunt.loadNpmTasks('grunt-usemin');
- 
-    // Tell Grunt what to do when we type "grunt" into the terminal
+
+
     grunt.registerTask('default', [
-        'copy', 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin'
+        'useminPrepare', 'concat', 'uglify','cssmin','usemin'
     ]);
 };

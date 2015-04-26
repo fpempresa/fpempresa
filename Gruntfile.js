@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         useminPrepare: {
             html: 'web/**/*.html',
             options: {
-                dest: 'build/web'
+                dest: 'web'
             }
         },
         concat: {
@@ -24,9 +24,9 @@ module.exports = function (grunt) {
 
         },        
         usemin: {
-            html: ['build/web/**/*.html'],
+            html: ['web/**/*.html'],
             options: {
-                assetsDirs: ['build/web/**']
+                assetsDirs: ['web/**']
             }
         },
         

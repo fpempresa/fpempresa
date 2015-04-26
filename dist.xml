@@ -74,7 +74,7 @@
         <delete dir="${DEP_DIR}" />
     </target>
 
-    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="-set-os,-exec-grunt-linux,-exec-grunt-windows" >       
+    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="" >       
         <!-- Poner los datos de la conexión de producción -->
         <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
             <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>

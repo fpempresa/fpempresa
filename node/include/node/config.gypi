@@ -31,7 +31,7 @@
                  'node_use_perfctr': 'false',
                  'openssl_no_asm': 0,
                  'python': '/data/opt/bin/python',
-                 'target_arch': 'x64',
+                 'target_arch': 'ia32',
                  'uv_library': 'static_library',
                  'uv_parent_path': '/deps/uv/',
                  'uv_use_dtrace': 'false',

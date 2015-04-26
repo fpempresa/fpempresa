@@ -95,7 +95,7 @@
     </target>
 
     <target name="-exec-grunt-linux" if="linuxos">	
-        <exec executable="./node/bin/node32" >
+        <exec executable="./node/bin/node64" >
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>

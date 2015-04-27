@@ -43,7 +43,7 @@
                 <equals arg1="${APP_ENVIRONMENT}" arg2="PRUEBAS" />
                 <then>
                     <git command="fetch" options="origin" dir="../ix3" />
-                    <git command="checkout" options=" ${ix3.pruebas.branch} " dir="../ix3" />
+                    <git command="checkout" options="-b ${ix3.pruebas.branch} origin/${ix3.pruebas.branch}" dir="../ix3" />
                 </then>
             </elseif>                      
             <else>

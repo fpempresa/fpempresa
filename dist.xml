@@ -43,7 +43,7 @@
                 <equals arg1="${APP_ENVIRONMENT}" arg2="PRUEBAS" />
                 <then>
                     <git command="fetch" options="origin" dir="../ix3" />
-                    <git command="checkout" options="-b ${ix3.pruebas.branch} origin/${ix3.pruebas.branch}" dir="../ix3" />
+                    <git command="checkout" options=" ${ix3.pruebas.branch} " dir="../ix3" />
                 </then>
             </elseif>                      
             <else>
@@ -74,7 +74,7 @@
         <delete dir="${DEP_DIR}" />
     </target>
 
-    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="" >       
+    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="-set-os,-exec-grunt-linux,-exec-grunt-windows" >       
         <!-- Poner los datos de la conexión de producción -->
         <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
             <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
@@ -101,7 +101,7 @@
         </exec>
     </target>
     <target name="-exec-grunt-windows" if="windowsos">
-        <exec executable="./node/bin/node32.exe" os="windows">
+        <exec executable="./node/bin/node64.exe" >
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>

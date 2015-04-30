@@ -38,7 +38,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 message: 'El registro de Empresas no está habilitado',
                 rule: function () {
                     if ($scope.model.tipoUsuario === "EMPRESA") {
-                        return false;
+                        return true;
                     } else {
                         return true;
                     }

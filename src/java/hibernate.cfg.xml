@@ -9,25 +9,37 @@
     <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
     <property name="hibernate.cache.use_second_level_cache">true</property>
     <property name="hibernate.cache.use_query_cache">true</property>
-    <!-- Tablas del titulado -->
+    <!-- BEGIN:Tablas Comunes -->
+    <mapping resource="es/logongas/fpempresa/dao/comun/geo/impl/Provincia.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/geo/impl/Municipio.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/comun/usuario/impl/Usuario.hbm.xml"/>
+    <!-- END:Tablas Comunes -->
+    <!-- BEGIN:Tablas Educacion -->
+    <mapping resource="es/logongas/fpempresa/dao/educacion/impl/Familia.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/educacion/impl/Grado.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/educacion/impl/LeyEducativa.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/educacion/impl/Ciclo.hbm.xml"/>
+    <!-- END:Tablas Educacion -->
+    <!-- BEGIN:Tablas del titulado -->
     <mapping resource="es/logongas/fpempresa/dao/titulado/impl/Titulado.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/titulado/impl/TituloIdioma.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/titulado/impl/ExperienciaLaboral.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/titulado/impl/FormacionAcademica.hbm.xml"/>
-    <!-- Tablas sobre el centro -->
+    <!-- END:Tablas del titulado -->
+    <!-- BEGIN:Tablas sobre el centro -->
     <mapping resource="es/logongas/fpempresa/dao/centro/impl/Centro.hbm.xml"/>
-    <!-- Tablas comunes -->
-    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Usuario.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Provincia.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Municipio.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Familia.hbm.xml"/>
-    <mapping resource="es/logongas/fpempresa/dao/comun/impl/Ciclo.hbm.xml"/>
-    <!-- Definición de la seguridad -->
+    <!-- END:Tablas sobre el centro -->
+    <!-- BEGIN:Tablas sobre la empresa -->
+    <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Empresa.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Oferta.hbm.xml"/>
+    <!-- END:Tablas sobre la empresa -->
+    <!-- BEGIN:Definición de la seguridad -->
     <mapping resource="es/logongas/ix3/security/dao/impl/Identity.hbm.xml"/>
     <mapping resource="es/logongas/ix3/security/dao/impl/GroupMember.hbm.xml"/>
     <mapping resource="es/logongas/ix3/security/dao/impl/ACE.hbm.xml"/>
     <mapping resource="es/logongas/ix3/security/dao/impl/Permission.hbm.xml"/>
     <mapping resource="es/logongas/ix3/security/dao/impl/SecureResource.hbm.xml"/>
     <mapping resource="es/logongas/ix3/security/dao/impl/SecureResourceType.hbm.xml"/>
+    <!-- END:Definición de la seguridad -->
   </session-factory>
 </hibernate-configuration>

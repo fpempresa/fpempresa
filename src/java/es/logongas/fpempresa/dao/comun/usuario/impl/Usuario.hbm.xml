@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <joined-subclass extends="es.logongas.ix3.security.model.User" name="es.logongas.fpempresa.modelo.comun.usuario.Usuario" table="usuario">
+    <key column="idIdentity"/>
+    <property name="email" />
+    <property name="nombre"/>
+    <property name="apellidos"/>
+    <property name="foto"/>
+    <property name="password" update="false"/>
+    <property name="tipoUsuario" >
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario</param>
+        <param name="type">12</param>
+      </type>
+    </property>
+    
+    <many-to-one name="centro">
+      <column name="idCentro"/>
+    </many-to-one>    
+
+    <many-to-one name="titulado">
+      <column name="idTitulado"/>
+    </many-to-one>
+            
+    <many-to-one name="empresa">
+      <column name="idEmpresa"/>
+    </many-to-one>          
+              
+    <property name="estadoUsuario"  >
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario</param>
+        <param name="type">12</param>
+      </type>
+    </property>    
+    
+    <property name="validadoEmail"/>
+    <property name="claveValidacionEmail"/>
+    
+  </joined-subclass>
+</hibernate-mapping>

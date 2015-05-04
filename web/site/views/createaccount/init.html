@@ -1,0 +1,70 @@
+<div class="container-fluid form__page">
+    <div class="row"  >    
+        <div class="col-xs-12 form--center"  >
+            <h3 class="form__main-title" >&nbsp;&nbsp;Crea una cuenta&nbsp;&nbsp;</h3>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-sm-offset-1" ng-switch on="model.tipoUsuario"></div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 col-md-offset-0 col-md-7  col-lg-offset-0 col-lg-6"  >
+            <p class="form__text form__text--help">Debes elegir el tipo de usuario que eres. Segun tu elecci&oacute;n podr&aacute;s acceder a unos servicio u otros de FPempresa</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-sm-offset-1" style="text-align: right" ng-switch on="model.tipoUsuario">
+            <img ng-if="model.tipoUsuario !== 'TITULADO'" ng-src="{{getContextPath()}}/img/icons/titulado_blanco.png" alt="titulado" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'TITULADO'" ng-src="{{getContextPath()}}/img/icons/titulado_azul.png" alt="titulado" style="width: 120px;height: 120px;">
+            <br>
+            <img ng-if="model.tipoUsuario !== 'CENTRO'" ng-src="{{getContextPath()}}/img/icons/centro_blanco.png" alt="centro" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'CENTRO'" ng-src="{{getContextPath()}}/img/icons/centro_azul.png" alt="centro" style="width: 120px;height: 120px;">
+            <br>
+            <img ng-if="model.tipoUsuario !== 'EMPRESA'" ng-src="{{getContextPath()}}/img/icons/empresa_blanco.png" alt="empresa" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'EMPRESA'" ng-src="{{getContextPath()}}/img/icons/empresa_azul.png" alt="empresa" style="width: 120px;height: 120px;"> 
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 col-md-offset-0 col-md-7  col-lg-offset-0 col-lg-6 form__container"  >
+
+            <form name="mainForm" id="mainForm">
+
+                <legend class="form__title">&iquest;Quien eres?</legend>
+                <ix3-business-messages></ix3-business-messages>
+
+                <div class="radio">
+                    <label class="form__label">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones"  value="TITULADO" class="form__field">
+                        Un <strong>titulado</strong> de formacion profesional que busca empleo
+                    </label>
+                </div>
+                <br>
+                <div class="radio">
+                    <label class="form__label">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="CENTRO" class="form__field">
+                        Un <strong>profesor</strong> de un centro educativo que quiere tener su propia bolsa de trabajo
+                    </label>
+                </div>
+                <br>
+                <div class="radio">
+                    <label class="form__label">
+                        <input ng-model="model.tipoUsuario" type="radio" name="opciones" value="EMPRESA" class="form__field">
+                        Una <strong>empresa</strong> que busca profesionales
+                    </label>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class=" pull-right">
+                            <button type="button" class="btn btn-lg form__button form__button--primary " ng-click="next()" >Siguiente</button>
+                        </div>
+                    </div>
+                </div>                
+
+            </form>
+        </div>        
+    </div>    
+</div>
+
+

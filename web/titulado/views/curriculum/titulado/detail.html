@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Datos personales</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6 col form-horizontal"> 
+                            <div class="form-group">
+                                <label for="fechaNacimiento" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="input-group col-xs-9 col-sm-6">
+                                    <input ng-model="model.fechaNacimiento" type="text" class="form-control" id="fechaNacimiento" name="fechaNacimiento"  ix3-date ix3-datepicker ix3-validation>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="telefono" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.telefono" type="text" class="form-control" id="telefono" name="telefono"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="telefonoAlternativo" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.telefonoAlternativo" type="text" class="form-control" id="telefonoAlternativo" name="telefonoAlternativo"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="tipoDocumento" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.tipoDocumento" id="tipoDocumento" name="tipoDocumento" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="numeroDocumento" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.numeroDocumento" type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"  required>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>                    
+                    <legend class="form__title">Direcci&oacute;n</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.tipoVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.direccion.tipoVia" id="direccion.tipoVia" name="direccion.tipoVia" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.nombreVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.direccion.nombreVia" type="text" class="form-control" id="direccion.nombreVia" name="direccion.nombreVia"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div> 
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.otrosDireccion" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.direccion.otrosDireccion" type="text" class="form-control" id="direccion.otrosDireccion" name="direccion.otrosDireccion"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.codigoPostal" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.direccion.codigoPostal" type="text" class="form-control" id="direccion.codigoPostal" name="direccion.codigoPostal"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.direccion.municipio.provincia" id="direccion.municipio.provincia" name="direccion.municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'" ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="direccion.municipio" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.direccion.municipio" id="direccion.municipio" name="direccion.municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.direccion.municipio.provincia}" >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div> 
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <br>
+                            <crud-detail-buttons class="pull-right"></crud-detail-buttons>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

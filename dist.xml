@@ -74,7 +74,7 @@
         <delete dir="${DEP_DIR}" />
     </target>
 
-    <target name="-pre-dist-configureProduccion" if="enableProduccion" >       
+    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="-set-os,-exec-grunt-linux,-exec-grunt-windows" >       
         <!-- Poner los datos de la conexión de producción -->
         <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
             <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
@@ -84,7 +84,28 @@
         <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
     </target>
 
+    <target name="-set-os" >
+        <condition property="windowsos">
+            <os family="windows" />
+        </condition>
 
+        <condition property="linuxos">
+            <os family="unix" />
+        </condition>
+    </target>
+
+    <target name="-exec-grunt-linux" if="linuxos">	
+        <exec executable="./node/bin/node64" >
+            <arg value="-e"/>
+            <arg value="require('grunt').tasks(['default']);"/>
+        </exec>
+    </target>
+    <target name="-exec-grunt-windows" if="windowsos">
+        <exec executable="./node/bin/node64.exe" >
+            <arg value="-e"/>
+            <arg value="require('grunt').tasks(['default']);"/>
+        </exec>
+    </target>
 
     <macrodef name="ix3DownloadChangeJarAll">
         <attribute name="ix3version" />

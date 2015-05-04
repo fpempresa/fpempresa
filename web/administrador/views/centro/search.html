@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Centros</legend>
+
+            <div class="row">
+                <div class="col-xs-12"> 
+                    <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del centro"  > 
+                </div>  
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th ix3-order-field-names="nombre"  style="min-width:  40%;text-align: center">Nombre</th>
+                        <th ix3-order-field-names="direccion.municipio.provincia.descripcion" style="width:      15%;text-align: center">Provincia</th>
+                        <th ix3-order-field-names="direccion.municipio.descripcion" style="width:      20%;text-align: center">Poblaci&oacute;n</th>
+                        <th ix3-order-field-names="estadoCentro" style="width:      25%;text-align: center">Estado</th>
+                        <th style="width:120px;text-align: center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="centro in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(centro.idCentro)">{{centro.nombre}}</a></td>
+                        <td >{{centro.direccion.municipio.provincia.descripcion}}</td>
+                        <td >{{centro.direccion.municipio.descripcion}}</td>
+                        <td style="text-align: left" >{{centro.getEstadoCentroDescription()}}</td>
+                        <td >
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(centro.idCentro)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(centro.idCentro)">Editar</button>
+                        </td>                             
+                    </tr>
+                </tbody>
+            </table> 
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>
+
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nuevo Centro</button>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,5 @@
 "user strict";
 
-app.controller("IndexController",['$scope',function($scope) {
-        
-}]);
+app.controller("IndexController", ['$scope', function ($scope) {
 
-
+    }]);

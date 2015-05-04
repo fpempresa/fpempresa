@@ -1,0 +1,112 @@
+<div class="container-fluid form__page">
+    <div class="row"  >    
+        <div class="col-xs-12 form--center"  >
+            <h3 class="form__main-title" >&nbsp;&nbsp;Crea una cuenta&nbsp;&nbsp;</h3>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-sm-offset-1" ></div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 "  >
+            <p class="form__text form__text--help" ng-if="model.tipoUsuario === 'TITULADO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás introducir tu curriculum</p>
+            <p class="form__text form__text--help" ng-if="model.tipoUsuario === 'EMPRESA'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás indicar los datos de la empresa</p>
+            <p class="form__text form__text--help" ng-if="model.tipoUsuario === 'CENTRO'">Ahora necesitamos los datos minimos para crear tu cuenta, mas adelante podrás crear tu bolsa de trabajo</p>        
+        </div>
+    </div>
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-sm-offset-1" style="text-align: right" ng-switch on="model.tipoUsuario">
+            <img ng-if="model.tipoUsuario !== 'TITULADO'" ng-src="{{getContextPath()}}/img/icons/titulado_blanco.png" alt="titulado" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'TITULADO'" ng-src="{{getContextPath()}}/img/icons/titulado_azul.png" alt="titulado" style="width: 120px;height: 120px;">
+            <br>
+            <img ng-if="model.tipoUsuario !== 'CENTRO'" ng-src="{{getContextPath()}}/img/icons/centro_blanco.png" alt="centro" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'CENTRO'" ng-src="{{getContextPath()}}/img/icons/centro_azul.png" alt="centro" style="width: 120px;height: 120px;">
+            <br>
+            <img ng-if="model.tipoUsuario !== 'EMPRESA'" ng-src="{{getContextPath()}}/img/icons/empresa_blanco.png" alt="empresa" style="width: 120px;height: 120px;">
+            <img ng-if="model.tipoUsuario === 'EMPRESA'" ng-src="{{getContextPath()}}/img/icons/empresa_azul.png" alt="empresa" style="width: 120px;height: 120px;"> 
+
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-8 form__container"  >
+
+
+            <form name="mainForm" id="mainForm" ix3-form >
+                <legend class="form__title" ng-if="model.tipoUsuario === 'TITULADO'">Registro de un Titulado</legend>
+                <legend class="form__title" ng-if="model.tipoUsuario === 'EMPRESA'">Registro de una Empresa</legend>
+                <legend class="form__title" ng-if="model.tipoUsuario === 'CENTRO'">Registro de un Centro Educativo</legend> 
+
+                <ix3-business-messages></ix3-business-messages>
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="nombre" class="col-xs-3 control-label">Nombre</label>
+                            <div class="col-xs-9">
+                                <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  required>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="apellidos" class="col-xs-3 control-label">Apellidos</label>
+                            <div class="col-xs-9">
+                                <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  required>
+                            </div>
+                        </div>                     
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-xs-12 form-horizontal"> 
+                        <div class="form-group">
+                            <label for="email" class="col-xs-3 control-label">Correo electr&oacute;nico</label>
+                            <div class="col-xs-9">
+                                <input x-ng-model="model.email" type="email" class="form-control" id="eMail" name="email"  required>
+                            </div>
+                        </div> 
+                    </div>
+                </div>                
+                <div class="row" >
+                    <div class="col-xs-12 col-sm-6  form-horizontal">
+                        <div class="form-group">
+                            <label for="password" class="col-xs-3 col-sm-6 control-label">Contrase&ntilde;a</label>
+                            <div class="col-xs-9 col-sm-6">
+                                <input ng-model="model.password" type="password" class="form-control" id="password" name="password"  required>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-xs-12 col-sm-6  form-horizontal">
+                        <div class="form-group">
+                            <label for="confirmPassword" class="col-xs-3 col-sm-6 control-label">Confirmar contrase&ntilde;a</label>
+                            <div class="col-xs-9 col-sm-6">
+                                <input ng-model="model.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword"  required>
+                            </div>
+                        </div> 
+                    </div>  
+                </div>
+                <div class="row" >
+
+                    <div class="col-xs-12 col-md-offset-3 col-md-4  col-lg-offset-3 col-lg-5 form-horizontal"> 
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input ng-model="model.aceptarCondicionesPolitica" type="checkbox" id="aceptarCondicionesPolitica" name="aceptarCondicionesPolitica"  > Acepto los <a href="{{getContextPath()}}/site/index.html#/docs/terminos"  target="_blank">terminos del servicio</a> y la <a href="{{getContextPath()}}/site/index.html#/docs/privacidad"  target="_blank">politica de privacidad</a> de FPempresa
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-5 col-lg-4"> 
+                        <div class=" pull-right">
+                            <button type="button" class="btn btn-lg form__button form__button--default" ng-click="volver()" >Volver</button>
+                            <button type="button" class="btn btn-lg form__button form__button--primary" ng-click="registrarse()" >Registrarse</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>        
+    </div>    
+</div>
+

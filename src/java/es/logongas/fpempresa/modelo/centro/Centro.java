@@ -1,12 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *   FPempresa
+ *   Copyright (C) 2014  Lorenzo González
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Affero General Public License as
+ *   published by the Free Software Foundation, either version 3 of the
+ *   License, or (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Affero General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Affero General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 package es.logongas.fpempresa.modelo.centro;
 
-import es.logongas.fpempresa.modelo.comun.Direccion;
+import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -20,21 +33,22 @@ public class Centro {
     private int idCentro;
     
     @NotBlank
-    private String  descripcion;
+    private String  nombre;
     
     @NotNull
     @Valid
     private Direccion direccion;
     
-    @Label("Pertenece a FPempresa")
-    private boolean fpempresa;
+    @Label("Pertenencia a FPempresa")
+    @NotNull
+    private EstadoCentro estadoCentro;
 
     public Centro() {
     }
 
     @Override
     public String toString() {
-        return descripcion;
+        return nombre;
     }
 
     
@@ -54,17 +68,17 @@ public class Centro {
     }
 
     /**
-     * @return the descripcion
+     * @return the nombre
      */
-    public String getDescripcion() {
-        return descripcion;
+    public String getNombre() {
+        return nombre;
     }
 
     /**
-     * @param descripcion the descripcion to set
+     * @param nombre the nombre to set
      */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
@@ -82,18 +96,19 @@ public class Centro {
     }
 
     /**
-     * @return the fpempresa
+     * @return the estadoCentro
      */
-    public boolean isFpempresa() {
-        return fpempresa;
+    public EstadoCentro getEstadoCentro() {
+        return estadoCentro;
     }
 
     /**
-     * @param fpempresa the fpempresa to set
+     * @param estadoCentro the estadoCentro to set
      */
-    public void setFpempresa(boolean fpempresa) {
-        this.fpempresa = fpempresa;
+    public void setEstadoCentro(EstadoCentro estadoCentro) {
+        this.estadoCentro = estadoCentro;
     }
+
 
 
 

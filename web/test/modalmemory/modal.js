@@ -1,6 +1,6 @@
 "use strict";
 
-angular.lazy.controller("LoginController", ['$scope', 'dialog', '$timeout', function($scope, dialog, $timeout) {
+app.controller("LoginController", ['$scope', 'dialog', '$timeout', function($scope, dialog, $timeout) {
 
         $scope.dialog.open({
             title: "Nueva Ventana:" + Math.random()
@@ -13,7 +13,7 @@ angular.lazy.controller("LoginController", ['$scope', 'dialog', '$timeout', func
 
 
         $scope.newDialog = function() {
-            dialog.create(getContextPath() + "/test/modalmemory/modal", 10).then(function(resultado) {
+            dialog.create(getContextPath() + "/test/modalmemory/modal.html", 10).then(function(resultado) {
                 if (resultado === 20) {
                     $scope.newDialog();
                 }

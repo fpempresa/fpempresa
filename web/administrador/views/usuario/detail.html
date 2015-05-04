@@ -1,0 +1,130 @@
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Usuario de tipo "{{model.getTipoUsuarioDescription()}}"</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>                          
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="apellidos" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="email" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.email" type="text" class="form-control" id="email" name="email"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="controllerAction === 'NEW'" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="password" class="col-xs-3 col-sm-6 control-label">Contrase&ntilde;a</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.password" type="password" class="form-control" id="password" name="password" ng-required="controllerAction === 'NEW'"  >
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="confirmPassword" class="col-xs-3 col-sm-6 control-label">Confirmar contrase&ntilde;a</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-required="controllerAction === 'NEW'" >
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+
+                    <legend class="form__title" ng-show="model.tipoUsuario === 'CENTRO'">Centro al que pertenece</legend>
+                    <div class="row" ng-show="model.tipoUsuario === 'CENTRO'" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="model.centro.direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.centro.direccion.municipio.provincia" id="model.centro.direccion.municipio.provincia" name="model.centro.direccion.municipio.provincia" class="form-control" ix3-clear="model.tipoUsuario!=='CENTRO'" ix3-options  >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="model.centro" class="col-xs-3 col-sm-6 control-label" >Nombre</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-clear="model.tipoUsuario!=='CENTRO'" ix3-options ix3-validation ix3-options-depend='{"direccion.municipio.provincia":model.centro.direccion.municipio.provincia}' >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div> 
+                    <legend class="form__title" ng-show="model.tipoUsuario === 'EMPRESA'">Empresa a la que pertenece</legend>
+                    <div class="row" ng-show="model.tipoUsuario === 'EMPRESA'" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="model.empresa.direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.empresa.direccion.municipio.provincia" id="model.empresa.direccion.municipio.provincia" name="model.empresa.direccion.municipio.provincia" class="form-control"  ix3-clear="model.tipoUsuario!=='EMPRESA'"  ix3-options  >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="model.empresa" class="col-xs-3 col-sm-6 control-label" ix3-label>Nombre</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.empresa" id="model.empresa" name="model.empresa" class="form-control" ix3-clear="model.tipoUsuario!=='EMPRESA'" ix3-options ix3-validation ix3-options-depend='{"direccion.municipio.provincia":model.empresa.direccion.municipio.provincia}' >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6  form-horizontal" ng-show="(model.tipoUsuario === 'CENTRO' || model.tipoUsuario === 'EMPRESA')">
+                            <div class="form-group">
+                                <label for="estadoUsuario" class="col-xs-3 col-sm-6 control-label" >Estado en <span ng-show="model.tipoUsuario==='CENTRO'">el</span><span ng-show="model.tipoUsuario==='EMPRESA'">la</span> {{model.getTipoUsuarioDescription()}}</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select  ng-model="model.estadoUsuario" id="estadoUsuario" name="estadoUsuario" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 ">                             
+                            <crud-detail-buttons class="pull-right" >
+                                <button type="button" ng-show="controllerAction === 'EDIT'" class="btn form__button form__button--default" ng-click="cambiarContrasenya()" >Cambiar Contrase&ntilde;a</button>
+                            </crud-detail-buttons>
+                        </div>
+                    </div>                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -6,12 +6,13 @@
 package es.logongas.fpempresa.modelo.titulado;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.comun.Ciclo;
-import es.logongas.fpempresa.modelo.comun.Familia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
+import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 /**
  *
@@ -30,9 +31,6 @@ public class FormacionAcademica {
     private Centro centro;
 
     @ValuesList(shortLength = true)
-    private Familia familia;
-
-    @ValuesList(shortLength = true,dependProperty = "familia")
     private Ciclo ciclo;
 
     @Label("Nombre centro")
@@ -43,7 +41,12 @@ public class FormacionAcademica {
 
     @NotNull
     private Titulado titulado;
-
+    
+    @Past
+    @NotNull
+    @Label("Fecha de obtención del título")
+    private Date fecha;
+    
     public FormacionAcademica() {
     }
 
@@ -58,25 +61,6 @@ public class FormacionAcademica {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
                 if (centro == null) {
-                    return false;
-                } else {
-                    return true;
-                }
-            case TITULO_UNIVERSITARIO:
-                return true;
-            case OTRO_TITULO:
-                return true;
-            default:
-                throw new RuntimeException("El tipoFormacionAcademica no es válido:" + tipoFormacionAcademica);
-        }
-    }
-
-    @AssertTrue(message = "No puede estar vacia")
-    @Label("Familia")
-    private boolean getValidateFamilia() {
-        switch (tipoFormacionAcademica) {
-            case CICLO_FORMATIVO:
-                if (familia == null) {
                     return false;
                 } else {
                     return true;
@@ -231,20 +215,6 @@ public class FormacionAcademica {
     }
 
     /**
-     * @return the familia
-     */
-    public Familia getFamilia() {
-        return familia;
-    }
-
-    /**
-     * @param familia the familia to set
-     */
-    public void setFamilia(Familia familia) {
-        this.familia = familia;
-    }
-
-    /**
      * @return the ciclo
      */
     public Ciclo getCiclo() {
@@ -298,5 +268,19 @@ public class FormacionAcademica {
      */
     public void setTitulado(Titulado titulado) {
         this.titulado = titulado;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

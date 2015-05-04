@@ -17,6 +17,12 @@
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.dao" />
         <property name="implBasePackageName"       value="es.logongas.fpempresa.dao" />
     </bean>
+    
+    <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
+        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
+    </bean>    
 
     <bean id="authenticationManager" class="es.logongas.ix3.security.authentication.impl.AuthenticationManagerImpl"  >
         <property name="authenticationProviders">
@@ -30,4 +36,6 @@
         <property name="defaultAuthorization" value="true" />
     </bean>    
     
+    
+     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
 </beans>

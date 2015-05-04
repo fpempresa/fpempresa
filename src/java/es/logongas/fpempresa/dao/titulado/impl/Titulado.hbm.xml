@@ -6,27 +6,21 @@
         <cache usage="read-write" />
         
         <id name="idTitulado" >
-            <generator class="foreign">
-                <param name="property">usuario</param>
-            </generator>
+            <generator class="identity" />
         </id>
-        <one-to-one name="usuario" cascade="none" />
 
         <property name="fechaNacimiento" />
         
         <component name="direccion" >
             <property name="tipoVia" >
                 <type name="org.hibernate.type.EnumType">
-                    <param name="enumClass">es.logongas.fpempresa.modelo.comun.TipoVia</param>
-                    <param name="type">4</param>
+                    <param name="enumClass">es.logongas.fpempresa.modelo.comun.geo.TipoVia</param>
+                    <param name="type">12</param>
                 </type>
             </property>
             <property name="nombreVia" />
             <property name="otrosDireccion" />
             <property name="codigoPostal" />
-            <many-to-one name="provincia">
-                <column name="idProvincia"  />
-            </many-to-one>
             <many-to-one name="municipio">
                 <column name="idMunicipio"  />
             </many-to-one>
@@ -37,7 +31,7 @@
         <property name="tipoDocumento" >
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">es.logongas.fpempresa.modelo.titulado.TipoDocumento</param>
-                <param name="type">4</param>
+                <param name="type">12</param>
             </type>    
         </property>
         <property name="numeroDocumento" />
@@ -60,7 +54,6 @@
             </key>
             <one-to-many class="es.logongas.fpempresa.modelo.titulado.FormacionAcademica" />
         </set>        
-        
         
         
     </class>

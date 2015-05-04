@@ -88,10 +88,9 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         return name;
     }
 
-    @AssertTrue(message = "El registro está deshabilitado")
-    @Label("")
+    @ConstraintRule(message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class)
     private boolean isProhibidoNuevoUsuario() {
-        return true;
+        return false;
     }
 
     @AssertTrue(message = "Solo se permite registrar titulados")

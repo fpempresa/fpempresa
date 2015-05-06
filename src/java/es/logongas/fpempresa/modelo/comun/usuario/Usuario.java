@@ -40,7 +40,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Lorenzo
  */
-public class Usuario extends User implements PostLoadEventListener, Principal {
+public class Usuario extends User implements Principal {
 
     @Email
     @NotBlank
@@ -88,13 +88,12 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         return name;
     }
 
-    @ConstraintRule(message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class)
+    @ConstraintRule(message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class,priority = -20,disabled = true)
     private boolean isProhibidoNuevoUsuario() {
         return true;
     }
 
-    @AssertTrue(message = "El centro es requerido si el usuario está aceptado")
-    @Label("")
+    @ConstraintRule(message = "El centro es requerido si el usuario está aceptado")
     private boolean isCentroRequeridoSiUsuarioAceptado() {
         if ((this.getTipoUsuario() == TipoUsuario.CENTRO) && (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO)) {
             if (this.centro == null) {
@@ -107,8 +106,7 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         }
     }
 
-    @AssertTrue(message = "La empresa es requerida si el usuario está aceptado")
-    @Label("")
+    @ConstraintRule(message = "La empresa es requerida si el usuario está aceptado")
     private boolean isEmpresaRequeridaSiUsuarioAceptado() {
         if ((this.getTipoUsuario() == TipoUsuario.EMPRESA) && (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO)) {
             if (this.empresa == null) {
@@ -121,8 +119,7 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         }
     }
 
-    @AssertTrue(message = "Un administrador siempre debe estar aceptado")
-    @Label("")
+    @ConstraintRule(message = "Un administrador siempre debe estar aceptado")
     private boolean isAdministradorAceptado() {
         if (this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
             if (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO) {
@@ -135,8 +132,7 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         }
     }
 
-    @AssertTrue(message = "No es posible añadir usuarios desarrolladores")
-    @Label("")
+    @ConstraintRule(message = "No es posible añadir usuarios desarrolladores")
     private boolean isDesarrollador() {
         if (this.getTipoUsuario() == TipoUsuario.DESARROLLADOR) {
             return false;
@@ -144,14 +140,7 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
             return true;
         }
     }    
-    
-    @Override
-    public void onPostLoad(PostLoadEvent ple) {
-        Usuario usuario = (Usuario) ple.getEntity();
-        //Nunca se retorna el Hash de la contraseña
-        usuario.setPassword(null);
-    }
-    
+       
     
     @ConstraintRule(message="No es posible modificar el tipo del usuario de '${originalEntity?.tipoUsuario?.toString()}' a '${entity?.tipoUsuario?.toString()}'",groups=RuleGroupPredefined.PreUpdate.class)
     private boolean isModificadoTipoUsuario(RuleContext<Usuario> ruleContext) {
@@ -222,6 +211,12 @@ public class Usuario extends User implements PostLoadEventListener, Principal {
         return true;
     }  
     
+    
+    @ActionRule(groups = RuleGroupPredefined.PostRead.class)
+    private void quitarHashPassword() {
+        //Nunca se retorna el Hash de la contraseña
+        this.setPassword(null);
+    }    
     
     @ActionRule(groups=RuleGroupPredefined.PreInsert.class)
     private void estadoInicialDelUsuario(RuleContext<Usuario> ruleContext) {

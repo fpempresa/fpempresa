@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Usuarios de '{{user.empresa.toString()}}' con acceso a FPempresa</legend>        
+            <br>            
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th ix3-order-field-names="nombre,apellidos" style="text-align: center">Nombre</th>
+                        <th ix3-order-field-names="email" style="width:   15%;text-align: center">Correo</th>
+                        <th  style="width:   10%;text-align: center">Validado EMail</th>
+                        <th style="max-width: 120px; width: 120px;text-align: center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="usuario in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a></td>
+                        <td >{{usuario.email}}</td>                       
+                        <td  ng-switch    on="usuario.validadoEmail" class="text-center"><i ng-switch-default class="fa fa-square-o"></i><i ng-switch-when="true" class="fa fa-check-square-o"></i></td>
+                        <td style="text-align:center" >
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(usuario.idIdentity)">Editar</button>
+                        </td>                             
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>

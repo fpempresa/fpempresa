@@ -79,8 +79,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public void insert(Usuario usuario) throws BusinessException {
-        
-
 
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
         usuario.setValidadoEmail(false);
@@ -94,6 +92,13 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public boolean update(Usuario usuario) throws BusinessException {
         Usuario usuarioOriginal = getUsuarioDAO().readOriginal(usuario.getIdIdentity());
 
+        if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
+            if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
+                if (usuarioOriginal.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+                    throw new BusinessException("Tu mismo no te puedes modificar el estado");
+                }
+            }
+        }
 
         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
         if (!usuarioOriginal.getEmail()

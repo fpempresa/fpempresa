@@ -170,11 +170,6 @@ public class Usuario extends User implements Principal {
                     //No es necesario hace nada pq el administrador siempre puede modificarlo
                     break;
                 case CENTRO:
-                    //Solo puede si no es el mismo 
-                    if (usuario.getIdIdentity() == principal.getIdIdentity()) {
-                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
-                    }
-
                     if (usuario.getTipoUsuario() != TipoUsuario.CENTRO) {
                         throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo CENTRO");
                     }
@@ -185,11 +180,6 @@ public class Usuario extends User implements Principal {
 
                     break;
                 case EMPRESA:
-                    //Solo puede si no es el mismo 
-                    if (usuario.getIdIdentity() == principal.getIdIdentity()) {
-                        throw new BusinessException("Tu mismo no te puedes modificar el estado");
-                    }
-
                     if (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) {
                         throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo EMPRESA");
                     }

@@ -146,7 +146,7 @@
                 return defered.promise;
             };
 
-            scope.finishOK = function () {
+            scope.finishOK = function (oldControllerAction) {
                 $window.history.back();
             };
             scope.finishCancel = function () {
@@ -159,18 +159,25 @@
                 scope.finishCancel();
             };
             scope.buttonOK = function () {
+                var oldControllerAction=scope.controllerAction;
                 switch (scope.controllerAction) {
                     case "NEW":
-                        scope.doInsert().then(scope.finishOK);
+                        scope.doInsert().then(function() {
+                            scope.finishOK(oldControllerAction);
+                        });
                         break;
                     case "EDIT":
-                        scope.doUpdate().then(scope.finishOK);
+                        scope.doUpdate().then(function() {
+                            scope.finishOK(oldControllerAction);
+                        });
                         break;
                     case "VIEW":
-                        scope.finishOK();
+                        scope.finishOK(oldControllerAction);
                         break;
                     case "DELETE":
-                        scope.doDelete().then(scope.finishOK);
+                        scope.doDelete().then(function() {
+                            scope.finishOK(oldControllerAction);
+                        });
                         break;
                     default:
                         throw Error("scope.controllerAction desconocida:" + scope.controllerAction);

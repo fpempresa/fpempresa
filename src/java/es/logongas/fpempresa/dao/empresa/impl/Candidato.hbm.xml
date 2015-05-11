@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.empresa.Candidato" >
+        
+        <cache usage="read-write" />
+        
+        <id name="idCandidato" >
+            <generator class="identity" />
+        </id>
+
+
+        <many-to-one name="oferta">
+            <column name="idOferta"/>
+        </many-to-one> 
+        
+        <many-to-one name="usuario">
+            <column name="idIdentity"/>
+        </many-to-one> 
+
+        <property name="fecha" type="date" />
+        
+        <property name="rechazado" />
+        
+
+
+    </class>
+</hibernate-mapping>

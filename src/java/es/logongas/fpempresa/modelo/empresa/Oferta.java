@@ -20,9 +20,11 @@ import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.ix3.core.annotations.ValuesList;
+import es.logongas.ix3.service.rules.ActionRule;
 import es.logongas.ix3.service.rules.ConstraintRule;
 import es.logongas.ix3.service.rules.RuleContext;
 import es.logongas.ix3.service.rules.RuleGroupPredefined;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
@@ -30,41 +32,42 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Oferta de una empresa
+ *
  * @author logongas
  */
 public class Oferta {
-    
+
     private int idOferta;
-    
+
     private Date fecha;
-    
+
     @NotNull
     private Empresa empresa;
-    
+
     @NotEmpty
     private String puesto;
-    
+
     @NotEmpty
     private String descripcion;
 
     @NotNull
-    private Municipio municipio;    
-    
+    private Municipio municipio;
+
     @NotNull
     @ValuesList(shortLength = true)
-    private Familia familia;    
-    
+    private Familia familia;
+
     private Set<Ciclo> ciclos;
-    
+
     @NotNull
     private TipoOferta tipoOferta;
-    
-    private boolean cerrada;
 
+    private boolean cerrada;
+   
     public Oferta() {
-        this.tipoOferta=TipoOferta.LABORAL;
+        this.tipoOferta = TipoOferta.LABORAL;
     }
-    
+
     /**
      * @return the idOferta
      */
@@ -205,27 +208,37 @@ public class Oferta {
         this.cerrada = cerrada;
     }
 
-
-    @ConstraintRule(message = "El tipo de oferta debe ser laboral",groups = RuleGroupPredefined.PostSave.class)
+    @ConstraintRule(message = "El tipo de oferta debe ser laboral", groups = RuleGroupPredefined.PostInsertOrUpdate.class)
     private boolean isTipoOfertaLaboral(RuleContext ruleContext) {
-        if (this.tipoOferta!=TipoOferta.LABORAL) {
+        if (this.tipoOferta != TipoOferta.LABORAL) {
             return false;
-        } 
-        
+        }
+
         return true;
     }
 
-    
-    @ConstraintRule(message = "Es necesario indicar al menos un ciclo formativo",groups = RuleGroupPredefined.PostSave.class)
+    @ConstraintRule(message = "Es necesario indicar al menos un ciclo formativo", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean isCicloRequerido(RuleContext ruleContext) {
-        if ((this.ciclos==null) || (this.ciclos.isEmpty())) {
+        if ((this.ciclos == null) || (this.ciclos.isEmpty())) {
             return false;
-        } 
-        
+        }
+
         return true;
-    }    
-    
+    }
 
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void establecerFechaCreacion() {
 
- 
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        date = cal.getTime();
+
+        this.fecha = date;
+    }
+
 }

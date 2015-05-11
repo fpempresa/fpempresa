@@ -16,7 +16,7 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
-import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
@@ -37,47 +37,31 @@ public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> im
     @Override
     public void insert(Empresa empresa) throws BusinessException {
 
-        //REGLA SEGURIDAD
-        if (getPrincipal() == null) {
-            throw new BusinessException("No es posible modificar la empresa si no estás autenticado");
-        }
+            if (getPrincipal().getEmpresa()!=null) {
+                throw new BusinessException("No puedes insertar una empresa puesta que ya perteneces a " + getPrincipal().getEmpresa().toString());
+            }        
         
-        //REGLA SEGURIDAD: Solo puede modificarlo administradores y centros
-        if ((getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) && (getPrincipal().getTipoUsuario() != TipoUsuario.CENTRO)) {
-            throw new BusinessException("Solo un administrador o un profesor puede insertar una empresa");
-        }
+            if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
+                if (getPrincipal().getEstadoUsuario()!=EstadoUsuario.ACEPTADO) {
+                    throw new BusinessException("No puedes insertar una empresa ya que no estas aceptado en el centro");
+                }
+            }             
+            
+            if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
+                empresa.setCentro(getPrincipal().getCentro());
+            }                
         
-        if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
-            empresa.setCentro(getPrincipal().getCentro());
-        }        
-        
-        super.insert(empresa);
-    }
+            if (getPrincipal().getTipoUsuario()==TipoUsuario.EMPRESA) {
+                getPrincipal().setEmpresa(empresa);
+                getPrincipal().setEstadoUsuario(EstadoUsuario.ACEPTADO);
+            }       
+            
+            transactionManager.begin();
 
-    @Override
-    public boolean update(Empresa empresa) throws BusinessException {
-        Empresa empresaOriginal = this.readOriginal(empresa.getIdEmpresa());
+                getDAO().insert(empresa);
+                daoFactory.getDAO(Usuario.class).update(getPrincipal());
 
-        //REGLA SEGURIDAD
-        if (getPrincipal() == null) {
-            throw new BusinessException("No es posible modificar la empresa si no estás autenticado");
-        }
-        
-        //REGLA SEGURIDAD: Solo puede modificarlo administradores y centros
-        if ((getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) && (getPrincipal().getTipoUsuario() != TipoUsuario.CENTRO)) {
-            throw new BusinessException("Solo un administrador o un profesor puede modificar una empresa");
-        }
-
-        
-        if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
-            if (empresaOriginal.getCentro().getIdCentro()!=empresa.getCentro().getIdCentro()) {
-                throw new BusinessException("No es posible modificar el centro al que pertenece la empresa");
-            }
-        }     
-        
-
-
-        return super.update(empresa);
+            transactionManager.commit();
     }
 
 }

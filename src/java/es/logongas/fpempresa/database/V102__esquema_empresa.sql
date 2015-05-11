@@ -41,3 +41,14 @@ CREATE TABLE `ofertaciclo` (
     KEY `KEY_OFERTACICLO_OFERTA`(`idOferta`),CONSTRAINT `KEY_OFERTACICLO_OFERTA` FOREIGN KEY (`idOferta`) REFERENCES `oferta`(`idOferta`),
     KEY `KEY_OFERTACICLO_CICLO` (`idCiclo`) ,CONSTRAINT `KEY_OFERTACICLO_CICLO`  FOREIGN KEY (`idCiclo`)  REFERENCES `ciclo` (`idCiclo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `candidato` (
+    `idCandidato` int(11) NOT NULL AUTO_INCREMENT,
+    `idOferta` integer not null,
+    `idIdentity` integer not null,
+    `fecha` date DEFAULT NULL,
+    `rechazado` int(11) DEFAULT NULL,    
+    PRIMARY KEY  (`idCandidato`),
+    KEY `KEY_CANDIDATO_OFERTA`(`idOferta`),CONSTRAINT `KEY_CANDIDATO_OFERTA` FOREIGN KEY (`idOferta`) REFERENCES `oferta`(`idOferta`),
+    KEY `KEY_CANDIDATO_USER` (`idIdentity`) ,CONSTRAINT `KEY_CANDIDATO_USER`  FOREIGN KEY (`idIdentity`)  REFERENCES `sec_user` (`idIdentity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

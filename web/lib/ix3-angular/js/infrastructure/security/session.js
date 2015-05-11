@@ -30,8 +30,8 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
             };
 
             $http(config).success(function (user, status, headers, config) {
-                deferred.resolve(user);
                 that.setUser(user);
+                deferred.resolve(user);
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -52,8 +52,8 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
             };
 
             $http(config).success(function (data, status, headers, config) {
-                deferred.resolve(data);
                 that.setUser(null);
+                deferred.resolve(data);
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -74,8 +74,8 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
             };
 
             $http(config).success(function (user, status, headers, config) {
-                deferred.resolve(user);
                 that.setUser(user);
+                deferred.resolve(user);
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);

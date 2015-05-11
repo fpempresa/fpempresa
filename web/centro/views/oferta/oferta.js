@@ -19,8 +19,6 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
 app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
-        $scope.tiposOferta = metadataEntities.getMetadataProperty('Oferta.tipoOferta').values;
-
         $scope.buscarEmpresa = function () {
 
             var params = {
@@ -64,7 +62,7 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
                 };
                 var orderby = [
                     {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"ASC"},
+                    {fieldName:"leyEducativa",orderDirection:"DESC"},
                     {fieldName:"descripcion",orderDirection:"ASC"}
                 ];                
 
@@ -91,7 +89,6 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
 app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-        $scope.tiposOferta = metadataEntities.getMetadataProperty('Oferta.tipoOferta').values;
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
             
@@ -109,7 +106,7 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                 };
                 var orderby = [
                     {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"ASC"},
+                    {fieldName:"leyEducativa",orderDirection:"DESC"},
                     {fieldName:"descripcion",orderDirection:"ASC"}
                 ];                
 
@@ -136,9 +133,6 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
 
 app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-        $scope.tiposOferta = metadataEntities.getMetadataProperty('Oferta.tipoOferta').values;
-
-
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
             
@@ -156,7 +150,7 @@ app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail
                 };
                 var orderby = [
                     {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"ASC"},
+                    {fieldName:"leyEducativa",orderDirection:"DESC"},
                     {fieldName:"descripcion",orderDirection:"ASC"}
                 ];                
 

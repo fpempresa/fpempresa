@@ -6,20 +6,6 @@
             <form name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
                     <legend class="form__title">Oferta</legend>
-                    <div class="row" >
-                        <div class="col-xs-12 form-horizontal"> 
-                            <div class="form-group">
-                                <label  class="col-xs-3  control-label" >Tipo de Oferta</label>
-                                <div class="col-xs-9 ">
-                                    <div class="radio" ng-repeat="value in tiposOferta">
-                                        <label>
-                                            <input ng-model="model.tipoOferta" type="radio" name="{{value.key}}" id="{{value.key}}" ng-value="value.key">{{value.description}}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 

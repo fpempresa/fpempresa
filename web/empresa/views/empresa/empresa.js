@@ -1,9 +1,9 @@
 "use strict";
-app.config(['crudRoutesProvider', function (crudRoutesProvider) {
-        crudRoutesProvider.addAllRoutes({
+app.config(['crudRoutesProvider', function (crudRoutesProvider) {       
+        crudRoutesProvider.addEditRoute({
             entity: "Empresa",
             expand: "direccion.municipio,direccion.municipio.provincia"
-        });
+        });        
     }]);
 
 
@@ -19,8 +19,3 @@ app.controller("EmpresaNewEditController", ['$scope', '$window', '$location', 'g
         };
 
     }]);
-
-app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
-        genericControllerCrudDetail.extendScope($scope, controllerParams);
-    }]);
-

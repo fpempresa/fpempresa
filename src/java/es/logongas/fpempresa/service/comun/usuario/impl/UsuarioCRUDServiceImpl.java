@@ -100,6 +100,20 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             }
         }
 
+        
+        //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiente de aceptación
+        if (getPrincipal().getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
+            if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
+                if (((usuarioOriginal.getEmpresa() == null) && (usuario.getEmpresa() != null))
+                        || ((usuarioOriginal.getEmpresa() != null) && (usuario.getEmpresa() == null))
+                        || (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa())) {
+
+                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                }
+            }
+        }        
+        
+        
         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
         if (!usuarioOriginal.getEmail()
                 .equals(usuario.getEmail())) {

@@ -246,30 +246,6 @@ public class Usuario extends User implements Principal {
         }        
     }
     
-    @ActionRule(groups=RuleGroupPredefined.PreUpdate.class)
-    private void pasarAPendienteAlCambiarDeEmpresa(RuleContext<Usuario> ruleContext) {
-        Usuario usuario=ruleContext.getEntity();
-        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
-        Usuario principal=(Usuario)ruleContext.getPrincipal();
-        
-        
-        //REGLA NEGOCIO:Si cambiamos de empresa hay que volver a poner el usuario como pendiente de aceptación
-        if (principal.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
-            if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
-                if (((usuarioOriginal.getEmpresa() == null) && (usuario.getEmpresa() != null))
-                        || ((usuarioOriginal.getEmpresa() != null) && (usuario.getEmpresa() == null))
-                        || (usuarioOriginal.getEmpresa().getIdEmpresa() != usuario.getEmpresa().getIdEmpresa())) {
-
-                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                }
-            }
-        }        
-    }
-    
-    
-    
-    
-    
     /**
      * @return the titulado
      */

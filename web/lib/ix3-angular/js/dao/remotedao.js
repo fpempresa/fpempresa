@@ -8,7 +8,7 @@
      * @param {Http} $http Servicio de Http de AngularJS
      * @param {Q} $q Servicio de promesas de AngularJS
      */
-    RemoteDAO.$inject = ['entityName', 'ix3Configuration', '$http', '$q','$log'];
+    RemoteDAO.$inject = ['entityName', 'ix3Configuration', '$http', '$q', '$log'];
     function RemoteDAO(entityName, ix3Configuration, $http, $q, $log) {
         this.entityName = entityName;
         this.baseUrl = ix3Configuration.server.api;
@@ -45,7 +45,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al crear la entidad los datos:" + status + "\n" + data);
                 }
@@ -79,7 +79,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página     
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al obtener la entidad:" + status + "\n" + data);
                 }
@@ -114,7 +114,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página    
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
                 }
@@ -149,7 +149,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página    
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
                 }
@@ -180,7 +180,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al borrar la entidad:" + status + "\n" + data);
                 }
@@ -201,9 +201,9 @@
 
 
                     if (key.charAt(0) === "$") {
-                        var operator=key.substr(1).toUpperCase();
-                        var filtersWithOperator=filters[key];  //Objeto con filtros cuya operador es "operator"
-                        
+                        var operator = key.substr(1).toUpperCase();
+                        var filtersWithOperator = filters[key];  //Objeto con filtros cuya operador es "operator"
+
                         for (var propertyName in filtersWithOperator) {
                             if (!filtersWithOperator.hasOwnProperty(propertyName)) {
                                 continue;
@@ -256,7 +256,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al buscar los datos:" + status + "\n" + data);
                 }
@@ -264,6 +264,45 @@
 
             return deferred.promise;
         };
+
+        this.namedSearch = function (namedSearch, params, expand) {
+            var deferred = this.$q.defer();
+
+            params = params || {};
+
+            if (expand) {
+                params.$expand = expand;
+            }
+
+
+            var config = {
+                method: 'GET',
+                url: this.baseUrl + '/' + this.entityName + '/$namedsearch/' + namedSearch,
+                params: params
+            };
+
+            this.$http(config).success(function (data, status, headers, config) {
+                if (status === 204) {
+                    //El 204 (no content) realmente es un null
+                    deferred.resolve(null);
+                } else {
+                    deferred.resolve(data);
+                }
+            }).error(function (data, status, headers, config) {
+                if (status === 400) {
+                    deferred.reject(data);
+                } else if (status === 0) {
+                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
+                    $log.info("Cancelada petición HTTP:" + config.url);
+                } else {
+                    throw new Error("Fallo al buscar los datos:" + status + "\n" + data);
+                }
+            });
+
+            return deferred.promise;
+        };
+
+
 
         this.getChild = function (id, child, expand) {
             var deferred = this.$q.defer();
@@ -291,7 +330,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página   
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al obtener la entidad hija:" + status + "\n" + data);
                 }
@@ -326,7 +365,7 @@
                     deferred.reject(data);
                 } else if (status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página  
-                    $log.info("Cancelada petición HTTP:"+config.url);
+                    $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
                     throw new Error("Fallo al obtener los metadatos:" + status + "\n" + data);
                 }

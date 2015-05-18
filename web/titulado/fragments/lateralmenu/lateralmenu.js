@@ -1,9 +1,10 @@
 "user strict";
 
-app.controller("LateralMenuController", ['$scope', '$state','dialog', function ($scope, $state, dialog) {
+app.controller("LateralMenuController", ['$scope', '$location', '$state', 'dialog', function ($scope, $location, $state, dialog) {
         $scope.isItemSelected = function (option) {
             if (option) {
-                if ($state.current.name.indexOf(option) >= 0) {
+                var regExp = new RegExp(option);
+                if (regExp.test($location.url()) === true) {
                     return true;
                 } else {
                     return false;
@@ -12,10 +13,10 @@ app.controller("LateralMenuController", ['$scope', '$state','dialog', function (
                 return false;
             }
         };
-        
-        
-        $scope.cambiarContrasenya=function() {
-            dialog.create('cambiarContrasenya',$scope.user);
+
+
+        $scope.cambiarContrasenya = function () {
+            dialog.create('cambiarContrasenya', $scope.user);
         }
 
     }]);

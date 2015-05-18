@@ -17,6 +17,8 @@
 package es.logongas.fpempresa.modelo.empresa;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.service.rules.ActionRule;
+import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import java.util.Date;
 
 /**
@@ -103,6 +105,12 @@ public class Candidato {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+    
+    
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void establecerFecha() {
+        this.fecha=new Date();
     }
     
 }

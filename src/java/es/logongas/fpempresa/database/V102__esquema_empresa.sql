@@ -50,5 +50,6 @@ CREATE TABLE `candidato` (
     `rechazado` int(11) DEFAULT NULL,    
     PRIMARY KEY  (`idCandidato`),
     KEY `KEY_CANDIDATO_OFERTA`(`idOferta`),CONSTRAINT `KEY_CANDIDATO_OFERTA` FOREIGN KEY (`idOferta`) REFERENCES `oferta`(`idOferta`),
-    KEY `KEY_CANDIDATO_USER` (`idIdentity`) ,CONSTRAINT `KEY_CANDIDATO_USER`  FOREIGN KEY (`idIdentity`)  REFERENCES `sec_user` (`idIdentity`)
+    KEY `KEY_CANDIDATO_USER` (`idIdentity`) ,CONSTRAINT `KEY_CANDIDATO_USER`  FOREIGN KEY (`idIdentity`)  REFERENCES `sec_user` (`idIdentity`),
+    UNIQUE INDEX `CANDIDATO_UNICO_OFERTA` (`idOferta`, `idIdentity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

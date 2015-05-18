@@ -1,49 +1,51 @@
 "use strict";
 
-(function() {
-    
-    GenericControllerCrudList.$inject=['serviceFactory', '$location','metadataEntities'];
+(function () {
+
+    GenericControllerCrudList.$inject = ['serviceFactory', '$location', 'metadataEntities'];
     function GenericControllerCrudList(serviceFactory, $location, metadataEntities) {
-        this.extendScope = function(scope, controllerParams) {
+        this.extendScope = function (scope, controllerParams) {
             scope.models = {};
             scope.filters = {
-                $eq:{},
-                $ne:{},
-                $gt:{},
-                $ge:{},
-                $lt:{},
-                $le:{},
-                $like:{},
-                $llike:{},
-                $liker:{},
-                $lliker:{}
+                $eq: {},
+                $ne: {},
+                $gt: {},
+                $ge: {},
+                $lt: {},
+                $le: {},
+                $like: {},
+                $llike: {},
+                $liker: {},
+                $lliker: {}
             };
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.page = {};
             scope.businessMessages = null;
+            scope.namedSearch = undefined;
+            scope.namedSearchParameters={};
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
-            scope.prefixRoute="/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
+            scope.prefixRoute = "/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
                 scope.page.pageNumber = 0;
             }
             scope.page.totalPages = undefined;
-            scope.$watch("page.pageNumber", function(newValue, oldValue) {
+            scope.$watch("page.pageNumber", function (newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
                 }
                 scope.search();
             });
-            scope.$watch("page.pageSize", function(newValue, oldValue) {
+            scope.$watch("page.pageSize", function (newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
                 }
                 scope.page.pageNumber = 0;
                 scope.search();
             });
-            scope.$watch("order", function(newValue, oldValue) {
+            scope.$watch("order", function (newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
                 }
@@ -53,14 +55,22 @@
 
 
 
-            scope.search = function() {
-                var filters=scope.filters; 
+            scope.search = function () {
+                var filters = scope.filters;
 
                 if (scope.parentProperty && scope.parentId) {
                     filters[scope.parentProperty] = scope.parentId;
                 }
 
-                scope.service.search(filters, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize).then(function(data) {
+                var promise;
+
+                if (scope.namedSearch) {
+                    promise=scope.service.namedSearch(scope.namedSearch,scope.namedSearchParameters, scope.expand);
+                } else {
+                    promise=scope.service.search(filters, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize);
+                }
+
+                promise.then(function (data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
                     } else {
@@ -75,7 +85,7 @@
                             throw Error("Los datos retornados por el servidor no son un objeto 'Page'");
                         }
                     }
-                }, function(businessMessages) {
+                }, function (businessMessages) {
                     scope.businessMessages = businessMessages;
                 });
             };
@@ -83,23 +93,23 @@
 
 
 
-            scope.buttonSearch = function() {
+            scope.buttonSearch = function () {
                 scope.page.pageNumber = 0;
                 scope.search();
             };
-            scope.buttonNew = function() {
+            scope.buttonNew = function () {
                 var newPath = getPathAction("new", scope.prefixRoute, undefined, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
-            scope.buttonEdit = function(id) {
+            scope.buttonEdit = function (id) {
                 var newPath = getPathAction("edit", scope.prefixRoute, id, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
-            scope.buttonDelete = function(id) {
+            scope.buttonDelete = function (id) {
                 var newPath = getPathAction("delete", scope.prefixRoute, id, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };
-            scope.buttonView = function(id) {
+            scope.buttonView = function (id) {
                 var newPath = getPathAction("view", scope.prefixRoute, id, scope.parentProperty, scope.parentId);
                 $location.path(newPath).search({});
             };

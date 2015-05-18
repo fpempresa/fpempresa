@@ -3,7 +3,11 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addEditRoute({
             entity: "Empresa",
             expand: "direccion.municipio,direccion.municipio.provincia"
-        });        
+        });    
+        crudRoutesProvider.addNewRoute({
+            entity: "Empresa",
+            expand: "direccion.municipio,direccion.municipio.provincia"
+        });         
     }]);
 
 

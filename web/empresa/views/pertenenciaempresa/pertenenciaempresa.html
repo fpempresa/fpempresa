@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-12 form__container" >
         <div>
-            <legend class="form__title">Selecciona la empresa a la que pertenences</legend>
+            <legend class="form__title">Selecciona la nueva empresa a la que quieres pertenencer</legend>
 
 
             <div ng-if="user.empresa === null">
@@ -14,7 +14,7 @@
             </div>
 
 
-            <div>
+            <div  ng-hide="user.empresa">
                 <p class="form__text form__text--help">Si tu empresa no aparece en la siguiente lista puedes crear una nueva empresa: <button class="btn form__button form__button--primary" ng-click="crearNuevaEmpresa()" >Crear una nueva empresa</button></p> 
             </div> 
 
@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <div>
+            <div  ng-hide="user.empresa">
                 <p ><button class="btn form__button form__button--primary" ng-click="crearNuevaEmpresa()" >Crear una nueva empresa si no aparece en la lista</button></p> 
             </div>             
             

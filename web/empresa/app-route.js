@@ -8,7 +8,7 @@ app.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlR
             idEmpresa=0;
         }
         
-        $urlRouterProvider.otherwise('/empresa/edit/'+idEmpresa);
+        $urlRouterProvider.otherwise('/');
         $stateProvider.state("lateralmenu",{
             templateUrl:"fragments/lateralmenu/lateralmenu.html",
             controller:"LateralMenuController"

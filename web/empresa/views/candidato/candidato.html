@@ -1,0 +1,130 @@
+<div class="row" >
+    <div class="col-sm-12 form__container"  style="height: 100%" >
+        <form name="mainForm" id="mainForm"  ix3-form>
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <ix3-business-messages></ix3-business-messages>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" >                     
+                    <button ng-if="model.rechazado === true" type="button" class="btn form__button form__button--default" ng-click="buttonAceptar()" title="No se notificará al titulado que ha sido vuelto a aceptar" >Aceptar candidato y cerrar</button>
+                    <button  ng-if="model.rechazado !== true" type="button" class="btn form__button form__button--danger" ng-click="buttonRechazar()" title="No se notificará al titulado que ha sido rechazado" >Rechazar candidato y cerrar</button>
+                    Aceptar o rechazar un candidato &uacute;nicamente tiene como finalidad ayudar a gestionar la lista de candidatos.En ning&uacute;n momento se notifica al candidato el rechazo o aceptaci&oacute;n                  
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <legend class="form__title">Datos personales</legend>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="data-table__row">
+                                <td><i class="glyphicon glyphicon-user"></i> Nombre y apellidos:</td>
+                                <td>{{model.usuario.getNombreCompleto()}}</td>
+                            </tr>                     
+                            <tr class="data-table__row">
+                                <td><i class="glyphicon glyphicon-envelope"></i> Correo electronico:</td>
+                                <td>{{model.usuario.email}}</td>
+                            </tr>                        
+                            <tr ng-show="model.usuario.titulado.fechaNacimiento" class="data-table__row">
+                                <td><i class="glyphicon glyphicon-gift"></i> Fecha de nacimiento:</td>
+                                <td>{{model.usuario.titulado.fechaNacimiento| ix3Date}}</td>
+                            </tr>
+                            <tr  ng-show="model.usuario.titulado.telefono" class="data-table__row">
+                                <td><i class="glyphicon glyphicon-earphone"></i> Telefono:</td>
+                                <td>{{model.usuario.titulado.telefono}}  {{model.usuario.titulado.telefonoAlternativo}}</td>
+                            </tr>
+                            <tr ng-show="model.usuario.titulado.tipoDocumento" class="data-table__row">
+                                <td><i class="glyphicon glyphicon-credit-card"></i> {{model.usuario.titulado.getTipoDocumentoDescription()}}</td>
+                                <td>{{model.usuario.titulado.numeroDocumento}}</td>
+                            </tr>
+                            <tr ng-show="model.usuario.titulado.direccion !== null" class="data-table__row">
+                                <td><i class="glyphicon glyphicon-map-marker"></i> Direccion</td>
+                                <td>{{model.usuario.titulado.direccion.getTipoViaDescription()}} {{model.usuario.titulado.direccion.nombreVia}} {{model.usuario.titulado.direccion.otrosDireccion}}<br> {{model.usuario.titulado.direccion.codigoPostal}} {{model.usuario.titulado.direccion.municipio.toString()}} ({{model.usuario.titulado.direccion.municipio.provincia.toString()}})</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <div role="tabpanel">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" ng-click="$event.preventDefault()" aria-controls="home" role="tab" data-toggle="tab">Formaci&oacute;n Academica</a></li>
+                            <li role="presentation"><a href="#profile" ng-click="$event.preventDefault()" aria-controls="profile" role="tab" data-toggle="tab">Experiencia Laboral</a></li>
+                            <li role="presentation"><a href="#messages" ng-click="$event.preventDefault()" aria-controls="messages" role="tab" data-toggle="tab">Idiomas</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <table class="table table-bordered table-hover">
+                                    <thead>                        
+                                        <tr class="data-table__head">
+                                            <th style="min-width:140px;text-align: left">Nivel</th>
+                                            <th style="width:      50%;text-align: left">Titulo</th>
+                                            <th style="width:      35%;text-align: left">Centro</th>
+                                            <th style="min-width:85px;text-align: left">Fecha</th>                        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="formacionAcademica in model.usuario.titulado.formacionesAcademicas| orderBy:'fecha' " class="data-table__row">
+                                            <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
+                                            <td >{{formacionAcademica.getNombreTitulo()}}</td>
+                                            <td >{{formacionAcademica.getNombreCentro()}}</td>
+                                            <td >{{formacionAcademica.fecha| ix3Date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <table class="table table-bordered">
+                                    <thead>                    
+                                        <tr class="data-table__head">
+                                            <th style="width:      60%;text-align: left">Empresa</th>
+                                            <th style="width:      30%;text-align: left">Puesto</th>
+                                            <th style="min-width:150px;text-align: left">Fechas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="experienciaLaboral in model.usuario.titulado.experienciasLaborales| orderBy:'fechaInicio' " class="data-table__row">
+                                            <td >{{experienciaLaboral.nombreEmpresa}}</td>
+                                            <td >{{experienciaLaboral.puestoTrabajo}}</td>
+                                            <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">
+                                <table class="table table-bordered table-hover">
+                                    <thead>                    
+                                        <tr class="data-table__head">
+                                            <th style="min-width:30px;text-align: left">Nivel</th>
+                                            <th style="width:    100%;text-align: left">Nombre</th>
+                                            <th style="min-width:85px;text-align: left">Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="tituloIdioma in model.usuario.titulado.titulosIdiomas| orderBy:'fecha' " class="data-table__row">
+                                            <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
+                                            <td >{{tituloIdioma.getNombreIdioma()}}</td>
+                                            <td >{{tituloIdioma.fecha| ix3Date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <div class="pull-right">
+                        <button type="button" class="btn form__button form__button--primary" ng-click="buttonCancel()">Cerrar</button>
+                    </div>
+                </div>
+            </div>             
+        </form>
+    </div>
+</div>
+

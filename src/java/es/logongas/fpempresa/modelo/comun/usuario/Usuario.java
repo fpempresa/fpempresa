@@ -88,7 +88,7 @@ public class Usuario extends User implements Principal {
         return name;
     }
 
-    @ConstraintRule(message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class,priority = -20,disabled = true)
+    @ConstraintRule(disabled = true,message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class,priority = -20)
     private boolean isProhibidoNuevoUsuario() {
         return true;
     }
@@ -151,7 +151,7 @@ public class Usuario extends User implements Principal {
         return true;
     }
     
-    @ConstraintRule(message="Error en el sistema de mensajes",groups=RuleGroupPredefined.PreUpdate.class)
+    @ConstraintRule(disabled = true,message="Error en el sistema de mensajes",groups=RuleGroupPredefined.PreUpdate.class)
     private boolean isModificadosValoresUsuario(RuleContext<Usuario> ruleContext) throws BusinessException {
         Usuario usuario=ruleContext.getEntity();
         Usuario usuarioOriginal=ruleContext.getOriginalEntity();

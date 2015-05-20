@@ -23,6 +23,7 @@
             <div class="col-xs-12 col-sm-2" style="padding-right: 0px!important;">
                 <ul class="lateral-menu__menu">
                     <li class="lateral-menu__header">Centro</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/$')}"  class="lateral-menu__item__link" href="#/">Panel de control</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/centro/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/centro/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/centro/edit/{{user.centro.idCentro}}">Mi centro</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/titulado/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/titulado/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/titulado/search">Mis Titulados</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/profesor/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/profesor/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/profesor/search">Mis Profesores</a></li>

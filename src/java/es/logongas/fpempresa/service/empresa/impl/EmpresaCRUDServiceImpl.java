@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
@@ -37,31 +38,34 @@ public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> im
     @Override
     public void insert(Empresa empresa) throws BusinessException {
 
-            if (getPrincipal().getEmpresa()!=null) {
-                throw new BusinessException("No puedes insertar una empresa puesta que ya perteneces a " + getPrincipal().getEmpresa().toString());
-            }        
-        
-            if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
-                if (getPrincipal().getEstadoUsuario()!=EstadoUsuario.ACEPTADO) {
-                    throw new BusinessException("No puedes insertar una empresa ya que no estas aceptado en el centro");
-                }
-            }             
-            
-            if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
-                empresa.setCentro(getPrincipal().getCentro());
-            }                
-        
-            if (getPrincipal().getTipoUsuario()==TipoUsuario.EMPRESA) {
-                getPrincipal().setEmpresa(empresa);
-                getPrincipal().setEstadoUsuario(EstadoUsuario.ACEPTADO);
-            }       
-            
-            transactionManager.begin();
+        if (getPrincipal().getEmpresa() != null) {
+            throw new BusinessException("No puedes insertar una empresa puesta que ya perteneces a " + getPrincipal().getEmpresa().toString());
+        }
 
-                getDAO().insert(empresa);
-                daoFactory.getDAO(Usuario.class).update(getPrincipal());
+        if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
+            if (getPrincipal().getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                throw new BusinessException("No puedes insertar una empresa ya que no estas aceptado en el centro");
+            }
+        }
 
-            transactionManager.commit();
+        transactionManager.begin();
+
+        if (getPrincipal().getTipoUsuario() == TipoUsuario.CENTRO) {
+            empresa.setCentro((Centro) daoFactory.getDAO(Centro.class).read(getPrincipal().getCentro().getIdCentro()));
+        }
+
+        Usuario usuario = (Usuario) daoFactory.getDAO(Usuario.class).read(getPrincipal().getIdIdentity());
+
+        if (getPrincipal().getTipoUsuario() == TipoUsuario.EMPRESA) {
+            
+            usuario.setEmpresa(empresa);
+            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        }
+
+        getDAO().insert(empresa);
+        daoFactory.getDAO(Usuario.class).update(usuario);
+
+        transactionManager.commit();
     }
 
 }

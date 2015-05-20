@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.core.hibernate.HibernateUtil"%>
 <%@page import="es.logongas.ix3.security.authentication.AuthenticationManager"%>
@@ -22,6 +24,10 @@
         HttpSession httpSession = request.getSession();
         Serializable sid = (Serializable) httpSession.getAttribute("sid");
         Principal principal;
+        List<String> expands=new ArrayList<String>();
+        expands.add("empresa");
+        expands.add("centro");
+        expands.add("titulado");
         if (sid == null) {
             principal = null;
         } else {
@@ -30,7 +36,7 @@
         
         if (principal != null) {
             JsonWriter jsonWriter = jsonFactory.getJsonWriter(Principal.class);
-            jsonUser = jsonWriter.toJson(principal);
+            jsonUser = jsonWriter.toJson(principal,expands);
         } else {
             jsonUser = "null";
         }

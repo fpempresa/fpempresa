@@ -20,6 +20,7 @@
             <div class="col-xs-12 col-sm-2" style="padding-right: 0px!important;">
                 <ul class="lateral-menu__menu">
                     <li class="lateral-menu__header">Sitios</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/$')}"  class="lateral-menu__item__link" href="#/">Panel de control</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/centro/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/centro/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/centro/search">Centros</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/empresa/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/empresa/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/empresa/search">Empresas</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/oferta/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/oferta/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/oferta/search">Ofertas</a></li>

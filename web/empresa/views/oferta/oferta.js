@@ -45,7 +45,7 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
         $scope.search = function () {
             
-            $scope.filters['empresa.idEmpresa'] = $scope.model.empresa.idEmpresa;
+            $scope.filters['oferta.idOferta'] = $scope.model.idOferta;
 
 
 

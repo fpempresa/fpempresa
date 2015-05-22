@@ -5,13 +5,15 @@
             <ix3-business-messages></ix3-business-messages>
             <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend class="form__title" >Mis datos</legend>
+                    <legend class="form__title">Usuario</legend>
+
+
                     <div class="row" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">
                                 <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation>
+                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation ng-disabled="model.idIdentity!==user.idIdentity">
                                 </div>
                             </div> 
                         </div>                          
@@ -19,7 +21,7 @@
                             <div class="form-group">
                                 <label for="apellidos" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation>
+                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation ng-disabled="model.idIdentity!==user.idIdentity">
                                 </div>
                             </div> 
                         </div>
@@ -29,35 +31,28 @@
                             <div class="form-group">
                                 <label for="email" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.email" type="text" class="form-control" id="email" name="email"  ix3-validation>
+                                    <input ng-model="model.email" type="text" class="form-control" id="email" name="email"  ix3-validation ng-disabled="model.idIdentity!==user.idIdentity">
                                 </div>
                             </div> 
                         </div>
                     </div>
 
-                    <div class="row" ng-show="controllerAction === 'NEW'" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6  form-horizontal" ng-show="(model.tipoUsuario === 'CENTRO' || model.tipoUsuario === 'EMPRESA') && (model.idIdentity!==user.idIdentity)">
                             <div class="form-group">
-                                <label for="password" class="col-xs-3 col-sm-6 control-label">Contrase&ntilde;a</label>
+                                <label for="estadoUsuario" class="col-xs-3 col-sm-6 control-label" >Estado en <span ng-show="model.tipoUsuario==='CENTRO'">el</span><span ng-show="model.tipoUsuario==='EMPRESA'">la</span> {{model.getTipoUsuarioDescription()}}</label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.password" type="password" class="form-control" id="password" name="password" ng-required="controllerAction === 'NEW'"  >
+                                    <select  ng-model="model.estadoUsuario" id="estadoUsuario" name="estadoUsuario" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
                                 </div>
                             </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="confirmPassword" class="col-xs-3 col-sm-6 control-label">Confirmar contrase&ntilde;a</label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-required="controllerAction === 'NEW'" >
-                                </div>
-                            </div> 
-                        </div>  
+                        </div> 
                     </div>
-
                     <div class="row" >
-                        <div class="col-xs-12 ">                             
-                            <div class="pull-right" >
-                                <button type="button" ng-show="controllerAction === 'EDIT'" class="btn form__button form__button--default" ng-click="cambiarContrasenya()" >Cambiar Contrase&ntilde;a</button>
+                        <div class="col-xs-12 ">
+                            <div class="pull-right">
+                                <button type="button" ng-show="controllerAction === 'EDIT' && (model.idIdentity===user.idIdentity)" class="btn form__button form__button--default" ng-click="cambiarContrasenya()" >Cambiar Contrase&ntilde;a</button>
                                 <fpe-cancel-button></fpe-cancel-button>
                                 <fpe-ok-button></fpe-ok-button>
                             </div>

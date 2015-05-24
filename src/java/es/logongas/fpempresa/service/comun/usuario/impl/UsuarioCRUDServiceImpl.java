@@ -25,6 +25,11 @@ import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.IOUtils;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -80,6 +85,15 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     @Override
     public void insert(Usuario usuario) throws BusinessException {
 
+        InputStream inputStream = UsuarioCRUDServiceImpl.class.getResourceAsStream("fotoDefecto.png");
+        
+        try {
+            byte[] foto=IOUtils.toByteArray(inputStream);
+            usuario.setFoto(foto);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
         usuario.setValidadoEmail(false);
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());

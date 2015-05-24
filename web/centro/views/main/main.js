@@ -7,98 +7,20 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
     }]);
 
 
-MainController.$inject = ['$scope'];
-function MainController($scope) {
+MainController.$inject = ['$scope', '$http', 'ix3Configuration'];
+function MainController($scope, $http, ix3Configuration) {
     $scope.businessMessages = [];
 
 
-    $scope.model = {
-        
-        titulados: 186,
-        empresas: 2,
-        ofertas: 6,
-        graficaOfertasPorFamilia: {
-            title: "Titulados por familia",
-            subtitle: null,
-            yAxisTitle: "Nº de titulados",
-            labels: [
-                'Informática y Comunicaciones',
-                'Comercio y Marketing',
-                'Administración y Gestión',
-                'Sanidad'
-            ],
-            series: [
-                {
-                    name: "Familias profesionales",
-                    data: [
-                        54, 45, 38, 49
-                    ]
-                }
-            ]
-        }
-    };
-
-    showChart($("#grafica"), $scope.model.graficaOfertasPorFamilia);
-
-}
-
-function showChart(element, resultado) {
-    if (element.highcharts()) {
-        element.highcharts().destroy();
+    if ($scope.user && $scope.user.centro) {
+        $http({
+            method: "GET",
+            url: ix3Configuration.server.api + "/Estadisticas/centro/" + $scope.user.centro.idCentro
+        }).then(function (chartData) {
+            $scope.chartData = chartData.data;
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
+        });
     }
-    if (resultado === null) {
-        return;
-    }
-
-    element.highcharts({
-        chart: {
-            type: 'column'
-        },
-        credits: {
-            enabled: false
-        },
-        title: {
-            text: resultado.title
-        },
-        subtitle: {
-            text: resultado.subtitle
-        },
-        xAxis: {
-            categories: resultado.labels
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: resultado.yAxisTitle
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true,
-                    color: "#000000",
-                    style: {
-                        fontWeight: 'bold'
-                    },
-                    formatter: function () {
-                        return this.y;
-                    }
-                }
-            }
-        },
-        series: [{
-                name: resultado.series[0].name,
-                data: resultado.series[0].data
-
-            }],
-        exporting: {
-            enabled: false
-        }
-    });
-
-
-
 }
 app.controller("MainController", MainController);

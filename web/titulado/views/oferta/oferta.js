@@ -82,7 +82,7 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
             candidatoService.insert(candidato).then(function (candidato) {
                 $scope.inscrito = true;
                 $scope.businessMessages = [];
-                alert("Se ha inscrito correctametne en la oferta");
+                alert("Se ha inscrito correctamente en la oferta");
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });
@@ -102,7 +102,7 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                     candidatoService.delete(candidatos[0].idCandidato).then(function () {
                         $scope.inscrito = false;
                         $scope.businessMessages = [];
-                        alert("Te has borrado correctametne en la oferta");
+                        alert("Te has borrado correctamente de la oferta");
                     }, function (businessMessages) {
                         $scope.businessMessages = businessMessages;
                     });

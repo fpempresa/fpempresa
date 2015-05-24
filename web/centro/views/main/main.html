@@ -15,81 +15,109 @@
 
                         <div class="row">
                             <div class="col-xs-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-graduation-cap fa-4x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="section__text--size-high">{{model.titulados}}</div>
-                                                <div class="section__text--size-high">Titulados</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#/titulado/search">
-                                        <div class="panel-footer" style="background-color: #FFFFFF">
-                                            <span class="pull-left">Ir a los titulados</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>   
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-user fa-4x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="section__text--size-high">{{model.empresas}}</div>
-                                                <div class="section__text--size-high">Empresas</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#/empresa/search">
-                                        <div class="panel-footer" style="background-color: #FFFFFF">
-                                            <span class="pull-left">Ir a las empresas</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <div class="panel panel-primary">
+                                <div class="panel panel-red">
                                     <div class="panel-heading">
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <i class="fa fa-shopping-cart  fa-4x"></i>
                                             </div>
                                             <div class="col-xs-9 text-right">
-                                                <div class="section__text--size-high">{{model.ofertas}}</div>
+                                                <div class="section__text--size-high">{{chartData.numeroOfertas}}</div>
                                                 <div class="section__text--size-high">Ofertas</div>
                                             </div>
                                         </div>
                                     </div>
                                     <a href="#/oferta/search">
-                                    <div class="panel-footer" style="background-color: #FFFFFF">
-                                        <span class="pull-left">Ir a las ofertas</span>
-                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                        <div class="clearfix"></div>
-                                    </div>
+                                        <div class="panel-footer" style="background-color: #FFFFFF">
+                                            <span class="pull-left">Ir a las ofertas</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
                                     </a>
                                 </div>
-                            </div>                            
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="panel panel-yellow">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa-graduation-cap fa-4x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="section__text--size-high">{{chartData.numeroTitulados}}</div>
+                                                <div class="section__text--size-high">Titulados</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#/usuario/search/tipoUsuario/TITULADO">
+                                        <div class="panel-footer" style="background-color: #FFFFFF">
+                                            <span class="pull-left">Ir a los titulados</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa-archive fa-4x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="section__text--size-high">{{chartData.numeroCandidatos}}</div>
+                                                <div class="section__text--size-high">Candidatos</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer" style="background-color: #FFFFFF">
+                                        <span class="pull-left">&nbsp;</span>
+                                        <span class="pull-right">&nbsp;</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
             </div>
-
             <div class="row" >
                 <div class="col-xs-12 ">
-                    <div id="grafica" style="height: 400px;position: relative;top:0px;left:0px;"  ></div>
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Ofertas por familia</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div style="height: 300px;position: relative;top:0px;left:0px;" fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Ofertas" title-x="Familias profesionales" serie="chartData.ofertasPorFamilia" ></div>
+                        </div>
+                    </div>                    
                 </div>
             </div>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> <i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;Titulados por familia</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div style="height: 300px;position: relative;top:0px;left:0px;"  fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Titulados" title-x="Familias profesionales" serie="chartData.tituladosPorFamilia"   ></div>
+                        </div>
+                    </div>                                      
+                </div>
+            </div>  
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;Candidatos por familia</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div style="height: 300px;position: relative;top:0px;left:0px;"  fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Candidatos" title-x="Familias profesionales" serie="chartData.candidatosPorFamilia"   ></div>
+                        </div>
+                    </div>                                      
+                </div>
+            </div>                          
         </form>
     </div>
 </div>

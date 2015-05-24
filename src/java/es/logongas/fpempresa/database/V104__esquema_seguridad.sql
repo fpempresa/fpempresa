@@ -11,7 +11,7 @@ CREATE TABLE `usuario` (
   `idEmpresa` int(11) DEFAULT NULL,
   `validadoEmail` int(11) DEFAULT NULL,
   `claveValidacionEmail` varchar(255) DEFAULT NULL,
-  `foto` blob,
+  `foto` MEDIUMBLOB NULL,
   PRIMARY KEY (`idIdentity`),
   UNIQUE KEY `eMail` (`eMail`),
   KEY `KEY_USUARIO_Centro` (`idCentro`),

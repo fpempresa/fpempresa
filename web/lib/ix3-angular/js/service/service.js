@@ -72,10 +72,10 @@
 
             return deferred.promise;
         };
-        this.search = function (filters, order, expand, pageNumber, pageSize) {
+        this.search = function (query) {
             var deferred = $q.defer();
 
-            that.repository.search(filters, order, expand, pageNumber, pageSize).then(function (data) {
+            that.repository.search(query).then(function (data) {
                 deferred.resolve(data);
             }, function (data) {
                 deferred.reject(data);

@@ -188,21 +188,22 @@
 
             return deferred.promise;
         };
-        this.search = function (filters, order, expand, pageNumber, pageSize) {
+        this.search = function (query) {
             var deferred = this.$q.defer();
-
+            query=query || {};
+            
             var params = {};
-            if (filters) {
+            if (query.filters) {
 
-                for (var key in filters) {
-                    if (!filters.hasOwnProperty(key)) {
+                for (var key in query.filters) {
+                    if (!query.filters.hasOwnProperty(key)) {
                         continue;
                     }
 
 
                     if (key.charAt(0) === "$") {
                         var operator = key.substr(1).toUpperCase();
-                        var filtersWithOperator = filters[key];  //Objeto con filtros cuya operador es "operator"
+                        var filtersWithOperator = query.filters[key];  //Objeto con filtros cuya operador es "operator"
 
                         for (var propertyName in filtersWithOperator) {
                             if (!filtersWithOperator.hasOwnProperty(propertyName)) {
@@ -213,16 +214,16 @@
                         }
                     } else {
                         //Los filtros que cuelgan directamente son del tipo "EQ" y no hace falta poner nada.
-                        params[key] = filters[key];
+                        params[key] = query.filters[key];
                     }
 
                 }
 
             }
-            if (order) {
+            if (query.order) {
                 params.$orderby = "";
-                for (var i = 0; i < order.length; i++) {
-                    var simpleOrder = order[i];
+                for (var i = 0; i < query.order.length; i++) {
+                    var simpleOrder = query.order[i];
                     if (params.$orderby !== "") {
                         params.$orderby = params.$orderby + ",";
                     }
@@ -230,13 +231,17 @@
                 }
             }
 
-            if (expand) {
-                params.$expand = expand;
+            if (query.expand) {
+                params.$expand = query.expand;
             }
-            if ((pageNumber >= 0) && (pageSize > 0)) {
-                params.$pagenumber = pageNumber;
-                params.$pagesize = pageSize;
+            if ((query.pageNumber >= 0) && (query.pageSize > 0)) {
+                params.$pagenumber = query.pageNumber;
+                params.$pagesize = query.pageSize;
             }
+            
+            if (query.distinct===true) {
+                params.$distinct = true;
+            }            
 
             var config = {
                 method: 'GET',

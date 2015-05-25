@@ -19,6 +19,7 @@
                 $lliker: {}
             };
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
+            scope.distinct=false;
             scope.page = {};
             scope.businessMessages = null;
             scope.namedSearch = undefined;
@@ -67,7 +68,15 @@
                 if (scope.namedSearch) {
                     promise=scope.service.namedSearch(scope.namedSearch,scope.namedSearchParameters, scope.expand);
                 } else {
-                    promise=scope.service.search(filters, scope.orderby, scope.expand, scope.page.pageNumber, scope.page.pageSize);
+                    var query = {
+                        filters:filters,
+                        orderby:scope.orderby,
+                        expand:scope.expand,
+                        pageNumber:scope.page.pageNumber,
+                        pageSize:scope.page.pageSize,
+                        distinct:scope.distinct
+                    };
+                    promise=scope.service.search(query);
                 }
 
                 promise.then(function (data) {

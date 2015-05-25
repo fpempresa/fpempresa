@@ -50,7 +50,12 @@
                         service.repository.get(id, expands.tituladoExpand).then(function (titulado) {
 
                             if ((expands.expandUsuario) && (titulado)) {
-                                service.usuarioRepository.search({"titulado.idTitulado": titulado.idTitulado}, undefined, expands.usuarioExpand).then(function (usuarios) {
+                                var query = {
+                                    filters:{"titulado.idTitulado": titulado.idTitulado},
+                                    expand:expands.usuarioExpand
+                                }
+                                
+                                service.usuarioRepository.search(query).then(function (usuarios) {
 
                                     if (usuarios.length > 1) {
                                         throw new Error("Existe mas de un Usuario para el titulado:" + titulado.idTitulado);

@@ -20,17 +20,17 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.filters = {
-                $eq: {},
-                $ne: {},
-                $gt: {},
-                $ge: {},
-                $lt: {},
-                $le: {},
-                $like: {},
-                $llike: {},
-                $liker: {},
-                $lliker: {}
-            };
+            $eq: {},
+            $ne: {},
+            $gt: {},
+            $ge: {},
+            $lt: {},
+            $le: {},
+            $like: {},
+            $llike: {},
+            $liker: {},
+            $lliker: {}
+        };
         $scope.orderby = [];
 
         $scope.page = {
@@ -44,12 +44,18 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         };
 
         $scope.search = function () {
-            
+
             $scope.filters['oferta.idOferta'] = $scope.model.idOferta;
 
+            var query = {
+                filters: $scope.filters,
+                orderby: $scope.orderby,
+                expand: "usuario",
+                pageNumber: $scope.page.pageNumber,
+                pageSize: $scope.page.pageSize
+            }
 
-
-            serviceFactory.getService("Candidato").search($scope.filters, $scope.orderby, "usuario", $scope.page.pageNumber, $scope.page.pageSize).then(function (data) {
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
                 if (angular.isArray(data)) {
                     $scope.candidatos = data;
                 } else {
@@ -72,7 +78,7 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         $scope.verCandidato = function (idCandidato) {
             dialog.create("viewCandidato", {
                 id: idCandidato
-            }).then(function() {
+            }).then(function () {
                 $scope.search();
             });
         };
@@ -102,16 +108,18 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
                 };
-                var orderby = [
-                    {fieldName: "grado", orderDirection: "DESC"},
-                    {fieldName: "leyEducativa", orderDirection: "DESC"},
-                    {fieldName: "descripcion", orderDirection: "ASC"}
-                ];
 
-                serviceCiclo.search(filters, orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -150,14 +158,14 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             $scope.page.pageNumber = 0;
             $scope.search();
         }, true);
-        
+
         $scope.$watch("filters", function (newValue, oldValue) {
             if (newValue === oldValue) {
                 return;
             }
             $scope.page.pageNumber = 0;
             $scope.search();
-        }, true);        
+        }, true);
         $scope.buttonSearch = function () {
             $scope.page.pageNumber = 0;
             $scope.search();
@@ -182,16 +190,17 @@ app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
-                };
-                var orderby = [
-                    {fieldName: "grado", orderDirection: "DESC"},
-                    {fieldName: "leyEducativa", orderDirection: "DESC"},
-                    {fieldName: "descripcion", orderDirection: "ASC"}
-                ];
-
-                serviceCiclo.search(filters, orderby).then(function (ciclos) {
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
+                }
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;

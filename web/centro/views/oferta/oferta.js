@@ -36,37 +36,39 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         };
 
 
-        $scope.checkTodosCiclos=function(todosCiclos) {
-            
+        $scope.checkTodosCiclos = function (todosCiclos) {
+
             if (todosCiclos) {
-                $scope.model.ciclos=angular.copy($scope.ciclos);
+                $scope.model.ciclos = angular.copy($scope.ciclos);
             } else {
-               $scope.model.ciclos=[]; 
+                $scope.model.ciclos = [];
             }
-            
+
         };
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
-            
-            if (newFamilia===oldFamilia) {
+
+            if (newFamilia === oldFamilia) {
                 return;
             }
-            
+
             if (oldFamilia) {
-                $scope.model.ciclos=[];
+                $scope.model.ciclos = [];
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
-                };
-                var orderby = [
-                    {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"DESC"},
-                    {fieldName:"descripcion",orderDirection:"ASC"}
-                ];                
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
+                }
 
-                serviceCiclo.search(filters,orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -76,10 +78,10 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
                 $scope.ciclos = [];
             }
         });
-        
-        $scope.compareCiclo=function(cicloA,cicloB) {
+
+        $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {
-                return (cicloA.idCiclo===cicloB.idCiclo);
+                return (cicloA.idCiclo === cicloB.idCiclo);
             } else {
                 return false;
             }
@@ -91,26 +93,28 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
-            
-            if (newFamilia===oldFamilia) {
+
+            if (newFamilia === oldFamilia) {
                 return;
             }
-            
+
             if (oldFamilia) {
-                $scope.model.ciclos=[];
+                $scope.model.ciclos = [];
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
                 };
-                var orderby = [
-                    {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"DESC"},
-                    {fieldName:"descripcion",orderDirection:"ASC"}
-                ];                
 
-                serviceCiclo.search(filters,orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -120,10 +124,10 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                 $scope.ciclos = [];
             }
         });
-        
-        $scope.compareCiclo=function(cicloA,cicloB) {
+
+        $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {
-                return (cicloA.idCiclo===cicloB.idCiclo);
+                return (cicloA.idCiclo === cicloB.idCiclo);
             } else {
                 return false;
             }
@@ -135,26 +139,28 @@ app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
-            
-            if (newFamilia===oldFamilia) {
+
+            if (newFamilia === oldFamilia) {
                 return;
             }
-            
+
             if (oldFamilia) {
-                $scope.model.ciclos=[];
+                $scope.model.ciclos = [];
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
                 };
-                var orderby = [
-                    {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"DESC"},
-                    {fieldName:"descripcion",orderDirection:"ASC"}
-                ];                
 
-                serviceCiclo.search(filters,orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -164,10 +170,10 @@ app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail
                 $scope.ciclos = [];
             }
         });
-        
-        $scope.compareCiclo=function(cicloA,cicloB) {
+
+        $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {
-                return (cicloA.idCiclo===cicloB.idCiclo);
+                return (cicloA.idCiclo === cicloB.idCiclo);
             } else {
                 return false;
             }

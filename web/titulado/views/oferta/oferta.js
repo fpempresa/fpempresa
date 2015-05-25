@@ -90,13 +90,14 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
 
         $scope.desinscribirseOferta = function () {
             var candidatoService = serviceFactory.getService("Candidato");
+            var query = {
+                filter: {
+                    'oferta.idOferta': $scope.model.idOferta,
+                    'usuario.idIdentity': $scope.user.idIdentity
+                }
+            }
 
-            var filter = {
-                'oferta.idOferta': $scope.model.idOferta,
-                'usuario.idIdentity': $scope.user.idIdentity
-            };
-
-            candidatoService.search(filter).then(function (candidatos) {
+            candidatoService.search(query).then(function (candidatos) {
 
                 if (candidatos && candidatos.length === 1) {
                     candidatoService.delete(candidatos[0].idCandidato).then(function () {

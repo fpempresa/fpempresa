@@ -265,7 +265,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                 }
 
                 var service = serviceFactory.getService(metadataProperty.className);
-                var promise = service.search(filters, undefined, expand);
+                var query = {
+                    filters:filters,
+                    expand:expand
+                };
+                var promise = service.search(query);
 
                 return promise;
             }

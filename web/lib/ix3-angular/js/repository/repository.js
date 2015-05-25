@@ -85,12 +85,12 @@
 
             return deferred.promise;
         };
-        this.search = function (filters, order, expand, pageNumber, pageSize) {
+        this.search = function (query) {
             var deferred = $q.defer();
 
-            that.remoteDAO.search(filters, order, expand, pageNumber, pageSize).then(function (data) {
+            that.remoteDAO.search(query).then(function (data) {
                 //OJO:!!!!!!Hay que comprobar si lo que retornamos no es un objeto "Page" pq en ese caso se enriquece solo su contenido!!!!!!
-                if ((typeof (pageNumber) !== "undefined") && (typeof (pageSize) !== "undefined") && (typeof (data.content) !== "undefined")) {
+                if ((typeof (query.pageNumber) !== "undefined") && (typeof (query.pageSize) !== "undefined") && (typeof (data.content) !== "undefined")) {
                     richDomain.extend(data.content);
                 } else {
                     richDomain.extend(data);

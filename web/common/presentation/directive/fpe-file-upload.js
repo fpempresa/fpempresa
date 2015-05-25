@@ -25,6 +25,7 @@ angular.module("common").directive('fpeFileUpload', ['ix3Configuration', functio
                     },
                     always: function () {
                         mainProgressElement.css({visibility: "hidden"});
+                        $('.progress-bar', element).css('width', 0 + '%');
                     },
                     done:function(e, data) {
                         $scope.$evalAsync($scope.success);

@@ -54,8 +54,16 @@ angular.module("es.logongas.ix3").directive('ix3Validation', ['$compile','metada
                             element.attr("min",minimum);
                         }                        
                         
+                        var format=metadataProperty.format;
+                        if (format==="URL") {
+                            element.attr("type","url");
+                        } else if (format==="EMAIL") {
+                            element.attr("type","email");
+                        }                          
+                        
                         element.removeAttr("ix3-validation"); //Se quita para evitar el bucle infinito de compilaciones
                         element.removeAttr("data-ix3-validation"); //Se quita para evitar el bucle infinito de compilaciones
+                        element.removeAttr("x-ix3-validation"); //Se quita para evitar el bucle infinito de compilaciones
                         $compile(element)($scope);
                     }
                 }

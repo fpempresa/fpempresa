@@ -7,6 +7,12 @@ CREATE TABLE `centro` (
   `otrosDireccion` varchar(255) DEFAULT NULL,
   `codigoPostal` varchar(255) DEFAULT NULL,
   `idMunicipio` int(11) DEFAULT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+  `email` VARCHAR(255) DEFAULT NULL,
+  `persona` VARCHAR(255) DEFAULT NULL,
+  `telefono` VARCHAR(15) DEFAULT NULL,
+  `fax` VARCHAR(15) DEFAULT NULL,
+  `textoLibre` TEXT DEFAULT NULL,
   PRIMARY KEY (`idCentro`),
   KEY `KEY_CENTRO_MUNICIPIO` (`idMunicipio`),
   CONSTRAINT `KEY_CENTRO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)

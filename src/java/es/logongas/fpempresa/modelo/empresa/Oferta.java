@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.modelo.empresa;
 
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
@@ -27,6 +28,7 @@ import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -64,6 +66,10 @@ public class Oferta {
 
     private boolean cerrada;
    
+    @NotNull
+    @Valid
+    private Contacto contacto;       
+    
     public Oferta() {
         this.tipoOferta = TipoOferta.LABORAL;
     }
@@ -239,6 +245,20 @@ public class Oferta {
         date = cal.getTime();
 
         this.fecha = date;
+    }
+
+    /**
+     * @return the contacto
+     */
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    /**
+     * @param contacto the contacto to set
+     */
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 
 }

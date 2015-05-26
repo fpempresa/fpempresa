@@ -43,5 +43,14 @@
 
         <property name="cerrada" />
        
+        <component name="contacto" >
+            <property name="url" />
+            <property name="email" />
+            <property name="persona" />
+            <property name="telefono" />
+            <property name="fax" />
+            <property name="textoLibre" />
+        </component>        
+        
     </class>
 </hibernate-mapping>

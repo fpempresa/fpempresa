@@ -17,6 +17,7 @@
 package es.logongas.fpempresa.modelo.empresa;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
@@ -52,6 +53,10 @@ public class Empresa {
     
     private Centro centro;
 
+    @NotNull
+    @Valid
+    private Contacto contacto;    
+    
     @ConstraintRule(message = "Solo un usuario registrado puede modificar la empresa", priority = -20, groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
     private boolean usuarioRegistrado(RuleContext<Empresa> ruleContext) {
         Usuario usuario = (Usuario) ruleContext.getPrincipal();
@@ -201,6 +206,20 @@ public class Empresa {
      */
     public void setCentro(Centro centro) {
         this.centro = centro;
+    }
+
+    /**
+     * @return the contacto
+     */
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    /**
+     * @param contacto the contacto to set
+     */
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 
 }

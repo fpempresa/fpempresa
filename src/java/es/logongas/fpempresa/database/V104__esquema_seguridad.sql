@@ -12,6 +12,7 @@ CREATE TABLE `usuario` (
   `validadoEmail` int(11) DEFAULT NULL,
   `claveValidacionEmail` varchar(255) DEFAULT NULL,
   `foto` MEDIUMBLOB NULL,
+  `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`idIdentity`),
   UNIQUE KEY `eMail` (`eMail`),
   KEY `KEY_USUARIO_Centro` (`idCentro`),

@@ -29,10 +29,8 @@ import es.logongas.ix3.service.rules.RuleContext;
 import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import es.logongas.ix3.web.json.annotations.ForbiddenExport;
 import es.logongas.ix3.web.json.annotations.ForbiddenImport;
-import javax.validation.constraints.AssertTrue;
+import java.util.Date;
 import javax.validation.constraints.NotNull;
-import org.hibernate.event.spi.PostLoadEvent;
-import org.hibernate.event.spi.PostLoadEventListener;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -79,6 +77,9 @@ public class Usuario extends User implements Principal {
     @ForbiddenExport
     private String claveValidacionEmail;
 
+    
+    private Date fecha;
+    
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
     }
@@ -86,6 +87,11 @@ public class Usuario extends User implements Principal {
     @Override
     public String toString() {
         return name;
+    }
+    
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void estableceFechaCreacion() {
+        this.fecha=new Date();
     }
 
     @ConstraintRule(disabled = true,message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class,priority = -20)
@@ -414,5 +420,19 @@ public class Usuario extends User implements Principal {
      */
     public void setClaveValidacionEmail(String claveValidacionEmail) {
         this.claveValidacionEmail = claveValidacionEmail;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

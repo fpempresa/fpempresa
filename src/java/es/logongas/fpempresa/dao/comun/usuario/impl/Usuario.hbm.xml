@@ -37,5 +37,7 @@
     <property name="validadoEmail"/>
     <property name="claveValidacionEmail"/>
     
+    <property name="fecha"/>
+    
   </joined-subclass>
 </hibernate-mapping>

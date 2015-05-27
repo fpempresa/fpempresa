@@ -7,7 +7,7 @@ angular.module('es.logongas.ix3').provider("formValidator", [function () {
                 email: "No tiene el formato de EMail",
                 maxlength: "Debe tener un tamaño menor o igual a {{maxlength}}",
                 minlength: "Debe tener un tamaño mayor o igual a {{minlength}}",
-                pattern: "No cumple la expresión regular: '{{pattern}}'",
+                pattern: "No cumple la expresión regular: '{{ngPattern}}'",
                 min: "Debe ser un valor mayor o igual a {{min}}",
                 max: "Debe ser un valor menor o igual a {{max}}",
                 url: "No tiene el formato de una URL",

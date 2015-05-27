@@ -220,10 +220,10 @@
                 }
 
             }
-            if (query.order) {
+            if (query.orderby) {
                 params.$orderby = "";
-                for (var i = 0; i < query.order.length; i++) {
-                    var simpleOrder = query.order[i];
+                for (var i = 0; i < query.orderby.length; i++) {
+                    var simpleOrder = query.orderby[i];
                     if (params.$orderby !== "") {
                         params.$orderby = params.$orderby + ",";
                     }

@@ -17,3 +17,16 @@ CREATE TABLE `centro` (
   KEY `KEY_CENTRO_MUNICIPIO` (`idMunicipio`),
   CONSTRAINT `KEY_CENTRO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `certificadotitulo` (
+  `idCertificadoTitulo` int(11) NOT NULL AUTO_INCREMENT,
+  `idCentro` int(11) DEFAULT NULL,
+  `anyo` int(11) DEFAULT NULL,
+  `idCiclo` int(11) DEFAULT NULL,
+  `nifnie` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idCertificadoTitulo`),
+  KEY `KEY_CERTIFICADOTITULO_CENTRO` (`idCentro`),CONSTRAINT `KEY_CERTIFICADOTITULO_CENTRO` FOREIGN KEY (`idCentro`) REFERENCES `centro` (`idCentro`),
+  KEY `KEY_CERTIFICADOTITULO_CICLO` (`idCiclo`),CONSTRAINT `KEY_CERTIFICADOTITULO_CICLO` FOREIGN KEY (`idCiclo`) REFERENCES `ciclo` (`idCiclo`),
+  UNIQUE INDEX `KEY_CERTIFICADOTITULO_UNIQUE` (`idCentro`, `idCiclo`, `anyo`, `nifnie`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

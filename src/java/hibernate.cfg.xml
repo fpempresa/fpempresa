@@ -28,6 +28,7 @@
     <!-- END:Tablas del titulado -->
     <!-- BEGIN:Tablas sobre el centro -->
     <mapping resource="es/logongas/fpempresa/dao/centro/impl/Centro.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/centro/impl/CertificadoTitulo.hbm.xml"/>
     <!-- END:Tablas sobre el centro -->
     <!-- BEGIN:Tablas sobre la empresa -->
     <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Empresa.hbm.xml"/>

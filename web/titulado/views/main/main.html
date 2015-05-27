@@ -39,7 +39,8 @@
                         <th style="min-width:140px;text-align: left">Nivel</th>
                         <th style="width:      50%;text-align: left">Titulo</th>
                         <th style="width:      35%;text-align: left">Centro</th>
-                        <th style="min-width:85px;text-align: left">Fecha</th>                        
+                        <th style="min-width:85px;text-align: left">Fecha</th> 
+                        <th style="min-width:85px;text-align: center" title="Indica si el centro donde has estudiado certifica que tienes el t&iacute;tulo">Certificado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@
                         <td >{{formacionAcademica.getNombreTitulo()}}</td>
                         <td >{{formacionAcademica.getNombreCentro()}}</td>
                         <td >{{formacionAcademica.fecha | ix3Date}}</td>
+                        <td style="text-align: center" ><img ng-show="formacionAcademica.certificadoTitulo" title="El centro donde has estudiado ha certificado que tienes el t&iacute;tulo" ng-src="{{getContextPath()}}/img/award/award-24x24.png"></td>                        
                     </tr>
                 </tbody>
             </table>                

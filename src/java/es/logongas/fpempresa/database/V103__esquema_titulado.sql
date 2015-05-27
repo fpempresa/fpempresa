@@ -39,6 +39,7 @@ CREATE TABLE `formacionacademica` (
   `idCiclo` int(11) DEFAULT NULL,
   `idTitulado` int(11) DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
+  `certificadoTitulo` int(11) DEFAULT NULL,
   PRIMARY KEY (`idFormacionAcademica`),
   KEY `FK7C4E0018EE23894D` (`idCentro`),
   KEY `FK7C4E0018E6B99AB0` (`idCiclo`),

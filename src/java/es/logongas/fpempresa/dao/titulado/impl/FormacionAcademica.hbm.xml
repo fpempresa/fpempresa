@@ -30,5 +30,8 @@
             <column name="idTitulado"  />
         </many-to-one>
         <property name="fecha" />
+        
+        <property name="certificadoTitulo" />
+        
     </class>
 </hibernate-mapping>

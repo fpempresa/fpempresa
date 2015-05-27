@@ -37,19 +37,44 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     public List<Oferta> getOfertasUsuarioTitulado(Usuario usuario) {
         Session session = sessionFactory.getCurrentSession();
 
-        String sql = "SELECT DISTINCT oferta.*\n"
+        String sql = "SELECT oferta.*\n"
                 + "FROM\n"
-                + "   Oferta oferta   INNER JOIN OfertaCiclo ofertaCiclo               ON oferta.idOferta=ofertaCiclo.idOferta INNER JOIN Municipio municipioOferta ON oferta.idMunicipio=municipioOferta.idMunicipio,\n"
-                + "   Usuario usuario INNER JOIN FormacionAcademica formacionAcademica ON usuario.idTitulado=formacionAcademica.idTitulado INNER JOIN Titulado titulado ON usuario.idTitulado=titulado.idTitulado  INNER JOIN Municipio municipioTitulado ON titulado.idMunicipio=municipioTitulado.idMunicipio\n"
+                + "   Oferta oferta   \n"
+                + "		INNER JOIN OfertaCiclo ofertaCiclo   ON oferta.idOferta=ofertaCiclo.idOferta \n"
+                + "		INNER JOIN Municipio municipioOferta ON oferta.idMunicipio=municipioOferta.idMunicipio\n"
+                + "		INNER JOIN Empresa empresa           ON oferta.idEmpresa=empresa.idEmpresa,\n"
+                + "   Usuario usuario \n"
+                + "		INNER JOIN FormacionAcademica formacionAcademica ON usuario.idTitulado=formacionAcademica.idTitulado \n"
+                + "		INNER JOIN Titulado titulado                     ON usuario.idTitulado=titulado.idTitulado  \n"
+                + "		INNER JOIN Municipio municipioTitulado           ON titulado.idMunicipio=municipioTitulado.idMunicipio\n"
                 + "WHERE\n"
+                + "   oferta.cerrada <> 1 AND\n"
                 + "   usuario.idIdentity=? AND\n"
+                + "   empresa.idCentro IS NULL AND\n"
                 + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n"
                 + "   municipioOferta.idProvincia=municipioTitulado.idProvincia AND\n"
+                + "   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)\n"
+                + "   \n"
+                + "UNION DISTINCT \n"
+                + "\n"
+                + "SELECT oferta.*\n"
+                + "FROM\n"
+                + "   Oferta oferta   \n"
+                + "		INNER JOIN OfertaCiclo ofertaCiclo  ON oferta.idOferta=ofertaCiclo.idOferta \n"
+                + "		INNER JOIN Empresa empresa          ON oferta.idEmpresa=empresa.idEmpresa,\n"
+                + "   Usuario usuario \n"
+                + "		INNER JOIN FormacionAcademica formacionAcademica ON usuario.idTitulado=formacionAcademica.idTitulado   \n"
+                + "WHERE\n"
+                + "   oferta.cerrada <> 1 AND\n"
+                + "   usuario.idIdentity=? AND\n"
+                + "   empresa.idCentro = formacionAcademica.idCentro AND\n"
+                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n"
                 + "   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)";
 
-        SQLQuery  sqlQuery = session.createSQLQuery(sql);
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.addEntity(Oferta.class);
         sqlQuery.setInteger(0, usuario.getIdIdentity());
+        sqlQuery.setInteger(1, usuario.getIdIdentity());
 
         return (List<Oferta>) sqlQuery.list();
     }

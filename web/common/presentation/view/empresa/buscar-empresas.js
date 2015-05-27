@@ -39,7 +39,7 @@
     angular.module("common").config(['dialogProvider', 'getContextPath', 'crudRoutesProvider', function (dialogProvider, getContextPath, crudRoutesProvider) {
             
         dialogProvider.when('buscarEmpresas', {
-            templateUrl: getContextPath() + "/common/presentation/view/empresa/buscarempresa.html",
+            templateUrl: getContextPath() + "/common/presentation/view/empresa/buscar-empresas.html",
             controller: 'BuscarEmpresaController',
             resolve: crudRoutesProvider.getResolve('Empresa', 'direccion.municipio,direccion.municipio.provincia')
         });

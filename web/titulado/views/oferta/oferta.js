@@ -66,32 +66,88 @@ app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCr
 
 
 
-app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', 'inscrito', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory, inscrito) {
+app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', 'inscrito', function ($scope, $q, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory, inscrito) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         $scope.inscrito = inscrito;
 
-        $scope.inscribirseOferta = function () {
-            var candidatoService = serviceFactory.getService("Candidato");
+        $scope.verEmpresa = function (id) {
 
+            var params = {
+                id: id
+            };
+
+            dialog.create('verEmpresa', params);
+        };
+
+
+        $scope.buttonInscribirseOferta = function () {
+
+            if ($scope.model.empresa.centro) {
+                var promise = dialog.create('avisoInscripcion', {
+                    titulo:"Inscripción en la oferta",
+                    mensaje:"Aunque estés inscrito en la oferta debes ponerte en contacto directamente con las empresa a través de los datos que se muestran a continuación para que la empresa puedar ver tus datos",
+                    datosContacto: $scope.model.contacto.textoLibre
+                });
+                
+                promise["finally"](function () {
+                    $scope.inscribirseOferta();
+                });
+            } else {
+                $scope.inscribirseOferta().then(function () {
+                    alert("Te has inscrito correctamente en la oferta. La empresa recibirá tu curriculum");
+                });
+            }
+
+        }
+
+        $scope.inscribirseOferta = function () {
+            var defered = $q.defer();
+
+            var candidatoService = serviceFactory.getService("Candidato");
             var candidato = {
                 oferta: $scope.model,
                 usuario: $scope.user
             };
-
-
             candidatoService.insert(candidato).then(function (candidato) {
                 $scope.inscrito = true;
                 $scope.businessMessages = [];
-                alert("Se ha inscrito correctamente en la oferta");
+                defered.resolve(candidato);
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
+                defered.reject(businessMessages);
             });
+
+            return defered.promise;
         };
 
+
+        $scope.buttonDesinscribirseOferta = function () {
+            
+            if ($scope.model.empresa.centro) {
+                var promise = dialog.create('avisoInscripcion', {
+                    titulo:"Desinscripción de la oferta",
+                    mensaje:"Aunque te desinscribas de la oferta recuerda que tus datos los debistes de enviar tu directamente a la información de contacto que aparece en el siguiente campo.",
+                    datosContacto: $scope.model.contacto.textoLibre
+                });
+                
+                promise["finally"](function () {
+                    $scope.desinscribirseOferta();
+                });
+            } else {
+                $scope.desinscribirseOferta().then(function () {
+                    alert("Te has borrado correctamente de la oferta. La empresa ya no podrá ver tu curriculum");
+                });
+            }            
+            
+
+        }
+
         $scope.desinscribirseOferta = function () {
+            var defered = $q.defer();
+
             var candidatoService = serviceFactory.getService("Candidato");
             var query = {
-                filter: {
+                filters: {
                     'oferta.idOferta': $scope.model.idOferta,
                     'usuario.idIdentity': $scope.user.idIdentity
                 }
@@ -103,19 +159,23 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                     candidatoService.delete(candidatos[0].idCandidato).then(function () {
                         $scope.inscrito = false;
                         $scope.businessMessages = [];
-                        alert("Te has borrado correctamente de la oferta");
+
+                        defered.resolve();
                     }, function (businessMessages) {
                         $scope.businessMessages = businessMessages;
+                        defered.reject(businessMessages);
                     });
                 } else {
-                    $scope.businessMessages = [{message: "No estabas inscrito en la oferta"}];
+                    var businessMessages = [{message: "No estabas inscrito en la oferta"}];
+                    $scope.businessMessages = businessMessages;
+                    defered.reject(businessMessages);
                 }
 
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });
 
-
+            return defered.promise;
         };
 
     }]);

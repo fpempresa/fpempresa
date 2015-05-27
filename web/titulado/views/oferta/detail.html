@@ -11,9 +11,9 @@
                         <div class="col-xs-12 form-horizontal"> 
                             <div class="form-group">
                                 <label  class="col-xs-3  control-label" >Empresa</label>
-                                <div  class="input-group col-xs-9" ng-click="buscarEmpresa()" style="cursor: pointer">
+                                <div  class="input-group col-xs-9" ng-click="verEmpresa(model.empresa.idEmpresa)" style="cursor: pointer">
                                     <span class="input-group-addon"  ><i class="glyphicon glyphicon-search"></i></span>
-                                    <input ng-model="model.empresa.nombreComercial" class="form-control" type="text" ng-keypress="buscarEmpresa()"  ng-readonly="true" placeholder="Seleccione la empresa que ofrece la oferta" style="background-color: #FFFFFF;cursor: pointer" />
+                                    <input ng-model="model.empresa.nombreComercial" class="form-control" type="text" ng-keypress="verEmpresa()"  ng-readonly="true" placeholder="Seleccione la empresa que ofrece la oferta" style="background-color: #FFFFFF;cursor: pointer" />
                                 </div> 
                             </div> 
                         </div>
@@ -74,6 +74,28 @@
                             </div> 
                         </div> 
                     </div> 
+                    
+                    <div ng-show="model.empresa.centro">
+                        <legend class="form__title">Datos de contacto</legend>       
+                        <div class="row" >
+                            <div class="col-xs-12 form-horizontal"> 
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <p class="form__text form__text--help">Los titulados que se inscriban en esta oferta deben necesariamente de ponerse directamente en contacto con la empresa a traves de los datos que se suministran en este campo</p>
+                                    </div>
+                            </div> 
+                        </div>                     
+                        <div class="row" >
+                            <div class="col-xs-12 form-horizontal"> 
+                                <div class="form-group">
+                                    <label for="contacto.textoLibre" class="col-sm-3  control-label" ix3-label ></label>
+                                    <div class="col-sm-9">
+                                        <textarea ng-model="model.contacto.textoLibre" class="form-control" rows="4"  id="contacto.textoLibre" name="contacto.textoLibre"  ix3-validation></textarea>
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div>                      
+                    </div>
+                    
                     <legend class="form__title">Destinado a personas de</legend>                    
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 
@@ -120,8 +142,8 @@
                     <div class="row" >
                         <div class="col-xs-12 ">
                             <div class="pull-right">
-                                <button type="button" ng-show="controllerAction === 'VIEW' && inscrito==true" class="btn form__button form__button--danger" ng-click="desinscribirseOferta()" >Borrarse en la oferta</button>
-                                <button type="button" ng-show="controllerAction === 'VIEW' && inscrito==false" class="btn form__button form__button--default" ng-click="inscribirseOferta()" >Inscribirse en la oferta</button>
+                                <button type="button" ng-show="controllerAction === 'VIEW' && inscrito==true" class="btn form__button form__button--danger" ng-click="buttonDesinscribirseOferta()" >Borrarse en la oferta</button>
+                                <button type="button" ng-show="controllerAction === 'VIEW' && inscrito==false" class="btn form__button form__button--default" ng-click="buttonInscribirseOferta()" >Inscribirse en la oferta</button>
                                 <fpe-ok-button  ></fpe-ok-button>
                             </div>
                         </div>

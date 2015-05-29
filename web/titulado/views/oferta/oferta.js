@@ -43,19 +43,35 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.namedSearchParameters.usuario = $scope.user.idIdentity;
+        $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
+
+
+        $scope.preSearch=function(filters) {
+            if (filters.provincia) {
+                filters.provincia=filters.provincia.idProvincia;
+            }
+        }
 
         $scope.buttonView = function (idOferta) {
             $location.path("/oferta/view_todas/" + idOferta).search({});
         };
-
+        
         $scope.search();
+
     }]);
 
 app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
         $scope.namedSearchParameters.usuario = $scope.user.idIdentity;
-
+        $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
+        
+        $scope.preSearch=function(filters) {
+            if (filters.provincia) {
+                filters.provincia=filters.provincia.idProvincia;
+            }
+        }
+        
         $scope.buttonView = function (idOferta) {
             $location.path("/oferta/view_inscrito/" + idOferta).search({});
         };

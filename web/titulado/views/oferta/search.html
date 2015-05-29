@@ -1,34 +1,73 @@
 <div class="row">
     <div class="col-sm-12 form__container" >
-        <div>
-            <legend class="form__title">Ofertas</legend>
-            <br>             
-            <ix3-business-messages></ix3-business-messages>
-            <table class="table table-bordered">
-                <thead>                        
-                    <tr class="data-table__head">
-                        <th ix3-order-field-names="puesto" style="width:   40%;text-align: center">Puesto</th>
-                        <th ix3-order-field-names="empresa.nombreComercial" style="width:   20%;text-align: center">Empresa</th>
-                        <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
-                        <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="model in models" class="data-table__row">
-                        <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
-                        <td >{{model.empresa.nombreComercial}}</td>
-                        <td >{{model.familia.descripcion}}</td>                   
-                        <td >
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonView(model.idOferta)">Ver</button>
-                        </td>                             
-                    </tr>
-                </tbody>
-            </table> 
-            <div class="row">
-                <div class="col-sm-12">
-                    <ix3-pagination></ix3-pagination>
+        <div class="row">
+            <div class="col-sm-12">
+                <legend class="form__title">Ofertas</legend>
+            </div>
+        </div>  
+        <form name="mainForm" id="mainForm" ix3-form>
+            <div class="row" >
+                <div class="col-xs-12 col-sm-4  form-horizontal">
+                    <select ng-model="namedSearchParameters.provincia" ix3-meta-data-property='Oferta.municipio.provincia' id="provincia" name="provincia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                        <option value="">-- Provincia --</option>
+                    </select>
+
                 </div>
-            </div>  
-        </div>
+                <div class="col-xs-12 col-sm-4  form-horizontal">
+                    <div class="input-group">
+                        <input ng-model="namedSearchParameters.fechaInicio"  ix3-meta-data-property='Oferta.fecha'  type="text" class="form-control" id="fechaInicio" name="fechaInicio"  ix3-date ix3-datepicker placeholder="Fecha desde" >
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div> 
+                <div class="col-xs-12 col-sm-4  form-horizontal">
+                    <div class="input-group">
+                        <input ng-model="namedSearchParameters.fechaFin"  ix3-meta-data-property='Oferta.fecha'  type="text" class="form-control" id="fechaFin" name="fechaFin"  ix3-date ix3-datepicker placeholder="Fecha hasta" >
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div> 
+                </div>                         
+            </div> 
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>
+        </form>
+        <div class="row">
+            <div class="col-sm-12">      
+                <ix3-business-messages></ix3-business-messages>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-sm-12">   
+                <table class="table table-bordered">
+                    <thead>                        
+                        <tr class="data-table__head">
+                            <th ix3-order-field-names="puesto" style="width:   40%;text-align: center">Puesto</th>
+                            <th ix3-order-field-names="empresa.nombreComercial" style="width:   20%;text-align: center">Empresa</th>
+                            <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
+                            <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="model in models" class="data-table__row">
+                            <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
+                            <td >{{model.empresa.nombreComercial}}</td>
+                            <td >{{model.familia.descripcion}}</td>                   
+                            <td >
+                                <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonView(model.idOferta)">Ver</button>
+                            </td>                             
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>             
+        <div class="row">
+            <div class="col-sm-12">
+                <ix3-pagination></ix3-pagination>
+            </div>
+        </div>  
+
     </div>
 </div>

@@ -12,10 +12,17 @@
                     <button  ng-if="model.rechazado !== true" type="button" class="btn form__button form__button--danger" ng-click="buttonRechazar()" title="No se notificará al titulado que ha sido rechazado" >Rechazar candidato y cerrar</button>
                     Aceptar o rechazar un candidato &uacute;nicamente tiene como finalidad ayudar a gestionar la lista de candidatos.En ning&uacute;n momento se notifica al candidato el rechazo o aceptaci&oacute;n                  
                 </div>
-            </div> 
+            </div>
             <div class="row">
                 <div class="col-sm-12" > 
                     <legend class="form__title">Datos personales</legend>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2" >
+                    <img class="img-circle" width="120px" ng-src="{{ix3Configuration.server.api}}/Usuario/{{model.usuario.idIdentity}}/foto" alt="Foto usuario">
+                </div>
+                <div class="col-sm-10" > 
                     <table class="table table-bordered">
                         <tbody>
                             <tr class="data-table__row">

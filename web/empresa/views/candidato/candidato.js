@@ -1,8 +1,9 @@
 "use strict";
 
-CandidatoViewController.$inject = ['$scope', 'genericControllerCrudDetail', 'currentDialog', 'controllerParams', 'serviceFactory'];
-function CandidatoViewController($scope, genericControllerCrudDetail, currentDialog, controllerParams, serviceFactory) {
+CandidatoViewController.$inject = ['$scope', 'genericControllerCrudDetail', 'currentDialog', 'controllerParams', 'ix3Configuration'];
+function CandidatoViewController($scope, genericControllerCrudDetail, currentDialog, controllerParams, ix3Configuration) {
     genericControllerCrudDetail.extendScope($scope, controllerParams);
+    $scope.ix3Configuration=ix3Configuration;
     currentDialog.open({
         width: 1000,
         height: 800,

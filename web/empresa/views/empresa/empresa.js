@@ -1,13 +1,13 @@
 "use strict";
-app.config(['crudRoutesProvider', function (crudRoutesProvider) {       
+app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addEditRoute({
             entity: "Empresa",
             expand: "direccion.municipio,direccion.municipio.provincia"
-        });    
+        });
         crudRoutesProvider.addNewRoute({
             entity: "Empresa",
             expand: "direccion.municipio,direccion.municipio.provincia"
-        });         
+        });
     }]);
 
 
@@ -18,7 +18,9 @@ app.controller("EmpresaNewEditController", ['$scope', '$window', '$location', 'g
             if (oldControllerAction === "NEW") {
                 $window.location.assign($window.location.pathname);
             } else {
-                $window.history.back();
+                setTimeout(function () { //http://stackoverflow.com/questions/13853844/angular-js-ie-error-10-digest-iterations-reached-aborting
+                    $window.history.back(); 
+                }, 0);
             }
         };
 

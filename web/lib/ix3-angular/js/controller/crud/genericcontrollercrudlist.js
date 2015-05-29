@@ -28,6 +28,9 @@
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
             scope.prefixRoute = "/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
+            scope.preSearch = function(filters) {
+                
+            };
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
                 scope.page.pageNumber = 0;
@@ -57,17 +60,18 @@
 
 
             scope.search = function () {
-                var filters = scope.filters;
-
-                if (scope.parentProperty && scope.parentId) {
-                    filters[scope.parentProperty] = scope.parentId;
-                }
-
                 var promise;
 
                 if (scope.namedSearch) {
-                    promise=scope.service.namedSearch(scope.namedSearch,scope.namedSearchParameters, scope.expand);
+                    var namedSearchParameters = angular.copy(scope.namedSearchParameters);
+                    scope.preSearch(namedSearchParameters);
+                    promise=scope.service.namedSearch(scope.namedSearch,namedSearchParameters, scope.expand);
                 } else {
+                    var filters = angular.copy(scope.filters);
+                    if (scope.parentProperty && scope.parentId) {
+                        filters[scope.parentProperty] = scope.parentId;
+                    }                    
+                    scope.preSearch(filters);
                     var query = {
                         filters:filters,
                         orderby:scope.orderby,

@@ -27,7 +27,7 @@
         List<String> expands=new ArrayList<String>();
         expands.add("empresa");
         expands.add("centro");
-        expands.add("titulado");
+        expands.add("titulado.direccion.municipio.provincia");
         if (sid == null) {
             principal = null;
         } else {

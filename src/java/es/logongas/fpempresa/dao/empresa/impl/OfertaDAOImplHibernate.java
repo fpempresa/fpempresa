@@ -18,10 +18,12 @@ package es.logongas.fpempresa.dao.empresa.impl;
 
 import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -34,10 +36,12 @@ import org.hibernate.Session;
 public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Integer> implements OfertaDAO {
 
     @Override
-    public List<Oferta> getOfertasUsuarioTitulado(Usuario usuario) {
+    public List<Oferta> getOfertasUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
         Session session = sessionFactory.getCurrentSession();
 
-        String sql = "SELECT oferta.*\n"
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT oferta.*\n"
                 + "FROM\n"
                 + "   Oferta oferta   \n"
                 + "		INNER JOIN OfertaCiclo ofertaCiclo   ON oferta.idOferta=ofertaCiclo.idOferta \n"
@@ -51,43 +55,107 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
                 + "   oferta.cerrada <> 1 AND\n"
                 + "   usuario.idIdentity=? AND\n"
                 + "   empresa.idCentro IS NULL AND\n"
-                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n"
-                + "   municipioOferta.idProvincia=municipioTitulado.idProvincia AND\n"
-                + "   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)\n"
-                + "   \n"
-                + "UNION DISTINCT \n"
-                + "\n"
-                + "SELECT oferta.*\n"
+                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n");
+
+        if (provincia != null) {
+            sb.append("   municipioOferta.idProvincia=? AND\n");
+        }
+        if (fechaInicio != null) {
+            sb.append("   oferta.fecha>=? AND\n");
+        }
+        if (fechaFin != null) {
+            sb.append("   oferta.fecha<=? AND\n");
+        }
+
+        sb.append("   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)\n");
+
+        sb.append(" UNION DISTINCT \n");
+
+        sb.append("SELECT oferta.*\n"
                 + "FROM\n"
                 + "   Oferta oferta   \n"
-                + "		INNER JOIN OfertaCiclo ofertaCiclo  ON oferta.idOferta=ofertaCiclo.idOferta \n"
-                + "		INNER JOIN Empresa empresa          ON oferta.idEmpresa=empresa.idEmpresa,\n"
+                + "		INNER JOIN OfertaCiclo ofertaCiclo   ON oferta.idOferta=ofertaCiclo.idOferta \n"
+                + "		INNER JOIN Municipio municipioOferta ON oferta.idMunicipio=municipioOferta.idMunicipio\n"
+                + "		INNER JOIN Empresa empresa           ON oferta.idEmpresa=empresa.idEmpresa,\n"
                 + "   Usuario usuario \n"
                 + "		INNER JOIN FormacionAcademica formacionAcademica ON usuario.idTitulado=formacionAcademica.idTitulado   \n"
                 + "WHERE\n"
                 + "   oferta.cerrada <> 1 AND\n"
                 + "   usuario.idIdentity=? AND\n"
                 + "   empresa.idCentro = formacionAcademica.idCentro AND\n"
-                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n"
-                + "   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)";
+                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n");
+        if (provincia != null) {
+            sb.append("   municipioOferta.idProvincia=? AND\n");
+        }
+        if (fechaInicio != null) {
+            sb.append("   oferta.fecha>=? AND\n");
+        }
+        if (fechaFin != null) {
+            sb.append("   oferta.fecha<=? AND\n");
+        }
 
-        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        sb.append("   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)");
+
+        SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
         sqlQuery.addEntity(Oferta.class);
-        sqlQuery.setInteger(0, usuario.getIdIdentity());
-        sqlQuery.setInteger(1, usuario.getIdIdentity());
+        
+        int paramNumber=0;
+        
+        sqlQuery.setInteger(paramNumber++, usuario.getIdIdentity());
+        if (provincia != null) {
+            sqlQuery.setInteger(paramNumber++, provincia.getIdProvincia());
+        }
+        if (fechaInicio != null) {
+            sqlQuery.setDate(paramNumber++, fechaInicio);
+        }
+        if (fechaFin != null) {
+            sqlQuery.setDate(paramNumber++, fechaFin);
+        }        
+        sqlQuery.setInteger(paramNumber++, usuario.getIdIdentity());
+        if (provincia != null) {
+            sqlQuery.setInteger(paramNumber++, provincia.getIdProvincia());
+        }
+        if (fechaInicio != null) {
+            sqlQuery.setDate(paramNumber++, fechaInicio);
+        }
+        if (fechaFin != null) {
+            sqlQuery.setDate(paramNumber++, fechaFin);
+        } 
 
         return (List<Oferta>) sqlQuery.list();
     }
 
     @Override
-    public List<Oferta> getOfertasInscritoUsuarioTitulado(Usuario usuario) {
+    public List<Oferta> getOfertasInscritoUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
         Session session = sessionFactory.getCurrentSession();
 
-        String hql = "SELECT candidato.oferta FROM Candidato candidato WHERE candidato.usuario.idIdentity=?";
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("SELECT candidato.oferta FROM Candidato candidato WHERE candidato.usuario.idIdentity=?");
 
-        Query query = session.createQuery(hql);
-        query.setInteger(0, usuario.getIdIdentity());
-
+        if (provincia!=null) {
+            sb.append(" AND candidato.oferta.municipio.provincia.idProvincia=? ");
+        }
+        if (fechaInicio!=null) {
+            sb.append(" AND candidato.oferta.fecha>=? ");
+        }
+        if (fechaFin!=null) {
+            sb.append(" AND candidato.oferta.fecha<=? ");
+        }
+        
+        Query query = session.createQuery(sb.toString());
+        int paramNumber=0;
+        query.setInteger(paramNumber++, usuario.getIdIdentity());
+        if (provincia != null) {
+            query.setInteger(paramNumber++, provincia.getIdProvincia());
+        }
+        if (fechaInicio != null) {
+            query.setDate(paramNumber++, fechaInicio);
+        }
+        if (fechaFin != null) {
+            query.setDate(paramNumber++, fechaFin);
+        } 
+        
         return (List<Oferta>) query.list();
     }
 

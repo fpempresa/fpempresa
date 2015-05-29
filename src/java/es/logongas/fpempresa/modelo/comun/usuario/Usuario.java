@@ -51,7 +51,9 @@ public class Usuario extends User implements Principal {
     @Label("Apellidos")
     @NotBlank
     private String apellidos;
-
+    
+    @ForbiddenImport
+    @ForbiddenExport
     private byte[] foto;
 
     @Label("Contraseña")

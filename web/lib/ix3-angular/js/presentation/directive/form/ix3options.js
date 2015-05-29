@@ -18,9 +18,29 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                         var filters = attributes.ix3Options;
                         var ix3OptionsDepend = attributes.ix3OptionsDepend;
                         var ix3OptionsDefault = attributes.ix3OptionsDefault;
-                        var propertyName = attributes.ngModel.replace(/^model\./, "");
-                        var metadata = metadataEntities.getMetadata(ix3FormController.getConfig().entity);
-                        var metadataProperty = metadata.getMetadataProperty(propertyName);
+                        
+                        var metadataProperty;
+                        if (attributes.ix3MetaDataProperty) {
+                            metadataProperty = metadataEntities.getMetadataProperty(attributes.ix3MetaDataProperty);
+                            if (!metadataProperty) {
+                                throw Error("No existe la metainformación de :" + attributes.ix3MetaDataProperty);
+                            }
+                        } else {
+                            var propertyName = attributes.ngModel.replace(new RegExp("^" + ix3FormController.getConfig().modelPropertyName + "\."), "");
+                            var metadata = metadataEntities.getMetadata(ix3FormController.getConfig().entity);
+                            
+                            if (!metadata) {
+                                throw Error("No existe la metainformación de la entidad :" + ix3FormController.getConfig().entity);
+                            }
+                            
+                            metadataProperty = metadata.getMetadataProperty(propertyName);
+                            
+                            if (!metadataProperty) {
+                                throw Error("No existe la metainformación de la propiedad :" + ix3FormController.getConfig().entity + "." + propertyName);
+                            }
+                        }
+
+
 
 
                         if (angular.isArray(metadataProperty.values)) {

@@ -13,10 +13,27 @@ angular.module("es.logongas.ix3").directive('ix3Validation', ['$compile','metada
 
                     },
                     post: function($scope, element, attributes, ix3FormController) {
-                        var propertyName = attributes.ngModel.replace(/^model\./, "");
-                        var entity=ix3FormController.getConfig().entity;
-                        var metadataProperty=metadataEntities.getMetadata(entity).getMetadataProperty(propertyName);
-                        
+                        var metadataProperty;
+                        if (attributes.ix3MetaDataProperty) {
+                            metadataProperty = metadataEntities.getMetadataProperty(attributes.ix3MetaDataProperty);
+                            if (!metadataProperty) {
+                                throw Error("No existe la metainformación de :" + attributes.ix3MetaDataProperty);
+                            }
+                        } else {
+                            var propertyName = attributes.ngModel.replace(new RegExp("^" + ix3FormController.getConfig().modelPropertyName + "\."), "");
+                            var metadata = metadataEntities.getMetadata(ix3FormController.getConfig().entity);
+                            
+                            if (!metadata) {
+                                throw Error("No existe la metainformación de la entidad :" + ix3FormController.getConfig().entity);
+                            }
+                            
+                            metadataProperty = metadata.getMetadataProperty(propertyName);
+                            
+                            if (!metadataProperty) {
+                                throw Error("No existe la metainformación de la propiedad :" + ix3FormController.getConfig().entity + "." + propertyName);
+                            }
+                        }                        
+
                         //Expresion regular
                         var pattern=metadataProperty.pattern;
                         if (pattern!==null) {

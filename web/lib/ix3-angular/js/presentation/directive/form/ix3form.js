@@ -6,9 +6,17 @@
             return {
                 restrict: 'A',
                 controller:['$scope','$element','$attrs',function($scope, $element, $attrs) {
-                    var config=$attrs.ix3Form || "{entity:entity}";
+                    var config=$attrs.ix3Form || "{}";
                     
                     this.config=$scope.$eval(config);
+                    
+                    if (!this.config.entity) {
+                        this.config.entity=$scope.entity;
+                    }
+                    if (!this.config.modelPropertyName) {
+                        this.config.modelPropertyName="model";
+                    }                    
+                    
                     
                     this.getConfig=function() {
                         return this.config;

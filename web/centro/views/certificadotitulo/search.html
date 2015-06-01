@@ -24,15 +24,13 @@
                             <tr class="data-table__head">
                                 <th ix3-order-field-names="ciclo.descripcion" style="width:90%;text-align: center">Titulo</th>
                                 <th ix3-order-field-names="anyo" style="min-width:60px;text-align: center">A&ntilde;o</th>
-                                <th ix3-order-field-names="nifnie" style="min-width:100px;text-align: center">NIF/NIE</th>
                                 <th style="min-width:120px;text-align: center" >Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="certificadoTitulo in models" class="data-table__row">
                                 <td >{{certificadoTitulo.ciclo.descripcion}}</td>
-                                <td >{{certificadoTitulo.anyo}}</td>
-                                <td >{{certificadoTitulo.nifnie}}</td>                      
+                                <td >{{certificadoTitulo.anyo}}</td>                     
                                 <td >
                                     <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(certificadoTitulo.idCertificadoTitulo)">Borrar</button>
                                     <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(certificadoTitulo.idCertificadoTitulo)">Editar</button>

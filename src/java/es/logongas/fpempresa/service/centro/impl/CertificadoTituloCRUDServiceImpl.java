@@ -118,7 +118,7 @@ public class CertificadoTituloCRUDServiceImpl  extends CRUDServiceImpl<Certifica
         GenericDAO<FormacionAcademica,Integer> formacionAcademicaDAO=daoFactory.getDAO(FormacionAcademica.class);
         
         List<Filter> filters=new ArrayList<Filter>();
-        filters.add(new Filter("titulado.numeroDocumento",certificadoTitulo.getNifnie()));
+        filters.add(new Filter("titulado.numeroDocumento",certificadoTitulo.getNifnies()));
         filters.add(new Filter("centro.idCentro",certificadoTitulo.getCentro().getIdCentro()));
         filters.add(new Filter("ciclo.idCiclo",certificadoTitulo.getCiclo().getIdCiclo()));
         

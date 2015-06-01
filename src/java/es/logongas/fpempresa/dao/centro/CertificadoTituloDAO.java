@@ -28,6 +28,6 @@ import es.logongas.ix3.dao.GenericDAO;
  */
 public interface CertificadoTituloDAO extends GenericDAO<CertificadoTitulo,Integer>  {
     
-    boolean isCertificadoTitulo(Centro centro,Ciclo ciclo,int anyo,String nifnie);
+    CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(Centro centro,Ciclo ciclo,int anyo);
     
 }

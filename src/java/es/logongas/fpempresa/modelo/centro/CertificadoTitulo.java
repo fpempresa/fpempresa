@@ -1,59 +1,92 @@
 /**
- *   FPempresa
- *   Copyright (C) 2015  Lorenzo González
+ * FPempresa Copyright (C) 2015 Lorenzo González
  *
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Affero General Public License as
- *   published by the Free Software Foundation, either version 3 of the
- *   License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
  *
- *   You should have received a copy of the GNU Affero General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.modelo.centro;
 
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.ix3.core.annotations.Label;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * La certificación de un centro de que un titulado tiene el título
+ *
  * @author logongas
  */
 public class CertificadoTitulo {
-    
+
     private int idCertificadoTitulo;
-    
+
     @NotNull
     private Centro centro;
-    
+
     @Min(1900)
     @Label("Año")
     private int anyo;
-    
+
     @NotNull
     private Ciclo ciclo;
-    
+
     @NotBlank
     @Label("NIF/NIE")
     private String nifnie;
+   
+    
+    public boolean isCertificadoNifNie(String nifnie) {
+        
+        if (nifnie==null) {
+            return false;
+        }
+        
+        if (this.getNifnies().contains(nifnie.toUpperCase())) {
+            return true;
+        } else{
+            return false;
+        }
+        
+    }
+    
+    
+    public Set<String> getNifnies() {
+        Set<String> nifnies = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        
+        String[] rawNifnies = this.nifnie.split("[,\\s]");
+        
 
-    public CertificadoTitulo() {
-        this.anyo=Calendar.getInstance().get(Calendar.YEAR);
+        for (String currentNifnie : rawNifnies) {
+            String realNifnie = currentNifnie.trim();
+
+            if (realNifnie.length() > 0) {
+                nifnies.add(realNifnie.toUpperCase());
+            }
+        }
+
+        return nifnies;
     }
 
-    
-    
-    
+    public CertificadoTitulo() {
+        this.anyo = Calendar.getInstance().get(Calendar.YEAR);
+    }
+
     /**
      * @return the idCertificadoTitulo
      */
@@ -123,5 +156,5 @@ public class CertificadoTitulo {
     public void setNifnie(String nifnie) {
         this.nifnie = nifnie;
     }
-    
+
 }

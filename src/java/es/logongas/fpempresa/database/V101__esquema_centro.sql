@@ -24,9 +24,9 @@ CREATE TABLE `certificadotitulo` (
   `idCentro` int(11) DEFAULT NULL,
   `anyo` int(11) DEFAULT NULL,
   `idCiclo` int(11) DEFAULT NULL,
-  `nifnie` varchar(255) DEFAULT NULL,
+  `nifnie` TEXT DEFAULT NULL,
   PRIMARY KEY (`idCertificadoTitulo`),
   KEY `KEY_CERTIFICADOTITULO_CENTRO` (`idCentro`),CONSTRAINT `KEY_CERTIFICADOTITULO_CENTRO` FOREIGN KEY (`idCentro`) REFERENCES `centro` (`idCentro`),
   KEY `KEY_CERTIFICADOTITULO_CICLO` (`idCiclo`),CONSTRAINT `KEY_CERTIFICADOTITULO_CICLO` FOREIGN KEY (`idCiclo`) REFERENCES `ciclo` (`idCiclo`),
-  UNIQUE INDEX `KEY_CERTIFICADOTITULO_UNIQUE` (`idCentro`, `idCiclo`, `anyo`, `nifnie`)
+  UNIQUE INDEX `KEY_CERTIFICADOTITULO_UNIQUE` (`idCentro`, `idCiclo`, `anyo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

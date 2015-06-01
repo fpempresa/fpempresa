@@ -15,7 +15,7 @@
                             </select>
                         </div>
                     </div>                        
-                    
+
                     <div class="form-group">
                         <label for="model.ciclo" class="col-sm-3  control-label" ix3-label ></label>
                         <div class="col-sm-7">
@@ -31,25 +31,23 @@
                         </div>  
                         <div  class="col-sm-3"></div>
                     </div> 
-                    
-                    <div class="row" ng-if="bulk.allowCheck===true" >
-                        <div class="col-xs-12 col-xs-12 col-xs-offset-3  form-horizontal">
-                            <div class="checkbox">
-                                <label>
-                                    <input ng-model="bulk.enabled" type="checkbox" >
-                                    Indicar varios NIF/NIE separados por comas, tabuladores o nuevas lineas
-                                </label>
-                            </div>
-                        </div> 
-                    </div>
-                    
+
                     <div class="form-group">
                         <label for="model.nifnie" class="col-sm-3  control-label" ix3-label ></label> 
-                        <div  class="col-sm-{{(bulk.enabled?9:4)}}" >
-                            <textarea ng-model="model.nifnie" id="model.nifnie" name="model.nifnie" class="form-control" rows="{{(bulk.enabled?10:1)}}" style="resize:{{(bulk.enabled?'both':'none')}};"  ix3-validation  ></textarea>
+                        <div  class="col-sm-9">
+                            <textarea ng-model="model.nifnie" id="model.nifnie" name="model.nifnie" class="form-control" rows="15"  ix3-validation  ></textarea>
                         </div>                        
                     </div> 
-                    
+                    <div class="form-group"  >
+                        <div class="col-xs-9 col-xs-9 col-xs-offset-3">
+                            <p class="form__text form__text--help">
+                                Hay que indicar todos los  NIF/NIE que han obtenido ese título en ese año en el centro.<br>Los NIF/NIE deben estar separados por comas, tabuladores o nuevas lineas
+                            </p>
+
+                        </div> 
+                    </div>                    
+
+
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 ">
@@ -64,4 +62,4 @@
         </div>
     </div>
 </div>
-                    
+

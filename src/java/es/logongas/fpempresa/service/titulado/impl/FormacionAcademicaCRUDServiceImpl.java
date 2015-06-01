@@ -49,7 +49,7 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
     }
 
     private boolean getCertificadoTitulo(FormacionAcademica formacionAcademica) {
-        boolean certificadoTitulo;
+        boolean isCertificadoTitulo;
 
         if ((formacionAcademica.getTitulado().getTipoDocumento() == TipoDocumento.NIF) || (formacionAcademica.getTitulado().getTipoDocumento() == TipoDocumento.NIE)) {
             Calendar calendar = new GregorianCalendar();
@@ -60,12 +60,18 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
             int anyo = calendar.get(Calendar.YEAR);
             String nifnie = formacionAcademica.getTitulado().getNumeroDocumento();
 
-            certificadoTitulo = ((CertificadoTituloDAO) daoFactory.getDAO(CertificadoTitulo.class)).isCertificadoTitulo(centro, ciclo, anyo, nifnie);
+            CertificadoTitulo certificadoTitulo = ((CertificadoTituloDAO) daoFactory.getDAO(CertificadoTitulo.class)).getCertificadoTituloByCentroCicloAnyo(centro, ciclo, anyo);
+
+            if (certificadoTitulo != null) {
+                isCertificadoTitulo = certificadoTitulo.isCertificadoNifNie(nifnie);
+            } else {
+                isCertificadoTitulo = false;
+            }
         } else {
-            certificadoTitulo = false;
+            isCertificadoTitulo = false;
         }
 
-        return certificadoTitulo;
+        return isCertificadoTitulo;
     }
 
 }

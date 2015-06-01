@@ -32,21 +32,16 @@ import org.hibernate.Session;
 public class CertificadoTituloDAOImplHibernate extends GenericDAOImplHibernate<CertificadoTitulo, Integer> implements CertificadoTituloDAO {
 
     @Override
-    public boolean isCertificadoTitulo(Centro centro, Ciclo ciclo, int anyo, String nifnie) {
+    public CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(Centro centro, Ciclo ciclo, int anyo) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("SELECT certificadoTitulo FROM CertificadoTitulo certificadoTitulo  WHERE certificadoTitulo.centro.idCentro=? AND certificadoTitulo.ciclo.idCiclo=? AND certificadoTitulo.anyo=? AND certificadoTitulo.nifnie=? ");
+        Query query = session.createQuery("SELECT certificadoTitulo FROM CertificadoTitulo certificadoTitulo  WHERE certificadoTitulo.centro.idCentro=? AND certificadoTitulo.ciclo.idCiclo=? AND certificadoTitulo.anyo=?");
         query.setInteger(0, centro.getIdCentro());
         query.setInteger(1, ciclo.getIdCiclo());
         query.setInteger(2, anyo);
-        query.setString(3, nifnie);
         CertificadoTitulo certificadoTitulo = (CertificadoTitulo) query.uniqueResult();
 
-        if (certificadoTitulo != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return certificadoTitulo;
 
     }
 

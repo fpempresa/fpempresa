@@ -18,30 +18,16 @@ app.controller("CertificadoTituloSearchController", ['$scope', 'genericControlle
 app.controller("CertificadoTituloNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {      
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         
-        $scope.bulk={
-            allowCheck:false,
-            enabled:false
-        }
-        if ($scope.controllerAction==="NEW") {
-            $scope.bulk.allowCheck=true;
-        }
 
     }]);
 
 app.controller("CertificadoTituloViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         
-        $scope.bulk={
-            allowCheck:false,
-            enabled:false
-        }        
+       
     }]);
 
 app.controller("CertificadoTituloDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-        
-        $scope.bulk={
-            allowCheck:false,
-            enabled:false
-        }        
+              
     }]);

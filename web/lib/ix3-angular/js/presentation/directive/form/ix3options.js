@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'metadataEntities', '$q', 'langUtil', function (serviceFactory, metadataEntities, $q, langUtil) {
+angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'metadataEntities', '$q', 'langUtil', '$parse', function (serviceFactory, metadataEntities, $q, langUtil, $parse) {
 
 
         return {
@@ -346,14 +346,14 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
 
 
         function setModelValue(scope, attributes, ngModelController, value) {
-            //TODO: Usar ngModelController para establecer el valor
             var scopeAccessName = "$parent." + attributes.ngModel;
-            langUtil.setValue(scope, scopeAccessName, value);
+            var setter=$parse(scopeAccessName).assign;
+            setter(scope, value);
         }
         function getModelValue(scope, attributes, ngModelController) {
-            //TODO: Usar ngModelController para leer el valor
             var scopeAccessName = "$parent." + attributes.ngModel;
-            var value = scope.$eval(scopeAccessName);
+            var getter=$parse(scopeAccessName);
+            var value = getter(scope);  
 
             return value;
         }

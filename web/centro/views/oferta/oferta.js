@@ -35,7 +35,30 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             });
         };
 
+        $scope.postGet = function () {
+            $scope.search();
+        };
 
+        $scope.search = function () {
+
+
+            var query = {
+                filters: {
+                    'oferta.idOferta':$scope.model.idOferta
+                }
+            }
+
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                if (angular.isArray(data)) {
+                    $scope.numeroCandidatos = data.length;
+                } else {
+                    $scope.numeroCandidatos = 0;
+                }
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }
+        
         $scope.checkTodosCiclos = function (todosCiclos) {
 
             if (todosCiclos) {

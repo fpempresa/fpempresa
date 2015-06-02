@@ -4,7 +4,7 @@
 
     angular.module("common").config(['serviceFactoryProvider', function (serviceFactoryProvider) {
 
-            serviceFactoryProvider.addExtendService("Titulado", ['service', '$q', 'repositoryFactory', 'langUtil', function (service, $q, repositoryFactory, langUtil) {
+            serviceFactoryProvider.addExtendService("Titulado", ['service', '$q', 'repositoryFactory', 'langUtil', 'session', function (service, $q, repositoryFactory, langUtil, session) {
 
                     service.usuarioRepository = repositoryFactory.getRepository("Usuario");
 
@@ -75,6 +75,38 @@
                             }
 
 
+                        }, function (data) {
+                            deferred.reject(data);
+                        });
+
+                        return deferred.promise;
+                    };
+
+                    service.insert = function (entity, expand) {
+                        var deferred = $q.defer();
+
+                        this.repository.insert(entity, expand).then(function (data) {
+                            session.logged().then(function() {
+                                deferred.resolve(data);
+                            }, function (data) {
+                                deferred.reject(data);
+                            });
+                        }, function (data) {
+                            deferred.reject(data);
+                        });
+
+                        return deferred.promise;
+                    };
+
+                    service.update = function (id, entity, expand) {
+                        var deferred = $q.defer();
+
+                        this.repository.update(id, entity, expand).then(function (data) {
+                            session.logged().then(function() {
+                                deferred.resolve(data);
+                            }, function (data) {
+                                deferred.reject(data);
+                            });
                         }, function (data) {
                             deferred.reject(data);
                         });

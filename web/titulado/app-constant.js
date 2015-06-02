@@ -38,6 +38,9 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
                 }]
         ]
     },
+    session: {
+        expand:"empresa,centro,titulado.direccion.municipio.provincia"
+    },
     crud: {
         defaultParentState:"lateralmenu",
         defaultHtmlBasePath:"views"

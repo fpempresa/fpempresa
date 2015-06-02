@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Servicio para gestionar la sesión en el servidor
  */
@@ -13,7 +12,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
         }
 
         var currentUser=null;
-        
+
         function login(login, password) {
             var that=this;
             var deferred = $q.defer();
@@ -22,7 +21,8 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
                 url: ix3Configuration.server.api + '/session',
                 data: jQuery.param({
                     login: login,
-                    password: password
+                    password: password,
+                    $expand:ix3Configuration.session.expand
                 }),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -70,7 +70,10 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
 
             var config = {
                 method: 'GET',
-                url: ix3Configuration.server.api + '/session'
+                url: ix3Configuration.server.api + '/session',
+                params: {
+                    $expand:ix3Configuration.session.expand
+                }
             };
 
             $http(config).success(function (user, status, headers, config) {

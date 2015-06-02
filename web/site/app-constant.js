@@ -19,5 +19,8 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
     },
     security:{
         defaultStatus:200
+    },
+    session: {
+        expand:"empresa,centro,titulado.direccion.municipio.provincia"
     }
 });

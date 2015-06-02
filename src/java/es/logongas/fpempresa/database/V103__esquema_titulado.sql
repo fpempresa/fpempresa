@@ -10,6 +10,7 @@ CREATE TABLE `titulado` (
   `telefonoAlternativo` varchar(255) DEFAULT NULL,
   `tipoDocumento` varchar(15) DEFAULT NULL,
   `numeroDocumento` varchar(20) DEFAULT NULL,
+  `notificarPorEmail` int(11) DEFAULT 0,
   PRIMARY KEY (`idTitulado`),
   KEY `KEY_TITULADO_MUNICIPIO` (`idMunicipio`),
   CONSTRAINT `KEY_TITULADO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)
@@ -59,4 +60,15 @@ CREATE TABLE `tituloidioma` (
   PRIMARY KEY (`idTituloIdioma`),
   KEY `FK51BC8E0E4C28477E` (`idTitulado`),
   CONSTRAINT `FK51BC8E0E4C28477E` FOREIGN KEY (`idTitulado`) REFERENCES `titulado` (`idTitulado`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `tituladoprovincianotificacion` (
+    `idTituladoProvinciaNotificacion` int(11) NOT NULL AUTO_INCREMENT,
+    `idTitulado` integer not null,
+    `idProvincia` integer not null,
+    PRIMARY KEY  (`idTituladoProvinciaNotificacion`),
+    KEY `KEY_TITULADOPROVINCIANOTIFICACION_TITULADO`(`idTitulado`),CONSTRAINT `KEY_TITULADOPROVINCIANOTIFICACION_TITULADO` FOREIGN KEY (`idTitulado`) REFERENCES `titulado`(`idTitulado`),
+    KEY `KEY_TITULADOPROVINCIANOTIFICACION_PROVINCIA` (`idProvincia`) ,CONSTRAINT `KEY_TITULADOPROVINCIANOTIFICACION_PROVINCIA`  FOREIGN KEY (`idProvincia`)  REFERENCES `provincia` (`idProvincia`),
+    UNIQUE INDEX `KEY_TITULADOPROVINCIANOTIFICACION_UNIQUE` (`idTitulado`, `idProvincia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

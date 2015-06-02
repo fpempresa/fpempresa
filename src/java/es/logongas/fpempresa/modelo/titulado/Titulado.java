@@ -19,7 +19,10 @@ package es.logongas.fpempresa.modelo.titulado;
 
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.ix3.core.annotations.Label;
+import es.logongas.ix3.service.rules.ActionRule;
+import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;
@@ -63,6 +66,20 @@ public class Titulado {
     private Set<ExperienciaLaboral> experienciasLaborales;
     private Set<FormacionAcademica> formacionesAcademicas;
 
+    @Valid
+    @NotNull
+    private Configuracion configuracion=new Configuracion();
+    
+    
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void provinciaDeNotificacionIgualALaDireccion() {
+        if (configuracion.getNotificacionOferta().getProvincias().isEmpty()) {
+            configuracion.getNotificacionOferta().getProvincias().add(direccion.getMunicipio().getProvincia());
+            configuracion.getNotificacionOferta().setNotificarPorEmail(true);
+        }
+    }
+    
+    
     public Titulado() {
     }
     
@@ -204,6 +221,20 @@ public class Titulado {
      */
     public void setFormacionesAcademicas(Set<FormacionAcademica> formacionesAcademicas) {
         this.formacionesAcademicas = formacionesAcademicas;
+    }
+
+    /**
+     * @return the configuracion
+     */
+    public Configuracion getConfiguracion() {
+        return configuracion;
+    }
+
+    /**
+     * @param configuracion the configuracion to set
+     */
+    public void setConfiguracion(Configuracion configuracion) {
+        this.configuracion = configuracion;
     }
 
 }

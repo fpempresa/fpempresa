@@ -39,6 +39,7 @@
             <ul class="lateral-menu__menu">
                 <li class="lateral-menu__header">Cuenta</li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/usuario/edit/' + user.idIdentity + '$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/usuario/edit/' + user.idIdentity + '$')}"  class="lateral-menu__item__link" href="#/usuario/edit/{{user.idIdentity}}">Mis datos</a></li>
+                <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/configuracion$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/configuracion$')}"  class="lateral-menu__item__link" href="#/configuracion">Configuraci&oacute;n</a></li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar mi contrase&ntilde;a</a></li>
             </ul>
         </div>

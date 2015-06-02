@@ -4,10 +4,10 @@ angular.module('es.logongas.ix3').provider("formValidator", [function () {
         function FormValidatorProvider() {
             this.errorMensajePatterns = {
                 required: "No puede estar vacio.",
-                email: "No tiene el formato de EMail",
+                email: "No tiene el formato de correo electrónico",
                 maxlength: "Debe tener un tamaño menor o igual a {{maxlength}}",
                 minlength: "Debe tener un tamaño mayor o igual a {{minlength}}",
-                pattern: "No cumple la expresión regular: '{{ngPattern}}'",
+                pattern: "El formato no es válido: '{{ngPattern}}'",
                 min: "Debe ser un valor mayor o igual a {{min}}",
                 max: "Debe ser un valor menor o igual a {{max}}",
                 url: "No tiene el formato de una URL",

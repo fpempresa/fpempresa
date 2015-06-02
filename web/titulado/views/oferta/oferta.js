@@ -43,7 +43,9 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.namedSearchParameters.usuario = $scope.user.idIdentity;
-        $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
+        if ($scope.user.titulado && $scope.user.titulado.direccion && $scope.user.titulado.direccion.municipio && $scope.user.titulado.direccion.municipio.provincia) {
+            $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
+        }
 
 
         $scope.preSearch=function(filters) {
@@ -64,7 +66,9 @@ app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCr
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
         $scope.namedSearchParameters.usuario = $scope.user.idIdentity;
-        $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
+        if ($scope.user.titulado && $scope.user.titulado.direccion && $scope.user.titulado.direccion.municipio && $scope.user.titulado.direccion.municipio.provincia) {
+            $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
+        }
         
         $scope.preSearch=function(filters) {
             if (filters.provincia) {

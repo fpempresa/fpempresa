@@ -12,8 +12,9 @@ app.controller("TituladoSearchController", ['$scope', 'genericControllerCrudList
     }]);
 
 
-app.controller("TituladoViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'ix3Configuration', function ($scope, genericControllerCrudDetail, controllerParams, ix3Configuration) {
+app.controller("TituladoViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'ix3Configuration', 'ageCalculator', function ($scope, genericControllerCrudDetail, controllerParams, ix3Configuration, ageCalculator) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
          $scope.ix3Configuration=ix3Configuration;
+         $scope.ageCalculator=ageCalculator;
     }]);
 

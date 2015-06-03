@@ -34,7 +34,7 @@
                             </tr>                                             
                             <tr>
                                 <td class="profile__caption"><i class="glyphicon glyphicon-gift"></i>&nbsp;Fecha nacimiento</td>
-                                <td class="profile__value">{{model.usuario.titulado.fechaNacimiento| ix3Date}}</td>
+                                <td class="profile__value">{{model.usuario.titulado.fechaNacimiento| ix3Date}} ({{ageCalculator(model.usuario.titulado.fechaNacimiento)}} años)</td>
                             </tr>
                             <tr>
                                 <td class="profile__caption"><i class="glyphicon glyphicon-earphone"></i>&nbsp;Telefono</td>

@@ -1,9 +1,10 @@
 "use strict";
 
-CandidatoViewController.$inject = ['$scope', 'genericControllerCrudDetail', 'currentDialog', 'controllerParams', 'ix3Configuration'];
-function CandidatoViewController($scope, genericControllerCrudDetail, currentDialog, controllerParams, ix3Configuration) {
+CandidatoViewController.$inject = ['$scope', 'genericControllerCrudDetail', 'currentDialog', 'controllerParams', 'ix3Configuration', 'ageCalculator'];
+function CandidatoViewController($scope, genericControllerCrudDetail, currentDialog, controllerParams, ix3Configuration, ageCalculator) {
     genericControllerCrudDetail.extendScope($scope, controllerParams);
     $scope.ix3Configuration=ix3Configuration;
+    $scope.ageCalculator=ageCalculator;
     currentDialog.open({
         width: 1000,
         height: 700,

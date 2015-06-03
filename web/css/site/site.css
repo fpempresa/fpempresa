@@ -615,6 +615,31 @@ fieldset[disabled] .form__button--danger.active {
 .panel-yellow a:hover {
   color: #df8a13;
 }
+.profile__caption {
+  font-size: 14px;
+  font-weight: bold;
+  color: #005594;
+}
+.profile__value {
+  font-size: 14px;
+  color: #000000;
+}
+.profile__value--cita {
+  font-style: italic;
+}
+.profile__value--name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #005594;
+  text-transform: uppercase;
+}
+.profile__value--email {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #005594;
+}
 .btn-xl {
   padding: 13px 19px;
   font-size: 21px;

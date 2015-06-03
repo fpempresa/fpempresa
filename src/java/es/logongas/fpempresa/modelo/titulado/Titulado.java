@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -60,6 +61,7 @@ public class Titulado {
     
     @NotEmpty
     @Label("Nº de documento")
+    @Size(max=20)
     private String numeroDocumento;
     
     private Set<TituloIdioma> titulosIdiomas;
@@ -70,6 +72,17 @@ public class Titulado {
     @NotNull
     private Configuracion configuracion=new Configuracion();
     
+    @Label("Sobre mi")
+    @Size(max=255)
+    private String resumen;
+    
+    @Label("Otras competencias")
+    @Size(max=65000)     
+    private String otrasCompetencias;
+    
+    @Label("Permisos de conducir")
+    @Size(max=255)
+    private String permisosConducir;
     
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void provinciaDeNotificacionIgualALaDireccion() {
@@ -235,6 +248,48 @@ public class Titulado {
      */
     public void setConfiguracion(Configuracion configuracion) {
         this.configuracion = configuracion;
+    }
+
+    /**
+     * @return the resumen
+     */
+    public String getResumen() {
+        return resumen;
+    }
+
+    /**
+     * @param resumen the resumen to set
+     */
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
+
+    /**
+     * @return the otrasCompetencias
+     */
+    public String getOtrasCompetencias() {
+        return otrasCompetencias;
+    }
+
+    /**
+     * @param otrasCompetencias the otrasCompetencias to set
+     */
+    public void setOtrasCompetencias(String otrasCompetencias) {
+        this.otrasCompetencias = otrasCompetencias;
+    }
+
+    /**
+     * @return the permisosConducir
+     */
+    public String getPermisosConducir() {
+        return permisosConducir;
+    }
+
+    /**
+     * @param permisosConducir the permisosConducir to set
+     */
+    public void setPermisosConducir(String permisosConducir) {
+        this.permisosConducir = permisosConducir;
     }
 
 }

@@ -12,7 +12,8 @@ app.controller("TituladoSearchController", ['$scope', 'genericControllerCrudList
     }]);
 
 
-app.controller("TituladoViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("TituladoViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'ix3Configuration', function ($scope, genericControllerCrudDetail, controllerParams, ix3Configuration) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+         $scope.ix3Configuration=ix3Configuration;
     }]);
 

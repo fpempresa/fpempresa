@@ -6,7 +6,7 @@ function CandidatoViewController($scope, genericControllerCrudDetail, currentDia
     $scope.ix3Configuration=ix3Configuration;
     currentDialog.open({
         width: 1000,
-        height: 800,
+        height: 700,
         title: "Curriculum"
     });
 

@@ -65,5 +65,9 @@
                 </set>
             </component>   
         </component>
+        
+        <property name="resumen" />    
+        <property name="otrasCompetencias" type="text" />    
+        <property name="permisosConducir" />          
     </class>
 </hibernate-mapping>

@@ -10,7 +10,10 @@ CREATE TABLE `titulado` (
   `telefonoAlternativo` varchar(255) DEFAULT NULL,
   `tipoDocumento` varchar(15) DEFAULT NULL,
   `numeroDocumento` varchar(20) DEFAULT NULL,
-  `notificarPorEmail` int(11) DEFAULT 0,
+  `notificarPorEmail` int(11) DEFAULT NULL,
+  `resumen` varchar(255) DEFAULT NULL,
+  `otrasCompetencias` TEXT DEFAULT NULL,
+  `permisosConducir` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idTitulado`),
   KEY `KEY_TITULADO_MUNICIPIO` (`idMunicipio`),
   CONSTRAINT `KEY_TITULADO_MUNICIPIO` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`)

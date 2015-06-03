@@ -18,39 +18,52 @@
                     <legend class="form__title">Datos personales</legend>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-sm-2" >
-                    <img class="img-circle" width="120px" ng-src="{{ix3Configuration.server.api}}/Usuario/{{model.usuario.idIdentity}}/foto" alt="Foto usuario">
-                </div>
-                <div class="col-sm-10" > 
-                    <table class="table table-bordered">
+                <div class="col-xs-12 col-sm-6">                
+                    <table class="table">
                         <tbody>
-                            <tr class="data-table__row">
-                                <td><i class="glyphicon glyphicon-user"></i> Nombre y apellidos:</td>
-                                <td>{{model.usuario.getNombreCompleto()}}</td>
-                            </tr>                     
-                            <tr class="data-table__row">
-                                <td><i class="glyphicon glyphicon-envelope"></i> Correo electronico:</td>
-                                <td>{{model.usuario.email}}</td>
-                            </tr>                        
-                            <tr ng-show="model.usuario.titulado.fechaNacimiento" class="data-table__row">
-                                <td><i class="glyphicon glyphicon-gift"></i> Fecha de nacimiento:</td>
-                                <td>{{model.usuario.titulado.fechaNacimiento| ix3Date}}</td>
+
+                            <tr>
+                                <td style="width: 40%;"><div style="text-align: center"><img class="img-circle" width="120px" ng-src="{{ix3Configuration.server.api}}/Usuario/{{model.usuario.idIdentity}}/foto" alt="Foto usuario"></div></td>
+                                <td >
+                                    <div class="profile__value profile__value--name">{{model.usuario.getNombreCompleto()}}</div> 
+                                    <br>
+                                    <div class="profile__value profile__value--email"><i class="fa fa-envelope"></i>&nbsp;{{model.usuario.email}}</div> 
+                                </td>
+                            </tr>                                             
+                            <tr>
+                                <td class="profile__caption"><i class="glyphicon glyphicon-gift"></i>&nbsp;Fecha nacimiento</td>
+                                <td class="profile__value">{{model.usuario.titulado.fechaNacimiento| ix3Date}}</td>
                             </tr>
-                            <tr  ng-show="model.usuario.titulado.telefono" class="data-table__row">
-                                <td><i class="glyphicon glyphicon-earphone"></i> Telefono:</td>
-                                <td>{{model.usuario.titulado.telefono}}  {{model.usuario.titulado.telefonoAlternativo}}</td>
+                            <tr>
+                                <td class="profile__caption"><i class="glyphicon glyphicon-earphone"></i>&nbsp;Telefono</td>
+                                <td class="profile__value">{{model.usuario.titulado.telefono}}  {{model.usuario.titulado.telefonoAlternativo}}</td>
                             </tr>
-                            <tr ng-show="model.usuario.titulado.tipoDocumento" class="data-table__row">
-                                <td><i class="glyphicon glyphicon-credit-card"></i> {{model.usuario.titulado.getTipoDocumentoDescription()}}</td>
-                                <td>{{model.usuario.titulado.numeroDocumento}}</td>
-                            </tr>
-                            <tr ng-show="model.usuario.titulado.direccion !== null" class="data-table__row">
-                                <td><i class="glyphicon glyphicon-map-marker"></i> Direccion</td>
-                                <td>{{model.usuario.titulado.direccion.getTipoViaDescription()}} {{model.usuario.titulado.direccion.nombreVia}} {{model.usuario.titulado.direccion.otrosDireccion}}<br> {{model.usuario.titulado.direccion.codigoPostal}} {{model.usuario.titulado.direccion.municipio.toString()}} ({{model.usuario.titulado.direccion.municipio.provincia.toString()}})</td>
-                            </tr>
+                            <tr>
+                                <td class="profile__caption"><i class="glyphicon glyphicon-credit-card"></i>&nbsp;{{model.usuario.titulado.getTipoDocumentoDescription()}}</td>
+                                <td class="profile__value">{{model.usuario.titulado.numeroDocumento}}</td>
+                            </tr>                       
                         </tbody>
-                    </table>
+                    </table> 
+                </div>            
+                <div class="col-xs-12 col-sm-6">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><span class="profile__caption"><i class="fa fa-info-circle"></i>&nbsp;Sobre mi:</span>&nbsp;<span class="profile__value profile__value--cita">{{model.usuario.titulado.resumen}}</span></td>
+                            </tr>                                             
+                            <tr>
+                                <td><span class="profile__caption"><i class="fa fa-briefcase"></i>&nbsp;Otras competencias:</span>&nbsp;<span class="profile__value">{{model.usuario.titulado.otrasCompetencias}}</span></td>
+                            </tr>                        
+                            <tr>
+                                <td><span class="profile__caption"><i class="fa fa-car"></i>&nbsp;Carnet de conducir:</span>&nbsp;<span class="profile__value">{{model.usuario.titulado.permisosConducir}}</span></td>
+                            </tr>  
+                            <tr>
+                                <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.usuario.titulado.direccion.getTipoViaDescription()}} {{model.usuario.titulado.direccion.nombreVia}} {{model.usuario.titulado.direccion.otrosDireccion}} {{model.usuario.titulado.direccion.codigoPostal}} {{model.usuario.titulado.direccion.municipio.toString()}} ({{model.usuario.titulado.direccion.municipio.provincia.toString()}})</span></td>
+                            </tr>                         
+                        </tbody>
+                    </table>                    
                 </div>
             </div>
 

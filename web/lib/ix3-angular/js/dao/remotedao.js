@@ -241,48 +241,15 @@
             
             if (query.distinct===true) {
                 params.$distinct = true;
-            }            
+            } 
+            
+            if (query.namedSearch) {
+                params.$namedsearch = query.namedSearch;
+            }             
 
             var config = {
                 method: 'GET',
                 url: this.baseUrl + '/' + this.entityName,
-                params: params
-            };
-
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
-                    //El 204 (no content) realmente es un null
-                    deferred.resolve(null);
-                } else {
-                    deferred.resolve(data);
-                }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
-                    //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
-                    $log.info("Cancelada petición HTTP:" + config.url);
-                } else {
-                    throw new Error("Fallo al buscar los datos:" + status + "\n" + data);
-                }
-            });
-
-            return deferred.promise;
-        };
-
-        this.namedSearch = function (namedSearch, params, expand) {
-            var deferred = this.$q.defer();
-
-            params = params || {};
-
-            if (expand) {
-                params.$expand = expand;
-            }
-
-
-            var config = {
-                method: 'GET',
-                url: this.baseUrl + '/' + this.entityName + '/$namedsearch/' + namedSearch,
                 params: params
             };
 

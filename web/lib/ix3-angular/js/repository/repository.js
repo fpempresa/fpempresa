@@ -103,23 +103,7 @@
 
             return deferred.promise;
         };
-        
-        
-        this.namedSearch = function (namedSearch, params, expand) {
-            var deferred = $q.defer();
-
-            that.remoteDAO.namedSearch(namedSearch, params, expand).then(function (data) {
-                richDomain.extend(data);
-                deferred.resolve(data);
-            }, function (data) {
-                richDomain.extend(data);
-                deferred.reject(data);
-            });
-
-            return deferred.promise;
-        };        
-        
-        
+          
         this.getChild = function (id, child, expand) {
             var deferred = $q.defer();
 

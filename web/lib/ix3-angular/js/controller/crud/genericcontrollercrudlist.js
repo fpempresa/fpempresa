@@ -19,17 +19,16 @@
                 $lliker: {}
             };
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
-            scope.distinct=false;
+            scope.distinct = false;
             scope.page = {};
             scope.businessMessages = null;
             scope.namedSearch = undefined;
-            scope.namedSearchParameters={};
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
             scope.prefixRoute = "/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
-            scope.preSearch = function(filters) {
-                
+            scope.preSearch = function (filters) {
+
             };
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
@@ -60,28 +59,23 @@
 
 
             scope.search = function () {
-                var promise;
 
-                if (scope.namedSearch) {
-                    var namedSearchParameters = angular.copy(scope.namedSearchParameters);
-                    scope.preSearch(namedSearchParameters);
-                    promise=scope.service.namedSearch(scope.namedSearch,namedSearchParameters, scope.expand);
-                } else {
-                    var filters = angular.copy(scope.filters);
-                    if (scope.parentProperty && scope.parentId) {
-                        filters[scope.parentProperty] = scope.parentId;
-                    }                    
-                    scope.preSearch(filters);
-                    var query = {
-                        filters:filters,
-                        orderby:scope.orderby,
-                        expand:scope.expand,
-                        pageNumber:scope.page.pageNumber,
-                        pageSize:scope.page.pageSize,
-                        distinct:scope.distinct
-                    };
-                    promise=scope.service.search(query);
+                var filters = angular.copy(scope.filters);
+                if (scope.parentProperty && scope.parentId) {
+                    filters[scope.parentProperty] = scope.parentId;
                 }
+                scope.preSearch(filters);
+                var query = {
+                    filters: filters,
+                    orderby: scope.orderby,
+                    expand: scope.expand,
+                    pageNumber: scope.page.pageNumber,
+                    pageSize: scope.page.pageSize,
+                    distinct: scope.distinct,
+                    namedSearch: scope.namedSearch
+                };
+                var promise = scope.service.search(query);
+
 
                 promise.then(function (data) {
                     if (angular.isArray(data)) {

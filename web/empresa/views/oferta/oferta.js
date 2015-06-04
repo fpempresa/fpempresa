@@ -45,43 +45,24 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
         $scope.search = function () {
 
-            $scope.filters['oferta.idOferta'] = $scope.model.idOferta;
-
             var query = {
-                filters: $scope.filters,
-                orderby: $scope.orderby,
-                expand: "usuario",
-                pageNumber: $scope.page.pageNumber,
-                pageSize: $scope.page.pageSize
+                filters: {
+                    'oferta.idOferta':$scope.model.idOferta
+                }
             }
 
             serviceFactory.getService("Candidato").search(query).then(function (data) {
                 if (angular.isArray(data)) {
-                    $scope.candidatos = data;
+                    $scope.numeroCandidatos = data.length;
                 } else {
-                    //Si no es un array es un objeto "Page" Y lo comprobamos
-                    if (data.hasOwnProperty("pageNumber") && data.hasOwnProperty("content") && data.hasOwnProperty("totalPages")) {
-                        //Comprobamos este IF pq puede hbaer varias peticiones AJAX en curso y solo queremos la actual
-                        if ($scope.page.pageNumber === data.pageNumber) {
-                            $scope.candidatos = data.content;
-                            $scope.page.totalPages = data.totalPages;
-                        }
-                    } else {
-                        throw Error("Los datos retornados por el servidor no son un objeto 'Page'");
-                    }
+                    $scope.numeroCandidatos = 0;
                 }
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });
         }
 
-        $scope.verCandidato = function (idCandidato) {
-            dialog.create("viewCandidato", {
-                id: idCandidato
-            }).then(function () {
-                $scope.search();
-            });
-        };
+
 
         $scope.postCreate = function () {
             $scope.model.empresa = session.getUser().empresa;

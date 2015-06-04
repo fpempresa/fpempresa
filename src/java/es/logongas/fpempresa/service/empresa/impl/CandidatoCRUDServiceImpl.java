@@ -19,8 +19,12 @@ package es.logongas.fpempresa.service.empresa.impl;
 import es.logongas.fpempresa.dao.empresa.CandidatoDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.Page;
+import es.logongas.ix3.core.PageRequest;
 import es.logongas.ix3.service.CRUDService;
+import es.logongas.ix3.service.NamedSearch;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
@@ -33,18 +37,24 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
         return (Usuario) principalLocator.getPrincipal();
     }
 
-    private CandidatoDAO getOCandidatoDAO() {
+    private CandidatoDAO getCandidatoDAO() {
         return (CandidatoDAO) getDAO();
     }
 
     @Override
     public void insert(Candidato candidato) throws BusinessException {
 
-        if (getOCandidatoDAO().isUsuarioCandidato(candidato.getUsuario(), candidato.getOferta()) == true) {
+        if (getCandidatoDAO().isUsuarioCandidato(candidato.getUsuario(), candidato.getOferta()) == true) {
             throw new BusinessException("Ya estás inscrito en la oferta");
         }
 
         super.insert(candidato); 
+    }
+
+    
+    @NamedSearch(parameterNames = {"oferta","ocultarRechazados","hanTrabajado","maxAnyoTitulo","pageRequest"})
+    public Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean hanTrabajado,int maxAnyoTitulo,PageRequest pageRequest) {
+       return getCandidatoDAO().getCandidatosOferta(oferta, ocultarRechazados, hanTrabajado, maxAnyoTitulo, pageRequest);
     }
 
 }

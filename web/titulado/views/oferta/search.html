@@ -8,20 +8,20 @@
         <form name="mainForm" id="mainForm" ix3-form>
             <div class="row" >
                 <div class="col-xs-12 col-sm-4  form-horizontal">
-                    <select ng-model="namedSearchParameters.provincia" ix3-meta-data-property='Oferta.municipio.provincia' id="provincia" name="provincia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                    <select ng-model="filters.provincia" ix3-meta-data-property='Oferta.municipio.provincia' id="provincia" name="provincia" class="form-control" ix3-options="orderBy:'descripcion'"  >
                         <option value="">-- Provincia --</option>
                     </select>
 
                 </div>
                 <div class="col-xs-12 col-sm-4  form-horizontal">
                     <div class="input-group">
-                        <input ng-model="namedSearchParameters.fechaInicio"  ix3-meta-data-property='Oferta.fecha'  type="text" class="form-control" id="fechaInicio" name="fechaInicio"  ix3-date ix3-datepicker placeholder="Fecha desde" >
+                        <input ng-model="filters.fechaInicio"  ix3-meta-data-property='Oferta.fecha'  type="text" class="form-control" id="fechaInicio" name="fechaInicio"  ix3-date ix3-datepicker placeholder="Fecha desde" >
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div> 
                 <div class="col-xs-12 col-sm-4  form-horizontal">
                     <div class="input-group">
-                        <input ng-model="namedSearchParameters.fechaFin"  ix3-meta-data-property='Oferta.fecha'  type="text" class="form-control" id="fechaFin" name="fechaFin"  ix3-date ix3-datepicker placeholder="Fecha hasta" >
+                        <input ng-model="filters.fechaFin"  ix3-meta-data-property='Oferta.fecha'  type="text" class="form-control" id="fechaFin" name="fechaFin"  ix3-date ix3-datepicker placeholder="Fecha hasta" >
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div> 
                 </div>                         

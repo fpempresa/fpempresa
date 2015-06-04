@@ -42,10 +42,7 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
 app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasUsuarioTitulado";
-        $scope.namedSearchParameters.usuario = $scope.user.idIdentity;
-        if ($scope.user.titulado && $scope.user.titulado.direccion && $scope.user.titulado.direccion.municipio && $scope.user.titulado.direccion.municipio.provincia) {
-            $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
-        }
+        $scope.filters.usuario = $scope.user.idIdentity;
 
 
         $scope.preSearch=function(filters) {
@@ -65,11 +62,8 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
 app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
-        $scope.namedSearchParameters.usuario = $scope.user.idIdentity;
-        if ($scope.user.titulado && $scope.user.titulado.direccion && $scope.user.titulado.direccion.municipio && $scope.user.titulado.direccion.municipio.provincia) {
-            $scope.namedSearchParameters.provincia=$scope.user.titulado.direccion.municipio.provincia;
-        }
-        
+        $scope.filters.usuario = $scope.user.idIdentity;
+
         $scope.preSearch=function(filters) {
             if (filters.provincia) {
                 filters.provincia=filters.provincia.idProvincia;

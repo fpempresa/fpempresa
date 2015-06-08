@@ -7,7 +7,7 @@ angular.module("common").config(['$stateProvider', 'dialogProvider', 'getContext
             url: "/candidato/search/:parentProperty/:parentId",
             templateUrl: 'views/candidato/search.html',
             controller: 'CandidatoSearchController',
-            resolve: crudRoutesProvider.getResolve("Candidato", "oferta,usuario")
+            resolve: crudRoutesProvider.getResolve("Candidato", "oferta,usuario.titulado")
         });
 
 
@@ -27,7 +27,7 @@ app.controller("CandidatoSearchController", ['$scope', 'genericControllerCrudLis
         $scope.namedSearch = "getCandidatosOferta";
         $scope.page.pageSize = 20;
         $scope.filters.ocultarRechazados=false;
-        $scope.filters.hanTrabajado=false;
+        $scope.filters.certificados=true;
         $scope.filters.maxAnyoTitulo=200;        
         $scope.anyos = [
             {

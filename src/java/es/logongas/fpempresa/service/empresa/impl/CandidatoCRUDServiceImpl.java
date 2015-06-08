@@ -52,9 +52,9 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
     }
 
     
-    @NamedSearch(parameterNames = {"oferta","ocultarRechazados","hanTrabajado","maxAnyoTitulo","pageRequest"})
-    public Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean hanTrabajado,int maxAnyoTitulo,PageRequest pageRequest) {
-       return getCandidatoDAO().getCandidatosOferta(oferta, ocultarRechazados, hanTrabajado, maxAnyoTitulo, pageRequest);
+    @NamedSearch(parameterNames = {"oferta","ocultarRechazados","certificados","maxAnyoTitulo","pageRequest"})
+    public Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest) {
+       return getCandidatoDAO().getCandidatosOferta(oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
     }
 
 }

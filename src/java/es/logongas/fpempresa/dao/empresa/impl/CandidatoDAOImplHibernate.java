@@ -56,7 +56,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
     }
 
     @Override
-    public Page<Candidato> getCandidatosOferta(Oferta oferta, boolean ocultarRechazados, boolean hanTrabajado, int maxAnyoTitulo, PageRequest pageRequest) {
+    public Page<Candidato> getCandidatosOferta(Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
         Session session = sessionFactory.getCurrentSession();
 
         String sqlPartFrom = " FROM Candidato candidato ";

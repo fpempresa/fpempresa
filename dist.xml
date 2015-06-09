@@ -3,30 +3,29 @@
     <description>Builds, tests, and runs the project fpempresa.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
+    <target name="distOpenShift" depends="-configureAnt,-load-ix3,-enableProduccion,clean,dist" >
     </target>
+	
+    <target name="sonar" depends="-configureAnt" >
+        <property file="./sonar-project.properties"/>
+        <!-- Estas propeiudades se deben actualizar según el servidor de sonar a usar -->
+        <property name="sonar.host.url" value="http://sonar.fpempresa.net" />
+        <property name="sonar.jdbc.url" value="jdbc:postgresql://localhost/sonar" />
+        <property name="sonar.jdbc.username" value="" />
+        <property name="sonar.jdbc.password" value="" />
+	
+        <!-- Antes de ejecutar la tarea quizas haya que hacer un tunel ssh al servidor de sonar -->
+        <sonar />        
+    </target>	
+	
+		
+	
     <target name="-enableProduccion"  >
         <property name="enableProduccion" value="yes"/>
     </target>
-    <target name="-configureAnt">
-        <echo>Configurando Ant</echo>
-        <!-- Cargar todas las variables de entorno -->
-        <property environment="env"/>
-        <!-- Si no está definida la variable la cojemos como variable de entorno -->
-        <property name="env.APP_ENVIRONMENT" value="" />
-        <property name="APP_ENVIRONMENT" value="${env.APP_ENVIRONMENT}" />
-
-        <!-- OpenShift -->
-        <taskdef  resource="es/logongas/openshift/ant/antlib.xml" />
-                
-        <property name="libs.CopyLibs.classpath" value="ant/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
-        <property name="j2ee.server.home" value="ant" />
-
-        <!-- Para tener el try-cath -->
-        <taskdef  resource="net/sf/antcontrib/antcontrib.properties"/>
-        <!-- Manejo de ficheros XML -->
-        <taskdef  name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
-
+    
+    
+    <target name="-load-ix3">
         <property file="ix3.properties"/>
         <if>
             <equals arg1="${APP_ENVIRONMENT}" arg2="PRODUCCION" />
@@ -49,8 +48,32 @@
             <else>
                 <fail message="La variable 'APP_ENVIRONMENT' solo pude tener los valores PRODUCCION , PREPRODUCCION , PRUEBAS pero tiene el valor '${APP_ENVIRONMENT}'"/>
             </else>            
-        </if>        
+        </if>  
         
+    </target>    
+    
+    
+    <target name="-configureAnt">
+        <echo>Configurando Ant</echo>
+        <!-- Cargar todas las variables de entorno -->
+        <property environment="env"/>
+        <!-- Si no está definida la variable la cojemos como variable de entorno -->
+        <property name="env.APP_ENVIRONMENT" value="" />
+        <property name="APP_ENVIRONMENT" value="${env.APP_ENVIRONMENT}" />
+
+        <!-- OpenShift -->
+        <taskdef  resource="es/logongas/openshift/ant/antlib.xml" />
+   
+        <property name="libs.CopyLibs.classpath" value="ant/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
+        <property name="j2ee.server.home" value="ant" />
+
+        <!-- Para tener el try-cath -->
+        <taskdef  resource="net/sf/antcontrib/antcontrib.properties"/>
+        <!-- Manejo de ficheros XML -->
+        <taskdef  name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+        
+        <!--tareas de sonar -->
+        <taskdef resource="org/sonar/ant/antlib.xml"></taskdef>  
         
         <!-- Propiedades del proyecto -->
         <property file="nbproject/project.properties"/>     

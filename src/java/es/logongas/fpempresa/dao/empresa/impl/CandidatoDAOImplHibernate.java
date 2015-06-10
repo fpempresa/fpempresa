@@ -22,8 +22,12 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import es.logongas.ix3.dao.impl.PageImpl;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -57,44 +61,49 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
 
     @Override
     public Page<Candidato> getCandidatosOferta(Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
-        Session session = sessionFactory.getCurrentSession();
-
         String sqlPartFrom = " FROM Candidato candidato ";
         StringBuilder sqlPartWhere = new StringBuilder(" WHERE candidato.oferta.idOferta=? ");
         if (ocultarRechazados == true) {
             sqlPartWhere.append(" AND candidato.rechazado=? ");
         }
+        sqlPartWhere.append(" AND NOT EXISTS ("
+                + "SELECT "
+                + "    formacionAcademica "
+                + "FROM "
+                + "    FormacionAcademica formacionAcademica "
+                + "WHERE "
+                + "    formacionAcademica.titulado.idTitulado=candidato.usuario.titulado.idTitulado AND "
+                + "    (year(current_date())-year(formacionAcademica.fecha))>? "
+                + ") ");
+        if (certificados==true) {
+            sqlPartWhere.append(" AND NOT EXISTS ("
+                    + "SELECT "
+                    + "    formacionAcademica "
+                    + "FROM "
+                    + "    FormacionAcademica formacionAcademica "
+                    + "WHERE "
+                    + "    formacionAcademica.titulado.idTitulado=candidato.usuario.titulado.idTitulado AND "
+                    + "    certificadoTitulo=false "
+                    + ") ");        
+        }
+        
+        
+        
         String sqlPartOrderBy = "";
         String sqlPartSelectObject = " SELECT candidato ";
         String sqlPartSelectCount = " SELECT COUNT(candidato) ";
 
+        String sqlData = sqlPartSelectObject + " " + sqlPartFrom + " " + sqlPartWhere + " " + sqlPartOrderBy;
+        String sqlCount = sqlPartSelectCount + " " + sqlPartFrom + " " + sqlPartWhere;
+
+        List<Object> parameters=new ArrayList<Object>();
+        parameters.add(oferta.getIdOferta());
+        if (ocultarRechazados == true) {
+            parameters.add(false);
+        }        
+        parameters.add(maxAnyoTitulo);
         
-        Query queryDatos = session.createQuery(sqlPartSelectObject + " " + sqlPartFrom + " " + sqlPartWhere + " " + sqlPartOrderBy);
-        queryDatos.setInteger(0, oferta.getIdOferta());
-        if (ocultarRechazados == true) {
-            queryDatos.setBoolean(1, false);
-        }
-        queryDatos.setMaxResults(pageRequest.getPageSize());
-        queryDatos.setFirstResult(pageRequest.getPageSize() * pageRequest.getPageNumber());
-
-        List results = queryDatos.list();
-
-        //Vamos ahora a calcular el total de páginas
-        Query queryCount = session.createQuery(sqlPartSelectCount + " " + sqlPartFrom + " " + sqlPartWhere);
-        queryCount.setInteger(0, oferta.getIdOferta());
-        if (ocultarRechazados == true) {
-            queryCount.setBoolean(1, false);
-        }
-        Long totalCount = (Long) queryCount.uniqueResult();
-
-        int totalPages;
-        if (totalCount == 0) {
-            totalPages = 0;
-        } else {
-            totalPages = (int) (Math.ceil(((double) totalCount) / ((double) pageRequest.getPageSize())));
-        }
-
-        Page page = new PageImpl(results, pageRequest.getPageSize(), pageRequest.getPageNumber(), totalPages);
+        Page page = getPaginatedQuery(sqlData,sqlCount,pageRequest,parameters);
 
         return page;
     }

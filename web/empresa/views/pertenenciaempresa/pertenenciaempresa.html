@@ -35,7 +35,7 @@
                         <td ><a href ng-click="buttonPertenenciaEmpresa(empresa.idEmpresa)">{{empresa.nombreComercial}}</a></td>
                         <td >{{empresa.direccion.municipio.provincia.descripcion}}</td>
                         <td >{{empresa.direccion.municipio.descripcion}}</td>
-                        <td >{{empresa.direccion.getTipoViaDescription()}} {{empresa.direccion.nombreVia}} {{empresa.direccion.otrosDireccion}}</td>      
+                        <td >{{empresa.direccion.datosDireccion}}</td>      
                         <td>
                             <div style="text-align:center" >
                                 <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonPertenenciaEmpresa(empresa.idEmpresa)">Pertenecer</button>                                

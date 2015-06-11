@@ -15,15 +15,7 @@
 
         
         <component name="direccion" >
-            <property name="tipoVia" >
-                <type name="org.hibernate.type.EnumType">
-                    <param name="enumClass">es.logongas.fpempresa.modelo.comun.geo.TipoVia</param>
-                    <param name="type">12</param>
-                </type>
-            </property>
-            <property name="nombreVia" />
-            <property name="otrosDireccion" />
-            <property name="codigoPostal" />
+            <property name="datosDireccion" />
             <many-to-one name="municipio">
                 <column name="idMunicipio"  />
             </many-to-one>

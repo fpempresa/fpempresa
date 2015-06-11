@@ -1,10 +1,7 @@
 CREATE TABLE `titulado` (
   `idTitulado` int(11) NOT NULL AUTO_INCREMENT,
   `fechaNacimiento` datetime DEFAULT NULL,
-  `tipoVia` varchar(25) DEFAULT NULL,
-  `nombreVia` varchar(255) DEFAULT NULL,
-  `otrosDireccion` varchar(255) DEFAULT NULL,
-  `codigoPostal` varchar(10) DEFAULT NULL,
+  `datosDireccion` varchar(255) DEFAULT NULL,
   `idMunicipio` int(11) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `telefonoAlternativo` varchar(255) DEFAULT NULL,

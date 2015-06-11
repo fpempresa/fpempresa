@@ -45,7 +45,7 @@
                             <td><span class="profile__caption"><i class="fa fa-car"></i>&nbsp;Carnet de conducir:</span>&nbsp;<span class="profile__value">{{model.permisosConducir}}</span></td>
                         </tr>  
                         <tr>
-                            <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.direccion.getTipoViaDescription()}} {{model.direccion.nombreVia}} {{model.direccion.otrosDireccion}} {{model.direccion.codigoPostal}} {{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</span></td>
+                            <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.direccion.datosDireccion}} {{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</span></td>
                         </tr>                         
                     </tbody>
                 </table>                    

@@ -58,47 +58,19 @@
                         </div>  
                     </div>                    
                     <legend class="form__title">Direcci&oacute;n</legend>
+ 
 
 
                     <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                        <div class="col-xs-12 form-horizontal">
                             <div class="form-group">
-                                <label for="direccion.tipoVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.direccion.tipoVia" id="direccion.tipoVia" name="direccion.tipoVia" class="form-control" ix3-options ix3-validation >
-                                        <option value="">-- Elige Opcion --</option>
-                                    </select>
+                                <label for="direccion.datosDireccion" class="col-xs-3 control-label" ix3-label></label>
+                                <div class="col-xs-9">
+                                    <input ng-model="model.direccion.datosDireccion" type="text" class="form-control" id="direccion.datosDireccion" name="direccion.datosDireccion"  ix3-validation>
+                                    <p class="form__text form__text--help">Tipo v&iacute;a, nombre v&iacute;a, n&uacute;mero, puerta, etc.</p>
                                 </div>
                             </div> 
                         </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.nombreVia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.direccion.nombreVia" type="text" class="form-control" id="direccion.nombreVia" name="direccion.nombreVia"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>  
-                    </div> 
-
-
-                    <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.otrosDireccion" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.direccion.otrosDireccion" type="text" class="form-control" id="direccion.otrosDireccion" name="direccion.otrosDireccion"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="direccion.codigoPostal" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.direccion.codigoPostal" type="text" class="form-control" id="direccion.codigoPostal" name="direccion.codigoPostal"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>  
                     </div>
 
                     <div class="row" >
@@ -130,7 +102,7 @@
                                 <label for="resumen" class="col-xs-3 control-label" ix3-label></label>
                                 <div class="input-group col-xs-9">
                                     <input ng-model="model.resumen" type="text" class="form-control" id="resumen" name="resumen"   ix3-validation>
-                                    <p class="form__text form__text--help">Resume en una o dos frases porqu&eacute; una empresa deber&iacute;a contratarte</p>
+                                    <p class="form__text form__text--help">Resume en una o dos frases porqu&eacute; una empresa deber&iacute;a contratarte.<br>Esta frase es muy importante ya que es lo primero que va a ver la empresa de ti.</p>
                                 </div>
                             </div> 
                         </div>
@@ -152,7 +124,7 @@
                                 <label for="permisosConducir" class="col-xs-3 control-label" ix3-label></label>
                                 <div class="input-group col-xs-9">
                                     <input ng-model="model.permisosConducir" type="text" class="form-control" id="permisosConducir" name="permisosConducir"   ix3-validation>
-                                    <p class="form__text form__text--help">Indicas si tienes alg&uacute;n carnet de conducir.</p>
+                                    <p class="form__text form__text--help">Indica si tienes alg&uacute;n carnet de conducir.</p>
                                 </div>
                             </div> 
                         </div>

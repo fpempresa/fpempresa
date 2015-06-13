@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.modelo.empresa;
 
+import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
@@ -27,6 +28,7 @@ import es.logongas.ix3.service.rules.RuleContext;
 import es.logongas.ix3.service.rules.RuleGroupPredefined;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -44,35 +46,34 @@ public class Empresa {
     private String razonSocial;
 
     @NotBlank
+    @Size(min = 9, max = 9)
     private String cif;
 
     @NotNull
     @Valid
     private Direccion direccion;
 
-    
     private Centro centro;
 
     @NotNull
     @Valid
-    private Contacto contacto;    
-    
+    private Contacto contacto;
+
     @ConstraintRule(message = "Solo un usuario registrado puede modificar la empresa", priority = -20, groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
     private boolean usuarioRegistrado(RuleContext<Empresa> ruleContext) {
         Usuario usuario = (Usuario) ruleContext.getPrincipal();
 
-        if (usuario==null) {
+        if (usuario == null) {
             return false;
-        }  
-        
+        }
+
         return true;
     }
-    
-  
-    @ConstraintRule(message = "Tu tipo de usuario no permite modificar la empresa", groups=RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
+
+    @ConstraintRule(message = "Tu tipo de usuario no permite modificar la empresa", groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
     private boolean soloLoPuedeModificarUnCentroAdministradorOTrabajador(RuleContext<Empresa> ruleContext) {
         Usuario usuario = (Usuario) ruleContext.getPrincipal();
-        
+
         if ((usuario.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) && (usuario.getTipoUsuario() != TipoUsuario.CENTRO)) {
             return false;
         }
@@ -80,7 +81,7 @@ public class Empresa {
         return true;
     }
 
-    @ConstraintRule(message = "Un trabajador no puede modificar la empresa si no pertences a ella",groups=RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
+    @ConstraintRule(message = "Un trabajador no puede modificar la empresa si no pertences a ella", groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
     private boolean soloUsuarioDeEmpresaPuedeModificarla(RuleContext<Empresa> ruleContext) {
         Usuario usuario = (Usuario) ruleContext.getPrincipal();
 
@@ -93,7 +94,7 @@ public class Empresa {
         return true;
     }
 
-    @ConstraintRule(message = "Un profesor no puede modificar la empresa si no pertences a su centro",groups=RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
+    @ConstraintRule(message = "Un profesor no puede modificar la empresa si no pertences a su centro", groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
     private boolean soloProfesorCuyaEmpresaSeaDeSuCentroPuedeModificarla(RuleContext<Empresa> ruleContext) {
         Usuario usuario = (Usuario) ruleContext.getPrincipal();
 
@@ -111,11 +112,17 @@ public class Empresa {
         return true;
     }
 
-    
- 
-   
-    
-    
+    @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class, disabled = true)
+    private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
+        Validador validadorCIF = new Validador();
+
+        if (validadorCIF.checkNif(this.cif) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Empresa() {
     }
 

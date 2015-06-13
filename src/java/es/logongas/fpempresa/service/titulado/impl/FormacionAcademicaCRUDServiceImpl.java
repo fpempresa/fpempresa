@@ -51,7 +51,7 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
     private boolean getCertificadoTitulo(FormacionAcademica formacionAcademica) {
         boolean isCertificadoTitulo;
 
-        if ((formacionAcademica.getTitulado().getTipoDocumento() == TipoDocumento.NIF) || (formacionAcademica.getTitulado().getTipoDocumento() == TipoDocumento.NIE)) {
+        if (formacionAcademica.getTitulado().getTipoDocumento() == TipoDocumento.NIF_NIE) {
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(formacionAcademica.getFecha());
 

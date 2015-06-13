@@ -118,17 +118,18 @@ public class CertificadoTituloCRUDServiceImpl  extends CRUDServiceImpl<Certifica
         GenericDAO<FormacionAcademica,Integer> formacionAcademicaDAO=daoFactory.getDAO(FormacionAcademica.class);
         
         List<Filter> filters=new ArrayList<Filter>();
+        filters.add(new Filter("titulado.tipoDocumento",TipoDocumento.NIF_NIE));
         filters.add(new Filter("titulado.numeroDocumento",certificadoTitulo.getNifnies()));
         filters.add(new Filter("centro.idCentro",certificadoTitulo.getCentro().getIdCentro()));
         filters.add(new Filter("ciclo.idCiclo",certificadoTitulo.getCiclo().getIdCiclo()));
         
+        
         List<FormacionAcademica> formacionesAcademicasRaw=formacionAcademicaDAO.search(filters);
         for(FormacionAcademica formacionAcademica:formacionesAcademicasRaw) {
-            Titulado titulado=formacionAcademica.getTitulado();
             calendar.setTime(formacionAcademica.getFecha());
             int anyo=calendar.get(Calendar.YEAR);
             
-            if (anyo==certificadoTitulo.getAnyo() && ( (titulado.getTipoDocumento()== TipoDocumento.NIF) || (titulado.getTipoDocumento()==TipoDocumento.NIE)  )) {
+            if (anyo==certificadoTitulo.getAnyo()) {
                 formacionesAcademicas.add(formacionAcademica);
             }
             

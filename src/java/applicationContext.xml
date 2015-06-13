@@ -40,4 +40,7 @@
      <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
      <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
      <bean class="es.logongas.fpempresa.dao.estadisticas.impl.EstadisticaDAOImplHibernate"  />
+     
+     <bean class="es.logongas.fpempresa.service.populate.PopulateService"  />
+     
 </beans>

@@ -16,7 +16,8 @@
                 $like: {},
                 $llike: {},
                 $liker: {},
-                $lliker: {}
+                $lliker: {},
+                $isnull: {}
             };
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.distinct = false;

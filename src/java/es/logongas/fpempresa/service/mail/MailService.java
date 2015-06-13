@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.service.mail;
 
+import es.logongas.ix3.service.Service;
 import java.util.List;
 import javax.mail.internet.InternetAddress;
 
@@ -23,7 +24,7 @@ import javax.mail.internet.InternetAddress;
  * Servicio de envio de EMails.
  * @author logongas
  */
-public interface MailService {
+public interface MailService extends Service {
     void sendPlainMail(List<InternetAddress> to,InternetAddress from,String subject,String plainBody);
     void sendHTMLMail(List<InternetAddress> to,InternetAddress from,String subject,String htmlBody);
 }

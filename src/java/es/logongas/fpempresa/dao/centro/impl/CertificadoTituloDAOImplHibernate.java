@@ -35,6 +35,10 @@ public class CertificadoTituloDAOImplHibernate extends GenericDAOImplHibernate<C
     public CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(Centro centro, Ciclo ciclo, int anyo) {
         Session session = sessionFactory.getCurrentSession();
 
+        if ((centro==null) || (ciclo==null)) {
+            return null;
+        }
+        
         Query query = session.createQuery("SELECT certificadoTitulo FROM CertificadoTitulo certificadoTitulo  WHERE certificadoTitulo.centro.idCentro=? AND certificadoTitulo.ciclo.idCiclo=? AND certificadoTitulo.anyo=?");
         query.setInteger(0, centro.getIdCentro());
         query.setInteger(1, ciclo.getIdCiclo());

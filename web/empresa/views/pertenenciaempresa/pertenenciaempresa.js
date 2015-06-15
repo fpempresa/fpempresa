@@ -7,6 +7,7 @@ app.controller("PertenenciaEmpresaController", ['$scope', '$q', '$location', 'co
         if ($scope.user && $scope.user.empresa) {
             $scope.filters.$ne.idEmpresa = $scope.user.empresa.idEmpresa; //No debe salir la propia empresa a la que pertenece.
         }
+        $scope.filters.$isnull.centro=true;
 
         $scope.buttonPertenenciaEmpresa = function (idEmpresa) {
             $scope.pertenenciaEmpresa(idEmpresa);

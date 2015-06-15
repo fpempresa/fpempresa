@@ -25,7 +25,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
                     $expand:ix3Configuration.session.expand
                 }),
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'                   
                 }
             };
 

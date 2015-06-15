@@ -42,7 +42,7 @@ public class FormacionAcademica {
     @Label("Centro educativo")
     private Centro centro;
 
-    @ValuesList(shortLength = true)
+    @ValuesList(shortLength = false)
     private Ciclo ciclo;
 
     @Label("Nombre centro")

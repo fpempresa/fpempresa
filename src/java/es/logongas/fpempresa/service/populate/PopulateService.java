@@ -82,7 +82,7 @@ public class PopulateService implements Service {
 
     public Empresa createEmpresaAleatoria() throws BusinessException {
         String[] tiposEmpresa = {"Sociedad Anonima", "Sociedad Limitada", "Cooperativa", "Sociedad Laboral"};
-        Centro[] centros = {getCentroAleatorio(), null, null, null, null, null};
+        Centro[] centros = {getCentroAleatorio(), null};
 
         CRUDService<Empresa, Integer> empresaService = crudServiceFactory.getService(Empresa.class);
 

@@ -29,11 +29,13 @@ import es.logongas.fpempresa.modelo.titulado.TituloIdioma;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.fpempresa.service.populate.PopulateService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.controllers.AbstractRESTController;
 import es.logongas.ix3.web.controllers.Command;
 import es.logongas.ix3.web.controllers.CommandResult;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,21 +72,21 @@ public class PopulateController extends AbstractRESTController {
             @Override
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
 
-                Date dateStart=new Date();
-                
+                Date dateStart = new Date();
+
                 crearCentros(12);
                 crearEmpresas(89);
-                crearOfertas(187);
+                crearOfertas(438);
                 crearUsuarios(23, TipoUsuario.CENTRO);
                 crearUsuarios(197, TipoUsuario.EMPRESA);
-                crearUsuarios(475, TipoUsuario.TITULADO);
-                
-                Date dateEnd=new Date();
-                
+                crearUsuarios(775, TipoUsuario.TITULADO);
+
+                Date dateEnd = new Date();
+
                 Map<String, Object> result = new HashMap<String, Object>();
-                result.put("dateStart",dateStart);
-                result.put("dateEnd",dateEnd);
-                result.put("duration",dateEnd.getTime()-dateStart.getTime());
+                result.put("dateStart", dateStart);
+                result.put("dateEnd", dateEnd);
+                result.put("duration", dateEnd.getTime() - dateStart.getTime());
                 return new CommandResult(result);
             }
         });
@@ -97,18 +99,18 @@ public class PopulateController extends AbstractRESTController {
 
             @Override
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
-                
-                Date dateStart=new Date();
-                
+
+                Date dateStart = new Date();
+
                 crearCentros(numCentros);
-                
-                Date dateEnd=new Date();
-                
+
+                Date dateEnd = new Date();
+
                 Map<String, Object> result = new HashMap<String, Object>();
-                result.put("dateStart",dateStart);
-                result.put("dateEnd",dateEnd);
-                result.put("duration",dateEnd.getTime()-dateStart.getTime());
-                result.put("num",numCentros);
+                result.put("dateStart", dateStart);
+                result.put("dateEnd", dateEnd);
+                result.put("duration", dateEnd.getTime() - dateStart.getTime());
+                result.put("num", numCentros);
                 return new CommandResult(result);
             }
         });
@@ -121,18 +123,18 @@ public class PopulateController extends AbstractRESTController {
 
             @Override
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
-                
-                Date dateStart=new Date();
-                
+
+                Date dateStart = new Date();
+
                 crearEmpresas(numEmpresas);
-                
-                Date dateEnd=new Date();
-                
+
+                Date dateEnd = new Date();
+
                 Map<String, Object> result = new HashMap<String, Object>();
-                result.put("dateStart",dateStart);
-                result.put("dateEnd",dateEnd);
-                result.put("duration",dateEnd.getTime()-dateStart.getTime());
-                result.put("num",numEmpresas);
+                result.put("dateStart", dateStart);
+                result.put("dateEnd", dateEnd);
+                result.put("duration", dateEnd.getTime() - dateStart.getTime());
+                result.put("num", numEmpresas);
                 return new CommandResult(result);
             }
         });
@@ -145,18 +147,18 @@ public class PopulateController extends AbstractRESTController {
 
             @Override
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
-                
-                Date dateStart=new Date();
-                
-                crearUsuarios(numUsuarios,tipoUsuario);
-                
-                Date dateEnd=new Date();
-                
+
+                Date dateStart = new Date();
+
+                crearUsuarios(numUsuarios, tipoUsuario);
+
+                Date dateEnd = new Date();
+
                 Map<String, Object> result = new HashMap<String, Object>();
-                result.put("dateStart",dateStart);
-                result.put("dateEnd",dateEnd);
-                result.put("duration",dateEnd.getTime()-dateStart.getTime());
-                result.put("num",numUsuarios);
+                result.put("dateStart", dateStart);
+                result.put("dateEnd", dateEnd);
+                result.put("duration", dateEnd.getTime() - dateStart.getTime());
+                result.put("num", numUsuarios);
                 return new CommandResult(result);
             }
         });
@@ -169,23 +171,47 @@ public class PopulateController extends AbstractRESTController {
 
             @Override
             public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
-                
-                Date dateStart=new Date();
-                
+
+                Date dateStart = new Date();
+
                 crearOfertas(numOfertas);
-                
-                Date dateEnd=new Date();
-                
+
+                Date dateEnd = new Date();
+
                 Map<String, Object> result = new HashMap<String, Object>();
-                result.put("dateStart",dateStart);
-                result.put("dateEnd",dateEnd);
-                result.put("duration",dateEnd.getTime()-dateStart.getTime());
-                result.put("num",numOfertas);
+                result.put("dateStart", dateStart);
+                result.put("dateEnd", dateEnd);
+                result.put("duration", dateEnd.getTime() - dateStart.getTime());
+                result.put("num", numOfertas);
                 return new CommandResult(result);
             }
         });
     }
 
+    @RequestMapping(value = {"/Candidato/$populate"}, method = RequestMethod.GET, produces = "application/json")
+    public void crearCandidatos(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
+        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+
+            @Override
+            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+
+                Date dateStart = new Date();
+
+                createCandidatos();
+
+                Date dateEnd = new Date();
+
+                Map<String, Object> result = new HashMap<String, Object>();
+                result.put("dateStart", dateStart);
+                result.put("dateEnd", dateEnd);
+                result.put("duration", dateEnd.getTime() - dateStart.getTime());
+                return new CommandResult(result);
+            }
+        });
+    }    
+    
+    
     private void crearCentros(int numCentros) throws BusinessException {
         CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
         for (int i = 0; i < numCentros; i++) {
@@ -216,8 +242,6 @@ public class PopulateController extends AbstractRESTController {
         CRUDService<FormacionAcademica, Integer> formacionAcademicaService = crudServiceFactory.getService(FormacionAcademica.class);
         CRUDService<ExperienciaLaboral, Integer> experienciaLaboralService = crudServiceFactory.getService(ExperienciaLaboral.class);
         CRUDService<TituloIdioma, Integer> tituloIdiomaService = crudServiceFactory.getService(TituloIdioma.class);
-        CRUDService<Candidato, Integer> candidatoService = crudServiceFactory.getService(Candidato.class);
-        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) crudServiceFactory.getService(Oferta.class);
 
         for (int i = 0; i < numUsuarios; i++) {
             Usuario usuario = populateService.createUsuarioAleatorio(tipoUsuario);
@@ -236,17 +260,32 @@ public class PopulateController extends AbstractRESTController {
 
             }
             usuarioService.insert(usuario);
-            if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
-                List<Oferta> ofertas = ofertaCRUDService.getOfertasUsuarioTitulado(usuario, null, null, null);
-                int numOfertas = (int) (ofertas.size() * 0.8);
-                for (int j = 0; j < numOfertas; j++) {
-                    Candidato candidato = candidatoService.create();
-                    candidato.setOferta(ofertas.get(j));
-                    candidato.setUsuario(usuario);
-                    candidatoService.insert(candidato);
-                }
-            }
+
         }
     }
 
+    private void createCandidatos() throws BusinessException {
+        CRUDService<Usuario, Integer> usuarioService = crudServiceFactory.getService(Usuario.class);
+        List<Filter> filters=new ArrayList<Filter>();
+        filters.add(new Filter("tipoUsuario", TipoUsuario.TITULADO));
+        List<Usuario> usuarios=usuarioService.search(filters);
+        for(Usuario usuario:usuarios) {
+            createCandidato(usuario);
+        }
+    }
+
+    private void createCandidato(Usuario usuario) throws BusinessException {
+        CRUDService<Candidato, Integer> candidatoService = crudServiceFactory.getService(Candidato.class);
+        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) crudServiceFactory.getService(Oferta.class);
+        if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
+            List<Oferta> ofertas = ofertaCRUDService.getOfertasUsuarioTitulado(usuario, null, null, null);
+            int numOfertas = (int) (ofertas.size() * 0.8);
+            for (int j = 0; j < numOfertas; j++) {
+                Candidato candidato = candidatoService.create();
+                candidato.setOferta(ofertas.get(j));
+                candidato.setUsuario(usuario);
+                candidatoService.insert(candidato);
+            }
+        }
+    }
 }

@@ -9,21 +9,16 @@
 
     <!--Permite usar entre otras la anotación @Autowired -->
     <context:annotation-config/>
-    <!--Permite usar entre otras las anotaciones @Component y @Controller -->
-    <!-- <context:component-scan base-package="es.fpmislata.examen.datos"/> -->
-
+  
+    <!-- DAOs -->
     <bean class="es.logongas.ix3.dao.impl.DAOFactoryImplHibernate" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.dao" />
         <property name="implBasePackageName"       value="es.logongas.fpempresa.dao" />
-    </bean>
-    
-    <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
-        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
-        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
-        <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
     </bean>    
+    <bean class="es.logongas.fpempresa.dao.estadisticas.impl.EstadisticaDAOImplHibernate"  />
 
+    <!-- Seguridad -->
     <bean id="authenticationManager" class="es.logongas.ix3.security.authentication.impl.AuthenticationManagerImpl"  >
         <property name="authenticationProviders">
             <list>
@@ -34,14 +29,16 @@
     
     <bean id="authorizationManager" class="es.logongas.ix3.security.authorization.impl.AuthorizationManagerImpl"  >
         <property name="defaultAuthorization" value="true" />
-    </bean>    
+    </bean>  
     
-    <!-- DAOs -->
-    <bean class="es.logongas.fpempresa.dao.estadisticas.impl.EstadisticaDAOImplHibernate"  />
     
     <!-- Servicios -->
     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.populate.PopulateService"  />
-     
+    <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
+        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
+    </bean> 
 </beans>

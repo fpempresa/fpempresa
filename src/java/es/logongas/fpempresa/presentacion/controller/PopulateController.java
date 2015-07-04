@@ -279,7 +279,7 @@ public class PopulateController extends AbstractRESTController {
         OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) crudServiceFactory.getService(Oferta.class);
         if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
             List<Oferta> ofertas = ofertaCRUDService.getOfertasUsuarioTitulado(usuario, null, null, null);
-            int numOfertas = (int) (ofertas.size() * 0.8);
+            int numOfertas = (int) Math.ceil(ofertas.size() * 0.8);
             for (int j = 0; j < numOfertas; j++) {
                 Candidato candidato = candidatoService.create();
                 candidato.setOferta(ofertas.get(j));

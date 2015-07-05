@@ -1,3 +1,4 @@
+<%@page import="es.logongas.ix3.security.util.WebSessionSidStorage"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -20,9 +21,9 @@
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
         JsonFactory jsonFactory = webApplicationContext.getBean(JsonFactory.class);
         AuthenticationManager authenticationManager = webApplicationContext.getBean(AuthenticationManager.class);
+        WebSessionSidStorage webSessionSidStorage = webApplicationContext.getBean(WebSessionSidStorage.class);
 
-        HttpSession httpSession = request.getSession();
-        Serializable sid = (Serializable) httpSession.getAttribute("sid");
+        Serializable sid = webSessionSidStorage.getSid(request,response);
         Principal principal;
         List<String> expands=new ArrayList<String>();
         expands.add("empresa");

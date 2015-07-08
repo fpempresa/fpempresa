@@ -1,7 +1,8 @@
+<%@ page session="false" %>
+<%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.security.util.WebSessionSidStorage"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.core.hibernate.HibernateUtil"%>
 <%@page import="es.logongas.ix3.security.authentication.AuthenticationManager"%>
 <%@page import="java.io.Serializable"%>

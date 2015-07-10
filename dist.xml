@@ -6,6 +6,10 @@
     <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
     </target>
 	
+    <target name="-enableProduccion"  >
+        <property name="enableProduccion" value="yes"/>
+    </target>        
+        
     <target name="sonar" depends="-configureAnt" >
         <property file="./sonar-project.properties"/>
         <!-- Estas propeiudades se deben actualizar según el servidor de sonar a usar -->

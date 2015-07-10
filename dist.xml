@@ -3,7 +3,7 @@
     <description>Builds, tests, and runs the project fpempresa.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <target name="distOpenShift" depends="-configureAnt,-load-ix3,-enableProduccion,clean,dist" >
+    <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
     </target>
 	
     <target name="sonar" depends="-configureAnt" >
@@ -17,42 +17,7 @@
         <!-- Antes de ejecutar la tarea quizas haya que hacer un tunel ssh al servidor de sonar -->
         <sonar />        
     </target>	
-	
-		
-	
-    <target name="-enableProduccion"  >
-        <property name="enableProduccion" value="yes"/>
-    </target>
-    
-    
-    <target name="-load-ix3">
-        <property file="ix3.properties"/>
-        <if>
-            <equals arg1="${APP_ENVIRONMENT}" arg2="PRODUCCION" />
-            <then>
-                <ix3DownloadChangeJarAll ix3version="${ix3.produccion.version}"/>
-            </then>
-            <elseif>
-                <equals arg1="${APP_ENVIRONMENT}" arg2="PREPRODUCCION" />
-                <then>
-                    <ix3DownloadChangeJarAll ix3version="${ix3.preproduccion.version}"/>
-                </then>
-            </elseif>
-            <elseif>
-                <equals arg1="${APP_ENVIRONMENT}" arg2="PRUEBAS" />
-                <then>
-                    <git command="fetch" options="origin" dir="../ix3" />
-                    <git command="checkout" options="-b ${ix3.pruebas.branch} origin/${ix3.pruebas.branch}" dir="../ix3" />
-                </then>
-            </elseif>                      
-            <else>
-                <fail message="La variable 'APP_ENVIRONMENT' solo pude tener los valores PRODUCCION , PREPRODUCCION , PRUEBAS pero tiene el valor '${APP_ENVIRONMENT}'"/>
-            </else>            
-        </if>  
-        
-    </target>    
-    
-    
+  
     <target name="-configureAnt">
         <echo>Configurando Ant</echo>
         <!-- Cargar todas las variables de entorno -->
@@ -128,33 +93,6 @@
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>
-    </target>
-
-    <macrodef name="ix3DownloadChangeJarAll">
-        <attribute name="ix3version" />
-        
-        <sequential>
-            <property name="IX3_DOWNLOAD_URL_REPOSITORY" value="http://dl.bintray.com/logongas/maven/es/logongas/ix3" />
-            <property name="DEP_DIR" value="${basedir}/dependencies" />
-            <delete dir="${DEP_DIR}" />
-            <mkdir dir="${DEP_DIR}" />            
-            <ix3DownloadChangeJar artifactId="ix3core"         ix3version="@{ix3version}" />
-            <ix3DownloadChangeJar artifactId="ix3dao"          ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3security"     ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3securityimpl" ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3service"      ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3web"          ix3version="@{ix3version}"  />
-        </sequential>
-    </macrodef>
-    <macrodef name="ix3DownloadChangeJar">
-        <attribute name="artifactId" />
-        <attribute name="ix3version" />
-        <sequential>
-            <get src="${IX3_DOWNLOAD_URL_REPOSITORY}/@{artifactId}/@{ix3version}/@{artifactId}-@{ix3version}.jar" dest="${DEP_DIR}"/>
-            <property name="reference.@{artifactId}.jar" value="${DEP_DIR}/@{artifactId}-@{ix3version}.jar" /> 
-               
-        </sequential>
-    </macrodef> 
-
+    </target> 
 
 </project>

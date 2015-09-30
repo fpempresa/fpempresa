@@ -15,8 +15,4 @@ app.config(['$stateProvider', function($stateProvider) {
             url:'/docs/terminos',
             templateUrl: 'views/docs/terminos.html'
         });
-        $stateProvider.state('/docs/asociacion', {
-            url:'/docs/asociacion',
-            templateUrl: 'views/docs/asociacion.html'
-        });
     }]);

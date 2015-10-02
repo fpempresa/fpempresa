@@ -24,7 +24,7 @@ import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
 import es.logongas.ix3.service.CRUDService;
-import es.logongas.ix3.service.NamedSearch;
+import es.logongas.ix3.service.ParameterSearch;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
@@ -52,7 +52,7 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
     }
 
     
-    @NamedSearch(parameterNames = {"oferta","ocultarRechazados","certificados","maxAnyoTitulo","pageRequest"})
+    @ParameterSearch(parameterNames = {"oferta","ocultarRechazados","certificados","maxAnyoTitulo","pageRequest"})
     public Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest) {
        return getCandidatoDAO().getCandidatosOferta(oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
     }

@@ -23,7 +23,7 @@ import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.service.CRUDService;
-import es.logongas.ix3.service.NamedSearch;
+import es.logongas.ix3.service.ParameterSearch;
 import java.util.Date;
 import java.util.List;
 
@@ -33,15 +33,15 @@ import java.util.List;
  */
 public interface OfertaCRUDService extends CRUDService<Oferta, Integer> {
 
-    @NamedSearch(parameterNames = {"usuario","provincia","fechaInicio","fechaFin"})
+    @ParameterSearch(parameterNames = {"usuario","provincia","fechaInicio","fechaFin"})
     public List<Oferta> getOfertasUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException;
     
-    @NamedSearch(parameterNames = {"usuario","provincia","fechaInicio","fechaFin"})
+    @ParameterSearch(parameterNames = {"usuario","provincia","fechaInicio","fechaFin"})
     public List<Oferta> getOfertasInscritoUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException;
 
-    @NamedSearch(parameterNames = "centro")
+    @ParameterSearch(parameterNames = "centro")
     public List<Oferta> getOfertasEmpresasCentro(Centro centro) throws BusinessException;
 
-    @NamedSearch(parameterNames = "empresa")
+    @ParameterSearch(parameterNames = "empresa")
     public List<Oferta> getOfertasEmpresa(Empresa empresa) throws BusinessException;
 }

@@ -202,7 +202,7 @@
 
 
                     if (key.charAt(0) === "$") {
-                        var operator = key.substr(1).toUpperCase();
+                        var operator = key.substr(1);
                         var filtersWithOperator = query.filters[key];  //Objeto con filtros cuya operador es "operator"
 
                         for (var propertyName in filtersWithOperator) {
@@ -210,7 +210,7 @@
                                 continue;
                             }
 
-                            params[propertyName + "__" + operator + "__" ] = filtersWithOperator[propertyName];
+                            params[propertyName + "$" + operator + "" ] = filtersWithOperator[propertyName];
                         }
                     } else {
                         //Los filtros que cuelgan directamente son del tipo "EQ" y no hace falta poner nada.

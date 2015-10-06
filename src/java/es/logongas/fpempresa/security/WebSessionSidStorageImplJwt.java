@@ -34,18 +34,28 @@ public class WebSessionSidStorageImplJwt extends WebSessionSidStorageImplAbstrac
     DAOFactory daoFactory;
 
     @Override
-    protected byte[] getPassword(Serializable sid) {
+    protected byte[] getSecretKey(Serializable sid) {
         try {        
         UsuarioDAO usuarioDAO=(UsuarioDAO)daoFactory.getDAO(Usuario.class);
         
         
 
             Usuario usuario=usuarioDAO.readOriginal((Integer)sid);
+            
+            if (usuario==null) {
+                return null;
+            }
+            
             String encryptedPassword= usuarioDAO.getEncryptedPassword(usuario);
             
-            byte[] bytes=encryptedPassword.getBytes(Charset.forName("utf-8"));
+            byte[] secretKey;
+            if (encryptedPassword!=null) {
+                 secretKey=encryptedPassword.getBytes(Charset.forName("utf-8"));
+            } else {
+                 secretKey=new byte[0];
+            }
 
-            return bytes;
+            return secretKey;
         } catch (BusinessException ex) {
             throw new RuntimeException(ex);
         }

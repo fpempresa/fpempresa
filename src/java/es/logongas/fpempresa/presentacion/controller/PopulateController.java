@@ -61,11 +61,12 @@ public class PopulateController extends AbstractRESTController {
 
     @Autowired
     private PopulateService populateService;
+    
     @Autowired
     private CRUDServiceFactory crudServiceFactory;
 
     @RequestMapping(value = {"/$populate"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearCentrosAleatorios(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public void crearTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         restMethod(httpServletRequest, httpServletResponse, null, new Command() {
 
@@ -80,7 +81,8 @@ public class PopulateController extends AbstractRESTController {
                 crearUsuarios(23, TipoUsuario.CENTRO);
                 crearUsuarios(197, TipoUsuario.EMPRESA);
                 crearUsuarios(775, TipoUsuario.TITULADO);
-
+                createCandidatos();
+                
                 Date dateEnd = new Date();
 
                 Map<String, Object> result = new HashMap<String, Object>();

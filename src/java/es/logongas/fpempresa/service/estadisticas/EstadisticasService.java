@@ -19,12 +19,13 @@ package es.logongas.fpempresa.service.estadisticas;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.ix3.service.Service;
 
 /**
  *
  * @author logongas
  */
-public interface EstadisticasService {
+public interface EstadisticasService extends Service<Estadisticas> {
     
      Estadisticas getEstadisticas();
      Estadisticas getEstadisticas(Centro centro);

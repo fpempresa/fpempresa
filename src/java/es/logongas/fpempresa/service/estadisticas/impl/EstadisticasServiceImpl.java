@@ -54,4 +54,14 @@ public class EstadisticasServiceImpl implements EstadisticasService {
         return estadisticas;   
     }
 
+    @Override
+    public void setEntityType(Class<Estadisticas> entityType) {
+        throw new RuntimeException("No se permite cambiar el tipo de la entidad. Debe ser siemrpe Estadisticas");
+    }
+        
+    @Override
+    public Class<Estadisticas> getEntityType() {
+        return Estadisticas.class;
+    } 
+
 }

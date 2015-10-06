@@ -9,7 +9,7 @@
 
     <!--Permite usar entre otras la anotación @Autowired -->
     <context:annotation-config/>
-  
+        
     <!-- DAOs -->
     <bean class="es.logongas.ix3.dao.impl.DAOFactoryImplHibernate" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
@@ -43,7 +43,7 @@
     <!-- Servicios -->
     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
-    <bean class="es.logongas.fpempresa.service.populate.PopulateService"  />
+    <bean class="es.logongas.fpempresa.service.populate.PopulateServiceImpl"  />
     <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />

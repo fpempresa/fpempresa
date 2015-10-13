@@ -31,9 +31,9 @@
         <property name="defaultAuthorization" value="true" />
     </bean>  
     
-    <!--
-    <bean class="es.logongas.ix3.security.util.WebSessionSidStorageImplHttpSession"  />
-    -->
+    <!-- 
+        <bean class="es.logongas.ix3.web.security.impl.WebSessionSidStorageImplHttpSession"  />    
+    --> 
     <bean class="es.logongas.fpempresa.security.WebSessionSidStorageImplJwt" >
         <property name="jwsCookieName" value="XSRF-TOKEN" />
         <property name="jwsHeaderName" value="X-XSRF-TOKEN" />

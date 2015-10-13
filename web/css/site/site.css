@@ -285,7 +285,6 @@
   font-weight: bold;
   border-bottom: solid 2px;
   display: inline;
-  padding-bottom: 10px;
 }
 @media (min-width: 767px) {
   .section__main-title {

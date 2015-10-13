@@ -19,7 +19,7 @@ import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
-import es.logongas.ix3.security.util.WebSessionSidStorageImplAbstractJws;
+import es.logongas.ix3.web.security.impl.WebSessionSidStorageImplAbstractJws;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import org.springframework.beans.factory.annotation.Autowired;

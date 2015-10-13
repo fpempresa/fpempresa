@@ -1,6 +1,6 @@
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="es.logongas.ix3.security.util.WebSessionSidStorage"%>
+<%@page import="es.logongas.ix3.web.security.WebSessionSidStorage"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="es.logongas.ix3.core.hibernate.HibernateUtil"%>

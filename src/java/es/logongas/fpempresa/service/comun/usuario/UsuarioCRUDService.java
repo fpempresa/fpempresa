@@ -20,6 +20,7 @@ package es.logongas.fpempresa.service.comun.usuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.service.CRUDService;
+import es.logongas.ix3.service.ParameterSearch;
 
 /**
  *
@@ -28,5 +29,6 @@ import es.logongas.ix3.service.CRUDService;
 public interface UsuarioCRUDService extends CRUDService<Usuario,Integer> {
     void updatePassword(Usuario usuario,String currentPassword,String newPassword) throws BusinessException ;
     boolean checkPassword(Usuario usuario,String password) throws BusinessException ;
-    
+    @ParameterSearch(parameterNames = "idTitulado")
+    Usuario getUsuarioFromTitulado(int idTitulado) throws BusinessException;
 }

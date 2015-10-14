@@ -24,9 +24,13 @@ import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.service.ParameterSearch;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
@@ -147,6 +151,23 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         return encryptedPassword;
     }
 
+    
+    @ParameterSearch(parameterNames = "idTitulado")
+    public Usuario getUsuarioFromTitulado(int idTitulado) throws BusinessException  {
+        List<Filter> filters=new ArrayList<>();
+        filters.add(new Filter("titulado.idTitulado", idTitulado));
+        List<Usuario> usuarios=this.getDAO().search(filters);
+        
+        if (usuarios.size()==1) {
+            return usuarios.get(0);
+        } else if (usuarios.size()==0) {
+            return null;
+        } else {
+            throw new RuntimeException("La consulta retornó mas de un elemento:" + usuarios.size());
+        }
+        
+    };
+    
     private void sendMailValidacionEMail(Usuario usuario) {
         //Enviar el Mail de Verificación
 

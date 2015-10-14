@@ -51,22 +51,16 @@
 
                             if ((expands.expandUsuario) && (titulado)) {
                                 var query = {
-                                    filters:{"titulado.idTitulado": titulado.idTitulado},
+                                    namedSearch:"getUsuarioFromTitulado",
+                                    filters:{
+                                        idTitulado: titulado.idTitulado
+                                    },
                                     expand:expands.usuarioExpand
                                 }
                                 
-                                service.usuarioRepository.search(query).then(function (usuarios) {
-
-                                    if (usuarios.length > 1) {
-                                        throw new Error("Existe mas de un Usuario para el titulado:" + titulado.idTitulado);
-                                    }
-
-                                    if (usuarios.length === 1) {
-                                        titulado.usuario = usuarios[0];
-                                    }
-
+                                service.usuarioRepository.search(query).then(function (usuario) {
+                                    titulado.usuario = usuario;
                                     deferred.resolve(titulado);
-
                                 }, function (data) {
                                     deferred.reject(data);
                                 });

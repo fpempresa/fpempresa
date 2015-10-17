@@ -97,7 +97,7 @@
 
             var config = {
                 method: 'POST',
-                url: this.baseUrl + '/' + this.entityName + "/",
+                url: this.baseUrl + '/' + this.entityName,
                 params: params,
                 data: entity
             };

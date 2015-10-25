@@ -17,6 +17,7 @@
  */
 package es.logongas.fpempresa.service.titulado.impl;
 
+import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
@@ -46,10 +47,12 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
             getDAO().insert(titulado);
             
             if (usuario.getTipoUsuario()==TipoUsuario.TITULADO) {
+                UsuarioDAO usuarioDAO=(UsuarioDAO)daoFactory.getDAO(Usuario.class);
+                Usuario updateUsuario=usuarioDAO.read(usuario.getIdIdentity());
                 //Si un usuario de tipo titulado está añadiendo un titulado
                 //Decimos que ese usuario está asociado a ese titulado
-                usuario.setTitulado(titulado);
-                daoFactory.getDAO(Usuario.class).update(usuario);
+                updateUsuario.setTitulado(titulado);
+                usuarioDAO.update(updateUsuario);
             }
 
             transactionManager.commit();

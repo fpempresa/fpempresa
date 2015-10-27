@@ -27,8 +27,6 @@ import es.logongas.ix3.service.rules.ActionRule;
 import es.logongas.ix3.service.rules.ConstraintRule;
 import es.logongas.ix3.service.rules.RuleContext;
 import es.logongas.ix3.service.rules.RuleGroupPredefined;
-import es.logongas.ix3.web.json.annotations.ForbiddenExport;
-import es.logongas.ix3.web.json.annotations.ForbiddenImport;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
@@ -52,8 +50,6 @@ public class Usuario extends User implements Principal {
     @NotBlank
     private String apellidos;
     
-    @ForbiddenImport
-    @ForbiddenExport
     private byte[] foto;
 
     @Label("Contraseña")
@@ -72,11 +68,8 @@ public class Usuario extends User implements Principal {
     @Label("Estado del usuario")
     private EstadoUsuario estadoUsuario;
 
-    @ForbiddenImport
     private boolean validadoEmail;
-
-    @ForbiddenImport
-    @ForbiddenExport
+    
     private String claveValidacionEmail;
 
     

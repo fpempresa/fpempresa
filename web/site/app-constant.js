@@ -5,7 +5,7 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
         version:3
     },
     server: {
-        api:getContextPath() + "/api"
+        api:getContextPath() + "/api/site"
     },
     format: {
         date: {
@@ -21,6 +21,7 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
         defaultStatus:200
     },
     session: {
+        url: getContextPath() + "/api",        
         expand:"empresa,centro,titulado.direccion.municipio.provincia"
     }
 });

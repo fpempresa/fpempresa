@@ -18,7 +18,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
             var deferred = $q.defer();
             var config = {
                 method: 'POST',
-                url: ix3Configuration.server.api + '/session',
+                url: ix3Configuration.session.url + '/session',
                 data: jQuery.param({
                     login: login,
                     password: password,
@@ -48,7 +48,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
 
             var config = {
                 method: 'DELETE',
-                url: ix3Configuration.server.api + '/session'
+                url: ix3Configuration.session.url + '/session'
             };
 
             $http(config).success(function (data, status, headers, config) {
@@ -70,7 +70,7 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
 
             var config = {
                 method: 'GET',
-                url: ix3Configuration.server.api + '/session',
+                url: ix3Configuration.session.url + '/session',
                 params: {
                     $expand:ix3Configuration.session.expand
                 }

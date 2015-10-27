@@ -23,6 +23,7 @@ import es.logongas.fpempresa.modelo.educacion.LeyEducativa;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.Idioma;
@@ -50,13 +51,15 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         addEndPointsNegocio(endPoints, "/titulado");
 
         addEndPointsNegocio(endPoints, "/administrador");
-        endPoints.add(EndPoint.createEndPoint("/administrador/Estadisticas/**", null, null));
+        endPoints.add(EndPoint.createEndPoint("/administrador/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
         endPoints.add(EndPoint.createEndPoint("/administrador/$populate/**", null, null));
 
         addEndPointsNegocio(endPoints, "/centro");
-
+        endPoints.add(EndPoint.createEndPoint("/centro/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
+        
         addEndPointsNegocio(endPoints, "/empresa");
-
+        endPoints.add(EndPoint.createEndPoint("/empresa/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
+        
         addEndPointsNegocio(endPoints, "/site");
         endPoints.add(EndPoint.createEndPoint("/site/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
 

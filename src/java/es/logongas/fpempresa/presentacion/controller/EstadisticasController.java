@@ -52,7 +52,7 @@ public class EstadisticasController extends AbstractRestController {
     @Autowired
     private EstadisticasService estadisticasService;
   
-    @RequestMapping(value = {"/administrador/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/{path}/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasCentro(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("idCentro") int idCentro) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -72,7 +72,7 @@ public class EstadisticasController extends AbstractRestController {
             }
         });
     }
-    @RequestMapping(value = {"/administrador/Estadisticas/empresa/{idEmpresa}"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/{path}/Estadisticas/empresa/{idEmpresa}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasEmpresa(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("idEmpresa") int idEmpresa) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -93,7 +93,7 @@ public class EstadisticasController extends AbstractRestController {
         });
     }  
     
-    @RequestMapping(value = {"/administrador/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/{path}/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasAdministrador(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {

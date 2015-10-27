@@ -32,9 +32,10 @@ import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
-import es.logongas.ix3.web.controllers.AbstractRESTController;
+import es.logongas.ix3.web.controllers.AbstractRestController;
 import es.logongas.ix3.web.controllers.Command;
 import es.logongas.ix3.web.controllers.CommandResult;
+import es.logongas.ix3.web.controllers.endpoint.EndPoint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author logongas
  */
 @Controller
-public class PopulateController extends AbstractRESTController {
+public class PopulateController extends AbstractRestController {
 
     private static final Log log = LogFactory.getLog(PopulateController.class);
 
@@ -65,13 +66,13 @@ public class PopulateController extends AbstractRESTController {
     @Autowired
     private CRUDServiceFactory crudServiceFactory;
 
-    @RequestMapping(value = {"/$populate"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearTodo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    @RequestMapping(value = {"/developer/$populate"}, method = RequestMethod.POST, produces = "application/json")
+    public void crearTodo(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -94,13 +95,13 @@ public class PopulateController extends AbstractRESTController {
         });
     }
 
-    @RequestMapping(value = {"/Centro/$populate/{numCentros}"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearCentrosAleatorios(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("numCentros") int numCentros) {
+    @RequestMapping(value = {"/developer/$populate/Centro/{numCentros}"}, method = RequestMethod.POST, produces = "application/json")
+    public void crearCentrosAleatorios(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numCentros") int numCentros) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -118,13 +119,13 @@ public class PopulateController extends AbstractRESTController {
         });
     }
 
-    @RequestMapping(value = {"/Empresa/$populate/{numEmpresas}"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearEmpresasAleatorias(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("numEmpresas") int numEmpresas) {
+    @RequestMapping(value = {"/developer/$populate/Empresa/{numEmpresas}"}, method = RequestMethod.POST, produces = "application/json")
+    public void crearEmpresasAleatorias(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numEmpresas") int numEmpresas) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -142,13 +143,13 @@ public class PopulateController extends AbstractRESTController {
         });
     }
 
-    @RequestMapping(value = {"/Usuario/$populate/{numUsuarios}/{tipoUsuario}"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearUsuariosAleatorios(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("numUsuarios") int numUsuarios, final @PathVariable("tipoUsuario") TipoUsuario tipoUsuario) {
+    @RequestMapping(value = {"/developer/$populate/Usuario/{numUsuarios}/{tipoUsuario}"}, method = RequestMethod.POST, produces = "application/json")
+    public void crearUsuariosAleatorios(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numUsuarios") int numUsuarios, final @PathVariable("tipoUsuario") TipoUsuario tipoUsuario) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -166,13 +167,13 @@ public class PopulateController extends AbstractRESTController {
         });
     }
 
-    @RequestMapping(value = {"/Oferta/$populate/{numOfertas}"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearOfertasAleatorias(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("numOfertas") int numOfertas) {
+    @RequestMapping(value = {"/developer/$populate/Oferta/{numOfertas}"}, method = RequestMethod.POST, produces = "application/json")
+    public void crearOfertasAleatorias(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numOfertas") int numOfertas) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -190,13 +191,13 @@ public class PopulateController extends AbstractRESTController {
         });
     }
 
-    @RequestMapping(value = {"/Candidato/$populate"}, method = RequestMethod.POST, produces = "application/json")
-    public void crearCandidatos(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    @RequestMapping(value = {"/developer/$populate/Candidato"}, method = RequestMethod.POST, produces = "application/json")
+    public void crearCandidatos(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 

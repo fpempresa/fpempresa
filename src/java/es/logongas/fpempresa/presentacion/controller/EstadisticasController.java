@@ -22,10 +22,10 @@ import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
-import es.logongas.ix3.web.controllers.AbstractRESTController;
+import es.logongas.ix3.web.controllers.AbstractRestController;
 import es.logongas.ix3.web.controllers.Command;
 import es.logongas.ix3.web.controllers.CommandResult;
-import java.util.Map;
+import es.logongas.ix3.web.controllers.endpoint.EndPoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author logongas
  */
 @Controller
-public class EstadisticasController extends AbstractRESTController {
+public class EstadisticasController extends AbstractRestController {
 
     private static final Log log = LogFactory.getLog(EstadisticasController.class);
 
@@ -52,13 +52,13 @@ public class EstadisticasController extends AbstractRESTController {
     @Autowired
     private EstadisticasService estadisticasService;
   
-    @RequestMapping(value = {"/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("idCentro") int idCentro) {
+    @RequestMapping(value = {"/administrador/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasCentro(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("idCentro") int idCentro) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
                 
                 Centro centro=daoFactory.getDAO(Centro.class).read(idCentro);
                 
@@ -72,13 +72,13 @@ public class EstadisticasController extends AbstractRESTController {
             }
         });
     }
-    @RequestMapping(value = {"/Estadisticas/empresa/{idEmpresa}"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasEmpresa(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("idEmpresa") int idEmpresa) {
+    @RequestMapping(value = {"/administrador/Estadisticas/empresa/{idEmpresa}"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasEmpresa(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("idEmpresa") int idEmpresa) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
                 
                 Empresa empresa=daoFactory.getDAO(Empresa.class).read(idEmpresa);
                 
@@ -93,13 +93,13 @@ public class EstadisticasController extends AbstractRESTController {
         });
     }  
     
-    @RequestMapping(value = {"/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasAdministrador(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    @RequestMapping(value = {"/administrador/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasAdministrador(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
                 
                 Estadisticas estadisticas=estadisticasService.getEstadisticas();
                 

@@ -1,18 +1,13 @@
 /**
  * FPempresa Copyright (C) 2015 Lorenzo González
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or (at your option) any
- * later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.presentacion.controller;
 
@@ -20,17 +15,14 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.metadata.MetaData;
 import es.logongas.ix3.dao.metadata.MetaDataFactory;
 import es.logongas.ix3.service.CRUDServiceFactory;
-import es.logongas.ix3.web.controllers.AbstractRESTController;
+import es.logongas.ix3.web.controllers.AbstractRestController;
 import es.logongas.ix3.web.controllers.Command;
 import es.logongas.ix3.web.controllers.CommandResult;
+import es.logongas.ix3.web.controllers.endpoint.EndPoint;
 import es.logongas.ix3.web.json.JsonReader;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +39,21 @@ import org.springframework.web.multipart.MultipartFile;
  * @author logongas
  */
 @Controller
-public class UsuarioRESTController extends AbstractRESTController {
+public class UsuarioRESTController extends AbstractRestController {
 
     @Autowired
     private MetaDataFactory metaDataFactory;
 
     @Autowired
-    private Conversion conversion;
-
-    @Autowired
     private CRUDServiceFactory crudServiceFactory;
 
-    @RequestMapping(value = {"/Usuario/{idUsuario}/estadoUsuario/{estadoUsuario}"}, method = RequestMethod.PATCH, produces = "application/json")
-    public void estadoUsuario(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario, final @PathVariable("estadoUsuario") EstadoUsuario estadoUsuario) {
+    @RequestMapping(value = {"{path}/Usuario/{idUsuario}/estadoUsuario/{estadoUsuario}"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void estadoUsuario(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario, final @PathVariable("estadoUsuario") EstadoUsuario estadoUsuario) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
                 MetaData metaData = metaDataFactory.getMetaData("Usuario");
                 if (metaData == null) {
                     throw new BusinessException("No existe la entidad 'Usuario'");
@@ -82,13 +71,13 @@ public class UsuarioRESTController extends AbstractRESTController {
 
     }
 
-    @RequestMapping(value = {"/Usuario/{idUsuario}/updatePassword"}, method = RequestMethod.PATCH, produces = "application/json")
-    public void updatePassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario, final @RequestBody String jsonIn) {
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/updatePassword"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void updatePassword(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario, final @RequestBody String jsonIn) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
                 MetaData metaData = metaDataFactory.getMetaData("Usuario");
                 if (metaData == null) {
                     throw new BusinessException("No existe la entidad 'Usuario'");
@@ -99,39 +88,41 @@ public class UsuarioRESTController extends AbstractRESTController {
                 Usuario usuario = usuarioCrudService.read(idUsuario);
                 usuarioCrudService.updatePassword(usuario, changePassword.getCurrentPassword(), changePassword.getNewPassword());
 
-                return null;
+                return new CommandResult(null);
 
             }
         });
 
     }
 
-    @RequestMapping(value = {"/Usuario/{idUsuario}/foto"}, method = RequestMethod.GET)
-    public void getFoto(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario) {
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/foto"}, method = RequestMethod.GET)
+    public void getFoto(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario) {
+
+        final UsuarioRESTController usuarioRESTController=this; //Esto se hace para poder usarlo desde la inner class "Command".
         
-                            
-        try {
-            UsuarioCRUDService usuarioCrudService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
-            Usuario usuario = usuarioCrudService.read(idUsuario);
-            
-            super.noCache(httpServletResponse);
-            httpServletResponse.getOutputStream().write(usuario.getFoto());
-            
-            
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-
-  
-
-    }    
-    
-    @RequestMapping(value = {"/Usuario/{idUsuario}/foto"}, method = RequestMethod.POST, produces = "application/json")
-    public void updateFoto(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario, final @RequestParam("file") MultipartFile file) {
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
+                UsuarioCRUDService usuarioCrudService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
+                Usuario usuario = usuarioCrudService.read(idUsuario);
+
+                usuarioRESTController.noCache(httpServletResponse);
+                httpServletResponse.setContentType("application/octet-stream");
+                httpServletResponse.getOutputStream().write(usuario.getFoto());
+
+                return null;
+            }
+        });
+    }
+
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/foto"}, method = RequestMethod.POST, produces = "application/json")
+    public void updateFoto(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final @PathVariable("idUsuario") int idUsuario, final @RequestParam("file") MultipartFile file) {
+
+        restMethod(httpServletRequest, httpServletResponse, new Command() {
+            
+            @Override
+            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
                 if (!file.isEmpty()) {
                     byte[] bytes = file.getBytes();
 
@@ -142,16 +133,16 @@ public class UsuarioRESTController extends AbstractRESTController {
 
                     usuarioCrudService.update(usuario);
 
-                    return null;
+                    return new CommandResult(null);
                 } else {
-                    throw new BusinessException("No has usbido ningún parámetro");
+                    throw new RuntimeException("No has usbido ningún parámetro");
                 }
             }
         });
-
     }
 
     private static class ChangePassword {
+
         private String currentPassword;
         private String newPassword;
 

@@ -66,7 +66,7 @@ public class PopulateController extends AbstractRestController {
     @Autowired
     private CRUDServiceFactory crudServiceFactory;
 
-    @RequestMapping(value = {"/developer/$populate"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = {"/administrador/$populate"}, method = RequestMethod.POST, produces = "application/json")
     public void crearTodo(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -95,7 +95,7 @@ public class PopulateController extends AbstractRestController {
         });
     }
 
-    @RequestMapping(value = {"/developer/$populate/Centro/{numCentros}"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = {"/administrador/$populate/Centro/{numCentros}"}, method = RequestMethod.POST, produces = "application/json")
     public void crearCentrosAleatorios(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numCentros") int numCentros) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -119,7 +119,7 @@ public class PopulateController extends AbstractRestController {
         });
     }
 
-    @RequestMapping(value = {"/developer/$populate/Empresa/{numEmpresas}"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = {"/administrador/$populate/Empresa/{numEmpresas}"}, method = RequestMethod.POST, produces = "application/json")
     public void crearEmpresasAleatorias(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numEmpresas") int numEmpresas) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -143,7 +143,7 @@ public class PopulateController extends AbstractRestController {
         });
     }
 
-    @RequestMapping(value = {"/developer/$populate/Usuario/{numUsuarios}/{tipoUsuario}"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = {"/administrador/$populate/Usuario/{numUsuarios}/{tipoUsuario}"}, method = RequestMethod.POST, produces = "application/json")
     public void crearUsuariosAleatorios(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numUsuarios") int numUsuarios, final @PathVariable("tipoUsuario") TipoUsuario tipoUsuario) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -167,7 +167,7 @@ public class PopulateController extends AbstractRestController {
         });
     }
 
-    @RequestMapping(value = {"/developer/$populate/Oferta/{numOfertas}"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = {"/administrador/$populate/Oferta/{numOfertas}"}, method = RequestMethod.POST, produces = "application/json")
     public void crearOfertasAleatorias(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("numOfertas") int numOfertas) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
@@ -191,7 +191,7 @@ public class PopulateController extends AbstractRestController {
         });
     }
 
-    @RequestMapping(value = {"/developer/$populate/Candidato"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = {"/administrador/$populate/Candidato"}, method = RequestMethod.POST, produces = "application/json")
     public void crearCandidatos(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {

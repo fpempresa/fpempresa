@@ -1,18 +1,18 @@
 (function (undefined) {
     "use strict";
     
-    MetadataEntities.$inject = ["repositoryFactory", "$q","langUtil"];
-    function MetadataEntities(repositoryFactory, $q,langUtil) {
+    SchemaEntities.$inject = ["repositoryFactory", "$q","langUtil"];
+    function SchemaEntities(repositoryFactory, $q,langUtil) {
         //Aqui guardamos cada uno los metadatos de cada entidad
-        var metadatasStorage = new MetadatasStorage(langUtil);
+        var schemasStorage = new SchemasStorage(langUtil);
 
-        var metadata = {
+        var schema = {
             load: load,
-            getMetadata: getMetadata,
-            getMetadataProperty: getMetadataProperty
+            getSchema: getSchema,
+            getSchemaProperty: getSchemaProperty
         };
 
-        return metadata;
+        return schema;
 
 
         function load(entityName, expands) {
@@ -20,26 +20,26 @@
 
             var arrExpands = langUtil.splitValues(expands, ",");
 
-            var exists = metadatasStorage.existsMetadata(entityName, arrExpands);
+            var exists = schemasStorage.existsSchema(entityName, arrExpands);
             if (exists === true) {
-                deferred.resolve(metadatasStorage.getMetadata(entityName));
+                deferred.resolve(schemasStorage.getSchema(entityName));
             } else {
                 var repository = repositoryFactory.getRepository(entityName);
-                repository.metadata(expands).then(function (newMetadata) {
+                repository.schema(expands).then(function (newSchema) {
                     //Ahora hay que fusionar lo que acaba de llegar con lo que hay
-                    if (metadatasStorage.getMetadata(entityName) === null) {
+                    if (schemasStorage.getSchema(entityName) === null) {
                         //No hay nada así que añadimos todo lo que acabamos de cargar
-                        metadatasStorage.addMetadata(entityName, newMetadata);
+                        schemasStorage.addSchema(entityName, newSchema);
                     } else {
                         //Ahora hay que añadir parte por parte de lo que falta.
-                        var currentMetadata = metadatasStorage.getMetadata(entityName);
+                        var currentSchema = schemasStorage.getSchema(entityName);
 
                         for (var i = 0; i < arrExpands.length; i++) {
                             var expand = arrExpands[i];
                             //Vamos a comprobar el expand que falta
-                            if (metadatasStorage.existsMetadata(entityName, expand) === false) {
+                            if (schemasStorage.existsSchema(entityName, expand) === false) {
                                 //La variable existExpand es la parte que si que existe
-                                var existExpand = metadatasStorage.getBestExistsProperty(entityName, expand);
+                                var existExpand = schemasStorage.getBestExistsProperty(entityName, expand);
                                 var nextProperty;
                                 if (existExpand === "") {
                                     nextProperty = expand;
@@ -47,7 +47,7 @@
                                     nextProperty = expand.substring(existExpand.length + 1);
                                 }
                                 nextProperty = nextProperty.split(".")[0];
-                                currentMetadata.getMetadataProperty(existExpand).properties[nextProperty] = newMetadata.getMetadataProperty(existExpand).properties[nextProperty];
+                                currentSchema.getSchemaProperty(existExpand).properties[nextProperty] = newSchema.getSchemaProperty(existExpand).properties[nextProperty];
                             }
                         }
 
@@ -55,7 +55,7 @@
                     }
 
 
-                    deferred.resolve(metadatasStorage.getMetadata(entityName));
+                    deferred.resolve(schemasStorage.getSchema(entityName));
                 }, function (data) {
                     deferred.reject(data);
                 });
@@ -65,22 +65,22 @@
         }
 
 
-        function getMetadata(entityName) {
-            return metadatasStorage.getMetadata(entityName);
+        function getSchema(entityName) {
+            return schemasStorage.getSchema(entityName);
         }
 
-        function getMetadataProperty(propertyPath) {
+        function getSchemaProperty(propertyPath) {
             var arrPropertyPath = propertyPath.split(".");
             var entityName = arrPropertyPath[0];
             var propertyName = arrPropertyPath.slice(1, arrPropertyPath.length).join(".");
             
-            var metadata=getMetadata(entityName);
+            var schema=getSchema(entityName);
             
-            if (!metadata) {
+            if (!schema) {
                 throw new Error("No existe la entidad para el propertyPath:"+propertyPath);
             }
             
-            return metadata.getMetadataProperty(propertyName);
+            return schema.getSchemaProperty(propertyName);
         }
 
 
@@ -88,31 +88,31 @@
 
 
 
-    angular.module("es.logongas.ix3").factory("metadataEntities", MetadataEntities);
+    angular.module("es.logongas.ix3").factory("schemaEntities", SchemaEntities);
 
 
 
     /**
-     * Clase para gestionar varios objetos Metadata
+     * Clase para gestionar varios objetos Schema
      * Y guarda cada uno de los metadatos de cada entidad.
      */
-    function MetadatasStorage(langUtil) {
+    function SchemasStorage(langUtil) {
 
         /**
          * Aqui guardamos cada uno de los metadatos de cada entidad
          */
         this.entities = {};
 
-        this.addMetadata = function (entityName, metadata) {
-            if (this.getMetadata(entityName) === null) {
-                this.entities[entityName] = metadata;
+        this.addSchema = function (entityName, schema) {
+            if (this.getSchema(entityName) === null) {
+                this.entities[entityName] = schema;
             }
         };
 
-        this.getMetadata = function (entityName) {
-            var metadata = this.entities[entityName];
-            if (metadata) {
-                return metadata;
+        this.getSchema = function (entityName) {
+            var schema = this.entities[entityName];
+            if (schema) {
+                return schema;
             } else {
                 return null;
             }
@@ -122,17 +122,17 @@
         /**
          * 
          * @param {String} entityName Nombre de la entidad
-         * @param {Array[String]} arrExpands Los expandido que debe estar el metadata. Se permiten varios valores , por eso es un array
+         * @param {Array[String]} arrExpands Los expandido que debe estar el schema. Se permiten varios valores , por eso es un array
          * @returns {Boolean} Si esta entidad existe y está expanjdida como dicen todos y cada uno de los valores de "expands"
          */
-        this.existsMetadata = function (entityName, arrExpands) {
-            var metadata = this.getMetadata(entityName);
-            if (metadata === null) {
+        this.existsSchema = function (entityName, arrExpands) {
+            var schema = this.getSchema(entityName);
+            if (schema === null) {
                 return false;
             }
 
             for (var i = 0; i < arrExpands.length; i++) {
-                if (metadata.getMetadataProperty(arrExpands[i]) === null) {
+                if (schema.getSchemaProperty(arrExpands[i]) === null) {
                     return false;
                 }
             }
@@ -154,7 +154,7 @@
             }
 
             var propertyExists = "";
-            var current = this.getMetadata(entityName);
+            var current = this.getSchema(entityName);
 
             var keys = langUtil.splitValues(propertyName, ".");
             for (var i = 0; i < keys.length; i++) {

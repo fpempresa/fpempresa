@@ -2,7 +2,7 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("Direccion", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("Direccion", ['schemaEntities', function (schemaEntities) {
                 var Direccion = {
 
                 };

@@ -9,12 +9,12 @@
             <form name="mainForm" id="mainForm" ix3-form="{modelPropertyName:'filters'}" >
                 <div class="row" >
                     <div class="col-xs-12 col-sm-6">
-                        <select ng-model="filters['ciclo.familia.idFamilia']" ix3-meta-data-property='CertificadoTitulo.ciclo.familia'   id="ciclo.familia" name="ciclo.familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                        <select ng-model="filters['ciclo.familia.idFamilia']" ix3-schema-property='CertificadoTitulo.ciclo.familia'   id="ciclo.familia" name="ciclo.familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
                             <option value="">-- Elige Familia Profesional --</option>
                         </select>
                     </div>
                     <div class="col-xs-12 col-sm-6">
-                        <select ng-model="filters['ciclo.idCiclo']" ix3-meta-data-property='CertificadoTitulo.ciclo' id="ciclo" name="ciclo" class="form-control" ix3-options=" orderBy:'descripcion'" ix3-options-depend="{familia:filters['ciclo.familia.idFamilia']}"   >
+                        <select ng-model="filters['ciclo.idCiclo']" ix3-schema-property='CertificadoTitulo.ciclo' id="ciclo" name="ciclo" class="form-control" ix3-options=" orderBy:'descripcion'" ix3-options-depend="{familia:filters['ciclo.familia.idFamilia']}"   >
                             <option value="">-- Elige Ciclo --</option>
                         </select>
                     </div>

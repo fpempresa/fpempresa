@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'metadataEntities', '$q', 'langUtil', '$parse', function (serviceFactory, metadataEntities, $q, langUtil, $parse) {
+angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'schemaEntities', '$q', 'langUtil', '$parse', function (serviceFactory, schemaEntities, $q, langUtil, $parse) {
 
 
         return {
@@ -19,23 +19,23 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                         var ix3OptionsDepend = attributes.ix3OptionsDepend;
                         var ix3OptionsDefault = attributes.ix3OptionsDefault;
                         
-                        var metadataProperty;
-                        if (attributes.ix3MetaDataProperty) {
-                            metadataProperty = metadataEntities.getMetadataProperty(attributes.ix3MetaDataProperty);
-                            if (!metadataProperty) {
-                                throw Error("No existe la metainformación de :" + attributes.ix3MetaDataProperty);
+                        var schemaProperty;
+                        if (attributes.ix3SchemaProperty) {
+                            schemaProperty = schemaEntities.getSchemaProperty(attributes.ix3SchemaProperty);
+                            if (!schemaProperty) {
+                                throw Error("No existe la metainformación de :" + attributes.ix3SchemaProperty);
                             }
                         } else {
                             var propertyName = attributes.ngModel.replace(new RegExp("^" + ix3FormController.getConfig().modelPropertyName + "\."), "");
-                            var metadata = metadataEntities.getMetadata(ix3FormController.getConfig().entity);
+                            var schema = schemaEntities.getSchema(ix3FormController.getConfig().entity);
                             
-                            if (!metadata) {
+                            if (!schema) {
                                 throw Error("No existe la metainformación de la entidad :" + ix3FormController.getConfig().entity);
                             }
                             
-                            metadataProperty = metadata.getMetadataProperty(propertyName);
+                            schemaProperty = schema.getSchemaProperty(propertyName);
                             
-                            if (!metadataProperty) {
+                            if (!schemaProperty) {
                                 throw Error("No existe la metainformación de la propiedad :" + ix3FormController.getConfig().entity + "." + propertyName);
                             }
                         }
@@ -43,12 +43,12 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
 
 
 
-                        if (angular.isArray(metadataProperty.values)) {
+                        if (angular.isArray(schemaProperty.values)) {
                             if (ix3OptionsDepend) {
                                 $scope.values = [];
                             } else {
                                 //El slice es para hacer un "clone" del array de forma rápida
-                                $scope.values = metadataProperty.values.slice();
+                                $scope.values = schemaProperty.values.slice();
                             }
                         } else {
                             $scope.values = [];
@@ -66,7 +66,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                                 } else if (oldValue) {
                                     //No lo ponemos a null, pq al depender de otros valores de los que dependen se borrarían tambien.
                                     //Asi que al valor ANTERIOR le quitamos la clave primaria y las clave naturales y así no se ve pero se mantiene todo
-                                    var newNullValue = cloneObjectWithClearEntityKeys(oldValue, metadataProperty);
+                                    var newNullValue = cloneObjectWithClearEntityKeys(oldValue, schemaProperty);
                                     if (angular.equals(newNullValue, oldValue) === false) {
                                         setModelValue($scope, attributes, ngModelController, newNullValue);
                                     }
@@ -78,12 +78,12 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                                     return;
                                 }
                                 var promise;
-                                if (angular.isArray(metadataProperty.values)) {
+                                if (angular.isArray(schemaProperty.values)) {
                                     //La lista de posibles valores está en los metadatos , así que no hace falta ir al servidor
-                                    promise = getFilteredValuesFromMetadata(newDepend, $scope.$eval(ix3OptionsDefault), metadataProperty);
+                                    promise = getFilteredValuesFromSchema(newDepend, $scope.$eval(ix3OptionsDefault), schemaProperty);
                                 } else {
                                     //Los datos hay que ir a buscarlos al servidor
-                                    promise = getFilteredValuesFromServer(newDepend, $scope.$eval(ix3OptionsDefault), metadataProperty);
+                                    promise = getFilteredValuesFromServer(newDepend, $scope.$eval(ix3OptionsDefault), schemaProperty);
                                 }
 
                                 promise.then(function (values) {
@@ -92,11 +92,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                                     {
                                         //Al cambiar la lista de valores, debemos volver a poner siempre un nuevo valor
                                         var currentValue = getModelValue($scope, attributes, ngModelController);
-                                        var valueFromArray = getValueFromArrayByPrimaryKey($scope.values, currentValue, metadataProperty.primaryKeyPropertyName);
+                                        var valueFromArray = getValueFromArrayByPrimaryKey($scope.values, currentValue, schemaProperty.primaryKeyPropertyName);
                                         if (valueFromArray === null) {
                                             //No lo ponemos a null, pq al depender de otros valores de los que dependen se borrarían tambien.
                                             //Asi que quitamos la clave primaria y las clave naturales y así no se ve pero se mantiene todo
-                                            setModelValue($scope, attributes, ngModelController, cloneObjectWithClearEntityKeys(currentValue, metadataProperty));
+                                            setModelValue($scope, attributes, ngModelController, cloneObjectWithClearEntityKeys(currentValue, schemaProperty));
                                         } else {
                                             //Aqui se carga el valor del "<select>"
                                             setModelValue($scope, attributes, ngModelController, angular.copy(currentValue));
@@ -114,11 +114,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                         }
 
                         var ngOptions;
-                        if (metadataProperty.type === "OBJECT") {
+                        if (schemaProperty.type === "OBJECT") {
                             if ((filters) && (filters.trim() !== "")) {
-                                ngOptions = "value.toString() for value in values | " + filters + " track by value." + metadataProperty.primaryKeyPropertyName + "";
+                                ngOptions = "value.toString() for value in values | " + filters + " track by value." + schemaProperty.primaryKeyPropertyName + "";
                             } else {
-                                ngOptions = "value.toString() for value in values track by value." + metadataProperty.primaryKeyPropertyName + "";
+                                ngOptions = "value.toString() for value in values track by value." + schemaProperty.primaryKeyPropertyName + "";
                             }
                         } else {
                             if ((filters) && (filters.trim() !== "")) {
@@ -143,20 +143,20 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
          * Este método retorna la lista de valores del "<select>" pero SOLO si están en los metadatos.
          * @param {type} depend El objeto del que dependen
          * @param {type} ix3OptionsDefault LAs opciones de cuando no hay datos en el objeto del que dependen
-         * @param {type} metadataProperty 
+         * @param {type} schemaProperty 
          * @returns {Promise} Una promesa con los datos
          */
-        function getFilteredValuesFromMetadata(depend, ix3OptionsDefault, metadataProperty) {
+        function getFilteredValuesFromSchema(depend, ix3OptionsDefault, schemaProperty) {
             var filterValues;
 
-            if (isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty)) {
+            if (isImpossibleFilter(depend, ix3OptionsDefault, schemaProperty)) {
                 filterValues = [];
             } else {
                 filterValues = [];
-                var values = metadataProperty.values;
+                var values = schemaProperty.values;
                 for (var i = 0; i < values.length; i++) {
                     var value = values[i];
-                    if (isValueInFilterList(value, depend, ix3OptionsDefault, metadataProperty)) {
+                    if (isValueInFilterList(value, depend, ix3OptionsDefault, schemaProperty)) {
                         filterValues.push(value);
                     }
                 }
@@ -172,10 +172,10 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
          * @param {type} value
          * @param {type} depend
          * @param {type} ix3OptionsDefault
-         * @param {type} metadataProperty
+         * @param {type} schemaProperty
          * @returns {Boolean}
          */
-        function isValueInFilterList(value, depend, ix3OptionsDefault, metadataProperty) {
+        function isValueInFilterList(value, depend, ix3OptionsDefault, schemaProperty) {
             var add = true;
 
             for (var dependPropertyName in depend) {
@@ -183,8 +183,8 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                     continue;
                 }
 
-                var dependMetadataProperty = metadataProperty.getMetadataProperty(dependPropertyName);
-                var primaryKeyPropertyName = dependMetadataProperty.primaryKeyPropertyName;
+                var dependSchemaProperty = schemaProperty.getSchemaProperty(dependPropertyName);
+                var primaryKeyPropertyName = dependSchemaProperty.primaryKeyPropertyName;
                 if (depend[dependPropertyName]) {
                     var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
                     if (value[dependPropertyName]) {
@@ -242,11 +242,11 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
          * Este método retorna la lista de valores del "<select>" pero los busca en el servidor
          * @param {type} depend El objeto del que dependen
          * @param {type} ix3OptionsDefault LAs opciones de cuando no hay datos en el objeto del que dependen
-         * @param {type} metadataProperty 
+         * @param {type} schemaProperty 
          * @returns {Promise} Una promesa con los datos
          */
-        function getFilteredValuesFromServer(depend, ix3OptionsDefault, metadataProperty) {
-            if (isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty)) {
+        function getFilteredValuesFromServer(depend, ix3OptionsDefault, schemaProperty) {
+            if (isImpossibleFilter(depend, ix3OptionsDefault, schemaProperty)) {
                 var promise = $q.when([]);
                 return promise;
             } else {
@@ -257,7 +257,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                         continue;
                     }
 
-                    var primaryKeyPropertyName = metadataProperty.getMetadataProperty(dependPropertyName).primaryKeyPropertyName;
+                    var primaryKeyPropertyName = schemaProperty.getSchemaProperty(dependPropertyName).primaryKeyPropertyName;
 
                     if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
                         var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
@@ -284,7 +284,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                     }
                 }
 
-                var service = serviceFactory.getService(metadataProperty.className);
+                var service = serviceFactory.getService(schemaProperty.className);
                 var query = {
                     filters:filters,
                     expand:expand
@@ -302,10 +302,10 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
          * Y así nos ahorramos una llamada al servidor
          * @param {type} depend
          * @param {type} ix3OptionsDefault
-         * @param {type} metadataProperty
+         * @param {type} schemaProperty
          * @returns {Boolean}
          */
-        function isImpossibleFilter(depend, ix3OptionsDefault, metadataProperty) {
+        function isImpossibleFilter(depend, ix3OptionsDefault, schemaProperty) {
             var impossibleFilter = false;
 
             for (var dependPropertyName in depend) {
@@ -313,7 +313,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                     continue;
                 }
 
-                var primaryKeyPropertyName = metadataProperty.getMetadataProperty(dependPropertyName).primaryKeyPropertyName;
+                var primaryKeyPropertyName = schemaProperty.getSchemaProperty(dependPropertyName).primaryKeyPropertyName;
 
                 if ((depend[dependPropertyName]) && (depend[dependPropertyName][primaryKeyPropertyName])) {
                     continue;
@@ -360,16 +360,16 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
 
 
         //Clonea un objeto pero sin copiar los valores de su clave primarias y de sus claves naturales 
-        function cloneObjectWithClearEntityKeys(obj, metadataProperty) {
+        function cloneObjectWithClearEntityKeys(obj, schemaProperty) {
 
-            function isPropertyPrimaryKeyOrNaturalKey(propertyName, metadataProperty) {
-                if (propertyName === metadataProperty.primaryKeyPropertyName) {
+            function isPropertyPrimaryKeyOrNaturalKey(propertyName, schemaProperty) {
+                if (propertyName === schemaProperty.primaryKeyPropertyName) {
                     return true;
                 }
 
-                if (angular.isArray(metadataProperty.naturalKeyPropertiesName)) {
-                    for (var i = 0; i < metadataProperty.naturalKeyPropertiesName.length; i++) {
-                        if (metadataProperty.naturalKeyPropertiesName[i] === propertyName) {
+                if (angular.isArray(schemaProperty.naturalKeyPropertiesName)) {
+                    for (var i = 0; i < schemaProperty.naturalKeyPropertiesName.length; i++) {
+                        if (schemaProperty.naturalKeyPropertiesName[i] === propertyName) {
                             return true;
                         }
                     }
@@ -387,7 +387,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'me
                     }
                     var value = obj[key];
 
-                    if (isPropertyPrimaryKeyOrNaturalKey(key, metadataProperty) === false) {
+                    if (isPropertyPrimaryKeyOrNaturalKey(key, schemaProperty) === false) {
                         newValue[key] = value;
                     }
 

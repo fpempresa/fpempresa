@@ -118,10 +118,10 @@
             return deferred.promise;
         };
 
-        this.metadata = function (expand) {
+        this.schema = function (expand) {
             var deferred = $q.defer();
 
-            that.remoteDAO.metadata(expand).then(function (data) {
+            that.remoteDAO.schema(expand).then(function (data) {
                 richDomain.extend(data);
                 deferred.resolve(data);
             }, function (data) {

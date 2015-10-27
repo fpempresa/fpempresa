@@ -96,10 +96,10 @@
             return deferred.promise;
         };
 
-        this.metadata = function (expand) {
+        this.schema = function (expand) {
             var deferred = $q.defer();
 
-            that.repository.metadata(expand).then(function (data) {
+            that.repository.schema(expand).then(function (data) {
                 deferred.resolve(data);
             }, function (data) {
                 deferred.reject(data);

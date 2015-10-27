@@ -1,5 +1,5 @@
 "use strict";
-angular.module("es.logongas.ix3").directive('ix3Label', ['$document', 'directiveUtil', 'metadataEntities', function ($document, directiveUtil, metadataEntities) {
+angular.module("es.logongas.ix3").directive('ix3Label', ['$document', 'directiveUtil', 'schemaEntities', function ($document, directiveUtil, schemaEntities) {
 
         return {
             restrict: 'A',
@@ -7,11 +7,11 @@ angular.module("es.logongas.ix3").directive('ix3Label', ['$document', 'directive
             compile: function (element, attributes) {
                 return {
                     pre: function ($scope, element, attributes, ix3FormController) {
-                        var metadataProperty;
-                        if (attributes.ix3MetaDataProperty) {
-                            metadataProperty = metadataEntities.getMetadataProperty(attributes.ix3MetaDataProperty);
-                            if (!metadataProperty) {
-                                throw Error("No existe la metainformación de :" + attributes.ix3MetaDataProperty);
+                        var schemaProperty;
+                        if (attributes.ix3SchemaProperty) {
+                            schemaProperty = schemaEntities.getSchemaProperty(attributes.ix3SchemaProperty);
+                            if (!schemaProperty) {
+                                throw Error("No existe la metainformación de :" + attributes.ix3SchemaProperty);
                             }
                         } else {
                             var forId = attributes.for;
@@ -20,12 +20,12 @@ angular.module("es.logongas.ix3").directive('ix3Label', ['$document', 'directive
                                 throw new Error("No existe el elemento input al que hace referencia el for del label:" + forId);
                             }
 
-                            var forElementIx3MetaDataProperty = directiveUtil.getAttributeValueFromNormalizedName(inputElement, "ix3MetaDataProperty");
+                            var forElementIx3SchemaProperty = directiveUtil.getAttributeValueFromNormalizedName(inputElement, "ix3SchemaProperty");
                             
-                            if (forElementIx3MetaDataProperty) {
-                                metadataProperty = metadataEntities.getMetadataProperty(forElementIx3MetaDataProperty);
-                                if (!metadataProperty) {
-                                    throw Error("No existe la metainformación de :" + forElementIx3MetaDataProperty);
+                            if (forElementIx3SchemaProperty) {
+                                schemaProperty = schemaEntities.getSchemaProperty(forElementIx3SchemaProperty);
+                                if (!schemaProperty) {
+                                    throw Error("No existe la metainformación de :" + forElementIx3SchemaProperty);
                                 }
                             } else {
                                 var forElementNgModel = directiveUtil.getAttributeValueFromNormalizedName(inputElement, "ngModel");
@@ -33,21 +33,21 @@ angular.module("es.logongas.ix3").directive('ix3Label', ['$document', 'directive
 
 
                                 var propertyName = forElementNgModel.replace(new RegExp("^" + ix3FormController.getConfig().modelPropertyName + "\."), "");
-                                var metadata = metadataEntities.getMetadata(ix3FormController.getConfig().entity);
+                                var schema = schemaEntities.getSchema(ix3FormController.getConfig().entity);
 
-                                if (!metadata) {
+                                if (!schema) {
                                     throw Error("No existe la metainformación de la entidad :" + ix3FormController.getConfig().entity);
                                 }
 
-                                metadataProperty = metadata.getMetadataProperty(propertyName);
+                                schemaProperty = schema.getSchemaProperty(propertyName);
 
-                                if (!metadataProperty) {
+                                if (!schemaProperty) {
                                     throw Error("No existe la metainformación de la propiedad :" + ix3FormController.getConfig().entity + "." + propertyName);
                                 }
                             }
                         }
 
-                        var value = metadataProperty.label;
+                        var value = schemaProperty.label;
                         if ((value === undefined) || (value === null) || (value.trim() === "")) {
                             //Si no está el label usamos el nombre de la propia propiedad
                             value = propertyName;

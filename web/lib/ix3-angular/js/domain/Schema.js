@@ -2,10 +2,10 @@
 
 angular.module('es.logongas.ix3').config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("Metadata", ['langUtil', function (langUtil) {
+        richDomain.addEntityTransformer("Schema", ['langUtil', function (langUtil) {
 
-                var Metadata = {
-                    getMetadataProperty: function (propertyName) {
+                var Schema = {
+                    getSchemaProperty: function (propertyName) {
                         propertyName = propertyName || "";
                         if (propertyName.indexOf(",") >= 0) {
                             throw new Error("No se permiten comas en el nombre de la propiedad");
@@ -30,7 +30,7 @@ angular.module('es.logongas.ix3').config(['richDomainProvider', function (richDo
 
 
                 return function (object, propertyPath) {
-                    angular.extend(object, Metadata)
+                    angular.extend(object, Schema)
                 };
 
             }]);

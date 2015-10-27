@@ -2,8 +2,8 @@
 
 (function () {
 
-    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'metadataEntities', '$q', ];
-    function GenericControllerCrudDetail(serviceFactory, $window, formValidator, $location, metadataEntities, $q) {
+    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'schemaEntities', '$q', ];
+    function GenericControllerCrudDetail(serviceFactory, $window, formValidator, $location, schemaEntities, $q) {
 
         this.extendScope = function (scope, controllerParams) {
             scope.labelButtonOK = null;
@@ -13,7 +13,7 @@
             scope.businessMessages = null;
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
-            scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
+            scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
             scope.childPrefixRoute = "/" + scope.entity.toLowerCase();
             scope.preCreate = function () {
             };

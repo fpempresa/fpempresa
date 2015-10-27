@@ -2,10 +2,10 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("Titulado", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("Titulado", ['schemaEntities', function (schemaEntities) {
                 var Titulado = {
                     getTipoDocumentoDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".tipoDocumento").getValueDescription(this.tipoDocumento);
+                        return schemaEntities.getSchemaProperty(this.$propertyPath + ".tipoDocumento").getValueDescription(this.tipoDocumento);
                     }
                 };
 

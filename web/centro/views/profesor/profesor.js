@@ -1,7 +1,7 @@
 "use strict";
 
 
-app.controller("ProfesorSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'metadataEntities', function ($scope, genericControllerCrudList, controllerParams, metadataEntities) {
+app.controller("ProfesorSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'schemaEntities', function ($scope, genericControllerCrudList, controllerParams, schemaEntities) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.prefixRoute="/profesor";
         $scope.page.pageSize = 20;

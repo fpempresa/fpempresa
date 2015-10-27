@@ -80,7 +80,7 @@ app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCr
 
 
 
-app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', 'inscrito', function ($scope, $q, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory, inscrito) {
+app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', 'inscrito', function ($scope, $q, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory, inscrito) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         $scope.inscrito = inscrito;
 

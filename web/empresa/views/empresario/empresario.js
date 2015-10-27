@@ -17,7 +17,7 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
 
     }]);
 
-app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'metadataEntities', function ($scope, genericControllerCrudList, controllerParams, metadataEntities) {
+app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'schemaEntities', function ($scope, genericControllerCrudList, controllerParams, schemaEntities) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.prefixRoute="/empresario";
         $scope.page.pageSize = 20;

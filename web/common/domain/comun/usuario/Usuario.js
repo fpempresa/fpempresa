@@ -2,16 +2,16 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("Usuario", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("Usuario", ['schemaEntities', function (schemaEntities) {
                 var Usuario = {
                     getNombreCompleto: function () {
                         return this.nombre + (this.apellidos ? " " + this.apellidos : "");
                     },
                     getEstadoUsuarioDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".estadoUsuario").getValueDescription(this.estadoUsuario);
+                        return schemaEntities.getSchemaProperty(this.$propertyPath + ".estadoUsuario").getValueDescription(this.estadoUsuario);
                     },
                     getTipoUsuarioDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".tipoUsuario").getValueDescription(this.tipoUsuario);
+                        return schemaEntities.getSchemaProperty(this.$propertyPath + ".tipoUsuario").getValueDescription(this.tipoUsuario);
                     },
                     $validators: [
                         {

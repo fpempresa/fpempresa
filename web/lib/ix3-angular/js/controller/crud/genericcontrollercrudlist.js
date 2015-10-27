@@ -2,8 +2,8 @@
 
 (function () {
 
-    GenericControllerCrudList.$inject = ['serviceFactory', '$location', 'metadataEntities'];
-    function GenericControllerCrudList(serviceFactory, $location, metadataEntities) {
+    GenericControllerCrudList.$inject = ['serviceFactory', '$location', 'schemaEntities'];
+    function GenericControllerCrudList(serviceFactory, $location, schemaEntities) {
         this.extendScope = function (scope, controllerParams) {
             scope.models = {};
             scope.filters = {
@@ -26,7 +26,7 @@
             scope.namedSearch = undefined;
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
-            scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
+            scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
             scope.prefixRoute = "/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
             scope.preSearch = function (filters) {
 

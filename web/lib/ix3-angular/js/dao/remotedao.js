@@ -311,7 +311,7 @@
             return deferred.promise;
         };
 
-        this.metadata = function (expand) {
+        this.schema = function (expand) {
             var deferred = this.$q.defer();
 
             var params = {};
@@ -321,7 +321,7 @@
 
             var config = {
                 method: 'GET',
-                url: this.baseUrl + '/' + this.entityName + "/$metadata",
+                url: this.baseUrl + '/' + this.entityName + "/$schema",
                 params: params
             };
 

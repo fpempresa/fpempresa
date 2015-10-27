@@ -16,7 +16,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
     }]);
 
 
-app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$location', 'metadataEntities', 'serviceFactory', 'session', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, $location, metadataEntities, serviceFactory, session, dialog) {
+app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$location', 'schemaEntities', 'serviceFactory', 'session', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, $location, schemaEntities, serviceFactory, session, dialog) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.filters = {
@@ -157,7 +157,7 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
 
 
-app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {

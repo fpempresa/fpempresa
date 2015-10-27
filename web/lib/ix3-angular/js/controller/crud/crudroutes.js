@@ -178,8 +178,8 @@
                                 expand: expand
                             };
                         }],
-                    metadata: ['metadataEntities', function (metadataEntities) {
-                            return metadataEntities.load(entity, expand);
+                    schema: ['schemaEntities', function (schemaEntities) {
+                            return schemaEntities.load(entity, expand);
                         }]
                 };
             } else {
@@ -193,8 +193,8 @@
                                 expand: expand
                             };
                         }],
-                    metadata: ['metadataEntities', function (metadataEntities) {
-                            return metadataEntities.load(entity, expand);
+                    schema: ['schemaEntities', function (schemaEntities) {
+                            return schemaEntities.load(entity, expand);
                         }]
                 };
             }

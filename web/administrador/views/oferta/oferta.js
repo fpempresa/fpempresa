@@ -14,7 +14,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
     }]);
 
 
-app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.buscarEmpresa = function () {
@@ -84,7 +84,7 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
     }]);
 
-app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
@@ -130,7 +130,7 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
 
     }]);
 
-app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {

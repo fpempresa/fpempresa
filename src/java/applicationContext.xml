@@ -28,10 +28,10 @@
     </bean>
     
     <bean id="authorizationManager" class="es.logongas.ix3.security.authorization.impl.AuthorizationManagerImpl"  >
-        <property name="defaultAuthorization" value="false" />
+        <property name="defaultAuthorization" value="true" />
         <property name="authorizationProviders">
             <list>
-                <bean class="es.logongas.ix3.security.authorization.impl.AuthorizationProviderImplIdentity" />
+                <!-- <bean class="es.logongas.ix3.security.authorization.impl.AuthorizationProviderImplIdentity" /> -->
             </list>
         </property>
     </bean>  
@@ -54,4 +54,8 @@
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
         <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
     </bean> 
+    
+    <!-- Capade web -->
+    <bean class="es.logongas.fpempresa.presentacion.controller.EndPointsFactoryImpl" />
+    
 </beans>

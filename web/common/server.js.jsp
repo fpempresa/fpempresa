@@ -1,7 +1,7 @@
+<%@page import="es.logongas.ix3.web.json.beanmapper.Expands"%>
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.web.security.WebSessionSidStorage"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="es.logongas.ix3.core.hibernate.HibernateUtil"%>
 <%@page import="es.logongas.ix3.security.authentication.AuthenticationManager"%>
@@ -26,7 +26,7 @@
 
         Serializable sid = webSessionSidStorage.getSid(request,response);
         Principal principal;
-        List<String> expands=new ArrayList<String>();
+        Expands expands=new Expands();
         expands.add("empresa");
         expands.add("centro");
         expands.add("titulado.direccion.municipio.provincia");

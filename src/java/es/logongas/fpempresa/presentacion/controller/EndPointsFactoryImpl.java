@@ -53,7 +53,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         addEndPointsNegocio(endPoints, "/administrador");
         endPoints.add(EndPoint.createEndPoint("/administrador/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
         endPoints.add(EndPoint.createEndPoint("/administrador/$populate/**", null, null));
-
+        
         addEndPointsNegocio(endPoints, "/centro");
         endPoints.add(EndPoint.createEndPoint("/centro/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
         
@@ -61,7 +61,6 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPoint("/empresa/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
         
         addEndPointsNegocio(endPoints, "/site");
-        endPoints.add(EndPoint.createEndPoint("/site/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
 
         //ix3
         endPoints.add(EndPoint.createEndPoint("/$echo/**", null, null));
@@ -83,6 +82,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, Municipio.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Provincia.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
 
         //educacion
         endPoints.add(EndPoint.createEndPointCrud(path, Ciclo.class));
@@ -93,7 +93,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         //empresa
         endPoints.add(EndPoint.createEndPointCrud(path, Candidato.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
-        endPoints.add(EndPoint.createEndPointCrud(path, Oferta.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
 
         //administrador
         endPoints.add(EndPoint.createEndPointCrud(path, Configuracion.class));

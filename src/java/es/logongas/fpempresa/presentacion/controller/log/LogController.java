@@ -9,15 +9,13 @@
  *
  * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.presentacion.controller;
+package es.logongas.fpempresa.presentacion.controller.log;
 
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.web.controllers.AbstractRestController;
 import es.logongas.ix3.web.controllers.Command;
 import es.logongas.ix3.web.controllers.CommandResult;
 import es.logongas.ix3.web.controllers.endpoint.EndPoint;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
@@ -26,7 +24,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,7 +36,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LogController extends AbstractRestController {
 
-    private static final String LOGGER_NAME = "es.logongas";
+    private static final String APP_LOGGER_NAME = "es.logongas";
+    private static final String SQL_LOGGER_NAME = "org.hibernate.SQL";
 
     @RequestMapping(value = {"/$log"}, method = RequestMethod.GET, produces = "application/json")
     public void getLogLevel(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
@@ -48,28 +47,38 @@ public class LogController extends AbstractRestController {
             @Override
             public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
-                Map<String, Level> levels = new HashMap<String, Level>();
-                levels.put(LOGGER_NAME, getLoggerConfig(LOGGER_NAME).getLevel());
-
-                return new CommandResult(levels);
+                ServerLogConfig serverLogConfig=new ServerLogConfig();
+                serverLogConfig.setAppLevel(getLoggerConfig(APP_LOGGER_NAME).getLevel().name());
+                serverLogConfig.setDatabaseLevel(getLoggerConfig(SQL_LOGGER_NAME).getLevel().name());
+                        
+                
+                return new CommandResult(serverLogConfig);
             }
         });
     }
 
-    @RequestMapping(value = {"/$log/{level}"}, method = RequestMethod.PUT, produces = "application/json")
-    public void setLogLevel(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final @PathVariable("level") String level) {
+    @RequestMapping(value = {"/$log"}, method = RequestMethod.PUT,consumes="application/json", produces = "application/json")
+    public void setLogLevel(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,final @RequestBody String jsonIn) {
 
         restMethod(httpServletRequest, httpServletResponse, new Command() {
 
             @Override
             public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
 
-                Configurator.setLevel(LOGGER_NAME, Level.toLevel(level));
+                ServerLogConfig inputServerLogConfig=(ServerLogConfig)jsonFactory.getJsonReader(ServerLogConfig.class).fromJson(jsonIn);
                 
-                Map<String, Level> levels = new HashMap<String, Level>();
-                levels.put(LOGGER_NAME, getLoggerConfig(LOGGER_NAME).getLevel());
-
-                return new CommandResult(levels);
+                if (inputServerLogConfig.getAppLevel()!=null) {
+                    Configurator.setLevel(APP_LOGGER_NAME,Level.toLevel(inputServerLogConfig.getAppLevel()));
+                }
+                if (inputServerLogConfig.getDatabaseLevel()!=null) {
+                    Configurator.setLevel(SQL_LOGGER_NAME, Level.toLevel(inputServerLogConfig.getDatabaseLevel()));
+                }                
+                
+                ServerLogConfig outputServerLogConfig=new ServerLogConfig();
+                outputServerLogConfig.setAppLevel(getLoggerConfig(APP_LOGGER_NAME).getLevel().name());
+                outputServerLogConfig.setDatabaseLevel(getLoggerConfig(SQL_LOGGER_NAME).getLevel().name());
+                        
+                return new CommandResult(outputServerLogConfig);
             }
         });
     }
@@ -81,4 +90,5 @@ public class LogController extends AbstractRestController {
         return loggerConfig;
     }
 
+   
 }

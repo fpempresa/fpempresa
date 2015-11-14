@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="trace">
+    <Appenders>
+        <Console name="Consola" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="Fichero" fileName="${sys:catalina.base}/logs/fpempresa.log" filePattern="${sys:catalina.base}/logs/fpempresa.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>      
+        </RollingFile>    
+    </Appenders>
+    <Loggers>
+        <Root level="WARN">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="Fichero"/>
+        </Root>
+        <Logger name="es.logongas" level="INFO" additivity="false">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="Fichero"/>      
+        </Logger>               
+    </Loggers>
+</Configuration>

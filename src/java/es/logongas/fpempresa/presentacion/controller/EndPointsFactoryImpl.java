@@ -64,6 +64,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         //ix3
         endPoints.add(EndPoint.createEndPoint("/$echo/**", null, null));
+        endPoints.add(EndPoint.createEndPoint("/$log/**", null, null));
         endPoints.add(EndPoint.createEndPoint("/session", null, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null)));
 
     }

@@ -76,7 +76,7 @@ public class LogController extends AbstractRestController {
 
     private LoggerConfig getLoggerConfig(String name) {
         LoggerContext loggerContext = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
-        LoggerConfig loggerConfig = loggerContext.getConfiguration().getLoggerConfig(LOGGER_NAME);
+        LoggerConfig loggerConfig = loggerContext.getConfiguration().getLoggerConfig(name);
 
         return loggerConfig;
     }

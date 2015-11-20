@@ -44,14 +44,14 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
                 goHomeApp();
             },
             createAccount:function(tipoUsuario) {
-                alert("El registro de nuevos usuarios en FPempresa no está habilitado actualmente");
-/**                
+                //alert("El registro de nuevos usuarios en FPempresa no está habilitado actualmente");
+                
                 if (tipoUsuario) {
                     $window.location.href = getContextPath() + "/site/index.html#/createaccount/register/"+tipoUsuario;
                 } else {
                     $window.location.href = getContextPath() + "/site/index.html#/createaccount/init";
                 }
-**/                
+                
             },
             login:function() {
                     $window.location.href = getContextPath() + "/site/index.html#/login";  

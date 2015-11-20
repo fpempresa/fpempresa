@@ -31,7 +31,7 @@
         <property name="defaultAuthorization" value="true" />
         <property name="authorizationProviders">
             <list>
-                <bean class="es.logongas.ix3.security.authorization.impl.AuthorizationProviderImplIdentity" />
+                <!-- <bean class="es.logongas.ix3.security.authorization.impl.AuthorizationProviderImplIdentity" /> -->
             </list>
         </property>
     </bean>  

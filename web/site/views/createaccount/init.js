@@ -28,7 +28,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 message: 'El registro de Titulados no está habilitado',
                 rule: function () {
                     if ($scope.model.tipoUsuario === "TITULADO") {
-                        return false;
+                        return true;
                     } else {
                         return true;
                     }
@@ -38,7 +38,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 message: 'El registro de Profesores no está habilitado',
                 rule: function () {
                     if ($scope.model.tipoUsuario === "CENTRO") {
-                        return false;
+                        return true;
                     } else {
                         return true;
                     }
@@ -48,7 +48,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 message: 'El registro de Empresas no está habilitado',
                 rule: function () {
                     if ($scope.model.tipoUsuario === "EMPRESA") {
-                        return false;
+                        return true;
                     } else {
                         return true;
                     }

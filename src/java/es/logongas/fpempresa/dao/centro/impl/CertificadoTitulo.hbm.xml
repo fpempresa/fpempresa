@@ -3,8 +3,6 @@
 <hibernate-mapping>
     <class name="es.logongas.fpempresa.modelo.centro.CertificadoTitulo" >
         
-        <cache usage="read-write" />
-        
         <id name="idCertificadoTitulo" >
             <generator class="identity" />
         </id>

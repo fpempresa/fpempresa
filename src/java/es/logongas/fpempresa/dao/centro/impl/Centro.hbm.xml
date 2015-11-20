@@ -3,8 +3,6 @@
 <hibernate-mapping>
     <class name="es.logongas.fpempresa.modelo.centro.Centro" >
         
-        <cache usage="read-write" />
-        
         <id name="idCentro" >
             <generator class="identity" />
         </id>

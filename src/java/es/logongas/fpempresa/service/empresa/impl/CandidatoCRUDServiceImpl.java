@@ -57,4 +57,9 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
        return getCandidatoDAO().getCandidatosOferta(oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
     }
 
+    @ParameterSearch(parameterNames = {"oferta"})
+    public long getNumCandidatosOferta(Oferta oferta) throws BusinessException {
+        return getCandidatoDAO().getNumCandidatosOferta(oferta);
+    }
+
 }

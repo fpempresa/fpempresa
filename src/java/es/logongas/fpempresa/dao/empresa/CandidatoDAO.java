@@ -30,4 +30,5 @@ import es.logongas.ix3.dao.GenericDAO;
 public interface CandidatoDAO extends GenericDAO<Candidato,Integer>  {
     boolean isUsuarioCandidato(Usuario usuario,Oferta oferta);
     Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest);
+    long getNumCandidatosOferta(Oferta oferta);
 }

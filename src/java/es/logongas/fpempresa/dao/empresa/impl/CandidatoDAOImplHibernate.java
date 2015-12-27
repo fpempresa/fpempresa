@@ -58,7 +58,22 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
         }
 
     }
+    
+    
+    @Override
+    public long getNumCandidatosOferta(Oferta oferta) {
+        String hqlCount = " SELECT COUNT(candidato) FROM Candidato candidato WHERE candidato.oferta.idOferta=?";
 
+        Session session = sessionFactory.getCurrentSession();
+
+        Query queryCount = session.createQuery(hqlCount);
+        queryCount.setParameter(0, oferta.getIdOferta());
+        long numCandidatosOferta = (Long) queryCount.uniqueResult();
+        
+        return numCandidatosOferta;
+    }
+    
+    
     @Override
     public Page<Candidato> getCandidatosOferta(Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
         String sqlPartFrom = " FROM Candidato candidato ";

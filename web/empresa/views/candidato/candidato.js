@@ -27,7 +27,7 @@ app.controller("CandidatoSearchController", ['$scope', 'genericControllerCrudLis
         $scope.namedSearch = "getCandidatosOferta";
         $scope.page.pageSize = 20;
         $scope.filters.ocultarRechazados=false;
-        $scope.filters.certificados=true;
+        $scope.filters.certificados=false;
         $scope.filters.maxAnyoTitulo=200;        
         $scope.anyos = [
             {

@@ -7,6 +7,7 @@ app.controller("ProfesorSearchController", ['$scope', 'genericControllerCrudList
         $scope.page.pageSize = 20;
 
         $scope.filters['centro.idCentro']=$scope.user.centro.idCentro;
+        $scope.filters['tipoUsuario']="CENTRO";
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
             $scope.service.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {

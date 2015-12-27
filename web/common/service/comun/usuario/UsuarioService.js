@@ -16,7 +16,21 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
 
                     return deferred.promise;
                 };
+                service.updateCentro = function (idIdentity, centro, expand) {
+                    var deferred = $q.defer();
 
+                    this.repository.updateCentro(idIdentity, centro, expand).then(function (usuario) {
+                        if (usuario.idIdentity===session.getUser().idIdentity) {
+                            //Si cambian los datos del usuario y es el que está logeado , actualizamos los datos del usaurio logeado
+                            session.setUser(usuario);
+                        }
+                        deferred.resolve(usuario);
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+
+                    return deferred.promise;
+                };
                 service.updatePassword = function (idIdentity, currentPassword, newPassword) {
                     var deferred = $q.defer();
 

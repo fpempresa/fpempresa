@@ -10,7 +10,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
 
-        $scope.filters.$eq['empresa.idEmpresa'] = $scope.user.empresa.idEmpresa;
+        $scope.filters['empresa.idEmpresa'] = $scope.user.empresa.idEmpresa;
 
         $scope.search();
     }]);
@@ -47,16 +47,13 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
             var query = {
                 filters: {
-                    'oferta.idOferta':$scope.model.idOferta
-                }
+                    'oferta':$scope.model.idOferta
+                },
+                namedSearch:"getNumCandidatosOferta"
             }
 
             serviceFactory.getService("Candidato").search(query).then(function (data) {
-                if (angular.isArray(data)) {
-                    $scope.numeroCandidatos = data.length;
-                } else {
-                    $scope.numeroCandidatos = 0;
-                }
+                $scope.numeroCandidatos = data;
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });

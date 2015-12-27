@@ -119,7 +119,7 @@ public class Usuario extends User implements Principal {
             return true;
         }
     }
-
+    
     @ConstraintRule(message = "Un administrador siempre debe estar aceptado")
     private boolean isAdministradorAceptado() {
         if (this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
@@ -140,8 +140,44 @@ public class Usuario extends User implements Principal {
         } else {
             return true;
         }
-    }    
-       
+    } 
+    
+    @ConstraintRule(message = "La empresa está prohibida si no es un usuario de una empresa")
+    private boolean isEmpresaProhibidaSiUsuarioNoEmpresa() {
+        if ((this.getTipoUsuario() != TipoUsuario.EMPRESA) ) {
+            if (this.empresa != null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+    @ConstraintRule(message = "El centro está prohibido si no es un usuario de un centro")
+    private boolean isCentroProhibidoSiUsuarioNoCentro() {
+        if ((this.getTipoUsuario() != TipoUsuario.CENTRO) ) {
+            if (this.centro != null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    } 
+    @ConstraintRule(message = "El titulado está prohibido si no es un usuario titulado")
+    private boolean isTituladoProhibidoSiUsuarioNoTitulado() {
+        if ((this.getTipoUsuario() != TipoUsuario.TITULADO) ) {
+            if (this.titulado != null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    } 
     
     @ConstraintRule(message="No es posible modificar el tipo del usuario de '${originalEntity?.tipoUsuario?.toString()}' a '${entity?.tipoUsuario?.toString()}'",groups=RuleGroupPredefined.PreUpdate.class)
     private boolean isModificadoTipoUsuario(RuleContext<Usuario> ruleContext) {

@@ -13,36 +13,23 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams
         $scope.buttonPertenenciaCentro = function (idCentro) {
             $scope.pertenenciaCentro(idCentro);
         };
-        $scope.pertenenciaCentro = function (idCentro) {
-            var usuarioService = serviceFactory.getService("Usuario");
+        $scope.pertenenciaCentro = function (centro) {
+            var ok = confirm("¿Realmente quieres cambiar al centro  '" + centro.toString() + "'?.\nNo podras volver a entrar hasta que acepten o rechacen tu solicitud");
 
-            var promise = $scope.service.get(idCentro);
-            promise.then(function (centro) {
-                return centro;
-            }).then(function (centro) {
+            if (ok === true) {
+                var usuarioService = serviceFactory.getService("Usuario");
+                usuarioService.get($scope.user.idIdentity).then(function (usuario) {
+                    return usuarioService.updateCentro(usuario.idIdentity, centro);
+                }).then(function () {
+                    return session.logout();
+                }).then(function () {
+                    goPage.homeApp();
+                }).catch(function (businessMessages) {
+                    $scope.businessMessages = businessMessages;
+                });
 
-                var ok = confirm("¿Realmente quieres cambiar al centro  '" + centro.toString() + "'?.\nNo podras volver a entrar hasta que acepten o rechacen tu solicitud");
-                
-                if (ok === true) {
-                    return  usuarioService.get($scope.user.idIdentity);
-                } else {
-                    //Tenemos que cancelar la promesa para que se ejecute el catch!!
-                    return $q.reject([]);
-                }
-            }).then(function (usuario) {
-                usuario.centro = {
-                    idCentro: idCentro
-                };                
-                return usuarioService.update(usuario.idIdentity, usuario);
-            }).then(function () {
-                return session.logout();
-            }).then(function () {
-                goPage.homeApp();               
-            }).catch(function (businessMessages) {
-                $scope.businessMessages = businessMessages;
-            });
+            };
         };
-
         $scope.search();
 
     }]);

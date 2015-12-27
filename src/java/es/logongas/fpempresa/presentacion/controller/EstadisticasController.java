@@ -81,7 +81,7 @@ public class EstadisticasController extends AbstractRestController {
     public void getEstadisticasEmpresa(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, @PathVariable("idEmpresa") int idEmpresa) {
 
         restMethod(httpServletRequest, httpServletResponse,"getEstadisticasEmpresa",null, new Command() {
-            int idEmpresa;
+            public int idEmpresa;
             
             public Command inicialize(int idEmpresa) {
                 this.idEmpresa=idEmpresa;
@@ -100,7 +100,7 @@ public class EstadisticasController extends AbstractRestController {
                 
                 return new CommandResult(estadisticas);
             }
-        });
+        }.inicialize(idEmpresa));
     }  
     
     @RequestMapping(value = {"/{path}/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")

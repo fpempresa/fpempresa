@@ -74,6 +74,24 @@ public class Oferta {
         this.tipoOferta = TipoOferta.LABORAL;
     }
 
+    @ConstraintRule(message = "Los datos de contacto son necesarios para ofertas de centros",groups=RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean isRequeridoContacto() {
+        if (this.empresa.getCentro()!=null) {
+            
+            if (this.contacto==null) {
+                return false;
+            }
+            
+            if ((this.contacto.getTextoLibre()==null) || (this.contacto.getTextoLibre().trim().isEmpty())) {
+                return false;
+            }            
+            
+            return true;
+        } else {
+            return true;
+        }
+    }    
+    
     /**
      * @return the idOferta
      */

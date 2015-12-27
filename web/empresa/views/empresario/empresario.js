@@ -23,6 +23,7 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
         $scope.page.pageSize = 20;
 
         $scope.filters['empresa.idEmpresa']=$scope.user.empresa.idEmpresa;
+        $scope.filters['tipoUsuario']='EMPRESA';
 
         $scope.search();
     }]);
@@ -32,7 +33,6 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.postCreate = function () {
-            //Cuando los crea el administrador siempre están aceptados por defecto
             $scope.model.estadoUsuario = "ACEPTADO";
         }
 

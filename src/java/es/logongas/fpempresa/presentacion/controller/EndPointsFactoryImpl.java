@@ -44,28 +44,39 @@ import java.util.List;
  */
 public class EndPointsFactoryImpl implements EndPointsFactory {
 
-    List<EndPoint> endPoints = new ArrayList<EndPoint>();
+    List<EndPoint> endPoints;
 
     public EndPointsFactoryImpl() {
 
-        addEndPointsNegocio(endPoints, "/titulado");
+        endPoints = new ArrayList<EndPoint>();
 
-        addEndPointsNegocio(endPoints, "/administrador");
-        endPoints.add(EndPoint.createEndPoint("/administrador/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
-        endPoints.add(EndPoint.createEndPoint("/administrador/$populate/**", null, null));
+        addIx3EndPoints(endPoints);        
         
-        addEndPointsNegocio(endPoints, "/centro");
-        endPoints.add(EndPoint.createEndPoint("/centro/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
         
-        addEndPointsNegocio(endPoints, "/empresa");
-        endPoints.add(EndPoint.createEndPoint("/empresa/Estadisticas/**", null, new BeanMapper(Estadisticas.class,null,"*")));
         
-        addEndPointsNegocio(endPoints, "/site");
+        addCommonEndPoints(endPoints, "/site");
+        addSiteEndPoints(endPoints, "/site");
+        
+        
+        
+        addCommonEndPoints(endPoints, "/administrador");
+        addAdministradorEndPoints(endPoints, "/administrador");
 
-        //ix3
-        endPoints.add(EndPoint.createEndPoint("/$echo/**", null, null));
-        endPoints.add(EndPoint.createEndPoint("/$log/**", null, null));
-        endPoints.add(EndPoint.createEndPoint("/session", null, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null)));
+        
+        
+        addCommonEndPoints(endPoints, "/titulado");
+        addTituladoEndPoints(endPoints, "/titulado");
+
+        
+        
+        addCommonEndPoints(endPoints, "/centro");
+        addCentroEndPoints(endPoints, "/centro");
+        
+        
+        
+        addCommonEndPoints(endPoints, "/empresa");
+        addEmpresaEndPoints(endPoints, "/empresa");
+        
 
     }
 
@@ -74,16 +85,17 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         return endPoints;
     }
 
-    private void addEndPointsNegocio(List<EndPoint> endPoints, String path) {
-        //Centro
-        endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));
-        endPoints.add(EndPoint.createEndPointCrud(path, CertificadoTitulo.class));
+    private void addIx3EndPoints(List<EndPoint> endPoints) {
+        endPoints.add(EndPoint.createEndPoint("/$echo/**", null, null));
+        endPoints.add(EndPoint.createEndPoint("/$log/**", null, null));
+        endPoints.add(EndPoint.createEndPoint("/session", null, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
+    }
+    
+    private void addCommonEndPoints(List<EndPoint> endPoints, String path) {
 
-        //comun
+        //comun        
         endPoints.add(EndPoint.createEndPointCrud(path, Municipio.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Provincia.class));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null)));
-        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
 
         //educacion
         endPoints.add(EndPoint.createEndPointCrud(path, Ciclo.class));
@@ -91,20 +103,85 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, Grado.class));
         endPoints.add(EndPoint.createEndPointCrud(path, LeyEducativa.class));
 
-        //empresa
-        endPoints.add(EndPoint.createEndPointCrud(path, Candidato.class));
+    }
+
+    private void addSiteEndPoints(List<EndPoint> endPoints, String path) {
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+    }
+
+    private void addAdministradorEndPoints(List<EndPoint> endPoints, String path) {
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+        
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**","GET", new BeanMapper(Estadisticas.class, null, "*")));
+        
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
 
-        //administrador
+        //Centro
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class)));
+    }
+
+    private void addTituladoEndPoints(List<EndPoint> endPoints, String path) {
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
+
+        //Centro
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class, "contacto", null)));
+
+        //empresa
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class, "contacto", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "empresa.contacto,empresa.centro.contacto", "ciclos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "rechazado,oferta.empresa.contacto,oferta.empresa.centro.contacto", null)));
+
+        //titulado
         endPoints.add(EndPoint.createEndPointCrud(path, Configuracion.class));
         endPoints.add(EndPoint.createEndPointCrud(path, NotificacionOferta.class));
         endPoints.add(EndPoint.createEndPointCrud(path, ExperienciaLaboral.class));
         endPoints.add(EndPoint.createEndPointCrud(path, FormacionAcademica.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Idioma.class));
         endPoints.add(EndPoint.createEndPointCrud(path, NivelIdioma.class));
-        endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Titulado.class, null, "configuracion.notificacionOferta.provincias>")));
         endPoints.add(EndPoint.createEndPointCrud(path, TituloIdioma.class));
+
     }
+
+    private void addCentroEndPoints(List<EndPoint> endPoints, String path) {
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+        
+        
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**","GET", new BeanMapper(Estadisticas.class, null, "*")));
+        
+        endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));
+        endPoints.add(EndPoint.createEndPoint(path + "/Centro", "GET", new BeanMapper(Centro.class, "contacto", null)));        
+        endPoints.add(EndPoint.createEndPointCrud(path, CertificadoTitulo.class));        
+        endPoints.add(EndPoint.createEndPoint(path + "/CertificadoTitulo", "PUT", new BeanMapper(CertificadoTitulo.class, "centro>", null)));
+
+        endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class,"usuario.foto,usuario.claveValidacionEmail,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion",null)));
+        
+        endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
+    }
+
+    private void addEmpresaEndPoints(List<EndPoint> endPoints, String path) {
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+        
+                
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**","GET", new BeanMapper(Estadisticas.class, null, "*")));
+        
+        endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));        
+        
+        endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class,"usuario.foto,usuario.claveValidacionEmail,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion",null)));
+
+
+        endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
+
+    }
+
+
 
 }

@@ -17,7 +17,6 @@ angular.module("common").directive('fpeFileUpload', ['ix3Configuration', functio
                 $(element).fileupload({
                     url: $scope.url,
                     method: "POST",
-                    dataType: 'json',
                     progressall: function (e, data) {
                         mainProgressElement.css({visibility: "visible"});
                         var progress = parseInt(data.loaded / data.total * 100, 10);

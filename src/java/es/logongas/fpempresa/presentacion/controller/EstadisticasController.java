@@ -22,10 +22,9 @@ import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
-import es.logongas.ix3.web.controllers.AbstractRestController;
-import es.logongas.ix3.web.controllers.Command;
-import es.logongas.ix3.web.controllers.CommandResult;
-import es.logongas.ix3.web.controllers.endpoint.EndPoint;
+import es.logongas.ix3.web.controllers.helper.AbstractRestController;
+import es.logongas.ix3.web.controllers.command.Command;
+import es.logongas.ix3.web.controllers.command.CommandResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -51,34 +50,45 @@ public class EstadisticasController extends AbstractRestController {
     
     @Autowired
     private EstadisticasService estadisticasService;
-  
+    
     @RequestMapping(value = {"/{path}/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasCentro(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("idCentro") int idCentro) {
+    public void getEstadisticasCentro(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
+        
+        restMethod(httpServletRequest, httpServletResponse,"getEstadisticasCentro",null, new Command() {
 
-        restMethod(httpServletRequest, httpServletResponse, new Command() {
-
+            int idCentro;
+            
+            public Command inicialize(int idCentro) {
+                this.idCentro=idCentro;
+                return this;
+            }
+            
             @Override
-            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
-                
+            public CommandResult run() throws Exception, BusinessException {
                 Centro centro=daoFactory.getDAO(Centro.class).read(idCentro);
                 
                 if (centro==null) {
                     throw new BusinessException("No existe el centro");
-                }
+                }                
                 
                 Estadisticas estadisticas=estadisticasService.getEstadisticas(centro);
                 
                 return new CommandResult(estadisticas);
             }
-        });
+        }.inicialize(idCentro));
     }
     @RequestMapping(value = {"/{path}/Estadisticas/empresa/{idEmpresa}"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasEmpresa(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse, final @PathVariable("idEmpresa") int idEmpresa) {
+    public void getEstadisticasEmpresa(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, @PathVariable("idEmpresa") int idEmpresa) {
 
-        restMethod(httpServletRequest, httpServletResponse, new Command() {
-
+        restMethod(httpServletRequest, httpServletResponse,"getEstadisticasEmpresa",null, new Command() {
+            int idEmpresa;
+            
+            public Command inicialize(int idEmpresa) {
+                this.idEmpresa=idEmpresa;
+                return this;
+            }
             @Override
-            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
+            public CommandResult run() throws Exception, BusinessException {
                 
                 Empresa empresa=daoFactory.getDAO(Empresa.class).read(idEmpresa);
                 
@@ -94,12 +104,12 @@ public class EstadisticasController extends AbstractRestController {
     }  
     
     @RequestMapping(value = {"/{path}/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasAdministrador(final HttpServletRequest httpServletRequest,final HttpServletResponse httpServletResponse) {
+    public void getEstadisticasAdministrador(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 
-        restMethod(httpServletRequest, httpServletResponse, new Command() {
+        restMethod(httpServletRequest, httpServletResponse,"getEstadisticasAdministrador",null, new Command() {
 
             @Override
-            public CommandResult run(EndPoint endPoint) throws Exception, BusinessException {
+            public CommandResult run() throws Exception, BusinessException {
                 
                 Estadisticas estadisticas=estadisticasService.getEstadisticas();
                 

@@ -1,13 +1,6 @@
 "use strict";
 
-app.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider) {
-        var idEmpresa;
-        if (user && user.empresa && user.empresa.idEmpresa) {
-            idEmpresa=user.empresa.idEmpresa;
-        } else {
-            idEmpresa=0;
-        }
-        
+app.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider) {        
         $urlRouterProvider.otherwise('/');
         $stateProvider.state("lateralmenu",{
             templateUrl:"fragments/lateralmenu/lateralmenu.html",

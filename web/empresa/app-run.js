@@ -11,10 +11,9 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
         //Obligamos a ir a la página de los datos del titulado si  
         //aun no ha puesto los datos del titulado
         $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-            if ((($rootScope.user) && (!$rootScope.user.empresa)) || ($rootScope.user.estadoUsuario==="RECHAZADO")) {
-                
+            if (($rootScope.user) && (!$rootScope.user.empresa)) {
                 if (toState.url!=="/empresa/new") {
-                    $location.url("/pertenenciaempresa");
+                    $location.url("/empresa/new");
                 }
             }
         });

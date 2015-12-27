@@ -1,0 +1,145 @@
+<div class="row" >
+    <div class="col-sm-12 form__container"  style="height: 100%" >
+        <form name="mainForm" id="mainForm"  ix3-form>
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <ix3-business-messages></ix3-business-messages>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <legend class="form__title">Datos personales</legend>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">                
+                    <table class="table">
+                        <tbody>
+
+                            <tr>
+                                <td style="width: 40%;"><div style="text-align: center"><img class="img-circle" width="120px" ng-src="{{ix3Configuration.server.api}}/Usuario/{{model.usuario.idIdentity}}/foto" alt="Foto usuario"></div></td>
+                                <td >
+                                    <div class="profile__value profile__value--name">{{model.usuario.getNombreCompleto()}}</div> 
+                                    <br>
+                                    <div class="profile__value profile__value--email"><i class="fa fa-envelope"></i>&nbsp;{{model.usuario.email}}</div> 
+                                </td>
+                            </tr>                                             
+                            <tr>
+                                <td class="profile__caption"><i class="glyphicon glyphicon-gift"></i>&nbsp;Fecha nacimiento</td>
+                                <td class="profile__value">{{model.usuario.titulado.fechaNacimiento| ix3Date}} ({{ageCalculator(model.usuario.titulado.fechaNacimiento)}} años)</td>
+                            </tr>
+                            <tr>
+                                <td class="profile__caption"><i class="glyphicon glyphicon-earphone"></i>&nbsp;Telefono</td>
+                                <td class="profile__value">{{model.usuario.titulado.telefono}}  {{model.usuario.titulado.telefonoAlternativo}}</td>
+                            </tr>
+                            <tr>
+                                <td class="profile__caption"><i class="glyphicon glyphicon-credit-card"></i>&nbsp;{{model.usuario.titulado.getTipoDocumentoDescription()}}</td>
+                                <td class="profile__value">{{model.usuario.titulado.numeroDocumento}}</td>
+                            </tr>                       
+                        </tbody>
+                    </table> 
+                </div>            
+                <div class="col-xs-12 col-sm-6">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><span class="profile__caption"><i class="fa fa-info-circle"></i>&nbsp;Sobre mi:</span>&nbsp;<span class="profile__value profile__value--cita">{{model.usuario.titulado.resumen}}</span></td>
+                            </tr>                                             
+                            <tr>
+                                <td><span class="profile__caption"><i class="fa fa-briefcase"></i>&nbsp;Otras competencias:</span>&nbsp;<span class="profile__value">{{model.usuario.titulado.otrasCompetencias}}</span></td>
+                            </tr>                        
+                            <tr>
+                                <td><span class="profile__caption"><i class="fa fa-car"></i>&nbsp;Carnet de conducir:</span>&nbsp;<span class="profile__value">{{model.usuario.titulado.permisosConducir}}</span></td>
+                            </tr>  
+                            <tr>
+                                <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.usuario.titulado.direccion.datosDireccion}} {{model.usuario.titulado.direccion.municipio.toString()}} ({{model.usuario.titulado.direccion.municipio.provincia.toString()}})</span></td>
+                            </tr>                         
+                        </tbody>
+                    </table>                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <div role="tabpanel">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" ng-click="$event.preventDefault()" aria-controls="home" role="tab" data-toggle="tab">Formaci&oacute;n Academica</a></li>
+                            <li role="presentation"><a href="#profile" ng-click="$event.preventDefault()" aria-controls="profile" role="tab" data-toggle="tab">Experiencia Laboral</a></li>
+                            <li role="presentation"><a href="#messages" ng-click="$event.preventDefault()" aria-controls="messages" role="tab" data-toggle="tab">Idiomas</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <table class="table table-bordered table-hover">
+                                    <thead>                        
+                                        <tr class="data-table__head">
+                                            <th style="min-width:140px;text-align: left">Nivel</th>
+                                            <th style="width:      50%;text-align: left">Titulo</th>
+                                            <th style="width:      35%;text-align: left">Centro</th>
+                                            <th style="min-width:85px;text-align: left">Fecha</th>                        
+                                            <th style="min-width:85px;text-align: center" title="Indica si el centro donde has estudiado certifica que tienes el t&iacute;tulo">Certificado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="formacionAcademica in model.usuario.titulado.formacionesAcademicas| orderBy:'fecha' " class="data-table__row">
+                                            <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
+                                            <td >{{formacionAcademica.getNombreTitulo()}}</td>
+                                            <td >{{formacionAcademica.getNombreCentro()}}</td>
+                                            <td >{{formacionAcademica.fecha| ix3Date}}</td>
+                                            <td style="text-align: center" ><img ng-show="formacionAcademica.certificadoTitulo" title="El centro donde has estudiado ha certificado que tienes el t&iacute;tulo" ng-src="{{getContextPath()}}/img/award/award-24x24.png"></td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <table class="table table-bordered">
+                                    <thead>                    
+                                        <tr class="data-table__head">
+                                            <th style="width:      60%;text-align: left">Empresa</th>
+                                            <th style="width:      30%;text-align: left">Puesto</th>
+                                            <th style="min-width:150px;text-align: left">Fechas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="experienciaLaboral in model.usuario.titulado.experienciasLaborales| orderBy:'fechaInicio' " class="data-table__row">
+                                            <td >{{experienciaLaboral.nombreEmpresa}}</td>
+                                            <td >{{experienciaLaboral.puestoTrabajo}}</td>
+                                            <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">
+                                <table class="table table-bordered table-hover">
+                                    <thead>                    
+                                        <tr class="data-table__head">
+                                            <th style="min-width:30px;text-align: left">Nivel</th>
+                                            <th style="width:    100%;text-align: left">Nombre</th>
+                                            <th style="min-width:85px;text-align: left">Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="tituloIdioma in model.usuario.titulado.titulosIdiomas| orderBy:'fecha' " class="data-table__row">
+                                            <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
+                                            <td >{{tituloIdioma.getNombreIdioma()}}</td>
+                                            <td >{{tituloIdioma.fecha| ix3Date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-sm-12" > 
+                    <div class="pull-right">
+                        <button type="button" class="btn form__button form__button--primary" ng-click="buttonCancel()">Cerrar</button>
+                    </div>
+                </div>
+            </div>             
+        </form>
+    </div>
+</div>
+

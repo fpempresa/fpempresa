@@ -1,3 +1,5 @@
+<%@page import="es.logongas.fpempresa.modelo.comun.usuario.Usuario"%>
+<%@page import="es.logongas.ix3.web.json.beanmapper.BeanMapper"%>
 <%@page import="es.logongas.ix3.web.json.beanmapper.Expands"%>
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -30,6 +32,7 @@
         expands.add("empresa");
         expands.add("centro");
         expands.add("titulado.direccion.municipio.provincia");
+        BeanMapper beanMapper=new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null);
         if (sid == null) {
             principal = null;
         } else {
@@ -38,7 +41,7 @@
         
         if (principal != null) {
             JsonWriter jsonWriter = jsonFactory.getJsonWriter(Principal.class);
-            jsonUser = jsonWriter.toJson(principal,expands);
+            jsonUser = jsonWriter.toJson(principal,expands,beanMapper);
         } else {
             jsonUser = "null";
         }

@@ -56,7 +56,7 @@ public class EstadisticasController extends AbstractRestController {
         
         restMethod(httpServletRequest, httpServletResponse,"getEstadisticasCentro",null, new Command() {
 
-            int idCentro;
+            public int idCentro;
             
             public Command inicialize(int idCentro) {
                 this.idCentro=idCentro;

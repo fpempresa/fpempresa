@@ -4,7 +4,7 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 32, '.*Controller.Usuario.search', NULL, 'arguments.get("namedSearch")=="getUsuarioFromTitulado" && arguments.get("parametersMap").get("idTitulado").length==1 && arguments.get("parametersMap").get("idTitulado")[0]==""+identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.Usuario.schema', NULL, NULL, 1, NULL),
 ('Allow', 22, 32, '.*Controller.Usuario.read', NULL, 'arguments.get("id")==identity.idIdentity', 1, NULL),
-('Allow', 22, 32, '.*Controller.Usuario.update', NULL, 'arguments.get("entity").idIdentity==identity.idIdentity', 1, NULL),
+('Allow', 22, 32, '.*Controller.Usuario.update', NULL, 'arguments.get("originalEntity").idIdentity==identity.idIdentity', 1, NULL),
 ('Allow', 22, 32, 'UsuarioRESTController.updatePassword', NULL, 'arguments.get("idUsuario")==identity.idIdentity', 1, NULL),
 ('Allow', 22, 32, 'UsuarioRESTController.getFoto', NULL, 'arguments.get("idUsuario")==identity.idIdentity', 1, NULL),
 ('Allow', 22, 32, 'UsuarioRESTController.updateFoto', NULL, 'arguments.get("idUsuario")==identity.idIdentity', 1, NULL);
@@ -17,7 +17,7 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 32, '.*Controller.Titulado.create', NULL, NULL, 1, NULL),
 ('Allow', 22, 32, '.*Controller.Titulado.read', NULL, '((arguments.get("id")==0) || (arguments.get("id")==identity.titulado.idTitulado))', 1, NULL),
 ('Allow', 22, 32, '.*Controller.Titulado.insert', NULL, 'identity.titulado==null', 1, NULL),
-('Allow', 22, 32, '.*Controller.Titulado.update', NULL, 'identity.titulado!=null && arguments.get("entity").idTitulado==identity.titulado.idTitulado', 1, NULL);
+('Allow', 22, 32, '.*Controller.Titulado.update', NULL, 'identity.titulado!=null && arguments.get("originalEntity").idTitulado==identity.titulado.idTitulado', 1, NULL);
 
 /** Permisos de la formacion academica **/
 INSERT INTO `sec_ace` 
@@ -27,7 +27,7 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 32, '.*Controller.FormacionAcademica.insert', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.FormacionAcademica.read', NULL, NULL, 1, NULL),
 ('Deny' , 23, 32, '.*Controller.FormacionAcademica.read', NULL, 'arguments.commandResult.result.titulado.idTitulado!=identity.titulado.idTitulado', 1, NULL),
-('Allow', 22, 32, '.*Controller.FormacionAcademica.update', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
+('Allow', 22, 32, '.*Controller.FormacionAcademica.update', NULL, 'arguments.get("originalEntity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.FormacionAcademica.delete', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.FormacionAcademica.search', NULL, 'arguments.get("parametersMap").get("titulado.idTitulado").length==1 && arguments.get("parametersMap").get("titulado.idTitulado")[0]==""+identity.titulado.idTitulado', 1, NULL);
 
@@ -40,7 +40,7 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 32, '.*Controller.ExperienciaLaboral.insert', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.ExperienciaLaboral.read', NULL, NULL, 1, NULL),
 ('Deny' , 23, 32, '.*Controller.ExperienciaLaboral.read', NULL, 'arguments.commandResult.result.titulado.idTitulado!=identity.titulado.idTitulado', 1, NULL),
-('Allow', 22, 32, '.*Controller.ExperienciaLaboral.update', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
+('Allow', 22, 32, '.*Controller.ExperienciaLaboral.update', NULL, 'arguments.get("originalEntity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.ExperienciaLaboral.delete', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.ExperienciaLaboral.search', NULL, 'arguments.get("parametersMap").get("titulado.idTitulado").length==1 && arguments.get("parametersMap").get("titulado.idTitulado")[0]==""+identity.titulado.idTitulado', 1, NULL);
 
@@ -54,7 +54,7 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 32, '.*Controller.TituloIdioma.insert', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.TituloIdioma.read', NULL, NULL, 1, NULL),
 ('Deny' , 23, 32, '.*Controller.TituloIdioma.read', NULL, 'arguments.commandResult.result.titulado.idTitulado!=identity.titulado.idTitulado', 1, NULL),
-('Allow', 22, 32, '.*Controller.TituloIdioma.update', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
+('Allow', 22, 32, '.*Controller.TituloIdioma.update', NULL, 'arguments.get("originalEntity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.TituloIdioma.delete', NULL, 'arguments.get("entity").titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*Controller.TituloIdioma.search', NULL, 'arguments.get("parametersMap").get("titulado.idTitulado").length==1 && arguments.get("parametersMap").get("titulado.idTitulado")[0]==""+identity.titulado.idTitulado', 1, NULL);
 

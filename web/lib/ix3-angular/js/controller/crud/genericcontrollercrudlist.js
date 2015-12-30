@@ -27,7 +27,7 @@
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
-            scope.prefixRoute = "/" + scope.entity.toLowerCase(); //Indica como empiezan las URLs de las rutas
+            scope.prefixRoute = $location.url().substr(0,$location.url().lastIndexOf("/search")); //Indica como empiezan las URLs de las rutas
             scope.preSearch = function (filters) {
 
             };

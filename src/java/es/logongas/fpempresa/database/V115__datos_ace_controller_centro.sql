@@ -72,4 +72,5 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 33, '.*Controller.Candidato.search', NULL, 'arguments.get("namedSearch")=="getCandidatosOferta" && arguments.get("parameters").get("oferta").empresa.centro.idCentro==identity.centro.idCentro', 1, NULL),
 ('Allow', 22, 33, '.*Controller.Candidato.schema', NULL, NULL, 1, NULL),
 ('Allow', 22, 33, '.*Controller.Candidato.read', NULL, NULL, 1, NULL),
-('Deny',  23, 33, '.*Controller.Candidato.read', NULL, 'arguments.commandResult.result.oferta.empresa.centro.idCentro!=identity.centro.idCentro', 1, NULL);
+('Deny',  23, 33, '.*Controller.Candidato.read', NULL, 'arguments.commandResult.result.oferta.empresa.centro.idCentro!=identity.centro.idCentro', 1, NULL),
+('Allow', 22, 33, 'CandidatoController.getFoto', NULL, 'arguments.get("candidato").oferta.empresa.centro.idCentro==identity.centro.idCentro', 1, NULL);

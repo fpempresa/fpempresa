@@ -7,6 +7,8 @@ INSERT INTO `sec_ace`
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES 
 ('Allow', 22, 34, '.*Controller.Empresa.schema', NULL, NULL, 1, NULL),
+('Allow', 22, 34, '.*Controller.Empresa.create', NULL, NULL, 1, NULL),
+('Allow', 22, 34, '.*Controller.Empresa.insert', NULL, 'identity.empresa==null', 1, NULL),
 ('Allow', 22, 34, '.*Controller.Empresa.read', NULL, 'arguments.get("id")==identity.empresa.idEmpresa', 1, NULL),
 ('Allow', 22, 34, '.*Controller.Empresa.update', NULL, 'arguments.get("originalEntity").idEmpresa==identity.empresa.idEmpresa', 1, NULL);
 
@@ -15,7 +17,7 @@ INSERT INTO `sec_ace`
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES 
 ('Allow', 22, 34, '.*Controller.Usuario.schema', NULL, NULL, 1, NULL),
 ('Allow', 22, 34, '.*Controller.Usuario.create', NULL, NULL, 1, NULL),
-('Allow', 22, 34, '.*Controller.Usuario.insert', NULL, 'arguments.get("entity").tipoUsuario="EMPRESA" && arguments.get("entity").empresa.idEmpresa==identity.empresa.idEmpresa', 1, NULL),
+('Allow', 22, 34, '.*Controller.Usuario.insert', NULL, 'arguments.get("entity").tipoUsuario==T(es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario).EMPRESA && arguments.get("entity").empresa.idEmpresa==identity.empresa.idEmpresa', 1, NULL),
 ('Allow', 22, 34, '.*Controller.Usuario.update', NULL, 'arguments.get("originalEntity").empresa.idEmpresa==identity.empresa.idEmpresa', 1, NULL),
 ('Allow', 22, 34, '.*Controller.Usuario.delete', NULL, 'arguments.get("entity").empresa.idEmpresa==identity.empresa.idEmpresa', 1, NULL),
 ('Allow', 22, 34, '.*Controller.Usuario.read', NULL, NULL, 1, NULL),

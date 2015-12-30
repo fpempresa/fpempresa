@@ -38,8 +38,8 @@
                 expand:""
             },
             crud: {
-                defaultParentState:"",
-                defaultHtmlBasePath:""
+                parentState:"",
+                parentPathViews:""
             }
         };
  */

@@ -43,7 +43,7 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
         expand:"empresa,centro,titulado.direccion.municipio.provincia"
     },
     crud: {
-        defaultParentState:"lateralmenu",
-        defaultHtmlBasePath:"views"
+        parentState:"lateralmenu",
+        parentPathViews:"views"
     }
 });

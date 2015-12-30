@@ -1,18 +1,13 @@
 /**
  * FPempresa Copyright (C) 2014 Lorenzo González
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or (at your option) any
- * later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.modelo.comun.usuario;
 
@@ -49,7 +44,7 @@ public class Usuario extends User implements Principal {
     @Label("Apellidos")
     @NotBlank
     private String apellidos;
-    
+
     private byte[] foto;
 
     @Label("Contraseña")
@@ -69,12 +64,11 @@ public class Usuario extends User implements Principal {
     private EstadoUsuario estadoUsuario;
 
     private boolean validadoEmail;
-    
+
     private String claveValidacionEmail;
 
-    
     private Date fecha;
-    
+
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
     }
@@ -83,13 +77,8 @@ public class Usuario extends User implements Principal {
     public String toString() {
         return name;
     }
-    
-    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
-    private void estableceFechaCreacion() {
-        this.fecha=new Date();
-    }
 
-    @ConstraintRule(disabled = true,message = "No está habilitado el registro de usuarios",groups=RuleGroupPredefined.PreInsert.class,priority = -20)
+    @ConstraintRule(disabled = true, message = "No está habilitado el registro de usuarios", groups = RuleGroupPredefined.PreInsert.class, priority = -20)
     private boolean isProhibidoNuevoUsuario() {
         return true;
     }
@@ -107,19 +96,6 @@ public class Usuario extends User implements Principal {
         }
     }
 
-    @ConstraintRule(message = "La empresa es requerida si el usuario está aceptado")
-    private boolean isEmpresaRequeridaSiUsuarioAceptado() {
-        if ((this.getTipoUsuario() == TipoUsuario.EMPRESA) && (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO)) {
-            if (this.empresa == null) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-    
     @ConstraintRule(message = "Un administrador siempre debe estar aceptado")
     private boolean isAdministradorAceptado() {
         if (this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
@@ -133,18 +109,18 @@ public class Usuario extends User implements Principal {
         }
     }
 
-    @ConstraintRule(message = "No es posible añadir usuarios desarrolladores")
+    @ConstraintRule(message = "No es posible añadir usuarios desarrolladores", groups = RuleGroupPredefined.PreInsert.class)
     private boolean isDesarrollador() {
         if (this.getTipoUsuario() == TipoUsuario.DESARROLLADOR) {
             return false;
         } else {
             return true;
         }
-    } 
-    
+    }
+
     @ConstraintRule(message = "La empresa está prohibida si no es un usuario de una empresa")
     private boolean isEmpresaProhibidaSiUsuarioNoEmpresa() {
-        if ((this.getTipoUsuario() != TipoUsuario.EMPRESA) ) {
+        if ((this.getTipoUsuario() != TipoUsuario.EMPRESA)) {
             if (this.empresa != null) {
                 return false;
             } else {
@@ -154,9 +130,10 @@ public class Usuario extends User implements Principal {
             return true;
         }
     }
+
     @ConstraintRule(message = "El centro está prohibido si no es un usuario de un centro")
     private boolean isCentroProhibidoSiUsuarioNoCentro() {
-        if ((this.getTipoUsuario() != TipoUsuario.CENTRO) ) {
+        if ((this.getTipoUsuario() != TipoUsuario.CENTRO)) {
             if (this.centro != null) {
                 return false;
             } else {
@@ -165,10 +142,11 @@ public class Usuario extends User implements Principal {
         } else {
             return true;
         }
-    } 
+    }
+
     @ConstraintRule(message = "El titulado está prohibido si no es un usuario titulado")
     private boolean isTituladoProhibidoSiUsuarioNoTitulado() {
-        if ((this.getTipoUsuario() != TipoUsuario.TITULADO) ) {
+        if ((this.getTipoUsuario() != TipoUsuario.TITULADO)) {
             if (this.titulado != null) {
                 return false;
             } else {
@@ -177,23 +155,23 @@ public class Usuario extends User implements Principal {
         } else {
             return true;
         }
-    } 
-    
-    @ConstraintRule(message="No es posible modificar el tipo del usuario de '${originalEntity?.tipoUsuario?.toString()}' a '${entity?.tipoUsuario?.toString()}'",groups=RuleGroupPredefined.PreUpdate.class)
+    }
+
+    @ConstraintRule(message = "No es posible modificar el tipo del usuario de '${originalEntity?.tipoUsuario?.toString()}' a '${entity?.tipoUsuario?.toString()}'", groups = RuleGroupPredefined.PreUpdate.class)
     private boolean isModificadoTipoUsuario(RuleContext<Usuario> ruleContext) {
         if (ruleContext.getOriginalEntity().getTipoUsuario() != ruleContext.getEntity().getTipoUsuario()) {
             return false;
         }
-        
+
         return true;
     }
-    
-    @ConstraintRule(disabled = true,message="Error en el sistema de mensajes",groups=RuleGroupPredefined.PreUpdate.class)
-    private boolean isModificadosValoresUsuario(RuleContext<Usuario> ruleContext) throws BusinessException {
-        Usuario usuario=ruleContext.getEntity();
-        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
-        Usuario principal=(Usuario)ruleContext.getPrincipal();        
-        
+
+    @ConstraintRule(message = "Error en el sistema de mensajes", groups = RuleGroupPredefined.PreUpdate.class)
+    private boolean isModificadoEstadoUsuario(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario usuario = ruleContext.getEntity();
+        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
         //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
         if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
 
@@ -202,76 +180,114 @@ public class Usuario extends User implements Principal {
                 throw new BusinessException("No es posible modificar el estado del usuario ya que TU no estás aceptado");
             }
 
-            switch (principal.getTipoUsuario()) {
+            if (usuario.getIdIdentity() == principal.getIdIdentity()) {
+                throw new BusinessException("No te puedes modificar tu mismo el estado");
+            }
+
+            switch (usuario.getTipoUsuario()) {
                 case ADMINISTRADOR:
-                    //No es necesario hace nada pq el administrador siempre puede modificarlo
-                    break;
+                    throw new BusinessException("No es posible modificar el estado del administrador , ya que siempre es ACEPTADO");
                 case CENTRO:
-                    if (usuario.getTipoUsuario() != TipoUsuario.CENTRO) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo CENTRO");
+                    if ((principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+
+                        if (usuario.getCentro().getIdCentro() != principal.getCentro().getIdCentro()) {
+                            throw new BusinessException("No puedes modificar el estado de usuarios que sean de centros distintos al tuyo");
+                        } else {
+                            return true;
+                        }
+
+                    } else if (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        return true;
+                    } else {
+                        throw new BusinessException("Solo un profesor y un administrador pueden cambiar el estado del usuario pero era un " + principal.getTipoUsuario());
                     }
 
-                    if (usuario.getCentro().getIdCentro() != principal.getCentro().getIdCentro()) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de centros distintos al tuyo");
-                    }
-
-                    break;
                 case EMPRESA:
-                    if (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que no sean de tipo EMPRESA");
-                    }
-
-                    if (usuario.getEmpresa().getIdEmpresa() != principal.getEmpresa().getIdEmpresa()) {
-                        throw new BusinessException("No puedes modificar el estado de usuarios que sean de empresas distintas a la tuya");
-                    }
-
-                    break;
+                    throw new BusinessException("No es posible modificar el estado de un usuario de empresa , ya que siempre es ACEPTADO");
                 case TITULADO:
                     throw new BusinessException("No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO");
                 default:
-                    throw new BusinessException("No es posible modificar el estado del usuario");
+                    throw new RuntimeException("Tipo de usario desconocido:" + usuario.getTipoUsuario());
+            }
+        } else {
+            return true;
+        }
+    }
+
+    @ConstraintRule(message = "No se puede cambiar la empresa del usuario", groups = RuleGroupPredefined.PreUpdate.class)
+    private boolean isModificadoEmpresa(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario usuario = ruleContext.getEntity();
+        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
+
+        if (usuarioOriginal.getTipoUsuario() == TipoUsuario.EMPRESA) {
+            if (usuario.getEmpresa().getIdEmpresa() != usuarioOriginal.getEmpresa().getIdEmpresa()) {
+                return false;
+            } else {
+                return true;
             }
 
-        }        
-        
-        
-        return true;
-    }  
-    
-    
+        } else {
+            return true;
+        }
+    }
+
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void estableceFechaCreacion() {
+        this.fecha = new Date();
+    }
+
     @ActionRule(groups = RuleGroupPredefined.PostRead.class)
     private void quitarHashPassword() {
         //Nunca se retorna el Hash de la contraseña
         this.setPassword(null);
-    }    
-    
-    @ActionRule(groups=RuleGroupPredefined.PreInsert.class)
-    private void estadoInicialDelUsuario(RuleContext<Usuario> ruleContext) {
-        Usuario usuario=ruleContext.getEntity();
-        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
-        Usuario principal=(Usuario)ruleContext.getPrincipal();
-        
-        
-        if ((principal!=null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
-            if ((usuario.getTipoUsuario() != TipoUsuario.CENTRO) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA)) {
-                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-            }
-        } else {
-            if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
-                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-            } else {
-                usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-            }
-        }      
-        
     }
-    
-    @ActionRule(groups=RuleGroupPredefined.PreUpdate.class)
+
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void estadoInicialDelUsuario(RuleContext<Usuario> ruleContext) {
+        Usuario usuario = ruleContext.getEntity();
+        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
+        switch (usuario.getTipoUsuario()) {
+            case TITULADO:
+                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+                break;
+            case CENTRO:
+                if (principal != null) {
+                    if (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+                    } else if (principal.getTipoUsuario() == TipoUsuario.CENTRO) {
+                        if (principal.getCentro().getIdCentro() == usuario.getCentro().getIdCentro()) {
+                            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+                        } else {
+                            usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                        }
+                    } else {
+                        usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                    }
+                } else {
+                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+                }
+
+                break;
+            case EMPRESA:
+                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+                break;
+            case ADMINISTRADOR:
+                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    @ActionRule(groups = RuleGroupPredefined.PreUpdate.class)
     private void pasarAPendienteAlCambiarDeCentro(RuleContext<Usuario> ruleContext) {
-        Usuario usuario=ruleContext.getEntity();
-        Usuario usuarioOriginal=ruleContext.getOriginalEntity();
-        Usuario principal=(Usuario)ruleContext.getPrincipal();
-        
+        Usuario usuario = ruleContext.getEntity();
+        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
         if (principal.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
             if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
                 if (((usuarioOriginal.getCentro() == null) && (usuario.getCentro() != null))
@@ -280,9 +296,9 @@ public class Usuario extends User implements Principal {
                     usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
                 }
             }
-        }        
+        }
     }
-    
+
     /**
      * @return the titulado
      */

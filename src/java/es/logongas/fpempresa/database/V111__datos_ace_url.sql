@@ -21,18 +21,18 @@ INSERT INTO `sec_ace` (`aceType`, `idPermission`, `ididentity`, `secureResourceR
 
 /**  Permitido el acceso al $log a todos verlo y cambiarlo solo al administrador **/
 INSERT INTO `sec_ace` (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES
-('Allow', 1, 1, '/api/\\$log', NULL, NULL, 10, 'get log todos'),
+('Allow', 1, 31, '/api/\\$log', NULL, NULL, 10, 'get log admin'),
 ('Allow', 3, 31,'/api/\\$log', NULL, NULL, 10, 'put log admin');
 
 
 /**  permitido /site a todos **/
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES
-('Allow', 1, 1, '/api/site/.*', NULL, NULL, 10, 'GET Permitido'),
-('Allow', 2, 1, '/api/site/.*', NULL, NULL, 10, 'POST Permitido'),
-('Allow', 3, 1, '/api/site/.*', NULL, NULL, 10, 'PUT Permitido'),
-('Allow', 4, 1, '/api/site/.*', NULL, NULL, 10, 'DELETE Permitido'),
-('Allow', 5, 1, '/api/site/.*', NULL, NULL, 10, 'PATCH Permitido');
+('Allow', 1, 1, '/api/site/.*', NULL, NULL, 10, 'GET Permitido a todos'),
+('Allow', 2, 1, '/api/site/.*', NULL, NULL, 10, 'POST Permitido a todos'),
+('Allow', 3, 1, '/api/site/.*', NULL, NULL, 10, 'PUT Permitido a todos'),
+('Allow', 4, 1, '/api/site/.*', NULL, NULL, 10, 'DELETE Permitido a todos'),
+('Allow', 5, 1, '/api/site/.*', NULL, NULL, 10, 'PATCH Permitido a todos');
 
 /**  Permitido /administrador a los administradores **/
 INSERT INTO `sec_ace` 

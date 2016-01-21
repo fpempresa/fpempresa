@@ -1,17 +1,17 @@
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES
-('Deny', 22, 1, '.*', NULL, NULL, 10, "Por defecto todos los PRE controladoreas están prohibidos"),
-('Allow', 23, 1, '.*', NULL, NULL, 10, "Por defecto todos los Post controladoreas están permitidos");
+('Deny', 22, 1, '.*', NULL, NULL, 10, "Por defecto todos los PRE BusinessProcess están prohibidos"),
+('Allow', 23, 1, '.*', NULL, NULL, 10, "Por defecto todos los POST BusinessProcess están permitidos");
 
 
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES
-('Allow', 22, 1, 'SessionRestController\\..*', NULL, NULL, 1, "A todos se pemite la gestion de sesiones");
+('Allow', 22, 1, 'WebSessionBusinessProcess\\..*', NULL, NULL, 1, "A todos se pemite la gestion de sesiones");
 
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES
-('Allow', 22, 1, 'EchoController.echoNoDatabase', NULL, NULL, 1, "Permitir el echoNoDatabase"),
-('Allow', 22, 1, 'EchoController.echoDataBase', NULL, NULL, 1, "Permitir el echoDataBase");
+('Allow', 22, 1, 'EchoBusinessProcess.echoNoDatabase', NULL, NULL, 1, "Permitir el echoNoDatabase"),
+('Allow', 22, 1, 'EchoBusinessProcess.echoDataBase', NULL, NULL, 1, "Permitir el echoDataBase");
 
 
 /** Todos los usuarios registrados pueden "search" en las tablas basicas **/
@@ -48,5 +48,5 @@ INSERT INTO `sec_ace`
 /** Crear una cuenta **/
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES 
-('Allow', 22, 1, '.*Controller.Usuario.create', NULL, NULL, 1, NULL),
-('Allow', 22, 1, '.*Controller.Usuario.insert', NULL, NULL, 1, NULL);
+('Allow', 22, 1, '.*BusinessProcess.Usuario.create', NULL, NULL, 1, NULL),
+('Allow', 22, 1, '.*BusinessProcess.Usuario.insert', NULL, NULL, 1, NULL);

@@ -10,10 +10,12 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:ix3core.xml
+            classpath:ix3rule.xml
             classpath:ix3dao.xml
             classpath:ix3security.xml
             classpath:ix3securityimpl.xml
             classpath:ix3service.xml
+            classpath:ix3businessprocess.xml
             classpath:ix3web.xml
             classpath:applicationContext.xml
         </param-value>
@@ -29,14 +31,7 @@
         <listener-class>es.logongas.ix3.web.database.DatabaseMigrateContextListener</listener-class>
     </listener>     
     
-    <filter>
-        <filter-name>HibernateContextListenerAndFilter</filter-name>
-        <filter-class>es.logongas.ix3.web.hibernate.HibernateFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>HibernateContextListenerAndFilter</filter-name>
-        <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
+
     <filter>
         <filter-name>filterImplSecurity</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

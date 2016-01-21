@@ -19,6 +19,8 @@ import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
+import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.web.security.impl.WebSessionSidStorageImplAbstractJws;
 import java.io.Serializable;
 import java.nio.charset.Charset;
@@ -32,34 +34,33 @@ public class WebSessionSidStorageImplJwt extends WebSessionSidStorageImplAbstrac
 
     @Autowired
     DAOFactory daoFactory;
+    @Autowired
+    DataSessionFactory dataSessionFactory;
 
     @Override
     protected byte[] getSecretKey(Serializable sid) {
-        try {        
-        UsuarioDAO usuarioDAO=(UsuarioDAO)daoFactory.getDAO(Usuario.class);
-        
-        
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            UsuarioDAO usuarioDAO = (UsuarioDAO) daoFactory.getDAO(Usuario.class);
+            Usuario usuario = usuarioDAO.readOriginal(dataSession, (Integer) sid);
 
-            Usuario usuario=usuarioDAO.readOriginal((Integer)sid);
-            
-            if (usuario==null) {
+            if (usuario == null) {
                 return null;
             }
-            
-            String encryptedPassword= usuarioDAO.getEncryptedPassword(usuario);
-            
+
+            String encryptedPassword = usuarioDAO.getEncryptedPassword(dataSession, usuario);
+
             byte[] secretKey;
-            if (encryptedPassword!=null) {
-                 secretKey=encryptedPassword.getBytes(Charset.forName("utf-8"));
+            if (encryptedPassword != null) {
+                secretKey = encryptedPassword.getBytes(Charset.forName("utf-8"));
             } else {
-                 secretKey=new byte[0];
+                secretKey = new byte[0];
             }
 
             return secretKey;
-        } catch (BusinessException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        
+
     }
-    
+
 }

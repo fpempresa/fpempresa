@@ -2,11 +2,11 @@
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
             entity:"ExperienciaLaboral",
-            htmlBasePath:"views/curriculum"
+            crudName:"curriculum.ExperienciaLaboral"
         });
     }]);
 
-app.controller("ExperienciaLaboralSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
+app.controller("CurriculumExperienciaLaboralSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);
 
         $scope.orderby=[
@@ -16,14 +16,14 @@ app.controller("ExperienciaLaboralSearchController", ['$scope', 'genericControll
         $scope.search();
     }]);
 
-app.controller("ExperienciaLaboralNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumExperienciaLaboralNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("ExperienciaLaboralViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumExperienciaLaboralViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("ExperienciaLaboralDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumExperienciaLaboralDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

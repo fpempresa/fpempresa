@@ -12,7 +12,7 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
         //aun no ha puesto los datos del titulado
         $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
             if (!$rootScope.user.titulado) {
-                $location.url("/titulado/new");
+                $location.url("/curriculum/titulado/new");
             }
         });
 

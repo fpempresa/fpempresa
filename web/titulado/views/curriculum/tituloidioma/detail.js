@@ -1,14 +1,14 @@
 "use strict";
 
 
-app.controller("TituloIdiomaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumTituloIdiomaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("TituloIdiomaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumTituloIdiomaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("TituloIdiomaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumTituloIdiomaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

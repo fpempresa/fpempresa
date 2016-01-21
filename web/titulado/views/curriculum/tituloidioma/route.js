@@ -2,6 +2,6 @@
 app.config(['crudRoutesProvider', function(crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
             entity:"TituloIdioma",
-            htmlBasePath:"views/curriculum"
+            crudName:"curriculum.TituloIdioma"
         });
     }]);

@@ -11,16 +11,19 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
+import es.logongas.fpempresa.businessprocess.empresa.CandidatoCRUDBusinessProcess;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.metadata.MetaData;
-import es.logongas.ix3.dao.metadata.MetaDataFactory;
+import es.logongas.ix3.core.Principal;
+import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
-import es.logongas.ix3.web.controllers.helper.AbstractRestController;
-import es.logongas.ix3.web.controllers.command.Command;
-import es.logongas.ix3.web.controllers.command.CommandResult;
-import es.logongas.ix3.web.controllers.command.MimeType;
+import es.logongas.ix3.web.json.JsonFactory;
+import es.logongas.ix3.web.util.ControllerHelper;
+import es.logongas.ix3.web.util.HttpResult;
+import es.logongas.ix3.web.util.MimeType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,32 +37,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author logongas
  */
 @Controller
-public class CandidatoController extends AbstractRestController {
+public class CandidatoController {
 
     @Autowired
     private CRUDServiceFactory crudServiceFactory;
+    @Autowired
+    private CRUDBusinessProcessFactory crudBusinessProcessFactory;
+    @Autowired
+    private ControllerHelper controllerHelper;
+    @Autowired
+    private DataSessionFactory dataSessionFactory;
+    @Autowired
+    private JsonFactory jsonFactory;
 
     @RequestMapping(value = {"/{path}/Candidato/{idCandidato}/foto"}, method = RequestMethod.GET)
     public void getFoto(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCandidato") int idCandidato) throws BusinessException {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
-        CRUDService<Candidato, Integer> candidatoCrudService = (CRUDService<Candidato, Integer>) crudServiceFactory.getService(Candidato.class);
-        Candidato candidato = candidatoCrudService.read(idCandidato);
+            CRUDService<Candidato, Integer> candidatoCrudService =  crudServiceFactory.getService(Candidato.class);
+            Candidato candidato = candidatoCrudService.read(dataSession, idCandidato);
 
-        restMethod(httpServletRequest, httpServletResponse, "getFoto", null, new Command() {
-            public int idCandidato;
-            public Candidato candidato;
+            CandidatoCRUDBusinessProcess candidatoCRUDBusinessProcess=(CandidatoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Candidato.class);
+            
+            byte[] foto = candidatoCRUDBusinessProcess.getFotoCandidato(new CandidatoCRUDBusinessProcess.FotoCandidatoArguments(principal, dataSession, candidato));
 
-            public Command inicialize(int idCandidato, Candidato candidato) {
-                this.idCandidato = idCandidato;
-                this.candidato = candidato;
-                return this;
-            }
+            controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
 
-            @Override
-            public CommandResult run() throws Exception, BusinessException {
-                return new CommandResult(null, candidato.getUsuario().getFoto(), 200, false, null, MimeType.OCTET_STREAM);
-            }
-        }.inicialize(idCandidato, candidato));
     }
 
 }

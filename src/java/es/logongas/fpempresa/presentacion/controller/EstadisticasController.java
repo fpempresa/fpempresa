@@ -16,15 +16,16 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
+import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessProcess;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
-import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
-import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.DAOFactory;
-import es.logongas.ix3.web.controllers.helper.AbstractRestController;
-import es.logongas.ix3.web.controllers.command.Command;
-import es.logongas.ix3.web.controllers.command.CommandResult;
+import es.logongas.ix3.core.Principal;
+import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.DataSessionFactory;
+import es.logongas.ix3.service.CRUDServiceFactory;
+import es.logongas.ix3.web.util.ControllerHelper;
+import es.logongas.ix3.web.util.HttpResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -40,81 +41,63 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author logongas
  */
 @Controller
-public class EstadisticasController extends AbstractRestController {
+public class EstadisticasController  {
 
     private static final Log log = LogFactory.getLog(EstadisticasController.class);
 
 
     @Autowired 
-    DAOFactory daoFactory;
-    
+    CRUDServiceFactory crudServiceFactory;
     @Autowired
-    private EstadisticasService estadisticasService;
-    
+    private EstadisticasBusinessProcess estadisticasBusinessProcess;
+    @Autowired
+    private DataSessionFactory dataSessionFactory;   
+    @Autowired
+    private ControllerHelper controllerHelper;     
+     
     @RequestMapping(value = {"/{path}/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasCentro(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
         
-        restMethod(httpServletRequest, httpServletResponse,"getEstadisticasCentro",null, new Command() {
-
-            public int idCentro;
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+			
+            Centro centro=crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
             
-            public Command inicialize(int idCentro) {
-                this.idCentro=idCentro;
-                return this;
-            }
+            Estadisticas estadisticas=estadisticasBusinessProcess.getEstadisticasCentro(new EstadisticasBusinessProcess.GetEstadisticasCentroArguments(principal, dataSession, centro));
             
-            @Override
-            public CommandResult run() throws Exception, BusinessException {
-                Centro centro=daoFactory.getDAO(Centro.class).read(idCentro);
-                
-                if (centro==null) {
-                    throw new BusinessException("No existe el centro");
-                }                
-                
-                Estadisticas estadisticas=estadisticasService.getEstadisticas(centro);
-                
-                return new CommandResult(estadisticas);
-            }
-        }.inicialize(idCentro));
+            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas),  httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }        
+        
     }
     @RequestMapping(value = {"/{path}/Estadisticas/empresa/{idEmpresa}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasEmpresa(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, @PathVariable("idEmpresa") int idEmpresa) {
 
-        restMethod(httpServletRequest, httpServletResponse,"getEstadisticasEmpresa",null, new Command() {
-            public int idEmpresa;
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+			
+            Empresa empresa=crudServiceFactory.getService(Empresa.class).read(dataSession, idEmpresa);
             
-            public Command inicialize(int idEmpresa) {
-                this.idEmpresa=idEmpresa;
-                return this;
-            }
-            @Override
-            public CommandResult run() throws Exception, BusinessException {
-                
-                Empresa empresa=daoFactory.getDAO(Empresa.class).read(idEmpresa);
-                
-                if (empresa==null) {
-                    throw new BusinessException("No existe la empresa");
-                }                
-                
-                Estadisticas estadisticas=estadisticasService.getEstadisticas(empresa);
-                
-                return new CommandResult(estadisticas);
-            }
-        }.inicialize(idEmpresa));
+            Estadisticas estadisticas=estadisticasBusinessProcess.getEstadisticasEmpresa(new EstadisticasBusinessProcess.GetEstadisticasEmpresaArguments(principal, dataSession, empresa));
+            
+            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas),  httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
     }  
     
     @RequestMapping(value = {"/{path}/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasAdministrador(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 
-        restMethod(httpServletRequest, httpServletResponse,"getEstadisticasAdministrador",null, new Command() {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
-            @Override
-            public CommandResult run() throws Exception, BusinessException {
-                
-                Estadisticas estadisticas=estadisticasService.getEstadisticas();
-                
-                return new CommandResult(estadisticas);
-            }
-        });
+            Estadisticas estadisticas=estadisticasBusinessProcess.getEstadisticasAdministrador(new EstadisticasBusinessProcess.GetEstadisticasAdministradorArguments(principal, dataSession));
+            
+            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas),  httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
     }     
 }

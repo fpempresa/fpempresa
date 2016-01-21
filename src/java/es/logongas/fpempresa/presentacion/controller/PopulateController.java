@@ -16,47 +16,47 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
-import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.modelo.empresa.Candidato;
-import es.logongas.fpempresa.modelo.empresa.Empresa;
-import es.logongas.fpempresa.modelo.empresa.Oferta;
-import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
-import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
-import es.logongas.fpempresa.modelo.titulado.Titulado;
-import es.logongas.fpempresa.modelo.titulado.TituloIdioma;
-import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
-import es.logongas.fpempresa.service.populate.PopulateService;
-import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.Filter;
-import es.logongas.ix3.service.CRUDService;
-import es.logongas.ix3.service.CRUDServiceFactory;
-import es.logongas.ix3.web.controllers.helper.AbstractRestController;
-import es.logongas.ix3.web.controllers.command.Command;
-import es.logongas.ix3.web.controllers.command.CommandResult;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+//import es.logongas.fpempresa.modelo.centro.Centro;
+//import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
+//import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+//import es.logongas.fpempresa.modelo.empresa.Candidato;
+//import es.logongas.fpempresa.modelo.empresa.Empresa;
+//import es.logongas.fpempresa.modelo.empresa.Oferta;
+//import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
+//import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
+//import es.logongas.fpempresa.modelo.titulado.Titulado;
+//import es.logongas.fpempresa.modelo.titulado.TituloIdioma;
+//import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
+//import es.logongas.fpempresa.service.populate.PopulateService;
+//import es.logongas.ix3.core.BusinessException;
+//import es.logongas.ix3.dao.Filter;
+//import es.logongas.ix3.service.CRUDService;
+//import es.logongas.ix3.service.CRUDServiceFactory;
+//import es.logongas.ix3.web.util.HttpResult;
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMethod;
+
 
 /**
  *
  * @author logongas
  */
 @Controller
-public class PopulateController extends AbstractRestController {
-
+public class PopulateController  {
+/**
     private static final Log log = LogFactory.getLog(PopulateController.class);
 
     @Autowired
@@ -71,7 +71,7 @@ public class PopulateController extends AbstractRestController {
         restMethod(httpServletRequest, httpServletResponse,"crearTodo",null, new Command() {
 
             @Override
-            public CommandResult run() throws Exception, BusinessException {
+            public HttpResult run() throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -91,7 +91,7 @@ public class PopulateController extends AbstractRestController {
                 result.put("dateStart", dateStart);
                 result.put("dateEnd", dateEnd);
                 result.put("duration", dateEnd.getTime() - dateStart.getTime());
-                return new CommandResult(result);
+                return new HttpResult(result);
             }
         });
     }
@@ -102,7 +102,7 @@ public class PopulateController extends AbstractRestController {
         restMethod(httpServletRequest, httpServletResponse,"crearCentrosAleatorios",null, new Command() {
 
             @Override
-            public CommandResult run() throws Exception, BusinessException {
+            public HttpResult run() throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -115,7 +115,7 @@ public class PopulateController extends AbstractRestController {
                 result.put("dateEnd", dateEnd);
                 result.put("duration", dateEnd.getTime() - dateStart.getTime());
                 result.put("num", numCentros);
-                return new CommandResult(result);
+                return new HttpResult(result);
             }
         });
     }
@@ -126,7 +126,7 @@ public class PopulateController extends AbstractRestController {
         restMethod(httpServletRequest, httpServletResponse,"crearEmpresasAleatorias",null, new Command() {
 
             @Override
-            public CommandResult run() throws Exception, BusinessException {
+            public HttpResult run() throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -139,7 +139,7 @@ public class PopulateController extends AbstractRestController {
                 result.put("dateEnd", dateEnd);
                 result.put("duration", dateEnd.getTime() - dateStart.getTime());
                 result.put("num", numEmpresas);
-                return new CommandResult(result);
+                return new HttpResult(result);
             }
         });
     }
@@ -150,7 +150,7 @@ public class PopulateController extends AbstractRestController {
         restMethod(httpServletRequest, httpServletResponse,"crearUsuariosAleatorios",null, new Command() {
 
             @Override
-            public CommandResult run() throws Exception, BusinessException {
+            public HttpResult run() throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -163,7 +163,7 @@ public class PopulateController extends AbstractRestController {
                 result.put("dateEnd", dateEnd);
                 result.put("duration", dateEnd.getTime() - dateStart.getTime());
                 result.put("num", numUsuarios);
-                return new CommandResult(result);
+                return new HttpResult(result);
             }
         });
     }
@@ -174,7 +174,7 @@ public class PopulateController extends AbstractRestController {
         restMethod(httpServletRequest, httpServletResponse,"crearOfertasAleatorias",null, new Command() {
 
             @Override
-            public CommandResult run() throws Exception, BusinessException {
+            public HttpResult run() throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -187,7 +187,7 @@ public class PopulateController extends AbstractRestController {
                 result.put("dateEnd", dateEnd);
                 result.put("duration", dateEnd.getTime() - dateStart.getTime());
                 result.put("num", numOfertas);
-                return new CommandResult(result);
+                return new HttpResult(result);
             }
         });
     }
@@ -198,7 +198,7 @@ public class PopulateController extends AbstractRestController {
         restMethod(httpServletRequest, httpServletResponse,"crearCandidatos",null, new Command() {
 
             @Override
-            public CommandResult run() throws Exception, BusinessException {
+            public HttpResult run() throws Exception, BusinessException {
 
                 Date dateStart = new Date();
 
@@ -210,7 +210,7 @@ public class PopulateController extends AbstractRestController {
                 result.put("dateStart", dateStart);
                 result.put("dateEnd", dateEnd);
                 result.put("duration", dateEnd.getTime() - dateStart.getTime());
-                return new CommandResult(result);
+                return new HttpResult(result);
             }
         });
     }    
@@ -292,4 +292,6 @@ public class PopulateController extends AbstractRestController {
             }
         }
     }
+    * 
+    **/
 }

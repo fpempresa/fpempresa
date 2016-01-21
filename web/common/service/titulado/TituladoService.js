@@ -53,7 +53,7 @@
                                 var query = {
                                     namedSearch:"getUsuarioFromTitulado",
                                     filters:{
-                                        idTitulado: titulado.idTitulado
+                                        titulado: titulado.idTitulado
                                     },
                                     expand:expands.usuarioExpand
                                 }

@@ -17,8 +17,8 @@
 package es.logongas.fpempresa.modelo.titulado.configuracion;
 
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
-import es.logongas.ix3.service.rules.ConstraintRule;
-import es.logongas.ix3.service.rules.RuleGroupPredefined;
+import es.logongas.ix3.rule.ConstraintRule;
+import es.logongas.ix3.rule.RuleGroupPredefined;
 import java.util.HashSet;
 import java.util.Set;
 

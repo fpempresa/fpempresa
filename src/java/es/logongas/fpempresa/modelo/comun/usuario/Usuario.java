@@ -17,11 +17,12 @@ import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;
-import es.logongas.ix3.security.authentication.Principal;
-import es.logongas.ix3.service.rules.ActionRule;
-import es.logongas.ix3.service.rules.ConstraintRule;
-import es.logongas.ix3.service.rules.RuleContext;
-import es.logongas.ix3.service.rules.RuleGroupPredefined;
+import es.logongas.ix3.core.Principal;
+import es.logongas.ix3.security.authorization.BusinessSecurityException;
+import es.logongas.ix3.rule.ActionRule;
+import es.logongas.ix3.rule.ConstraintRule;
+import es.logongas.ix3.rule.RuleContext;
+import es.logongas.ix3.rule.RuleGroupPredefined;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
@@ -83,30 +84,325 @@ public class Usuario extends User implements Principal {
         return true;
     }
 
-    @ConstraintRule(message = "El centro es requerido si el usuario está aceptado")
-    private boolean isCentroRequeridoSiUsuarioAceptado() {
-        if ((this.getTipoUsuario() == TipoUsuario.CENTRO) && (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO)) {
-            if (this.centro == null) {
-                return false;
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertCentroEstado'", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isCheckInsertCentroAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+        if ((this.getTipoUsuario() == TipoUsuario.CENTRO)) {
+
+            //Comprobar el principal que lo inserta
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+                securityTrue(principal.getCentro() != null, "Ya debes pertenecer a un centro");
+            } else if (principal == null) {
+                //No hace falta comprobar nada ya que no hay usuario
             } else {
-                return true;
+                throw new BusinessSecurityException("No tienes permiso para añadir un profesor");
             }
-        } else {
-            return true;
+
+            businessTrue(this.titulado == null, "El titulado está prohibido para usuarios de centro");
+            businessTrue(this.empresa == null, "La empresa está prohibida para usuarios de centro");
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                businessTrue(this.centro != null, "El centro es requerido para usuarios de centro");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+                businessTrue(this.centro != null, "El centro es requerido para los profesores");
+                businessTrue(this.getCentro().getIdCentro() == principal.getCentro().getIdCentro(), "El centro debe ser del mismo centro que el tuyo");
+            } else {
+                businessTrue(this.centro == null, "El centro está prohibido al insertar el usuario");
+            }
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El profesor debe estar aceptado al insertarlo el administrador");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El profesor debe estar aceptado al insertarlo otro profesor");
+            } else {
+                businessTrue(this.estadoUsuario == null, "Es estado debe estar vacio al no haber centro");
+            }
+
         }
+
+        return true;
+
     }
 
-    @ConstraintRule(message = "Un administrador siempre debe estar aceptado")
-    private boolean isAdministradorAceptado() {
-        if (this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-            if (this.getEstadoUsuario() == EstadoUsuario.ACEPTADO) {
-                return true;
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckUpdateCentroAndEstado'", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isCheckUpdateCentroAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
+
+        if ((this.getTipoUsuario() == TipoUsuario.CENTRO)) {
+
+            //Comprobar el principal que lo inserta
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO) && (principal.getIdIdentity() == this.getIdIdentity())) {
+                //Somos nosotros actualizando el usuario, no hacemos nada
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+                securityTrue(principal.getCentro() != null, "Ya debes pertenecer a un centro");
             } else {
-                return false;
+                throw new BusinessSecurityException("No tienes permiso para actualizar un profesor");
             }
-        } else {
-            return true;
+
+            businessTrue(this.titulado == null, "El titulado está prohibido para usuarios de centro");
+            businessTrue(this.empresa == null, "La empresa está prohibida para usuarios de centro");
+
+            if ((this.getCentro() != null) && (usuarioOriginal.getCentro() != null)) {
+                if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                    businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El profesor debe estar aceptado al actualizarlo el administrador");
+                } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO) && (principal.getIdIdentity() == this.getIdIdentity())) {
+                    
+                    if (this.getCentro().getIdCentro() != usuarioOriginal.getCentro().getIdCentro()) {
+                        businessTrue(this.estadoUsuario == EstadoUsuario.PENDIENTE_ACEPTACION, "El profesor debe estar pendiente de aceptación al cambiar de centro");
+                    }
+                    
+                } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+                    businessTrue(usuarioOriginal.getCentro().getIdCentro() == principal.getCentro().getIdCentro(), "El usuario debe permanecer a tu centro");
+                    businessTrue(this.getCentro().getIdCentro() == usuarioOriginal.getCentro().getIdCentro(), "No puedes cambiar el centro del profesor");
+                } else {
+                    throw new RuntimeException("No puedes actualizar el usuario , pero ya se había comprobado asi que esto es un error");
+                }
+
+                businessTrue(this.getCentro().getIdCentro() != usuarioOriginal.getCentro().getIdCentro(), "No es posible cambiar de Centro");
+             
+            } else if ((this.getCentro() == null) && (usuarioOriginal.getCentro() != null)) {
+                throw new BusinessException("No es posible quitar el Centro");
+            } else if ((this.getCentro() != null) && (usuarioOriginal.getCentro() == null)) {
+                
+                if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                    businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El profesor debe estar aceptado al actualizarlo el administrador");
+                } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO) && (principal.getIdIdentity() == this.getIdIdentity())) {
+                    businessTrue(this.estadoUsuario == EstadoUsuario.PENDIENTE_ACEPTACION, "El profesor debe estar aceptado al actualizarlo el administrador");
+                } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
+                    businessTrue(this.getCentro().getIdCentro() == principal.getCentro().getIdCentro(), "El centro del usuario debe ser el mismo que el tuyo");
+                    businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El profesor debe estar aceptado al actualizarlo otro profesor");
+                } else {
+                    throw new RuntimeException("No puedes actualizar el usuario , pero ya se había comprobado asi que esto es un error");
+                }
+                    
+            } else if ((this.getCentro() == null) && (usuarioOriginal.getCentro() == null)) {
+                //No pasa nada sigue sin Centro
+            } else {
+                throw new BusinessException("Error de lógica:" + (this.getCentro()) + "," + (usuarioOriginal.getCentro()));
+            }
+
+
+
         }
+
+        return true;
+
+    }
+
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertEmpresaAndEstado'", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isCheckInsertEmpresaAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
+        if ((this.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+
+            //El principal que lo inserta
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+                securityTrue(principal.getEmpresa() != null, "Ya debes pertenecer a una empresa");
+            } else if (principal == null) {
+                //No hace falta comprobar nada ya que no hay usuario
+            } else {
+                throw new BusinessSecurityException("No tienes permiso para añadir un usuario de una empresa");
+            }
+
+            businessTrue(this.titulado == null, "El titulado está prohibido para usuarios de empresa");
+            businessTrue(this.centro == null, "El centro está prohibido para usuarios de empresa");
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                businessTrue(this.empresa != null, "La empresa es requerida para usuarios de una empresa");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                businessTrue(this.empresa != null, "La empresa es requerida para usuarios de la empresa");
+                businessTrue(this.getEmpresa().getIdEmpresa() == principal.getEmpresa().getIdEmpresa(), "La empresa debe ser la misma empresa que la tuya");
+            } else {
+                businessTrue(this.empresa == null, "La empresa está prohibida al insertar el usuario");
+            }
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El usuario de la empresa debe estar aceptado al insertarlo el administrador");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El usuario de la empresa debe estar aceptado al insertarlo otro usuario de la empresa");
+            } else {
+                businessTrue(this.estadoUsuario == null, "Es estado debe estar vacio al no haber empresa");
+            }
+
+        }
+
+        return true;
+
+    }
+
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckUpdateEmpresaAndEstado'", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isCheckUpdateEmpresaAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
+        if ((this.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+
+            //El principal que lo actualiza
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                if (principal.getIdIdentity() != this.getIdIdentity()) {
+                    securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+                    securityTrue(principal.getEmpresa() != null, "Ya debes pertenecer a una empresa");
+                }
+            } else {
+                throw new BusinessSecurityException("Solo un usuario de la empresa o los administradores pueden añadir otros usuarios de la empresa");
+            }
+
+            businessTrue(this.titulado == null, "El titulado está prohibido para usuarios de empresa");
+            businessTrue(this.centro == null, "El centro está prohibido para usuarios de empresa");
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                businessTrue(this.empresa != null, "La empresa es requerida para usuarios de una empresa");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                businessTrue(this.empresa != null, "La empresa es requerida para usuarios de la empresa");
+                businessTrue(this.getEmpresa().getIdEmpresa() == principal.getEmpresa().getIdEmpresa(), "La empresa debe ser la misma empresa que la tuya");
+            } else {
+                throw new RuntimeException("No puedes actualizar el usuario , pero ya se había comprobado asi que esto es un error");
+            }
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El usuario de la empresa debe estar aceptado al insertarlo el administrador");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El usuario de la empresa debe estar aceptado al insertarlo otro usuario de la empresa");
+            } else {
+                businessTrue(this.estadoUsuario == null, "Es estado debe estar vacio al no haber empresa");
+            }
+
+        }
+
+        return true;
+
+    }
+
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertTituladoAndEstado'", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isCheckInsertTituladoAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
+        if ((this.getTipoUsuario() == TipoUsuario.TITULADO)) {
+
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else if (principal == null) {
+                //No hace falta comprobar nada ya que no hay usuario pero se permite insertat sin principal
+            } else {
+                throw new BusinessSecurityException("No tienes permiso para añadir un titulado");
+            }
+
+            businessTrue(this.empresa == null, "La empresa está prohibida para titulados");
+            businessTrue(this.centro == null, "El centro está prohibido para titulados");
+            businessTrue(this.titulado == null, "El titulado está prohibido al insertar el usuario");
+
+            if (this.titulado == null) {
+                businessTrue(this.estadoUsuario == null, "Sin titulado no puede haber estado");
+            } else {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El titulado debe estar aceptado");
+            }
+
+        }
+
+        return true;
+
+    }
+
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckUpdateTituladoAndEstado'", groups = RuleGroupPredefined.PreUpdate.class)
+    private boolean isCheckUpdateTituladoAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
+
+        if ((this.getTipoUsuario() == TipoUsuario.TITULADO)) {
+
+            //Comprobar la seguridad del principal que lo actualiza
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.TITULADO)) {
+                securityTrue(principal.getIdIdentity() == this.getIdIdentity(), "No puedes actualizar a un titulado que no sea tu mismo");
+            } else {
+                throw new BusinessSecurityException("Solo el titulado o los administradores pueden actualizar al titulado");
+            }
+
+            businessTrue(this.empresa == null, "La empresa está prohibida para titulados");
+            businessTrue(this.centro == null, "El centro está prohibido para titulados");
+
+            if ((this.getTitulado() != null) && (usuarioOriginal.getTitulado() != null)) {
+                businessTrue(this.getTitulado().getIdTitulado() != usuarioOriginal.getTitulado().getIdTitulado(), "No es posible cambiar de titulado");
+            } else if ((this.getTitulado() == null) && (usuarioOriginal.getTitulado() != null)) {
+                throw new BusinessException("No es posible quitar el titulado");
+            } else if ((this.getTitulado() != null) && (usuarioOriginal.getTitulado() == null)) {
+                //No pasa nada se le ha puesto el titulado
+            } else if ((this.getTitulado() == null) && (usuarioOriginal.getTitulado() == null)) {
+                //No pasa nada sigue sin titulado
+            } else {
+                throw new BusinessException("Error de lógica:" + (this.getTitulado()) + "," + (usuarioOriginal.getTitulado()));
+            }
+
+            if (this.titulado == null) {
+                businessTrue(this.estadoUsuario == null, "Sin titulado no puede haber estado");
+            } else {
+                businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "El titulado debe estar aceptado");
+            }
+
+        }
+
+        return true;
+
+    }
+
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertAdministradorAndEstado'", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isCheckInsertAdministradorAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
+        if ((this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+
+            //Comprobar la seguridad del principal que lo actualiza
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else {
+                throw new BusinessSecurityException("Solo los administradores pueden insertar otro administrador");
+            }
+
+            businessTrue(this.empresa == null, "La empresa está prohibida para los administradores");
+            businessTrue(this.centro == null, "El centro está prohibido para los administradores");
+            businessTrue(this.titulado == null, "El titulado está prohibido los administradores");
+            businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "Los administradores siempre deben estar aceptados");
+
+        }
+
+        return true;
+
+    }
+
+    @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckUpdateAdministradorAndEstado'", groups = RuleGroupPredefined.PreUpdate.class)
+    private boolean isCheckUpdateAdministradorAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
+        Usuario principal = (Usuario) ruleContext.getPrincipal();
+
+        if ((this.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+
+            //Comprobar la seguridad del principal que lo actualiza
+            if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
+                securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
+            } else {
+                throw new BusinessSecurityException("Solo los administradores pueden actualizar otro administrador");
+            }
+
+            businessTrue(this.empresa == null, "La empresa está prohibida para los administradores");
+            businessTrue(this.centro == null, "El centro está prohibido para los administradores");
+            businessTrue(this.titulado == null, "El titulado está prohibido los administradores");
+            businessTrue(this.estadoUsuario == EstadoUsuario.ACEPTADO, "Los administradores siempre deben estar aceptados");
+
+        }
+
+        return true;
+
     }
 
     @ConstraintRule(message = "No es posible añadir usuarios desarrolladores", groups = RuleGroupPredefined.PreInsert.class)
@@ -118,114 +414,10 @@ public class Usuario extends User implements Principal {
         }
     }
 
-    @ConstraintRule(message = "La empresa está prohibida si no es un usuario de una empresa")
-    private boolean isEmpresaProhibidaSiUsuarioNoEmpresa() {
-        if ((this.getTipoUsuario() != TipoUsuario.EMPRESA)) {
-            if (this.empresa != null) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    @ConstraintRule(message = "El centro está prohibido si no es un usuario de un centro")
-    private boolean isCentroProhibidoSiUsuarioNoCentro() {
-        if ((this.getTipoUsuario() != TipoUsuario.CENTRO)) {
-            if (this.centro != null) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    @ConstraintRule(message = "El titulado está prohibido si no es un usuario titulado")
-    private boolean isTituladoProhibidoSiUsuarioNoTitulado() {
-        if ((this.getTipoUsuario() != TipoUsuario.TITULADO)) {
-            if (this.titulado != null) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
     @ConstraintRule(message = "No es posible modificar el tipo del usuario de '${originalEntity?.tipoUsuario?.toString()}' a '${entity?.tipoUsuario?.toString()}'", groups = RuleGroupPredefined.PreUpdate.class)
     private boolean isModificadoTipoUsuario(RuleContext<Usuario> ruleContext) {
         if (ruleContext.getOriginalEntity().getTipoUsuario() != ruleContext.getEntity().getTipoUsuario()) {
             return false;
-        }
-
-        return true;
-    }
-
-    @ConstraintRule(message = "Error en el sistema de mensajes", groups = RuleGroupPredefined.PreUpdate.class)
-    private boolean isModificadoEstadoUsuario(RuleContext<Usuario> ruleContext) throws BusinessException {
-        Usuario usuario = ruleContext.getEntity();
-        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
-        Usuario principal = (Usuario) ruleContext.getPrincipal();
-
-        //REGLA SEGURIDAD:Comprobar si puede modificar el estado de un usuario
-        if (usuarioOriginal.getEstadoUsuario() != usuario.getEstadoUsuario()) {
-
-            if (principal.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                //Si el usuario no está aceptado no le dejamos cambiar el estado
-                throw new BusinessException("No es posible modificar el estado del usuario ya que TU no estás aceptado");
-            }
-
-            if (usuario.getIdIdentity() == principal.getIdIdentity()) {
-                throw new BusinessException("No te puedes modificar tu mismo el estado");
-            }
-
-            switch (usuario.getTipoUsuario()) {
-                case ADMINISTRADOR:
-                    throw new BusinessException("No es posible modificar el estado del administrador , ya que siempre es ACEPTADO");
-                case CENTRO:
-                    if ((principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
-
-                        if (usuario.getCentro().getIdCentro() != principal.getCentro().getIdCentro()) {
-                            throw new BusinessException("No puedes modificar el estado de usuarios que sean de centros distintos al tuyo");
-                        } else {
-                            return true;
-                        }
-
-                    } else if (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                        return true;
-                    } else {
-                        throw new BusinessException("Solo un profesor y un administrador pueden cambiar el estado del usuario pero era un " + principal.getTipoUsuario());
-                    }
-
-                case EMPRESA:
-                    throw new BusinessException("No es posible modificar el estado de un usuario de empresa , ya que siempre es ACEPTADO");
-                case TITULADO:
-                    throw new BusinessException("No es posible modificar el estado de un titulado , ya que siempre es ACEPTADO");
-                default:
-                    throw new RuntimeException("Tipo de usario desconocido:" + usuario.getTipoUsuario());
-            }
-        } else {
-            return true;
-        }
-    }
-
-    @ConstraintRule(message = "No se puede cambiar la empresa del usuario", groups = RuleGroupPredefined.PreUpdate.class)
-    private boolean isModificadoEmpresa(RuleContext<Usuario> ruleContext) throws BusinessException {
-        Usuario usuario = ruleContext.getEntity();
-        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
-
-        if (usuarioOriginal.getTipoUsuario() == TipoUsuario.EMPRESA) {
-            if (usuario.getEmpresa().getIdEmpresa() != usuarioOriginal.getEmpresa().getIdEmpresa()) {
-                return false;
-            } else {
-                return true;
-            }
-
         } else {
             return true;
         }
@@ -240,63 +432,6 @@ public class Usuario extends User implements Principal {
     private void quitarHashPassword() {
         //Nunca se retorna el Hash de la contraseña
         this.setPassword(null);
-    }
-
-    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
-    private void estadoInicialDelUsuario(RuleContext<Usuario> ruleContext) {
-        Usuario usuario = ruleContext.getEntity();
-        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
-        Usuario principal = (Usuario) ruleContext.getPrincipal();
-
-        switch (usuario.getTipoUsuario()) {
-            case TITULADO:
-                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-                break;
-            case CENTRO:
-                if (principal != null) {
-                    if (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                        usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-                    } else if (principal.getTipoUsuario() == TipoUsuario.CENTRO) {
-                        if (principal.getCentro().getIdCentro() == usuario.getCentro().getIdCentro()) {
-                            usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-                        } else {
-                            usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                        }
-                    } else {
-                        usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                    }
-                } else {
-                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                }
-
-                break;
-            case EMPRESA:
-                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-                break;
-            case ADMINISTRADOR:
-                usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    @ActionRule(groups = RuleGroupPredefined.PreUpdate.class)
-    private void pasarAPendienteAlCambiarDeCentro(RuleContext<Usuario> ruleContext) {
-        Usuario usuario = ruleContext.getEntity();
-        Usuario usuarioOriginal = ruleContext.getOriginalEntity();
-        Usuario principal = (Usuario) ruleContext.getPrincipal();
-
-        if (principal.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) {
-            if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
-                if (((usuarioOriginal.getCentro() == null) && (usuario.getCentro() != null))
-                        || ((usuarioOriginal.getCentro() != null) && (usuario.getCentro() == null))
-                        || (usuarioOriginal.getCentro().getIdCentro() != usuario.getCentro().getIdCentro())) {
-                    usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-                }
-            }
-        }
     }
 
     /**
@@ -481,5 +616,17 @@ public class Usuario extends User implements Principal {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    private void businessTrue(boolean valid, String message) throws BusinessException {
+        if (valid == false) {
+            throw new BusinessException(message);
+        }
+    }
+
+    private void securityTrue(boolean valid, String message) throws BusinessException {
+        if (valid == false) {
+            throw new BusinessSecurityException(message);
+        }
     }
 }

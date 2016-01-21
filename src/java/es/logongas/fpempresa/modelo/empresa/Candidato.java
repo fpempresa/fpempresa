@@ -17,8 +17,8 @@
 package es.logongas.fpempresa.modelo.empresa;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.ix3.service.rules.ActionRule;
-import es.logongas.ix3.service.rules.RuleGroupPredefined;
+import es.logongas.ix3.rule.ActionRule;
+import es.logongas.ix3.rule.RuleGroupPredefined;
 import java.util.Date;
 
 /**

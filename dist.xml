@@ -22,6 +22,22 @@
         <sonar />        
     </target>	
   
+  
+    <target name="jmeter" depends="-configureAnt" >
+		<jmeter
+			jmeterhome="${basedir}/jmeter"
+			testplan="${basedir}/jmeter/fpempresa.jmx"
+			resultlog="${basedir}/jmeter/fpempresa.jtl">
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.bytes" value="true"/>
+            <property name="file_format.testlog" value="${format}"/>
+            <property name="jmeter.save.saveservice.response_data.on_error" value="${funcMode}"/>
+		</jmeter>
+		<xslt in="${basedir}/jmeter/JMeterResults.jtl" out="${basedir}/jmeter/fpempresa.html" style="${basedir}/jmeter/extras/jmeter-results-report_21.xsl" force="true"/>
+		
+    </target>
+  
     <target name="-configureAnt">
         <echo>Configurando Ant</echo>
         <!-- Cargar todas las variables de entorno -->
@@ -44,6 +60,9 @@
         <!--tareas de sonar -->
         <taskdef resource="org/sonar/ant/antlib.xml"></taskdef>  
         
+		<!--tareas de JMeter -->
+		<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>		
+		
         <!-- Propiedades del proyecto -->
         <property file="nbproject/project.properties"/>     
     </target>

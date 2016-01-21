@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 
 /**
@@ -28,7 +29,7 @@ import es.logongas.ix3.dao.GenericDAO;
  * @author logongas
  */
 public interface CandidatoDAO extends GenericDAO<Candidato,Integer>  {
-    boolean isUsuarioCandidato(Usuario usuario,Oferta oferta);
-    Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest);
-    long getNumCandidatosOferta(Oferta oferta);
+    boolean isUsuarioCandidato(DataSession dataSession, Usuario usuario,Oferta oferta);
+    Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest);
+    long getNumCandidatosOferta(DataSession dataSession, Oferta oferta);
 }

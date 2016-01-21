@@ -20,6 +20,7 @@ package es.logongas.fpempresa.dao.comun.usuario.impl;
 
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,10 +32,10 @@ import org.hibernate.Session;
 public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Integer> implements UsuarioDAO  {
 
     @Override
-    public void updateEncryptedPassword(Usuario usuario,String encriptedPassword){
+    public void updateEncryptedPassword(DataSession dataSession, Usuario usuario,String encriptedPassword){
        
         
-        Session session=sessionFactory.getCurrentSession();
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
         
         Query query = session.createSQLQuery("UPDATE Usuario SET password=? WHERE idIdentity=?");
         query.setString(0, encriptedPassword);
@@ -44,8 +45,8 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
     }
     
     @Override  
-    public String getEncryptedPassword(Usuario usuario) {
-        Session session=sessionFactory.getCurrentSession();
+    public String getEncryptedPassword(DataSession dataSession, Usuario usuario) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
         
         Query query = session.createSQLQuery("SELECT password FROM Usuario WHERE idIdentity=?");
         query.setInteger(0, usuario.getIdIdentity());

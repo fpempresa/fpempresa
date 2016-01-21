@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +37,8 @@ import org.hibernate.Session;
 public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Integer> implements OfertaDAO {
 
     @Override
-    public List<Oferta> getOfertasUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         StringBuilder sb = new StringBuilder();
 
@@ -126,8 +127,8 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     }
 
     @Override
-    public List<Oferta> getOfertasInscritoUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<Oferta> getOfertasInscritoUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         StringBuilder sb = new StringBuilder();
         
@@ -160,8 +161,8 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     }
 
     @Override
-    public List<Oferta> getOfertasEmpresasCentro(Centro centro) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String hql = "SELECT oferta FROM Oferta AS oferta WHERE oferta.empresa.centro.idCentro=?";
 
@@ -172,8 +173,8 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     }
 
     @Override
-    public List<Oferta> getOfertasEmpresa(Empresa empresa) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String hql = "SELECT oferta FROM Oferta AS oferta WHERE oferta.empresa.idEmpresa=?";
 

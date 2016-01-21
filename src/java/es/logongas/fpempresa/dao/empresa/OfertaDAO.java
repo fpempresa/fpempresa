@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +32,8 @@ import java.util.List;
  */
 public interface OfertaDAO extends GenericDAO<Oferta,Integer> {
 
-    List<Oferta> getOfertasUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin);
-    List<Oferta> getOfertasInscritoUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin);
-    List<Oferta> getOfertasEmpresasCentro(Centro centro);
-    List<Oferta> getOfertasEmpresa(Empresa empresa);
+    List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin);
+    List<Oferta> getOfertasInscritoUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin);
+    List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro);
+    List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa);
 }

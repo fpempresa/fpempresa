@@ -20,13 +20,11 @@ import es.logongas.fpempresa.dao.estadisticas.EstadisticaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaEstadistica;
-import java.math.BigInteger;
+import es.logongas.ix3.dao.DataSession;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -34,24 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
-    @Autowired
-    SessionFactory sessionFactory;
-
-    private List<FamiliaEstadistica> getListFamiliaEstadisticaDAO(List<Object[]> datos) {
-        List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
-
-        for (Object[] dato : datos) {
-            FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1],((Number) dato[2]).intValue());
-
-            familiaEstadisticas.add(familiaEstadistica);
-        }
-
-        return familiaEstadisticas;
-    }
-
     @Override
-    public List<FamiliaEstadistica> getOfertasGroupByFamilia() {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -63,12 +46,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getOfertasGroupByFamilia(Empresa empresa) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Empresa empresa) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -83,12 +66,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, empresa.getIdEmpresa());
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getOfertasGroupByFamilia(Centro centro) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Centro centro) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -103,12 +86,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, centro.getIdCentro());
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getCandidatosGroupByFamilia() {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -119,12 +102,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(Empresa empresa) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Empresa empresa) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -138,12 +121,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, empresa.getIdEmpresa());
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(Centro centro) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Centro centro) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -157,12 +140,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, centro.getIdCentro());
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getTituladosGroupByFamilia() {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -173,12 +156,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
     @Override
-    public List<FamiliaEstadistica> getTituladosGroupByFamilia(Centro centro) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession, Centro centro) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
@@ -192,7 +175,20 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, centro.getIdCentro());
 
-        return getListFamiliaEstadisticaDAO(sqlQuery.list());
+        return getListFamiliaEstadistica(sqlQuery.list());
     }
 
+    private List<FamiliaEstadistica> getListFamiliaEstadistica(List<Object[]> datos) {
+        List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
+
+        for (Object[] dato : datos) {
+            FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1],((Number) dato[2]).intValue());
+
+            familiaEstadisticas.add(familiaEstadistica);
+        }
+
+        return familiaEstadisticas;
+    }    
+    
+    
 }

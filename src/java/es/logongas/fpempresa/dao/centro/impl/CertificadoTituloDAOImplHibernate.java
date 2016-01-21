@@ -21,6 +21,7 @@ import es.logongas.fpempresa.dao.centro.CertificadoTituloDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -32,8 +33,8 @@ import org.hibernate.Session;
 public class CertificadoTituloDAOImplHibernate extends GenericDAOImplHibernate<CertificadoTitulo, Integer> implements CertificadoTituloDAO {
 
     @Override
-    public CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(Centro centro, Ciclo ciclo, int anyo) {
-        Session session = sessionFactory.getCurrentSession();
+    public CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(DataSession dataSession, Centro centro, Ciclo ciclo, int anyo) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         if ((centro==null) || (ciclo==null)) {
             return null;

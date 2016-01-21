@@ -22,12 +22,9 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
-import es.logongas.ix3.dao.Filter;
-import es.logongas.ix3.dao.FilterOperator;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
-import es.logongas.ix3.dao.impl.PageImpl;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -39,8 +36,8 @@ import org.hibernate.Session;
 public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato, Integer> implements CandidatoDAO {
 
     @Override
-    public boolean isUsuarioCandidato(Usuario usuario, Oferta oferta) {
-        Session session = sessionFactory.getCurrentSession();
+    public boolean isUsuarioCandidato(DataSession dataSession, Usuario usuario, Oferta oferta) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String hql = "SELECT candidato FROM Candidato candidato WHERE candidato.usuario.idIdentity=? AND candidato.oferta.idOferta=?";
         Query query = session.createQuery(hql);
@@ -61,10 +58,10 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
     
     
     @Override
-    public long getNumCandidatosOferta(Oferta oferta) {
+    public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) {
         String hqlCount = " SELECT COUNT(candidato) FROM Candidato candidato WHERE candidato.oferta.idOferta=?";
 
-        Session session = sessionFactory.getCurrentSession();
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         Query queryCount = session.createQuery(hqlCount);
         queryCount.setParameter(0, oferta.getIdOferta());
@@ -75,7 +72,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
     
     
     @Override
-    public Page<Candidato> getCandidatosOferta(Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
+    public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
         String sqlPartFrom = " FROM Candidato candidato ";
         StringBuilder sqlPartWhere = new StringBuilder(" WHERE candidato.oferta.idOferta=? ");
         if (ocultarRechazados == true) {
@@ -118,7 +115,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
         }        
         parameters.add(maxAnyoTitulo);
         
-        Page page = getPaginatedQuery(sqlData,sqlCount,pageRequest,parameters);
+        Page page = getPaginatedQuery(dataSession, sqlData,sqlCount,pageRequest,parameters);
 
         return page;
     }

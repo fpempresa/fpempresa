@@ -20,6 +20,7 @@ package es.logongas.fpempresa.dao.centro;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 
 /**
@@ -28,6 +29,6 @@ import es.logongas.ix3.dao.GenericDAO;
  */
 public interface CertificadoTituloDAO extends GenericDAO<CertificadoTitulo,Integer>  {
     
-    CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(Centro centro,Ciclo ciclo,int anyo);
+    CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(DataSession dataSession, Centro centro,Ciclo ciclo,int anyo);
     
 }

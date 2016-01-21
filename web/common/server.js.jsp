@@ -1,31 +1,35 @@
+<%@ page session="false" %>
+<%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="es.logongas.ix3.dao.DataSession"%>
+<%@page import="es.logongas.ix3.dao.DataSessionFactory"%>
+<%@page import="es.logongas.ix3.core.Principal"%>
 <%@page import="es.logongas.fpempresa.modelo.comun.usuario.Usuario"%>
 <%@page import="es.logongas.ix3.web.json.beanmapper.BeanMapper"%>
 <%@page import="es.logongas.ix3.web.json.beanmapper.Expands"%>
-<%@ page session="false" %>
-<%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.web.security.WebSessionSidStorage"%>
 <%@page import="java.util.List"%>
-<%@page import="es.logongas.ix3.core.hibernate.HibernateUtil"%>
 <%@page import="es.logongas.ix3.security.authentication.AuthenticationManager"%>
 <%@page import="java.io.Serializable"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.StringWriter"%>
 <%@page import="es.logongas.ix3.web.json.JsonWriter"%>
 <%@page import="es.logongas.ix3.web.json.JsonFactory"%>
-<%@page import="es.logongas.ix3.security.authentication.Principal"%>
 <%@page import="org.springframework.beans.factory.config.AutowireCapableBeanFactory"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%
     String jsonUser;
     String error;
+    
+    DataSession dataSession=null;
     try {
-        HibernateUtil.openSessionAndBindToThread();
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
         JsonFactory jsonFactory = webApplicationContext.getBean(JsonFactory.class);
         AuthenticationManager authenticationManager = webApplicationContext.getBean(AuthenticationManager.class);
         WebSessionSidStorage webSessionSidStorage = webApplicationContext.getBean(WebSessionSidStorage.class);
-
+        DataSessionFactory dataSessionFactory = webApplicationContext.getBean(DataSessionFactory.class);
+        dataSession=dataSessionFactory.getDataSession();
+        
         Serializable sid = webSessionSidStorage.getSid(request,response);
         Principal principal;
         Expands expands=new Expands();
@@ -36,7 +40,7 @@
         if (sid == null) {
             principal = null;
         } else {
-            principal = authenticationManager.getPrincipalBySID(sid);
+            principal = authenticationManager.getPrincipalBySID(sid,dataSession);
         }
         
         if (principal != null) {
@@ -54,7 +58,9 @@
         ex.printStackTrace(printWriter);
         error = "throw new Error('Fallo al cargar el usuario desde el servidor:" + ex.toString() + "');\n/**" + stringWriter.toString() + "**/\n";
     } finally {
-         HibernateUtil.closeSessionAndUnbindFromThread();
+         if (dataSession!=null) {
+             dataSession.close();
+         }
     }
 
 %>

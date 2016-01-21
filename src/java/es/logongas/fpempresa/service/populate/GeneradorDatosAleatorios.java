@@ -5,6 +5,21 @@
  */
 package es.logongas.fpempresa.service.populate;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.centro.EstadoCentro;
+import es.logongas.fpempresa.modelo.comun.Contacto;
+import es.logongas.fpempresa.modelo.comun.geo.Direccion;
+import es.logongas.fpempresa.modelo.comun.geo.Municipio;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
+import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.service.CRUDService;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,6 +34,126 @@ import java.util.Random;
 public class GeneradorDatosAleatorios {
 
     private GeneradorDatosAleatorios() {
+    }
+
+    
+    static final public Usuario createUsuarioAleatorio(TipoUsuario tipoUsuario) {
+        Random random = new Random(System.currentTimeMillis());
+        String[] correos = {"gmail.com", "yahoo.com", "hotmail.com"};
+
+        Usuario usuario = new Usuario();
+
+        String ape1 = GeneradorDatosAleatorios.getApellidoPersona();
+        String ape2 = GeneradorDatosAleatorios.getApellidoPersona();
+        String nombre = GeneradorDatosAleatorios.getNombrePersona();
+        String email = ape1.substring(0, 3) + ape2.substring(0, 3) + nombre.substring(0, 3) + random.nextInt(9999) + "@" + GeneradorDatosAleatorios.getAleatorio(correos);
+
+        usuario.setApellidos(ape1 + " " + ape2);
+        usuario.setNombre(nombre);
+        usuario.setEmail(email.toLowerCase());
+        usuario.setPassword("a");
+        usuario.setTipoUsuario(tipoUsuario);
+        usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+
+        return usuario;
+    }    
+    
+    static final public Centro createCentroAleatorio() {
+        Centro centro = new Centro();
+        centro.setEstadoCentro(EstadoCentro.PERTENECE_A_FPEMPRESA);
+        centro.setNombre(GeneradorDatosAleatorios.getNombreCentroAleatorio());
+        centro.setDireccion(createDireccionAleatoria());
+        centro.setContacto(createContactoCentroAleatorio(centro));
+
+        return centro;
+    }
+
+    static final public Empresa createEmpresaAleatoria(Centro centro) {
+        String[] tiposEmpresa = {"Sociedad Anonima", "Sociedad Limitada", "Cooperativa", "Sociedad Laboral"};
+        Centro[] centros = {createCentroAleatorio(), null};
+
+        String nombreEmpresa = GeneradorDatosAleatorios.getNombreEmpresa() + " " + GeneradorDatosAleatorios.getApellidoPersona();
+        Empresa empresa = new Empresa();
+
+        empresa.setNombreComercial(nombreEmpresa);
+        empresa.setRazonSocial(nombreEmpresa + " " + GeneradorDatosAleatorios.getAleatorio(tiposEmpresa));
+        empresa.setDireccion(createDireccionAleatoria());
+        empresa.setContacto(createContactoEmpresaAleatorio(empresa));
+        empresa.setCentro(centro);
+
+        if (empresa.getCentro() != null) {
+            empresa.getDireccion().setMunicipio(getMunicipioAleatorio(empresa.getCentro().getDireccion().getMunicipio().getProvincia()));
+        }
+
+        empresa.setCif(GeneradorDatosAleatorios.getCif());
+
+        return empresa;
+    }
+
+    static final public Direccion createDireccionAleatoria() {
+        Direccion direccion = new Direccion();
+        direccion.setDatosDireccion(GeneradorDatosAleatorios.getDireccion());
+        direccion.setMunicipio(getMunicipioAleatorio());
+
+        return direccion;
+    }
+
+    static final public Contacto createContactoAleatorio() {
+        Contacto contacto = new Contacto();
+        contacto.setPersona(GeneradorDatosAleatorios.getNombrePersona() + " " + GeneradorDatosAleatorios.getApellidoPersona() + " " + GeneradorDatosAleatorios.getApellidoPersona());
+        contacto.setTelefono(GeneradorDatosAleatorios.getTelefono());
+        contacto.setFax(GeneradorDatosAleatorios.getTelefono());
+
+        return contacto;
+    }
+
+    static final public Provincia getProvinciaAleatoria() {
+        Random random = new Random();
+
+        int i = random.nextInt(provincias.length);
+        String nombre = provincias[i];
+
+        Provincia provincia = new Provincia();
+        provincia.setIdProvincia(i + 1);
+        provincia.setDescripcion(nombre);
+        return provincia;
+    }
+
+    static final public Municipio getMunicipioAleatorio() {
+        Random random = new Random();
+
+        int i = random.nextInt(municipios.length);
+        String nombre = municipios[i];
+
+        Municipio municipio = new Municipio();
+        municipio.setIdMunicipio(i + 1);
+        municipio.setDescripcion(nombre);
+        municipio.setProvincia(getProvinciaAleatoria());
+        return municipio;
+    }
+
+    static final public Municipio getMunicipioAleatorio(Provincia provincia) {
+        Municipio municipio = getMunicipioAleatorio();
+        municipio.setProvincia(provincia);
+        return municipio;
+    }
+
+    static final public Contacto createContactoEmpresaAleatorio(Empresa empresa) {
+        Contacto contacto = createContactoAleatorio();
+
+        contacto.setUrl("http://www." + empresa.getNombreComercial().replaceAll("\\s+", "").toLowerCase() + ".com");
+        contacto.setEmail("info@" + empresa.getNombreComercial().replaceAll("\\s+", "").toLowerCase() + ".com");
+
+        return contacto;
+    }
+
+    static final public Contacto createContactoCentroAleatorio(Centro centro) {
+        Contacto contacto = createContactoAleatorio();
+
+        contacto.setUrl("http://www." + centro.getNombre().replaceAll("\\s+", "").toLowerCase() + ".com");
+        contacto.setEmail("secretaria@" + centro.getNombre().replaceAll("\\s+", "").toLowerCase() + ".com");
+
+        return contacto;
     }
 
     static final public String getNombreEmpresa() {
@@ -43,7 +178,7 @@ public class GeneradorDatosAleatorios {
 
     static final public String getNombreCentroAleatorio() {
         String[] tiposCentro = {"IES", "CIPFP"};
-        String[] tiposPersona = {"Pintor", "","","Botanico","Literato","Arquitecto","Poeta","Escultor","","","","","","",""};
+        String[] tiposPersona = {"Pintor", "", "", "Botanico", "Literato", "Arquitecto", "Poeta", "Escultor", "", "", "", "", "", "", ""};
         return getAleatorio(tiposCentro) + " " + getAleatorio(tiposPersona) + " " + getNombrePersona() + " " + getApellidoPersona();
     }
 
@@ -55,9 +190,9 @@ public class GeneradorDatosAleatorios {
     }
 
     static final public String getResumenPersona() {
-        String[] pre={"Especializado en","Puedo","Me gusta","Mi pasión es","Mi hobby es","Disfruto al","Siempre he querido","He trabajo en"};
-        
-        return getAleatorio(pre) + " "+ getAleatorio(verbo) + " " + getAleatorio(concepto) + " " + getAleatorio(complemento);
+        String[] pre = {"Especializado en", "Puedo", "Me gusta", "Mi pasión es", "Mi hobby es", "Disfruto al", "Siempre he querido", "He trabajo en"};
+
+        return getAleatorio(pre) + " " + getAleatorio(verbo) + " " + getAleatorio(concepto) + " " + getAleatorio(complemento);
     }
 
     static final public String getCarreraUniversitaria() {
@@ -156,6 +291,100 @@ public class GeneradorDatosAleatorios {
         return datos.get(random.nextInt(datos.size()));
     }
 
+    private static final String[] municipios = {"Tobarra",
+        "Valdeganga",
+        "Vianos",
+        "Villa de Ves",
+        "Villalgordo del Júcar",
+        "Villamalea",
+        "Villapalacios",
+        "Villarrobledo",
+        "Villatoya",
+        "Villavaliente",
+        "Villaverde de Guadalimar",
+        "Viveros",
+        "Yeste",
+        "Pozo Cañada",
+        "Adsubia",
+        "Agost",
+        "Agres",
+        "Aigües",
+        "Albatera",
+        "Alcalalí",
+        "Alcocer de Planes",
+        "Alcoleja",
+        "Alcoy/Alcoi",
+        "Alfafara",
+        "Alfàs del Pi",
+        "Algorfa",
+        "Algueña",
+        "Alicante/Alacant",
+        "Almoradí",
+        "Almudaina",
+        "Alqueria",
+        "Altea",
+        "Aspe",
+        "Balones",
+        "Banyeres de Mariola",
+        "Benasau",
+        "Beneixama",
+        "Benejúzar"
+
+    };
+
+    private static final String[] provincias = {"Araba/Álava",
+        "Albacete",
+        "Alicante/Alacant",
+        "Almería",
+        "Ávila",
+        "Badajoz",
+        "Balears, Illes",
+        "Barcelona",
+        "Burgos",
+        "Cáceres",
+        "Cádiz",
+        "Castellón/Castelló",
+        "Ciudad Real",
+        "Córdoba",
+        "Coruña, A",
+        "Cuenca",
+        "Girona",
+        "Granada",
+        "Guadalajara",
+        "Gipuzkoa",
+        "Huelva",
+        "Huesca",
+        "Jaén",
+        "León",
+        "Lleida",
+        "Rioja, La",
+        "Lugo",
+        "Madrid",
+        "Málaga",
+        "Murcia",
+        "Navarra",
+        "Ourense",
+        "Asturias",
+        "Palencia",
+        "Palmas, Las",
+        "Pontevedra",
+        "Salamanca",
+        "Santa Cruz de Tenerife",
+        "Cantabria",
+        "Segovia",
+        "Sevilla",
+        "Soria",
+        "Tarragona",
+        "Teruel",
+        "Toledo",
+        "Valencia/Valéncia",
+        "Valladolid",
+        "Bizkaia",
+        "Zamora",
+        "Zaragoza",
+        "Ceuta",
+        "Melilla"};
+    
     private static final String[] direcciones = {"c/San Vicente Ferrer, 15 bajo  ",
         "c/ San Pedro, 12",
         "c/ Luis Oliag, 69 1",

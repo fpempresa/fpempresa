@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.service.CRUDService;
@@ -38,80 +39,80 @@ import java.util.List;
 public class CertificadoTituloCRUDServiceImpl  extends CRUDServiceImpl<CertificadoTitulo, Integer> implements  CRUDService<CertificadoTitulo, Integer>  {
 
     @Override
-    public void insert(CertificadoTitulo certificadoTitulo) throws BusinessException {
+    public CertificadoTitulo insert(DataSession dataSession,CertificadoTitulo certificadoTitulo) throws BusinessException {
         GenericDAO<FormacionAcademica,Integer> formacionAcademicaDAO=daoFactory.getDAO(FormacionAcademica.class);
         
-        transactionManager.begin();
+        transactionManager.begin(dataSession);
 
-        List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaFromCertificadoTitulo(certificadoTitulo);
+        List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaFromCertificadoTitulo(dataSession,certificadoTitulo);
      
         for(FormacionAcademica formacionAcademica:formacionesAcademicas) {
             formacionAcademica.setCertificadoTitulo(true);
-            formacionAcademicaDAO.update(formacionAcademica);
+            formacionAcademicaDAO.update(dataSession,formacionAcademica);
         }
     
-        daoFactory.getDAO(CertificadoTitulo.class).insert(certificadoTitulo);
+        CertificadoTitulo certificadoTitulo1= daoFactory.getDAO(CertificadoTitulo.class).insert(dataSession,certificadoTitulo);
 
-        transactionManager.commit();
+        transactionManager.commit(dataSession);
+        
+        return certificadoTitulo;
     }
 
     @Override
-    public boolean update(CertificadoTitulo certificadoTitulo) throws BusinessException {
+    public CertificadoTitulo update(DataSession dataSession,CertificadoTitulo certificadoTitulo) throws BusinessException {
         
         GenericDAO<FormacionAcademica,Integer> formacionAcademicaDAO=daoFactory.getDAO(FormacionAcademica.class);
         
-        CertificadoTitulo certificadoTituloOriginal=getDAO().readOriginal(certificadoTitulo.getIdCertificadoTitulo());
+        CertificadoTitulo certificadoTituloOriginal=getDAO().readOriginal(dataSession,certificadoTitulo.getIdCertificadoTitulo());
         
-        transactionManager.begin();
+        transactionManager.begin(dataSession);
 
-        List<FormacionAcademica> formacionesAcademicasOriginales=getFormacionAcademicaFromCertificadoTitulo(certificadoTituloOriginal);
+        List<FormacionAcademica> formacionesAcademicasOriginales=getFormacionAcademicaFromCertificadoTitulo(dataSession,certificadoTituloOriginal);
      
         for(FormacionAcademica formacionAcademica:formacionesAcademicasOriginales) {
             formacionAcademica.setCertificadoTitulo(false);
-            formacionAcademicaDAO.update(formacionAcademica);
+            formacionAcademicaDAO.update(dataSession,formacionAcademica);
         }        
         
-        List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaFromCertificadoTitulo(certificadoTitulo);
+        List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaFromCertificadoTitulo(dataSession,certificadoTitulo);
      
         for(FormacionAcademica formacionAcademica:formacionesAcademicas) {
             formacionAcademica.setCertificadoTitulo(true);
-            formacionAcademicaDAO.update(formacionAcademica);
+            formacionAcademicaDAO.update(dataSession,formacionAcademica);
         }
     
-        boolean update=daoFactory.getDAO(CertificadoTitulo.class).update(certificadoTitulo);
+        CertificadoTitulo update=daoFactory.getDAO(CertificadoTitulo.class).update(dataSession,certificadoTitulo);
 
-        transactionManager.commit();        
+        transactionManager.commit(dataSession);        
         
         
         return update;
     }
 
     @Override
-    public boolean delete(Integer idCertificadoTitulo) throws BusinessException {
+    public boolean delete(DataSession dataSession,CertificadoTitulo certificadoTitulo) throws BusinessException {
         
         GenericDAO<FormacionAcademica,Integer> formacionAcademicaDAO=daoFactory.getDAO(FormacionAcademica.class);
         
-        CertificadoTitulo certificadoTituloOriginal=getDAO().readOriginal(idCertificadoTitulo);
-        
-        transactionManager.begin();
+        transactionManager.begin(dataSession);
 
-        List<FormacionAcademica> formacionesAcademicasOriginales=getFormacionAcademicaFromCertificadoTitulo(certificadoTituloOriginal);
+        List<FormacionAcademica> formacionesAcademicasOriginales=getFormacionAcademicaFromCertificadoTitulo(dataSession,certificadoTitulo);
      
         for(FormacionAcademica formacionAcademica:formacionesAcademicasOriginales) {
             formacionAcademica.setCertificadoTitulo(false);
-            formacionAcademicaDAO.update(formacionAcademica);
+            formacionAcademicaDAO.update(dataSession,formacionAcademica);
         }        
     
-        boolean delete=daoFactory.getDAO(CertificadoTitulo.class).delete(idCertificadoTitulo);
+        boolean delete=daoFactory.getDAO(CertificadoTitulo.class).delete(dataSession,certificadoTitulo);
 
-        transactionManager.commit();        
+        transactionManager.commit(dataSession);        
         
         
         return delete; 
     }
     
     
-    private List<FormacionAcademica> getFormacionAcademicaFromCertificadoTitulo(CertificadoTitulo certificadoTitulo) throws BusinessException {
+    private List<FormacionAcademica> getFormacionAcademicaFromCertificadoTitulo(DataSession dataSession,CertificadoTitulo certificadoTitulo) throws BusinessException {
         List<FormacionAcademica> formacionesAcademicas=new ArrayList<FormacionAcademica>();
         Calendar calendar = new GregorianCalendar();
             
@@ -124,7 +125,7 @@ public class CertificadoTituloCRUDServiceImpl  extends CRUDServiceImpl<Certifica
         filters.add(new Filter("ciclo.idCiclo",certificadoTitulo.getCiclo().getIdCiclo()));
         
         
-        List<FormacionAcademica> formacionesAcademicasRaw=formacionAcademicaDAO.search(filters);
+        List<FormacionAcademica> formacionesAcademicasRaw=formacionAcademicaDAO.search(dataSession,filters,null,null);
         for(FormacionAcademica formacionAcademica:formacionesAcademicasRaw) {
             calendar.setTime(formacionAcademica.getFecha());
             int anyo=calendar.get(Calendar.YEAR);

@@ -39,11 +39,11 @@ import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.modelo.titulado.TituloIdioma;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
-import es.logongas.ix3.service.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,38 +67,38 @@ public class PopulateServiceImpl implements PopulateService {
     private CRUDServiceFactory crudServiceFactory;
 
     @Override
-    public Centro createCentroAleatorio() throws BusinessException {
+    public Centro createCentroAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
 
-        Centro centro = centroService.create();
+        Centro centro = centroService.create(dataSession,null);
 
         
         centro.setEstadoCentro(EstadoCentro.PERTENECE_A_FPEMPRESA);
         centro.setNombre(GeneradorDatosAleatorios.getNombreCentroAleatorio());
-        centro.setDireccion(createDireccionAleatoria());
-        centro.setContacto(createContactoCentroAleatorio(centro));
+        centro.setDireccion(createDireccionAleatoria(dataSession));
+        centro.setContacto(createContactoCentroAleatorio(dataSession,centro));
         
         return centro;
     }
 
     @Override
-    public Empresa createEmpresaAleatoria() throws BusinessException {
+    public Empresa createEmpresaAleatoria(DataSession dataSession) throws BusinessException {
         String[] tiposEmpresa = {"Sociedad Anonima", "Sociedad Limitada", "Cooperativa", "Sociedad Laboral"};
-        Centro[] centros = {getCentroAleatorio(), null};
+        Centro[] centros = {getCentroAleatorio(dataSession), null};
 
         CRUDService<Empresa, Integer> empresaService = crudServiceFactory.getService(Empresa.class);
 
         String nombreEmpresa = GeneradorDatosAleatorios.getNombreEmpresa() + " " + GeneradorDatosAleatorios.getApellidoPersona();
-        Empresa empresa = empresaService.create();
+        Empresa empresa = empresaService.create(dataSession,null);
 
         empresa.setNombreComercial(nombreEmpresa);
         empresa.setRazonSocial(nombreEmpresa + " " + GeneradorDatosAleatorios.getAleatorio(tiposEmpresa));
-        empresa.setDireccion(createDireccionAleatoria());
+        empresa.setDireccion(createDireccionAleatoria(dataSession));
         empresa.setContacto(createContactoEmpresaAleatorio(empresa));
         empresa.setCentro((Centro) GeneradorDatosAleatorios.getAleatorio(centros));
 
         if (empresa.getCentro() != null) {
-            empresa.getDireccion().setMunicipio(getMunicipioAleatorio(empresa.getCentro().getDireccion().getMunicipio().getProvincia()));
+            empresa.getDireccion().setMunicipio(getMunicipioAleatorio(dataSession,empresa.getCentro().getDireccion().getMunicipio().getProvincia()));
         }
 
         empresa.setCif(GeneradorDatosAleatorios.getCif());
@@ -107,12 +107,12 @@ public class PopulateServiceImpl implements PopulateService {
     }
 
     @Override
-    public Oferta createOfertaAleatoria(Empresa empresa) throws BusinessException {
+    public Oferta createOfertaAleatoria(DataSession dataSession,Empresa empresa) throws BusinessException {
         CRUDService<Oferta, Integer> ofertaService = crudServiceFactory.getService(Oferta.class);
-        Oferta oferta = ofertaService.create();
+        Oferta oferta = ofertaService.create(dataSession,null);
 
         if (empresa == null) {
-            empresa = getEmpresaAleatoria();
+            empresa = getEmpresaAleatoria(dataSession);
         }
 
         Boolean[] cerradas = {false, false, false, true};
@@ -121,9 +121,9 @@ public class PopulateServiceImpl implements PopulateService {
 
         oferta.setEmpresa(empresa);
         oferta.setCerrada((Boolean) GeneradorDatosAleatorios.getAleatorio(cerradas));
-        oferta.setFamilia(getFamiliaAleatoria());
+        oferta.setFamilia(getFamiliaAleatoria(dataSession));
         Set<Ciclo> ciclos = new HashSet<Ciclo>();
-        ciclos.add(getCicloAleatorio(oferta.getFamilia()));
+        ciclos.add(getCicloAleatorio(dataSession,oferta.getFamilia()));
         oferta.setCiclos(ciclos);
 
         Contacto contacto = new Contacto();
@@ -132,19 +132,19 @@ public class PopulateServiceImpl implements PopulateService {
         }
         oferta.setContacto(contacto);
         oferta.setDescripcion("Oferta laboral para trabajar como '" + puesto + "' a jornada completa. \nNo es necesaria experiencia.");
-        oferta.setMunicipio(getMunicipioAleatorio(empresa.getDireccion().getMunicipio().getProvincia()));
+        oferta.setMunicipio(getMunicipioAleatorio(dataSession,empresa.getDireccion().getMunicipio().getProvincia()));
         oferta.setPuesto(puesto);
 
         return oferta;
     }
 
     @Override
-    public Usuario createUsuarioAleatorio(TipoUsuario tipoUsuario) throws BusinessException {
+    public Usuario createUsuarioAleatorio(DataSession dataSession,TipoUsuario tipoUsuario) throws BusinessException {
         Random random = new Random(System.currentTimeMillis());
         CRUDService<Usuario, Integer> usuarioService = crudServiceFactory.getService(Usuario.class);
         String[] correos = {"gmail.com", "yahoo.com", "hotmail.com"};
 
-        Usuario usuario = usuarioService.create();
+        Usuario usuario = usuarioService.create(dataSession,null);
 
         String ape1 = GeneradorDatosAleatorios.getApellidoPersona();
         String ape2 = GeneradorDatosAleatorios.getApellidoPersona();
@@ -159,25 +159,25 @@ public class PopulateServiceImpl implements PopulateService {
         usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         switch (usuario.getTipoUsuario()) {
             case EMPRESA:
-                usuario.setEmpresa(getEmpresaSinCentroAleatoria());
+                usuario.setEmpresa(getEmpresaSinCentroAleatoria(dataSession));
                 break;
             case CENTRO:
-                usuario.setCentro(getCentroAleatorio());
+                usuario.setCentro(getCentroAleatorio(dataSession));
                 break;
             case TITULADO:
-                usuario.setTitulado(createTituladoAleatorio());
+                usuario.setTitulado(createTituladoAleatorio(dataSession));
                 break;
         }
 
         return usuario;
     }
 
-    private Titulado createTituladoAleatorio() throws BusinessException {
+    private Titulado createTituladoAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Titulado, Integer> tituladoService = crudServiceFactory.getService(Titulado.class);
-        Titulado titulado = tituladoService.create();
+        Titulado titulado = tituladoService.create(dataSession,null);
         String[] permisosConducir = {"A", "A", "B", "B", "C1", "C", null, null, null, null, null, null, null, null, null, null, null, null, null, null};
 
-        titulado.setDireccion(createDireccionAleatoria());
+        titulado.setDireccion(createDireccionAleatoria(dataSession));
         titulado.setFechaNacimiento(GeneradorDatosAleatorios.getFecha(18, 35));
         titulado.setTipoDocumento(TipoDocumento.NIF_NIE);
         titulado.setNumeroDocumento(GeneradorDatosAleatorios.getNif());
@@ -185,9 +185,9 @@ public class PopulateServiceImpl implements PopulateService {
         titulado.setTelefono(GeneradorDatosAleatorios.getTelefono());
         titulado.setTelefonoAlternativo(GeneradorDatosAleatorios.getTelefono());
         titulado.setResumen(GeneradorDatosAleatorios.getResumenPersona());
-        titulado.setFormacionesAcademicas(createFormacionesAcademicasAleatorias(titulado));
-        titulado.setExperienciasLaborales(createExperienciasLaboralesAleatorias(titulado));
-        titulado.setTitulosIdiomas(createTitulosIdiomasAleatorios(titulado));
+        titulado.setFormacionesAcademicas(createFormacionesAcademicasAleatorias(dataSession,titulado));
+        titulado.setExperienciasLaborales(createExperienciasLaboralesAleatorias(dataSession,titulado));
+        titulado.setTitulosIdiomas(createTitulosIdiomasAleatorios(dataSession,titulado));
 
         return titulado;
     }
@@ -210,7 +210,7 @@ public class PopulateServiceImpl implements PopulateService {
         return contacto;
     }    
 
-    private Contacto createContactoCentroAleatorio(Centro centro) throws BusinessException {
+    private Contacto createContactoCentroAleatorio(DataSession dataSession, Centro centro) throws BusinessException {
         Contacto contacto = createContactoAleatorio();
 
         contacto.setUrl("http://www." + centro.getNombre().replaceAll("\\s+", "").toLowerCase()+".com");
@@ -219,21 +219,21 @@ public class PopulateServiceImpl implements PopulateService {
         return contacto;
     }    
     
-    private Set<FormacionAcademica> createFormacionesAcademicasAleatorias(Titulado titulado) throws BusinessException {
+    private Set<FormacionAcademica> createFormacionesAcademicasAleatorias(DataSession dataSession, Titulado titulado) throws BusinessException {
         Set<FormacionAcademica> formacionesAcademicas = new HashSet<FormacionAcademica>();
 
         Integer[] numPosiblesTitulos = {1, 1, 1, 2, 2, 3, 3};
         int numTitulos = (Integer) GeneradorDatosAleatorios.getAleatorio(numPosiblesTitulos);
         for (int i = 0; i < numTitulos; i++) {
-            formacionesAcademicas.add(createFormacionAcademicaAleatoria(titulado));
+            formacionesAcademicas.add(createFormacionAcademicaAleatoria(dataSession,titulado));
         }
 
         return formacionesAcademicas;
     }
 
-    private FormacionAcademica createFormacionAcademicaAleatoria(Titulado titulado) throws BusinessException {
+    private FormacionAcademica createFormacionAcademicaAleatoria(DataSession dataSession, Titulado titulado) throws BusinessException {
         CRUDService<FormacionAcademica, Integer> formacionAcademicaService = crudServiceFactory.getService(FormacionAcademica.class);
-        FormacionAcademica formacionAcademica = formacionAcademicaService.create();
+        FormacionAcademica formacionAcademica = formacionAcademicaService.create(dataSession,null);
         TipoFormacionAcademica[] tipoFormacionAcademica = {TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.TITULO_UNIVERSITARIO};
         Boolean[] nuevoCentro = {false, false, false, false, false, false, true};
 
@@ -243,16 +243,16 @@ public class PopulateServiceImpl implements PopulateService {
         switch (formacionAcademica.getTipoFormacionAcademica()) {
             case CICLO_FORMATIVO:
 
-                formacionAcademica.setCiclo(getCicloAleatorio());
+                formacionAcademica.setCiclo(getCicloAleatorio(dataSession));
 
                 if ((boolean) GeneradorDatosAleatorios.getAleatorio(nuevoCentro)) {
                     CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
-                    formacionAcademica.setCentro(centroService.read(-1));
+                    formacionAcademica.setCentro(centroService.read(dataSession,-1));
                     formacionAcademica.setOtroCentro(GeneradorDatosAleatorios.getNombreCentroAleatorio());
                 } else {
-                    Centro centro = getCentroAleatorio(titulado.getDireccion().getMunicipio().getProvincia());
+                    Centro centro = getCentroAleatorio(dataSession,titulado.getDireccion().getMunicipio().getProvincia());
                     if (centro == null) {
-                        centro = getCentroAleatorio();
+                        centro = getCentroAleatorio(dataSession);
                     }
                     formacionAcademica.setCentro(centro);
                     Boolean[] certificadoTitulo = {true, true, false};
@@ -261,7 +261,7 @@ public class PopulateServiceImpl implements PopulateService {
 
                 break;
             case TITULO_UNIVERSITARIO:
-                formacionAcademica.setOtroCentro("Universidad de " + getProvinciaAleatoria().getDescripcion());
+                formacionAcademica.setOtroCentro("Universidad de " + getProvinciaAleatoria(dataSession).getDescripcion());
                 formacionAcademica.setOtroTitulo(GeneradorDatosAleatorios.getCarreraUniversitaria());
                 break;
             default:
@@ -271,21 +271,21 @@ public class PopulateServiceImpl implements PopulateService {
         return formacionAcademica;
     }
 
-    private Set<ExperienciaLaboral> createExperienciasLaboralesAleatorias(Titulado titulado) throws BusinessException {
+    private Set<ExperienciaLaboral> createExperienciasLaboralesAleatorias(DataSession dataSession, Titulado titulado) throws BusinessException {
         Set<ExperienciaLaboral> experienciasLaborales = new HashSet<ExperienciaLaboral>();
 
         Integer[] numPosiblesExperienciasLaborales = {0, 0, 0, 0, 1, 1, 1, 2, 2};
         int numExperienciasLaborales = (Integer) GeneradorDatosAleatorios.getAleatorio(numPosiblesExperienciasLaborales);
         for (int i = 0; i < numExperienciasLaborales; i++) {
-            experienciasLaborales.add(createExperienciaLaboralAleatoria(titulado));
+            experienciasLaborales.add(createExperienciaLaboralAleatoria(dataSession, titulado));
         }
 
         return experienciasLaborales;
     }
 
-    private ExperienciaLaboral createExperienciaLaboralAleatoria(Titulado titulado) throws BusinessException {
+    private ExperienciaLaboral createExperienciaLaboralAleatoria(DataSession dataSession, Titulado titulado) throws BusinessException {
         CRUDService<ExperienciaLaboral, Integer> experienciaLaboralService = crudServiceFactory.getService(ExperienciaLaboral.class);
-        ExperienciaLaboral experienciaLaboral = experienciaLaboralService.create();
+        ExperienciaLaboral experienciaLaboral = experienciaLaboralService.create(dataSession,null);
         Random random = new Random();
 
         Calendar calendarFin = new GregorianCalendar();
@@ -315,21 +315,21 @@ public class PopulateServiceImpl implements PopulateService {
         return experienciaLaboral;
     }
 
-    private Set<TituloIdioma> createTitulosIdiomasAleatorios(Titulado titulado) throws BusinessException {
+    private Set<TituloIdioma> createTitulosIdiomasAleatorios(DataSession dataSession, Titulado titulado) throws BusinessException {
         Set<TituloIdioma> titulosIdiomas = new HashSet<TituloIdioma>();
 
         Integer[] numPosiblesIdiomas = {0, 0, 0, 1, 1, 2};
         int numIdiomas = (Integer) GeneradorDatosAleatorios.getAleatorio(numPosiblesIdiomas);
         for (int i = 0; i < numIdiomas; i++) {
-            titulosIdiomas.add(createTituloIdiomaAleatorio(titulado));
+            titulosIdiomas.add(createTituloIdiomaAleatorio(dataSession,titulado));
         }
 
         return titulosIdiomas;
     }
 
-    private TituloIdioma createTituloIdiomaAleatorio(Titulado titulado) throws BusinessException {
+    private TituloIdioma createTituloIdiomaAleatorio(DataSession dataSession, Titulado titulado) throws BusinessException {
         CRUDService<TituloIdioma, Integer> tituloIdiomaService = crudServiceFactory.getService(TituloIdioma.class);
-        TituloIdioma tituloIdioma = tituloIdiomaService.create();
+        TituloIdioma tituloIdioma = tituloIdiomaService.create(dataSession,null);
         String[] otroIdioma = {"Chino", "Ruso", "Armenio", "Italiano", "Árabe", "Griego", "Japonés"};
 
         tituloIdioma.setTitulado(titulado);
@@ -343,96 +343,96 @@ public class PopulateServiceImpl implements PopulateService {
         return tituloIdioma;
     }
 
-    private Direccion createDireccionAleatoria() throws BusinessException {
+    private Direccion createDireccionAleatoria(DataSession dataSession) throws BusinessException {
         Direccion direccion = new Direccion();
         direccion.setDatosDireccion(GeneradorDatosAleatorios.getDireccion());
-        direccion.setMunicipio(getMunicipioAleatorio());
+        direccion.setMunicipio(getMunicipioAleatorio(dataSession));
 
         return direccion;
     }
 
-    private Familia getFamiliaAleatoria() throws BusinessException {
+    private Familia getFamiliaAleatoria(DataSession dataSession) throws BusinessException {
         CRUDService<Familia, Integer> familiaService = crudServiceFactory.getService(Familia.class);
 
-        Familia familia = GeneradorDatosAleatorios.getAleatorio(familiaService.search(null));
+        Familia familia = GeneradorDatosAleatorios.getAleatorio(familiaService.search(dataSession, null,null,null));
 
         return familia;
     }
 
-    private Ciclo getCicloAleatorio() throws BusinessException {
+    private Ciclo getCicloAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Ciclo, Integer> cicloService = crudServiceFactory.getService(Ciclo.class);
 
-        Ciclo ciclo = GeneradorDatosAleatorios.getAleatorio(cicloService.search(null));
+        Ciclo ciclo = GeneradorDatosAleatorios.getAleatorio(cicloService.search(dataSession, null,null,null));
 
         return ciclo;
     }
     
-    private Ciclo getCicloAleatorio(Familia familia) throws BusinessException {
+    private Ciclo getCicloAleatorio(DataSession dataSession, Familia familia) throws BusinessException {
         CRUDService<Ciclo, Integer> cicloService = crudServiceFactory.getService(Ciclo.class);
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new Filter("familia.idFamilia", familia.getIdFamilia()));
         
-        Ciclo ciclo = GeneradorDatosAleatorios.getAleatorio(cicloService.search(filters));
+        Ciclo ciclo = GeneradorDatosAleatorios.getAleatorio(cicloService.search(dataSession, filters,null,null));
 
         return ciclo;
     }
         
 
-    private Provincia getProvinciaAleatoria() throws BusinessException {
+    private Provincia getProvinciaAleatoria(DataSession dataSession) throws BusinessException {
         CRUDService<Provincia, Integer> provinciaService = crudServiceFactory.getService(Provincia.class);
 
-        Provincia provincia = GeneradorDatosAleatorios.getAleatorio(provinciaService.search(null));
+        Provincia provincia = GeneradorDatosAleatorios.getAleatorio(provinciaService.search(dataSession, null,null,null));
 
         return provincia;
     }
 
-    private Empresa getEmpresaAleatoria() throws BusinessException {
+    private Empresa getEmpresaAleatoria(DataSession dataSession) throws BusinessException {
         CRUDService<Empresa, Integer> empresaService = crudServiceFactory.getService(Empresa.class);
 
-        Empresa empresa = GeneradorDatosAleatorios.getAleatorio(empresaService.search(null));
+        Empresa empresa = GeneradorDatosAleatorios.getAleatorio(empresaService.search(dataSession, null,null,null));
 
         return empresa;
     }
 
-    private Municipio getMunicipioAleatorio() throws BusinessException {
+    private Municipio getMunicipioAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Municipio, Integer> municipioService = crudServiceFactory.getService(Municipio.class);
 
         List<Filter> filters = new ArrayList<Filter>();
-        filters.add(new Filter("provincia.idProvincia", getProvinciaAleatoria().getIdProvincia()));
+        filters.add(new Filter("provincia.idProvincia", getProvinciaAleatoria(dataSession).getIdProvincia()));
 
-        Municipio municipio = GeneradorDatosAleatorios.getAleatorio(municipioService.search(filters));
+        Municipio municipio = GeneradorDatosAleatorios.getAleatorio(municipioService.search(dataSession, filters,null,null));
 
         return municipio;
     }
 
-    private Municipio getMunicipioAleatorio(Provincia provincia) throws BusinessException {
+    private Municipio getMunicipioAleatorio(DataSession dataSession,Provincia provincia) throws BusinessException {
         CRUDService<Municipio, Integer> municipioService = crudServiceFactory.getService(Municipio.class);
 
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new Filter("provincia.idProvincia", provincia.getIdProvincia()));
 
-        Municipio municipio = GeneradorDatosAleatorios.getAleatorio(municipioService.search(filters));
+        Municipio municipio = GeneradorDatosAleatorios.getAleatorio(municipioService.search(dataSession, filters,null,null));
 
         return municipio;
     }
 
-    private Centro getCentroAleatorio() throws BusinessException {
+    private Centro getCentroAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
 
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new Filter("idCentro", 0, FilterOperator.gt));
-        Centro centro = GeneradorDatosAleatorios.getAleatorio(centroService.search(filters));
+        Centro centro = GeneradorDatosAleatorios.getAleatorio(centroService.search(dataSession, filters,null,null));
 
         return centro;
     }
 
-    private Centro getCentroAleatorio(Provincia provincia) throws BusinessException {
+    private Centro getCentroAleatorio(DataSession dataSession, Provincia provincia) throws BusinessException {
         CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
 
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new Filter("idCentro", 0, FilterOperator.gt));
         filters.add(new Filter("direccion.municipio.provincia.idProvincia", provincia.getIdProvincia()));
-        List<Centro> centros = centroService.search(filters);
+        List<Centro> centros = centroService.search(dataSession, filters,null,null);
 
         Centro centro;
         if (centros.size() == 0) {
@@ -444,11 +444,11 @@ public class PopulateServiceImpl implements PopulateService {
         return centro;
     }
 
-    private Empresa getEmpresaSinCentroAleatoria() throws BusinessException {
+    private Empresa getEmpresaSinCentroAleatoria(DataSession dataSession) throws BusinessException {
         CRUDService<Empresa, Integer> empresaService = crudServiceFactory.getService(Empresa.class);
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new Filter("centro", true, FilterOperator.isnull));
-        Empresa empresa = GeneradorDatosAleatorios.getAleatorio(empresaService.search(filters));
+        Empresa empresa = GeneradorDatosAleatorios.getAleatorio(empresaService.search(dataSession, filters,null,null));
 
         return empresa;
     }

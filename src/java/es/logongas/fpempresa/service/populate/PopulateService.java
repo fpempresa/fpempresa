@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.Service;
 
 /**
@@ -30,9 +31,9 @@ import es.logongas.ix3.service.Service;
  */
 public interface PopulateService extends Service {
     
-    public Centro createCentroAleatorio() throws BusinessException;
-    public Empresa createEmpresaAleatoria() throws BusinessException;
-    public Oferta createOfertaAleatoria(Empresa empresa) throws BusinessException;
-    public Usuario createUsuarioAleatorio(TipoUsuario tipoUsuario) throws BusinessException;
+    public Centro createCentroAleatorio(DataSession dataSession) throws BusinessException;
+    public Empresa createEmpresaAleatoria(DataSession dataSession) throws BusinessException;
+    public Oferta createOfertaAleatoria(DataSession dataSession,Empresa empresa) throws BusinessException;
+    public Usuario createUsuarioAleatorio(DataSession dataSession,TipoUsuario tipoUsuario) throws BusinessException;
 
 }

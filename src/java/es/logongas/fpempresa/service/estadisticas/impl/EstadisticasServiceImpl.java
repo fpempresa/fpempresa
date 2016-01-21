@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
+import es.logongas.ix3.dao.DataSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -33,23 +34,23 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     EstadisticaDAO estadisticaDAO;
     
     @Override
-    public Estadisticas getEstadisticas() {
-        Estadisticas estadisticasAdministrador=new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(),estadisticaDAO.getOfertasGroupByFamilia(),estadisticaDAO.getCandidatosGroupByFamilia());
+    public Estadisticas getEstadisticasAdministrador(DataSession dataSession) {
+        Estadisticas estadisticasAdministrador=new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession),estadisticaDAO.getOfertasGroupByFamilia(dataSession),estadisticaDAO.getCandidatosGroupByFamilia(dataSession));
         
         return estadisticasAdministrador;
     }
 
     @Override
-    public Estadisticas getEstadisticas(Centro centro) {
-        Estadisticas estadisticas=new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(centro),estadisticaDAO.getOfertasGroupByFamilia(centro),estadisticaDAO.getCandidatosGroupByFamilia(centro));
+    public Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro) {
+        Estadisticas estadisticas=new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession,centro),estadisticaDAO.getOfertasGroupByFamilia(dataSession,centro),estadisticaDAO.getCandidatosGroupByFamilia(dataSession,centro));
 
         
         return estadisticas; 
     }
 
     @Override
-    public Estadisticas getEstadisticas(Empresa empresa) {
-        Estadisticas estadisticas=new Estadisticas(null,estadisticaDAO.getOfertasGroupByFamilia(empresa),estadisticaDAO.getCandidatosGroupByFamilia(empresa));
+    public Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa) {
+        Estadisticas estadisticas=new Estadisticas(null,estadisticaDAO.getOfertasGroupByFamilia(dataSession,empresa),estadisticaDAO.getCandidatosGroupByFamilia(dataSession,empresa));
         
         return estadisticas;   
     }

@@ -17,49 +17,42 @@
 package es.logongas.fpempresa.service.empresa.impl;
 
 import es.logongas.fpempresa.dao.empresa.CandidatoDAO;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
-import es.logongas.ix3.service.ParameterSearch;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
  *
  * @author logongas
  */
-public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer> implements CRUDService<Candidato, Integer> {
-
-    private Usuario getPrincipal() {
-        return (Usuario) principalLocator.getPrincipal();
-    }
+public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer> implements CandidatoCRUDService {
 
     private CandidatoDAO getCandidatoDAO() {
         return (CandidatoDAO) getDAO();
     }
 
     @Override
-    public void insert(Candidato candidato) throws BusinessException {
+    public Candidato insert(DataSession dataSession, Candidato candidato) throws BusinessException {
 
-        if (getCandidatoDAO().isUsuarioCandidato(candidato.getUsuario(), candidato.getOferta()) == true) {
+        if (getCandidatoDAO().isUsuarioCandidato(dataSession, candidato.getUsuario(), candidato.getOferta()) == true) {
             throw new BusinessException("Ya estás inscrito en la oferta");
         }
 
-        super.insert(candidato); 
+        return super.insert(dataSession, candidato); 
     }
 
-    
-    @ParameterSearch(parameterNames = {"oferta","ocultarRechazados","certificados","maxAnyoTitulo","pageRequest"})
-    public Page<Candidato> getCandidatosOferta(Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest) {
-       return getCandidatoDAO().getCandidatosOferta(oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
+    public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest) {
+       return getCandidatoDAO().getCandidatosOferta(dataSession, oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
     }
 
-    @ParameterSearch(parameterNames = {"oferta"})
-    public long getNumCandidatosOferta(Oferta oferta) throws BusinessException {
-        return getCandidatoDAO().getNumCandidatosOferta(oferta);
+    public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) throws BusinessException {
+        return getCandidatoDAO().getNumCandidatosOferta(dataSession, oferta);
     }
 
 }

@@ -23,6 +23,7 @@ import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.util.Calendar;
@@ -35,20 +36,20 @@ import java.util.GregorianCalendar;
 public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<FormacionAcademica, Integer> implements CRUDService<FormacionAcademica, Integer> {
 
     @Override
-    public void insert(FormacionAcademica formacionAcademica) throws BusinessException {
+    public FormacionAcademica insert(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
 
-        formacionAcademica.setCertificadoTitulo(getCertificadoTitulo(formacionAcademica));
-        super.insert(formacionAcademica);
+        formacionAcademica.setCertificadoTitulo(getCertificadoTitulo(dataSession, formacionAcademica));
+        return super.insert(dataSession, formacionAcademica);
     }
 
     @Override
-    public boolean update(FormacionAcademica formacionAcademica) throws BusinessException {
+    public FormacionAcademica update(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
 
-        formacionAcademica.setCertificadoTitulo(getCertificadoTitulo(formacionAcademica));
-        return super.update(formacionAcademica);
+        formacionAcademica.setCertificadoTitulo(getCertificadoTitulo(dataSession, formacionAcademica));
+        return super.update(dataSession, formacionAcademica);
     }
 
-    private boolean getCertificadoTitulo(FormacionAcademica formacionAcademica) {
+    private boolean getCertificadoTitulo(DataSession dataSession, FormacionAcademica formacionAcademica) {
         boolean isCertificadoTitulo;
 
         if (formacionAcademica.getTitulado().getTipoDocumento() == TipoDocumento.NIF_NIE) {
@@ -60,7 +61,7 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
             int anyo = calendar.get(Calendar.YEAR);
             String nifnie = formacionAcademica.getTitulado().getNumeroDocumento();
 
-            CertificadoTitulo certificadoTitulo = ((CertificadoTituloDAO) daoFactory.getDAO(CertificadoTitulo.class)).getCertificadoTituloByCentroCicloAnyo(centro, ciclo, anyo);
+            CertificadoTitulo certificadoTitulo = ((CertificadoTituloDAO) daoFactory.getDAO(CertificadoTitulo.class)).getCertificadoTituloByCentroCicloAnyo(dataSession, centro, ciclo, anyo);
 
             if (certificadoTitulo != null) {
                 isCertificadoTitulo = certificadoTitulo.isCertificadoNifNie(nifnie);

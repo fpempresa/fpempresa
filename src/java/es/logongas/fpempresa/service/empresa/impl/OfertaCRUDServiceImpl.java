@@ -24,6 +24,7 @@ import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.util.Date;
 import java.util.List;
@@ -34,32 +35,29 @@ import java.util.List;
  */
 public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> implements OfertaCRUDService {
 
-    private Usuario getPrincipal() {
-        return (Usuario) principalLocator.getPrincipal();
-    }
 
     private OfertaDAO getOfertaDAO() {
         return (OfertaDAO) getDAO();
     }
 
     @Override
-    public List<Oferta> getOfertasUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException {
-        return getOfertaDAO().getOfertasUsuarioTitulado(usuario, provincia, fechaInicio, fechaFin);
+    public List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException {
+        return getOfertaDAO().getOfertasUsuarioTitulado(dataSession, usuario, provincia, fechaInicio, fechaFin);
     }
     
     @Override
-    public List<Oferta> getOfertasInscritoUsuarioTitulado(Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException {
-        return getOfertaDAO().getOfertasInscritoUsuarioTitulado(usuario, provincia, fechaInicio, fechaFin);
+    public List<Oferta> getOfertasInscritoUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException {
+        return getOfertaDAO().getOfertasInscritoUsuarioTitulado(dataSession, usuario, provincia, fechaInicio, fechaFin);
     }
 
     @Override
-    public List<Oferta> getOfertasEmpresasCentro(Centro centro) throws BusinessException {
-        return getOfertaDAO().getOfertasEmpresasCentro(centro);
+    public List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro) throws BusinessException {
+        return getOfertaDAO().getOfertasEmpresasCentro(dataSession, centro);
     }
 
     @Override
-    public List<Oferta> getOfertasEmpresa(Empresa empresa) throws BusinessException {
-        return getOfertaDAO().getOfertasEmpresa(empresa);
+    public List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa) throws BusinessException {
+        return getOfertaDAO().getOfertasEmpresa(dataSession, empresa);
     }
 
 }

@@ -19,6 +19,7 @@ package es.logongas.fpempresa.service.estadisticas;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.Service;
 
 /**
@@ -27,8 +28,8 @@ import es.logongas.ix3.service.Service;
  */
 public interface EstadisticasService extends Service<Estadisticas> {
     
-     Estadisticas getEstadisticas();
-     Estadisticas getEstadisticas(Centro centro);
-     Estadisticas getEstadisticas(Empresa empresa);
+     Estadisticas getEstadisticasAdministrador(DataSession dataSession);
+     Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro);
+     Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa);
     
 }

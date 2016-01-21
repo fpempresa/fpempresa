@@ -17,18 +17,17 @@
 package es.logongas.fpempresa.service.comun.usuario.impl;
 
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
-import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.security.model.Group;
 import es.logongas.ix3.security.model.GroupMember;
-import es.logongas.ix3.service.ParameterSearch;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,36 +52,16 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         return (UsuarioDAO) getDAO();
     }
 
-    private Usuario getPrincipal() {
-        return (Usuario) principalLocator.getPrincipal();
+    @Override
+    public void updatePassword(DataSession dataSession, Usuario usuario, String newPassword) throws BusinessException {
+        getUsuarioDAO().updateEncryptedPassword(dataSession,usuario, getEncryptedPasswordFromPlainPassword(newPassword));
     }
 
     @Override
-    public void updatePassword(Usuario usuario, String currentPassword, String newPassword) throws BusinessException {
-
-        if (usuario == null) {
-            throw new BusinessException("No hay usuario al que cambiar la contraseña");
-        } else if (getPrincipal() == null) {
-            throw new BusinessException("Debes haber entrado para cambiar la contraseña");
-        } else if (usuario.getIdIdentity() == getPrincipal().getIdIdentity()) {
-            if (checkPassword(usuario, currentPassword)) {
-                getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
-            } else {
-                throw new BusinessException("La contraseña actual no es válida");
-            }
-        } else if (getPrincipal().getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-            //Si eres administrador no necesitas la contraseña actual
-            getUsuarioDAO().updateEncryptedPassword(usuario, getEncryptedPasswordFromPlainPassword(newPassword));
-        } else {
-            throw new BusinessException("Solo un Administrador o el propio usuario puede cambiar la contraseña");
-        }
-    }
-
-    @Override
-    public boolean checkPassword(Usuario usuario, String password) throws BusinessException {
+    public boolean checkPassword(DataSession dataSession, Usuario usuario, String password) throws BusinessException {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
-        String encryptedPassword = getUsuarioDAO().getEncryptedPassword(usuario);
+        String encryptedPassword = getUsuarioDAO().getEncryptedPassword(dataSession, usuario);
 
         boolean checkOK = passwordEncryptor.checkPassword(password, encryptedPassword);
 
@@ -90,7 +69,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     @Override
-    public void insert(Usuario usuario) throws BusinessException {
+    public Usuario insert(DataSession dataSession, Usuario usuario) throws BusinessException {
 
         InputStream inputStream = UsuarioCRUDServiceImpl.class.getResourceAsStream("fotoDefecto.png");
 
@@ -105,17 +84,19 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         usuario.setValidadoEmail(false);
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
         sendMailValidacionEMail(usuario);
-        usuario.setMemberOf(getMembersOf(usuario));
-        getUsuarioDAO().insert(usuario);
+        usuario.setMemberOf(getMembersOf(dataSession, usuario));
+        Usuario resultUsuario=getUsuarioDAO().insert(dataSession, usuario);
         
         
         //La ponemos siemrpe a null una vez insertada para que nunca se pueda ver desde "fuera"
-        usuario.setPassword(null);
+        resultUsuario.setPassword(null);
+        
+        return resultUsuario;
     }
 
     @Override
-    public boolean update(Usuario usuario) throws BusinessException {
-        Usuario usuarioOriginal = getUsuarioDAO().readOriginal(usuario.getIdIdentity());
+    public Usuario update(DataSession dataSession, Usuario usuario) throws BusinessException {
+        Usuario usuarioOriginal = getUsuarioDAO().readOriginal(dataSession, usuario.getIdIdentity());
 
         
         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
@@ -126,7 +107,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             sendMailValidacionEMail(usuario);
         }
 
-        return super.update(usuario);
+        return super.update(dataSession, usuario);
     }
 
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
@@ -138,11 +119,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     
-    @ParameterSearch(parameterNames = "idTitulado")
-    public Usuario getUsuarioFromTitulado(int idTitulado) throws BusinessException  {
+    @Override
+    public Usuario getUsuarioFromTitulado(DataSession dataSession, int idTitulado) throws BusinessException  {
         List<Filter> filters=new ArrayList<>();
         filters.add(new Filter("titulado.idTitulado", idTitulado));
-        List<Usuario> usuarios=this.getDAO().search(filters);
+        List<Usuario> usuarios=this.getDAO().search(dataSession,filters,null,null);
 
         if (usuarios.size()==1) {
             return usuarios.get(0);
@@ -159,13 +140,13 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     }
 
-    private Set<GroupMember> getMembersOf(Usuario usuario) {
+    private Set<GroupMember> getMembersOf(DataSession dataSession, Usuario usuario) {
         try {
             Set<GroupMember> groupMembers = new HashSet<>();
             GenericDAO<Group, Integer> groupDAO = daoFactory.getDAO(Group.class);
 
             String GROUP_USUARIOS_NAME = "GUsuarios";
-            Group usuarios = groupDAO.readByNaturalKey(GROUP_USUARIOS_NAME);
+            Group usuarios = groupDAO.readByNaturalKey(dataSession, GROUP_USUARIOS_NAME);
             if (usuarios == null) {
                 throw new RuntimeException("No existe el grupo " + GROUP_USUARIOS_NAME);
             }
@@ -174,7 +155,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             switch (usuario.getTipoUsuario()) {
                 case ADMINISTRADOR:
                     String GROUP_ADMINISTRADORES_NAME = "GAdministradores";
-                    Group administradores = groupDAO.readByNaturalKey(GROUP_ADMINISTRADORES_NAME);
+                    Group administradores = groupDAO.readByNaturalKey(dataSession, GROUP_ADMINISTRADORES_NAME);
                     if (administradores == null) {
                         throw new RuntimeException("No existe el grupo " + GROUP_ADMINISTRADORES_NAME);
                     }
@@ -182,7 +163,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                     break;
                 case CENTRO:
                     String GROUP_CENTROS_NAME = "GCentros";
-                    Group centros = groupDAO.readByNaturalKey(GROUP_CENTROS_NAME);
+                    Group centros = groupDAO.readByNaturalKey(dataSession, GROUP_CENTROS_NAME);
                     if (centros == null) {
                         throw new RuntimeException("No existe el grupo " + GROUP_CENTROS_NAME);
                     }
@@ -190,7 +171,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                     break;
                 case EMPRESA:
                     String GROUP_EMPRESAS_NAME = "GEmpresas";
-                    Group empresas = groupDAO.readByNaturalKey(GROUP_EMPRESAS_NAME);
+                    Group empresas = groupDAO.readByNaturalKey(dataSession, GROUP_EMPRESAS_NAME);
                     if (empresas == null) {
                         throw new RuntimeException("No existe el grupo " + GROUP_EMPRESAS_NAME);
                     }
@@ -198,7 +179,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                     break;
                 case TITULADO:
                      String GROUP_TITULADOS_NAME = "GTitulados";
-                    Group titulados = groupDAO.readByNaturalKey(GROUP_TITULADOS_NAME);
+                    Group titulados = groupDAO.readByNaturalKey(dataSession, GROUP_TITULADOS_NAME);
                     if (titulados == null) {
                         throw new RuntimeException("No existe el grupo " + GROUP_TITULADOS_NAME);
                     }

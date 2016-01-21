@@ -1,25 +1,17 @@
 "use strict";
 app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, crudRoutesProvider) {
 
-        $stateProvider.state('lateralmenu.empresario_search_', {
-            url: "/empresario/search",
-            templateUrl: 'views/empresario/search.html',
-            controller: 'UsuarioSearchController',
-            resolve: crudRoutesProvider.getResolve("Usuario","empresa") 
+        crudRoutesProvider.addAllRoutes({
+            entity: "Usuario",
+            expand: "empresa",
+            crudName:"empresario"
         });
         
-        $stateProvider.state('lateralmenu.empresario_edit_', {
-            url: "/empresario/edit/:id",
-            templateUrl: 'views/empresario/detail.html',
-            controller: 'UsuarioNewEditController',
-            resolve: crudRoutesProvider.getResolve("Usuario","empresa","EDIT")
-        }); 
 
     }]);
 
-app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'schemaEntities', function ($scope, genericControllerCrudList, controllerParams, schemaEntities) {
+app.controller("EmpresarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'schemaEntities', function ($scope, genericControllerCrudList, controllerParams, schemaEntities) {
         genericControllerCrudList.extendScope($scope, controllerParams);
-        $scope.prefixRoute="/empresario";
         $scope.page.pageSize = 20;
 
         $scope.filters['empresa.idEmpresa']=$scope.user.empresa.idEmpresa;
@@ -29,16 +21,16 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
     }]);
 
 
-app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, dialog) {
+app.controller("EmpresarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, dialog) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.postCreate = function () {
-            $scope.model.estadoUsuario = "ACEPTADO";
-        }
+
+        };
 
         $scope.preInsert = function () {
-            //Al insertar un usuario siempre debe aceptar las politicas
-            //Lo hacemos aqui pq al ser el administrador el que los crea suponemos que el usuario las ha aceptado
+            $scope.model.empresa=$scope.user.empresa;
+            $scope.model.tipoUsuario='EMPRESA';
             $scope.model.aceptarCondicionesPolitica = true;
         };
 
@@ -62,10 +54,10 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
 
     }]);
 
-app.controller("UsuarioViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("EmpresarioViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("UsuarioDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("EmpresarioDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

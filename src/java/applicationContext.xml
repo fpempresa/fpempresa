@@ -55,6 +55,16 @@
         <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
     </bean> 
     
+    <!-- BusinessProcess -->
+    <bean class="es.logongas.fpempresa.businessprocess.estadisticas.impl.EstadisticasBusinessProcessImpl"  />
+    <bean class="es.logongas.fpempresa.businessprocess.log.impl.LogBusinessProcessImpl"  />
+
+    <bean class="es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessFactoryImpl" >
+        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.businessprocess" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.businessprocess" />
+    </bean>   
+    
     <!-- Capade web -->
     <bean class="es.logongas.fpempresa.presentacion.controller.EndPointsFactoryImpl" />
     

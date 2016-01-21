@@ -25,6 +25,7 @@ import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.security.model.Group;
 import es.logongas.ix3.security.model.GroupMember;
@@ -121,7 +122,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     
     @Override
     public Usuario getUsuarioFromTitulado(DataSession dataSession, int idTitulado) throws BusinessException  {
-        List<Filter> filters=new ArrayList<>();
+        Filters filters=new Filters();
         filters.add(new Filter("titulado.idTitulado", idTitulado));
         List<Usuario> usuarios=this.getDAO().search(dataSession,filters,null,null);
 

@@ -42,6 +42,7 @@ import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import java.util.ArrayList;
@@ -369,7 +370,7 @@ public class PopulateServiceImpl implements PopulateService {
     
     private Ciclo getCicloAleatorio(DataSession dataSession, Familia familia) throws BusinessException {
         CRUDService<Ciclo, Integer> cicloService = crudServiceFactory.getService(Ciclo.class);
-        List<Filter> filters = new ArrayList<Filter>();
+        Filters filters = new Filters();
         filters.add(new Filter("familia.idFamilia", familia.getIdFamilia()));
         
         Ciclo ciclo = GeneradorDatosAleatorios.getAleatorio(cicloService.search(dataSession, filters,null,null));
@@ -397,7 +398,7 @@ public class PopulateServiceImpl implements PopulateService {
     private Municipio getMunicipioAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Municipio, Integer> municipioService = crudServiceFactory.getService(Municipio.class);
 
-        List<Filter> filters = new ArrayList<Filter>();
+        Filters filters = new Filters();
         filters.add(new Filter("provincia.idProvincia", getProvinciaAleatoria(dataSession).getIdProvincia()));
 
         Municipio municipio = GeneradorDatosAleatorios.getAleatorio(municipioService.search(dataSession, filters,null,null));
@@ -408,7 +409,7 @@ public class PopulateServiceImpl implements PopulateService {
     private Municipio getMunicipioAleatorio(DataSession dataSession,Provincia provincia) throws BusinessException {
         CRUDService<Municipio, Integer> municipioService = crudServiceFactory.getService(Municipio.class);
 
-        List<Filter> filters = new ArrayList<Filter>();
+        Filters filters = new Filters();
         filters.add(new Filter("provincia.idProvincia", provincia.getIdProvincia()));
 
         Municipio municipio = GeneradorDatosAleatorios.getAleatorio(municipioService.search(dataSession, filters,null,null));
@@ -419,7 +420,7 @@ public class PopulateServiceImpl implements PopulateService {
     private Centro getCentroAleatorio(DataSession dataSession) throws BusinessException {
         CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
 
-        List<Filter> filters = new ArrayList<Filter>();
+        Filters filters = new Filters();
         filters.add(new Filter("idCentro", 0, FilterOperator.gt));
         Centro centro = GeneradorDatosAleatorios.getAleatorio(centroService.search(dataSession, filters,null,null));
 
@@ -429,7 +430,7 @@ public class PopulateServiceImpl implements PopulateService {
     private Centro getCentroAleatorio(DataSession dataSession, Provincia provincia) throws BusinessException {
         CRUDService<Centro, Integer> centroService = crudServiceFactory.getService(Centro.class);
 
-        List<Filter> filters = new ArrayList<Filter>();
+        Filters filters = new Filters();
         filters.add(new Filter("idCentro", 0, FilterOperator.gt));
         filters.add(new Filter("direccion.municipio.provincia.idProvincia", provincia.getIdProvincia()));
         List<Centro> centros = centroService.search(dataSession, filters,null,null);
@@ -446,7 +447,7 @@ public class PopulateServiceImpl implements PopulateService {
 
     private Empresa getEmpresaSinCentroAleatoria(DataSession dataSession) throws BusinessException {
         CRUDService<Empresa, Integer> empresaService = crudServiceFactory.getService(Empresa.class);
-        List<Filter> filters = new ArrayList<Filter>();
+        Filters filters = new Filters();
         filters.add(new Filter("centro", true, FilterOperator.isnull));
         Empresa empresa = GeneradorDatosAleatorios.getAleatorio(empresaService.search(dataSession, filters,null,null));
 

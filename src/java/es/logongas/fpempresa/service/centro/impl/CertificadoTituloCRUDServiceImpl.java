@@ -20,10 +20,10 @@ package es.logongas.fpempresa.service.centro.impl;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
-import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
@@ -118,7 +118,7 @@ public class CertificadoTituloCRUDServiceImpl  extends CRUDServiceImpl<Certifica
             
         GenericDAO<FormacionAcademica,Integer> formacionAcademicaDAO=daoFactory.getDAO(FormacionAcademica.class);
         
-        List<Filter> filters=new ArrayList<Filter>();
+        Filters filters=new Filters();
         filters.add(new Filter("titulado.tipoDocumento",TipoDocumento.NIF_NIE));
         filters.add(new Filter("titulado.numeroDocumento",certificadoTitulo.getNifnies()));
         filters.add(new Filter("centro.idCentro",certificadoTitulo.getCentro().getIdCentro()));

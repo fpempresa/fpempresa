@@ -2,7 +2,6 @@
 
 app.controller("TituladoSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);
-        $scope.prefixRoute="/titulado";
         $scope.page.pageSize = 20;
         $scope.distinct=true;
         $scope.filters.tipoUsuario="TITULADO";

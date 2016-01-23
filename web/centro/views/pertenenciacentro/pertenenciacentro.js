@@ -10,8 +10,8 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams
         }
         $scope.filters.estadoCentro = "PERTENECE_A_FPEMPRESA";
 
-        $scope.buttonPertenenciaCentro = function (idCentro) {
-            $scope.pertenenciaCentro(idCentro);
+        $scope.buttonPertenenciaCentro = function (centro) {
+            $scope.pertenenciaCentro(centro);
         };
         $scope.pertenenciaCentro = function (centro) {
             var ok = confirm("¿Realmente quieres cambiar al centro  '" + centro.toString() + "'?.\nNo podras volver a entrar hasta que acepten o rechacen tu solicitud");

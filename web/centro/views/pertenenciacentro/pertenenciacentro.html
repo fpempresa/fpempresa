@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="centro in models" class="data-table__row">
-                        <td ><a href ng-click="buttonPertenenciaCentro(centro.idCentro)">{{centro.nombre}}</a></td>
+                        <td ><a href ng-click="buttonPertenenciaCentro(centro)">{{centro.nombre}}</a></td>
                         <td >{{centro.direccion.municipio.provincia.descripcion}}</td>
                         <td >{{centro.direccion.municipio.descripcion}}</td>
                         <td >{{centro.direccion.datosDireccion}}</td>      

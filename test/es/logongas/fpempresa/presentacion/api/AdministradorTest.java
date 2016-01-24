@@ -7,51 +7,46 @@ package es.logongas.fpempresa.presentacion.api;
 
 import org.junit.Test;
 import static com.jayway.restassured.RestAssured.*;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.response.ValidatableResponse;
 import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.centro.EstadoCentro;
-import es.logongas.fpempresa.modelo.comun.geo.Direccion;
-import es.logongas.fpempresa.modelo.comun.geo.Municipio;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
-import es.logongas.fpempresa.presentacion.controller.UsuarioRESTController;
 import es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios;
-import es.logongas.ix3.util.ReflectionUtil;
 import java.util.Map;
 import org.apache.http.HttpStatus;
 import static org.hamcrest.Matchers.*;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  * @author logongas
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AdministradorTest {
 
     static Map<String, String> cookies;
 
     @BeforeClass
-    public static void setUp() {
-        Response response = given().contentType("application/json").accept("application/json").queryParam("login", "administrador@fpempresa.net").queryParam("password", "administrador").when().post(GenericTestCRUD.getApiBase() + "/api/session");
-        cookies = response.getCookies();
-        response.then().statusCode(HttpStatus.SC_OK);
+    public static void setUpClass() {
+        cookies = TestUtil.login("administrador@fpempresa.net", "administrador");
     }
 
     @Test
-    public void testEstadisticasAdministradorProhibidasSinLogin() {
+    public void test_01_EstadisticasAdministradorProhibidasSinLogin() {
         given().
-                when().get(GenericTestCRUD.getApiBase() + "/api/administrador/Estadisticas/administrador").
+                when().get("/api/administrador/Estadisticas/administrador").
                 then().statusCode(HttpStatus.SC_FORBIDDEN);
     }
 
     @Test
-    public void testEstadisticasAdministrador() {
+    public void test_02_EstadisticasAdministrador() {
         given().
                 cookies(cookies).
                 when().
-                get(GenericTestCRUD.getApiBase() + "/api/administrador/Estadisticas/administrador").
+                get("/api/administrador/Estadisticas/administrador").
                 then().
                 statusCode(HttpStatus.SC_OK).
                 body("tituladosPorFamilia", not(nullValue())).
@@ -63,88 +58,201 @@ public class AdministradorTest {
     }
 
     @Test
-    public void testCentro() {
+    public void test_03_Centro() {
         Centro centro = GeneradorDatosAleatorios.createCentroAleatorio();
-        GenericTestCRUD.testCRUD(Centro.class, true, 0, cookies, centro, "idCentro");
+
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Centro.class;
+        crudTestConfiguration.success = true;
+        crudTestConfiguration.httpStatus = 0;
+        crudTestConfiguration.cookies = cookies;
+        crudTestConfiguration.entity = centro;
+        crudTestConfiguration.primaryKeyName = "idCentro";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
     }
 
     @Test
-    public void testCentroProhibido() {
+    public void test_04_CentroProhibido() {
         Centro centro = GeneradorDatosAleatorios.createCentroAleatorio();
-        GenericTestCRUD.testCRUD(Centro.class, false, HttpStatus.SC_FORBIDDEN, null, centro, "idCentro");
+
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Centro.class;
+        crudTestConfiguration.success = false;
+        crudTestConfiguration.httpStatus = HttpStatus.SC_FORBIDDEN;
+        crudTestConfiguration.cookies = null;
+        crudTestConfiguration.entity = centro;
+        crudTestConfiguration.primaryKeyName = "idCentro";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
+
     }
 
     @Test
-    public void testEmpresa() {
+    public void test_05_Empresa() {
         Empresa empresa = GeneradorDatosAleatorios.createEmpresaAleatoria(null);
-        GenericTestCRUD.testCRUD(Empresa.class, true, 0, cookies, empresa, "idEmpresa");
+
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Empresa.class;
+        crudTestConfiguration.success = true;
+        crudTestConfiguration.httpStatus = 0;
+        crudTestConfiguration.cookies = cookies;
+        crudTestConfiguration.entity = empresa;
+        crudTestConfiguration.primaryKeyName = "idEmpresa";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
+
     }
 
     @Test
-    public void testEmpresaProhibido() {
+    public void test_06_EmpresaProhibido() {
         Empresa empresa = GeneradorDatosAleatorios.createEmpresaAleatoria(null);
-        GenericTestCRUD.testCRUD(Empresa.class, false, HttpStatus.SC_FORBIDDEN, null, empresa, "idEmpresa");
+
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Empresa.class;
+        crudTestConfiguration.success = false;
+        crudTestConfiguration.httpStatus = HttpStatus.SC_FORBIDDEN;
+        crudTestConfiguration.cookies = null;
+        crudTestConfiguration.entity = empresa;
+        crudTestConfiguration.primaryKeyName = "idEmpresa";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
     }
 
     @Test
-    public void testUsuarioAdministrador() {
+    public void test_07_UsuarioAdministrador() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.ADMINISTRADOR);
 
-        GenericTestCRUD.testCRUD(Usuario.class, true, 0, cookies, usuario, "idIdentity");
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Usuario.class;
+        crudTestConfiguration.success = true;
+        crudTestConfiguration.httpStatus = 0;
+        crudTestConfiguration.cookies = cookies;
+        crudTestConfiguration.entity = usuario;
+        crudTestConfiguration.primaryKeyName = "idIdentity";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
+
     }
 
     @Test
-    public void testUsuarioAdministradorProhibido() {
+    public void test_08_UsuarioAdministradorProhibido() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.ADMINISTRADOR);
 
-        GenericTestCRUD.testCRUD(Usuario.class, false, HttpStatus.SC_FORBIDDEN, null, usuario, "idIdentity");
+        TestUtil.testInsert("administrador", Usuario.class, false, HttpStatus.SC_FORBIDDEN, null, usuario, "idIdentity",null);
     }
 
     @Test
-    public void testUsuarioProfesor() {
+    public void test_09_UsuarioProfesor() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.CENTRO);
         usuario.setCentro(GeneradorDatosAleatorios.createCentroAleatorio());
 
-        GenericTestCRUD.testCRUD(Usuario.class, true, 0, cookies, usuario, "idIdentity");
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Usuario.class;
+        crudTestConfiguration.success = true;
+        crudTestConfiguration.httpStatus = 0;
+        crudTestConfiguration.cookies = cookies;
+        crudTestConfiguration.entity = usuario;
+        crudTestConfiguration.primaryKeyName = "idIdentity";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
     }
 
     @Test
-    public void testUsuarioEmpresa() {
+    public void test_10_UsuarioEmpresa() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.EMPRESA);
         usuario.setEmpresa(GeneradorDatosAleatorios.createEmpresaAleatoria(null));
-        GenericTestCRUD.testCRUD(Usuario.class, true, 0, cookies, usuario, "idIdentity");
+
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Usuario.class;
+        crudTestConfiguration.success = true;
+        crudTestConfiguration.httpStatus = 0;
+        crudTestConfiguration.cookies = cookies;
+        crudTestConfiguration.entity = usuario;
+        crudTestConfiguration.primaryKeyName = "idIdentity";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
     }
 
     @Test
-    public void testUsuarioTitulado() {
+    public void test_11_UsuarioTitulado() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.TITULADO);
 
-        GenericTestCRUD.testCRUD(Usuario.class, true, 0, cookies, usuario, "idIdentity");
+        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
+        crudTestConfiguration.appPath = "administrador";
+        crudTestConfiguration.entityClass = Usuario.class;
+        crudTestConfiguration.success = true;
+        crudTestConfiguration.httpStatus = 0;
+        crudTestConfiguration.cookies = cookies;
+        crudTestConfiguration.entity = usuario;
+        crudTestConfiguration.primaryKeyName = "idIdentity";
+        crudTestConfiguration.paginated = true;
+        crudTestConfiguration.params = null;
+        crudTestConfiguration.readNoContent = true;
+
+        TestUtil.testCRUD(crudTestConfiguration);
     }
 
     @Test
-    public void testUpdatePassword() {
-        Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.EMPRESA);
-        String currentPassword = usuario.getPassword();
-        int idIdentity = GenericTestCRUD.testInsert(Usuario.class, true, 0, cookies, usuario, "idIdentity");
-        
-        
-        given().
-                contentType("application/json").
-                cookies(cookies).
-                body(new UsuarioRESTController.ChangePassword(currentPassword, currentPassword + "aaa")).
-                when().
-                patch(GenericTestCRUD.getApiBase() + "/api/administrador/Usuario/{id}/updatePassword", idIdentity)
-                .then().statusCode(HttpStatus.SC_OK);
-        
-        given().
-                contentType("application/json").
-                body(new UsuarioRESTController.ChangePassword(currentPassword, currentPassword + "aaa")).
-                when().
-                patch(GenericTestCRUD.getApiBase() + "/api/administrador/Usuario/{id}/updatePassword", idIdentity)
-                .then().statusCode(HttpStatus.SC_FORBIDDEN);        
-        
-        GenericTestCRUD.testDelete(Usuario.class, true, 0, cookies, idIdentity);
+    public void test_12_update_usuario() {
+        Usuario usuario =new Usuario();
+        GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.ADMINISTRADOR);
+        usuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        usuario.setLogin("administrador@fpempresa.net");
+        usuario.setEmail("administrador@fpempresa.net");
+        usuario.setNombre("Administrador");
+        usuario.setApellidos(".");
+        usuario.setIdIdentity(30);
+        usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
 
-    }
+        TestUtil.testUpdate("administrador", Usuario.class, true, 0, cookies, usuario, "idIdentity",null);
+    }    
+       
+        
+    
+    @Test
+    public void test_97_update_password_prohibido() {
+        TestUtil.testUpdatePassword("administrador", false, HttpStatus.SC_FORBIDDEN, null, 30, "administrador");
+
+    } 
+    
+    @Test
+    public void test_98_update_password_contrasenya_erronea() {
+        TestUtil.testUpdatePassword("administrador", false, HttpStatus.SC_BAD_REQUEST, cookies, 30, null);
+
+    }     
+    
+    @Test
+    public void test_99_update_password() {
+        TestUtil.testUpdatePassword("administrador", true, 0, cookies, 30, "administrador");
+    }  
+    
 }

@@ -14,12 +14,16 @@ import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
-import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.DataSession;
-import es.logongas.ix3.dao.Filter;
-import es.logongas.ix3.service.CRUDService;
-import java.util.ArrayList;
+import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
+import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
+import es.logongas.fpempresa.modelo.titulado.Idioma;
+import es.logongas.fpempresa.modelo.titulado.NivelIdioma;
+import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
+import es.logongas.fpempresa.modelo.titulado.TipoFormacionAcademica;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
+import es.logongas.fpempresa.modelo.titulado.TituloIdioma;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -70,7 +74,6 @@ public class GeneradorDatosAleatorios {
 
     static final public Empresa createEmpresaAleatoria(Centro centro) {
         String[] tiposEmpresa = {"Sociedad Anonima", "Sociedad Limitada", "Cooperativa", "Sociedad Laboral"};
-        Centro[] centros = {createCentroAleatorio(), null};
 
         String nombreEmpresa = GeneradorDatosAleatorios.getNombreEmpresa() + " " + GeneradorDatosAleatorios.getApellidoPersona();
         Empresa empresa = new Empresa();
@@ -78,18 +81,33 @@ public class GeneradorDatosAleatorios {
         empresa.setNombreComercial(nombreEmpresa);
         empresa.setRazonSocial(nombreEmpresa + " " + GeneradorDatosAleatorios.getAleatorio(tiposEmpresa));
         empresa.setDireccion(createDireccionAleatoria());
+        if (centro!=null) {
+            empresa.getDireccion().setMunicipio(centro.getDireccion().getMunicipio());
+        }
         empresa.setContacto(createContactoEmpresaAleatorio(empresa));
         empresa.setCentro(centro);
-
-        if (empresa.getCentro() != null) {
-            empresa.getDireccion().setMunicipio(getMunicipioAleatorio(empresa.getCentro().getDireccion().getMunicipio().getProvincia()));
-        }
 
         empresa.setCif(GeneradorDatosAleatorios.getCif());
 
         return empresa;
     }
 
+    static final public Titulado createTituladoAleatorio() {
+        Titulado titulado = new Titulado();
+        String[] permisosConducir = {"A", "A", "B", "B", "C1", "C", null, null, null, null, null, null, null, null, null, null, null, null, null, null};
+
+        titulado.setDireccion(createDireccionAleatoria());
+        titulado.setFechaNacimiento(GeneradorDatosAleatorios.getFecha(18, 35));
+        titulado.setTipoDocumento(TipoDocumento.NIF_NIE);
+        titulado.setNumeroDocumento(GeneradorDatosAleatorios.getNif());
+        titulado.setPermisosConducir(GeneradorDatosAleatorios.getAleatorio(permisosConducir));
+        titulado.setTelefono(GeneradorDatosAleatorios.getTelefono());
+        titulado.setTelefonoAlternativo(GeneradorDatosAleatorios.getTelefono());
+        titulado.setResumen(GeneradorDatosAleatorios.getResumenPersona());
+        
+        return titulado;
+    }    
+    
     static final public Direccion createDireccionAleatoria() {
         Direccion direccion = new Direccion();
         direccion.setDatosDireccion(GeneradorDatosAleatorios.getDireccion());
@@ -107,6 +125,87 @@ public class GeneradorDatosAleatorios {
         return contacto;
     }
 
+    static final public TituloIdioma createTituloIdiomaAleatorio(Titulado titulado) {
+        TituloIdioma tituloIdioma =new TituloIdioma();
+        String[] otroIdioma = {"Chino", "Ruso", "Armenio", "Italiano", "Árabe", "Griego", "Japonés"};
+
+        tituloIdioma.setTitulado(titulado);
+        tituloIdioma.setFecha(GeneradorDatosAleatorios.getFecha(0, 5));
+        tituloIdioma.setIdioma((Idioma) GeneradorDatosAleatorios.getAleatorio(Idioma.values()));
+        if (tituloIdioma.getIdioma() == Idioma.OTRO) {
+            tituloIdioma.setOtroIdioma(GeneradorDatosAleatorios.getAleatorio(otroIdioma));
+        }
+        tituloIdioma.setNivelIdioma((NivelIdioma) GeneradorDatosAleatorios.getAleatorio(NivelIdioma.values()));
+
+        return tituloIdioma;
+    }    
+    
+    
+    static final public  FormacionAcademica createFormacionAcademicaAleatoria(Titulado titulado) {
+        FormacionAcademica formacionAcademica = new FormacionAcademica();
+        TipoFormacionAcademica[] tipoFormacionAcademica = {TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.TITULO_UNIVERSITARIO};
+        Boolean[] nuevoCentro = {false, false, false, false, false, false, true};
+
+        formacionAcademica.setTitulado(titulado);
+        formacionAcademica.setTipoFormacionAcademica((TipoFormacionAcademica) GeneradorDatosAleatorios.getAleatorio(tipoFormacionAcademica));
+        formacionAcademica.setFecha(GeneradorDatosAleatorios.getFecha(0, 5));
+        switch (formacionAcademica.getTipoFormacionAcademica()) {
+            case CICLO_FORMATIVO:
+                Ciclo ciclo=new Ciclo();
+                ciclo.setIdCiclo(10);
+                
+                formacionAcademica.setCiclo(ciclo);
+
+                Centro centro=new Centro();
+                centro.setIdCentro(-1);
+                formacionAcademica.setCentro(centro);
+                formacionAcademica.setOtroCentro(GeneradorDatosAleatorios.getNombreCentroAleatorio());
+
+
+                break;
+            case TITULO_UNIVERSITARIO:
+                formacionAcademica.setOtroCentro("Universidad de " + getProvinciaAleatoria().getDescripcion());
+                formacionAcademica.setOtroTitulo(GeneradorDatosAleatorios.getCarreraUniversitaria());
+                break;
+            default:
+                throw new RuntimeException("Tipo de formacion academicas no soportado:" + formacionAcademica.getTipoFormacionAcademica());
+        }
+
+        return formacionAcademica;
+    }    
+    
+    static final public  ExperienciaLaboral createExperienciaLaboralAleatoria(Titulado titulado) {
+        ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
+        Random random = new Random();
+
+        Calendar calendarFin = new GregorianCalendar();
+        calendarFin.setTime(GeneradorDatosAleatorios.getFecha(0, 5));
+        calendarFin.set(Calendar.MILLISECOND, 0);
+        calendarFin.set(Calendar.SECOND, 0);
+        calendarFin.set(Calendar.MINUTE, 0);
+        calendarFin.set(Calendar.HOUR_OF_DAY, 0);
+        Date fechaFin = calendarFin.getTime();
+
+        Calendar calendarInicio = new GregorianCalendar();
+        calendarInicio.setTime(fechaFin);
+        calendarInicio.add(Calendar.DATE, -(random.nextInt(90) + 7));
+        calendarInicio.set(Calendar.MILLISECOND, 0);
+        calendarInicio.set(Calendar.SECOND, 0);
+        calendarInicio.set(Calendar.MINUTE, 0);
+        calendarInicio.set(Calendar.HOUR_OF_DAY, 0);
+        Date fechaInicio = calendarInicio.getTime();
+
+        experienciaLaboral.setTitulado(titulado);
+        experienciaLaboral.setFechaInicio(fechaInicio);
+        experienciaLaboral.setFechaFin(fechaFin);
+        experienciaLaboral.setNombreEmpresa(GeneradorDatosAleatorios.getNombreEmpresa());
+        experienciaLaboral.setPuestoTrabajo(GeneradorDatosAleatorios.getNombrePuestoTrabajo());
+        experienciaLaboral.setDescripcion("Realizar trabajos relacionados con el puesto de trabajo de " + experienciaLaboral.getPuestoTrabajo());
+
+        return experienciaLaboral;
+    }     
+    
+    
     static final public Provincia getProvinciaAleatoria() {
         Random random = new Random();
 

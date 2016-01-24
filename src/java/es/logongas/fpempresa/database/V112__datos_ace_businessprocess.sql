@@ -45,8 +45,9 @@ INSERT INTO `sec_ace`
 ('Allow', 22, 35, '.*\\.LeyEducativa\\.read', NULL, NULL, 1, NULL),
 ('Allow', 22, 35, '.*\\.Ciclo\\.read', NULL, NULL, 1, NULL);
 
-/** Crear una cuenta **/
+/** Crear una cuenta y borrarla**/
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES 
-('Allow', 22, 1, '.*BusinessProcess.Usuario.create', NULL, NULL, 1, NULL),
-('Allow', 22, 1, '.*BusinessProcess.Usuario.insert', NULL, NULL, 1, NULL);
+('Allow', 22, 1, '.*BusinessProcess\\.Usuario\\.create', NULL, NULL, 1, NULL),
+('Allow', 22, 1, '.*BusinessProcess\\.Usuario\\.insert', NULL, NULL, 1, NULL),
+('Allow', 22, 35,'.*BusinessProcess\\.Usuario\\.delete', NULL, 'arguments.entity.idIdentity==identity.idIdentity', 1, 'Te puedes borrar a ti mismo');

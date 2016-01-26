@@ -6,6 +6,7 @@
 package es.logongas.fpempresa.businessprocess.comun.usuario.impl;
 
 import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
@@ -77,6 +78,8 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService= (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         
         updateCentroArguments.usuario.setCentro(updateCentroArguments.centro);
+        updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+        
         return usuarioCRUDService.update(updateCentroArguments.dataSession, updateCentroArguments.usuario); 
     }
     

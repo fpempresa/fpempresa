@@ -7,7 +7,6 @@ package es.logongas.fpempresa.presentacion.api;
 
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.parsing.Parser;
-import com.jayway.restassured.response.Response;
 import org.junit.Test;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;

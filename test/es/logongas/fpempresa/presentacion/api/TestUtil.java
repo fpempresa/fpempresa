@@ -7,6 +7,7 @@ package es.logongas.fpempresa.presentacion.api;
 
 import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.given;
+import com.jayway.restassured.parsing.Parser;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ValidatableResponse;
 import es.logongas.fpempresa.modelo.comun.Contacto;
@@ -20,6 +21,7 @@ import es.logongas.fpempresa.presentacion.controller.UsuarioRESTController;
 import es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios;
 import static es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios.getMunicipioAleatorio;
 import es.logongas.ix3.util.ReflectionUtil;
+import es.logongas.ix3.web.util.MimeType;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -78,22 +80,22 @@ public abstract class TestUtil {
         }
     }
 
-    static public ValidatableResponse testPaginatedSearch(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Map<String, Object> params) {
+    static public Response testPaginatedSearch(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Map<String, Object> params) {
         if (cookies == null) {
             cookies = new HashMap<String, String>();
         }
         if (params == null) {
             params = new HashMap<String, Object>();
         }
-        ValidatableResponse validatableResponse
-                = given().log().ifValidationFails().
+        
+                Response response= given().log().ifValidationFails().
                 queryParams(params).
                 cookies(cookies).
                 param("$orderby", "").
                 param("$pagenumber", "0").
-                param("$pagesize", "20").
-                when().
-                get("/api/" + appPath + "/" + entityClass.getSimpleName() + "").
+                param("$pagesize", "20").when().
+                get("/api/" + appPath + "/" + entityClass.getSimpleName() + "");
+                ValidatableResponse validatableResponse=response. 
                 then().log().ifValidationFails();
 
         if (success == true) {
@@ -110,23 +112,23 @@ public abstract class TestUtil {
                     body("content", not(nullValue()));
         }
         
-        return validatableResponse;
+        return response;
     }
 
-    static public ValidatableResponse testSearch(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Map<String, Object> params) {
+    static public Response testSearch(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Map<String, Object> params) {
         if (cookies == null) {
             cookies = new HashMap<String, String>();
         }
         if (params == null) {
             params = new HashMap<String, Object>();
         }
-        ValidatableResponse validatableResponse
-                = given().log().ifValidationFails().
-                queryParams(params).
-                cookies(cookies).
-                when().
-                get("/api/" + appPath + "/" + entityClass.getSimpleName() + "").
-                then().log().ifValidationFails();
+        Response response=given().log().ifValidationFails().
+        queryParams(params).
+        cookies(cookies).
+        when().
+        get("/api/" + appPath + "/" + entityClass.getSimpleName() + "");
+
+        ValidatableResponse validatableResponse = response.then().log().ifValidationFails();
 
         if (success == true) {
             validatableResponse.statusCode(HttpStatus.SC_OK);
@@ -139,7 +141,7 @@ public abstract class TestUtil {
                     body("", hasSize(greaterThan(-1)));
         }
         
-        return validatableResponse;
+        return response;
     }
 
     static public void testCreate(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies) {

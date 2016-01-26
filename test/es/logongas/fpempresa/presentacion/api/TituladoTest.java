@@ -19,7 +19,6 @@ import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.modelo.titulado.TituloIdioma;
 import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.fpempresa.modelo.titulado.configuracion.NotificacionOferta;
-import static es.logongas.fpempresa.presentacion.api.AdministradorTest.cookies;
 import es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,7 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import org.apache.http.HttpStatus;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -174,7 +172,7 @@ public class TituladoTest {
         params.put("usuario", usuario.getIdIdentity());         
         params.put("$expand", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos");         
         
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(0)));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));
     }
     
     @Test
@@ -222,9 +220,9 @@ public class TituladoTest {
         params.put("$expand", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos");         
         
         params.put("$namedsearch", "getOfertasUsuarioTitulado"); 
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
         params.put("$namedsearch", "getOfertasInscritoUsuarioTitulado");                
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(0)));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));
         
         Candidato candidato=new Candidato();
         candidato.setOferta(oferta);
@@ -233,16 +231,21 @@ public class TituladoTest {
         candidato.setIdCandidato(idCandidato);
         
         params.put("$namedsearch", "getOfertasUsuarioTitulado");              
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(0)));        
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));        
         params.put("$namedsearch", "getOfertasInscritoUsuarioTitulado");                
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
 
+        Map<String,Object> paramsSearchCandidato=new HashMap<String,Object>();
+        paramsSearchCandidato.put("oferta.idOferta", oferta.getIdOferta());        
+        paramsSearchCandidato.put("usuario.idIdentity", usuario.getIdIdentity());        
+
+        TestUtil.testSearch("titulado", Candidato.class, true, 0, cookies, paramsSearchCandidato).then().body("",hasSize(equalTo(1))).body("[0].idCandidato",equalTo(candidato.getIdCandidato()));
         TestUtil.testDelete("titulado",Candidato.class, true, 0, cookies, idCandidato);  
         
         params.put("$namedsearch", "getOfertasUsuarioTitulado"); 
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
         params.put("$namedsearch", "getOfertasInscritoUsuarioTitulado");                
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).body("",hasSize(equalTo(0)));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));
         
         TestUtil.testDelete("titulado",FormacionAcademica.class, true, 0, cookies, idFormacionAcademica);
         TestUtil.testDelete("centro",Oferta.class, true, 0, cookiesProfesor, idOferta);

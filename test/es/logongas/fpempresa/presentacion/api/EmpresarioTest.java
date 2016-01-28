@@ -9,8 +9,6 @@ import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.parsing.Parser;
 import org.junit.Test;
 import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
-import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
@@ -20,7 +18,6 @@ import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoFormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.http.HttpStatus;
@@ -38,7 +35,7 @@ import org.junit.runners.MethodSorters;
  * @author logongas
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Empresario {
+public class EmpresarioTest {
     static Map<String, String> cookiesAdministrador;
     static Map<String, String> cookiesEmpresario;
     static Map<String, String> cookiesTitulado;

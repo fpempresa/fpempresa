@@ -25,8 +25,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -220,7 +225,7 @@ public class TituladoTest {
         params.put("$expand", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos");         
         
         params.put("$namedsearch", "getOfertasUsuarioTitulado"); 
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasItem(hasEntry("idOferta", idOferta)));
         params.put("$namedsearch", "getOfertasInscritoUsuarioTitulado");                
         TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));
         
@@ -231,7 +236,7 @@ public class TituladoTest {
         candidato.setIdCandidato(idCandidato);
         
         params.put("$namedsearch", "getOfertasUsuarioTitulado");              
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));        
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",not(hasItem(hasEntry("idOferta", idOferta))));       
         params.put("$namedsearch", "getOfertasInscritoUsuarioTitulado");                
         TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
 
@@ -243,7 +248,7 @@ public class TituladoTest {
         TestUtil.testDelete("titulado",Candidato.class, true, 0, cookies, idCandidato);  
         
         params.put("$namedsearch", "getOfertasUsuarioTitulado"); 
-        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(1))).body("[0].idOferta",equalTo(idOferta));
+        TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasItem(hasEntry("idOferta", idOferta)));
         params.put("$namedsearch", "getOfertasInscritoUsuarioTitulado");                
         TestUtil.testSearch("titulado", Oferta.class, true, 0, cookies, params).then().body("",hasSize(equalTo(0)));
         

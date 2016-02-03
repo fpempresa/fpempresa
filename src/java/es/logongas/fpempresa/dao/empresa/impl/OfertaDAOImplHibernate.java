@@ -44,22 +44,22 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
 
         sb.append("SELECT oferta.*\n"
                 + "FROM\n"
-                + "   Oferta oferta   \n"
-                + "		INNER JOIN OfertaCiclo ofertaCiclo   ON oferta.idOferta=ofertaCiclo.idOferta \n"
-                + "		INNER JOIN Municipio municipioOferta ON oferta.idMunicipio=municipioOferta.idMunicipio\n"
-                + "		INNER JOIN Empresa empresa           ON oferta.idEmpresa=empresa.idEmpresa,\n"
-                + "   Usuario usuario \n"
-                + "		INNER JOIN FormacionAcademica formacionAcademica ON usuario.idTitulado=formacionAcademica.idTitulado \n"
-                + "		INNER JOIN Titulado titulado                     ON usuario.idTitulado=titulado.idTitulado  \n"
-                + "		INNER JOIN Municipio municipioTitulado           ON titulado.idMunicipio=municipioTitulado.idMunicipio\n"
+                + "   oferta   \n"
+                + "		INNER JOIN  ofertaciclo   ON oferta.idOferta=ofertaciclo.idOferta \n"
+                + "		INNER JOIN  municipio as municipiooferta ON oferta.idMunicipio=municipiooferta.idMunicipio\n"
+                + "		INNER JOIN  empresa           ON oferta.idEmpresa=empresa.idEmpresa,\n"
+                + "   usuario \n"
+                + "		INNER JOIN  formacionacademica ON usuario.idTitulado=formacionacademica.idTitulado \n"
+                + "		INNER JOIN  titulado                     ON usuario.idTitulado=titulado.idTitulado  \n"
+                + "		INNER JOIN  municipio as municipiotitulado           ON titulado.idMunicipio=municipiotitulado.idMunicipio\n"
                 + "WHERE\n"
                 + "   oferta.cerrada <> 1 AND\n"
                 + "   usuario.idIdentity=? AND\n"
                 + "   empresa.idCentro IS NULL AND\n"
-                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n");
+                + "   ofertaciclo.idCiclo=formacionacademica.idCiclo AND\n");
 
         if (provincia != null) {
-            sb.append("   municipioOferta.idProvincia=? AND\n");
+            sb.append("   municipiooferta.idProvincia=? AND\n");
         }
         if (fechaInicio != null) {
             sb.append("   oferta.fecha>=? AND\n");
@@ -68,25 +68,25 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
             sb.append("   oferta.fecha<=? AND\n");
         }
 
-        sb.append("   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)\n");
+        sb.append("   not exists (SELECT * FROM  candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)\n");
 
         sb.append(" UNION DISTINCT \n");
 
         sb.append("SELECT oferta.*\n"
                 + "FROM\n"
-                + "   Oferta oferta   \n"
-                + "		INNER JOIN OfertaCiclo ofertaCiclo   ON oferta.idOferta=ofertaCiclo.idOferta \n"
-                + "		INNER JOIN Municipio municipioOferta ON oferta.idMunicipio=municipioOferta.idMunicipio\n"
-                + "		INNER JOIN Empresa empresa           ON oferta.idEmpresa=empresa.idEmpresa,\n"
-                + "   Usuario usuario \n"
-                + "		INNER JOIN FormacionAcademica formacionAcademica ON usuario.idTitulado=formacionAcademica.idTitulado   \n"
+                + "   oferta   \n"
+                + "		INNER JOIN  ofertaciclo   ON oferta.idOferta=ofertaciclo.idOferta \n"
+                + "		INNER JOIN  municipio as municipiooferta ON oferta.idMunicipio=municipiooferta.idMunicipio\n"
+                + "		INNER JOIN  empresa           ON oferta.idEmpresa=empresa.idEmpresa,\n"
+                + "   usuario \n"
+                + "		INNER JOIN  formacionacademica ON usuario.idTitulado=formacionacademica.idTitulado   \n"
                 + "WHERE\n"
                 + "   oferta.cerrada <> 1 AND\n"
                 + "   usuario.idIdentity=? AND\n"
-                + "   empresa.idCentro = formacionAcademica.idCentro AND\n"
-                + "   ofertaCiclo.idCiclo=formacionAcademica.idCiclo AND\n");
+                + "   empresa.idCentro = formacionacademica.idCentro AND\n"
+                + "   ofertaciclo.idCiclo=formacionacademica.idCiclo AND\n");
         if (provincia != null) {
-            sb.append("   municipioOferta.idProvincia=? AND\n");
+            sb.append("   municipiooferta.idProvincia=? AND\n");
         }
         if (fechaInicio != null) {
             sb.append("   oferta.fecha>=? AND\n");
@@ -95,7 +95,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
             sb.append("   oferta.fecha<=? AND\n");
         }
 
-        sb.append("   not exists (SELECT * FROM Candidato candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)");
+        sb.append("   not exists (SELECT * FROM candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)");
 
         SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
         sqlQuery.addEntity(Oferta.class);
@@ -132,7 +132,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
 
         StringBuilder sb = new StringBuilder();
         
-        sb.append("SELECT candidato.oferta FROM Candidato candidato WHERE candidato.usuario.idIdentity=?");
+        sb.append("SELECT candidato.oferta FROM  Candidato  as candidato WHERE candidato.usuario.idIdentity=?");
 
         if (provincia!=null) {
             sb.append(" AND candidato.oferta.municipio.provincia.idProvincia=? ");
@@ -164,7 +164,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     public List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String hql = "SELECT oferta FROM Oferta AS oferta WHERE oferta.empresa.centro.idCentro=?";
+        String hql = "SELECT oferta FROM oferta WHERE oferta.empresa.centro.idCentro=?";
 
         Query query = session.createQuery(hql);
         query.setInteger(0, centro.getIdCentro());
@@ -176,7 +176,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     public List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String hql = "SELECT oferta FROM Oferta AS oferta WHERE oferta.empresa.idEmpresa=?";
+        String hql = "SELECT oferta FROM oferta WHERE oferta.empresa.idEmpresa=?";
 
         Query query = session.createQuery(hql);
         query.setInteger(0, empresa.getIdEmpresa());

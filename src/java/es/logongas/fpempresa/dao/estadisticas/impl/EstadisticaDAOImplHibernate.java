@@ -39,7 +39,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN ( Oferta as oferta  INNER  JOIN Empresa as empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
+                + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "\n"
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
@@ -56,7 +56,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN ( Oferta as oferta  INNER  JOIN Empresa as empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
+                + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "WHERE\n"
                 + "   empresa.idEmpresa=?"
                 + "\n"
@@ -76,7 +76,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN ( Oferta as oferta  INNER  JOIN Empresa as empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
+                + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "WHERE\n"
                 + "   empresa.idCentro=?"
                 + "\n"
@@ -96,7 +96,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN ( Oferta as oferta  INNER  JOIN Empresa as empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN Candidato as candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
+                + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 
@@ -112,7 +112,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN ( Oferta as oferta  INNER  JOIN Empresa as empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN Candidato as candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
+                + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "WHERE\n"
                 + "  empresa.idEmpresa=?\n"
                 + "GROUP BY\n"
@@ -131,7 +131,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN ( Oferta as oferta  INNER  JOIN Empresa as empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN Candidato as candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
+                + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "WHERE\n"
                 + "  empresa.idCentro=?\n"
                 + "GROUP BY\n"
@@ -150,7 +150,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN (Ciclo ciclo  JOIN FormacionAcademica as formacionAcademica  ON ciclo.idCiclo=formacionAcademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
+                + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 
@@ -166,9 +166,9 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT \n"
                 + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
                 + "FROM\n"
-                + "   Familia as familia JOIN (Ciclo ciclo  JOIN FormacionAcademica as formacionAcademica  ON ciclo.idCiclo=formacionAcademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
+                + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
                 + "WHERE\n"
-                + "   formacionAcademica.idCentro=?\n"
+                + "   formacionacademica.idCentro=?\n"
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="es.logongas.fpempresa.modelo.empresa.Oferta" >
+    <class name="es.logongas.fpempresa.modelo.empresa.Oferta" table="oferta"  >
         <id name="idOferta" >
             <generator class="identity" />
         </id>
@@ -24,7 +24,7 @@
             <column name="idFamilia"  />
         </many-to-one>          
         
-        <set name="ciclos" table="OfertaCiclo"  inverse="false"  lazy="false" >
+        <set name="ciclos" table="ofertaciclo"  inverse="false"  lazy="false" >
             <key>
                 <column name="idOferta"  />
             </key>

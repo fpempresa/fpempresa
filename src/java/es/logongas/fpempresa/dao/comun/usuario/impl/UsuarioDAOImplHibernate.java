@@ -37,7 +37,7 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
         
         Session session = (Session) dataSession.getDataBaseSessionImpl();
         
-        Query query = session.createSQLQuery("UPDATE Usuario SET password=? WHERE idIdentity=?");
+        Query query = session.createSQLQuery("UPDATE usuario SET password=? WHERE idIdentity=?");
         query.setString(0, encriptedPassword);
         query.setInteger(1, usuario.getIdIdentity());
         
@@ -48,7 +48,7 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Int
     public String getEncryptedPassword(DataSession dataSession, Usuario usuario) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
         
-        Query query = session.createSQLQuery("SELECT password FROM Usuario WHERE idIdentity=?");
+        Query query = session.createSQLQuery("SELECT password FROM usuario WHERE idIdentity=?");
         query.setInteger(0, usuario.getIdIdentity());
         String encryptedPassword=(String)query.uniqueResult();
         

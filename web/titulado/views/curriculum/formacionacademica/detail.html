@@ -67,7 +67,14 @@
                         </div>  
                         <div  class="col-sm-3"></div>
                     </div>  
-                    <br>
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'"  class="form-group">
+                        <div  class="input-group col-sm-3 col-sm-offset-3">
+                            <input ng-model="model.formacionDual" id="model.formacionDual" name="model.formacionDual" type="checkbox"   />
+                            <span class="" ix3-label for="model.formacionDual"></span>
+                        </div>  
+                        <div  class="col-sm-3"></div>
+                    </div>  
+                    <br>                  
                     <div class="row" >
                         <div class="col-xs-12 ">
                             <br>

@@ -61,6 +61,9 @@ public class FormacionAcademica {
     
     private boolean certificadoTitulo;
     
+    @Label("Formación Dual")
+    private boolean formacionDual;
+    
     public FormacionAcademica() {
     }
 
@@ -310,5 +313,19 @@ public class FormacionAcademica {
      */
     public void setCertificadoTitulo(boolean certificadoTitulo) {
         this.certificadoTitulo = certificadoTitulo;
+    }
+
+    /**
+     * @return the formacionDual
+     */
+    public boolean isFormacionDual() {
+        return formacionDual;
+    }
+
+    /**
+     * @param formacionDual the formacionDual to set
+     */
+    public void setFormacionDual(boolean formacionDual) {
+        this.formacionDual = formacionDual;
     }
 }

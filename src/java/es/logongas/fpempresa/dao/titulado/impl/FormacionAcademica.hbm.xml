@@ -30,5 +30,7 @@
         
         <property name="certificadoTitulo" />
         
+        <property name="formacionDual" />
+        
     </class>
 </hibernate-mapping>

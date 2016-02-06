@@ -1,3 +1,3 @@
-set ANT_OPTS=-Xms256m -Xmx255m
+set ANT_OPTS=-Xms200m -Xmx200m
 SET ANT_HOME=./ant
 "%ANT_HOME%/bin/ant.bat" %*

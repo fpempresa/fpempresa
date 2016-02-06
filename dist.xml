@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="fpempresa" default="default" basedir=".">
+<project name="fpempresa" default="distOpenShift" basedir=".">
     <description>Builds, tests, and runs the project fpempresa.</description>
     <import file="nbproject/build-impl.xml"/>
 
@@ -60,11 +60,15 @@
         <!--tareas de sonar -->
         <taskdef resource="org/sonar/ant/antlib.xml"></taskdef>  
         
-		<!--tareas de JMeter -->
-		<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>		
+        <!--tareas de JMeter -->
+        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>		
 		
         <!-- Propiedades del proyecto -->
-        <property file="nbproject/project.properties"/>     
+        <property file="nbproject/project.properties"/>    
+        
+        
+        <property name="max-memory-build-js" value="250" />
+         
     </target>
 
 
@@ -78,14 +82,15 @@
         <delete file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml"/>
     </target>
 
-    <target name="-pre-dist" depends="-pre-dist-configureProduccion">
+    <target name="-pre-dist" if="enableProduccion" >
+        <antcall target="-pre-dist-configureProduccion"></antcall>
     </target>
 
     <target name="-post-dist" >
         <delete dir="${DEP_DIR}" />
     </target>
 
-    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="-set-os,-exec-grunt-linux,-exec-grunt-windows" >       
+    <target name="-pre-dist-configureProduccion" depends="-set-os,-exec-grunt,-exec-gulp" >       
         <!-- Poner los datos de la conexión de producción -->
         <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
             <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
@@ -105,17 +110,43 @@
         </condition>
     </target>
 
+    <target name="-exec-grunt" if="grunt" >
+        <antcall target="-exec-grunt-linux"></antcall>
+        <antcall target="-exec-grunt-windows"></antcall>
+    </target>    
+
     <target name="-exec-grunt-linux" if="linuxos">	
         <exec executable="./node/bin/node64" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>
     </target>
     <target name="-exec-grunt-windows" if="windowsos">
         <exec executable="./node/bin/node64.exe" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>            
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>
-    </target> 
+    </target>
+    
+    <target name="-exec-gulp" unless="grunt" >
+        <antcall target="-exec-gulp-linux"></antcall>
+        <antcall target="-exec-gulp-windows"></antcall>
+    </target>  
+    
+    <target name="-exec-gulp-linux" >	
+        <exec executable="./node/bin/node64" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>            
+            <arg value="./node_modules/gulp/bin/gulp.js"/>
+        </exec>
+    </target>
+    <target name="-exec-gulp-windows" if="windowsos">
+        <exec executable="./node/bin/node64.exe" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>            
+            <arg value="./node_modules/gulp/bin/gulp.js"/>
+        </exec>
+    </target>     
+    
 
 </project>

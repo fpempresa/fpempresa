@@ -67,7 +67,7 @@
         <property file="nbproject/project.properties"/>    
         
         
-        <property name="max-memory-build-js" value="250" />
+        <property name="max-memory-build-js" value="200" />
          
     </target>
 

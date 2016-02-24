@@ -12,6 +12,8 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
+import static es.logongas.fpempresa.presentacion.api.EmpresarioTest.empresa;
+import static es.logongas.fpempresa.presentacion.api.ProfesorTest.centro;
 import es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios;
 import java.util.Map;
 import org.apache.http.HttpStatus;
@@ -28,6 +30,8 @@ import org.junit.runners.MethodSorters;
 public class AdministradorTest {
 
     static Map<String, String> cookies;
+    static Centro centro;
+    static Empresa empresa;
 
     @BeforeClass
     public static void setUpClass() {
@@ -161,11 +165,19 @@ public class AdministradorTest {
 
         TestUtil.testInsert("administrador", Usuario.class, false, HttpStatus.SC_FORBIDDEN, null, usuario, "idIdentity",null);
     }
+    
+    @Test
+    public void test_081_insertar_centro() {
+        centro = GeneradorDatosAleatorios.createCentroAleatorio();
+        int idCentro=TestUtil.testInsert("administrador", Centro.class, true, 0, cookies, centro, "idCentro", null);
+        centro.setIdCentro(idCentro);
+    }    
 
+    
     @Test
     public void test_09_UsuarioProfesor() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.CENTRO);
-        usuario.setCentro(GeneradorDatosAleatorios.createCentroAleatorio());
+        usuario.setCentro(centro);
 
         CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
         crudTestConfiguration.appPath = "administrador";
@@ -183,9 +195,16 @@ public class AdministradorTest {
     }
 
     @Test
+    public void test_091_insertar_empresa() {
+        empresa=GeneradorDatosAleatorios.createEmpresaAleatoria(null);
+        int idEmpresa=TestUtil.testInsert("administrador", Empresa.class, true, 0, cookies, empresa, "idEmpresa", null);
+        empresa.setIdEmpresa(idEmpresa);
+    }    
+    
+    @Test
     public void test_10_UsuarioEmpresa() {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.EMPRESA);
-        usuario.setEmpresa(GeneradorDatosAleatorios.createEmpresaAleatoria(null));
+        usuario.setEmpresa(empresa);
 
         CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
         crudTestConfiguration.appPath = "administrador";

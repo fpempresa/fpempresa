@@ -58,60 +58,8 @@ public class Empresa {
     @Valid
     private Contacto contacto;
 
-    @ConstraintRule(message = "Solo un usuario registrado puede modificar la empresa", priority = -20, groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
-    private boolean usuarioRegistrado(RuleContext<Empresa> ruleContext) {
-        Usuario usuario = (Usuario) ruleContext.getPrincipal();
 
-        if (usuario == null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @ConstraintRule(message = "Tu tipo de usuario no permite modificar la empresa", groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
-    private boolean soloLoPuedeModificarUnCentroAdministradorOTrabajador(RuleContext<Empresa> ruleContext) {
-        Usuario usuario = (Usuario) ruleContext.getPrincipal();
-
-        if ((usuario.getTipoUsuario() != TipoUsuario.ADMINISTRADOR) && (usuario.getTipoUsuario() != TipoUsuario.EMPRESA) && (usuario.getTipoUsuario() != TipoUsuario.CENTRO)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @ConstraintRule(message = "Un trabajador no puede modificar la empresa si no pertences a ella", groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
-    private boolean soloUsuarioDeEmpresaPuedeModificarla(RuleContext<Empresa> ruleContext) {
-        Usuario usuario = (Usuario) ruleContext.getPrincipal();
-
-        if (usuario.getTipoUsuario() == TipoUsuario.EMPRESA) {
-            if (usuario.getEmpresa().getIdEmpresa() != this.getIdEmpresa()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @ConstraintRule(message = "Un profesor no puede modificar la empresa si no pertences a su centro", groups = RuleGroupPredefined.PostInsertOrUpdateOrDelete.class)
-    private boolean soloProfesorCuyaEmpresaSeaDeSuCentroPuedeModificarla(RuleContext<Empresa> ruleContext) {
-        Usuario usuario = (Usuario) ruleContext.getPrincipal();
-
-        if (usuario.getTipoUsuario() == TipoUsuario.CENTRO) {
-
-            if (this.getCentro() == null) {
-                return false;
-            }
-
-            if (usuario.getCentro().getIdCentro() != this.getCentro().getIdCentro()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class, disabled = true)
+    @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
         Validador validadorCIF = new Validador();
 

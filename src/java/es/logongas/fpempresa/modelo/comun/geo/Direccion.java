@@ -20,7 +20,6 @@ package es.logongas.fpempresa.modelo.comun.geo;
 
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 

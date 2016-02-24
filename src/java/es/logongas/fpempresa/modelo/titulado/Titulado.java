@@ -17,11 +17,15 @@
  */
 package es.logongas.fpempresa.modelo.titulado;
 
+import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.rule.ActionRule;
+import es.logongas.ix3.rule.ConstraintRule;
+import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import java.util.Date;
 import java.util.Set;
@@ -91,6 +95,21 @@ public class Titulado {
             configuracion.getNotificacionOferta().setNotificarPorEmail(true);
         }
     }
+    
+    @ConstraintRule(fieldName = "numeroDocumento", message = "El número o la letra del NIF/NIE '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarNIF(RuleContext<Empresa> ruleContext) {
+        Validador validadorCIF = new Validador();
+
+        if (this.tipoDocumento==TipoDocumento.NIF_NIE) {
+            if (validadorCIF.checkNif(this.numeroDocumento) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }     
     
     
     public Titulado() {

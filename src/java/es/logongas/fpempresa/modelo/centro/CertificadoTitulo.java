@@ -18,9 +18,7 @@ package es.logongas.fpempresa.modelo.centro;
 
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.ix3.core.annotations.Label;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.validation.constraints.Min;

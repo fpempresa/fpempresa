@@ -300,43 +300,43 @@ public class GeneradorDatosAleatorios {
 
     static final public String getCif() {
         Random random = new Random();
-        String[] letrasIniciales = {"C", "D", "F", "G", "J", "N", "P", "Q", "R", "S", "V", "W"};
-        String cifSinLetra = getAleatorio(letrasIniciales) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1);
+        String[] letrasIniciales = {"A", "B"};
+        String cifSinLetra = getAleatorio(letrasIniciales) + "46" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1);
 
         return cifSinLetra + getLetraCif(cifSinLetra);
     }
 
     static final public String getNif() {
         Random random = new Random();
-        String[] letrasIniciales = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X"};
+        String[] letrasIniciales = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         String nifSinLetra = getAleatorio(letrasIniciales) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1) + "" + (random.nextInt(8) + 1);
 
         return nifSinLetra + getLetraNif(nifSinLetra);
     }
 
-    private static String getLetraNif(String nifSinLetra) {
+    static final public String getLetraNif(String nifSinLetra) {
         String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
         int valor;
 
         if (nifSinLetra.startsWith("X")) {
             //Es un NIE
-            valor = Integer.parseInt(nifSinLetra.substring(1, nifSinLetra.length() - 1));
+            valor = Integer.parseInt(nifSinLetra.substring(1, nifSinLetra.length()));
         } else if (nifSinLetra.startsWith("Y")) {
             //Es un NIE
-            valor = 10000000 + Integer.parseInt(nifSinLetra.substring(1, nifSinLetra.length() - 1));
+            valor = 10000000 + Integer.parseInt(nifSinLetra.substring(1, nifSinLetra.length()));
         } else if (nifSinLetra.startsWith("Z")) {
             //Es un NIE
-            valor = 20000000 + Integer.parseInt(nifSinLetra.substring(1, nifSinLetra.length() - 1));
+            valor = 20000000 + Integer.parseInt(nifSinLetra.substring(1, nifSinLetra.length()));
         } else {
             //Es un NIF
-            valor = Integer.parseInt(nifSinLetra.substring(0, nifSinLetra.length() - 1));
+            valor = Integer.parseInt(nifSinLetra.substring(0, nifSinLetra.length()));
         }
 
         return "" + letras.charAt(valor % 23);
 
     }
 
-    private static String getLetraCif(String cifSinLetra) {
+    static final public String getLetraCif(String cifSinLetra) {
         int a = 0;
         a = a + Integer.parseInt(cifSinLetra.substring(2, 3));
         a = a + Integer.parseInt(cifSinLetra.substring(4, 5));

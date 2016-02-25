@@ -1,4 +1,4 @@
 #!/bin/sh
-export ANT_OPTS="-Xms80m -Xmx80m"
+export ANT_OPTS="-Xms75m -Xmx75m"
 export ANT_HOME=./ant
 $ANT_HOME/bin/ant $*

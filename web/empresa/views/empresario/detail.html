@@ -1,0 +1,70 @@
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Usuario</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation >
+                                </div>
+                            </div> 
+                        </div>                          
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="apellidos" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation >
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="email" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.email" type="text" class="form-control" id="email" name="email"  ix3-validation >
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" ng-show="controllerAction === 'NEW'" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="password" class="col-xs-3 col-sm-6 control-label">Contrase&ntilde;a</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.password" type="password" class="form-control" id="password" name="password" ng-required="controllerAction === 'NEW'"  >
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="confirmPassword" class="col-xs-3 col-sm-6 control-label">Confirmar contrase&ntilde;a</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-required="controllerAction === 'NEW'" >
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>                    
+                    <br> 
+
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <crud-detail-buttons class="pull-right" >
+                            </crud-detail-buttons>                            
+                        </div>
+                    </div>                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="es.logongas.fpempresa.modelo.empresa.Oferta" >
-        
-        <cache usage="read-write" />
-        
+    <class name="es.logongas.fpempresa.modelo.empresa.Oferta" table="oferta"  >
         <id name="idOferta" >
             <generator class="identity" />
         </id>
@@ -27,7 +24,7 @@
             <column name="idFamilia"  />
         </many-to-one>          
         
-        <set name="ciclos" table="OfertaCiclo"  cascade="all" inverse="false"  lazy="false" >
+        <set name="ciclos" table="ofertaciclo"  inverse="false"  lazy="false" >
             <key>
                 <column name="idOferta"  />
             </key>
@@ -42,6 +39,15 @@
         </property>            
 
         <property name="cerrada" />
-
+       
+        <component name="contacto" >
+            <property name="url" />
+            <property name="email" />
+            <property name="persona" />
+            <property name="telefono" />
+            <property name="fax" />
+            <property name="textoLibre" />
+        </component>        
+        
     </class>
 </hibernate-mapping>

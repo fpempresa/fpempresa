@@ -5,7 +5,7 @@
             <ix3-business-messages></ix3-business-messages>
             <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend class="form__title">Formaci&oacute;n academica</legend>
+                    <legend class="form__title"><img ng-show="model.certificadoTitulo" title="El centro donde has estudiado ha certificado que tienes el t&iacute;tulo" src="{{getContextPath()}}/img/award/award-32x32.png">&nbsp;Formaci&oacute;n academica</legend>
                     <div class="form-group">
                         <label for="model.tipoFormacionAcademica" class="col-sm-3  control-label" ix3-label ></label>
                         <div class="col-sm-3">
@@ -67,7 +67,14 @@
                         </div>  
                         <div  class="col-sm-3"></div>
                     </div>  
-                    <br>
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'"  class="form-group">
+                        <div  class="input-group col-sm-3 col-sm-offset-3">
+                            <input ng-model="model.formacionDual" id="model.formacionDual" name="model.formacionDual" type="checkbox"   />
+                            <span class="" ix3-label for="model.formacionDual"></span>
+                        </div>  
+                        <div  class="col-sm-3"></div>
+                    </div>  
+                    <br>                  
                     <div class="row" >
                         <div class="col-xs-12 ">
                             <br>

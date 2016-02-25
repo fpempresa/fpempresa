@@ -10,7 +10,7 @@ app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList'
         genericControllerCrudList.extendScope($scope, controllerParams);      
         $scope.page.pageSize=20;
         
-        $scope.filters.$eq['centro.idCentro']=$scope.user.centro.idCentro;
+        $scope.filters['centro.idCentro']=$scope.user.centro.idCentro;
         
         $scope.search();
     }]);
@@ -18,6 +18,11 @@ app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList'
 
 app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        $scope.postCreate = function () {
+            $scope.model.centro = $scope.user.centro;
+        };
+        
     }]);
 
 app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {

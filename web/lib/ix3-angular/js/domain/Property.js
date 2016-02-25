@@ -39,7 +39,7 @@ angular.module('es.logongas.ix3').config(['richDomainProvider', function (richDo
                         }
                     },
                     //Obtener los metadatos de una propiedad
-                    getMetadataProperty: function (propertyName) {
+                    getSchemaProperty: function (propertyName) {
                         propertyName = propertyName || "";
                         if (propertyName.indexOf(",") >= 0) {
                             throw new Error("No se permiten comas en el nombre de la propiedad");

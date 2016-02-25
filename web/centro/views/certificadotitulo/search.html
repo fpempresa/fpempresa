@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <div class="row" >
+                <div class="col-xs-12 ">            
+                    <legend class="form__title">Certificados de T&iacute;tulos</legend>
+                </div>
+            </div> 
+            <form name="mainForm" id="mainForm" ix3-form="{modelPropertyName:'filters'}" >
+                <div class="row" >
+                    <div class="col-xs-12 col-sm-6">
+                        <select ng-model="filters['ciclo.familia.idFamilia']" ix3-schema-property='CertificadoTitulo.ciclo.familia'   id="ciclo.familia" name="ciclo.familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                            <option value="">-- Elige Familia Profesional --</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <select ng-model="filters['ciclo.idCiclo']" ix3-schema-property='CertificadoTitulo.ciclo' id="ciclo" name="ciclo" class="form-control" ix3-options=" orderBy:'descripcion'" ix3-options-depend="{familia:filters['ciclo.familia.idFamilia']}"   >
+                            <option value="">-- Elige Ciclo --</option>
+                        </select>
+                    </div>
+                </div> 
+                <br>
+                <div class="row" >
+                    <div  class="col-xs-12 col-sm-6 col-md-4">
+                        <input ng-model="filters.anyo" id="anyo" name="anyo" class="form-control" type="text"  placeholder="A&ntilde;o" />
+                    </div>  
+                </div>
+                <br>
+                <div class="row" >
+                    <div class="col-xs-12 ">
+                        <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                    </div>
+                </div> 
+            </form>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12"> 
+                    <p class="form__text form__text--help">Los certificados de los t&iacute;tulos permiten al centro certificar de cara a las empresas que los titulos que han incluido el alumno en su curriculum son correctos</p>
+                    <p class="form__text form__text--help">Desde esta pantalla debes indicar para cada ciclo y año los NIF/NIE de los alumnos que han obtenido el título ese año.</p>
+                </div>
+            </div>            
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <ix3-business-messages></ix3-business-messages>
+                </div>
+            </div>             
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <table class="table table-bordered">
+                        <thead>                        
+                            <tr class="data-table__head">
+                                <th ix3-order-field-names="ciclo.descripcion" style="width:90%;text-align: center">Titulo</th>
+                                <th ix3-order-field-names="anyo" style="min-width:60px;text-align: center">A&ntilde;o</th>
+                                <th style="min-width:120px;text-align: center" >Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="certificadoTitulo in models" class="data-table__row">
+                                <td >{{certificadoTitulo.ciclo.descripcion}}</td>
+                                <td >{{certificadoTitulo.anyo}}</td>                     
+                                <td >
+                                    <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(certificadoTitulo.idCertificadoTitulo)">Borrar</button>
+                                    <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(certificadoTitulo.idCertificadoTitulo)">Editar</button>
+                                </td>                             
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>   
+            <div class="row" >
+                <div class="col-xs-12 ">                        
+                    <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nuevo Certificado de Titulo</button>
+                </div>
+            </div>             
+        </div>
+    </div>
+</div>

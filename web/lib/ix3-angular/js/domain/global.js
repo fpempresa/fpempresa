@@ -32,7 +32,7 @@ angular.module('es.logongas.ix3').config(['richDomainProvider', function (richDo
 
             return function (object, propertyPath) {
                 //Añadir el método toString() para que use la propiedad "$toString", pero solo si existe
-                if (typeof (object['$toString']) === "string") {
+                if (object.hasOwnProperty('$toString')) {
                     //Definimos nuestra propia función "toString"
                     object['toString'] = toStringGlobal;
                 }

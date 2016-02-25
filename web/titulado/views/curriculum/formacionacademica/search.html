@@ -10,7 +10,8 @@
                         <th style="width:      50%;text-align: center">Titulo</th>
                         <th style="width:      35%;text-align: center">Centro</th>
                         <th style="min-width:85px;text-align: center">Fecha</th>
-                        <th style="min-width:120px;text-align: center" >Acciones</th>
+                        <th style="min-width:85px;text-align: center" title="Indica si el centro donde has estudiado certifica que tienes el t&iacute;tulo">Certificado</th>
+                        <th style="min-width:120px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,7 +19,8 @@
                         <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
                         <td >{{formacionAcademica.getNombreTitulo()}}</td>
                         <td >{{formacionAcademica.getNombreCentro()}}</td>
-                        <td >{{formacionAcademica.fecha| ix3Date}}</td>                        
+                        <td >{{formacionAcademica.fecha| ix3Date}}</td> 
+                        <td style="text-align: center" ><img ng-show="formacionAcademica.certificadoTitulo" title="El centro donde has estudiado ha certificado que tienes el t&iacute;tulo" ng-src="{{getContextPath()}}/img/award/award-24x24.png"></td>
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(formacionAcademica.idFormacionAcademica)">Borrar</button>
                             <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(formacionAcademica.idFormacionAcademica)">Editar</button>

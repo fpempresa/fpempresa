@@ -2,10 +2,10 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("Centro", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("Centro", ['schemaEntities', function (schemaEntities) {
                 var Centro = {
                     getEstadoCentroDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".estadoCentro").getValueDescription(this.estadoCentro);
+                        return schemaEntities.getSchemaProperty(this.$propertyPath + ".estadoCentro").getValueDescription(this.estadoCentro);
                     }
                 };
 

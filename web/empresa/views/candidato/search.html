@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Candidatos de la oferta "{{oferta.puesto}}"</legend>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6"> 
+                    <select class="form-control" ng-model="filters.maxAnyoTitulo"  id="maxAnyoTitulo" name="maxAnyoTitulo"  ng-options="anyo.anyo as anyo.descripcion for anyo in anyos"  >
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6"> 
+                    <div class="checkbox">
+                        <label>
+                            <input ng-model="filters.certificados" type="checkbox" >
+                            Titulaci&oacute;n certificada por el centro educativo
+                        </label>
+                    </div>
+                </div>               
+            </div>
+            <div class="row">
+                <div class="col-xs-12"> 
+                    <div class="checkbox">
+                        <label>
+                            <input ng-model="filters.ocultarRechazados" type="checkbox" >
+                            Ocultar candidatos rechazados
+                        </label>
+                    </div>
+                </div> 
+            </div>                
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>            
+            <ix3-business-messages></ix3-business-messages>
+
+            <table class="table table-bordered table-condensed">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th ix3-order-field-names="usuario.nombre,usuario.apellidos" style="width:   90%;text-align: center">Nombre</th>
+                        <th ix3-order-field-names="fecha" style="min-width: 150px; width: 150px;text-align: center">Fecha inscripci&oacute;n</th>
+                        <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="candidato in models" class="data-table__row">
+                        <td >
+                            <i ng-if="candidato.rechazado === true" class="fa fa-times" style="color:#FF0000">&nbsp;</i>
+                            <a href ng-click="verCandidato(candidato.idCandidato)">{{candidato.usuario.getNombreCompleto()}}</a>                                   
+                            <p class="profile__value profile__value--cita">{{candidato.usuario.titulado.resumen}}</p></td>                            
+                        <td >{{candidato.fecha| ix3Date}}</td>                            
+                        <td ><button class="btn btn-xs form__button form__button--default" type="button" ng-click="verCandidato(candidato.idCandidato)">Ver Curriculum</button></td>                            
+                    </tr>
+                </tbody>
+            </table>                 
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>

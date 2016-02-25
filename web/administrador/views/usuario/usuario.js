@@ -6,7 +6,7 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         });
     }]);
 
-app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'metadataEntities', function ($scope, genericControllerCrudList, controllerParams, metadataEntities) {
+app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'schemaEntities', function ($scope, genericControllerCrudList, controllerParams, schemaEntities) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
 
@@ -20,7 +20,7 @@ app.controller("UsuarioSearchController", ['$scope', 'genericControllerCrudList'
 
 
         if ($scope.parentProperty === "tipoUsuario") {
-            $scope.tipoUsuarioDescription = "de tipo \"" + metadataEntities.getMetadataProperty("Usuario.tipoUsuario").getValueDescription($scope.parentId) + "\"";
+            $scope.tipoUsuarioDescription = "de tipo \"" + schemaEntities.getSchemaProperty("Usuario.tipoUsuario").getValueDescription($scope.parentId) + "\"";
         } else {
             $scope.tipoUsuarioDescription = "";
         }

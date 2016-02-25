@@ -17,15 +17,23 @@
  */
 package es.logongas.fpempresa.modelo.titulado;
 
+import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.ix3.core.annotations.Label;
+import es.logongas.ix3.rule.ActionRule;
+import es.logongas.ix3.rule.ConstraintRule;
+import es.logongas.ix3.rule.RuleContext;
+import es.logongas.ix3.rule.RuleGroupPredefined;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -57,12 +65,53 @@ public class Titulado {
     
     @NotEmpty
     @Label("Nº de documento")
+    @Size(max=20)
     private String numeroDocumento;
     
     private Set<TituloIdioma> titulosIdiomas;
     private Set<ExperienciaLaboral> experienciasLaborales;
     private Set<FormacionAcademica> formacionesAcademicas;
 
+    @Valid
+    @NotNull
+    private Configuracion configuracion=new Configuracion();
+    
+    @Label("Sobre mi")
+    @Size(max=255)
+    private String resumen;
+    
+    @Label("Otras competencias")
+    @Size(max=65000)     
+    private String otrasCompetencias;
+    
+    @Label("Permisos de conducir")
+    @Size(max=255)
+    private String permisosConducir;
+    
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void provinciaDeNotificacionIgualALaDireccion() {
+        if (configuracion.getNotificacionOferta().getProvincias().isEmpty()) {
+            configuracion.getNotificacionOferta().getProvincias().add(direccion.getMunicipio().getProvincia());
+            configuracion.getNotificacionOferta().setNotificarPorEmail(true);
+        }
+    }
+    
+    @ConstraintRule(fieldName = "numeroDocumento", message = "El número o la letra del NIF/NIE '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarNIF(RuleContext<Empresa> ruleContext) {
+        Validador validadorCIF = new Validador();
+
+        if (this.tipoDocumento==TipoDocumento.NIF_NIE) {
+            if (validadorCIF.checkNif(this.numeroDocumento) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }     
+    
+    
     public Titulado() {
     }
     
@@ -204,6 +253,62 @@ public class Titulado {
      */
     public void setFormacionesAcademicas(Set<FormacionAcademica> formacionesAcademicas) {
         this.formacionesAcademicas = formacionesAcademicas;
+    }
+
+    /**
+     * @return the configuracion
+     */
+    public Configuracion getConfiguracion() {
+        return configuracion;
+    }
+
+    /**
+     * @param configuracion the configuracion to set
+     */
+    public void setConfiguracion(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+
+    /**
+     * @return the resumen
+     */
+    public String getResumen() {
+        return resumen;
+    }
+
+    /**
+     * @param resumen the resumen to set
+     */
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
+
+    /**
+     * @return the otrasCompetencias
+     */
+    public String getOtrasCompetencias() {
+        return otrasCompetencias;
+    }
+
+    /**
+     * @param otrasCompetencias the otrasCompetencias to set
+     */
+    public void setOtrasCompetencias(String otrasCompetencias) {
+        this.otrasCompetencias = otrasCompetencias;
+    }
+
+    /**
+     * @return the permisosConducir
+     */
+    public String getPermisosConducir() {
+        return permisosConducir;
+    }
+
+    /**
+     * @param permisosConducir the permisosConducir to set
+     */
+    public void setPermisosConducir(String permisosConducir) {
+        this.permisosConducir = permisosConducir;
     }
 
 }

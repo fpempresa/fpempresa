@@ -33,6 +33,11 @@ public class Familia {
     public Familia() {
     }
 
+    public Familia(int idFamilia, String descripcion) {
+        this.idFamilia = idFamilia;
+        this.descripcion = descripcion;
+    }
+    
     @Override
     public String toString() {
         return descripcion;
@@ -67,4 +72,7 @@ public class Familia {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    
+    
 }

@@ -34,9 +34,12 @@
                         }]
                 ]
             },
+            session: {
+                expand:""
+            },
             crud: {
-                defaultParentState:"",
-                defaultHtmlBasePath:""
+                parentState:"",
+                parentPathViews:""
             }
         };
  */
@@ -82,6 +85,8 @@ function getIx3Configuration(ix3UserConfiguration) {
 
         ix3Configuration.security = ix3Configuration.security || {};
         ix3Configuration.security.acl = ix3Configuration.security.acl || [];
+        
+        ix3Configuration.session = ix3Configuration.session || {};        
         
         ix3Configuration.crud = ix3Configuration.crud || {};
 

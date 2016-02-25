@@ -2,11 +2,9 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("Direccion", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("Direccion", ['schemaEntities', function (schemaEntities) {
                 var Direccion = {
-                    getTipoViaDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".tipoVia").getValueDescription(this.tipoVia);
-                    }
+
                 };
 
                 return function (object, propertyPath) {

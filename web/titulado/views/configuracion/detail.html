@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Configuracion Notificaciones</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="model.configuracion.notificacionOferta.notificarPorEmail" type="checkbox" >
+                                    Notificarme por correo electr&oacute;nico cuando llegue una oferta para alguno de mis t&iacute;tulos.
+                                </label>
+                            </div>
+                        </div> 
+                    </div>
+                    <br>
+                    <div class="row" ng-show="model.configuracion.notificacionOferta.notificarPorEmail===true" >
+                        <div class="col-xs-12  form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <p class="form__text form__text--help">
+                                        Solo se enviar&aacute;n correos electronicos de las ofertas en las siguientes provincias 
+                                    </p>
+                                    <table class="table table-bordered table-striped table-condensed">
+                                        <thead>                        
+                                            <tr class="data-table__head">
+                                                <th style="width:   1%;text-align: center"><input  type="checkbox" ng-model="todasProvincias" ng-click="checkTodasProvincias(todasProvincias)"></th>
+                                                <th style="width:   55%;text-align: center">Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="provincia in provincias" class="data-table__row">
+                                                <td ><input type="checkbox" checklist-model="model.configuracion.notificacionOferta.provincias" checklist-value="provincia" checklist-comparator="compareProvincia"></td>
+                                                <td >{{provincia.descripcion}}</td>                             
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
+                            </div> 
+                        </div> 
+                    </div>  
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <div class="pull-right">
+                                <fpe-cancel-button></fpe-cancel-button>
+                                <fpe-ok-button></fpe-ok-button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

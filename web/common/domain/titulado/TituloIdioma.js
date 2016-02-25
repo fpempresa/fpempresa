@@ -2,17 +2,17 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("TituloIdioma", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("TituloIdioma", ['schemaEntities', function (schemaEntities) {
                 var TituloIdioma = {
                     getNombreIdioma: function () {
                         if (this.idioma === "OTRO") {
                             return this.otroIdioma;
                         } else {
-                            return metadataEntities.getMetadataProperty(this.$propertyPath + ".idioma").getValueDescription(this.idioma);
+                            return schemaEntities.getSchemaProperty(this.$propertyPath + ".idioma").getValueDescription(this.idioma);
                         }
                     },
                     getNivelIdiomaDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".nivelIdioma").getValueDescription(this.nivelIdioma);
+                        return schemaEntities.getSchemaProperty(this.$propertyPath + ".nivelIdioma").getValueDescription(this.nivelIdioma);
                     }
                 };
 

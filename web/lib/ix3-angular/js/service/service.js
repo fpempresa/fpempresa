@@ -72,10 +72,10 @@
 
             return deferred.promise;
         };
-        this.search = function (filters, order, expand, pageNumber, pageSize) {
+        this.search = function (query) {
             var deferred = $q.defer();
 
-            that.repository.search(filters, order, expand, pageNumber, pageSize).then(function (data) {
+            that.repository.search(query).then(function (data) {
                 deferred.resolve(data);
             }, function (data) {
                 deferred.reject(data);
@@ -83,6 +83,7 @@
 
             return deferred.promise;
         };
+               
         this.getChild = function (id, child, expand) {
             var deferred = $q.defer();
 
@@ -95,10 +96,10 @@
             return deferred.promise;
         };
 
-        this.metadata = function (expand) {
+        this.schema = function (expand) {
             var deferred = $q.defer();
 
-            that.repository.metadata(expand).then(function (data) {
+            that.repository.schema(expand).then(function (data) {
                 deferred.resolve(data);
             }, function (data) {
                 deferred.reject(data);

@@ -20,6 +20,7 @@
 package es.logongas.fpempresa.dao.comun.usuario;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 
 
@@ -28,6 +29,6 @@ import es.logongas.ix3.dao.GenericDAO;
  * @author Lorenzo
  */
 public interface UsuarioDAO extends GenericDAO<Usuario,Integer> {
-    void updateEncryptedPassword(Usuario usuario,String encriptedPassword);
-    String getEncryptedPassword(Usuario usuario);
+    void updateEncryptedPassword(DataSession dataSession, Usuario usuario,String encriptedPassword);
+    String getEncryptedPassword(DataSession dataSession, Usuario usuario);
 }

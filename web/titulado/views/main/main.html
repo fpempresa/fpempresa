@@ -1,92 +1,117 @@
 <div class="row">
     <div class="col-sm-12 form__container" >
 
-            <ix3-business-messages></ix3-business-messages>
-            <legend class="form__title"><a class="form__title__link" href="#/titulado/edit/{{user.titulado.idTitulado}}">Datos personales</a></legend>
-            <table class="table table-bordered">
-                <tbody>
-                    <tr class="data-table__row">
-                        <td><i class="glyphicon glyphicon-user"></i> Nombre y apellidos:</td>
-                        <td>{{model.usuario.getNombreCompleto()}}</td>
-                    </tr>                     
-                    <tr class="data-table__row">
-                        <td><i class="glyphicon glyphicon-envelope"></i> Correo electronico:</td>
-                        <td>{{model.usuario.email}}</td>
-                    </tr>                        
-                    <tr ng-show="model.fechaNacimiento" class="data-table__row">
-                        <td><i class="glyphicon glyphicon-gift"></i> Fecha de nacimiento:</td>
-                        <td>{{model.fechaNacimiento| ix3Date}}</td>
-                    </tr>
-                    <tr  ng-show="model.telefono" class="data-table__row">
-                        <td><i class="glyphicon glyphicon-earphone"></i> Telefono:</td>
-                        <td>{{model.telefono}}  {{model.telefonoAlternativo}}</td>
-                    </tr>
-                    <tr ng-show="model.tipoDocumento" class="data-table__row">
-                        <td><i class="glyphicon glyphicon-credit-card"></i> {{model.getTipoDocumentoDescription()}}</td>
-                        <td>{{model.numeroDocumento}}</td>
-                    </tr>
-                    <tr ng-show="model.direccion !== null" class="data-table__row">
-                        <td><i class="glyphicon glyphicon-map-marker"></i> Direccion</td>
-                        <td>{{model.direccion.getTipoViaDescription()}} {{model.direccion.nombreVia}} {{model.direccion.otrosDireccion}}<br> {{model.direccion.codigoPostal}} {{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <legend class="form__title"><a class="form__title__link" href="#/formacionacademica/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Formaci&oacute;n Academica</a></legend>           
-            <table class="table table-bordered table-hover">
-                <thead>                        
-                    <tr class="data-table__head">
-                        <th style="min-width:140px;text-align: left">Nivel</th>
-                        <th style="width:      50%;text-align: left">Titulo</th>
-                        <th style="width:      35%;text-align: left">Centro</th>
-                        <th style="min-width:85px;text-align: left">Fecha</th>                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="formacionAcademica in model.formacionesAcademicas | orderBy:'fecha' " class="data-table__row">
-                        <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
-                        <td >{{formacionAcademica.getNombreTitulo()}}</td>
-                        <td >{{formacionAcademica.getNombreCentro()}}</td>
-                        <td >{{formacionAcademica.fecha | ix3Date}}</td>
-                    </tr>
-                </tbody>
-            </table>                
-            <br>
-            <legend class="form__title"><a class="form__title__link" href="#/experiencialaboral/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Experiencia Laboral</a></legend>
-            <table class="table table-bordered">
-                <thead>                    
-                    <tr class="data-table__head">
-                        <th style="width:      60%;text-align: left">Empresa</th>
-                        <th style="width:      30%;text-align: left">Puesto</th>
-                        <th style="min-width:150px;text-align: left">Fechas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="experienciaLaboral in model.experienciasLaborales | orderBy:'fechaInicio' " class="data-table__row">
-                        <td >{{experienciaLaboral.nombreEmpresa}}</td>
-                        <td >{{experienciaLaboral.puestoTrabajo}}</td>
-                        <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <legend class="form__title"><a class="form__title__link" href="#/tituloidioma/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Idiomas</a></legend>
-            <table class="table table-bordered table-hover">
-                <thead>                    
-                    <tr class="data-table__head">
-                        <th style="min-width:30px;text-align: left">Nivel</th>
-                        <th style="width:    100%;text-align: left">Nombre</th>
-                        <th style="min-width:85px;text-align: left">Fecha</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="tituloIdioma in model.titulosIdiomas | orderBy:'fecha' " class="data-table__row">
-                        <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
-                        <td >{{tituloIdioma.getNombreIdioma()}}</td>
-                        <td >{{tituloIdioma.fecha| ix3Date}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <ix3-business-messages></ix3-business-messages>
+        <legend class="form__title"><a class="form__title__link" href="#/titulado/edit/{{user.titulado.idTitulado}}">Datos personales</a></legend>
+
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">                
+                <table class="table">
+                    <tbody>
+
+                        <tr>
+                            <td colspan="2" >
+                                <div class="profile__value profile__value--name">{{model.usuario.getNombreCompleto()}}</div> 
+                                <br>
+                                <div class="profile__value profile__value--email"><i class="fa fa-envelope"></i>&nbsp;{{model.usuario.email}}</div> 
+                            </td>
+                        </tr>                                             
+                        <tr>
+                            <td class="profile__caption"><i class="glyphicon glyphicon-gift"></i>&nbsp;Fecha nacimiento</td>
+                            <td class="profile__value">{{model.fechaNacimiento| ix3Date}} ({{ageCalculator(model.fechaNacimiento)}} años)</td>
+                        </tr>
+                        <tr>
+                            <td class="profile__caption"><i class="glyphicon glyphicon-earphone"></i>&nbsp;Telefono</td>
+                            <td class="profile__value">{{model.telefono}}  {{model.telefonoAlternativo}}</td>
+                        </tr>
+                        <tr>
+                            <td class="profile__caption"><i class="glyphicon glyphicon-credit-card"></i>&nbsp;{{model.getTipoDocumentoDescription()}}</td>
+                            <td class="profile__value">{{model.numeroDocumento}}</td>
+                        </tr>                       
+                    </tbody>
+                </table> 
+            </div>            
+            <div class="col-xs-12 col-sm-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><span class="profile__caption"><i class="fa fa-info-circle"></i>&nbsp;Sobre mi:</span>&nbsp;<span class="profile__value profile__value--cita">{{model.resumen}}</span></td>
+                        </tr>                                             
+                        <tr>
+                            <td><span class="profile__caption"><i class="fa fa-briefcase"></i>&nbsp;Otras competencias:</span>&nbsp;<span class="profile__value">{{model.otrasCompetencias}}</span></td>
+                        </tr>                        
+                        <tr>
+                            <td><span class="profile__caption"><i class="fa fa-car"></i>&nbsp;Carnet de conducir:</span>&nbsp;<span class="profile__value">{{model.permisosConducir}}</span></td>
+                        </tr>  
+                        <tr>
+                            <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.direccion.datosDireccion}} {{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</span></td>
+                        </tr>                         
+                    </tbody>
+                </table>                    
+            </div>
+
+        </div>
+
+
+        <br>
+        <legend class="form__title"><a class="form__title__link" href="#/curriculum/formacionacademica/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Formaci&oacute;n Academica</a></legend>           
+        <table class="table table-bordered table-hover">
+            <thead>                        
+                <tr class="data-table__head">
+                    <th style="min-width:140px;text-align: left">Nivel</th>
+                    <th style="width:      50%;text-align: left">Titulo</th>
+                    <th style="width:      35%;text-align: left">Centro</th>
+                    <th style="min-width:85px;text-align: left">Fecha</th> 
+                    <th style="min-width:85px;text-align: center" title="Indica si el centro donde has estudiado certifica que tienes el t&iacute;tulo">Certificado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="formacionAcademica in model.formacionesAcademicas| orderBy:'fecha' " class="data-table__row">
+                    <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
+                    <td >{{formacionAcademica.getNombreTitulo()}}</td>
+                    <td >{{formacionAcademica.getNombreCentro()}}</td>
+                    <td >{{formacionAcademica.fecha| ix3Date}}</td>
+                    <td style="text-align: center" ><img ng-show="formacionAcademica.certificadoTitulo" title="El centro donde has estudiado ha certificado que tienes el t&iacute;tulo" ng-src="{{getContextPath()}}/img/award/award-24x24.png"></td>                        
+                </tr>
+            </tbody>
+        </table>                
+        <br>
+        <legend class="form__title"><a class="form__title__link" href="#/curriculum/experiencialaboral/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Experiencia Laboral</a></legend>
+        <table class="table table-bordered">
+            <thead>                    
+                <tr class="data-table__head">
+                    <th style="width:      60%;text-align: left">Empresa</th>
+                    <th style="width:      30%;text-align: left">Puesto</th>
+                    <th style="min-width:150px;text-align: left">Fechas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="experienciaLaboral in model.experienciasLaborales| orderBy:'fechaInicio' " class="data-table__row">
+                    <td >{{experienciaLaboral.nombreEmpresa}}</td>
+                    <td >{{experienciaLaboral.puestoTrabajo}}</td>
+                    <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <legend class="form__title"><a class="form__title__link" href="#/curriculum/tituloidioma/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Idiomas</a></legend>
+        <table class="table table-bordered table-hover">
+            <thead>                    
+                <tr class="data-table__head">
+                    <th style="min-width:30px;text-align: left">Nivel</th>
+                    <th style="width:    100%;text-align: left">Nombre</th>
+                    <th style="min-width:85px;text-align: left">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tituloIdioma in model.titulosIdiomas| orderBy:'fecha' " class="data-table__row">
+                    <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
+                    <td >{{tituloIdioma.getNombreIdioma()}}</td>
+                    <td >{{tituloIdioma.fecha| ix3Date}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>    
 </div>
 

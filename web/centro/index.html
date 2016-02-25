@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="shortcut icon" href="">
-
+        <link rel="icon" type="image/png" href="../img/favicon.png">
+        
         <title>fpempresa</title>       
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -24,6 +24,7 @@
         <link href="../lib/fontawesome/css/font-awesome.css"            rel="stylesheet" type="text/css" />
         <link href="../lib/notify/current/css/pnotify.custom.min.css"   rel="stylesheet" type="text/css" /> 
         <link href="../lib/sweetalert/css/sweet-alert.css"              rel="stylesheet" type="text/css" />
+        <link href="../lib/jquery-plugin-blueimp-fileupload/css/jquery.fileupload.css" rel="stylesheet" type="text/css"/>
         <link href="../css/centro/centro.css"                       rel="stylesheet" type="text/css" />
 
         <!-- build:js /js/centro.script.min.js -->
@@ -33,8 +34,11 @@
         <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.js"></script>
         <script type='text/javascript' src="../lib/jquery-ui/js/jquery-ui.js"></script>
         <script type='text/javascript' src="../lib/jquery-ui/js/jquery.ui.datepicker-es.js"></script>
-
-
+        <script type="text/javascript" src="../lib/jquery-plugin-blueimp-fileupload/js/jquery.fileupload.js"></script>
+        
+        <!-- highcharts -->
+        <script type="text/javascript" src="../lib/highcharts/js/highcharts.js"></script>        
+        
         <!-- angular-deps -->
         <script type='text/javascript' src='../lib/lodash/js/lodash.js'></script>
         <script type='text/javascript' src='../lib/moment/js/moment-with-langs.js'></script>
@@ -60,7 +64,7 @@
         
         <script type="text/javascript"  src="../lib/ix3-angular/js/dao/remotedao.js"></script>
         
-        <script type="text/javascript"  src="../lib/ix3-angular/js/domain/Metadata.js"></script>
+        <script type="text/javascript"  src="../lib/ix3-angular/js/domain/Schema.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/domain/Property.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/domain/domainvalidator.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/domain/global.js"></script>
@@ -83,7 +87,7 @@
         <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/directive/form/ix3options.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/directive/form/ix3validation.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/directive/ix3clear.js"></script>
-        <script type="text/javascript" src="../lib/ix3-angular/js/presentation/directive/ix3orderfieldnames.js"></script>        
+        <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/directive/ix3orderfieldnames.js"></script>        
         <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/directive/ix3pagination.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/directive/ix3visibility.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/presentation/filter/ix3date.js"></script>
@@ -92,7 +96,7 @@
         
         <script type="text/javascript"  src="../lib/ix3-angular/js/repository/repository.js"></script>
         
-        <script type="text/javascript"  src="../lib/ix3-angular/js/service/metadata.js"></script>
+        <script type="text/javascript"  src="../lib/ix3-angular/js/service/schema.js"></script>
         <script type="text/javascript"  src="../lib/ix3-angular/js/service/service.js"></script>
        
 
@@ -104,7 +108,8 @@
         
         <script type="text/javascript" src="../common/domain/centro/Centro.js"></script>
         <script type="text/javascript" src="../common/domain/comun/geo/Direccion.js"></script>
-        <script type="text/javascript" src="../common/domain/comun/usuario/Usuario.js"></script>        
+        <script type="text/javascript" src="../common/domain/comun/usuario/Usuario.js"></script> 
+        <script type="text/javascript" src="../common/domain/empresa/Empresa.js"></script>
         <script type="text/javascript" src="../common/domain/titulado/FormacionAcademica.js"></script>
         <script type="text/javascript" src="../common/domain/titulado/Titulado.js"></script>
         <script type="text/javascript" src="../common/domain/titulado/TituloIdioma.js"></script> 
@@ -112,15 +117,22 @@
         <script type="text/javascript" src="../common/infrastructure/getcontextpath.js"></script>
         
         <script type="text/javascript" src="../common/presentation/directive/cruddetailbuttons.js"></script>
+        <script type="text/javascript" src="../common/presentation/directive/fpe-cancel-button.js"></script>
+        <script type="text/javascript" src="../common/presentation/directive/fpe-file-upload.js"></script>
+        <script type="text/javascript" src="../common/presentation/directive/fpe-ok-button.js"></script>        
         <script type="text/javascript" src="../common/presentation/directive/currentdate.js"></script>
-        <script type="text/javascript" src="../common/presentation/view/empresa/buscarempresa.js"></script>
+        <script type="text/javascript" src="../common/presentation/directive/fpe-simple-bar-chart.js"></script>
+        <script type="text/javascript" src="../common/presentation/view/empresa/buscar-empresas.js"></script>
+        <script type="text/javascript" src="../common/presentation/view/empresa/ver-empresa.js"></script>
         <script type="text/javascript" src="../common/presentation/view/util/cambiarcontrasenya.js"></script>
         
         <script type="text/javascript" src="../common/repository/comun/usuario/UsuarioRepository.js"></script>
         
         <script type="text/javascript" src="../common/service/centro/CentroService.js"></script>        
+        <script type="text/javascript" src="../common/service/empresa/EmpresaService.js"></script>        
         <script type="text/javascript" src="../common/service/comun/usuario/UsuarioService.js"></script> 
-        <script type="text/javascript" src="../common/service/titulado/TituladoService.js"></script>        
+        <script type="text/javascript" src="../common/service/titulado/TituladoService.js"></script>  
+        <script type="text/javascript" src="../common/service/util/ageCalculator.js"></script>
      
 
         <!-- fpempresa-centro -->  
@@ -135,8 +147,11 @@
         <script type='text/javascript' src='fragments/header/header.js'></script>
         <script type='text/javascript' src='fragments/lateralmenu/lateralmenu.js'></script>
 
+        <script type="text/javascript" src="views/candidato/candidato.js"></script>
 	<script type="text/javascript" src="views/centro/centro.js"></script>
+        <script type="text/javascript" src="views/certificadotitulo/certificadotitulo.js"></script>
         <script type="text/javascript" src="views/empresa/empresa.js"></script>
+        <script type="text/javascript" src="views/main/main.js"></script>
         <script type="text/javascript" src="views/oferta/oferta.js"></script>
         <script type="text/javascript" src="views/pertenenciacentro/pertenenciacentro-route.js"></script>
         <script type="text/javascript" src="views/pertenenciacentro/pertenenciacentro.js"></script>
@@ -144,13 +159,14 @@
         <script type="text/javascript" src="views/profesor/profesor.js"></script>
         <script type="text/javascript" src="views/titulado/titulado-route.js"></script>
         <script type="text/javascript" src="views/titulado/titulado.js"></script>
+        <script type="text/javascript" src="views/usuario/usuario.js"></script>
         <script type="text/javascript" src="views/util/forbidden/forbidden-route.js"></script>
         <script type="text/javascript" src="views/util/forbidden/forbidden.js"></script>    
         <!-- endbuild -->
 
     </head>    
 
-    <body ng-controller="IndexController" >
+    <body ng-controller="IndexController"  style="background-color: #F6F8F7">
         <ng-include src="'fragments/header/header.html'"></ng-include>
 
         <ui-view  >

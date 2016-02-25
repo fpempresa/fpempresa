@@ -2,8 +2,8 @@
 
 (function () {
 
-    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'metadataEntities', '$q', ];
-    function GenericControllerCrudDetail(serviceFactory, $window, formValidator, $location, metadataEntities, $q) {
+    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'schemaEntities', '$q', ];
+    function GenericControllerCrudDetail(serviceFactory, $window, formValidator, $location, schemaEntities, $q) {
 
         this.extendScope = function (scope, controllerParams) {
             scope.labelButtonOK = null;
@@ -13,12 +13,12 @@
             scope.businessMessages = null;
             angular.extend(scope, controllerParams);
             scope.service = serviceFactory.getService(scope.entity);
-            scope.idName = metadataEntities.getMetadata(scope.entity).primaryKeyPropertyName;
-            scope.childPrefixRoute="/" + scope.entity.toLowerCase();
+            scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
+            scope.childPrefixRoute = "/" + scope.entity.toLowerCase();
             scope.preCreate = function () {
             };
             scope.postCreate = function () {
-            };            
+            };
             scope.preGet = function () {
             };
             scope.postGet = function () {
@@ -30,16 +30,16 @@
             scope.preUpdate = function () {
             };
             scope.postUpdate = function () {
-            };            
+            };
             scope.preDelete = function () {
             };
             scope.postDelete = function () {
             };
-            
+
 
             scope.doGet = function () {
                 var defered = $q.defer();
-                
+
                 scope.preGet();
                 scope.service.get(scope.id, scope.expand).then(function (data) {
                     if (data === null) {
@@ -49,7 +49,7 @@
                         scope.model = data;
                     }
                     scope.businessMessages = null;
-                    
+
                     scope.postGet();
                     defered.resolve(data);
                 }, function (businessMessages) {
@@ -62,7 +62,7 @@
 
             scope.doCreate = function () {
                 var defered = $q.defer();
-                
+
                 var parent = {};
                 if ((scope.parentProperty) && (scope.parentId)) {
                     parent[scope.parentProperty] = scope.parentId;
@@ -71,7 +71,7 @@
                 scope.service.create(scope.expand, parent).then(function (data) {
                     scope.model = data;
                     scope.businessMessages = null;
-                    
+
                     scope.postCreate();
                     defered.resolve(data);
                 }, function (businessMessages) {
@@ -93,7 +93,7 @@
                         scope.businessMessages = null;
                         scope.controllerAction = "EDIT";
                         scope.id = scope.model[scope.idName];
-                        
+
                         scope.postInsert();
                         defered.resolve(data);
                     }, function (businessMessages) {
@@ -108,14 +108,14 @@
 
             scope.doUpdate = function () {
                 var defered = $q.defer();
-                
+
                 scope.preUpdate();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
                     scope.service.update(scope.id, scope.model, scope.expand).then(function (data) {
                         scope.model = data;
                         scope.businessMessages = null;
-                        
+
                         scope.postUpdate();
                         defered.resolve(data);
                     }, function (businessMessages) {
@@ -131,11 +131,11 @@
 
             scope.doDelete = function () {
                 var defered = $q.defer();
-                
+
                 scope.preDelete()
                 scope.service.delete(scope.id).then(function (data) {
                     scope.businessMessages = null;
-                    
+
                     scope.postDelete();
                     defered.resolve(data);
                 }, function (businessMessages) {
@@ -146,11 +146,15 @@
                 return defered.promise;
             };
 
-            scope.finishOK = function () {
-                $window.history.back();
+            scope.finishOK = function (oldControllerAction) {
+                setTimeout(function () {  //http://stackoverflow.com/questions/13853844/angular-js-ie-error-10-digest-iterations-reached-aborting
+                    $window.history.back();
+                }, 0);
             };
-            scope.finishCancel = function () {
-                $window.history.back();
+            scope.finishCancel = function () {  //http://stackoverflow.com/questions/13853844/angular-js-ie-error-10-digest-iterations-reached-aborting
+                setTimeout(function () {
+                    $window.history.back();
+                }, 0);
             };
 
 
@@ -159,18 +163,25 @@
                 scope.finishCancel();
             };
             scope.buttonOK = function () {
+                var oldControllerAction = scope.controllerAction;
                 switch (scope.controllerAction) {
                     case "NEW":
-                        scope.doInsert().then(scope.finishOK);
+                        scope.doInsert().then(function () {
+                            scope.finishOK(oldControllerAction);
+                        });
                         break;
                     case "EDIT":
-                        scope.doUpdate().then(scope.finishOK);
+                        scope.doUpdate().then(function () {
+                            scope.finishOK(oldControllerAction);
+                        });
                         break;
                     case "VIEW":
-                        scope.finishOK();
+                        scope.finishOK(oldControllerAction);
                         break;
                     case "DELETE":
-                        scope.doDelete().then(scope.finishOK);
+                        scope.doDelete().then(function () {
+                            scope.finishOK(oldControllerAction);
+                        });
                         break;
                     default:
                         throw Error("scope.controllerAction desconocida:" + scope.controllerAction);

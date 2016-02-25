@@ -797,7 +797,7 @@ body .ui-tooltip {
 .ui-widget textarea,
 .ui-widget button {
 	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
-	//Lo quitamos para que no tenga conflicto con bootstrap font-size: 1em;
+	/** Lo quitamos para que no tenga conflicto con bootstrap font-size: 1em; **/
 }
 .ui-widget-content {
 	border: 1px solid #a6c9e2;
@@ -805,7 +805,7 @@ body .ui-tooltip {
 	color: #222222;
 }
 .ui-widget-content a {
-	//Lo quitamos para que no tenga conflicto con bootstrap color: #222222;
+	/** Lo quitamos para que no tenga conflicto con bootstrap color: #222222; */
 }
 .ui-widget-header {
 	border: 1px solid #4297d7;

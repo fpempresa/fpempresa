@@ -3,11 +3,11 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
             entity:"FormacionAcademica",
             expand:"ciclo.familia,ciclo.grado",
-            htmlBasePath:"views/curriculum"
+            crudName:"curriculum.FormacionAcademica"
         });
     }]);
 
-app.controller("FormacionAcademicaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
+app.controller("CurriculumFormacionAcademicaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
         genericControllerCrudList.extendScope($scope, controllerParams);    
         
         $scope.orderby=[
@@ -18,14 +18,14 @@ app.controller("FormacionAcademicaSearchController", ['$scope', 'genericControll
     }]);
 
 
-app.controller("FormacionAcademicaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumFormacionAcademicaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("FormacionAcademicaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumFormacionAcademicaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);
 
-app.controller("FormacionAcademicaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CurriculumFormacionAcademicaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
     }]);

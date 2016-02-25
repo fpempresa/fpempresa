@@ -9,21 +9,16 @@
 
     <!--Permite usar entre otras la anotación @Autowired -->
     <context:annotation-config/>
-    <!--Permite usar entre otras las anotaciones @Component y @Controller -->
-    <!-- <context:component-scan base-package="es.fpmislata.examen.datos"/> -->
-
+        
+    <!-- DAOs -->
     <bean class="es.logongas.ix3.dao.impl.DAOFactoryImplHibernate" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.dao" />
         <property name="implBasePackageName"       value="es.logongas.fpempresa.dao" />
-    </bean>
-    
-    <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
-        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
-        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
-        <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
     </bean>    
+    <bean class="es.logongas.fpempresa.dao.estadisticas.impl.EstadisticaDAOImplHibernate"  />
 
+    <!-- Seguridad -->
     <bean id="authenticationManager" class="es.logongas.ix3.security.authentication.impl.AuthenticationManagerImpl"  >
         <property name="authenticationProviders">
             <list>
@@ -33,9 +28,44 @@
     </bean>
     
     <bean id="authorizationManager" class="es.logongas.ix3.security.authorization.impl.AuthorizationManagerImpl"  >
-        <property name="defaultAuthorization" value="true" />
-    </bean>    
+        <property name="defaultAuthorization" value="false" />
+        <property name="authorizationProviders">
+            <list>
+                <bean class="es.logongas.ix3.security.authorization.impl.AuthorizationProviderImplIdentity" />
+            </list>
+        </property>
+    </bean>  
     
+    <!-- 
+        <bean class="es.logongas.ix3.web.security.impl.WebSessionSidStorageImplHttpSession"  />    
+    --> 
+    <bean class="es.logongas.fpempresa.security.WebSessionSidStorageImplJwt" >
+        <property name="jwsCookieName" value="XSRF-TOKEN" />
+        <property name="jwsHeaderName" value="X-XSRF-TOKEN" />
+        <property name="checkHeader"   value="false" />        
+    </bean>
     
-     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
+    <!-- Servicios -->
+    <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
+    <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
+    <bean class="es.logongas.fpempresa.service.populate.PopulateServiceImpl"  />
+    <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
+        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.service" />
+    </bean> 
+    
+    <!-- BusinessProcess -->
+    <bean class="es.logongas.fpempresa.businessprocess.estadisticas.impl.EstadisticasBusinessProcessImpl"  />
+    <bean class="es.logongas.fpempresa.businessprocess.log.impl.LogBusinessProcessImpl"  />
+
+    <bean class="es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessFactoryImpl" >
+        <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
+        <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.businessprocess" />
+        <property name="implBasePackageName"       value="es.logongas.fpempresa.businessprocess" />
+    </bean>   
+    
+    <!-- Capade web -->
+    <bean class="es.logongas.fpempresa.presentacion.controller.EndPointsFactoryImpl" />
+    
 </beans>

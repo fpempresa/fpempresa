@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Servicio para gestionar la sesión en el servidor
  */
@@ -13,25 +12,26 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
         }
 
         var currentUser=null;
-        
+
         function login(login, password) {
             var that=this;
             var deferred = $q.defer();
             var config = {
                 method: 'POST',
-                url: ix3Configuration.server.api + '/session',
+                url: ix3Configuration.session.url + '/session',
                 data: jQuery.param({
                     login: login,
-                    password: password
+                    password: password,
+                    $expand:ix3Configuration.session.expand
                 }),
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'                   
                 }
             };
 
             $http(config).success(function (user, status, headers, config) {
-                deferred.resolve(user);
                 that.setUser(user);
+                deferred.resolve(user);
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -48,12 +48,12 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
 
             var config = {
                 method: 'DELETE',
-                url: ix3Configuration.server.api + '/session'
+                url: ix3Configuration.session.url + '/session'
             };
 
             $http(config).success(function (data, status, headers, config) {
-                deferred.resolve(data);
                 that.setUser(null);
+                deferred.resolve(data);
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
@@ -70,12 +70,15 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
 
             var config = {
                 method: 'GET',
-                url: ix3Configuration.server.api + '/session'
+                url: ix3Configuration.session.url + '/session',
+                params: {
+                    $expand:ix3Configuration.session.expand
+                }
             };
 
             $http(config).success(function (user, status, headers, config) {
-                deferred.resolve(user);
                 that.setUser(user);
+                deferred.resolve(user);
             }).error(function (data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);

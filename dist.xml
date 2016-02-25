@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="fpempresa" default="default" basedir=".">
+<project name="fpempresa" default="distOpenShift" basedir=".">
     <description>Builds, tests, and runs the project fpempresa.</description>
     <import file="nbproject/build-impl.xml"/>
 
     <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
     </target>
+	
     <target name="-enableProduccion"  >
         <property name="enableProduccion" value="yes"/>
+    </target>        
+        
+    <target name="sonar" depends="-configureAnt" >
+        <property file="./sonar-project.properties"/>
+        <!-- Estas propeiudades se deben actualizar según el servidor de sonar a usar -->
+        <property name="sonar.host.url" value="http://sonar.fpempresa.net" />
+        <property name="sonar.jdbc.url" value="jdbc:postgresql://localhost/sonar" />
+        <property name="sonar.jdbc.username" value="" />
+        <property name="sonar.jdbc.password" value="" />
+	
+        <!-- Antes de ejecutar la tarea quizas haya que hacer un tunel ssh al servidor de sonar -->
+        <sonar />        
+    </target>	
+  
+  
+    <target name="jmeter" depends="-configureAnt" >
+		<jmeter
+			jmeterhome="${basedir}/jmeter"
+			testplan="${basedir}/jmeter/fpempresa.jmx"
+			resultlog="${basedir}/jmeter/fpempresa.jtl">
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.bytes" value="true"/>
+            <property name="file_format.testlog" value="${format}"/>
+            <property name="jmeter.save.saveservice.response_data.on_error" value="${funcMode}"/>
+		</jmeter>
+		<xslt in="${basedir}/jmeter/JMeterResults.jtl" out="${basedir}/jmeter/fpempresa.html" style="${basedir}/jmeter/extras/jmeter-results-report_21.xsl" force="true"/>
+		
     </target>
+  
     <target name="-configureAnt">
         <echo>Configurando Ant</echo>
         <!-- Cargar todas las variables de entorno -->
@@ -18,7 +48,7 @@
 
         <!-- OpenShift -->
         <taskdef  resource="es/logongas/openshift/ant/antlib.xml" />
-                
+   
         <property name="libs.CopyLibs.classpath" value="ant/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" />
         <property name="j2ee.server.home" value="ant" />
 
@@ -26,34 +56,19 @@
         <taskdef  resource="net/sf/antcontrib/antcontrib.properties"/>
         <!-- Manejo de ficheros XML -->
         <taskdef  name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
-
-        <property file="ix3.properties"/>
-        <if>
-            <equals arg1="${APP_ENVIRONMENT}" arg2="PRODUCCION" />
-            <then>
-                <ix3DownloadChangeJarAll ix3version="${ix3.produccion.version}"/>
-            </then>
-            <elseif>
-                <equals arg1="${APP_ENVIRONMENT}" arg2="PREPRODUCCION" />
-                <then>
-                    <ix3DownloadChangeJarAll ix3version="${ix3.preproduccion.version}"/>
-                </then>
-            </elseif>
-            <elseif>
-                <equals arg1="${APP_ENVIRONMENT}" arg2="PRUEBAS" />
-                <then>
-                    <git command="fetch" options="origin" dir="../ix3" />
-                    <git command="checkout" options="-b ${ix3.pruebas.branch} origin/${ix3.pruebas.branch}" dir="../ix3" />
-                </then>
-            </elseif>                      
-            <else>
-                <fail message="La variable 'APP_ENVIRONMENT' solo pude tener los valores PRODUCCION , PREPRODUCCION , PRUEBAS pero tiene el valor '${APP_ENVIRONMENT}'"/>
-            </else>            
-        </if>        
         
+        <!--tareas de sonar -->
+        <taskdef resource="org/sonar/ant/antlib.xml"></taskdef>  
         
+        <!--tareas de JMeter -->
+        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>		
+		
         <!-- Propiedades del proyecto -->
-        <property file="nbproject/project.properties"/>     
+        <property file="nbproject/project.properties"/>    
+        
+        
+        <property name="max-memory-build-js" value="145" />
+         
     </target>
 
 
@@ -67,14 +82,15 @@
         <delete file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml"/>
     </target>
 
-    <target name="-pre-dist" depends="-pre-dist-configureProduccion">
+    <target name="-pre-dist" if="enableProduccion" >
+        <antcall target="-pre-dist-configureProduccion"></antcall>
     </target>
 
     <target name="-post-dist" >
         <delete dir="${DEP_DIR}" />
     </target>
 
-    <target name="-pre-dist-configureProduccion" if="enableProduccion" depends="-set-os,-exec-grunt-linux,-exec-grunt-windows" >       
+    <target name="-pre-dist-configureProduccion" depends="-set-os,-exec-grunt,-exec-gulp" >       
         <!-- Poner los datos de la conexión de producción -->
         <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
             <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
@@ -94,44 +110,43 @@
         </condition>
     </target>
 
+    <target name="-exec-grunt" if="grunt" >
+        <antcall target="-exec-grunt-linux"></antcall>
+        <antcall target="-exec-grunt-windows"></antcall>
+    </target>    
+
     <target name="-exec-grunt-linux" if="linuxos">	
         <exec executable="./node/bin/node64" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>
     </target>
     <target name="-exec-grunt-windows" if="windowsos">
         <exec executable="./node/bin/node64.exe" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>            
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>
     </target>
-
-    <macrodef name="ix3DownloadChangeJarAll">
-        <attribute name="ix3version" />
-        
-        <sequential>
-            <property name="IX3_DOWNLOAD_URL_REPOSITORY" value="http://dl.bintray.com/logongas/maven/es/logongas/ix3" />
-            <property name="DEP_DIR" value="${basedir}/dependencies" />
-            <delete dir="${DEP_DIR}" />
-            <mkdir dir="${DEP_DIR}" />            
-            <ix3DownloadChangeJar artifactId="ix3core"         ix3version="@{ix3version}" />
-            <ix3DownloadChangeJar artifactId="ix3dao"          ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3security"     ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3securityimpl" ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3service"      ix3version="@{ix3version}"  />
-            <ix3DownloadChangeJar artifactId="ix3web"          ix3version="@{ix3version}"  />
-        </sequential>
-    </macrodef>
-    <macrodef name="ix3DownloadChangeJar">
-        <attribute name="artifactId" />
-        <attribute name="ix3version" />
-        <sequential>
-            <get src="${IX3_DOWNLOAD_URL_REPOSITORY}/@{artifactId}/@{ix3version}/@{artifactId}-@{ix3version}.jar" dest="${DEP_DIR}"/>
-            <property name="reference.@{artifactId}.jar" value="${DEP_DIR}/@{artifactId}-@{ix3version}.jar" /> 
-               
-        </sequential>
-    </macrodef> 
-
+    
+    <target name="-exec-gulp" unless="grunt" >
+        <antcall target="-exec-gulp-linux"></antcall>
+        <antcall target="-exec-gulp-windows"></antcall>
+    </target>  
+    
+    <target name="-exec-gulp-linux" >	
+        <exec executable="./node/bin/node64" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>            
+            <arg value="./node_modules/gulp/bin/gulp.js"/>
+        </exec>
+    </target>
+    <target name="-exec-gulp-windows" if="windowsos">
+        <exec executable="./node/bin/node64.exe" >
+            <arg value="--max_old_space_size=${max-memory-build-js}"/>            
+            <arg value="./node_modules/gulp/bin/gulp.js"/>
+        </exec>
+    </target>     
+    
 
 </project>

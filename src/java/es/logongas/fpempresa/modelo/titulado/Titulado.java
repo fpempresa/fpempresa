@@ -61,7 +61,7 @@ public class Titulado {
     
     @NotNull
     @Label("Tipo de documento")
-    private TipoDocumento tipoDocumento;
+    private TipoDocumento tipoDocumento=TipoDocumento.NIF_NIE;
     
     @NotEmpty
     @Label("Nº de documento")
@@ -96,12 +96,12 @@ public class Titulado {
         }
     }
     
-    @ConstraintRule(fieldName = "numeroDocumento", message = "El número o la letra del NIF/NIE '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
-    private boolean validarNIF(RuleContext<Empresa> ruleContext) {
+    @ConstraintRule(fieldName = "Nº Documento", message = "El NIF/NIE '${entity.numeroDocumento}' no es válido", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarNIF(RuleContext<Titulado> ruleContext) {
         Validador validadorCIF = new Validador();
 
-        if (this.tipoDocumento==TipoDocumento.NIF_NIE) {
-            if (validadorCIF.checkNif(this.numeroDocumento) > 0) {
+        if ((this.tipoDocumento==TipoDocumento.NIF_NIE) && (this.numeroDocumento!=null)) {
+            if (validadorCIF.checkNif(this.numeroDocumento.toUpperCase()) > 0) {
                 return true;
             } else {
                 return false;
@@ -111,6 +111,31 @@ public class Titulado {
         }
     }     
     
+    @ConstraintRule(fieldName = "Nº Documento", message = "No puede ser un CIF", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarNoCIF(RuleContext<Titulado> ruleContext) {
+        Validador validadorCIF = new Validador();
+
+        if ((this.tipoDocumento==TipoDocumento.NIF_NIE) && (this.numeroDocumento!=null)) {
+            if (validadorCIF.checkNif(this.numeroDocumento.toUpperCase()) > 0) {
+                //Comprobamos que no sea un CIF
+                if (this.numeroDocumento.matches("^[0-9xyzXYZ].*")==false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                //Retornamos true pq lo que nos interesa es sabe si es un CIF y no si es válido.
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }    
+    
+    @ActionRule(groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private void upperCaseNif(RuleContext<Titulado> ruleContext) {
+        this.numeroDocumento=this.numeroDocumento.toUpperCase();
+    }    
     
     public Titulado() {
     }

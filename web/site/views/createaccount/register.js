@@ -13,7 +13,7 @@ app.controller('CreateAccountRegisterController', ['$scope', '$stateParams', '$l
 
             switch ($scope.model.tipoUsuario) {
                 case "CENTRO":
-                    $scope.model.estadoUsuario="PENDIENTE_ACEPTACION";
+                    $scope.model.estadoUsuario=null;
                     break;
                 case "TITULADO":
                     $scope.model.estadoUsuario="ACEPTADO";

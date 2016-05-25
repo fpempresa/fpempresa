@@ -8,7 +8,7 @@
     <property name="apellidos"/>
     <property name="foto"/>
     <property name="password" update="false"/>
-    <property name="tipoUsuario" >
+    <property name="tipoUsuario" update="false" >
       <type name="org.hibernate.type.EnumType">
         <param name="enumClass">es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario</param>
         <param name="type">12</param>
@@ -36,6 +36,8 @@
     
     <property name="validadoEmail"/>
     <property name="claveValidacionEmail"/>
+    
+    <property name="fecha" update="false"/>
     
   </joined-subclass>
 </hibernate-mapping>

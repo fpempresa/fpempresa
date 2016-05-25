@@ -10,6 +10,20 @@ app.controller('CreateAccountRegisterController', ['$scope', '$stateParams', '$l
                 //Sobreescribimos el valor si nos los pasan en la URL
                 $scope.model.tipoUsuario = $stateParams.tipoUsuario;
             }
+
+            switch ($scope.model.tipoUsuario) {
+                case "CENTRO":
+                    $scope.model.estadoUsuario=null;
+                    break;
+                case "TITULADO":
+                    $scope.model.estadoUsuario="ACEPTADO";
+                    break;
+                case "EMPRESA":
+                    $scope.model.estadoUsuario="ACEPTADO";
+                    break;
+                default:
+                    throw Error("Tipo de usuario desonocido:" + $scope.model.tipoUsuario);
+            }
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;
         });

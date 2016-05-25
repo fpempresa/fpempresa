@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Ofertas</legend>
+            <br>             
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th ix3-order-field-names="puesto" style="width:   50%;text-align: center">Puesto</th>
+                        <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
+                        <th ix3-order-field-names="fecha" style="width:   10%;text-align: center">Fecha</th>                       
+                        <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(model.idOferta)">{{model.puesto}}</a></td>
+                        <td >{{model.familia.descripcion}}</td>     
+                        <td style="text-align: center" >{{model.fecha | date:'dd/MM/yyyy'}}</td>      
+                        <td >
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(model.idOferta)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(model.idOferta)">Editar</button>
+                        </td>                             
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>  
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nueva Oferta</button>
+        </div>
+    </div>
+</div>

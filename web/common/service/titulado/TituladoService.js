@@ -4,7 +4,7 @@
 
     angular.module("common").config(['serviceFactoryProvider', function (serviceFactoryProvider) {
 
-            serviceFactoryProvider.addExtendService("Titulado", ['service', '$q', 'repositoryFactory', 'langUtil', function (service, $q, repositoryFactory, langUtil) {
+            serviceFactoryProvider.addExtendService("Titulado", ['service', '$q', 'repositoryFactory', 'langUtil', 'session', function (service, $q, repositoryFactory, langUtil, session) {
 
                     service.usuarioRepository = repositoryFactory.getRepository("Usuario");
 
@@ -50,18 +50,17 @@
                         service.repository.get(id, expands.tituladoExpand).then(function (titulado) {
 
                             if ((expands.expandUsuario) && (titulado)) {
-                                service.usuarioRepository.search({"titulado.idTitulado": titulado.idTitulado}, undefined, expands.usuarioExpand).then(function (usuarios) {
-
-                                    if (usuarios.length > 1) {
-                                        throw new Error("Existe mas de un Usuario para el titulado:" + titulado.idTitulado);
-                                    }
-
-                                    if (usuarios.length === 1) {
-                                        titulado.usuario = usuarios[0];
-                                    }
-
+                                var query = {
+                                    namedSearch:"getUsuarioFromTitulado",
+                                    filters:{
+                                        titulado: titulado.idTitulado
+                                    },
+                                    expand:expands.usuarioExpand
+                                }
+                                
+                                service.usuarioRepository.search(query).then(function (usuario) {
+                                    titulado.usuario = usuario;
                                     deferred.resolve(titulado);
-
                                 }, function (data) {
                                     deferred.reject(data);
                                 });
@@ -70,6 +69,38 @@
                             }
 
 
+                        }, function (data) {
+                            deferred.reject(data);
+                        });
+
+                        return deferred.promise;
+                    };
+
+                    service.insert = function (entity, expand) {
+                        var deferred = $q.defer();
+
+                        this.repository.insert(entity, expand).then(function (data) {
+                            session.logged().then(function() {
+                                deferred.resolve(data);
+                            }, function (data) {
+                                deferred.reject(data);
+                            });
+                        }, function (data) {
+                            deferred.reject(data);
+                        });
+
+                        return deferred.promise;
+                    };
+
+                    service.update = function (id, entity, expand) {
+                        var deferred = $q.defer();
+
+                        this.repository.update(id, entity, expand).then(function (data) {
+                            session.logged().then(function() {
+                                deferred.resolve(data);
+                            }, function (data) {
+                                deferred.reject(data);
+                            });
                         }, function (data) {
                             deferred.reject(data);
                         });

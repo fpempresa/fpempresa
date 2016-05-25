@@ -1,123 +1,193 @@
 /**
  * FPempresa Copyright (C) 2015 Lorenzo González
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or (at your option) any
- * later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.presentacion.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.core.BusinessMessage;
-import es.logongas.ix3.core.conversion.Conversion;
-import es.logongas.ix3.dao.metadata.MetaData;
+import es.logongas.ix3.core.Principal;
+import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.dao.metadata.MetaDataFactory;
-import es.logongas.ix3.security.authentication.Principal;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
-import es.logongas.ix3.web.controllers.AbstractRESTController;
-import es.logongas.ix3.web.controllers.Command;
-import es.logongas.ix3.web.controllers.CommandResult;
+import es.logongas.ix3.web.json.JsonFactory;
+import es.logongas.ix3.web.util.HttpResult;
+import es.logongas.ix3.web.util.MimeType;
 import es.logongas.ix3.web.json.JsonReader;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import es.logongas.ix3.web.security.WebSessionSidStorage;
+import es.logongas.ix3.web.util.ControllerHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author logongas
  */
 @Controller
-public class UsuarioRESTController  extends AbstractRESTController {
+public class UsuarioRESTController {
+
     @Autowired
     private MetaDataFactory metaDataFactory;
-    
+
     @Autowired
-    private Conversion conversion;
-    
+    private CRUDServiceFactory crudServiceFactory;
     @Autowired
-    private CRUDServiceFactory crudServiceFactory;     
-    
-    
-    @RequestMapping(value = {"/Usuario/{idUsuario}/estadoUsuario/{estadoUsuario}"}, method = RequestMethod.PATCH,produces = "application/json")
-    public void estadoUsuario(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,final @PathVariable("idUsuario") int idUsuario, final @PathVariable("estadoUsuario") EstadoUsuario estadoUsuario) {
+    private CRUDBusinessProcessFactory crudBusinessProcessFactory;
+    @Autowired
+    private ControllerHelper controllerHelper;
+    @Autowired
+    private DataSessionFactory dataSessionFactory;
+    @Autowired
+    private JsonFactory jsonFactory;
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+    @Autowired
+    WebSessionSidStorage webSessionSidStorage;
 
-            @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
-                MetaData metaData = metaDataFactory.getMetaData("Usuario");
-                if (metaData == null) {
-                    throw new BusinessException("No existe la entidad 'Usuario'");
-                }
-                UsuarioCRUDService usuarioCrudService=(UsuarioCRUDService)crudServiceFactory.getService(metaData.getType());
-               
-                Usuario usuario=usuarioCrudService.read(idUsuario);
-                usuario.setEstadoUsuario(estadoUsuario);
-                usuarioCrudService.update(usuario);
+    @RequestMapping(value = {"{path}/Usuario/{idUsuario}/estadoUsuario/{estadoUsuario}"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void updateEstadoUsuario(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario, @PathVariable("estadoUsuario") EstadoUsuario estadoUsuario) {
 
-                return new CommandResult(metaData.getType(), usuario);
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
-            }
-        });
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            usuario = usuarioCRUDBusinessProcess.updateEstadoUsuario(new UsuarioCRUDBusinessProcess.UpdateEstadoUsuarioArguments(principal, dataSession, usuario, estadoUsuario));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
 
     }
-    
-    
-    @RequestMapping(value = {"/Usuario/{idUsuario}/updatePassword"}, method = RequestMethod.PATCH,produces = "application/json")
-    public void updatePassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,final @PathVariable("idUsuario") int idUsuario,final @RequestBody String jsonIn) {
 
-        restMethod(httpServletRequest, httpServletResponse, null, new Command() {
+    @RequestMapping(value = {"{path}/Usuario/{idUsuario}/centro/{idCentro}"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void updateCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario, @PathVariable("idCentro") int idCentro) {
 
-            @Override
-            public CommandResult run(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Map<String, Object> arguments) throws Exception, BusinessException {
-                MetaData metaData = metaDataFactory.getMetaData("Usuario");
-                if (metaData == null) {
-                    throw new BusinessException("No existe la entidad 'Usuario'");
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+            
+            CRUDService<Centro, Integer> centroCrudService = crudServiceFactory.getService(Centro.class);
+            Centro centro = centroCrudService.read(dataSession, idCentro);            
+                if (centro == null) {
+                    throw new RuntimeException("No existe el centro:" + idCentro);
                 }
-                UsuarioCRUDService usuarioCrudService=(UsuarioCRUDService)crudServiceFactory.getService(metaData.getType());
-                JsonReader jsonReader = jsonFactory.getJsonReader(ChangePassword.class);
-                ChangePassword changePassword = (ChangePassword) jsonReader.fromJson(jsonIn);
-                Usuario usuario=usuarioCrudService.read(idUsuario);
-                usuarioCrudService.updatePassword(usuario, changePassword.getCurrentPassword(), changePassword.getNewPassword());
                 
-                return null;
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
 
+            usuario = usuarioCRUDBusinessProcess.updateCentro(new UsuarioCRUDBusinessProcess.UpdateCentroArguments(principal, dataSession, usuario, centro));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }        
+
+    }
+
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/updatePassword"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void updatePassword(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario, @RequestBody String jsonIn) throws BusinessException {
+
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            JsonReader jsonReader = jsonFactory.getJsonReader(ChangePassword.class);
+            ChangePassword changePassword = (ChangePassword) jsonReader.fromJson(jsonIn, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.updatePassword(new UsuarioCRUDBusinessProcess.UpdatePasswordArguments(principal, dataSession, usuario,changePassword.currentPassword , changePassword.newPassword));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
+
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/foto"}, method = RequestMethod.GET)
+    public void getFoto(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario) throws BusinessException {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            byte[] foto = usuarioCRUDBusinessProcess.getFoto(new UsuarioCRUDBusinessProcess.GetFotoArguments(principal, dataSession, usuario));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/foto"}, method = RequestMethod.POST, produces = "application/json")
+    public void updateFoto(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario, @RequestParam("file") MultipartFile file) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            if (file.isEmpty()) {
+                throw new BusinessException("No has subido ningún fichero");
             }
-        });
 
-    }    
-    
-    
-    private static class ChangePassword {
+            byte[] foto = file.getBytes();
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.updateFoto(new UsuarioCRUDBusinessProcess.UpdateFotoArguments(principal, dataSession, usuario, foto));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
+
+    public static class ChangePassword {
+
         private String currentPassword;
         private String newPassword;
 
         public ChangePassword() {
         }
 
+        public ChangePassword(String currentPassword, String newPassword) {
+            this.currentPassword = currentPassword;
+            this.newPassword = newPassword;
+        }
+
+        
+        
         /**
          * @return the currentPassword
          */
@@ -145,8 +215,7 @@ public class UsuarioRESTController  extends AbstractRESTController {
         public void setNewPassword(String newPassword) {
             this.newPassword = newPassword;
         }
-        
-        
+
     }
-    
+
 }

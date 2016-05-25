@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="es.logongas.fpempresa.modelo.titulado.FormacionAcademica" >
-        
-        <cache usage="read-write" />
-        
+    <class name="es.logongas.fpempresa.modelo.titulado.FormacionAcademica" table="formacionacademica"  >
         <id name="idFormacionAcademica" >
             <generator class="identity" />
         </id>
@@ -30,5 +27,10 @@
             <column name="idTitulado"  />
         </many-to-one>
         <property name="fecha" />
+        
+        <property name="certificadoTitulo" />
+        
+        <property name="formacionDual" />
+        
     </class>
 </hibernate-mapping>

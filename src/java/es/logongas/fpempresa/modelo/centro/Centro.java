@@ -19,6 +19,7 @@
 
 package es.logongas.fpempresa.modelo.centro;
 
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.Valid;
@@ -43,6 +44,11 @@ public class Centro {
     @NotNull
     private EstadoCentro estadoCentro;
 
+    @NotNull
+    @Valid
+    @Label("Contacto")
+    private Contacto contacto;       
+    
     public Centro() {
     }
 
@@ -107,6 +113,20 @@ public class Centro {
      */
     public void setEstadoCentro(EstadoCentro estadoCentro) {
         this.estadoCentro = estadoCentro;
+    }
+
+    /**
+     * @return the contacto
+     */
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    /**
+     * @param contacto the contacto to set
+     */
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 
 

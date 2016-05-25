@@ -1,3 +1,5 @@
+
+
 /**
  * FPempresa Copyright (C) 2015 Lorenzo González
  *
@@ -25,11 +27,24 @@ import javax.mail.internet.InternetAddress;
  * @author logongas
  */
 public class MailServiceImpl implements MailService {
+    
+    @Override
     public void sendPlainMail(List<InternetAddress> to,InternetAddress from,String subject,String plainBody) {
         
     }
 
+    @Override
     public void sendHTMLMail(List<InternetAddress> to,InternetAddress from,String subject,String htmlBody) {
         
+    }
+
+    @Override
+    public void setEntityType(Class t) {
+        throw new UnsupportedOperationException("No se permite establece el tipo de la entidad");
+    }
+
+    @Override
+    public Class getEntityType() {
+        return null;
     }
 }

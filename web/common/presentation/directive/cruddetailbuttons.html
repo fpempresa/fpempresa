@@ -1,5 +1,5 @@
 <div>
     <ng-transclude></ng-transclude>
-    <button type="button" class="btn form__button form__button--default" ng-click="buttonCancel()" ng-hide="(controllerAction === 'VIEW') || (hideCancel === true)" >{{labelButtonCancel}}</button>
-    <button type="button" ng-class="{'form__button--primary':controllerAction !== 'DELETE','form__button--danger':controllerAction === 'DELETE'}" class="btn form__button" ng-click="buttonOK()">{{labelButtonOK}}</button>
+    <fpe-cancel-button ng-hide="hideCancel" ></fpe-cancel-button>
+    <fpe-ok-button ng-hide="hideOK"  ></fpe-ok-button>
 </div>

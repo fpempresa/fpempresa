@@ -51,7 +51,10 @@
                         Una <strong>empresa</strong> que busca profesionales
                     </label>
                 </div>
-                <br>
+                <div ng-show="model.tipoUsuario=='EMPRESA'" class="alert alert-danger" role="alert">
+                    Este usuario crear&aacute; una nueva empresa en FPempresa.<br>
+                    Si tu empresa ya est&aacute; registrada en FPempresa debes salir de esta p&aacute;gina y pedirle a un compa&ntilde;ero que te cree el usuario.
+                </div>
                 <br>
                 <br>
                 <div class="form-group">

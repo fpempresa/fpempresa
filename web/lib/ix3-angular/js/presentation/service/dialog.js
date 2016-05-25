@@ -17,6 +17,10 @@
             var deferred = $q.defer();
             var dialogDefinitionObject = dialogDefinitionObjects[name];
 
+            if (!dialogDefinitionObject) {
+                throw new Error("No existe ningún dialog con el nombre:"+name);
+            }
+
             var promises = {};
 
             angular.extend(promises, getPromiseResolves(dialogDefinitionObject, params));

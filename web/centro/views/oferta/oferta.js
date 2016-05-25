@@ -10,16 +10,14 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
 
-        $scope.filters.$eq['empresa.centro.idCentro'] = $scope.user.centro.idCentro;
+        $scope.filters['empresa.centro.idCentro'] = $scope.user.centro.idCentro;
 
         $scope.search();
     }]);
 
 
-app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-
-        $scope.tiposOferta = metadataEntities.getMetadataProperty('Oferta.tipoOferta').values;
 
         $scope.buscarEmpresa = function () {
 
@@ -37,38 +35,60 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             });
         };
 
+        $scope.postGet = function () {
+            $scope.search();
+        };
 
-        $scope.checkTodosCiclos=function(todosCiclos) {
-            
+        $scope.search = function () {
+
+
+            var query = {
+                filters: {
+                    'oferta':$scope.model.idOferta
+                },
+                namedSearch:"getNumCandidatosOferta"
+            };
+
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                $scope.numeroCandidatos = data;
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }
+        
+        $scope.checkTodosCiclos = function (todosCiclos) {
+
             if (todosCiclos) {
-                $scope.model.ciclos=angular.copy($scope.ciclos);
+                $scope.model.ciclos = angular.copy($scope.ciclos);
             } else {
-               $scope.model.ciclos=[]; 
+                $scope.model.ciclos = [];
             }
-            
+
         };
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
-            
-            if (newFamilia===oldFamilia) {
+
+            if (newFamilia === oldFamilia) {
                 return;
             }
-            
+
             if (oldFamilia) {
-                $scope.model.ciclos=[];
+                $scope.model.ciclos = [];
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
-                };
-                var orderby = [
-                    {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"ASC"},
-                    {fieldName:"descripcion",orderDirection:"ASC"}
-                ];                
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
+                }
 
-                serviceCiclo.search(filters,orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -78,10 +98,10 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
                 $scope.ciclos = [];
             }
         });
-        
-        $scope.compareCiclo=function(cicloA,cicloB) {
+
+        $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {
-                return (cicloA.idCiclo===cicloB.idCiclo);
+                return (cicloA.idCiclo === cicloB.idCiclo);
             } else {
                 return false;
             }
@@ -89,31 +109,32 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
     }]);
 
-app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-        $scope.tiposOferta = metadataEntities.getMetadataProperty('Oferta.tipoOferta').values;
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
-            
-            if (newFamilia===oldFamilia) {
+
+            if (newFamilia === oldFamilia) {
                 return;
             }
-            
+
             if (oldFamilia) {
-                $scope.model.ciclos=[];
+                $scope.model.ciclos = [];
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
                 };
-                var orderby = [
-                    {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"ASC"},
-                    {fieldName:"descripcion",orderDirection:"ASC"}
-                ];                
 
-                serviceCiclo.search(filters,orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -123,10 +144,10 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                 $scope.ciclos = [];
             }
         });
-        
-        $scope.compareCiclo=function(cicloA,cicloB) {
+
+        $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {
-                return (cicloA.idCiclo===cicloB.idCiclo);
+                return (cicloA.idCiclo === cicloB.idCiclo);
             } else {
                 return false;
             }
@@ -134,33 +155,32 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
 
     }]);
 
-app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'metadataEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, metadataEntities, serviceFactory) {
+app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-        $scope.tiposOferta = metadataEntities.getMetadataProperty('Oferta.tipoOferta').values;
-
-
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
-            
-            if (newFamilia===oldFamilia) {
+
+            if (newFamilia === oldFamilia) {
                 return;
             }
-            
+
             if (oldFamilia) {
-                $scope.model.ciclos=[];
+                $scope.model.ciclos = [];
             }
             if (newFamilia) {
                 var serviceCiclo = serviceFactory.getService("Ciclo");
-                var filters = {
-                    'familia.idFamilia': newFamilia.idFamilia
+                var query = {
+                    filters: {
+                        'familia.idFamilia': newFamilia.idFamilia
+                    },
+                    orderby: [
+                        {fieldName: "grado", orderDirection: "DESC"},
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},
+                        {fieldName: "descripcion", orderDirection: "ASC"}
+                    ]
                 };
-                var orderby = [
-                    {fieldName:"grado",orderDirection:"DESC"},
-                    {fieldName:"leyEducativa",orderDirection:"ASC"},
-                    {fieldName:"descripcion",orderDirection:"ASC"}
-                ];                
 
-                serviceCiclo.search(filters,orderby).then(function (ciclos) {
+                serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
@@ -170,10 +190,10 @@ app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail
                 $scope.ciclos = [];
             }
         });
-        
-        $scope.compareCiclo=function(cicloA,cicloB) {
+
+        $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {
-                return (cicloA.idCiclo===cicloB.idCiclo);
+                return (cicloA.idCiclo === cicloB.idCiclo);
             } else {
                 return false;
             }

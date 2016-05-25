@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="es.logongas.fpempresa.modelo.empresa.Empresa" >
-        
-        <cache usage="read-write" />
-        
+    <class name="es.logongas.fpempresa.modelo.empresa.Empresa" table="empresa"  >
         <id name="idEmpresa" >
             <generator class="identity" />
         </id>
@@ -15,23 +12,24 @@
 
         
         <component name="direccion" >
-            <property name="tipoVia" >
-                <type name="org.hibernate.type.EnumType">
-                    <param name="enumClass">es.logongas.fpempresa.modelo.comun.geo.TipoVia</param>
-                    <param name="type">12</param>
-                </type>
-            </property>
-            <property name="nombreVia" />
-            <property name="otrosDireccion" />
-            <property name="codigoPostal" />
+            <property name="datosDireccion" />
             <many-to-one name="municipio">
                 <column name="idMunicipio"  />
             </many-to-one>
         </component>
         
-        <many-to-one name="centro">
+        <many-to-one name="centro" update="false">
           <column name="idCentro"/>
         </many-to-one> 
+
+        <component name="contacto" >
+            <property name="url" />
+            <property name="email" />
+            <property name="persona" />
+            <property name="telefono" />
+            <property name="fax" />
+            <property name="textoLibre" />
+        </component>
 
     </class>
 </hibernate-mapping>

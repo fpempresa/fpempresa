@@ -14,13 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.empresa;
 
+import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
+import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.rule.ConstraintRule;
+import es.logongas.ix3.rule.RuleContext;
+import es.logongas.ix3.rule.RuleGroupPredefined;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -28,24 +35,40 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Empresa {
-    
+
     private int idEmpresa;
-    
+
     @NotBlank
-    private String  nombreComercial;
-    
+    private String nombreComercial;
+
     @NotBlank
-    private String  razonSocial; 
-    
+    private String razonSocial;
+
     @NotBlank
+    @Size(min = 9, max = 9)
     private String cif;
-    
+
     @NotNull
     @Valid
     private Direccion direccion;
-    
-    
+
     private Centro centro;
+
+    @NotNull
+    @Valid
+    private Contacto contacto;
+
+
+    @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
+        Validador validadorCIF = new Validador();
+
+        if (validadorCIF.checkNif(this.cif) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public Empresa() {
     }
@@ -138,5 +161,19 @@ public class Empresa {
     public void setCentro(Centro centro) {
         this.centro = centro;
     }
-    
+
+    /**
+     * @return the contacto
+     */
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    /**
+     * @param contacto the contacto to set
+     */
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
+    }
+
 }

@@ -2,7 +2,7 @@
 
 angular.module("common").config(['richDomainProvider', function (richDomain) {
 
-        richDomain.addEntityTransformer("FormacionAcademica", ['metadataEntities', function (metadataEntities) {
+        richDomain.addEntityTransformer("FormacionAcademica", ['schemaEntities', function (schemaEntities) {
                 var FormacionAcademica = {
                     getNombreCentro: function () {
                         if (this.tipoFormacionAcademica === "CICLO_FORMATIVO") {
@@ -26,7 +26,7 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                         return this.getNombreTitulo() + "-" + this.getNombreCentro();
                     },
                     getTipoFormacionAcademicaDescription: function () {
-                        return metadataEntities.getMetadataProperty(this.$propertyPath + ".tipoFormacionAcademica").getValueDescription(this.tipoFormacionAcademica);
+                        return schemaEntities.getSchemaProperty(this.$propertyPath + ".tipoFormacionAcademica").getValueDescription(this.tipoFormacionAcademica);
                     }
                 };
 

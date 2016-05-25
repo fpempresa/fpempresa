@@ -22,10 +22,11 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.security.model.Identity;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.security.authentication.impl.CredentialImplLoginPassword;
 import es.logongas.ix3.security.authentication.AuthenticationProvider;
 import es.logongas.ix3.security.authentication.Credential;
-import es.logongas.ix3.security.authentication.Principal;
+import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import java.io.Serializable;
 import org.apache.commons.logging.Log;
@@ -46,7 +47,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
     
     @Override
-    public Principal authenticate(Credential credential) throws BusinessException {
+    public Principal authenticate(Credential credential, DataSession dataSession) throws BusinessException {
 
         if ((credential instanceof CredentialImplLoginPassword) == false) {
             return null;
@@ -58,12 +59,12 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         }
 
         UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
-        Usuario usuario = usuarioService.readOriginalByNaturalKey(credentialImplLoginPassword.getLogin());
+        Usuario usuario = usuarioService.readOriginalByNaturalKey(dataSession, credentialImplLoginPassword.getLogin());
 
         if (usuario != null) {
             String plainPassword = credentialImplLoginPassword.getPassword();
 
-            if (usuarioService.checkPassword(usuario, plainPassword)) {
+            if (usuarioService.checkPassword(dataSession, usuario, plainPassword)) {
 
                 switch (usuario.getTipoUsuario()) {
                     case ADMINISTRADOR:
@@ -117,16 +118,16 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
     }
 
     @Override
-    public Principal getPrincipalBySID(Serializable sid) throws BusinessException {
+    public Principal getPrincipalBySID(Serializable sid, DataSession dataSession) throws BusinessException {
         Integer idIdentity = (Integer) sid;
         UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
 
-        return usuarioService.readOriginal(idIdentity);
+        return usuarioService.readOriginal(dataSession, idIdentity);
     }
 
-    protected Principal getPrincipalByLogin(String login) throws BusinessException {
+    protected Principal getPrincipalByLogin(String login, DataSession dataSession) throws BusinessException {
         UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
-        Identity identity = usuarioService.readOriginalByNaturalKey(login);
+        Identity identity = usuarioService.readOriginalByNaturalKey(dataSession, login);
 
         return identity;
     }

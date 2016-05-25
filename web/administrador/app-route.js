@@ -1,7 +1,7 @@
 "use strict";
 
 app.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider) {
-        $urlRouterProvider.otherwise('/centro/search');
+        $urlRouterProvider.otherwise('/');
         $stateProvider.state("lateralmenu",{
             templateUrl:"fragments/lateralmenu/lateralmenu.html",
             controller:"LateralMenuController"

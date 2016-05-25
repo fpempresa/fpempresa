@@ -1,0 +1,65 @@
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Certificado T&iacute;tulo</legend>
+
+                    <div class="form-group">
+                        <label for="model.ciclo.familia" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo.familia" id="model.ciclo.familia" name="model.ciclo.familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div>                        
+
+                    <div class="form-group">
+                        <label for="model.ciclo" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo" id="model.ciclo" name="model.ciclo" class="form-control" ix3-options=" orderBy:'descripcion'" ix3-options-depend="{familia:model.ciclo.familia}" ix3-validation  >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label for="model.anyo" class="col-sm-3  control-label" ix3-label ></label>
+                        <div  class="col-sm-3">
+                            <input ng-model="model.anyo" id="model.anyo" name="model.anyo" class="form-control" type="text"  ix3-validation />
+                        </div>  
+                        <div  class="col-sm-3"></div>
+                    </div> 
+
+                    <div class="form-group">
+                        <label for="model.nifnie" class="col-sm-3  control-label" ix3-label ></label> 
+                        <div  class="col-sm-9">
+                            <textarea ng-model="model.nifnie" id="model.nifnie" name="model.nifnie" class="form-control" rows="15"  ix3-validation  ></textarea>
+                        </div>                        
+                    </div> 
+                    <div class="form-group"  >
+                        <div class="col-xs-9 col-xs-9 col-xs-offset-3">
+                            <p class="form__text form__text--help">
+                                Hay que indicar todos los  NIF/NIE que han obtenido ese título en ese año en el centro.<br>Los NIF/NIE deben estar separados por comas, tabuladores o nuevas lineas
+                            </p>
+
+                        </div> 
+                    </div>                    
+
+
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <div class="pull-right">
+                                <fpe-cancel-button></fpe-cancel-button>
+                                <fpe-ok-button></fpe-ok-button>
+                            </div>
+                        </div>
+                    </div>                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

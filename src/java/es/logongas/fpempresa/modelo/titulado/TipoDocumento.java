@@ -24,8 +24,7 @@ package es.logongas.fpempresa.modelo.titulado;
  */
 public enum TipoDocumento {
     
-    NIF("NIF"),
-    NIE("NIE"),
+    NIF_NIE("NIF/NIE"),
     PASAPORTE("Pasaporte"),
     OTRO("Otro");
     

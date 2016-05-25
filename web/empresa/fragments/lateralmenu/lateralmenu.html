@@ -1,0 +1,44 @@
+    <div class=" form__page form__page--no-padding container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <img class="img-circle" src="../img/photo_user.png" alt="User Pic">
+            </div> 
+            <div class="col-xs-12 col-sm-10 form--center">
+                <h3 class="form__main-title">Bienvenido, {{user.name}}</h3>
+                <br>
+                <br>
+                <h4 class="form__title" ng-show="user.empresa!==null">De la empresa "{{user.empresa.toString()}}"</h4>  
+                <br>
+                <br>
+                <br>
+                <p class="form__text form__text--help">
+                    Desde aqui podr&aacute;s gestionar tus ofertas de trabajo
+                </p>          
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2" style="padding-right: 0px!important;">
+                <ul class="lateral-menu__menu">
+                    <li class="lateral-menu__header">Empresa</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/$')}"  class="lateral-menu__item__link" href="#/">Panel de control</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/empresa/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/empresa/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/empresa/edit/{{user.empresa.idEmpresa}}">Empresa</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/empresario/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/empresario/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/empresario/search">Usuarios</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/(oferta|candidato)/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/(oferta|candidato)/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/oferta/search">Ofertas</a></li>
+                </ul>
+                <br>
+                <ul class="lateral-menu__menu">
+                    <li class="lateral-menu__header">Cuenta</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/usuario/edit/' + user.idIdentity+ '$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/usuario/edit/' + user.idIdentity+ '$')}"  class="lateral-menu__item__link" href="#/usuario/edit/{{user.idIdentity}}">Mis datos</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar mi contrase&ntilde;a</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div ui-view></div>                     
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>

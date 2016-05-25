@@ -6,20 +6,6 @@
             <form name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
                     <legend class="form__title">Oferta</legend>
-                    <div class="row" >
-                        <div class="col-xs-12 form-horizontal"> 
-                            <div class="form-group">
-                                <label  class="col-xs-3  control-label" >Tipo de Oferta</label>
-                                <div class="col-xs-9 ">
-                                    <div class="radio" ng-repeat="value in tiposOferta">
-                                        <label>
-                                            <input ng-model="model.tipoOferta" type="radio" name="{{value.key}}" id="{{value.key}}" ng-value="value.key">{{value.description}}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 
@@ -49,7 +35,7 @@
                             <div class="form-group">
                                 <label for="descripcion" class="col-xs-3  control-label" ix3-label></label>
                                 <div class="col-xs-9">
-                                    <textarea ng-model="model.descripcion" class="form-control" rows="10"  id="descripcion" name="descripcion"  ix3-validation></textarea>
+                                    <textarea ng-model="model.descripcion" class="form-control" rows="7"  id="descripcion" name="descripcion"  ix3-validation></textarea>
                                 </div>
                             </div> 
                         </div>
@@ -88,6 +74,26 @@
                             </div> 
                         </div> 
                     </div> 
+
+                    <legend class="form__title">Datos de contacto</legend>       
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <p class="form__text form__text--help">Los titulados que se inscriban en esta oferta deben necesariamente de ponerse directamente en contacto con la empresa a traves de los datos que se suministran en este campo</p>
+                            </div>
+                        </div> 
+                    </div>                     
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label for="contacto.textoLibre" class="col-sm-3  control-label" ix3-label ></label>
+                                <div class="col-sm-9">
+                                    <textarea ng-model="model.contacto.textoLibre" class="form-control" rows="4"  id="contacto.textoLibre" name="contacto.textoLibre"  ix3-validation></textarea>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div>                     
+
                     <legend class="form__title">Destinado a personas de</legend>                    
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal"> 
@@ -131,7 +137,43 @@
                                 </div>
                             </div> 
                         </div> 
-                    </div>                     
+                    </div>  
+
+                    <div class="row" ng-show="controllerAction !== 'NEW'" >
+                        <div class="col-xs-12  form-horizontal">
+
+                            <legend class="form__title">Candidatos</legend>
+
+                            <div class="form-group">
+                                <div class="col-sm-7 col-sm-offset-4 col-xs-12 ">
+
+                                    <div class="panel panel-green">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <i class="fa fa-archive fa-4x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="section__text--size-high">{{numeroCandidatos}}</div>
+                                                    <div class="section__text--size-high"><ng-pluralize count="numeroCandidatos" when="{'0': 'Ningún Candidato','1': 'Candidato','other': 'Candidatos'}"></ng-pluralize></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a ng-hide="numeroCandidatos===0" href="#/candidato/search/oferta/{{model.idOferta}}">
+                                            <div class="panel-footer" style="background-color: #FFFFFF">
+                                                <span class="pull-left">Ver los candidatos</span>
+                                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </a>
+
+                                    </div>
+                                </div> 
+
+
+                            </div> 
+                        </div>
+                    </div> 
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 ">

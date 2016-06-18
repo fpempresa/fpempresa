@@ -103,6 +103,18 @@
                         </div>  
                     </div>
                     <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6  form-horizontal" ng-show="(model.tipoUsuario === 'CENTRO')">
+                            <div class="form-group">
+                                <label for="estadoUsuario" class="col-xs-3 col-sm-6 control-label" >Estado en el Centro</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select  ng-model="model.estadoUsuario" id="estadoUsuario" name="estadoUsuario" class="form-control" ix3-options ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div>
                     <div class="row" >
                         <div class="col-xs-12 ">                             
                             <crud-detail-buttons class="pull-right" >

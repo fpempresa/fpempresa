@@ -138,7 +138,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
                 securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
 
-                businessTrue(usuario.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "El usuario debe estar aceptado");
                 businessTrue(usuario.getCentro() != null, "El centro es requerido para el usuario");
             } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.CENTRO)) {
                 securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");

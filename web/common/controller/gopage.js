@@ -19,8 +19,8 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
         }
         function goHomeApp() {
             $window.location.href = getContextPath()+"/site/index.html#/";
-        }        
-        
+        }               
+
 
         return {
             homeUsuario: function(usuario) {
@@ -53,6 +53,9 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
             },
             login:function() {
                     $window.location.href = getContextPath() + "/site/index.html#/login";  
-            }
+            },
+            soporte:function() {
+                    $window.location.href = getContextPath() + "/site/index.html#/docs/soporte";  
+            },
         };
     }]);

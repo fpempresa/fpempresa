@@ -6,4 +6,8 @@ app.controller("HeaderController", ['$scope','session','goPage',function ($scope
                 $scope.businessMessages = businessMessages;
             });
         }
+        $scope.soporte=function() {
+                goPage.soporte();
+
+        }           
 }]);

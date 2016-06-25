@@ -4,7 +4,7 @@
             <button id="buttonMenuHeader" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href ng-click="navigateWithScroll('/','top')">
+            <a class="navbar-brand" href ng-click="navigateWithScroll('/', 'top')">
                 <img src="../img/logo/logo.png"  alt="logo"  >&nbsp;
             </a>
             <a class="navbar-brand" href="https://www.bankia.es">
@@ -12,31 +12,36 @@
             </a>            
         </div>
 
-
         <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
             <ul class="nav navbar-nav">
 
                 <li class="hidden">
-                    <a href ng-click="navigateWithScroll('/','top')" fpe-click-button-on-click="buttonMenuHeader"></a>
+                    <a href ng-click="navigateWithScroll('/', 'top')" fpe-click-button-on-click="buttonMenuHeader"></a>
                 </li>
                 <li>
                     <a  href="http://www.fpempresa.net" fpe-click-button-on-click="buttonMenuHeader">Asociaci&oacute;n</a>
                 </li>                
                 <li>
-                    <a  href ng-click="navigateWithScroll('/','ofrecemos')" fpe-click-button-on-click="buttonMenuHeader">Que ofrecemos</a>
+                    <a  href ng-click="navigateWithScroll('/', 'ofrecemos')" fpe-click-button-on-click="buttonMenuHeader">Que ofrecemos</a>
                 </li>
                 <li>
                     <a  href="#/docs/soporte" fpe-click-button-on-click="buttonMenuHeader">Soporte</a>
                 </li>
                 <li>
-                    <a  href ng-click="navigateWithScroll('/','porque')" fpe-click-button-on-click="buttonMenuHeader">Por qu&eacute;</a>
+                    <a  href ng-click="navigateWithScroll('/', 'porque')" fpe-click-button-on-click="buttonMenuHeader">Por qu&eacute;</a>
                 </li>
                 <li>
                     <a ng-if="!user" href="#/login" fpe-click-button-on-click="buttonMenuHeader">Entrar</a>
                     <a ng-if="user"  href ng-click="homeUsuario()" fpe-click-button-on-click="buttonMenuHeader">{{user.name}}</a>
                 </li>
             </ul>
-        </div>
-
+        </div>       
     </div>
+    <div class="container-fluid" >
+        <div class="navbar-header navbar-left" style="height: 80%" >
+            <div style="padding: 10px; font-size: large;color: #FFFFFF;text-transform: none" >
+                Soporte: &nbsp;&nbsp; <i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp;946 708 194 &nbsp;&nbsp; <i class="fa fa-envelope-square" aria-hidden="true"></i>&nbsp;soporte@empleafp.com           
+            </div>
+        </div>        
+    </div>        
 </nav>

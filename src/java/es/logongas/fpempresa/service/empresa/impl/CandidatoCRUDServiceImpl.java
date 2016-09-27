@@ -24,7 +24,6 @@ import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
 import es.logongas.ix3.dao.DataSession;
-import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**

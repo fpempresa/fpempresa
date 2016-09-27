@@ -98,6 +98,7 @@
         
         <!-- Cambiar el datasource de Hibernate -->
         <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
+        <!-- Copiar el fichero de Amazon -->
     </target>
 
     <target name="-set-os" >

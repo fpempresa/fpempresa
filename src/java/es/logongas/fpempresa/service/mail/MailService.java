@@ -16,15 +16,19 @@
  */
 package es.logongas.fpempresa.service.mail;
 
+import es.logongas.fpempresa.modelo.mail.Mail;
 import es.logongas.ix3.service.Service;
-import java.util.List;
+import java.io.IOException;
 import javax.mail.internet.InternetAddress;
 
 /**
  * Servicio de envio de EMails.
+ *
  * @author logongas
  */
-public interface MailService extends Service {
-    void sendPlainMail(List<InternetAddress> to,InternetAddress from,String subject,String plainBody);
-    void sendHTMLMail(List<InternetAddress> to,InternetAddress from,String subject,String htmlBody);
+public interface MailService extends Service<Mail> {
+
+    void send(Mail mail) throws IOException;
+
+    void verifyEmailAddress(InternetAddress internetAddress) throws IOException;
 }

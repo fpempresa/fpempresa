@@ -46,4 +46,17 @@ public class OfertaCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ofert
         return ofertaCRUDService.getOfertasEmpresa(getOfertasEmpresaArguments.dataSession, getOfertasEmpresaArguments.empresa);
     }
     
+    @Override
+    public Oferta insert(InsertArguments<Oferta> insertArguments) throws BusinessException {
+        Oferta oferta = super.insert(insertArguments);
+        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
+        ofertaCRUDService.notificarOfertaATitulados(insertArguments.dataSession, oferta);
+        return oferta;
+    }
+    
+    @Override
+    public Oferta update(UpdateArguments<Oferta> updateArguments) throws BusinessException {
+        return super.update(updateArguments);
+    }
+    
 }

@@ -47,6 +47,18 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         }
 
     }
+    
+    @Override
+    public void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException{
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        usuarioCRUDService.enviarMailResetearPassword(enviarMailResetearContrasenyaArguments.dataSession, enviarMailResetearContrasenyaArguments.email);
+    }
+    
+    @Override
+    public void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession, resetearContrasenyaArguments.claveResetearPassword, resetearContrasenyaArguments.nuevaContrasenya);
+    }
 
     @Override
     public Usuario getUsuarioFromTitulado(GetUsuarioFromTituladoArguments getUsuarioFromTituladoArguments) throws BusinessException {

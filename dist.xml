@@ -15,6 +15,7 @@
         <!-- Estas propeiudades se deben actualizar según el servidor de sonar a usar -->
         <property name="sonar.host.url" value="http://sonar.fpempresa.net" />
         <property name="sonar.jdbc.url" value="jdbc:postgresql://localhost/sonar" />
+        
         <property name="sonar.jdbc.username" value="" />
         <property name="sonar.jdbc.password" value="" />
 	
@@ -24,17 +25,17 @@
   
   
     <target name="jmeter" depends="-configureAnt" >
-		<jmeter
-			jmeterhome="${basedir}/jmeter"
-			testplan="${basedir}/jmeter/fpempresa.jmx"
-			resultlog="${basedir}/jmeter/fpempresa.jtl">
+        <jmeter
+            jmeterhome="${basedir}/jmeter"
+            testplan="${basedir}/jmeter/fpempresa.jmx"
+            resultlog="${basedir}/jmeter/fpempresa.jtl">
             <property name="jmeter.save.saveservice.output_format" value="xml"/>
             <property name="jmeter.save.saveservice.assertion_results" value="all"/>
             <property name="jmeter.save.saveservice.bytes" value="true"/>
             <property name="file_format.testlog" value="${format}"/>
             <property name="jmeter.save.saveservice.response_data.on_error" value="${funcMode}"/>
-		</jmeter>
-		<xslt in="${basedir}/jmeter/JMeterResults.jtl" out="${basedir}/jmeter/fpempresa.html" style="${basedir}/jmeter/extras/jmeter-results-report_21.xsl" force="true"/>
+        </jmeter>
+        <xslt in="${basedir}/jmeter/JMeterResults.jtl" out="${basedir}/jmeter/fpempresa.html" style="${basedir}/jmeter/extras/jmeter-results-report_21.xsl" force="true"/>
 		
     </target>
   
@@ -98,7 +99,9 @@
         
         <!-- Cambiar el datasource de Hibernate -->
         <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
-        <!-- Copiar el fichero de Amazon -->
+        
+        <copy file="../private/config.properties.${env.APP_ENVIRONMENT}" tofile="./build/web/WEB-INF/classes/config.properties"/>
+        
     </target>
 
     <target name="-set-os" >

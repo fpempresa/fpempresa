@@ -36,6 +36,8 @@
     
     <property name="validadoEmail"/>
     <property name="claveValidacionEmail"/>
+    <property name="claveResetearContrasenya"/>
+    <property name="fechaClaveResetearContrasenya"/>
     
     <property name="fecha" update="false"/>
     

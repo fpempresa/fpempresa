@@ -16,133 +16,58 @@
  */
 package es.logongas.fpempresa.service.mail.impl;
 
-import com.amazonaws.auth.PropertiesCredentials;
-import com.amazonaws.services.simpleemail.AWSJavaMailTransport;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
-import com.amazonaws.services.simpleemail.model.ListVerifiedEmailAddressesResult;
-import com.amazonaws.services.simpleemail.model.VerifyEmailAddressRequest;
-import es.logongas.fpempresa.modelo.mail.Mail;
+import com.amazonaws.services.simpleemail.model.Body;
+import com.amazonaws.services.simpleemail.model.Content;
+import com.amazonaws.services.simpleemail.model.Destination;
+import com.amazonaws.services.simpleemail.model.Message;
+import com.amazonaws.services.simpleemail.model.SendEmailRequest;
+import es.logongas.fpempresa.config.Config;
+import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import java.io.IOException;
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 /**
  * Servicio de envio de EMails.
  *
- * @author logongas
+ * @author rhuffus
  */
 public class MailServiceImplAWS implements MailService {
 
     @Override
     public void send(Mail mail) throws IOException {
-        /*
-         * Important: Be sure to fill in your AWS access credentials in the
-         * AwsCredentials.properties file before you try to run this sample.
-         * http://aws.amazon.com/security-credentials
-         */
-        PropertiesCredentials credentials = new PropertiesCredentials(
-                MailServiceImplAWS.class
-                .getResourceAsStream("/AwsCredentials.properties"));
-        AmazonSimpleEmailService ses = new AmazonSimpleEmailServiceClient(credentials);
 
-        /*
-         * Before you can send email via Amazon SES, you need to verify that you
-         * own the email address from which youÕll be sending email. This will
-         * trigger a verification email, which will contain a link that you can
-         * click on to complete the verification process.
-         */
+        // Construct an object to contain the recipient address.
+        Destination destination = new Destination().withToAddresses(mail.getTo());
 
-        /*
-         * If you've just signed up for SES, then you'll be placed in the Amazon
-         * SES sandbox, where you must also verify the email addresses you want
-         * to send mail to.
-         *
-         * You can uncomment the line below to verify the TO address in this
-         * sample.
-         *
-         * Once you have full access to Amazon SES, you will *not* be required
-         * to verify each email address you want to send mail to.
-         *
-         * You can request full access to Amazon SES here:
-         * http://aws.amazon.com/ses/fullaccessrequest
-         */
-//        verifyEmailAddress(mail.getFrom());
-        
-        /*
-		 * Setup JavaMail to use the Amazon Simple Email Service by specifying
-		 * the "aws" protocol.
-         */
-        Properties props = new Properties();
-        props.setProperty("mail.transport.protocol", "aws");
+        // Create the subject and body of the message.
+        Content subject = new Content().withData(mail.getSubject());
+        Content htmlBody = new Content().withData(mail.getHtmlBody());
+        Content textBody = new Content().withData(mail.getTextBody());
+        Body body = new Body();
+        body.withHtml(htmlBody);
+        body.withText(textBody);
 
-        /*
-         * Setting mail.aws.user and mail.aws.password are optional. Setting
-         * these will allow you to send mail using the static transport send()
-         * convince method.  It will also allow you to call connect() with no
-         * parameters. Otherwise, a user name and password must be specified
-         * in connect.
-         */
-        props.setProperty("mail.aws.user", credentials.getAWSAccessKeyId());
-        props.setProperty("mail.aws.password", credentials.getAWSSecretKey());
+        // Create a message with the specified subject and body.
+        Message message = new Message().withSubject(subject).withBody(body);
 
-        Session session = Session.getInstance(props);
+        // Assemble the email.
+        SendEmailRequest request = new SendEmailRequest().withSource(mail.getFrom()).withDestination(destination).withMessage(message);
 
-        try {
-            // Create a new Message
-            Message msg = new MimeMessage(session);
-            msg.setFrom(mail.getFrom());
-            for (InternetAddress internetAddress : mail.getTo()) {
-                msg.addRecipient(Message.RecipientType.TO, internetAddress);
-            }
-            msg.setSubject(mail.getSubject());
-            msg.setText(mail.getBody());
-            msg.saveChanges();
+        // Load AWS credentials
+        AWSCredentials credentials = new BasicAWSCredentials(Config.getSetting("aws.accessKey"), Config.getSetting("aws.secretKey"));
+        AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(credentials);
 
-            // Reuse one Transport object for sending all your messages
-            // for better performance
-            Transport t = new AWSJavaMailTransport(session, null);
-            t.connect();
-            t.sendMessage(msg, null);
+        // Configure region
+        Region REGION = Region.getRegion(Regions.EU_WEST_1);
+        client.setRegion(REGION);
 
-            // Close your transport when you're completely done sending
-            // all your messages
-            t.close();
-        } catch (AddressException e) {
-            e.printStackTrace();
-            System.out.println("Caught an AddressException, which means one or more of your "
-                    + "addresses are improperly formatted.");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            System.out.println("Caught a MessagingException, which means that there was a "
-                    + "problem sending your message to Amazon's E-mail Service check the "
-                    + "stack trace for more information.");
-        }
-    }
-
-    @Override
-    public void verifyEmailAddress(InternetAddress internetAddress) throws IOException{
-        
-        PropertiesCredentials credentials = new PropertiesCredentials(
-                MailServiceImplAWS.class
-                .getResourceAsStream("/AwsCredentials.properties"));
-        AmazonSimpleEmailService ses = new AmazonSimpleEmailServiceClient(credentials);
-        
-        ListVerifiedEmailAddressesResult verifiedEmails = ses.listVerifiedEmailAddresses();
-        if (verifiedEmails.getVerifiedEmailAddresses().contains(internetAddress.getAddress())) {
-            return;
-        }
-
-        ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(internetAddress.getAddress()));
-        System.out.println("Please check the email address " + internetAddress.getAddress() + " to verify it");
-        System.exit(0);
+        // Send email
+        client.sendEmail(request);
     }
 
     @Override

@@ -7,7 +7,8 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.presentacion.controller;
 
@@ -50,33 +51,22 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints = new ArrayList<EndPoint>();
 
-        addIx3EndPoints(endPoints);        
-        
-        
-        
+        addIx3EndPoints(endPoints);
+
         addCommonEndPoints(endPoints, "/site");
         addSiteEndPoints(endPoints, "/site");
-        
-        
-        
+
         addCommonEndPoints(endPoints, "/administrador");
         addAdministradorEndPoints(endPoints, "/administrador");
 
-        
-        
         addCommonEndPoints(endPoints, "/titulado");
         addTituladoEndPoints(endPoints, "/titulado");
 
-        
-        
         addCommonEndPoints(endPoints, "/centro");
         addCentroEndPoints(endPoints, "/centro");
-        
-        
-        
+
         addCommonEndPoints(endPoints, "/empresa");
         addEmpresaEndPoints(endPoints, "/empresa");
-        
 
     }
 
@@ -90,7 +80,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPoint("/$log/**", null, null));
         endPoints.add(EndPoint.createEndPoint("/session", null, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
     }
-    
+
     private void addCommonEndPoints(List<EndPoint> endPoints, String path) {
 
         //comun        
@@ -106,16 +96,18 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addSiteEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));        
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+        //endPoints.add(EndPoint.createEndPoint(path + "/Usuario/olvidoPassword/*", "POST", null));
+
     }
 
     private void addAdministradorEndPoints(List<EndPoint> endPoints, String path) {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
-        
-        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**","GET", new BeanMapper(Estadisticas.class, null, "*")));
-        
+
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
+
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
 
@@ -149,40 +141,35 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     private void addCentroEndPoints(List<EndPoint> endPoints, String path) {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
-        
-        
-        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**","GET", new BeanMapper(Estadisticas.class, null, "*")));
-        
+
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
+
         endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));
-        endPoints.add(EndPoint.createEndPoint(path + "/Centro", "GET", new BeanMapper(Centro.class, "contacto", null)));        
-        endPoints.add(EndPoint.createEndPointCrud(path, CertificadoTitulo.class));        
+        endPoints.add(EndPoint.createEndPoint(path + "/Centro", "GET", new BeanMapper(Centro.class, "contacto", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, CertificadoTitulo.class));
         endPoints.add(EndPoint.createEndPoint(path + "/CertificadoTitulo", "PUT", new BeanMapper(CertificadoTitulo.class, "centro>", null)));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class,"usuario.foto,usuario.claveValidacionEmail,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion",null)));
-        
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.foto,usuario.claveValidacionEmail,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion", null)));
+
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
     }
 
     private void addEmpresaEndPoints(List<EndPoint> endPoints, String path) {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
-        
-                
-        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**","GET", new BeanMapper(Estadisticas.class, null, "*")));
-        
-        endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));        
-        
+
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
+
+        endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));
+
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class,"usuario.foto,usuario.claveValidacionEmail,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion",null)));
-
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.foto,usuario.claveValidacionEmail,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion", null)));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 
     }
-
-
 
 }

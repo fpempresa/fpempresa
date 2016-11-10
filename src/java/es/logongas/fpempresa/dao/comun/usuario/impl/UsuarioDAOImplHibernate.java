@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.dao.comun.usuario.impl;
 
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
@@ -29,30 +28,59 @@ import org.hibernate.Session;
  *
  * @author Lorenzo
  */
-public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario,Integer> implements UsuarioDAO  {
+public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, Integer> implements UsuarioDAO {
 
     @Override
-    public void updateEncryptedPassword(DataSession dataSession, Usuario usuario,String encriptedPassword){
-       
-        
+    public void updateEncryptedPassword(DataSession dataSession, Usuario usuario, String encriptedPassword) {
+
         Session session = (Session) dataSession.getDataBaseSessionImpl();
-        
+
         Query query = session.createSQLQuery("UPDATE usuario SET password=? WHERE idIdentity=?");
         query.setString(0, encriptedPassword);
         query.setInteger(1, usuario.getIdIdentity());
-        
-        query.executeUpdate(); 
+
+        query.executeUpdate();
     }
-    
-    @Override  
+
+    @Override
     public String getEncryptedPassword(DataSession dataSession, Usuario usuario) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
-        
+
         Query query = session.createSQLQuery("SELECT password FROM usuario WHERE idIdentity=?");
         query.setInteger(0, usuario.getIdIdentity());
-        String encryptedPassword=(String)query.uniqueResult();
-        
+        String encryptedPassword = (String) query.uniqueResult();
+
         return encryptedPassword;
     }
- 
+
+    @Override
+    public Usuario getUsuarioPorClaveValidacionEmail(DataSession dataSession, String claveValidacionEmail) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+        String hql = "SELECT usuario FROM Usuario usuario WHERE usuario.validadoEmail = 0 AND usuario.claveValidacionEmail = :claveValidacionEmail";
+        Query query = session.createQuery(hql);
+        query.setString("claveValidacionEmail", claveValidacionEmail);
+        Usuario usuario = (Usuario) query.uniqueResult();
+        return usuario;
+    }
+
+    @Override
+    public Usuario getUsuarioPorClaveResetearContrasenya(DataSession dataSession, String claveResetearContrasenya) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+        String hql = "SELECT usuario FROM Usuario usuario WHERE usuario.claveResetearContrasenya = :claveResetearContrasenya";
+        Query query = session.createQuery(hql);
+        query.setString("claveResetearContrasenya", claveResetearContrasenya);
+        Usuario usuario = (Usuario) query.uniqueResult();
+        return usuario;
+    }
+
+    @Override
+    public Usuario getUsuarioPorEmail(DataSession dataSession, String email) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+        String hql = "SELECT usuario FROM Usuario usuario WHERE usuario.email = :email";
+        Query query = session.createQuery(hql);
+        query.setString("email", email);
+        Usuario usuario = (Usuario) query.uniqueResult();
+        return usuario;
+    }
+
 }

@@ -63,7 +63,5 @@ public class Provincia {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    
     
 }

@@ -419,5 +419,17 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             throw new BusinessSecurityException(message);
         }
     }
+    
+    @Override
+    public void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException{
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        usuarioCRUDService.enviarMailResetearPassword(enviarMailResetearContrasenyaArguments.dataSession, enviarMailResetearContrasenyaArguments.email);
+    }
+    
+    @Override
+    public void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession, resetearContrasenyaArguments.claveResetearPassword, resetearContrasenyaArguments.nuevaContrasenya);
+    }
 
 }

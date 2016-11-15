@@ -45,7 +45,6 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
     protected final Log log = LogFactory.getLog(getClass());
 
-    
     @Override
     public Principal authenticate(Credential credential, DataSession dataSession) throws BusinessException {
 
@@ -66,41 +65,44 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
             if (usuarioService.checkPassword(dataSession, usuario, plainPassword)) {
 
+                if (!usuario.isValidadoEmail()) {
+                    throw new BusinessException("Tu cuenta no está validada. Por favor, accede a tu correo electrónico y sigue las instrucciones que te enviamos para validarla.");
+                }
+
                 switch (usuario.getTipoUsuario()) {
                     case ADMINISTRADOR:
-                        
+
                         if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
-                        }                        
-                        
+                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:" + usuario.getEstadoUsuario());
+                        }
+
                         break;
                     case CENTRO:
-                        
-                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getCentro()!=null)) {
-                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" +  usuario.getCentro() + "'");
+
+                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getCentro() != null)) {
+                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" + usuario.getCentro() + "'");
                         }
-                        
+
                         if ((usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
                             throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
                         }
-                        
+
                         break;
                     case EMPRESA:
-                        
-                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getEmpresa()!=null)) {
-                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" +  usuario.getEmpresa() + "'");
-                        }                        
-                        
+
+                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getEmpresa() != null)) {
+                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" + usuario.getEmpresa() + "'");
+                        }
+
                         break;
                     case TITULADO:
-                        
+
                         if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:"+usuario.getEstadoUsuario());
+                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:" + usuario.getEstadoUsuario());
                         }
-                        
-                        break;                        
+
+                        break;
                 }
-                
 
                 if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) && (usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
                     throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");

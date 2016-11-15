@@ -7,7 +7,8 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.presentacion.controller;
 
@@ -92,13 +93,13 @@ public class UsuarioRESTController {
 
             CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
             Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
-            
+
             CRUDService<Centro, Integer> centroCrudService = crudServiceFactory.getService(Centro.class);
-            Centro centro = centroCrudService.read(dataSession, idCentro);            
-                if (centro == null) {
-                    throw new RuntimeException("No existe el centro:" + idCentro);
-                }
-                
+            Centro centro = centroCrudService.read(dataSession, idCentro);
+            if (centro == null) {
+                throw new RuntimeException("No existe el centro:" + idCentro);
+            }
+
             UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
 
             usuario = usuarioCRUDBusinessProcess.updateCentro(new UsuarioCRUDBusinessProcess.UpdateCentroArguments(principal, dataSession, usuario, centro));
@@ -106,13 +107,12 @@ public class UsuarioRESTController {
             controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
-        }        
+        }
 
     }
 
     @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/updatePassword"}, method = RequestMethod.PATCH, produces = "application/json")
     public void updatePassword(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario, @RequestBody String jsonIn) throws BusinessException {
-
 
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
@@ -122,7 +122,7 @@ public class UsuarioRESTController {
             CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
             Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
             UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
-            usuarioCRUDBusinessProcess.updatePassword(new UsuarioCRUDBusinessProcess.UpdatePasswordArguments(principal, dataSession, usuario,changePassword.currentPassword , changePassword.newPassword));
+            usuarioCRUDBusinessProcess.updatePassword(new UsuarioCRUDBusinessProcess.UpdatePasswordArguments(principal, dataSession, usuario, changePassword.currentPassword, changePassword.newPassword));
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
@@ -173,6 +173,63 @@ public class UsuarioRESTController {
 
     }
 
+    @RequestMapping(value = {"/{path}/Usuario/enviarMailResetearContrasenya/{email:.+}"}, method = RequestMethod.POST)
+    public void enviarMailResetearPassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("email") String email) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.enviarMailResetearContrasenya(new UsuarioCRUDBusinessProcess.EnviarMailResetearContrasenyaArguments(principal, dataSession, email));
+            controllerHelper.objectToHttpResponse(new HttpResult(email), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+
+    @RequestMapping(value = {"/{path}/Usuario/resetearContrasenya"}, method = RequestMethod.POST)
+    public void resetearContrasenya(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonIn) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            JsonReader jsonReader = jsonFactory.getJsonReader(ResetPassword.class);
+            ResetPassword resetPassword = (ResetPassword) jsonReader.fromJson(jsonIn, dataSession);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.resetearContrasenya(new UsuarioCRUDBusinessProcess.ResetearContrasenyaArguments(principal, dataSession, resetPassword.claveResetearContrasenya, resetPassword.nuevaContrasenya));
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+
+    public static class ResetPassword {
+
+        private String claveResetearContrasenya;
+        private String nuevaContrasenya;
+
+        public ResetPassword() {
+        }
+
+        public ResetPassword(String claveResetearContrasenya, String nuevaContrasenya) {
+            this.claveResetearContrasenya = claveResetearContrasenya;
+            this.nuevaContrasenya = nuevaContrasenya;
+        }
+
+        public String getClaveResetearContrasenya() {
+            return claveResetearContrasenya;
+        }
+
+        public void setClaveResetearContrasenya(String claveResetearContrasenya) {
+            this.claveResetearContrasenya = claveResetearContrasenya;
+        }
+
+        public String getNuevaContrasenya() {
+            return nuevaContrasenya;
+        }
+
+        public void setNuevaContrasenya(String nuevaContrasenya) {
+            this.nuevaContrasenya = nuevaContrasenya;
+        }
+
+    }
+
     public static class ChangePassword {
 
         private String currentPassword;
@@ -186,8 +243,6 @@ public class UsuarioRESTController {
             this.newPassword = newPassword;
         }
 
-        
-        
         /**
          * @return the currentPassword
          */

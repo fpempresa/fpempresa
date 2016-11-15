@@ -30,6 +30,7 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta,In
     public List<Oferta> getOfertasEmpresasCentro(GetOfertasEmpresasCentroArguments getOfertasEmpresasCentro) throws BusinessException;
 
     public List<Oferta> getOfertasEmpresa(GetOfertasEmpresaArguments getOfertasEmpresa) throws BusinessException;
+    
 
     public class GetOfertasUsuarioTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 

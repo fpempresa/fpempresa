@@ -198,6 +198,13 @@ public class UsuarioRESTController {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
     }
+    
+    @RequestMapping(value = {"/{path}/Usuario/importador-csv"}, method = RequestMethod.POST, consumes = "text/csv")
+    public void importadorUsuarios(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonIn) {
+        List<CompositeRequirement> allRecords = compReqServ.getFullDataSet((String) session.getAttribute("currentProject"));
+        CSVReader pepe = new CSVReader();
+      return new CsvResponse(allRecords, "yourData.csv");
+    }
 
     public static class ResetPassword {
 

@@ -230,10 +230,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             Mail mail = new Mail();
             mail.addTo(usuario.getEmail());
             mail.setFrom(Config.getSetting("mail.sender"));
-            mail.setSubject("Confirme su correo para acceder a empleaFP");
+            mail.setSubject("Confirma tu correo para acceder a empleaFP");
             mail.setHtmlBody(""
-                    + "Usted se ha registrado recientemente en empleaFP.<br> \n\n"
-                    + "Para completar el registro es necesario que verifique su dirección de correo haciendo click en el siguiente enlace: \n"
+                    + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br>"
+                    + "Acabas de registrarte en <a href=\"http://www.empleafp.com\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
+                    + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
                     + "<a href=\"" + (String) Config.getSetting("app.url") + "/fpempresa/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>");
             mailService.send(mail);
         } catch (IOException ex) {

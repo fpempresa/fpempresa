@@ -7,11 +7,14 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.presentacion.controller;
 
+import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
 import es.logongas.fpempresa.businessprocess.empresa.CandidatoCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
 import es.logongas.ix3.core.BusinessException;
@@ -31,6 +34,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -55,18 +60,17 @@ public class CandidatoController {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
-            CRUDService<Candidato, Integer> candidatoCrudService =  crudServiceFactory.getService(Candidato.class);
+            CRUDService<Candidato, Integer> candidatoCrudService = crudServiceFactory.getService(Candidato.class);
             Candidato candidato = candidatoCrudService.read(dataSession, idCandidato);
 
-            CandidatoCRUDBusinessProcess candidatoCRUDBusinessProcess=(CandidatoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Candidato.class);
-            
+            CandidatoCRUDBusinessProcess candidatoCRUDBusinessProcess = (CandidatoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Candidato.class);
+
             byte[] foto = candidatoCRUDBusinessProcess.getFotoCandidato(new CandidatoCRUDBusinessProcess.FotoCandidatoArguments(principal, dataSession, candidato));
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
-
     }
 
 }

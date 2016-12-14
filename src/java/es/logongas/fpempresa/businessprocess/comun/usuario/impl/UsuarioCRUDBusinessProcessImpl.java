@@ -146,11 +146,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                 if (principal.getIdIdentity() == usuario.getIdIdentity()) {
                     businessTrue(usuario.getCentro() != null, "El centro es requerido");
                     businessTrue(usuarioOriginal.getCentro() != null, "El usuario ya debía de tener un centro");
-                    
-                    boolean ahoraTieneCentro=(usuario.getCentro()!=null);                    
-                    boolean antesTeniaCentro=(usuarioOriginal.getCentro()!=null);
 
-                    
+                    boolean ahoraTieneCentro = (usuario.getCentro() != null);
+                    boolean antesTeniaCentro = (usuarioOriginal.getCentro() != null);
+
                     if (ahoraTieneCentro && antesTeniaCentro) {
                         if (usuario.getCentro().getIdCentro() != usuarioOriginal.getCentro().getIdCentro()) {
                             businessTrue(usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION, "El profesor debe estar pendiente de aceptación al cambiar de centro");
@@ -162,12 +161,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                     } else if (!ahoraTieneCentro && !antesTeniaCentro) {
                         throw new BusinessException("No puedes estar sin centro");
                     } else {
-                        throw new RuntimeException("Error de logica:"+ ahoraTieneCentro + "," + antesTeniaCentro);
-                        
-                    }
-                    
+                        throw new RuntimeException("Error de logica:" + ahoraTieneCentro + "," + antesTeniaCentro);
 
-                    
+                    }
+
                 } else {
                     businessTrue(usuario.getCentro() != null, "El centro es requerido para el usuario");
                     businessTrue(principal.getCentro().getIdCentro() == usuario.getCentro().getIdCentro(), "El centro debe ser el mismo centro que el tuyo");
@@ -190,22 +187,20 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 
             businessTrue(usuario.getTitulado() == null, "El titulado está prohibido para usuarios de empresa");
             businessTrue(usuario.getCentro() == null, "El centro está prohibido para usuarios de empresa");
-            
+
             //El principal que lo inserta
             if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
                 securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
-                
-                
+
                 businessTrue(usuario.getEmpresa() != null, "La empresa es requerida para usuarios de una empresa");
             } else if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.EMPRESA)) {
                 securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
                 securityTrue(principal.getEmpresa() != null, "Ya debes pertenecer a una empresa");
-                
-                
+
                 businessTrue(usuario.getEmpresa() != null, "La empresa es requerida para usuarios de una empresa");
                 businessTrue(usuario.getEmpresa().getIdEmpresa() == principal.getEmpresa().getIdEmpresa(), "La empresa debe ser la misma empresa que la tuya");
             } else if (principal == null) {
-                 businessTrue(usuario.getEmpresa() == null, "La empresa está prohibida al insertar el usuario");
+                businessTrue(usuario.getEmpresa() == null, "La empresa está prohibida al insertar el usuario");
             } else {
                 throw new BusinessSecurityException("No tienes permiso para añadir un usuario de una empresa");
             }
@@ -236,11 +231,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                 if (principal.getIdIdentity() == usuario.getIdIdentity()) {
                     businessTrue(usuario.getEmpresa() != null, "La empresa es requerida");
                     businessTrue(usuarioOriginal.getEmpresa() != null, "El usuario ya debía de tener una empresa");
-                    
-                    boolean ahoraTieneEmpresa=(usuario.getEmpresa()!=null);                    
-                    boolean antesTeniaEmpresa=(usuarioOriginal.getEmpresa()!=null);
 
-                    
+                    boolean ahoraTieneEmpresa = (usuario.getEmpresa() != null);
+                    boolean antesTeniaEmpresa = (usuarioOriginal.getEmpresa() != null);
+
                     if (ahoraTieneEmpresa && antesTeniaEmpresa) {
                         if (usuario.getEmpresa().getIdEmpresa() != usuarioOriginal.getEmpresa().getIdEmpresa()) {
                             businessTrue(usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION, "El profesor debe estar pendiente de aceptación al cambiar de empresa");
@@ -252,8 +246,8 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                     } else if (!ahoraTieneEmpresa && !antesTeniaEmpresa) {
                         throw new BusinessException("No puedes estar sin empresa");
                     } else {
-                        throw new RuntimeException("Error de logica:"+ ahoraTieneEmpresa + "," + antesTeniaEmpresa);
-                        
+                        throw new RuntimeException("Error de logica:" + ahoraTieneEmpresa + "," + antesTeniaEmpresa);
+
                     }
                 } else {
                     businessTrue(usuario.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "El usuario debe estar aceptado");
@@ -269,17 +263,15 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         return true;
 
     }
-    
-    
+
     @ActionRule(groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private void establecerEstadoEmpresa(RuleContext<Usuario> ruleContext) throws BusinessException {
-        Usuario usuario = ruleContext.getEntity();        
-        
-        if ((usuario.getTipoUsuario() == TipoUsuario.EMPRESA)) {        
+        Usuario usuario = ruleContext.getEntity();
+
+        if ((usuario.getTipoUsuario() == TipoUsuario.EMPRESA)) {
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         }
     }
-        
 
     @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertTitulado'", groups = RuleGroupPredefined.PreInsert.class)
     private boolean isCheckInsertTitulado(RuleContext<Usuario> ruleContext) throws BusinessException {
@@ -288,11 +280,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 
         if ((usuario.getTipoUsuario() == TipoUsuario.TITULADO)) {
 
-            
             businessTrue(usuario.getEmpresa() == null, "La empresa está prohibida para titulados");
             businessTrue(usuario.getCentro() == null, "El centro está prohibido para titulados");
-            businessTrue(usuario.getTitulado() == null, "El titulado está prohibido al insertar el usuario");            
-            
+            businessTrue(usuario.getTitulado() == null, "El titulado está prohibido al insertar el usuario");
+
             if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
                 securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
             } else if (principal == null) {
@@ -300,7 +291,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             } else {
                 throw new BusinessSecurityException("No tienes permiso para añadir un titulado");
             }
-
 
         }
 
@@ -317,8 +307,8 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         if ((usuario.getTipoUsuario() == TipoUsuario.TITULADO)) {
 
             businessTrue(usuario.getEmpresa() == null, "La empresa está prohibida para titulados");
-            businessTrue(usuario.getCentro() == null, "El centro está prohibido para titulados");            
-            
+            businessTrue(usuario.getCentro() == null, "El centro está prohibido para titulados");
+
             //Comprobar la seguridad del principal que lo actualiza
             if ((principal != null) && (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR)) {
                 securityTrue(principal.getEstadoUsuario() == EstadoUsuario.ACEPTADO, "Debes estar aceptado");
@@ -327,8 +317,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             } else {
                 throw new BusinessSecurityException("Solo el titulado o los administradores pueden actualizar al titulado");
             }
-
-
 
             if ((usuario.getTitulado() != null) && (usuarioOriginal.getTitulado() != null)) {
                 businessTrue(usuario.getTitulado().getIdTitulado() == usuarioOriginal.getTitulado().getIdTitulado(), "No es posible cambiar de titulado");
@@ -342,7 +330,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                 throw new BusinessException("Error de lógica:" + (usuario.getTitulado()) + "," + (usuarioOriginal.getTitulado()));
             }
 
-
         }
 
         return true;
@@ -352,12 +339,12 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     @ActionRule(groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private void establecerEstadoTitulado(RuleContext<Usuario> ruleContext) throws BusinessException {
         Usuario usuario = ruleContext.getEntity();
-        
-        if ((usuario.getTipoUsuario() == TipoUsuario.TITULADO)) {        
+
+        if ((usuario.getTipoUsuario() == TipoUsuario.TITULADO)) {
             usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
         }
-    }    
-    
+    }
+
     @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertAdministradorAndEstado'", groups = RuleGroupPredefined.PreInsert.class)
     private boolean isCheckInsertAdministradorAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
         Usuario principal = (Usuario) ruleContext.getPrincipal();
@@ -419,13 +406,13 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             throw new BusinessSecurityException(message);
         }
     }
-    
+
     @Override
-    public void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException{
+    public void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         usuarioCRUDService.enviarMailResetearPassword(enviarMailResetearContrasenyaArguments.dataSession, enviarMailResetearContrasenyaArguments.email);
     }
-    
+
     @Override
     public void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);

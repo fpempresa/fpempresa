@@ -39,4 +39,5 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     boolean validarEmail(DataSession dataSession, String claveValidacionEmail) throws BusinessException;
 
     void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException;
+
 }

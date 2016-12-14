@@ -5,11 +5,12 @@
  */
 package es.logongas.fpempresa.businessprocess.titulado.impl;
 
+import es.logongas.fpempresa.businessprocess.titulado.TituladoCRUDBusinessProcess;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
-import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
+import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
 
@@ -17,7 +18,7 @@ import es.logongas.ix3.core.BusinessException;
  *
  * @author logongas
  */
-public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Titulado, Integer> implements CRUDBusinessProcess<Titulado, Integer> {
+public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Titulado, Integer> implements TituladoCRUDBusinessProcess {
 
     @Override
     public Titulado insert(InsertArguments<Titulado> insertArguments) throws BusinessException {
@@ -39,7 +40,7 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
             transactionManager.commit(insertArguments.dataSession);
 
             return titulado;
-            
+
         } catch (BusinessException ex) {
             if (transactionManager.isActive(insertArguments.dataSession)) {
                 transactionManager.rollback(insertArguments.dataSession);
@@ -51,6 +52,13 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
             }
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public void importarTituladosCSV(ImportarTituladosCSVArguments importarTituladosCSVArguments) throws BusinessException {
+        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
+
+        tituladoCRUDService.importarTituladosCSV(importarTituladosCSVArguments.dataSession, importarTituladosCSVArguments.multipartFile);
     }
 
 }

@@ -3,6 +3,11 @@
         <div>
             <legend class="form__title">Titulados</legend>
             <div class="row">
+                <div class="col-sm-12">
+                    <span>Importar desde csv<fpe-file-upload text="Selecciona archivo..." url="{{apiUrl}}/Candidato/importar-csv" success="updateList()" fail="failImportCsv()"></fpe-file-upload></span>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-5"> 
                     <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
                 </div>
@@ -37,7 +42,7 @@
                         </td>                           
                     </tr>
                 </tbody>
-            </table> 
+            </table>
             <div class="row">
                 <div class="col-sm-12">
                     <ix3-pagination></ix3-pagination>

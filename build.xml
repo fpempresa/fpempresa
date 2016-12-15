@@ -14,7 +14,7 @@
     
     
     <target name="-pre-compile">
-        <copy file="../private/config.properties.${env.APP_ENVIRONMENT}" tofile="./build/web/WEB-INF/classes/config.properties"/>
+        <copy file="../private/config.properties.PRUEBAS" tofile="./build/web/WEB-INF/classes/config.properties"/>
     </target>
     <!--
 

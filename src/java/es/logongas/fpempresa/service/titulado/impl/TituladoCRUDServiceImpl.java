@@ -6,6 +6,9 @@
 package es.logongas.fpempresa.service.titulado.impl;
 
 import com.opencsv.CSVReader;
+import com.opencsv.bean.ColumnPositionMappingStrategy;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
@@ -40,7 +43,13 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         try {
             InputStream inputStream = multipartFile.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            CSVReader csvReader = new CSVReader(bufferedReader);
+            HeaderColumnNameMappingStrategy<Titulado> strat = new HeaderColumnNameMappingStrategy<>();
+            strat.setType(Titulado.class);
+            CsvToBean<Titulado> csv = new CsvToBean();
+            List<Titulado> listaTitulados = csv.parse(strat, bufferedReader);
+            for(Titulado t: listaTitulados){
+                getTituladoDAO().insert(dataSession, t);
+            }
         } catch (IOException ex) {
             throw new RuntimeException("Error al leer el archivo csv", ex);
         }

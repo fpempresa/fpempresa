@@ -3,10 +3,16 @@
         <div>
             <legend class="form__title">Titulados</legend>
             <div class="row">
-                <div class="col-sm-12">
-                    <span>Importar desde csv<fpe-file-upload text="Selecciona archivo..." url="{{apiUrl}}/../titulado/importar-csv" success="updateList()" fail="failImportCsv()"></fpe-file-upload></span>
+
+                <div class="col-sm-4">
+                    <span>Importar desde csv</span>
+                    <fpe-file-upload text="Selecciona archivo..." url="{{apiUrl}}/../titulado/importar-csv" success="updateList()" fail="failImportCsv()"></fpe-file-upload>
+                </div>
+                 <div class="col-sm-8">
+                     <a ng-click="mostrarCodigosMunicipio()"><i class="fa fa-question-circle"></i> Códigos de Municipio</a>
                 </div>
             </div>
+               
             <div class="row">
                 <div class="col-xs-5"> 
                     <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 

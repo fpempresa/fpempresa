@@ -5,12 +5,16 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
+import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
 import es.logongas.fpempresa.businessprocess.titulado.TituladoCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
+import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.json.JsonFactory;
 import es.logongas.ix3.web.util.ControllerHelper;

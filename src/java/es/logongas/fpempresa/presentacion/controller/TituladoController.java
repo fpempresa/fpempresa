@@ -5,16 +5,12 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
-import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
 import es.logongas.fpempresa.businessprocess.titulado.TituladoCRUDBusinessProcess;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
-import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
-import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.json.JsonFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
@@ -22,7 +18,7 @@ import es.logongas.ix3.web.util.HttpResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author GnommoStudios
  */
+@Controller
 public class TituladoController {
 
     @Autowired
@@ -47,6 +44,7 @@ public class TituladoController {
 
     @RequestMapping(value = {"/{path}/importar-csv"}, method = RequestMethod.POST, produces = "application/json")
     public void importarTituladosCSV(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestParam("file") final MultipartFile multipartFile) {
+        System.out.println("Entra por el controlador");
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
             TituladoCRUDBusinessProcess tituladoCRUDBusinessProcess = (TituladoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Titulado.class);

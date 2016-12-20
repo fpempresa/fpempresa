@@ -40,6 +40,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
 
     @Override
     public void importarTituladosCSV(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
+        System.out.println("Entra por el controlador");
         try {
             InputStream inputStream = multipartFile.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

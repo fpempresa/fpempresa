@@ -56,6 +56,7 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
 
     @Override
     public void importarTituladosCSV(ImportarTituladosCSVArguments importarTituladosCSVArguments) throws BusinessException {
+        System.out.println("Entra por el business");
         TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
 
         tituladoCRUDService.importarTituladosCSV(importarTituladosCSVArguments.dataSession, importarTituladosCSVArguments.multipartFile);

@@ -59,7 +59,7 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
         System.out.println("Entra por el business");
         TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
 
-        tituladoCRUDService.importarTituladosCSV(importarTituladosCSVArguments.dataSession, importarTituladosCSVArguments.multipartFile);
+        tituladoCRUDService.importarTituladosCSV(importarTituladosCSVArguments.dataSession, importarTituladosCSVArguments.listaUsuarios);
     }
 
 }

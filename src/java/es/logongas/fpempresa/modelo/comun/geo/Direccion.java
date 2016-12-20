@@ -18,6 +18,7 @@
 
 package es.logongas.fpempresa.modelo.comun.geo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,6 +35,7 @@ public class Direccion {
     @Size(min = 3, max = 255)
     private String datosDireccion;
    
+    @JsonProperty("municipio")
     @NotNull
     private Municipio municipio;
 

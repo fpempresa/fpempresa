@@ -19,15 +19,12 @@ package es.logongas.fpempresa.modelo.titulado;
 
 import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
-import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -36,7 +33,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Date;
-import com.opencsv.bean.CsvBindByName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
@@ -46,32 +43,32 @@ public class Titulado {
 
     private int idTitulado;
     
-    @CsvBindByName
+  
     @NotNull
     @Past
     @Label("Fecha de nacimiento")
     private Date fechaNacimiento;
     
-    @CsvBindByName
+    @JsonProperty("direccion")
     @NotNull
     @Valid
     private Direccion direccion;
     
-    @CsvBindByName
+   
     @Pattern(regexp = "[0-9]{9}| {0}")
     private String telefono;
 
-    @CsvBindByName
+    
     @Pattern(regexp = "[0-9]{9}| {0}")
     @Label("Telefono alternativo")
     private String telefonoAlternativo;
 
-    @CsvBindByName
+    
     @NotNull
     @Label("Tipo de documento")
     private TipoDocumento tipoDocumento = TipoDocumento.NIF_NIE;
 
-    @CsvBindByName
+    
     @NotEmpty
     @Label("Nº de documento")
     @Size(max = 20)
@@ -87,17 +84,17 @@ public class Titulado {
     @NotNull
     private Configuracion configuracion = new Configuracion();
     
-    @CsvBindByName
+   
     @Label("Sobre mi")
     @Size(max = 255)
     private String resumen;
 
-    @CsvBindByName
+    
     @Label("Otras competencias")
     @Size(max = 65000)
     private String otrasCompetencias;
 
-    @CsvBindByName
+    
     @Label("Permisos de conducir")
     @Size(max = 255)
     private String permisosConducir;

@@ -18,6 +18,7 @@ package es.logongas.fpempresa.service.comun.usuario.impl;
 
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
+import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
@@ -264,6 +265,14 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             }
         } catch (IOException ex) {
             throw new RuntimeException("Error al enviar email de reseteo de password", ex);
+        }
+    }
+
+    @Override
+    public void importarTituladosCSV(DataSession dataSession, Usuario[] listaUsuarios) throws BusinessException {
+        UsuarioDAO usuariosDAO = this.getUsuarioDAO();
+        for (Usuario u: listaUsuarios) {
+            usuariosDAO.insert(dataSession, u);
         }
     }
 

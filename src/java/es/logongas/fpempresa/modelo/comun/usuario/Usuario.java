@@ -12,6 +12,7 @@
  */
 package es.logongas.fpempresa.modelo.comun.usuario;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
@@ -54,10 +55,13 @@ public class Usuario extends User implements Principal {
     @Label("Tipo de usuario")
     private TipoUsuario tipoUsuario;
 
+    @JsonProperty("centro")
     private Centro centro;
-
+    
+    @JsonProperty("titulado")
     private Titulado titulado;
 
+    @JsonProperty("empresa")
     private Empresa empresa;
 
     @Label("Estado del usuario")

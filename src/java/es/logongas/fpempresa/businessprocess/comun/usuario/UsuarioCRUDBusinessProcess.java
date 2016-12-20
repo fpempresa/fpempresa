@@ -146,5 +146,18 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
 
     }
+void importarTituladosCSV(ImportarTituladosCSVArguments importarTituladosCSVArguments) throws BusinessException;
 
+    public class ImportarTituladosCSVArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
+            public Usuario[] listaUsuarios;
+
+        public ImportarTituladosCSVArguments() {
+        }
+
+        public ImportarTituladosCSVArguments(Principal principal, DataSession dataSession, Usuario[] listaUsuarios) {
+            super(principal, dataSession);
+            this.listaUsuarios = listaUsuarios;
+        }
+    }
 }

@@ -5,6 +5,7 @@
  */
 package es.logongas.fpempresa.service.titulado;
 
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.BusinessException;
@@ -21,6 +22,6 @@ public interface TituladoCRUDService extends CRUDService<Titulado, Integer> {
 
     public List<Titulado> getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(DataSession dataSession, Oferta oferta);
     
-    void importarTituladosCSV(DataSession dataSession, MultipartFile multipartFile) throws BusinessException;
+    void importarTituladosCSV(DataSession dataSession, Usuario[] listaUsuarios) throws BusinessException;
 
 }

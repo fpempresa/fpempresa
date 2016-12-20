@@ -19,6 +19,7 @@
 
 package es.logongas.fpempresa.modelo.centro;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.ix3.core.annotations.Label;
@@ -36,6 +37,7 @@ public class Centro {
     @NotBlank
     private String  nombre;
     
+    @JsonProperty("direccion")
     @NotNull
     @Valid
     private Direccion direccion;
@@ -44,6 +46,7 @@ public class Centro {
     @NotNull
     private EstadoCentro estadoCentro;
 
+    @JsonProperty("contacto")
     @NotNull
     @Valid
     @Label("Contacto")

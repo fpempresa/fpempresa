@@ -1,0 +1,53 @@
+[
+  {
+    "email":"r.solerginer@gmail.com",
+    "nombre":"Ruben",
+    "apellidos":"Soler",
+    "password":"12345",
+    "tipoUsuario":"TITULADO",
+    "centro":{
+      "idCentro":"1",
+      "nombre":"CIPFP Mislata",
+      "direccion":{
+        "datosDireccion":"Calle del centro",
+        "municipio":{
+          "idMunicipio":"1",
+          "provincia":{
+            "idProvincia":"1",
+            "descripcion":"Dolores ibarubi noseque"
+          }
+        }
+      },
+      "estadoCentro":"PERTENECE_A_FPEMPRESA",
+      "contacto":{
+        "url":"http://www.fpmislata.com",
+        "email":"persona",
+        "telefono":"600222111",
+        "fax":"912912912",
+        "textoLibre":"test"
+      }
+    },
+    "titulado":{
+      "fechaNacimiento":"810661891",
+      "direccion":{
+        "datosDireccion":"Pene",
+        "municipio":{
+          "idMunicipio":"1",
+          "provincia":{
+            "idProvincia":"1",
+            "descripcion":"calle del titulado"
+          }
+        }
+      },
+      "telefono":"123412345",
+      "telefonoAlternativo":"123456786",
+      "tipoDocumento":"NIF_NIE",
+      "numeroDocumento":"23847658Q",
+      "resumen":"Es un titulado pasado por json nene",
+      "otrasCompetencias":"ninguna",
+      "permisosConducir":"B"
+  },
+  "estadoUsuario":"ACEPTADO",
+  "validadoEmail":"true"
+}
+]

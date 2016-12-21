@@ -1,6 +1,7 @@
 "use strict";
 
 app.controller("TituladoSearchController", ['$scope', '$http', 'genericControllerCrudList', 'controllerParams', 'ix3Configuration', 'dialog', function ($scope, $http, genericControllerCrudList, controllerParams, ix3Configuration, dialog) {
+        $scope.businessMessages = [];
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.distinct = true;
@@ -11,11 +12,11 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
         $scope.mostrarCodigosMunicipio = function () {
             dialog.create('mostrarCodigosMunicipio');
         };
-        $scope.failImportCsv = function (data) {
-            throw new Error("Ocurrió un error al subir el CSV ");
-        };
-        $scope.updateList = function () {
-            console.info("TODO: Actualizar lista titulados cuando importas CSV");
+        $scope.failImport = function (event,data) {
+            alert(data);
+        }
+        $scope.updateList = function (event,data) {
+          alert(data);
         };
     }]);
 

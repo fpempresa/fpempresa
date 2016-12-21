@@ -3,16 +3,14 @@
         <div>
             <legend class="form__title">Titulados</legend>
             <div class="row">
-
                 <div class="col-sm-4">
-                    <span>Importar desde csv</span>
-                    <fpe-file-upload text="Selecciona archivo..." url="{{apiUrl}}/../titulado/importar-csv" success="updateList()" fail="failImportCsv()"></fpe-file-upload>
+                    <span>Importar desde json</span>
+                    <fpe-file-upload text="Selecionar archivo..." url="{{apiUrl + '/../titulado/importar-csv'}}" fail="failImportJson(event,data)" success="updateList(event,data)"></fpe-file-upload>
                 </div>
-                 <div class="col-sm-8">
-                     <a ng-click="mostrarCodigosMunicipio()"><i class="fa fa-question-circle"></i> Códigos de Municipio</a>
+                <div class="col-sm-8">
+                    <a ng-click="mostrarCodigosMunicipio()"><i class="fa fa-question-circle"></i> Ayuda</a>
                 </div>
             </div>
-               
             <div class="row">
                 <div class="col-xs-5"> 
                     <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 

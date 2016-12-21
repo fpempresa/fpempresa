@@ -12,6 +12,7 @@ import es.logongas.fpempresa.businessprocess.titulado.TituladoCRUDBusinessProces
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
+import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
@@ -76,10 +77,10 @@ public class TituladoController {
            
             TituladoCRUDBusinessProcess tituladoCRUDBusinessProcess = (TituladoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Titulado.class);
             tituladoCRUDBusinessProcess.importarTituladosCSV(new TituladoCRUDBusinessProcess.ImportarTituladosCSVArguments(principal, dataSession, listaUsuarios));
-             UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
             usuarioCRUDBusinessProcess.importarTituladosCSV(new UsuarioCRUDBusinessProcess.ImportarTituladosCSVArguments(principal, dataSession, listaUsuarios));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
-        } catch (Exception ex) {
+        } catch(Exception ex){
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
     }

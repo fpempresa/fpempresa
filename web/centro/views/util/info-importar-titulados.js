@@ -6,9 +6,9 @@
         $scope.businessMessages = [];
 
         currentDialog.open({
-            width: 1300,
+            width: 800,
             height: 'auto',
-            title: "Codigos municipio"
+            title: "Ayuda para importar titulados"
         });
 
         $scope.buttonCancel = function () {
@@ -26,7 +26,7 @@
     angular.module("app").config(['dialogProvider', 'getContextPath', function (dialogProvider, getContextPath) {
 
             dialogProvider.when('mostrarCodigosMunicipio', {
-                templateUrl: getContextPath() + "/centro/views/util/codigos-municipio.html",
+                templateUrl: getContextPath() + "/centro/views/util/info-importar-titulados.jsp",
                 controller: 'MostrarCodigosMunicipioDialogController'
             });
 

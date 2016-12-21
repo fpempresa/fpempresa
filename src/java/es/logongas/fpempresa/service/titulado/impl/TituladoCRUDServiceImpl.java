@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import jdk.nashorn.internal.ir.debug.JSONWriter;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -46,10 +47,17 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
     public void importarTituladosCSV(DataSession dataSession,Usuario[] listaUsuarios) throws BusinessException {
         TituladoDAO tituladosDAO = this.getTituladoDAO();
         for (Usuario t: listaUsuarios) {
+            t.setPassword(this.getEncryptedPasswordFromPlainPassword(t.getPassword()));
             tituladosDAO.insert(dataSession, t.getTitulado());
         }
-       
-
     }
+   private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
+        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+
+        String encryptedPassword = passwordEncryptor.encryptPassword(plainPassword);
+
+        return encryptedPassword;
+    }
+    
 
 }

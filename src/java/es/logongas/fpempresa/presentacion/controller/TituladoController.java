@@ -56,7 +56,6 @@ public class TituladoController {
 
     @RequestMapping(value = {"/{path}/importar-csv"}, method = RequestMethod.POST, produces = "application/json")
     public void importarTituladosCSV(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestParam("file") final MultipartFile multipartFile) {
-        System.out.println("Entra por el controlador");
         Usuario[] listaUsuarios;
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             try {

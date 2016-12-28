@@ -419,10 +419,4 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession, resetearContrasenyaArguments.claveResetearPassword, resetearContrasenyaArguments.nuevaContrasenya);
     }
 
-    @Override
-    public void importarTituladosCSV(ImportarTituladosCSVArguments importarTituladosCSVArguments) throws BusinessException {
-       UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-        usuarioCRUDService.importarTituladosCSV(importarTituladosCSVArguments.dataSession, importarTituladosCSVArguments.listaUsuarios);
-    }
-
 }

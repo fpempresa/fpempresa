@@ -22,6 +22,6 @@ public interface TituladoCRUDService extends CRUDService<Titulado, Integer> {
 
     public List<Titulado> getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(DataSession dataSession, Oferta oferta);
     
-    void importarTituladosCSV(DataSession dataSession, Usuario[] listaUsuarios) throws BusinessException;
+    void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException;
 
 }

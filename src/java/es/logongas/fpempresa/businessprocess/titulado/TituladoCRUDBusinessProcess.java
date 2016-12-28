@@ -5,13 +5,12 @@
  */
 package es.logongas.fpempresa.businessprocess.titulado;
 
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -19,18 +18,18 @@ import java.util.List;
  */
 public interface TituladoCRUDBusinessProcess extends CRUDBusinessProcess<Titulado, Integer> {
 
-    void importarTituladosCSV(ImportarTituladosCSVArguments importarTituladosCSVArguments) throws BusinessException;
+    void importarTitulados(ImportarTituladosArguments importarTituladosCSVArguments) throws BusinessException;
 
-    public class ImportarTituladosCSVArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+    public class ImportarTituladosArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
-            public Usuario[] listaUsuarios;
+        public MultipartFile multipartFile;
 
-        public ImportarTituladosCSVArguments() {
+        public ImportarTituladosArguments() {
         }
 
-        public ImportarTituladosCSVArguments(Principal principal, DataSession dataSession, Usuario[] listaUsuarios) {
+        public ImportarTituladosArguments(Principal principal, DataSession dataSession, MultipartFile multipartFile) {
             super(principal, dataSession);
-            this.listaUsuarios = listaUsuarios;
+            this.multipartFile = multipartFile;
         }
     }
 }

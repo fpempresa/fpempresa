@@ -21,8 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
-import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;

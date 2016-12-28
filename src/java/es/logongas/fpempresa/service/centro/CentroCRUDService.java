@@ -7,7 +7,6 @@ package es.logongas.fpempresa.service.centro;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.ix3.service.CRUDService;
-import es.logongas.ix3.service.impl.CRUDServiceImpl;
 
 /**
  *

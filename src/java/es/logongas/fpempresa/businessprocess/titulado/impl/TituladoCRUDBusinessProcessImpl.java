@@ -10,7 +10,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
-import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
+import es.logongas.fpempresa.service.titulado.impl.TituladoCRUDServiceImpl;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
 
@@ -56,8 +56,10 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
 
     @Override
     public void importarTitulados(ImportarTituladosArguments importarTituladosArguments) throws BusinessException {
-        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
-        tituladoCRUDService.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
+//        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
+//        tituladoCRUDService.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
+        TituladoCRUDServiceImpl tituladoCRUDServiceImpl = new TituladoCRUDServiceImpl();
+        tituladoCRUDServiceImpl.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
     }
 
 }

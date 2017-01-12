@@ -35,17 +35,21 @@ public class Centro {
     
     @JsonProperty("idCentro")
     private int idCentro;
-  
+    
+    @NotBlank
     private String  nombre;
     
     @JsonProperty("direccion")
+    @NotNull
     @Valid
     private Direccion direccion;
     
     @Label("Pertenencia a FPempresa")
+    @NotNull
     private EstadoCentro estadoCentro;
 
     @JsonProperty("contacto")
+    @NotNull
     @Valid
     @Label("Contacto")
     private Contacto contacto;       

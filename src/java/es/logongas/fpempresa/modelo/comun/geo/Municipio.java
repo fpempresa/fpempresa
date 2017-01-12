@@ -27,6 +27,8 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Municipio {
+    
+    @JsonProperty("idMunicipio")
     private int idMunicipio;
     
     private String descripcion;

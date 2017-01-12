@@ -16,7 +16,7 @@
 <%@page import="es.logongas.fpempresa.modelo.comun.geo.Municipio"%>
 <%@page import="es.logongas.fpempresa.modelo.centro.Centro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<a href="/centro/views/util/titulados.json">Ver ejemplo de archivo</a>
+<a href="../../centro/views/util/titulados.json">Ver ejemplo de archivo</a>
 <h4>Códigos de Centro</h4>
 <br>
 <div class="row form__container" style="font-size: 10px">

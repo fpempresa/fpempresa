@@ -61,19 +61,14 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         } catch (IOException exception) {
             throw new RuntimeException("Error al leer el archivo json", exception);
         }
-        List<Centro> listaCentros = new ArrayList<Centro>();
-        List<Provincia> listaProvincias = new ArrayList<Provincia>();
-        List<Municipio> listaMunicipios = new ArrayList<Municipio>();
-        
         if (listadoUsuarios != null) {
-            for (Usuario usuario : listadoUsuarios) {            
-                 Titulado titulado =   this.getTituladoDAO().insert(dataSession, usuario.getTitulado());
+            for (Usuario usuario : listadoUsuarios) {
+                 Titulado titulado = this.insert(dataSession, usuario.getTitulado());
                  usuario.setTitulado(titulado);
                  usuario.setTipoUsuario(TipoUsuario.TITULADO);
                  usuarioCRUDService.insert(dataSession, usuario);
             }
         }
-
     }
 
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {

@@ -147,19 +147,4 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
 
     }
-    
-/*    void importarTitulados(ImportarTituladosArguments importarTituladosCSVArguments) throws BusinessException;
-
-    public class ImportarTituladosArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
-
-        public MultipartFile multipartFile;
-
-        public ImportarTituladosArguments() {
-        }
-
-        public ImportarTituladosArguments(Principal principal, DataSession dataSession, MultipartFile multipartFile) {
-            super(principal, dataSession);
-            this.multipartFile = multipartFile;
-        }
-    }*/
 }

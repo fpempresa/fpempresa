@@ -46,7 +46,6 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
 
     @Override
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
-        System.out.println("Entra aqui wein");
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) this.serviceFactory.getService(Usuario.class);
         List<Usuario> listadoUsuarios = null;
         try {
@@ -62,9 +61,8 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
             for (Usuario usuario : listadoUsuarios) {
                  Titulado titulado =   this.getTituladoDAO().insert(dataSession, usuario.getTitulado());
                  usuario.setTitulado(titulado);
+                 usuario.setValidadoEmail(true);
                  usuarioCRUDService.insert(dataSession, usuario);
-                 System.out.println(usuario.getEmail());
-            
             }
         }
 

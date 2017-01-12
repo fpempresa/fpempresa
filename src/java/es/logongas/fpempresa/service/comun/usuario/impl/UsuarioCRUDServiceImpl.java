@@ -273,30 +273,4 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new RuntimeException("Error al enviar email de reseteo de password", ex);
         }
     }
-    /*
-    @Override
-    public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
-        System.out.println("Entra aqui wein");
-        List<Usuario> listadoUsuarios = null;
-       
-        try {
-            InputStream inputStream = multipartFile.getInputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-            listadoUsuarios = mapper.readValue(inputStream, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, Usuario.class));
-        } catch (IOException exception) {
-            throw new RuntimeException("Error al leer el archivo json", exception);
-        }
-
-        if (listadoUsuarios != null) {
-            for (Usuario usuario : listadoUsuarios) {
-                System.out.println(usuario.getApellidos());
-                System.out.println(usuario.getTitulado().getTelefono());
-                usuario.setValidadoEmail(true);
-                    this.insert(dataSession, usuario);
-                
-            }
-        }
-    }*/
-
 }

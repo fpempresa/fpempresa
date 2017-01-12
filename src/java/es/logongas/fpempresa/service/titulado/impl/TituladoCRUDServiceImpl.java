@@ -43,7 +43,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         return getTituladoDAO().getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(dataSession, oferta);
     }
 
-    @Override
+  /*  @Override
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
         System.out.println("Entra aqui wein");
         List<Usuario> listadoUsuarios = null;
@@ -70,7 +70,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
             }
         }
 
-    }
+    }*/
 
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();

@@ -53,7 +53,7 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
             throw new RuntimeException(ex);
         }
     }
-
+/*
     @Override
     public void importarTitulados(ImportarTituladosArguments importarTituladosArguments) throws BusinessException {
 //        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
@@ -61,5 +61,5 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
         TituladoCRUDServiceImpl tituladoCRUDServiceImpl = new TituladoCRUDServiceImpl();
         tituladoCRUDServiceImpl.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
     }
-
+*/
 }

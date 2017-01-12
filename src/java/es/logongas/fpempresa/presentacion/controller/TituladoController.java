@@ -51,7 +51,7 @@ public class TituladoController {
     private DataSessionFactory dataSessionFactory;
     @Autowired
     private JsonFactory jsonFactory;
-
+/*
     @RequestMapping(value = {"/{path}/importar-csv"}, method = RequestMethod.POST, produces = "application/json")
     public void importarTitulados(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestParam("file") final MultipartFile multipartFile) {
 
@@ -61,12 +61,12 @@ public class TituladoController {
             if (multipartFile.isEmpty()) {
                 throw new BusinessException("No has subido ningún fichero");
             }
-            TituladoCRUDBusinessProcess tituladoCRUDBusinessProcess = (TituladoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Titulado.class);
-            tituladoCRUDBusinessProcess.importarTitulados(new TituladoCRUDBusinessProcess.ImportarTituladosArguments(principal, dataSession, multipartFile));
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.importarTitulados(new UsuarioCRUDBusinessProcess.ImportarTituladosArguments(principal, dataSession, multipartFile));
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
-    }
+    }*/
 }

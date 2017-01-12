@@ -16,8 +16,12 @@
  */
 package es.logongas.fpempresa.service.comun.usuario.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
+import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
@@ -40,6 +44,7 @@ import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -264,6 +269,30 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             }
         } catch (IOException ex) {
             throw new RuntimeException("Error al enviar email de reseteo de password", ex);
+        }
+    }
+    
+    @Override
+    public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
+        System.out.println("Entra aqui wein");
+        List<Usuario> listadoUsuarios = null;
+        try {
+            InputStream inputStream = multipartFile.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+            listadoUsuarios = mapper.readValue(inputStream, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, Usuario.class));
+        } catch (IOException exception) {
+            throw new RuntimeException("Error al leer el archivo json", exception);
+        }
+
+        if (listadoUsuarios != null) {
+            for (Usuario usuario : listadoUsuarios) {
+                System.out.println(usuario.getApellidos());
+                System.out.println(usuario.getTitulado().getTelefono());
+                usuario.setValidadoEmail(true);
+                    this.insert(dataSession, usuario);
+                
+            }
         }
     }
 

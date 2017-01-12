@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface TituladoCRUDBusinessProcess extends CRUDBusinessProcess<Titulado, Integer> {
 
-    void importarTitulados(ImportarTituladosArguments importarTituladosCSVArguments) throws BusinessException;
+  /*  void importarTitulados(ImportarTituladosArguments importarTituladosCSVArguments) throws BusinessException;
 
     public class ImportarTituladosArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -31,5 +31,5 @@ public interface TituladoCRUDBusinessProcess extends CRUDBusinessProcess<Titulad
             super(principal, dataSession);
             this.multipartFile = multipartFile;
         }
-    }
+    }*/
 }

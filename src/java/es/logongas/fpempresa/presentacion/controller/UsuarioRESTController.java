@@ -198,6 +198,24 @@ public class UsuarioRESTController {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
     }
+    
+        @RequestMapping(value = {"/{path}/importar-csv"}, method = RequestMethod.POST, produces = "application/json")
+    public void importarTitulados(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestParam("file") final MultipartFile multipartFile) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            if (multipartFile.isEmpty()) {
+                throw new BusinessException("No has subido ningún fichero");
+            }
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.importarTitulados(new UsuarioCRUDBusinessProcess.ImportarTituladosArguments(principal, dataSession, multipartFile));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
 
     public static class ResetPassword {
 

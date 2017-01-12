@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -39,5 +40,6 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     boolean validarEmail(DataSession dataSession, String claveValidacionEmail) throws BusinessException;
 
     void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException;
-
+    
+    public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException;
 }

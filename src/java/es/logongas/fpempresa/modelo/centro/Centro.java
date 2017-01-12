@@ -32,22 +32,20 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Centro {
-    private int idCentro;
     
-    @NotBlank
+    @JsonProperty("idCentro")
+    private int idCentro;
+  
     private String  nombre;
     
     @JsonProperty("direccion")
-    @NotNull
     @Valid
     private Direccion direccion;
     
     @Label("Pertenencia a FPempresa")
-    @NotNull
     private EstadoCentro estadoCentro;
 
     @JsonProperty("contacto")
-    @NotNull
     @Valid
     @Label("Contacto")
     private Contacto contacto;       

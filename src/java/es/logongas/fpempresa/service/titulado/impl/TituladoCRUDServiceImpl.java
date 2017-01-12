@@ -10,6 +10,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
+import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.Municipio;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
@@ -21,6 +25,7 @@ import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +61,15 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         } catch (IOException exception) {
             throw new RuntimeException("Error al leer el archivo json", exception);
         }
-
+        List<Centro> listaCentros = new ArrayList<Centro>();
+        List<Provincia> listaProvincias = new ArrayList<Provincia>();
+        List<Municipio> listaMunicipios = new ArrayList<Municipio>();
+        
         if (listadoUsuarios != null) {
-            for (Usuario usuario : listadoUsuarios) {
+            for (Usuario usuario : listadoUsuarios) {            
                  Titulado titulado =   this.getTituladoDAO().insert(dataSession, usuario.getTitulado());
                  usuario.setTitulado(titulado);
-                 usuario.setValidadoEmail(true);
+                 usuario.setTipoUsuario(TipoUsuario.TITULADO);
                  usuarioCRUDService.insert(dataSession, usuario);
             }
         }

@@ -29,7 +29,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Municipio {
     private int idMunicipio;
     
-    @NotBlank
     private String descripcion;
     
     @JsonProperty("provincia")

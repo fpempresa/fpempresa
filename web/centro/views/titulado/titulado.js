@@ -12,13 +12,14 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
         $scope.mostrarCodigosMunicipio = function () {
             dialog.create('mostrarCodigosMunicipio');
         };
-        $scope.failImport = function (event,data) {
-            alert(data);
-        }
-        $scope.updateList = function (event,data) {
-          alert(data);
+        $scope.failImport = function () {
+           alert("Ocurrio un problema al importar los titulados");
+        };
+        $scope.updateList = function () {
+            $scope.search();
         };
     }]);
+
 
 
 app.controller("TituladoViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'ix3Configuration', 'ageCalculator', function ($scope, genericControllerCrudDetail, controllerParams, ix3Configuration, ageCalculator) {

@@ -419,12 +419,12 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession, resetearContrasenyaArguments.claveResetearPassword, resetearContrasenyaArguments.nuevaContrasenya);
     }
     
-     @Override
+   /*  @Override
     public void importarTitulados(ImportarTituladosArguments importarTituladosArguments) throws BusinessException {
 //        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
 //        tituladoCRUDService.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         usuarioCRUDService.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
-    }
+    }*/
 
 }

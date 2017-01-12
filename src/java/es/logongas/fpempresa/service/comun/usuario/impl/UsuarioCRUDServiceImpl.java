@@ -23,10 +23,12 @@ import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
@@ -271,11 +273,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new RuntimeException("Error al enviar email de reseteo de password", ex);
         }
     }
-    
+    /*
     @Override
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
         System.out.println("Entra aqui wein");
         List<Usuario> listadoUsuarios = null;
+       
         try {
             InputStream inputStream = multipartFile.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
@@ -294,6 +297,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 
             }
         }
-    }
+    }*/
 
 }

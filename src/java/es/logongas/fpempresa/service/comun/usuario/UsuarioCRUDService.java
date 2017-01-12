@@ -41,5 +41,5 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
 
     void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException;
     
-    public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException;
+  //  public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException;
 }

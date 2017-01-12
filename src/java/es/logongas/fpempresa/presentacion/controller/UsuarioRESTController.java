@@ -199,7 +199,7 @@ public class UsuarioRESTController {
         }
     }
     
-        @RequestMapping(value = {"/{path}/importar-csv"}, method = RequestMethod.POST, produces = "application/json")
+   /*     @RequestMapping(value = {"/{path}/importar-csv"}, method = RequestMethod.POST, produces = "application/json")
     public void importarTitulados(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestParam("file") final MultipartFile multipartFile) {
 
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
@@ -215,7 +215,7 @@ public class UsuarioRESTController {
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
-    }
+    }*/
 
     public static class ResetPassword {
 

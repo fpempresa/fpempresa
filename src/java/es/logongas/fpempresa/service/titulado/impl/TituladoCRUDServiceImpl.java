@@ -17,6 +17,7 @@ import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
+import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> implements TituladoCRUDService, CRUDService<Titulado, Integer> {
 
     @Autowired
-    UsuarioCRUDService usuarioCRUDService;
+    protected CRUDServiceFactory serviceFactory;
 
     private TituladoDAO getTituladoDAO() {
         return (TituladoDAO) this.getDAO();
@@ -43,9 +44,10 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         return getTituladoDAO().getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(dataSession, oferta);
     }
 
-  /*  @Override
+    @Override
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
         System.out.println("Entra aqui wein");
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) this.serviceFactory.getService(Usuario.class);
         List<Usuario> listadoUsuarios = null;
         try {
             InputStream inputStream = multipartFile.getInputStream();
@@ -58,19 +60,15 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
 
         if (listadoUsuarios != null) {
             for (Usuario usuario : listadoUsuarios) {
-                System.out.println(usuario.getApellidos());
-                System.out.println(usuario.getTitulado().getTelefono());
-                usuario.setCentro(null);
-                usuario.setValidadoEmail(true);
-                TituladoDAO tituladoDAO = this.getTituladoDAO();
-                if (tituladoDAO != null) {
-                    tituladoDAO.insert(dataSession, usuario.getTitulado());
-                }
-//                usuarioCRUDService.insert(dataSession, usuario);
+                 Titulado titulado =   this.getTituladoDAO().insert(dataSession, usuario.getTitulado());
+                 usuario.setTitulado(titulado);
+                 usuarioCRUDService.insert(dataSession, usuario);
+                 System.out.println(usuario.getEmail());
+            
             }
         }
 
-    }*/
+    }
 
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();

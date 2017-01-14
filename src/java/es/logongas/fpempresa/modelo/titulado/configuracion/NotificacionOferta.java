@@ -27,25 +27,26 @@ import java.util.Set;
  * @author logongas
  */
 public class NotificacionOferta {
+
     private boolean notificarPorEmail;
-    
+
     private Set<Provincia> provincias;
 
     public NotificacionOferta() {
         this.provincias = new HashSet<Provincia>();
-        this.notificarPorEmail=false;
+        this.notificarPorEmail = false;
     }
-    
-    @ConstraintRule(message = "Debe seleccionar al menos una provincia",fieldName = "provincias",groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+
+    @ConstraintRule(message = "Debe seleccionar al menos una provincia", fieldName = "provincias", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean almenosUnaProvincia() {
-        
-        if (notificarPorEmail==true) {
-            if ((provincias==null) || (provincias.isEmpty())) {
+
+        if (notificarPorEmail == true) {
+            if ((provincias == null) || (provincias.isEmpty())) {
                 return false;
             } else {
                 return true;
             }
-            
+
         } else {
             return true;
         }
@@ -78,5 +79,5 @@ public class NotificacionOferta {
     public void setProvincias(Set<Provincia> provincias) {
         this.provincias = provincias;
     }
-    
+
 }

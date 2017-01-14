@@ -24,8 +24,9 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author logongas
  */
 public class LeyEducativa {
+
     private int idLeyEducativa;
-    
+
     @NotBlank
     private String descripcion;
 
@@ -35,7 +36,7 @@ public class LeyEducativa {
     @Override
     public String toString() {
         return descripcion;
-    }    
+    }
 
     /**
      * @return the idLeyEducativa

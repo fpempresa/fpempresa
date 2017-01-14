@@ -42,59 +42,51 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Titulado {
 
     private int idTitulado;
-    
-  
+
     @NotNull
     @Past
     @Label("Fecha de nacimiento")
     private Date fechaNacimiento;
-    
+
     @JsonProperty("direccion")
     @NotNull
     @Valid
     private Direccion direccion;
-    
-   
+
     @Pattern(regexp = "[0-9]{9}| {0}")
     private String telefono;
 
-    
     @Pattern(regexp = "[0-9]{9}| {0}")
     @Label("Telefono alternativo")
     private String telefonoAlternativo;
 
-    
     @NotNull
     @Label("Tipo de documento")
     private TipoDocumento tipoDocumento = TipoDocumento.NIF_NIE;
 
-    
     @NotEmpty
     @Label("Nº de documento")
     @Size(max = 20)
     private String numeroDocumento;
 
     private Set<TituloIdioma> titulosIdiomas;
-    
+
     private Set<ExperienciaLaboral> experienciasLaborales;
-    
+
     private Set<FormacionAcademica> formacionesAcademicas;
 
     @Valid
     @NotNull
     private Configuracion configuracion = new Configuracion();
-    
-   
+
     @Label("Sobre mi")
     @Size(max = 255)
     private String resumen;
 
-    
     @Label("Otras competencias")
     @Size(max = 65000)
     private String otrasCompetencias;
 
-    
     @Label("Permisos de conducir")
     @Size(max = 255)
     private String permisosConducir;

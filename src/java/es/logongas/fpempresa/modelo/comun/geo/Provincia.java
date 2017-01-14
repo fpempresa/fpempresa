@@ -15,18 +15,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.modelo.comun.geo;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Entidad con las provincias.
+ *
  * @author Lorenzo
  */
 public class Provincia {
-    
-    
+
     @JsonProperty("idProvincia")
     private int idProvincia;
-    
+
     private String descripcion;
 
     public Provincia() {
@@ -64,5 +65,5 @@ public class Provincia {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
 }

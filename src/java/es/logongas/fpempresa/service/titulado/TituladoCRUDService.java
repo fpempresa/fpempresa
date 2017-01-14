@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface TituladoCRUDService extends CRUDService<Titulado, Integer> {
 
     public List<Titulado> getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(DataSession dataSession, Oferta oferta);
-    
+
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException;
 
 }

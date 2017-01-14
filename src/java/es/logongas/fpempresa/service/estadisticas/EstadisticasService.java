@@ -27,9 +27,11 @@ import es.logongas.ix3.service.Service;
  * @author logongas
  */
 public interface EstadisticasService extends Service<Estadisticas> {
-    
-     Estadisticas getEstadisticasAdministrador(DataSession dataSession);
-     Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro);
-     Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa);
-    
+
+    Estadisticas getEstadisticasAdministrador(DataSession dataSession);
+
+    Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro);
+
+    Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa);
+
 }

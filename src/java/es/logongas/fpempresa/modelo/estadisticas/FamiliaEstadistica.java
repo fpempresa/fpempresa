@@ -23,7 +23,7 @@ import es.logongas.fpempresa.modelo.educacion.Familia;
  * @author logongas
  */
 public class FamiliaEstadistica extends Familia {
-    
+
     private int valor;
 
     public FamiliaEstadistica(int idFamilia, String descripcion, int valor) {
@@ -44,5 +44,5 @@ public class FamiliaEstadistica extends Familia {
     public void setValor(int valor) {
         this.valor = valor;
     }
-    
+
 }

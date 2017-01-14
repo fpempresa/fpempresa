@@ -40,8 +40,6 @@ public interface CandidatoCRUDBusinessProcess extends CRUDBusinessProcess<Candid
             this.candidato = candidato;
         }
     }
-    
-    
 
     public class GetCandidatosOfertaArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -63,10 +61,10 @@ public interface CandidatoCRUDBusinessProcess extends CRUDBusinessProcess<Candid
             this.pageRequest = pageRequest;
         }
 
-        
     }
-    
+
     public class GetNumCandidatosOferta extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
         public Oferta oferta;
 
         public GetNumCandidatosOferta() {
@@ -76,7 +74,7 @@ public interface CandidatoCRUDBusinessProcess extends CRUDBusinessProcess<Candid
             super(principal, dataSession);
             this.oferta = oferta;
         }
-        
+
     }
 
 }

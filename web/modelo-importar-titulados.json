@@ -1,0 +1,151 @@
+[
+    {
+        "email": "aas@usuario.com",
+        "nombre": "Nombre",
+        "apellidos": "Apellidos",
+        "password": "123",
+        "tipoUsuario": "TITULADO",
+        "titulado": {
+            "fechaNacimiento": "25-7-2012",
+            "direccion": {
+                "datosDireccion": "Datos de la dirección",
+                "idMunicipio": 1
+            },
+            "telefono": "123456789",
+            "telefonoAlternativo": "123456789",
+            "tipoDocumento": "NIF_NIE",
+            "numeroDocumento": "22587068X",
+            "titulosIdiomas": [
+                {
+                    "nivelIdioma": "A1",
+                    "idioma": "INGLES",
+                    "otroIdioma": "Texto otro idioma",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "experienciasLaborales": [
+                {
+                    "nombreEmpresa": "Nombre de la empresa",
+                    "fechaInicio": "25-7-2012",
+                    "fechaFin": "25-7-2014",
+                    "puestoTrabajo": "Puesto de trabajo",
+                    "descripcion": "Descripción"
+                }
+            ],
+            "formacionesAcademicas": [
+                {
+                    "tipoFormacionAcademica": "CICLO_FORMATIVO",
+                    "idCentro": 1,
+                    "idCiclo": 1,
+                    "otroCentro": "Otro centro",
+                    "otroTitulo": "Otro titulo",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "resumen": "Resumen",
+            "otrasCompetencias": "Otras competencias",
+            "permisosConducir": "Permisos de conducir"
+        },
+        "estadoUsuario": "ACEPTADO",
+        "validadoEmail": true,
+        "fecha": "1484330124"
+    },
+    {
+        "email": "bsd@usuario.com",
+        "nombre": "Nombre",
+        "apellidos": "Apellidos",
+        "password": "123",
+        "tipoUsuario": "TITULADO",
+        "titulado": {
+            "fechaNacimiento": "25-7-2012",
+            "direccion": {
+                "datosDireccion": "Datos de la dirección",
+                "idMunicipio": 1
+            },
+            "telefono": "123456789",
+            "telefonoAlternativo": "123456789",
+            "tipoDocumento": "NIF_NIE",
+            "numeroDocumento": "22587068X",
+            "titulosIdiomas": [
+                {
+                    "nivelIdioma": "A1",
+                    "idioma": "INGLES",
+                    "otroIdioma": "Texto otro idioma",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "experienciasLaborales": [
+                {
+                    "nombreEmpresa": "Nombre de la empresa",
+                    "fechaInicio": "25-7-2012",
+                    "fechaFin": "25-7-2014",
+                    "puestoTrabajo": "Puesto de trabajo",
+                    "descripcion": "Descripción"
+                }
+            ],
+            "formacionesAcademicas": [
+                {
+                    "tipoFormacionAcademica": "CICLO_FORMATIVO",
+                    "idCentro": 1,
+                    "idCiclo": 1,
+                    "otroCentro": "Otro centro",
+                    "otroTitulo": "Otro titulo",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "resumen": "Resumen",
+            "otrasCompetencias": "Otras competencias",
+            "permisosConducir": "Permisos de conducir"
+        },
+        "estadoUsuario": "ACEPTADO",
+        "validadoEmail": true,
+        "fecha": "1484330124"
+    },
+    {
+        "email": "c@usuario.com",
+        "nombre": "Nombre",
+        "apellidos": "Apellidos",
+        "password": "123",
+        "tipoUsuario": "TITULADO",
+        "titulado": {
+            "fechaNacimiento": "25-7-2012",
+            "telefono": "123456789",
+            "telefonoAlternativo": "123456789",
+            "tipoDocumento": "NIF_NIE",
+            "numeroDocumento": "22587068X",
+            "titulosIdiomas": [
+                {
+                    "nivelIdioma": "A1",
+                    "idioma": "INGLES",
+                    "otroIdioma": "Texto otro idioma",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "experienciasLaborales": [
+                {
+                    "nombreEmpresa": "Nombre de la empresa",
+                    "fechaInicio": "25-7-2012",
+                    "fechaFin": "25-7-2014",
+                    "puestoTrabajo": "Puesto de trabajo",
+                    "descripcion": "Descripción"
+                }
+            ],
+            "formacionesAcademicas": [
+                {
+                    "tipoFormacionAcademica": "CICLO_FORMATIVO",
+                    "idCentro": 1,
+                    "idCiclo": 1,
+                    "otroCentro": "Otro centro",
+                    "otroTitulo": "Otro titulo",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "resumen": "Resumen",
+            "otrasCompetencias": "Otras competencias",
+            "permisosConducir": "Permisos de conducir"
+        },
+        "estadoUsuario": "ACEPTADO",
+        "validadoEmail": true,
+        "fecha": "1484330124"
+    }
+]

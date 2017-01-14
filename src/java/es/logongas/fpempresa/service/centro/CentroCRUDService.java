@@ -13,5 +13,5 @@ import es.logongas.ix3.service.CRUDService;
  * @author ruben
  */
 public interface CentroCRUDService extends CRUDService<Centro, Integer> {
-    
+
 }

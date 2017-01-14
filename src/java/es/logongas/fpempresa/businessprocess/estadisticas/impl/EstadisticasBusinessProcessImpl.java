@@ -19,7 +19,7 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
 
     @Autowired
     EstadisticasService estadisticasService;
-    
+
     @Override
     public Estadisticas getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException {
         return estadisticasService.getEstadisticasAdministrador(getEstadisticasAdministradorArguments.dataSession);
@@ -34,5 +34,5 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
     public Estadisticas getEstadisticasEmpresa(GetEstadisticasEmpresaArguments getEstadisticasEmpresaArguments) throws BusinessException {
         return estadisticasService.getEstadisticasEmpresa(getEstadisticasEmpresaArguments.dataSession, getEstadisticasEmpresaArguments.empresa);
     }
-    
+
 }

@@ -47,28 +47,25 @@ public class CertificadoTitulo {
     @NotBlank
     @Label("NIF/NIE")
     private String nifnie;
-   
-    
+
     public boolean isCertificadoNifNie(String nifnie) {
-        
-        if (nifnie==null) {
+
+        if (nifnie == null) {
             return false;
         }
-        
+
         if (this.getNifnies().contains(nifnie.toUpperCase())) {
             return true;
-        } else{
+        } else {
             return false;
         }
-        
+
     }
-    
-    
+
     public Set<String> getNifnies() {
         Set<String> nifnies = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-        
+
         String[] rawNifnies = this.nifnie.split("[,\\s]");
-        
 
         for (String currentNifnie : rawNifnies) {
             String realNifnie = currentNifnie.trim();

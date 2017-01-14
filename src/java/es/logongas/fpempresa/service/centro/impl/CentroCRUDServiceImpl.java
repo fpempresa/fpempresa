@@ -14,8 +14,6 @@ import es.logongas.ix3.service.impl.CRUDServiceImpl;
  *
  * @author ruben
  */
-public class CentroCRUDServiceImpl extends CRUDServiceImpl<Centro,Integer> implements CentroCRUDService, CRUDService<Centro,Integer>{
-    
-    
-    
+public class CentroCRUDServiceImpl extends CRUDServiceImpl<Centro, Integer> implements CentroCRUDService, CRUDService<Centro, Integer> {
+
 }

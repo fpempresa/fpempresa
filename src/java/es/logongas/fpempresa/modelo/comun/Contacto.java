@@ -24,6 +24,7 @@ import org.hibernate.validator.constraints.URL;
 
 /**
  * Datos e contatos de una empresa, centro o oferta
+ *
  * @author logongas
  */
 public class Contacto {
@@ -31,22 +32,22 @@ public class Contacto {
     @URL
     @Label("URL")
     private String url;
-    
+
     @Email
     @Label("Correo electrónico")
     private String email;
-    
+
     @Label("Persona de contacto")
     private String persona;
-    
+
     @Pattern(regexp = "[0-9]{9}| {0}")
     @Label("Teléfono")
     private String telefono;
-    
+
     @Pattern(regexp = "[0-9]{9}| {0}")
     @Label("Fax")
     private String fax;
-    
+
     @Label("Datos contacto")
     private String textoLibre;
 

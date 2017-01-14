@@ -24,7 +24,7 @@ public enum TipoOferta {
     LABORAL("Laboral"),
     FCT("Formacion en Centros de Trabajo (FCT)"),
     DUAL("Formacion Dual");
-    
+
     String text;
 
     private TipoOferta(String text) {
@@ -34,6 +34,6 @@ public enum TipoOferta {
     @Override
     public String toString() {
         return text;
-    }        
-    
+    }
+
 }

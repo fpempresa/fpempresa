@@ -34,8 +34,7 @@ public class EmpresaCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Empr
                 empresario.setEmpresa(insertArguments.entity);
                 empresario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
                 serviceFactory.getService(Usuario.class).update(insertArguments.dataSession, empresario);
-                
-                
+
                 empresa = serviceFactory.getService(Empresa.class).insert(insertArguments.dataSession, insertArguments.entity);
 
                 transactionManager.commit(insertArguments.dataSession);

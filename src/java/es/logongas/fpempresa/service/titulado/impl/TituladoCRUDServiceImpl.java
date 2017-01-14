@@ -6,26 +6,22 @@
 package es.logongas.fpempresa.service.titulado.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
-import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.comun.geo.Municipio;
-import es.logongas.fpempresa.modelo.comun.geo.Provincia;
-import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
-import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.service.titulado.ImportarTituladosJsonDeserializer;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +36,9 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
     @Autowired
     protected CRUDServiceFactory serviceFactory;
 
+    @Autowired
+    DAOFactory daoFactory;
+
     private TituladoDAO getTituladoDAO() {
         return (TituladoDAO) this.getDAO();
     }
@@ -51,22 +50,21 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
 
     @Override
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
-        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) this.serviceFactory.getService(Usuario.class);
         List<Usuario> listadoUsuarios = null;
         try {
             InputStream inputStream = multipartFile.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+            SimpleModule module = new SimpleModule();
+            module.addDeserializer(List.class, new ImportarTituladosJsonDeserializer(dataSession, daoFactory));
+            mapper.registerModule(module);
             listadoUsuarios = mapper.readValue(inputStream, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, Usuario.class));
         } catch (IOException exception) {
-            throw new RuntimeException("Error al leer el archivo json", exception);
+            throw new BusinessException("Error al leer el archivo json", exception.toString());
         }
         if (listadoUsuarios != null) {
             for (Usuario usuario : listadoUsuarios) {
-                 Titulado titulado = this.insert(dataSession, usuario.getTitulado());
-                 usuario.setTitulado(titulado);
-                 usuario.setTipoUsuario(TipoUsuario.TITULADO);
-                 usuarioCRUDService.insert(dataSession, usuario);
+                this.serviceFactory.getService(Titulado.class).insert(dataSession, usuario.getTitulado());
+                this.serviceFactory.getService(Usuario.class).insert(dataSession, usuario);
             }
         }
     }

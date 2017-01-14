@@ -60,7 +60,6 @@ public class Empresa {
     @Valid
     private Contacto contacto;
 
-
     @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
         Validador validadorCIF = new Validador();

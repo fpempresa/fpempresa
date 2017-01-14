@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author GnommoStudios
  */
-public interface TituladoDAO extends GenericDAO<Titulado,Integer>{
-    
+public interface TituladoDAO extends GenericDAO<Titulado, Integer> {
+
     List<Titulado> getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(DataSession dataSession, Oferta oferta);
 }

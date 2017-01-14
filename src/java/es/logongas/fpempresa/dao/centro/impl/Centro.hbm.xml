@@ -9,10 +9,10 @@
 
         <property name="nombre" />
         <property name="estadoCentro"  >
-                <type name="org.hibernate.type.EnumType">
-                    <param name="enumClass">es.logongas.fpempresa.modelo.centro.EstadoCentro</param>
-                    <param name="type">12</param>
-                </type>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">es.logongas.fpempresa.modelo.centro.EstadoCentro</param>
+                <param name="type">12</param>
+            </type>
         </property>
         
         <component name="direccion" >

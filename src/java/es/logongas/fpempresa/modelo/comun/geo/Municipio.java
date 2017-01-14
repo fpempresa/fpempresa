@@ -27,15 +27,15 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Municipio {
-    
+
     @JsonProperty("idMunicipio")
     private int idMunicipio;
-    
+
     private String descripcion;
-    
+
     @JsonProperty("provincia")
     @NotNull
-    @ValuesList(shortLength=true)
+    @ValuesList(shortLength = true)
     private Provincia provincia;
 
     public Municipio() {
@@ -45,7 +45,7 @@ public class Municipio {
     public String toString() {
         return descripcion;
     }
-    
+
     /**
      * @return the idMunicipio
      */
@@ -87,6 +87,5 @@ public class Municipio {
     public void setProvincia(Provincia provincia) {
         this.provincia = provincia;
     }
-    
-    
+
 }

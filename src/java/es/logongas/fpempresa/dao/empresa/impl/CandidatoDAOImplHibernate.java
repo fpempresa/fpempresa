@@ -55,8 +55,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
         }
 
     }
-    
-    
+
     @Override
     public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) {
         String hqlCount = " SELECT COUNT(candidato) FROM Candidato candidato WHERE candidato.oferta.idOferta=?";
@@ -66,11 +65,10 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
         Query queryCount = session.createQuery(hqlCount);
         queryCount.setParameter(0, oferta.getIdOferta());
         long numCandidatosOferta = (Long) queryCount.uniqueResult();
-        
+
         return numCandidatosOferta;
     }
-    
-    
+
     @Override
     public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
         String sqlPartFrom = " FROM Candidato candidato ";
@@ -87,7 +85,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
                 + "    formacionAcademica.titulado.idTitulado=candidato.usuario.titulado.idTitulado AND "
                 + "    (year(current_date())-year(formacionAcademica.fecha))>? "
                 + ") ");
-        if (certificados==true) {
+        if (certificados == true) {
             sqlPartWhere.append(" AND NOT EXISTS ("
                     + "SELECT "
                     + "    formacionAcademica "
@@ -96,11 +94,9 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
                     + "WHERE "
                     + "    formacionAcademica.titulado.idTitulado=candidato.usuario.titulado.idTitulado AND "
                     + "    certificadoTitulo=false "
-                    + ") ");        
+                    + ") ");
         }
-        
-        
-        
+
         String sqlPartOrderBy = "";
         String sqlPartSelectObject = " SELECT candidato ";
         String sqlPartSelectCount = " SELECT COUNT(candidato) ";
@@ -108,14 +104,14 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
         String sqlData = sqlPartSelectObject + " " + sqlPartFrom + " " + sqlPartWhere + " " + sqlPartOrderBy;
         String sqlCount = sqlPartSelectCount + " " + sqlPartFrom + " " + sqlPartWhere;
 
-        List<Object> parameters=new ArrayList<Object>();
+        List<Object> parameters = new ArrayList<Object>();
         parameters.add(oferta.getIdOferta());
         if (ocultarRechazados == true) {
             parameters.add(false);
-        }        
+        }
         parameters.add(maxAnyoTitulo);
-        
-        Page page = getPaginatedQuery(dataSession, sqlData,sqlCount,pageRequest,parameters);
+
+        Page page = getPaginatedQuery(dataSession, sqlData, sqlCount, pageRequest, parameters);
 
         return page;
     }

@@ -43,11 +43,11 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
             throw new BusinessException("Ya estás inscrito en la oferta");
         }
 
-        return super.insert(dataSession, candidato); 
+        return super.insert(dataSession, candidato);
     }
 
-    public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest) {
-       return getCandidatoDAO().getCandidatosOferta(dataSession, oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
+    public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
+        return getCandidatoDAO().getCandidatosOferta(dataSession, oferta, ocultarRechazados, certificados, maxAnyoTitulo, pageRequest);
     }
 
     public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) throws BusinessException {

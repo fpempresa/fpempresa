@@ -12,10 +12,11 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
         $scope.mostrarCodigosMunicipio = function () {
             dialog.create('mostrarCodigosMunicipio');
         };
-        $scope.failImport = function () {
-           alert("Ocurrio un problema al importar los titulados");
+        $scope.failImportJson = function (event, data) {
+            alert("Ocurrio un problema al importar el listado de Titulados");
         };
         $scope.updateList = function () {
+            alert("El listado de Titulados se importó correctamente");
             $scope.search();
         };
     }]);

@@ -7,7 +7,8 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.presentacion.controller.log;
 
@@ -36,44 +37,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LogController {
 
-    @Autowired private LogBusinessProcess logBusinessProcess;
-    @Autowired private ControllerHelper controllerHelper;
-    @Autowired private DataSessionFactory dataSessionFactory;
-    @Autowired private JsonFactory jsonFactory;
-    
+    @Autowired
+    private LogBusinessProcess logBusinessProcess;
+    @Autowired
+    private ControllerHelper controllerHelper;
+    @Autowired
+    private DataSessionFactory dataSessionFactory;
+    @Autowired
+    private JsonFactory jsonFactory;
+
     @RequestMapping(value = {"/$log"}, method = RequestMethod.GET, produces = "application/json")
     public void getLogLevel(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
-			
-            ServerLogConfig serverLogConfig= logBusinessProcess.getLogLevel(new LogBusinessProcess.GetLogLevelArguments(principal, dataSession));
-			
-            controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig),  httpServletRequest, httpServletResponse);
+
+            ServerLogConfig serverLogConfig = logBusinessProcess.getLogLevel(new LogBusinessProcess.GetLogLevelArguments(principal, dataSession));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
 
     }
 
-    @RequestMapping(value = {"/$log"}, method = RequestMethod.PUT,consumes="application/json", produces = "application/json")
-    public void setLogLevel(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,@RequestBody String jsonIn) {
-        
-                
+    @RequestMapping(value = {"/$log"}, method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
+    public void setLogLevel(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonIn) {
+
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
-            
-            ServerLogConfig inputServerLogConfig=(ServerLogConfig)jsonFactory.getJsonReader(ServerLogConfig.class).fromJson(jsonIn, dataSession);
-            ServerLogConfig serverLogConfig= logBusinessProcess.setLogLevel(new LogBusinessProcess.SetLogLevelArguments(principal, dataSession, inputServerLogConfig));
-			
-            controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig),  httpServletRequest, httpServletResponse);
+
+            ServerLogConfig inputServerLogConfig = (ServerLogConfig) jsonFactory.getJsonReader(ServerLogConfig.class).fromJson(jsonIn, dataSession);
+            ServerLogConfig serverLogConfig = logBusinessProcess.setLogLevel(new LogBusinessProcess.SetLogLevelArguments(principal, dataSession, inputServerLogConfig));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
-        
-        
+
     }
 
-
-
-   
 }

@@ -16,7 +16,7 @@ import es.logongas.ix3.core.Page;
  *
  * @author logongas
  */
-public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Candidato,Integer> implements CandidatoCRUDBusinessProcess {
+public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Candidato, Integer> implements CandidatoCRUDBusinessProcess {
 
     @Override
     public byte[] getFotoCandidato(FotoCandidatoArguments fotoCandidatoArguments) {
@@ -25,18 +25,15 @@ public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ca
 
     @Override
     public Page<Candidato> getCandidatosOferta(GetCandidatosOfertaArguments getCandidatosOfertaArguments) throws BusinessException {
-        CandidatoCRUDService candidatoCRUDService= (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+        CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
         return candidatoCRUDService.getCandidatosOferta(getCandidatosOfertaArguments.dataSession, getCandidatosOfertaArguments.oferta, getCandidatosOfertaArguments.ocultarRechazados, getCandidatosOfertaArguments.certificados, getCandidatosOfertaArguments.maxAnyoTitulo, getCandidatosOfertaArguments.pageRequest);
     }
 
     @Override
     public long getNumCandidatosOferta(GetNumCandidatosOferta getNumCandidatosOferta) throws BusinessException {
-        CandidatoCRUDService candidatoCRUDService= (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
-        
-        return candidatoCRUDService.getNumCandidatosOferta(getNumCandidatosOferta.dataSession,getNumCandidatosOferta.oferta);
+        CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+
+        return candidatoCRUDService.getNumCandidatosOferta(getNumCandidatosOferta.dataSession, getNumCandidatosOferta.oferta);
     }
 
-
-
-    
 }

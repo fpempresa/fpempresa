@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author logongas
  */
-public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta,Integer> {
+public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta, Integer> {
 
     public List<Oferta> getOfertasUsuarioTitulado(GetOfertasUsuarioTituladoArguments getOfertasUsuarioTitulado) throws BusinessException;
 
@@ -30,7 +30,6 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta,In
     public List<Oferta> getOfertasEmpresasCentro(GetOfertasEmpresasCentroArguments getOfertasEmpresasCentro) throws BusinessException;
 
     public List<Oferta> getOfertasEmpresa(GetOfertasEmpresaArguments getOfertasEmpresa) throws BusinessException;
-    
 
     public class GetOfertasUsuarioTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -42,7 +41,7 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta,In
         public GetOfertasUsuarioTituladoArguments() {
         }
 
-        public GetOfertasUsuarioTituladoArguments( Principal principal, DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
+        public GetOfertasUsuarioTituladoArguments(Principal principal, DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) {
             super(principal, dataSession);
             this.usuario = usuario;
             this.provincia = provincia;
@@ -70,8 +69,6 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta,In
             this.fechaFin = fechaFin;
         }
 
-        
-        
     }
 
     public class GetOfertasEmpresasCentroArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
@@ -81,7 +78,7 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta,In
         public GetOfertasEmpresasCentroArguments() {
         }
 
-        public GetOfertasEmpresasCentroArguments(Principal principal, DataSession dataSession, Centro centro ) {
+        public GetOfertasEmpresasCentroArguments(Principal principal, DataSession dataSession, Centro centro) {
             super(principal, dataSession);
             this.centro = centro;
         }

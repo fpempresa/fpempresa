@@ -15,8 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 package es.logongas.fpempresa.modelo.educacion;
 
 import es.logongas.ix3.core.annotations.ValuesList;
@@ -25,27 +23,28 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Ciclo de FP
+ *
  * @author Lorenzo
  */
 public class Ciclo {
+
     private int idCiclo;
-    
-    @ValuesList(shortLength=true)
+
+    @ValuesList(shortLength = true)
     @NotNull
     private Familia familia;
-    
-    @ValuesList(shortLength=true)
+
+    @ValuesList(shortLength = true)
     @NotNull
-    private Grado grado;    
-    
-    
+    private Grado grado;
+
     @NotBlank
-    private String descripcion;   
-    
-    @ValuesList(shortLength=true)
+    private String descripcion;
+
+    @ValuesList(shortLength = true)
     @NotNull
-    private LeyEducativa leyEducativa;    
-    
+    private LeyEducativa leyEducativa;
+
     public Ciclo() {
     }
 
@@ -53,7 +52,7 @@ public class Ciclo {
     public String toString() {
         return descripcion;
     }
-    
+
     /**
      * @return the idCiclo
      */

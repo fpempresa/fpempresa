@@ -57,7 +57,7 @@ public class Usuario extends User implements Principal {
 
     @JsonProperty("centro")
     private Centro centro;
-    
+
     @JsonProperty("titulado")
     private Titulado titulado;
 

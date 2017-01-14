@@ -31,8 +31,6 @@ public interface EstadisticasBusinessProcess {
         public GetEstadisticasAdministradorArguments() {
         }
 
-        
-        
         public GetEstadisticasAdministradorArguments(Principal principal, DataSession dataSession) {
             super(principal, dataSession);
         }
@@ -46,8 +44,6 @@ public interface EstadisticasBusinessProcess {
         public GetEstadisticasCentroArguments() {
         }
 
-        
-        
         public GetEstadisticasCentroArguments(Principal principal, DataSession dataSession, Centro centro) {
             super(principal, dataSession);
             this.centro = centro;
@@ -63,8 +59,6 @@ public interface EstadisticasBusinessProcess {
             this.empresa = null;
         }
 
-        
-        
         public GetEstadisticasEmpresaArguments(Principal principal, DataSession dataSession, Empresa empresa) {
             super(principal, dataSession);
             this.empresa = empresa;

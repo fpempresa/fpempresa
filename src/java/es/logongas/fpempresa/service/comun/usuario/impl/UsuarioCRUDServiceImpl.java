@@ -235,7 +235,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                     + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br>"
                     + "Acabas de registrarte en <a href=\"http://www.empleafp.com\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
                     + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
-                    + "<a href=\"" + (String) Config.getSetting("app.url") + "/fpempresa/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>");
+                    + "<a href=\"" + (String) Config.getSetting("app.url") + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>");
             mailService.send(mail);
         } catch (IOException ex) {
             throw new RuntimeException("Error al enviar email de validacion", ex);
@@ -255,9 +255,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 mail.setFrom(Config.getSetting("mail.sender"));
                 mail.setSubject("Resetear contraseña en empleaFP");
                 mail.setHtmlBody(""
-                        + "Usted ha solicitado cambiar de contraseña en empleaFP.<br> \n\n"
-                        + "Para proceder al cambio de contraseña de su cuenta haga click en el siguiente enlace e introduzca su nueva contraseña: \n"
-                        + "<a href=\"" + Config.getSetting("app.url") + "/fpempresa/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>");
+                        + "Has solicitado cambiar tu contraseña en empleaFP.<br> \n\n"
+                        + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
+                        + "<a href=\"" + Config.getSetting("app.url") + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>");
                 mailService.send(mail);
             } else {
                 throw new BusinessException("No existe el usuario");

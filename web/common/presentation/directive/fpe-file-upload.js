@@ -6,8 +6,8 @@ angular.module("common").directive('fpeFileUpload', ['ix3Configuration', functio
             scope: {
                 text: "@",
                 url: "@",
-                success:"&",
-                fail:"&"
+                success: "&",
+                fail: "&"
             },
             templateUrl: getContextPath() + '/common/presentation/directive/fpe-file-upload.html',
             link: function ($scope, element, attributes) {
@@ -26,11 +26,16 @@ angular.module("common").directive('fpeFileUpload', ['ix3Configuration', functio
                         mainProgressElement.css({visibility: "hidden"});
                         $('.progress-bar', element).css('width', 0 + '%');
                     },
-                    done:function(e, data) {
+                    done: function (e, data) {
+                        console.log(e);
+                        console.log(data);
                         $scope.$evalAsync($scope.success);
                     },
-                    fail:function(e, data) {
+                    fail: function (e, data) {
+                        console.log(e);
+                        console.log(data);
                         $scope.$evalAsync($scope.fail);
+                        $scope.fail({data: data});
                     }
                 });
             }

@@ -1,60 +1,96 @@
 [
     {
-        "email": "ejemplo5@email.com",
-        "nombre": "Ruben",
-        "apellidos": "Garcia",
-        "password": "12345",
-        "tipoUsuario": "TITULADO",
-        "centro": {
-            "idCentro": "1"
-        },    
+        "email": "email@usuario.com",
+        "nombre": "Nombre",
+        "apellidos": "Apellidos",
+        "password": "123",
         "titulado": {
-            "fechaNacimiento": "810661891",
+            "fechaNacimiento": "25-7-2012",
             "direccion": {
-                "datosDireccion": "Calle de ejemplo",
-                "municipio": {
-                    "idMunicipio": "2",
-                    "provincia": {
-                        "idProvincia": "1"
-                    }
-                }
+                "datosDireccion": "Datos de la dirección",
+                "idMunicipio": 1
             },
-            "telefono": "123412345",
-            "telefonoAlternativo": "123456786",
+            "telefono": "123456789",
+            "telefonoAlternativo": "123456789",
             "tipoDocumento": "NIF_NIE",
-            "numeroDocumento": "52575897J",
-            "resumen": "Descripcion sobre el titulado",
-            "otrasCompetencias": "ninguna",
-            "permisosConducir": "B"
+            "numeroDocumento": "12345678A",
+            "titulosIdiomas": [
+                {
+                    "nivelIdioma": "A1",
+                    "idioma": "INGLES",
+                    "otroIdioma": "Texto otro idioma",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "experienciasLaborales": [
+                {
+                    "nombreEmpresa": "Nombre de la empresa",
+                    "fechaInicio": "25-7-2012",
+                    "fechaFin": "25-7-2014",
+                    "puestoTrabajo": "Puesto de trabajo",
+                    "descripcion": "Descripción"
+                }
+            ],
+            "formacionesAcademicas": [
+                {
+                    "tipoFormacionAcademica": "CICLO_FORMATIVO",
+                    "idCentro": 1,
+                    "idCiclo": 1,
+                    "otroCentro": "Otro centro",
+                    "otroTitulo": "Otro titulo",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "resumen": "Resumen",
+            "otrasCompetencias": "Otras competencias",
+            "permisosConducir": "Permisos de conducir"
         }
     },
     {
-        "email": "segundoejemplo2@email.com",
-        "nombre": "Rafa",
-        "apellidos": "Garcia",
-        "password": "12345",
-        "tipoUsuario": "TITULADO",
-        "centro": {
-            "idCentro": "1"
-        },    
+        "email": "email@usuario2.com",
+        "nombre": "Nombre2",
+        "apellidos": "Apellidos2",
+        "password": "123",
         "titulado": {
-            "fechaNacimiento": "810661891",
+            "fechaNacimiento": "25-7-2012",
             "direccion": {
-                "datosDireccion": "Calle del segundo ejemplo",
-                "municipio": {
-                    "idMunicipio": "128",
-                    "provincia": {
-                        "idProvincia": "2"
-                    }
-                }
+                "datosDireccion": "Datos de la dirección",
+                "idMunicipio": 1
             },
-            "telefono": "123412345",
-            "telefonoAlternativo": "123456786",
+            "telefono": "123456789",
+            "telefonoAlternativo": "123456789",
             "tipoDocumento": "NIF_NIE",
-            "numeroDocumento": "14305811H",
-            "resumen": "Descripcion sobre el segundo titulado",
-            "otrasCompetencias": "ninguna",
-            "permisosConducir": "B"
+            "numeroDocumento": "12345678A",
+            "titulosIdiomas": [
+                {
+                    "nivelIdioma": "A1",
+                    "idioma": "INGLES",
+                    "otroIdioma": "Texto otro idioma",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "experienciasLaborales": [
+                {
+                    "nombreEmpresa": "Nombre de la empresa",
+                    "fechaInicio": "25-7-2012",
+                    "fechaFin": "25-7-2014",
+                    "puestoTrabajo": "Puesto de trabajo",
+                    "descripcion": "Descripción"
+                }
+            ],
+            "formacionesAcademicas": [
+                {
+                    "tipoFormacionAcademica": "CICLO_FORMATIVO",
+                    "idCentro": 1,
+                    "idCiclo": 1,
+                    "otroCentro": "Otro centro",
+                    "otroTitulo": "Otro titulo",
+                    "fecha": "25-7-2012"
+                }
+            ],
+            "resumen": "Resumen",
+            "otrasCompetencias": "Otras competencias",
+            "permisosConducir": "Permisos de conducir"
         }
     }
 ]

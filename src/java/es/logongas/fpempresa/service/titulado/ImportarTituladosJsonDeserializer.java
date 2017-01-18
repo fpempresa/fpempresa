@@ -96,7 +96,7 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
             // Obtener datos del Titulado
             JsonNode tituladoJsonNode = usuarioJsonNode.get("titulado");
             if (tituladoJsonNode.isNull()) {
-                throw new JsonMappingException(jsonParser, "No se ha encontrado el objeto titulado dentro de uno de los usuarios del listado");
+                throw new IOException(new BusinessException("No se ha encontrado el objeto titulado dentro de uno de los usuarios del listado"));
             }
 
             final String fechaNacimiento = !tituladoJsonNode.get("fechaNacimiento").isNull() ? tituladoJsonNode.get("fechaNacimiento").asText() : null;
@@ -144,7 +144,7 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
             // Obtener los TituloIdioma's del Titulado
             JsonNode titulosIdiomasJsonNode = tituladoJsonNode.get("titulosIdiomas");
             if (!titulosIdiomasJsonNode.isArray()) {
-                throw new IOException("Uno de los nodos titulosIdiomas no es un listado");
+                throw new IOException(new BusinessException("Uno de los nodos titulosIdiomas no es un listado"));
             }
 
             Iterator<JsonNode> iteradorTitulosIdiomasJsonNode = titulosIdiomasJsonNode.elements();
@@ -174,7 +174,7 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
             // Obtener las ExperienciaLaboral'es del Titulado
             JsonNode experienciasLaboralesJsonNode = tituladoJsonNode.get("experienciasLaborales");
             if (!experienciasLaboralesJsonNode.isArray()) {
-                throw new IOException("Uno de los nodos experienciasLaborales no es un listado");
+                throw new IOException(new BusinessException("Uno de los nodos experienciasLaborales no es un listado"));
             }
 
             Iterator<JsonNode> iteradorExperineciasLaboralesJsonNode = experienciasLaboralesJsonNode.elements();
@@ -206,7 +206,7 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
             // Obtener las FormacionAcademaica's del Titulado
             JsonNode formacionesAcademicasJsonNode = tituladoJsonNode.get("formacionesAcademicas");
             if (!formacionesAcademicasJsonNode.isArray()) {
-                throw new IOException("Uno de los nodos formacionesAcademicas no es un listado");
+                throw new IOException(new BusinessException("Uno de los nodos formacionesAcademicas no es un listado"));
             }
 
             Iterator<JsonNode> iteradorFormacionesAcademicasJsonNode = formacionesAcademicasJsonNode.elements();
@@ -254,13 +254,13 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
                 // Si no se encuentra en el listado lo obtenemos de la base de datos
                 municipio = this.daoFactory.getDAO(Municipio.class).read(dataSession, municipioId);
             } catch (BusinessException ex) {
-                throw new IOException("Error al buscar el Municipio en la base de datos");
+                throw new IOException(new BusinessException("Error al buscar el Municipio en la base de datos"));
             }
             if (municipio != null) {
                 this.listadoMunicipios.put(municipioId, municipio);
                 return municipio;
             } else {
-                throw new IOException("Uno de los municipios especifiacados no existe");
+                throw new IOException(new BusinessException("Uno de los municipios especifiacados no existe"));
             }
         }
     }
@@ -276,13 +276,13 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
                 // Si no se encuentra en el listado lo obtenemos de la base de datos
                 centro = this.daoFactory.getDAO(Centro.class).read(dataSession, centroId);
             } catch (BusinessException ex) {
-                throw new IOException("Error al buscar el Centro en la base de datos", ex);
+                throw new IOException(new BusinessException("Error al buscar el Centro en la base de datos"));
             }
             if (centro != null) {
                 this.listadoCentros.put(centroId, centro);
                 return centro;
             } else {
-                throw new IOException("Uno de los centros especifiacados no existe");
+                throw new IOException(new BusinessException("Uno de los centros especifiacados no existe"));
             }
         }
     }
@@ -298,13 +298,13 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
                 // Si no se encuentra en el listado lo obtenemos de la base de datos
                 ciclo = this.daoFactory.getDAO(Ciclo.class).read(dataSession, cicloId);
             } catch (BusinessException ex) {
-                throw new IOException("Error al buscar el Ciclo en la base de datos", ex);
+                throw new IOException(new BusinessException("Error al buscar el Ciclo en la base de datos"));
             }
             if (ciclo != null) {
                 this.listadoCiclos.put(cicloId, ciclo);
                 return ciclo;
             } else {
-                throw new IOException("Uno de los ciclos especifiacados no existe");
+                throw new IOException(new BusinessException("Uno de los ciclos especifiacados no existe"));
             }
         }
     }
@@ -313,7 +313,7 @@ public class ImportarTituladosJsonDeserializer extends JsonDeserializer<List<Usu
         try {
             return this.simpleDateFormat.parse(fecha);
         } catch (ParseException ex) {
-            throw new IOException("La fecha no se pudo convertir", ex);
+            throw new IOException(new BusinessException("La fecha no se pudo convertir"));
         }
     }
 

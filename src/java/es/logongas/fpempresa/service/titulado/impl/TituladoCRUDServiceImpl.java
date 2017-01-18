@@ -51,15 +51,20 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
     @Override
     public void importarTitulados(DataSession dataSession, MultipartFile multipartFile) throws BusinessException {
         List<Usuario> listadoUsuarios = null;
+        InputStream inputStream;
         try {
-            InputStream inputStream = multipartFile.getInputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            SimpleModule module = new SimpleModule();
-            module.addDeserializer(List.class, new ImportarTituladosJsonDeserializer(dataSession, daoFactory));
-            mapper.registerModule(module);
+            inputStream = multipartFile.getInputStream();
+        } catch (IOException ex) {
+            throw new BusinessException("Error al leer el archivo json");
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(List.class, new ImportarTituladosJsonDeserializer(dataSession, daoFactory));
+        mapper.registerModule(module);
+        try {
             listadoUsuarios = mapper.readValue(inputStream, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, Usuario.class));
-        } catch (IOException exception) {
-            throw new BusinessException("Error al leer el archivo json", exception.toString());
+        } catch (IOException ex) {
+            throw new BusinessException("Error al leer el archivo json");
         }
         if (listadoUsuarios != null) {
             for (Usuario usuario : listadoUsuarios) {

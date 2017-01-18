@@ -8,12 +8,13 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
         $scope.filters.tipoUsuario = "TITULADO";
         $scope.filters['titulado.formacionesAcademicas.centro.idCentro'] = $scope.user.centro.idCentro;
         $scope.search();
+        $scope.fail = {};
         $scope.apiUrl = ix3Configuration.server.api;
         $scope.mostrarCodigosMunicipio = function () {
             dialog.create('mostrarCodigosMunicipio');
         };
-        $scope.failImportJson = function (event, data) {
-            alert("Ocurrio un problema al importar el listado de Titulados");
+        $scope.failImportJson = function (data) {
+            if (data && data.jqXHR && data.jqXHR.responseText) alert(data);
         };
         $scope.updateList = function () {
             alert("El listado de Titulados se importó correctamente");

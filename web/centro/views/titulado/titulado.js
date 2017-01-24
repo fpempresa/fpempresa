@@ -14,7 +14,8 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
             dialog.create('mostrarCodigosMunicipio');
         };
         $scope.failImportJson = function (data) {
-            if (data && data.jqXHR && data.jqXHR.responseText) alert(data);
+            if (data && data.jqXHR && data.jqXHR.responseText)
+                $scope.businessMessages = JSON.parse(data.jqXHR.responseText);
         };
         $scope.updateList = function () {
             alert("El listado de Titulados se importó correctamente");

@@ -27,13 +27,9 @@ angular.module("common").directive('fpeFileUpload', ['ix3Configuration', functio
                         $('.progress-bar', element).css('width', 0 + '%');
                     },
                     done: function (e, data) {
-                        console.log(e);
-                        console.log(data);
                         $scope.$evalAsync($scope.success);
                     },
                     fail: function (e, data) {
-                        console.log(e);
-                        console.log(data);
                         $scope.$evalAsync($scope.fail);
                         $scope.fail({data: data});
                     }

@@ -15,13 +15,16 @@ import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.titulado.ImportarTituladosJsonDeserializer;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import es.logongas.ix3.util.ExceptionUtil;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,9 +70,21 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
             throw new BusinessException("Error al leer el archivo json");
         }
         if (listadoUsuarios != null) {
+            List<BusinessMessage> businessMessages = new ArrayList();
             for (Usuario usuario : listadoUsuarios) {
-                this.serviceFactory.getService(Titulado.class).insert(dataSession, usuario.getTitulado());
-                this.serviceFactory.getService(Usuario.class).insert(dataSession, usuario);
+                try {
+                    this.serviceFactory.getService(Titulado.class).insert(dataSession, usuario.getTitulado());
+                    this.serviceFactory.getService(Usuario.class).insert(dataSession, usuario);
+                } catch (Throwable throwable) {
+                    BusinessException businessException = ExceptionUtil.getBusinessExceptionFromThrowable(throwable);
+                    if (businessException != null) {
+                        businessMessages.addAll(ExceptionUtil.getBusinessExceptionFromThrowable(throwable).getBusinessMessages());
+                    }
+
+                }
+            }
+            if (!businessMessages.isEmpty()) {
+                throw new BusinessException(businessMessages);
             }
         }
     }

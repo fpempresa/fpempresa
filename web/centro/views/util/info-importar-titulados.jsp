@@ -108,7 +108,7 @@
         <h4>Códigos de Municipio (idMunicipio)</h4>
     </div>
 </div>
-<div class="row" style="font-size: 12px">
+<div class="row form__container" style="font-size: 12px; height: 400px; overflow-x: hidden; overflow-y: scroll">
     <jsp:include page="codigos-municipio.html"></jsp:include> 
 
     <%

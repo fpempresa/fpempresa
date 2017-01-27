@@ -255,7 +255,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 mail.setFrom(Config.getSetting("mail.sender"));
                 mail.setSubject("Resetear contraseña en empleaFP");
                 mail.setHtmlBody(""
-                        + "Has solicitado cambiar tu contraseña en empleaFP.<br> \n\n"
+                        + "Has solicitado cambiar tu contraseña en <a href=\"http://www.empleafp.com\">empleaFP</a>.<br> \n\n"
                         + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
                         + "<a href=\"" + Config.getSetting("app.url") + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>");
                 mailService.send(mail);

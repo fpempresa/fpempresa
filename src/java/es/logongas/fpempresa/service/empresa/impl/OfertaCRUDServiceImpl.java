@@ -87,14 +87,14 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                 mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
                 mail.setHtmlBody("Hola <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br>"
                         + "Hay una nueva oferta de trabajo en una de tus provincias seleccionadas:<br>"
-                        + "<trong>Provincia:</strong>" + oferta.getMunicipio().getProvincia()
-                        + "<trong>Municipio:</strong>" + oferta.getMunicipio()
-                        + "<trong>Ciclos:</strong>" + oferta.getCiclos()
-                        + "<trong>Familia:</strong>" + oferta.getFamilia()
-                        + "<trong>Empresa:</strong>" + oferta.getEmpresa()
-                        + "<trong>Puesto:</strong>" + oferta.getPuesto()
-                        + "<trong>Descripción:</strong>" + oferta.getDescripcion() + "<br>"
-                        + "Accede a tu cuenta para poder ampliar la información"
+                        + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
+                        + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
+                        + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
+                        + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
+                        + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
+                        + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
+                        + "<strong>Descripción: </strong>" + oferta.getDescripcion() + "<br>" + "<br>"
+                        + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
                 );
                 mail.setFrom(Config.getSetting("mail.sender"));
 

@@ -36,4 +36,12 @@ public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ca
         return candidatoCRUDService.getNumCandidatosOferta(getNumCandidatosOferta.dataSession, getNumCandidatosOferta.oferta);
     }
 
+    @Override
+    public Candidato insert(InsertArguments<Candidato> insertArguments) throws BusinessException {
+        Candidato Candidato = super.insert(insertArguments);
+        CandidatoCRUDService CandidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+        CandidatoCRUDService.notificarCandidatoAEmpresas(insertArguments.dataSession, Candidato);
+        return Candidato;
+    }
+
 }

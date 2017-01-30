@@ -232,7 +232,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             mail.setFrom(Config.getSetting("mail.sender"));
             mail.setSubject("Confirma tu correo para acceder a empleaFP");
             mail.setHtmlBody(""
-                    + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br>"
+                    + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
                     + "Acabas de registrarte en <a href=\"http://www.empleafp.com\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
                     + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
                     + "<a href=\"" + (String) Config.getSetting("app.url") + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>");
@@ -255,7 +255,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 mail.setFrom(Config.getSetting("mail.sender"));
                 mail.setSubject("Resetear contraseña en empleaFP");
                 mail.setHtmlBody(""
-                        + "Has solicitado cambiar tu contraseña en <a href=\"http://www.empleafp.com\">empleaFP</a>.<br> \n\n"
+                        + "Has solicitado cambiar tu contraseña en <a href=\"http://www.empleafp.com\">empleaFP</a>.<br><br>"
                         + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
                         + "<a href=\"" + Config.getSetting("app.url") + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>");
                 mailService.send(mail);

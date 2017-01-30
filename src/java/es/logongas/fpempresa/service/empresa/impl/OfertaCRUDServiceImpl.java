@@ -85,7 +85,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                 Usuario usuario = usuarioCRUDService.getUsuarioFromTitulado(dataSession, titulado.getIdTitulado()); //TODO esto no es muy eficiente
                 mail.addTo(usuario.getEmail());
                 mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
-                mail.setHtmlBody("Hola <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br>"
+                mail.setHtmlBody("Hola <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
                         + "Hay una nueva oferta de trabajo en una de tus provincias seleccionadas:<br>"
                         + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
                         + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"

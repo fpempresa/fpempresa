@@ -16,21 +16,29 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
+import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.empresa.CandidatoDAO;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
+import es.logongas.fpempresa.service.mail.Mail;
+import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author logongas
  */
 public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer> implements CandidatoCRUDService {
+
+    @Autowired
+    MailService mailService;
 
     private CandidatoDAO getCandidatoDAO() {
         return (CandidatoDAO) getDAO();
@@ -52,6 +60,37 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
 
     public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) throws BusinessException {
         return getCandidatoDAO().getNumCandidatosOferta(dataSession, oferta);
+    }
+
+    @Override
+    public void notificarCandidatoAEmpresas(DataSession dataSession, Candidato candidato) throws BusinessException {
+        try {
+            Mail mail = new Mail();
+            Oferta oferta = candidato.getOferta();
+            mail.addTo(candidato.getOferta().getEmpresa().getContacto().getEmail());
+            mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
+            mail.setHtmlBody("Hola <strong>" + oferta.getEmpresa().getContacto().getPersona() + "</strong>,<br><br>"
+                    + "Un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
+                    + "<h4>Datos de la oferta</h4>"
+                    + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
+                    + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
+                    + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
+                    + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
+                    + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
+                    + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
+                    + "<strong>Descripción: </strong>" + oferta.getDescripcion()
+                    + "<h4>Datos del candidato</h4>"
+                    + "<strong>Nombre: </strong>" + candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos() + "<br>"
+                    + "<strong>Teléfono: </strong>" + candidato.getUsuario().getTitulado().getTelefono() + "<br>"
+                    + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" + "<br>"
+                    + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
+            );
+            mail.setFrom(Config.getSetting("mail.sender"));
+            mailService.send(mail);
+        } catch (IOException ex) {
+            throw new RuntimeException("Error al enviar email notificacion de nuevo candidato a la empresa", ex);
+        }
+
     }
 
 }

@@ -3,6 +3,8 @@
     Created on : Dec 21, 2016, 3:16:53 PM
     Author     : ruben
 --%>
+<%@page import="es.logongas.fpempresa.service.educacion.ciclo.CicloCRUDService"%>
+<%@page import="es.logongas.fpempresa.modelo.educacion.Ciclo"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.StringWriter"%>
@@ -68,6 +70,51 @@
     <div class="col-xs-4">TITULO_UNIVERSITARIO</div>
     <div class="col-xs-4">OTRO_TITULO</div>
 </div>
+<div class="row">
+    <div class="col-xs-12">
+        <h4>Códigos de ciclo (idCiclo)</h4>
+    </div>
+</div>
+   <div class="row form__container">
+      <%
+        String message = "";
+        DataSession dataSession = null;
+        try {
+            WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+            DataSessionFactory dataSessionFactory = webApplicationContext.getBean(DataSessionFactory.class);
+            dataSession = dataSessionFactory.getDataSession();
+            CRUDServiceFactory serviceFactory = webApplicationContext.getBean(CRUDServiceFactory.class);
+            CicloCRUDService cicloCRUDService = (CicloCRUDService) serviceFactory.getService(Ciclo.class);
+            List<Ciclo> listaCiclos = cicloCRUDService.search(dataSession, null, null, null);
+            for (int i = 1; i < listaCiclos.size(); i++) {
+                Integer codigoDeCiclo = listaCiclos.get(i).getIdCiclo();
+                String nombreCiclo = listaCiclos.get(i).getDescripcion();
+    %>
+    <div class="col-xs-4">
+            <div class="col-xs-4">
+                <strong><%=codigoDeCiclo%></strong>
+            </div>
+            <div class="col-xs-8">
+                <%=nombreCiclo%>
+            </div>
+    </div>
+    <%}%>
+</div>
+<%
+        } catch (Exception ex) {
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            ex.printStackTrace(printWriter);
+            message = "throw new Error('Fallo al cargar los datos desde el servidor :" + ex.toString() + "');\n/**" + stringWriter.toString() + "**/\n";
+        
+        } finally {
+            if (dataSession != null) {
+                dataSession.close();
+            }
+        }
+    %>
+</div>
+
 
 <br>
 <div class="row">
@@ -77,8 +124,6 @@
 </div>
 <div class="row form__container" style="font-size: 10px">
     <%
-        String message = "";
-        DataSession dataSession = null;
         try {
             WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
             DataSessionFactory dataSessionFactory = webApplicationContext.getBean(DataSessionFactory.class);

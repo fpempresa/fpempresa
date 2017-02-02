@@ -120,14 +120,14 @@
     </target>    
 
     <target name="-exec-grunt-linux" if="linuxos">	
-        <exec executable="./node/bin/node64" >
+        <exec executable="./node/bin/node64" failonerror="true"  >
             <arg value="--max_old_space_size=${max-memory-build-js}"/>
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
         </exec>
     </target>
     <target name="-exec-grunt-windows" if="windowsos">
-        <exec executable="./node/bin/node64.exe" >
+        <exec executable="./node/bin/node64.exe" failonerror="true"  >
             <arg value="--max_old_space_size=${max-memory-build-js}"/>            
             <arg value="-e"/>
             <arg value="require('grunt').tasks(['default']);"/>
@@ -140,13 +140,13 @@
     </target>  
     
     <target name="-exec-gulp-linux" >	
-        <exec executable="./node/bin/node64" >
+        <exec executable="./node/bin/node64" failonerror="true" >
             <arg value="--max_old_space_size=${max-memory-build-js}"/>            
             <arg value="./node_modules/gulp/bin/gulp.js"/>
         </exec>
     </target>
     <target name="-exec-gulp-windows" if="windowsos">
-        <exec executable="./node/bin/node64.exe" >
+        <exec executable="./node/bin/node64.exe" failonerror="true" >
             <arg value="--max_old_space_size=${max-memory-build-js}"/>            
             <arg value="./node_modules/gulp/bin/gulp.js"/>
         </exec>

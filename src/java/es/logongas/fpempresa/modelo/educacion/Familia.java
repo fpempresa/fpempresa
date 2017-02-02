@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.educacion;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,8 +24,9 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Familia {
+
     private int idFamilia;
-    
+
     @NotBlank
     private String descripcion;
 
@@ -37,14 +37,12 @@ public class Familia {
         this.idFamilia = idFamilia;
         this.descripcion = descripcion;
     }
-    
+
     @Override
     public String toString() {
         return descripcion;
     }
 
-    
-    
     /**
      * @return the idFamilia
      */
@@ -73,6 +71,4 @@ public class Familia {
         this.descripcion = descripcion;
     }
 
-    
-    
 }

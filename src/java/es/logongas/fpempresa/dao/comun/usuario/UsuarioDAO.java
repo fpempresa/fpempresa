@@ -15,20 +15,25 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 package es.logongas.fpempresa.dao.comun.usuario;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 
-
 /**
  *
  * @author Lorenzo
  */
-public interface UsuarioDAO extends GenericDAO<Usuario,Integer> {
-    void updateEncryptedPassword(DataSession dataSession, Usuario usuario,String encriptedPassword);
+public interface UsuarioDAO extends GenericDAO<Usuario, Integer> {
+
+    void updateEncryptedPassword(DataSession dataSession, Usuario usuario, String encriptedPassword);
+
     String getEncryptedPassword(DataSession dataSession, Usuario usuario);
+
+    Usuario getUsuarioPorClaveValidacionEmail(DataSession dataSession, String claveValidacionEmail);
+
+    Usuario getUsuarioPorClaveResetearContrasenya(DataSession dataSession, String claveResetearContrasenya);
+
+    Usuario getUsuarioPorEmail(DataSession dataSession, String email);
 }

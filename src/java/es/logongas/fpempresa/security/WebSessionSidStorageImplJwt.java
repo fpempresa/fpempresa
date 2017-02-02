@@ -17,7 +17,6 @@ package es.logongas.fpempresa.security;
 
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;

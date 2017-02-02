@@ -34,10 +34,13 @@ import java.util.List;
 public interface OfertaCRUDService extends CRUDService<Oferta, Integer> {
 
     public List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException;
-    
+
     public List<Oferta> getOfertasInscritoUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException;
 
     public List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro) throws BusinessException;
 
     public List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa) throws BusinessException;
+
+    public void notificarOfertaATitulados(DataSession dataSession, Oferta oferta) throws BusinessException;
+
 }

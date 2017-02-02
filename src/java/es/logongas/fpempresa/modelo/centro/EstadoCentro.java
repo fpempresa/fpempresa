@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.centro;
 
 /**
@@ -26,7 +25,7 @@ public enum EstadoCentro {
     PERTENECE_A_FPEMPRESA("Pertenece a la asociación"),
     BAJA_EN_FPEMPRESA("Baja en la asociación"),
     NO_PERTENCE_A_FPEMPRESA("NO pertenece a la asociación");
-    
+
     String text;
 
     private EstadoCentro(String text) {

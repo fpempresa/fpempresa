@@ -19,15 +19,12 @@ package es.logongas.fpempresa.modelo.titulado;
 
 import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
-import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
-import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -35,59 +32,65 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
  * @author Lorenzo
  */
 public class Titulado {
+
     private int idTitulado;
-    
+
     @NotNull
     @Past
     @Label("Fecha de nacimiento")
     private Date fechaNacimiento;
-    
+
+    @JsonProperty("direccion")
     @NotNull
     @Valid
     private Direccion direccion;
-    
+
     @Pattern(regexp = "[0-9]{9}| {0}")
     private String telefono;
-    
-    @Pattern( regexp = "[0-9]{9}| {0}")
+
+    @Pattern(regexp = "[0-9]{9}| {0}")
     @Label("Telefono alternativo")
     private String telefonoAlternativo;
-    
+
     @NotNull
     @Label("Tipo de documento")
-    private TipoDocumento tipoDocumento=TipoDocumento.NIF_NIE;
-    
+    private TipoDocumento tipoDocumento = TipoDocumento.NIF_NIE;
+
     @NotEmpty
     @Label("Nº de documento")
-    @Size(max=20)
+    @Size(max = 20)
     private String numeroDocumento;
-    
+
     private Set<TituloIdioma> titulosIdiomas;
+
     private Set<ExperienciaLaboral> experienciasLaborales;
+
     private Set<FormacionAcademica> formacionesAcademicas;
 
     @Valid
     @NotNull
-    private Configuracion configuracion=new Configuracion();
-    
+    private Configuracion configuracion = new Configuracion();
+
     @Label("Sobre mi")
-    @Size(max=255)
+    @Size(max = 255)
     private String resumen;
-    
+
     @Label("Otras competencias")
-    @Size(max=65000)     
+    @Size(max = 65000)
     private String otrasCompetencias;
-    
+
     @Label("Permisos de conducir")
-    @Size(max=255)
+    @Size(max = 255)
     private String permisosConducir;
-    
+
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void provinciaDeNotificacionIgualALaDireccion() {
         if (configuracion.getNotificacionOferta().getProvincias().isEmpty()) {
@@ -95,12 +98,12 @@ public class Titulado {
             configuracion.getNotificacionOferta().setNotificarPorEmail(true);
         }
     }
-    
+
     @ConstraintRule(fieldName = "Nº Documento", message = "El NIF/NIE '${entity.numeroDocumento}' no es válido", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarNIF(RuleContext<Titulado> ruleContext) {
         Validador validadorCIF = new Validador();
 
-        if ((this.tipoDocumento==TipoDocumento.NIF_NIE) && (this.numeroDocumento!=null)) {
+        if ((this.tipoDocumento == TipoDocumento.NIF_NIE) && (this.numeroDocumento != null)) {
             if (validadorCIF.checkNif(this.numeroDocumento.toUpperCase()) > 0) {
                 return true;
             } else {
@@ -109,16 +112,16 @@ public class Titulado {
         } else {
             return true;
         }
-    }     
-    
+    }
+
     @ConstraintRule(fieldName = "Nº Documento", message = "No puede ser un CIF", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarNoCIF(RuleContext<Titulado> ruleContext) {
         Validador validadorCIF = new Validador();
 
-        if ((this.tipoDocumento==TipoDocumento.NIF_NIE) && (this.numeroDocumento!=null)) {
+        if ((this.tipoDocumento == TipoDocumento.NIF_NIE) && (this.numeroDocumento != null)) {
             if (validadorCIF.checkNif(this.numeroDocumento.toUpperCase()) > 0) {
                 //Comprobamos que no sea un CIF
-                if (this.numeroDocumento.matches("^[0-9xyzXYZ].*")==false) {
+                if (this.numeroDocumento.matches("^[0-9xyzXYZ].*") == false) {
                     return false;
                 } else {
                     return true;
@@ -130,16 +133,16 @@ public class Titulado {
         } else {
             return true;
         }
-    }    
-    
+    }
+
     @ActionRule(groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private void upperCaseNif(RuleContext<Titulado> ruleContext) {
-        this.numeroDocumento=this.numeroDocumento.toUpperCase();
-    }    
-    
+        this.numeroDocumento = this.numeroDocumento.toUpperCase();
+    }
+
     public Titulado() {
     }
-    
+
     /**
      * @return the idTitulado
      */

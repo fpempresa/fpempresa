@@ -7,7 +7,8 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.businessprocess.log;
 
@@ -21,19 +22,19 @@ import es.logongas.ix3.dao.DataSession;
  * @author logongas
  */
 public interface LogBusinessProcess {
-    
-    ServerLogConfig getLogLevel(GetLogLevelArguments getLogLevelArguments);
-    ServerLogConfig setLogLevel(SetLogLevelArguments setLogLevelArguments);
-    
-    public class GetLogLevelArguments extends BusinessProcess.BusinessProcessArguments {
 
+    ServerLogConfig getLogLevel(GetLogLevelArguments getLogLevelArguments);
+
+    ServerLogConfig setLogLevel(SetLogLevelArguments setLogLevelArguments);
+
+    public class GetLogLevelArguments extends BusinessProcess.BusinessProcessArguments {
 
         public GetLogLevelArguments(Principal principal, DataSession dataSession) {
             super(principal, dataSession);
         }
 
     }
-    
+
     public class SetLogLevelArguments extends BusinessProcess.BusinessProcessArguments {
 
         final public ServerLogConfig serverLogConfig;
@@ -43,6 +44,6 @@ public interface LogBusinessProcess {
             this.serverLogConfig = serverLogConfig;
         }
 
-    }    
-    
+    }
+
 }

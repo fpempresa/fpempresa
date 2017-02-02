@@ -15,10 +15,9 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 package es.logongas.fpempresa.modelo.centro;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.ix3.core.annotations.Label;
@@ -28,27 +27,32 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Centros de FP
+ *
  * @author Lorenzo
  */
 public class Centro {
+
+    @JsonProperty("idCentro")
     private int idCentro;
-    
+
     @NotBlank
-    private String  nombre;
-    
+    private String nombre;
+
+    @JsonProperty("direccion")
     @NotNull
     @Valid
     private Direccion direccion;
-    
+
     @Label("Pertenencia a FPempresa")
     @NotNull
     private EstadoCentro estadoCentro;
 
+    @JsonProperty("contacto")
     @NotNull
     @Valid
     @Label("Contacto")
-    private Contacto contacto;       
-    
+    private Contacto contacto;
+
     public Centro() {
     }
 
@@ -57,8 +61,6 @@ public class Centro {
         return nombre;
     }
 
-    
-    
     /**
      * @return the idCentro
      */
@@ -128,8 +130,5 @@ public class Centro {
     public void setContacto(Contacto contacto) {
         this.contacto = contacto;
     }
-
-
-
 
 }

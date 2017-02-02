@@ -15,8 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 package es.logongas.fpempresa.modelo.titulado;
 
 import es.logongas.ix3.core.annotations.Label;
@@ -27,33 +25,34 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Es cada uno de los trabajos que ha tenido un titulado
+ *
  * @author Lorenzo
  */
 public class ExperienciaLaboral {
+
     private int idExperienciaLaboral;
-    
+
     @NotNull
     private Titulado titulado;
-    
+
     @NotBlank
     @Label("Nombre de la empresa")
     private String nombreEmpresa;
-    
+
     @Past
     @es.logongas.ix3.core.annotations.Date
     @Label("Fecha Inicio")
     private Date fechaInicio;
-    
+
     @Past
     @es.logongas.ix3.core.annotations.Date
     @Label("Fecha final")
     private Date fechaFin;
-    
-    
+
     @Label("Puesto desenpeñado")
     @NotBlank
     private String puestoTrabajo;
-    
+
     @Label("Tareas realizadas en el puesto desempeñado")
     private String descripcion;
 

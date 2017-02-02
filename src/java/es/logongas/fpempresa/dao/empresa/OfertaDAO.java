@@ -30,10 +30,13 @@ import java.util.List;
  *
  * @author logongas
  */
-public interface OfertaDAO extends GenericDAO<Oferta,Integer> {
+public interface OfertaDAO extends GenericDAO<Oferta, Integer> {
 
     List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin);
+
     List<Oferta> getOfertasInscritoUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin);
+
     List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro);
+
     List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa);
 }

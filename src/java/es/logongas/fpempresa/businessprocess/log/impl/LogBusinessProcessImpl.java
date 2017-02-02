@@ -7,7 +7,8 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.businessprocess.log.impl;
 
@@ -50,7 +51,7 @@ public class LogBusinessProcessImpl implements LogBusinessProcess {
         ServerLogConfig outServerLogConfig = new ServerLogConfig();
         outServerLogConfig.setAppLevel(getLoggerConfig(APP_LOGGER_NAME).getLevel().name());
         outServerLogConfig.setDatabaseLevel(getLoggerConfig(SQL_LOGGER_NAME).getLevel().name());
-        
+
         return outServerLogConfig;
 
     }

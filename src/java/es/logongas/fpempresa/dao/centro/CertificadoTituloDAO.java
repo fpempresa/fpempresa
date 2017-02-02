@@ -27,8 +27,8 @@ import es.logongas.ix3.dao.GenericDAO;
  *
  * @author logongas
  */
-public interface CertificadoTituloDAO extends GenericDAO<CertificadoTitulo,Integer>  {
-    
-    CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(DataSession dataSession, Centro centro,Ciclo ciclo,int anyo);
-    
+public interface CertificadoTituloDAO extends GenericDAO<CertificadoTitulo, Integer> {
+
+    CertificadoTitulo getCertificadoTituloByCentroCicloAnyo(DataSession dataSession, Centro centro, Ciclo ciclo, int anyo);
+
 }

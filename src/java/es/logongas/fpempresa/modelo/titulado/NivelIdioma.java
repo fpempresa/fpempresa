@@ -15,14 +15,14 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.titulado;
 
 /**
- * Marco Común Europeo de Referencia para las Lenguas: aprendizaje, enseñanza, evaluación (MCERL)
+ * Marco Común Europeo de Referencia para las Lenguas: aprendizaje, enseñanza,
+ * evaluación (MCERL)
+ *
  * @author Lorenzo
  */
 public enum NivelIdioma {
-    A1,A2,B1,B2,C1,C2;
+    A1, A2, B1, B2, C1, C2;
 }
-

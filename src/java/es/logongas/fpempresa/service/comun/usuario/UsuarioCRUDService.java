@@ -21,13 +21,24 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Lorenzo Gonzalez
  */
-public interface UsuarioCRUDService extends CRUDService<Usuario,Integer> {
-    void updatePassword(DataSession dataSession, Usuario usuario,String newPassword) throws BusinessException ;
-    boolean checkPassword(DataSession dataSession, Usuario usuario,String password) throws BusinessException ;
+public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
+
+    void updatePassword(DataSession dataSession, Usuario usuario, String newPassword) throws BusinessException;
+
+    boolean checkPassword(DataSession dataSession, Usuario usuario, String password) throws BusinessException;
+
     Usuario getUsuarioFromTitulado(DataSession dataSession, int idTitulado) throws BusinessException;
+
+    void enviarMailResetearPassword(DataSession dataSession, String email) throws BusinessException;
+
+    boolean validarEmail(DataSession dataSession, String claveValidacionEmail) throws BusinessException;
+
+    void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException;
+
 }

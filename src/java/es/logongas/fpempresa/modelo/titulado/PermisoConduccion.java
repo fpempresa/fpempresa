@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.titulado;
 
 /**
@@ -23,5 +22,5 @@ package es.logongas.fpempresa.modelo.titulado;
  * @author Lorenzo
  */
 public enum PermisoConduccion {
-    A1,A2,A,B,C1,C,D1,D,BE,C1E,CE,D1E,DE,Btp;
+    A1, A2, A, B, C1, C, D1, D, BE, C1E, CE, D1E, DE, Btp;
 }

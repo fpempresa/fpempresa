@@ -46,7 +46,7 @@
     </bean>
     
     <!-- Servicios -->
-    <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImpl"  />
+    <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImplAWS"  />
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.populate.PopulateServiceImpl"  />
     <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >

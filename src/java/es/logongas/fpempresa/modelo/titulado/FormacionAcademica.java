@@ -53,17 +53,17 @@ public class FormacionAcademica {
 
     @NotNull
     private Titulado titulado;
-    
+
     @Past
     @NotNull
     @Label("Fecha de obtención del título")
     private Date fecha;
-    
+
     private boolean certificadoTitulo;
-    
+
     @Label("Formación Dual")
     private boolean formacionDual;
-    
+
     public FormacionAcademica() {
     }
 
@@ -115,7 +115,7 @@ public class FormacionAcademica {
     private boolean getValidateOtroCentro() {
         switch (tipoFormacionAcademica) {
             case CICLO_FORMATIVO:
-                if ((centro != null) && (centro.getIdCentro()< 0)) {
+                if ((centro != null) && (centro.getIdCentro() < 0)) {
                     //Si el IdCentro es negativo es que es un centro desconocido
                     if ((otroCentro == null) || otroCentro.trim().isEmpty()) {
                         return false;
@@ -167,7 +167,7 @@ public class FormacionAcademica {
 
     public String getNombreCentro() {
         if (tipoFormacionAcademica == TipoFormacionAcademica.CICLO_FORMATIVO) {
-            if (centro!=null) {
+            if (centro != null) {
                 if (centro.getIdCentro() < 0) {
                     return otroCentro;
                 } else {

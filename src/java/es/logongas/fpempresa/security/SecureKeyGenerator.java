@@ -31,7 +31,7 @@ public class SecureKeyGenerator {
 
     public static String getSecureKey() {
         try {
-            Base32 base32=new Base32();
+            Base32 base32 = new Base32();
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(keyLength);
             SecretKey secretKey = keyGen.generateKey();

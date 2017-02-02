@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.comun.usuario;
 
 /**
@@ -26,7 +25,7 @@ public enum EstadoUsuario {
     ACEPTADO("Aceptado"),
     PENDIENTE_ACEPTACION("Pendiente"),
     RECHAZADO("Rechazado");
-    
+
     String text;
 
     private EstadoUsuario(String text) {
@@ -36,5 +35,5 @@ public enum EstadoUsuario {
     @Override
     public String toString() {
         return text;
-    }    
+    }
 }

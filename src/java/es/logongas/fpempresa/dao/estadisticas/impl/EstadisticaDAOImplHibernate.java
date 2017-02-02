@@ -182,13 +182,12 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
 
         for (Object[] dato : datos) {
-            FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1],((Number) dato[2]).intValue());
+            FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1], ((Number) dato[2]).intValue());
 
             familiaEstadisticas.add(familiaEstadistica);
         }
 
         return familiaEstadisticas;
-    }    
-    
-    
+    }
+
 }

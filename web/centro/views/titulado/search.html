@@ -2,6 +2,16 @@
     <div class="col-sm-12 form__container" >
         <div>
             <legend class="form__title">Titulados</legend>
+            <ix3-business-messages style="overflow-y: scroll; overflow-x: hidden; max-height: 600px"></ix3-business-messages>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span>Importar desde json</span>
+                    <fpe-file-upload text="Selecionar archivo..." url="{{apiUrl + '/../titulado/importar-csv'}}" fail="failImportJson(data)" success="updateList(event,data)"></fpe-file-upload>
+                </div>
+                <div class="col-sm-8">
+                    <a ng-click="mostrarCodigosMunicipio()" style="cursor: pointer"><i class="fa fa-question-circle"></i> Ayuda</a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-5"> 
                     <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
@@ -17,7 +27,7 @@
                 </div>
             </div>
             <br>            
-            <ix3-business-messages></ix3-business-messages>
+            
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
@@ -37,7 +47,7 @@
                         </td>                           
                     </tr>
                 </tbody>
-            </table> 
+            </table>
             <div class="row">
                 <div class="col-sm-12">
                     <ix3-pagination></ix3-pagination>

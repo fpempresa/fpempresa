@@ -146,16 +146,15 @@ public class TituloIdioma {
 
     @Override
     public String toString() {
-        if (idioma==null) {
+        if (idioma == null) {
             return "";
         } else {
-            if (idioma==Idioma.OTRO) {
+            if (idioma == Idioma.OTRO) {
                 return otroIdioma;
             } else {
                 return idioma.text;
             }
         }
     }
-    
-    
+
 }

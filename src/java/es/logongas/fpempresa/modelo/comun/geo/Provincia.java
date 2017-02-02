@@ -16,16 +16,18 @@
  */
 package es.logongas.fpempresa.modelo.comun.geo;
 
-import org.hibernate.validator.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Entidad con las provincias.
+ *
  * @author Lorenzo
  */
 public class Provincia {
+
+    @JsonProperty("idProvincia")
     private int idProvincia;
-    
-    @NotBlank
+
     private String descripcion;
 
     public Provincia() {
@@ -64,6 +66,4 @@ public class Provincia {
         this.descripcion = descripcion;
     }
 
-    
-    
 }

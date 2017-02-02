@@ -17,9 +17,11 @@ import es.logongas.ix3.service.CRUDService;
  *
  * @author logongas
  */
-public interface CandidatoCRUDService extends CRUDService<Candidato,Integer> {
-    
-    public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta,boolean ocultarRechazados,boolean certificados,int maxAnyoTitulo,PageRequest pageRequest);
+public interface CandidatoCRUDService extends CRUDService<Candidato, Integer> {
+
+    public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest);
 
     public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) throws BusinessException;
+    
+    public void notificarCandidatoAEmpresas(DataSession dataSession, Candidato candidato) throws BusinessException;
 }

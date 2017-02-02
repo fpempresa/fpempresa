@@ -17,6 +17,7 @@
  */
 package es.logongas.fpempresa.modelo.comun.geo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.ix3.core.annotations.ValuesList;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,13 +27,15 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Municipio {
+
+    @JsonProperty("idMunicipio")
     private int idMunicipio;
-    
-    @NotBlank
+
     private String descripcion;
-    
+
+    @JsonProperty("provincia")
     @NotNull
-    @ValuesList(shortLength=true)
+    @ValuesList(shortLength = true)
     private Provincia provincia;
 
     public Municipio() {
@@ -42,7 +45,7 @@ public class Municipio {
     public String toString() {
         return descripcion;
     }
-    
+
     /**
      * @return the idMunicipio
      */
@@ -84,6 +87,5 @@ public class Municipio {
     public void setProvincia(Provincia provincia) {
         this.provincia = provincia;
     }
-    
-    
+
 }

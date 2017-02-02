@@ -26,15 +26,15 @@ import java.util.Date;
  * @author logongas
  */
 public class Candidato {
-    
+
     private int idCandidato;
-    
+
     private Oferta Oferta;
-    
+
     private Usuario usuario;
-    
+
     private boolean rechazado;
-    
+
     private Date fecha;
 
     /**
@@ -106,11 +106,10 @@ public class Candidato {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
-    
+
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void establecerFecha() {
-        this.fecha=new Date();
+        this.fecha = new Date();
     }
-    
+
 }

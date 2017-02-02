@@ -19,7 +19,7 @@
         </component>
         
         <many-to-one name="centro" update="false">
-          <column name="idCentro"/>
+            <column name="idCentro"/>
         </many-to-one> 
 
         <component name="contacto" >

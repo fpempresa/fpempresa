@@ -40,7 +40,6 @@ public class GeneradorDatosAleatorios {
     private GeneradorDatosAleatorios() {
     }
 
-    
     static final public Usuario createUsuarioAleatorio(TipoUsuario tipoUsuario) {
         Random random = new Random(System.currentTimeMillis());
         String[] correos = {"gmail.com", "yahoo.com", "hotmail.com"};
@@ -60,8 +59,8 @@ public class GeneradorDatosAleatorios {
         usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
 
         return usuario;
-    }    
-    
+    }
+
     static final public Centro createCentroAleatorio() {
         Centro centro = new Centro();
         centro.setEstadoCentro(EstadoCentro.PERTENECE_A_FPEMPRESA);
@@ -81,7 +80,7 @@ public class GeneradorDatosAleatorios {
         empresa.setNombreComercial(nombreEmpresa);
         empresa.setRazonSocial(nombreEmpresa + " " + GeneradorDatosAleatorios.getAleatorio(tiposEmpresa));
         empresa.setDireccion(createDireccionAleatoria());
-        if (centro!=null) {
+        if (centro != null) {
             empresa.getDireccion().setMunicipio(centro.getDireccion().getMunicipio());
         }
         empresa.setContacto(createContactoEmpresaAleatorio(empresa));
@@ -104,10 +103,10 @@ public class GeneradorDatosAleatorios {
         titulado.setTelefono(GeneradorDatosAleatorios.getTelefono());
         titulado.setTelefonoAlternativo(GeneradorDatosAleatorios.getTelefono());
         titulado.setResumen(GeneradorDatosAleatorios.getResumenPersona());
-        
+
         return titulado;
-    }    
-    
+    }
+
     static final public Direccion createDireccionAleatoria() {
         Direccion direccion = new Direccion();
         direccion.setDatosDireccion(GeneradorDatosAleatorios.getDireccion());
@@ -126,7 +125,7 @@ public class GeneradorDatosAleatorios {
     }
 
     static final public TituloIdioma createTituloIdiomaAleatorio(Titulado titulado) {
-        TituloIdioma tituloIdioma =new TituloIdioma();
+        TituloIdioma tituloIdioma = new TituloIdioma();
         String[] otroIdioma = {"Chino", "Ruso", "Armenio", "Italiano", "Árabe", "Griego", "Japonés"};
 
         tituloIdioma.setTitulado(titulado);
@@ -138,10 +137,9 @@ public class GeneradorDatosAleatorios {
         tituloIdioma.setNivelIdioma((NivelIdioma) GeneradorDatosAleatorios.getAleatorio(NivelIdioma.values()));
 
         return tituloIdioma;
-    }    
-    
-    
-    static final public  FormacionAcademica createFormacionAcademicaAleatoria(Titulado titulado) {
+    }
+
+    static final public FormacionAcademica createFormacionAcademicaAleatoria(Titulado titulado) {
         FormacionAcademica formacionAcademica = new FormacionAcademica();
         TipoFormacionAcademica[] tipoFormacionAcademica = {TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.CICLO_FORMATIVO, TipoFormacionAcademica.TITULO_UNIVERSITARIO};
         Boolean[] nuevoCentro = {false, false, false, false, false, false, true};
@@ -151,16 +149,15 @@ public class GeneradorDatosAleatorios {
         formacionAcademica.setFecha(GeneradorDatosAleatorios.getFecha(0, 5));
         switch (formacionAcademica.getTipoFormacionAcademica()) {
             case CICLO_FORMATIVO:
-                Ciclo ciclo=new Ciclo();
+                Ciclo ciclo = new Ciclo();
                 ciclo.setIdCiclo(10);
-                
+
                 formacionAcademica.setCiclo(ciclo);
 
-                Centro centro=new Centro();
+                Centro centro = new Centro();
                 centro.setIdCentro(-1);
                 formacionAcademica.setCentro(centro);
                 formacionAcademica.setOtroCentro(GeneradorDatosAleatorios.getNombreCentroAleatorio());
-
 
                 break;
             case TITULO_UNIVERSITARIO:
@@ -172,9 +169,9 @@ public class GeneradorDatosAleatorios {
         }
 
         return formacionAcademica;
-    }    
-    
-    static final public  ExperienciaLaboral createExperienciaLaboralAleatoria(Titulado titulado) {
+    }
+
+    static final public ExperienciaLaboral createExperienciaLaboralAleatoria(Titulado titulado) {
         ExperienciaLaboral experienciaLaboral = new ExperienciaLaboral();
         Random random = new Random();
 
@@ -203,9 +200,8 @@ public class GeneradorDatosAleatorios {
         experienciaLaboral.setDescripcion("Realizar trabajos relacionados con el puesto de trabajo de " + experienciaLaboral.getPuestoTrabajo());
 
         return experienciaLaboral;
-    }     
-    
-    
+    }
+
     static final public Provincia getProvinciaAleatoria() {
         Random random = new Random();
 
@@ -483,7 +479,7 @@ public class GeneradorDatosAleatorios {
         "Zaragoza",
         "Ceuta",
         "Melilla"};
-    
+
     private static final String[] direcciones = {"c/San Vicente Ferrer, 15 bajo  ",
         "c/ San Pedro, 12",
         "c/ Luis Oliag, 69 1",

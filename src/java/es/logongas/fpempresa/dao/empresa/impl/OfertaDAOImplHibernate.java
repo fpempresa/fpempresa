@@ -99,9 +99,9 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
 
         SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
         sqlQuery.addEntity(Oferta.class);
-        
-        int paramNumber=0;
-        
+
+        int paramNumber = 0;
+
         sqlQuery.setInteger(paramNumber++, usuario.getIdIdentity());
         if (provincia != null) {
             sqlQuery.setInteger(paramNumber++, provincia.getIdProvincia());
@@ -111,7 +111,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
         }
         if (fechaFin != null) {
             sqlQuery.setDate(paramNumber++, fechaFin);
-        }        
+        }
         sqlQuery.setInteger(paramNumber++, usuario.getIdIdentity());
         if (provincia != null) {
             sqlQuery.setInteger(paramNumber++, provincia.getIdProvincia());
@@ -121,7 +121,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
         }
         if (fechaFin != null) {
             sqlQuery.setDate(paramNumber++, fechaFin);
-        } 
+        }
 
         return (List<Oferta>) sqlQuery.list();
     }
@@ -131,21 +131,21 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("SELECT candidato.oferta FROM  Candidato  as candidato WHERE candidato.usuario.idIdentity=?");
 
-        if (provincia!=null) {
+        if (provincia != null) {
             sb.append(" AND candidato.oferta.municipio.provincia.idProvincia=? ");
         }
-        if (fechaInicio!=null) {
+        if (fechaInicio != null) {
             sb.append(" AND candidato.oferta.fecha>=? ");
         }
-        if (fechaFin!=null) {
+        if (fechaFin != null) {
             sb.append(" AND candidato.oferta.fecha<=? ");
         }
-        
+
         Query query = session.createQuery(sb.toString());
-        int paramNumber=0;
+        int paramNumber = 0;
         query.setInteger(paramNumber++, usuario.getIdIdentity());
         if (provincia != null) {
             query.setInteger(paramNumber++, provincia.getIdProvincia());
@@ -155,8 +155,8 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
         }
         if (fechaFin != null) {
             query.setDate(paramNumber++, fechaFin);
-        } 
-        
+        }
+
         return (List<Oferta>) query.list();
     }
 

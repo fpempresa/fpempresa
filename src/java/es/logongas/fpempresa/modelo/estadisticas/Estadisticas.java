@@ -23,11 +23,11 @@ import java.util.List;
  * @author logongas
  */
 public class Estadisticas {
-    
+
     private final List<FamiliaEstadistica> tituladosPorFamilia;
     private final List<FamiliaEstadistica> ofertasPorFamilia;
     private final List<FamiliaEstadistica> candidatosPorFamilia;
-    
+
     private final int numeroTitulados;
     private final int numeroOfertas;
     private final int numeroCandidatos;
@@ -36,33 +36,30 @@ public class Estadisticas {
         this.tituladosPorFamilia = tituladosPorFamilia;
         this.ofertasPorFamilia = ofertasPorFamilia;
         this.candidatosPorFamilia = candidatosPorFamilia;
-        
-        
+
         this.numeroTitulados = getSum(this.tituladosPorFamilia);
         this.numeroOfertas = getSum(this.ofertasPorFamilia);
         this.numeroCandidatos = getSum(this.candidatosPorFamilia);
     }
 
     private int getSum(List<FamiliaEstadistica> familiasEstadistica) {
-        int sum=0;
-        
-        if (familiasEstadistica!=null) {
-            for(FamiliaEstadistica familiaEstadistica : familiasEstadistica) {
-                sum=sum+familiaEstadistica.getValor();
+        int sum = 0;
+
+        if (familiasEstadistica != null) {
+            for (FamiliaEstadistica familiaEstadistica : familiasEstadistica) {
+                sum = sum + familiaEstadistica.getValor();
             }
         }
-        
+
         return sum;
     }
-    
-    
+
     /**
      * @return the tituladosPorFamilia
      */
     public List<FamiliaEstadistica> getTituladosPorFamilia() {
         return tituladosPorFamilia;
     }
-
 
     /**
      * @return the ofertasPorFamilia
@@ -78,7 +75,6 @@ public class Estadisticas {
         return candidatosPorFamilia;
     }
 
-
     /**
      * @return the numeroTitulados
      */
@@ -86,14 +82,12 @@ public class Estadisticas {
         return numeroTitulados;
     }
 
-
     /**
      * @return the numeroOfertas
      */
     public int getNumeroOfertas() {
         return numeroOfertas;
     }
-
 
     /**
      * @return the numeroCandidatos

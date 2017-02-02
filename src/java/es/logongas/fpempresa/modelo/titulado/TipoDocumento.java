@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.titulado;
 
 /**
@@ -23,11 +22,11 @@ package es.logongas.fpempresa.modelo.titulado;
  * @author Lorenzo
  */
 public enum TipoDocumento {
-    
+
     NIF_NIE("NIF/NIE"),
     PASAPORTE("Pasaporte"),
     OTRO("Otro");
-    
+
     String text;
 
     private TipoDocumento(String text) {

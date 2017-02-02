@@ -15,9 +15,9 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.modelo.comun.geo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,12 +28,13 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Lorenzo
  */
 public class Direccion {
-    
+
     @NotBlank
     @Label("Dirección")
     @Size(min = 3, max = 255)
     private String datosDireccion;
-   
+
+    @JsonProperty("municipio")
     @NotNull
     private Municipio municipio;
 
@@ -64,7 +65,5 @@ public class Direccion {
     public void setMunicipio(Municipio municipio) {
         this.municipio = municipio;
     }
-
-
 
 }

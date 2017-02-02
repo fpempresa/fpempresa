@@ -24,9 +24,10 @@ import javax.validation.constraints.NotNull;
  * @author logongas
  */
 public class Configuracion {
+
     @Valid
     @NotNull
-    private NotificacionOferta notificacionOferta=new NotificacionOferta();
+    private NotificacionOferta notificacionOferta = new NotificacionOferta();
 
     /**
      * @return the notificacionOferta

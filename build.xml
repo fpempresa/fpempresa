@@ -9,7 +9,13 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="fpempresa" default="default" basedir=".">
     <description>Builds, tests, and runs the project fpempresa.</description>
+    <property environment="env"/>
     <import file="nbproject/build-impl.xml"/>
+    
+    
+    <target name="-pre-compile">
+        <copy file="../private/config.properties.${env.APP_ENVIRONMENT}" tofile="./build/web/WEB-INF/classes/config.properties"/>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 

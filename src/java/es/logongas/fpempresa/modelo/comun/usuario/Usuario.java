@@ -7,11 +7,12 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package es.logongas.fpempresa.modelo.comun.usuario;
 
-import com.aeat.valida.Validador;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
@@ -54,10 +55,13 @@ public class Usuario extends User implements Principal {
     @Label("Tipo de usuario")
     private TipoUsuario tipoUsuario;
 
+    @JsonProperty("centro")
     private Centro centro;
 
+    @JsonProperty("titulado")
     private Titulado titulado;
 
+    @JsonProperty("empresa")
     private Empresa empresa;
 
     @Label("Estado del usuario")
@@ -66,6 +70,10 @@ public class Usuario extends User implements Principal {
     private boolean validadoEmail;
 
     private String claveValidacionEmail;
+
+    private String claveResetearContrasenya;
+
+    private Date fechaClaveResetearContrasenya;
 
     private Date fecha;
 
@@ -82,7 +90,6 @@ public class Usuario extends User implements Principal {
     private boolean isProhibidoNuevoUsuario() {
         return true;
     }
-
 
     @ConstraintRule(message = "No es posible añadir usuarios desarrolladores", groups = RuleGroupPredefined.PreInsert.class)
     private boolean isDesarrollador() {
@@ -295,6 +302,22 @@ public class Usuario extends User implements Principal {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public String getClaveResetearContrasenya() {
+        return claveResetearContrasenya;
+    }
+
+    public void setClaveResetearContrasenya(String claveResetearContrasenya) {
+        this.claveResetearContrasenya = claveResetearContrasenya;
+    }
+
+    public Date getFechaClaveResetearContrasenya() {
+        return fechaClaveResetearContrasenya;
+    }
+
+    public void setFechaClaveResetearContrasenya(Date fechaClaveResetearContrasenya) {
+        this.fechaClaveResetearContrasenya = fechaClaveResetearContrasenya;
     }
 
 }

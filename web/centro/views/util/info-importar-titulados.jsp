@@ -3,7 +3,7 @@
     Created on : Dec 21, 2016, 3:16:53 PM
     Author     : ruben
 --%>
-<%@page import="es.logongas.fpempresa.service.educacion.ciclo.CicloCRUDService"%>
+<%@page import="es.logongas.ix3.service.CRUDService"%>
 <%@page import="es.logongas.fpempresa.modelo.educacion.Ciclo"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.PrintWriter"%>
@@ -13,8 +13,6 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@page import="es.logongas.ix3.dao.DataSession"%>
-<%@page import="es.logongas.fpempresa.service.centro.CentroCRUDService"%>
-<%@page import="es.logongas.fpempresa.service.centro.impl.CentroCRUDServiceImpl"%>
 <%@page import="es.logongas.fpempresa.modelo.comun.geo.Municipio"%>
 <%@page import="es.logongas.fpempresa.modelo.centro.Centro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -75,7 +73,7 @@
         <h4>Códigos de ciclo (idCiclo)</h4>
     </div>
 </div>
-   <div class="row form__container">
+<div class="row form__container" style="font-size: 12px; height: 400px; overflow-x: hidden; overflow-y: scroll">
       <%
         String message = "";
         DataSession dataSession = null;
@@ -84,17 +82,17 @@
             DataSessionFactory dataSessionFactory = webApplicationContext.getBean(DataSessionFactory.class);
             dataSession = dataSessionFactory.getDataSession();
             CRUDServiceFactory serviceFactory = webApplicationContext.getBean(CRUDServiceFactory.class);
-            CicloCRUDService cicloCRUDService = (CicloCRUDService) serviceFactory.getService(Ciclo.class);
+            CRUDService cicloCRUDService =  serviceFactory.getService(Ciclo.class);
             List<Ciclo> listaCiclos = cicloCRUDService.search(dataSession, null, null, null);
             for (int i = 1; i < listaCiclos.size(); i++) {
                 Integer codigoDeCiclo = listaCiclos.get(i).getIdCiclo();
                 String nombreCiclo = listaCiclos.get(i).getDescripcion();
     %>
-    <div class="col-xs-4">
-            <div class="col-xs-4">
+    <div class="col-xs-12">
+            <div class="col-xs-1">
                 <strong><%=codigoDeCiclo%></strong>
             </div>
-            <div class="col-xs-8">
+            <div class="col-xs-11">
                 <%=nombreCiclo%>
             </div>
     </div>
@@ -129,18 +127,18 @@
             DataSessionFactory dataSessionFactory = webApplicationContext.getBean(DataSessionFactory.class);
             dataSession = dataSessionFactory.getDataSession();
             CRUDServiceFactory serviceFactory = webApplicationContext.getBean(CRUDServiceFactory.class);
-            CentroCRUDService centroCRUDService = (CentroCRUDService) serviceFactory.getService(Centro.class);
+            CRUDService centroCRUDService = serviceFactory.getService(Centro.class);
             List<Centro> listaCentros = centroCRUDService.search(dataSession, null, null, null);
 
             for (int i = 1; i < listaCentros.size(); i++) {
                 Integer codigoDeCentro = listaCentros.get(i).getIdCentro();
                 String nombreCentro = listaCentros.get(i).getNombre();
     %>
-    <div class="col-xs-4">
-        <div class="col-xs-4">
+    <div class="col-xs-6">
+        <div class="col-xs-1">
             <strong><%=codigoDeCentro%></strong>
         </div>
-        <div class="col-xs-8">
+        <div class="col-xs-10">
             <%=nombreCentro%>
         </div>
     </div>

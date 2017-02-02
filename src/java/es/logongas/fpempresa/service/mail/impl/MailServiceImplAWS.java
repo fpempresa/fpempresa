@@ -20,6 +20,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsyncClient;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.model.Body;
 import com.amazonaws.services.simpleemail.model.Content;
@@ -60,7 +61,7 @@ public class MailServiceImplAWS implements MailService {
 
         // Load AWS credentials
         AWSCredentials credentials = new BasicAWSCredentials(Config.getSetting("aws.accessKey"), Config.getSetting("aws.secretKey"));
-        AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(credentials);
+        AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceAsyncClient(credentials);
 
         // Configure region
         Region REGION = Region.getRegion(Regions.EU_WEST_1);

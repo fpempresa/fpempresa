@@ -28,7 +28,7 @@ public class TituladoDAOImplHibernate extends GenericDAOImplHibernate<Titulado, 
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(""
-                + "SELECT * FROM titulado\n"
+                + "SELECT DISTINCT * FROM titulado\n"
                 + "NATURAL JOIN tituladoprovincianotificacion\n"
                 + "NATURAL JOIN formacionacademica\n"
                 + "WHERE titulado.notificarPorEmail = 1\n"

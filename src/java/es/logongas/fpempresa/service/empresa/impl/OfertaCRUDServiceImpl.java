@@ -96,7 +96,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                         + "<strong>Descripción: </strong>" + oferta.getDescripcion() + "<br>" + "<br>"
                         + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
                 );
-                mail.setFrom(Config.getSetting("mail.sender"));
+                mail.setFrom(Config.getSetting("mail.sender").toString());
 
                 mailService.send(mail);
             } catch (IOException ex) {

@@ -229,7 +229,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         try {
             Mail mail = new Mail();
             mail.addTo(usuario.getEmail());
-            mail.setFrom(Config.getSetting("mail.sender"));
+            mail.setFrom(Config.getSetting("mail.sender").toString());
             mail.setSubject("Confirma tu correo para acceder a empleaFP");
             mail.setHtmlBody(""
                     + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
@@ -252,7 +252,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 getUsuarioDAO().update(dataSession, usuario);
                 Mail mail = new Mail();
                 mail.addTo(usuario.getEmail());
-                mail.setFrom(Config.getSetting("mail.sender"));
+                mail.setFrom(Config.getSetting("mail.sender").toString());
                 mail.setSubject("Resetear contraseña en empleaFP");
                 mail.setHtmlBody(""
                         + "Has solicitado cambiar tu contraseña en <a href=\"http://www.empleafp.com\">empleaFP</a>.<br><br>"

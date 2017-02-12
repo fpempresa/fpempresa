@@ -86,7 +86,7 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
                         + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" + "<br>"
                         + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
                 );
-                mail.setFrom(Config.getSetting("mail.sender"));
+                mail.setFrom(Config.getSetting("mail.sender").toString());
                 mailService.send(mail);
             } catch (IOException ex) {
                 throw new RuntimeException("Error al enviar email notificacion de nuevo candidato a la empresa", ex);

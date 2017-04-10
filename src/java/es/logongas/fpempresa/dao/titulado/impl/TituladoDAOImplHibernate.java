@@ -6,6 +6,7 @@
 package es.logongas.fpempresa.dao.titulado.impl;
 
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.dao.DataSession;
@@ -27,7 +28,7 @@ public class TituladoDAOImplHibernate extends GenericDAOImplHibernate<Titulado, 
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(""
+        String query = ""
                 + "SELECT DISTINCT * FROM titulado\n"
                 + "NATURAL JOIN tituladoprovincianotificacion\n"
                 + "NATURAL JOIN formacionacademica\n"
@@ -43,12 +44,27 @@ public class TituladoDAOImplHibernate extends GenericDAOImplHibernate<Titulado, 
                 + "	SELECT idCiclo\n"
                 + "	FROM ofertaciclo\n"
                 + "	WHERE ofertaciclo.idOferta = ?\n"
-                + "	)");
+                + "	)\n";
+
+        Centro centro = oferta.getEmpresa().getCentro();
+        if (centro != null) {
+            query += "AND titulado.idTitulado IN (\n"
+                    + "	SELECT idTitulado\n"
+                    + "	FROM formacionacademica\n"
+                    + "	WHERE formacionacademica.idCentro = ?\n"
+                    + "	)";
+        }
+
+        stringBuilder.append(query);
 
         SQLQuery sqlQuery = session.createSQLQuery(stringBuilder.toString());
         sqlQuery.addEntity(Titulado.class);
         sqlQuery.setInteger(0, oferta.getIdOferta());
         sqlQuery.setInteger(1, oferta.getIdOferta());
+
+        if (centro != null) {
+            sqlQuery.setInteger(2, centro.getIdCentro());
+        }
 
         return (List<Titulado>) sqlQuery.list();
     }

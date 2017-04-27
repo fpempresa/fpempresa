@@ -75,5 +75,12 @@
 
     -->
 
+        <target name="-pre-dist">
+		<tstamp>
+			<format property="VERSION" pattern="yyyyMMddHHmmss"/>
+		</tstamp>            
+            <replace file="${build.web.dir}/site/fragments/footer/footer.html" token="@@BUILD-STAMP@@" value="${VERSION}"/>
+        </target>
+
 
 </project>

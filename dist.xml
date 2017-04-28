@@ -101,7 +101,10 @@
         <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
         
         <copy file="../private/config.properties.${env.APP_ENVIRONMENT}" tofile="./build/web/WEB-INF/classes/config.properties"/>
-        
+        <tstamp>
+            <format property="VERSION" pattern="yyyyMMddHHmmss"/>
+        </tstamp>            
+        <replace file="${build.web.dir}/site/fragments/footer/footer.html" token="@@BUILD-STAMP@@" value="${VERSION}"/>        
     </target>
 
     <target name="-set-os" >

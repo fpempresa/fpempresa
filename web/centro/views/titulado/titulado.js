@@ -7,6 +7,17 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
         $scope.distinct = true;
         $scope.filters.tipoUsuario = "TITULADO";
         $scope.filters['titulado.formacionesAcademicas.centro.idCentro'] = $scope.user.centro.idCentro;
+        $scope.preSearch = function (filters) {
+            if (filters['ciclo.familia.idFamilia']) {
+                filters['titulado.formacionesAcademicas.ciclo.familia.idFamilia'] = filters['ciclo.familia.idFamilia'].idFamilia;
+            }
+            if (filters['ciclo.idCiclo']) {
+                filters['titulado.formacionesAcademicas.ciclo.idCiclo'] = filters['ciclo.idCiclo'].idCiclo;
+            }
+            if(filters['titulado.formacionesAcademicas.fecha']){
+                filters['titulado.formacionesAcademicas.fecha'] = new Date(filters['titulado.formacionesAcademicas.fecha']);
+            }
+        }
         $scope.search();
         $scope.fail = {};
         $scope.apiUrl = ix3Configuration.server.api;
@@ -21,6 +32,8 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
             alert("El listado de Titulados se importó correctamente");
             $scope.search();
         };
+
+
     }]);
 
 

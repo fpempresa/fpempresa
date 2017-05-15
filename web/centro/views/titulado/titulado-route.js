@@ -4,7 +4,7 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
             url: "/titulado/search",
             templateUrl: 'views/titulado/search.html',
             controller: 'TituladoSearchController',
-            resolve: crudRoutesProvider.getResolve("Usuario","titulado.direccion.municipio.provincia") 
+            resolve: crudRoutesProvider.getResolve("Usuario","titulado.direccion.municipio.provincia,titulado.formacionesAcademicas.ciclo,titulado.formacionesAcademicas.ciclo.familia") 
         });
         
         $stateProvider.state('lateralmenu.titulado_view_', {

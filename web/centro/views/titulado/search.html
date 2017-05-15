@@ -3,6 +3,7 @@
         <div>
             <legend class="form__title">Titulados</legend>
             <ix3-business-messages style="overflow-y: scroll; overflow-x: hidden; max-height: 600px"></ix3-business-messages>
+              <form name="mainForm" id="mainForm" ix3-form="{modelPropertyName:'filters'}" >
             <div class="row">
                 <div class="col-sm-4">
                     <span>Importar desde json</span>
@@ -12,20 +13,40 @@
                     <a ng-click="mostrarCodigosMunicipio()" style="cursor: pointer"><i class="fa fa-question-circle"></i> Ayuda</a>
                 </div>
             </div>
+                         
             <div class="row">
                 <div class="col-xs-5"> 
-                    <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
+<input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  > 
                 </div>
                 <div class="col-xs-7"> 
                     <input ng-model="filters.$lliker.apellidos" type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos"  > 
                 </div>             
             </div>          
             <br>
-            <div class="row" >
+                <div class="row" >
+                    <div class="col-xs-12 col-sm-4">
+                        <select ng-model="filters['ciclo.familia.idFamilia']" ix3-schema-property='Usuario.titulado.formacionesAcademicas.ciclo.familia'   id="ciclo.familia" name="ciclo.familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                            <option value="">-- Elige Familia Profesional --</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+    <select ng-model="filters['ciclo.idCiclo']" ix3-schema-property='Usuario.titulado.formacionesAcademicas.ciclo' id="ciclo" name="ciclo" class="form-control" ix3-options=" orderBy:'descripcion'" ix3-options-depend="{familia:filters['ciclo.familia.idFamilia']}"   >
+<option value="">-- Elige Ciclo --</option>
+                        </select>
+                    </div>
+                     <div  class="col-xs-12 col-sm-4">
+                        <input ng-model="filters['titulado.formacionesAcademicas.fecha']" id="fecha" name="formacionesAcademicas.fecha" class="form-control" type="text"  placeholder="A&ntilde;o" />
+                    </div> 
+                </div> 
+                
+                <br/>
+           <div class="row" >
                 <div class="col-xs-12 ">
                     <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
                 </div>
             </div>
+                <br>
+                </form>
             <br>            
             
             <table class="table table-bordered">

@@ -59,11 +59,13 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
 
     }]);
 
+
 app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
-
+        
+        
         $scope.preSearch=function(filters) {
             if (filters.provincia) {
                 filters.provincia=filters.provincia.idProvincia;

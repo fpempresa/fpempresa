@@ -30,6 +30,7 @@ public class Estadisticas {
 
     private final int numeroTitulados;
     private final int numeroOfertas;
+    private final int numeroCentros;
     private final int numeroCandidatos;
 
     public Estadisticas(List<FamiliaEstadistica> tituladosPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia) {
@@ -40,6 +41,18 @@ public class Estadisticas {
         this.numeroTitulados = getSum(this.tituladosPorFamilia);
         this.numeroOfertas = getSum(this.ofertasPorFamilia);
         this.numeroCandidatos = getSum(this.candidatosPorFamilia);
+        this.numeroCentros = 0;
+    }
+
+    public Estadisticas(List<FamiliaEstadistica> tituladosPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia, Integer numeroCentros) {
+        this.tituladosPorFamilia = tituladosPorFamilia;
+        this.ofertasPorFamilia = ofertasPorFamilia;
+        this.candidatosPorFamilia = candidatosPorFamilia;
+
+        this.numeroTitulados = getSum(this.tituladosPorFamilia);
+        this.numeroOfertas = getSum(this.ofertasPorFamilia);
+        this.numeroCandidatos = getSum(this.candidatosPorFamilia);
+        this.numeroCentros = numeroCentros;
     }
 
     private int getSum(List<FamiliaEstadistica> familiasEstadistica) {
@@ -87,6 +100,13 @@ public class Estadisticas {
      */
     public int getNumeroOfertas() {
         return numeroOfertas;
+    }
+
+    /**
+     * @return the numeroCentros
+     */
+    public int getNumeroCentros() {
+        return numeroCentros;
     }
 
     /**

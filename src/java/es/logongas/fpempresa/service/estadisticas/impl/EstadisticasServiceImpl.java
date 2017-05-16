@@ -42,7 +42,7 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
     @Override
     public Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro) {
-        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession, centro), estadisticaDAO.getOfertasGroupByFamilia(dataSession, centro), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, centro));
+        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession, centro), estadisticaDAO.getOfertasGroupByFamilia(dataSession, centro), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, centro), estadisticaDAO.getSumCentros(dataSession));
 
         return estadisticas;
     }
@@ -56,7 +56,7 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
     @Override
     public void setEntityType(Class<Estadisticas> entityType) {
-        throw new RuntimeException("No se permite cambiar el tipo de la entidad. Debe ser siemrpe Estadisticas");
+        throw new RuntimeException("No se permite cambiar el tipo de la entidad. Debe ser siempre Estadisticas");
     }
 
     @Override

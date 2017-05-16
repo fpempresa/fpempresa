@@ -40,5 +40,7 @@ public interface EstadisticaDAO {
     List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession);
 
     List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession, Centro centro);
+    
+    Integer getSumCentros(DataSession dataSession);
 
 }

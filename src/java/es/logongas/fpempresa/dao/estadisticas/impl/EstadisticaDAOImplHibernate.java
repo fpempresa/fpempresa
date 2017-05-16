@@ -190,4 +190,15 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         return familiaEstadisticas;
     }
 
+    @Override
+    public Integer getSumCentros(DataSession dataSession) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String sql = "SELECT COUNT(*) FROM centro";
+
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+                
+        return Integer.parseInt(sqlQuery.list().get(0).toString()) - 1;
+    }
+
 }

@@ -20,6 +20,7 @@ import es.logongas.fpempresa.dao.estadisticas.EstadisticaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.dao.DataSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,13 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
         return estadisticas;
     }
+    
+     @Override
+    public Estadisticas getEstadisticasTitulado(DataSession dataSession, Titulado titulado) {
+       Estadisticas estadisticas = new Estadisticas(1, estadisticaDAO.getOfertasGroupByFamilia(dataSession));
+
+        return estadisticas;
+    }
 
     @Override
     public void setEntityType(Class<Estadisticas> entityType) {
@@ -63,5 +71,7 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     public Class<Estadisticas> getEntityType() {
         return Estadisticas.class;
     }
+
+   
 
 }

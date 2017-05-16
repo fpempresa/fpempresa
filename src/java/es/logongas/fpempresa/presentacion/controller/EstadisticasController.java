@@ -20,6 +20,7 @@ import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessPr
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
@@ -94,6 +95,22 @@ public class EstadisticasController {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasAdministrador(new EstadisticasBusinessProcess.GetEstadisticasAdministradorArguments(principal, dataSession));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+    
+     @RequestMapping(value = {"/{path}/Estadisticas/titulado/{idTitulado}"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasTitulado(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idTitulado") int idTitulado) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+              Titulado titulado = crudServiceFactory.getService(Titulado.class).read(dataSession, idTitulado);
+
+            Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasTitulado(new EstadisticasBusinessProcess.GetEstadisticasTituladoArguments(principal, dataSession, titulado));
 
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {

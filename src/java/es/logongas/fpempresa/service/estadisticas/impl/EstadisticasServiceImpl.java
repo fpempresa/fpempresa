@@ -49,7 +49,7 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
     @Override
     public Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa) {
-        Estadisticas estadisticas = new Estadisticas(null, estadisticaDAO.getOfertasGroupByFamilia(dataSession, empresa), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, empresa));
+        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession, empresa), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, empresa));
 
         return estadisticas;
     }

@@ -54,11 +54,10 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
         return estadisticas;
     }
-    
-     @Override
-    public Estadisticas getEstadisticasTitulado(DataSession dataSession, Titulado titulado) {
-       Estadisticas estadisticas = new Estadisticas(1, estadisticaDAO.getOfertasGroupByFamilia(dataSession));
 
+    @Override
+    public Estadisticas getEstadisticasTitulado(DataSession dataSession, Titulado titulado) {
+        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getSumEmpresas(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession));
         return estadisticas;
     }
 
@@ -71,7 +70,5 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     public Class<Estadisticas> getEntityType() {
         return Estadisticas.class;
     }
-
-   
 
 }

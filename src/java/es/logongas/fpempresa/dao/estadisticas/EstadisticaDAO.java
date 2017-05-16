@@ -43,4 +43,6 @@ public interface EstadisticaDAO {
     
     Integer getSumCentros(DataSession dataSession);
 
+    public Integer getSumEmpresas(DataSession dataSession);
+
 }

@@ -201,4 +201,15 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         return Integer.parseInt(sqlQuery.list().get(0).toString()) - 1;
     }
 
+    @Override
+    public Integer getSumEmpresas(DataSession dataSession) {
+         Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String sql = "SELECT COUNT(*) FROM empresa";
+
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+                
+        return Integer.parseInt(sqlQuery.list().get(0).toString());
+    }
+
 }

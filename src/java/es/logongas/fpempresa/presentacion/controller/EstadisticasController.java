@@ -101,15 +101,15 @@ public class EstadisticasController {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
     }
-    
-     @RequestMapping(value = {"/{path}/Estadisticas/titulado/{idTitulado}"}, method = RequestMethod.GET, produces = "application/json")
+
+    @RequestMapping(value = {"/{path}/Estadisticas/titulado/{idTitulado}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasTitulado(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idTitulado") int idTitulado) {
 
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
-            
-              Titulado titulado = crudServiceFactory.getService(Titulado.class).read(dataSession, idTitulado);
 
+            Titulado titulado = crudServiceFactory.getService(Titulado.class).read(dataSession, idTitulado);
+           
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasTitulado(new EstadisticasBusinessProcess.GetEstadisticasTituladoArguments(principal, dataSession, titulado));
 
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);

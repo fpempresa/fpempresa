@@ -13,6 +13,8 @@ INSERT INTO `sec_ace`
 /** Permisos del Titulado **/
 INSERT INTO `sec_ace` 
 (`aceType`, `idPermission`, `ididentity`, `secureResourceRegExp`, `conditionalScript`, `conditionalExpression`, `priority`, `description`) VALUES 
+('Allow', 22, 32, 'EstadisticasBusinessProcess.getEstadisticasTitulado', NULL, 'arguments
+.titulado.idTitulado==identity.titulado.idTitulado', 1, NULL),
 ('Allow', 22, 32, '.*BusinessProcess.Titulado.schema', NULL, NULL, 1, NULL),
 ('Allow', 22, 32, '.*BusinessProcess.Titulado.create', NULL, NULL, 1, NULL),
 ('Allow', 22, 32, '.*BusinessProcess.Titulado.read', NULL, '((arguments.id==0) || (arguments.id==identity.titulado.idTitulado))', 1, NULL),

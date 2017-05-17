@@ -111,7 +111,7 @@ public class EstadisticasController {
             Titulado titulado = crudServiceFactory.getService(Titulado.class).read(dataSession, idTitulado);
            
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasTitulado(new EstadisticasBusinessProcess.GetEstadisticasTituladoArguments(principal, dataSession, titulado));
-
+            
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);

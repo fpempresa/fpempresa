@@ -110,6 +110,12 @@ public class Estadisticas {
         return numeroTitulados;
     }
 
+    public int getNumeroEmpresas() {
+        return numeroEmpresas;
+    }
+    
+    
+
     /**
      * @return the numeroOfertas
      */

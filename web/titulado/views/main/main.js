@@ -15,7 +15,6 @@ app.controller('MainController', ['$scope','$http','ix3Configuration', 'genericC
                 method: "GET",
                 url: ix3Configuration.server.api + "/Estadisticas/titulado/" + $scope.user.titulado.idTitulado
             }).then(function (chartData) {
-                console.log(chartData.data);
                 $scope.chartData = chartData.data;
                 $scope.chartData['numeroEmpresas'] = [{valor: chartData.data.numeroEmpresas}];
             }, function (businessMessages) {

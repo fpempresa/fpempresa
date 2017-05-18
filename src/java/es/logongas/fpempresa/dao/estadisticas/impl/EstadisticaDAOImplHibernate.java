@@ -164,7 +164,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
-                + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
+                + "   familia.idFamilia,familia.descripcion, COUNT(DISTINCT formacionacademica.idTitulado) as valor\n"
                 + "FROM\n"
                 + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
                 + "WHERE\n"

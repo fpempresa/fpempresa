@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
+import com.amazonaws.services.simpleworkflow.flow.annotations.Asynchronous;
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
@@ -74,6 +75,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         return getOfertaDAO().getOfertasEmpresa(dataSession, empresa);
     }
 
+    @Asynchronous
     @Override
     public void notificarOfertaATitulados(DataSession dataSession, Oferta oferta) throws BusinessException {
         TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
@@ -97,7 +99,6 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                         + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
                 );
                 mail.setFrom(Config.getSetting("mail.sender").toString());
-
                 mailService.send(mail);
             } catch (IOException ex) {
                 throw new RuntimeException("Error al enviar email notificacion oferta a titulados", ex);

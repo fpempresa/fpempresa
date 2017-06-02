@@ -16,7 +16,6 @@ function MainController($scope, $http, ix3Configuration) {
             method: "GET",
             url: ix3Configuration.server.api + "/Estadisticas/centro/" + $scope.user.centro.idCentro
         }).then(function (chartData) {
-            console.log(chartData.data);
             $scope.chartData = chartData.data;
             $scope.chartData['numeroCentros'] = [{valor: chartData.data.numeroCentros}];
         }, function (businessMessages) {

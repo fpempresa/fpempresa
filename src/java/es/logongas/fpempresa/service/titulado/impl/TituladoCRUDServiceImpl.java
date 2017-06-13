@@ -58,7 +58,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         try {
             inputStream = multipartFile.getInputStream();
         } catch (IOException ex) {
-            throw new BusinessException("Error al leer el archivo json");
+            throw new BusinessException("Error al leer el archivo json:"+ex.getLocalizedMessage());
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
@@ -67,7 +67,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         try {
             listadoUsuarios = mapper.readValue(inputStream, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, Usuario.class));
         } catch (IOException ex) {
-            throw new BusinessException("Error al leer el archivo json");
+            throw new BusinessException("Error al leer el archivo json:"+ex.getLocalizedMessage());
         }
         if (listadoUsuarios != null) {
             List<BusinessMessage> businessMessages = new ArrayList();

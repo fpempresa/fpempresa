@@ -24,6 +24,7 @@ import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.Filters;
@@ -49,6 +50,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Autowired
     MailService mailService;
+    
+    @Autowired
+    Conversion conversion;
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -82,14 +86,27 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new RuntimeException(ex);
         }
 
+        Boolean autoValidateEMail=(Boolean)conversion.convertFromString(Config.getSetting("app.autoValidateEMail"),Boolean.class);
+        if (autoValidateEMail==null) {
+            autoValidateEMail=false;
+        }
+        
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
-        usuario.setValidadoEmail(false);
+        if (autoValidateEMail==true) {
+            usuario.setValidadoEmail(true);
+        } else {
+            usuario.setValidadoEmail(false);
+        }
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
         usuario.setMemberOf(getMembersOf(dataSession, usuario));
         Usuario resultUsuario = getUsuarioDAO().insert(dataSession, usuario);
 
         if (resultUsuario != null) {
-            enviarMailValidacionCuenta(usuario);
+            if (autoValidateEMail==true) {
+                //No es necesario enviar el EMail de confirmación ya que auto valida el email
+            } else {
+                enviarMailValidacionCuenta(usuario);
+            }
         }
 
         //La ponemos siemrpe a null una vez insertada para que nunca se pueda ver desde "fuera"

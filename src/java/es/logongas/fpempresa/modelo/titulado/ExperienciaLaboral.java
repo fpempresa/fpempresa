@@ -21,6 +21,7 @@ import es.logongas.ix3.core.annotations.Label;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -51,9 +52,11 @@ public class ExperienciaLaboral {
 
     @Label("Puesto desenpeñado")
     @NotBlank
+    @Size(max = 255)
     private String puestoTrabajo;
 
     @Label("Tareas realizadas en el puesto desempeñado")
+    @Size(max = 255)
     private String descripcion;
 
     /**

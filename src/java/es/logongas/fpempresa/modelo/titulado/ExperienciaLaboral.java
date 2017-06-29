@@ -50,7 +50,7 @@ public class ExperienciaLaboral {
     @Label("Fecha final")
     private Date fechaFin;
 
-    @Label("Puesto desenpeñado")
+    @Label("Puesto desempeñado")
     @NotBlank
     @Size(max = 255)
     private String puestoTrabajo;

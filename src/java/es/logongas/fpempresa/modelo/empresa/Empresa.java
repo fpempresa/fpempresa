@@ -26,7 +26,6 @@ import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -43,7 +42,6 @@ public class Empresa {
     @NotBlank
     private String razonSocial;
 
-    @Size(min = 9, max = 9)
     private String cif;
 
     @JsonProperty("direccion")
@@ -62,11 +60,14 @@ public class Empresa {
     @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
         Validador validadorCIF = new Validador();
-
-        if (validadorCIF.checkNif(this.cif) > 0) {
+        if (this.cif == null) {
             return true;
         } else {
-            return false;
+            if (validadorCIF.checkNif(this.cif) > 0 || this.cif.isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

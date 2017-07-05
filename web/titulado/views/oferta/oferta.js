@@ -44,9 +44,9 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
 
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
-      //  $scope.orderby = [
-      //      {fieldName: "fecha", orderDirection: "DESC"}
-      //  ];
+        $scope.orderby = [
+            {fieldName: "fecha", orderDirection: "DESC"}
+        ];
         $scope.preSearch = function (filters) {
             if (filters.provincia) {
                 filters.provincia = filters.provincia.idProvincia;
@@ -66,9 +66,6 @@ app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCr
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
-        $scope.orderby = [
-            {fieldName: "fecha", orderDirection: "ASC"}
-        ];
         $scope.preSearch = function (filters) {
             if (filters.provincia) {
                 filters.provincia = filters.provincia.idProvincia;

@@ -43,7 +43,6 @@ public class Empresa {
     @NotBlank
     private String razonSocial;
 
-    @NotBlank
     @Size(min = 9, max = 9)
     private String cif;
 

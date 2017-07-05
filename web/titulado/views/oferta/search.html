@@ -50,6 +50,7 @@
                             <th ix3-order-field-names="puesto" style="width:   40%;text-align: center">Puesto</th>
                             <th ix3-order-field-names="empresa.nombreComercial" style="width:   20%;text-align: center">Empresa</th>
                             <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
+                            <th ix3-order-field-names="fecha" style="width:   30%;text-align: center">Fecha</th>
                             <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
                         </tr>
                     </thead>
@@ -57,7 +58,8 @@
                         <tr ng-repeat="model in models" class="data-table__row">
                             <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
                             <td >{{model.empresa.nombreComercial}}</td>
-                            <td >{{model.familia.descripcion}}</td>                   
+                            <td >{{model.familia.descripcion}}</td>
+                            <td >{{model.fecha | date: 'dd/MM/yyyy'}}</td>
                             <td >
                                 <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonView(model.idOferta)">Ver</button>
                             </td>                             

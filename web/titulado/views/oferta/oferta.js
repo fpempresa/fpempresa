@@ -41,20 +41,22 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
 
 app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
+
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
-
-
-        $scope.preSearch=function(filters) {
+      //  $scope.orderby = [
+      //      {fieldName: "fecha", orderDirection: "DESC"}
+      //  ];
+        $scope.preSearch = function (filters) {
             if (filters.provincia) {
-                filters.provincia=filters.provincia.idProvincia;
+                filters.provincia = filters.provincia.idProvincia;
             }
         }
 
         $scope.buttonView = function (idOferta) {
             $location.path("/oferta/view_todas/" + idOferta).search({});
         };
-        
+
         $scope.search();
 
     }]);
@@ -64,14 +66,15 @@ app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCr
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
-        
-        
-        $scope.preSearch=function(filters) {
+        $scope.orderby = [
+            {fieldName: "fecha", orderDirection: "ASC"}
+        ];
+        $scope.preSearch = function (filters) {
             if (filters.provincia) {
-                filters.provincia=filters.provincia.idProvincia;
+                filters.provincia = filters.provincia.idProvincia;
             }
-        }
-        
+        };
+
         $scope.buttonView = function (idOferta) {
             $location.path("/oferta/view_inscrito/" + idOferta).search({});
         };
@@ -100,11 +103,11 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
 
             if ($scope.model.empresa.centro) {
                 var promise = dialog.create('avisoInscripcion', {
-                    titulo:"Inscripción en la oferta",
-                    mensaje:"Aunque estés inscrito en la oferta debes ponerte en contacto directamente con las empresa a través de los datos que se muestran a continuación para que la empresa puedar ver tus datos",
+                    titulo: "Inscripción en la oferta",
+                    mensaje: "Aunque estés inscrito en la oferta debes ponerte en contacto directamente con las empresa a través de los datos que se muestran a continuación para que la empresa puedar ver tus datos",
                     datosContacto: $scope.model.contacto.textoLibre
                 });
-                
+
                 promise["finally"](function () {
                     $scope.inscribirseOferta();
                 });
@@ -138,14 +141,14 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
 
 
         $scope.buttonDesinscribirseOferta = function () {
-            
+
             if ($scope.model.empresa.centro) {
                 var promise = dialog.create('avisoInscripcion', {
-                    titulo:"Desinscripción de la oferta",
-                    mensaje:"Aunque te desinscribas de la oferta recuerda que tus datos los debistes de enviar tu directamente a la información de contacto que aparece en el siguiente campo.",
+                    titulo: "Desinscripción de la oferta",
+                    mensaje: "Aunque te desinscribas de la oferta recuerda que tus datos los debistes de enviar tu directamente a la información de contacto que aparece en el siguiente campo.",
                     datosContacto: $scope.model.contacto.textoLibre
                 });
-                
+
                 promise["finally"](function () {
                     $scope.desinscribirseOferta();
                 });
@@ -153,8 +156,8 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
                 $scope.desinscribirseOferta().then(function () {
                     alert("Te has borrado correctamente de la oferta. La empresa ya no podrá ver tu curriculum");
                 });
-            }            
-            
+            }
+
 
         }
 

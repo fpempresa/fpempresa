@@ -9,7 +9,9 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', '$location', function ($scope, genericControllerCrudList, controllerParams, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
-
+        $scope.orderby = [
+            {fieldName: "fecha", orderDirection: "DESC"}
+        ];
         $scope.filters['empresa.idEmpresa'] = $scope.user.empresa.idEmpresa;
 
         $scope.search();

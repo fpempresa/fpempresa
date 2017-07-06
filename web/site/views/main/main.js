@@ -2,7 +2,7 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
         $scope.login = function () {
             goPage.login();
         };
-
+        $scope.chartData = [];
         $scope.createAccount = function () {
             goPage.createAccount();
         };
@@ -12,7 +12,6 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
             url: ix3Configuration.server.api + "/Estadisticas/publicas/"
         }).then(function (chartData) {
             $scope.chartData = chartData.data;
-            console.log(chartData);
             $scope.chartData['numeroEmpresas'] = [{valor: chartData.data.numeroEmpresas}];
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;

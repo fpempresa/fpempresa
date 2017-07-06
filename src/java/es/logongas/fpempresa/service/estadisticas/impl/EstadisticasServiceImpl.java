@@ -64,7 +64,6 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     @Override
     public Estadisticas getEstadisticasPublicas(DataSession dataSession) {
         Estadisticas estadisticasPublicas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession));
-        System.out.println(estadisticasPublicas);
         return estadisticasPublicas;
     }
 

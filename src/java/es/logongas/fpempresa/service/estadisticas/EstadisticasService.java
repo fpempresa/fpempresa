@@ -37,4 +37,6 @@ public interface EstadisticasService extends Service<Estadisticas> {
     
     Estadisticas getEstadisticasTitulado(DataSession dataSession, Titulado titulado);
 
+    Estadisticas getEstadisticasPublicas(DataSession dataSession);
+    
 }

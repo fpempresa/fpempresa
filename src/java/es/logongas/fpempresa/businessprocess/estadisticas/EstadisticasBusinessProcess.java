@@ -26,8 +26,10 @@ public interface EstadisticasBusinessProcess {
     Estadisticas getEstadisticasCentro(GetEstadisticasCentroArguments getEstadisticasCentroArguments) throws BusinessException;
 
     Estadisticas getEstadisticasEmpresa(GetEstadisticasEmpresaArguments getEstadisticasEmpresaArguments) throws BusinessException;
-    
-     Estadisticas getEstadisticasTitulado(GetEstadisticasTituladoArguments getEstadisticasTituladoArguments) throws BusinessException;
+
+    Estadisticas getEstadisticasTitulado(GetEstadisticasTituladoArguments getEstadisticasTituladoArguments) throws BusinessException;
+
+    Estadisticas getEstadisticasPublicas(GetEstadisticasPublicasArguments getEstadisticasPublicasArguments) throws BusinessException;
 
     public class GetEstadisticasAdministradorArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -68,8 +70,8 @@ public interface EstadisticasBusinessProcess {
         }
 
     }
-    
-        public class GetEstadisticasTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
+    public class GetEstadisticasTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
         public Titulado titulado;
 
@@ -80,6 +82,17 @@ public interface EstadisticasBusinessProcess {
         public GetEstadisticasTituladoArguments(Principal principal, DataSession dataSession, Titulado titulado) {
             super(principal, dataSession);
             this.titulado = titulado;
+        }
+
+    }
+
+    public class GetEstadisticasPublicasArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
+        public GetEstadisticasPublicasArguments() {
+        }
+
+        public GetEstadisticasPublicasArguments(Principal principal, DataSession dataSession) {
+            super(principal, dataSession);
         }
 
     }

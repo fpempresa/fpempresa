@@ -98,6 +98,8 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     private void addSiteEndPoints(List<EndPoint> endPoints, String path) {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
+
         //endPoints.add(EndPoint.createEndPoint(path + "/Usuario/olvidoPassword/*", "POST", null));
 
     }

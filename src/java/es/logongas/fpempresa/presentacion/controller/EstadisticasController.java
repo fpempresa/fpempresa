@@ -109,9 +109,20 @@ public class EstadisticasController {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
             Titulado titulado = crudServiceFactory.getService(Titulado.class).read(dataSession, idTitulado);
-           
+
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasTitulado(new EstadisticasBusinessProcess.GetEstadisticasTituladoArguments(principal, dataSession, titulado));
-            
+
+            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+
+    @RequestMapping(value = {"/{path}/Estadisticas/publicas"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasPublicas(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasPublicas(new EstadisticasBusinessProcess.GetEstadisticasPublicasArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);

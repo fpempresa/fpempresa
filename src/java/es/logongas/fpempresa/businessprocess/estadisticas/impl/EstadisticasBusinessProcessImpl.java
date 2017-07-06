@@ -40,4 +40,9 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
         return estadisticasService.getEstadisticasTitulado(getEstadisticasTituladoArguments.dataSession, getEstadisticasTituladoArguments.titulado);
     }
 
+    @Override
+    public Estadisticas getEstadisticasPublicas(GetEstadisticasPublicasArguments getEstadisticasPublicasArguments) throws BusinessException {
+        return estadisticasService.getEstadisticasPublicas(getEstadisticasPublicasArguments.dataSession);
+    }
+    
 }

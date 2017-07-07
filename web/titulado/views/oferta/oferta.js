@@ -44,6 +44,7 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
 
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
+        $scope.page.pageSize = 20;
         $scope.orderby = [
             {fieldName: "fecha", orderDirection: "DESC"}
         ];

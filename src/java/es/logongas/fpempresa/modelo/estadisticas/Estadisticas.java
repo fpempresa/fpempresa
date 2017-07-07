@@ -46,6 +46,18 @@ public class Estadisticas {
         this.numeroEmpresas = 0;
     }
 
+    public Estadisticas(List<FamiliaEstadistica> tituladosPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia, Integer numeroCentros, Integer numeroEmpresas) {
+        this.tituladosPorFamilia = tituladosPorFamilia;
+        this.ofertasPorFamilia = ofertasPorFamilia;
+        this.candidatosPorFamilia = candidatosPorFamilia;
+
+        this.numeroTitulados = getSum(this.tituladosPorFamilia);
+        this.numeroOfertas = getSum(this.ofertasPorFamilia);
+        this.numeroCandidatos = getSum(this.candidatosPorFamilia);
+        this.numeroCentros = numeroCentros;
+        this.numeroEmpresas = numeroEmpresas;
+    }
+
     public Estadisticas(Integer numeroEmpresas, List<FamiliaEstadistica> ofertasPorFamilia) {
         this.tituladosPorFamilia = null;
         this.ofertasPorFamilia = ofertasPorFamilia;
@@ -113,8 +125,6 @@ public class Estadisticas {
     public int getNumeroEmpresas() {
         return numeroEmpresas;
     }
-    
-    
 
     /**
      * @return the numeroOfertas

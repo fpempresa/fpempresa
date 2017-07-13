@@ -15,6 +15,7 @@
             scope.service = serviceFactory.getService(scope.entity);
             scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
             scope.childPrefixRoute = "/" + scope.entity.toLowerCase();
+            scope.runningOKAction=false;
             scope.preCreate = function () {
             };
             scope.postCreate = function () {
@@ -164,26 +165,40 @@
             };
             scope.buttonOK = function () {
                 var oldControllerAction = scope.controllerAction;
+                
+                if (scope.isInOKAction()===true) {
+                    return;
+                }
+                
+                scope.startOKAction();
                 switch (scope.controllerAction) {
                     case "NEW":
                         scope.doInsert().then(function () {
                             scope.finishOK(oldControllerAction);
+                        })["finally"](function() {
+                            scope.endOKAction();
                         });
                         break;
                     case "EDIT":
                         scope.doUpdate().then(function () {
                             scope.finishOK(oldControllerAction);
+                        })["finally"](function() {
+                            scope.endOKAction();
                         });
                         break;
                     case "VIEW":
+                        scope.endOKAction();
                         scope.finishOK(oldControllerAction);
                         break;
                     case "DELETE":
                         scope.doDelete().then(function () {
                             scope.finishOK(oldControllerAction);
+                        })["finally"](function() {
+                           scope.endOKAction(); 
                         });
                         break;
                     default:
+                        scope.endOKAction();
                         throw Error("scope.controllerAction desconocida:" + scope.controllerAction);
                 }
 
@@ -211,6 +226,22 @@
                         throw Error("scope.controllerAction desconocida:" + scope.controllerAction);
                 }
             });
+
+
+            scope.isInOKAction = function () {
+                return (scope.runningOKAction===true);
+            };
+
+            scope.startOKAction = function () {
+                scope.runningOKAction=true;
+                document.getElementsByTagName("body")[0].style.cursor = "progress";
+            };
+            scope.endOKAction = function () {
+                scope.runningOKAction=false;
+                document.getElementsByTagName("body")[0].style.cursor = "default";
+            };            
+            
+
 
             /**
              * Accion a realizar al iniciar el controlador

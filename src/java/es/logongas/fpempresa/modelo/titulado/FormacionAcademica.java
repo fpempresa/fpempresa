@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -54,7 +55,6 @@ public class FormacionAcademica {
     @NotNull
     private Titulado titulado;
 
-    @Past
     @NotNull
     @Label("Fecha de obtención del título")
     private Date fecha;
@@ -165,6 +165,26 @@ public class FormacionAcademica {
         }
     }
 
+    @AssertTrue(message = "La fecha no puede ser mayor que la del final de este año")
+    @Label("Fecha de obtención del título")
+    private boolean getValidateFecha() {
+        Calendar calendarHoy = Calendar.getInstance();
+        calendarHoy.setTime(new Date());
+        int anyoActual=calendarHoy.get(Calendar.YEAR);
+
+        Calendar calendarFecha = Calendar.getInstance();
+        calendarFecha.setTime(fecha);
+        int anyoFechaFormacionAcademica=calendarFecha.get(Calendar.YEAR);        
+        
+        if (anyoFechaFormacionAcademica>anyoActual) {
+            return false;
+        } else {
+            return true;
+        }
+        
+    }     
+    
+    
     public String getNombreCentro() {
         if (tipoFormacionAcademica == TipoFormacionAcademica.CICLO_FORMATIVO) {
             if (centro != null) {

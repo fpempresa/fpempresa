@@ -21,6 +21,9 @@
 .intro .intro-body .intro-text {
   font-size: 18px;
 }
+.intro .intro-body .intro-text-alternative {
+  font-size: 20px;
+}
 @media (min-width: 767px) {
   .intro {
     height: 100%;
@@ -31,6 +34,9 @@
   }
   .intro .intro-body .intro-text {
     font-size: 25px;
+  }
+  .intro .intro-body .intro-text-alternative {
+    font-size: 30px;
   }
 }
 .button-circle {

@@ -646,6 +646,15 @@ fieldset[disabled] .form__button--danger.active {
   font-weight: bold;
   color: #005594;
 }
+.fpe_link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.fpe_link:hover,
+.fpe_link active,
+.fpe_link visited {
+  text-decoration: none;
+}
 .btn-xl {
   padding: 13px 19px;
   font-size: 21px;

@@ -1,11 +1,13 @@
 "use strict";
 
-app.config(['crudRoutesProvider', function (crudRoutesProvider) {
-        crudRoutesProvider.addAllRoutes({
-            entity: "Estadisticas",
-            expand: "tituladosPorFamilia,ofertasPorFamilia,candidatosPorFamilia"
+app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, crudRoutesProvider) {
+        $stateProvider.state('lateralmenu.estadisticas', {
+            url: "/estadisticas/centros",
+            templateUrl: 'views/estadisticas/centro.html',
+            controller: 'EstadisticasCentroController'
         });
     }]);
+
 
 
 app.controller("EstadisticasCentroController", ['$scope', function ($scope) {

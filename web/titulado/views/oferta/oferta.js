@@ -6,14 +6,14 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
             url: "/oferta/search_todas",
             templateUrl: 'views/oferta/search.html',
             controller: 'OfertaTodasSearchController',
-            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos")
+            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha")
         });
 
         $stateProvider.state("lateralmenu.oferta_view_todas", {
             url: '/oferta/view_todas/:id',
             templateUrl: 'views/oferta/detail.html',
             controller: 'OfertaViewController',
-            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos", "VIEW"), {inscrito: function () {
+            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha", "VIEW"), {inscrito: function () {
                     return false;
                 }})
         });
@@ -22,14 +22,14 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
             url: "/oferta/search_inscrito",
             templateUrl: 'views/oferta/search.html',
             controller: 'OfertaInscritoSearchController',
-            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos")
+            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha")
         });
 
         $stateProvider.state("lateralmenu.oferta_view_inscrito", {
             url: '/oferta/view_inscrito/:id',
             templateUrl: 'views/oferta/detail.html',
             controller: 'OfertaViewController',
-            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos", "VIEW"), {inscrito: function () {
+            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha", "VIEW"), {inscrito: function () {
                     return true;
                 }})
         });
@@ -45,9 +45,7 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
         $scope.page.pageSize = 20;
-        $scope.orderby = [
-            {fieldName: "fecha", orderDirection: "DESC"}
-        ];
+        
         $scope.preSearch = function (filters) {
             if (filters.provincia) {
                 filters.provincia = filters.provincia.idProvincia;
@@ -57,6 +55,9 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
         $scope.buttonView = function (idOferta) {
             $location.path("/oferta/view_todas/" + idOferta).search({});
         };
+        $scope.orderby = [
+            {fieldName: "fecha", orderDirection: "DESC"}
+        ];
 
         $scope.search();
 

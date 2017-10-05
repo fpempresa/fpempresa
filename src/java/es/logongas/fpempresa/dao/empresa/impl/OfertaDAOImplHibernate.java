@@ -96,6 +96,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
         }
 
         sb.append("   not exists (SELECT * FROM candidato WHERE candidato.idIdentity=usuario.idIdentity AND candidato.idOferta=oferta.idOferta)");
+        sb.append(" ORDER BY fecha DESC");
 
         SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
         sqlQuery.addEntity(Oferta.class);
@@ -144,6 +145,8 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
             sb.append(" AND candidato.oferta.fecha<=? ");
         }
 
+        sb.append(" ORDER BY fecha DESC");
+
         Query query = session.createQuery(sb.toString());
         int paramNumber = 0;
         query.setInteger(paramNumber++, usuario.getIdIdentity());
@@ -164,7 +167,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     public List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String hql = "SELECT oferta FROM oferta WHERE oferta.empresa.centro.idCentro=?";
+        String hql = "SELECT oferta FROM oferta WHERE oferta.empresa.centro.idCentro=? ORDER BY fecha";
 
         Query query = session.createQuery(hql);
         query.setInteger(0, centro.getIdCentro());
@@ -176,7 +179,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
     public List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String hql = "SELECT oferta FROM oferta WHERE oferta.empresa.idEmpresa=?";
+        String hql = "SELECT oferta FROM oferta WHERE oferta.empresa.idEmpresa=? ORDER BY fecha DESC";
 
         Query query = session.createQuery(hql);
         query.setInteger(0, empresa.getIdEmpresa());

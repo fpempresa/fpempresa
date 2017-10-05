@@ -2,18 +2,17 @@
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
             entity: "Oferta",
-            expand: "municipio,municipio.provincia,familia,empresa,ciclos,ciclos"
+            expand: "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha"
         });
     }]);
 
 app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', function ($scope, genericControllerCrudList, controllerParams, dialog) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
+        $scope.filters['empresa.centro.idCentro'] = $scope.user.centro.idCentro;
         $scope.orderby = [
             {fieldName: "fecha", orderDirection: "DESC"}
         ];
-        $scope.filters['empresa.centro.idCentro'] = $scope.user.centro.idCentro;
-
         $scope.search();
     }]);
 

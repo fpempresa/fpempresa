@@ -194,12 +194,14 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String sql = "SELECT count(formacionacademica.idTitulado) as 'Valor', ciclo.descripcion, ciclo.idCiclo FROM (familia JOIN ciclo ON ciclo.idFamilia=familia.idFamilia) JOIN formacionacademica ON formacionacademica.idCiclo = ciclo.idCiclo  AND formacionacademica.idCentro = ? GROUP BY ciclo.idCiclo";
+        String sql = "";
 
         for (Object[] dato : datos) {
+            sql = "SELECT count(formacionacademica.idTitulado) as 'Valor', ciclo.descripcion, ciclo.idCiclo FROM (familia JOIN ciclo ON ciclo.idFamilia=familia.idFamilia) JOIN formacionacademica ON formacionacademica.idCiclo = ciclo.idCiclo  AND formacionacademica.idCentro = ? WHERE ciclo.idFamilia = ? GROUP BY ciclo.idCiclo";
             SQLQuery sqlQuery = session.createSQLQuery(sql);
             sqlQuery.setInteger(0, (Integer) centro.getIdCentro());
-            List<CicloEstadistica> listCiclos =  getListCicloEstadistica(sqlQuery.list());
+            sqlQuery.setInteger(1, (Integer) dato[0]);
+            List<CicloEstadistica> listCiclos = getListCicloEstadistica(sqlQuery.list());
             FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1], ((Number) dato[2]).intValue(), listCiclos);
 
             familiaEstadisticas.add(familiaEstadistica);
@@ -207,15 +209,15 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
         return familiaEstadisticas;
     }
-    
+
     private List<CicloEstadistica> getListCicloEstadistica(List<Object[]> datos) {
-    List<CicloEstadistica> cicloEstadisticas = new ArrayList<CicloEstadistica>();    
-    
-        for (Object[] dato: datos) {
-            CicloEstadistica cicloEstadistica = new CicloEstadistica(((Number) dato[2]).intValue(), (String) dato[1], ((Number) dato[0]).intValue()); 
+        List<CicloEstadistica> cicloEstadisticas = new ArrayList<CicloEstadistica>();
+
+        for (Object[] dato : datos) {
+            CicloEstadistica cicloEstadistica = new CicloEstadistica(((Number) dato[2]).intValue(), (String) dato[1], ((Number) dato[0]).intValue());
             cicloEstadisticas.add(cicloEstadistica);
         }
-    return cicloEstadisticas;
+        return cicloEstadisticas;
     }
 
     @Override

@@ -212,7 +212,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
     List<CicloEstadistica> cicloEstadisticas = new ArrayList<CicloEstadistica>();    
     
         for (Object[] dato: datos) {
-            CicloEstadistica cicloEstadistica = new CicloEstadistica((Integer) dato[0], (String) dato[1], ((Number) dato[2]).intValue()); 
+            CicloEstadistica cicloEstadistica = new CicloEstadistica(((Number) dato[2]).intValue(), (String) dato[1], ((Number) dato[0]).intValue()); 
             cicloEstadisticas.add(cicloEstadistica);
         }
     return cicloEstadisticas;

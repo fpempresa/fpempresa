@@ -176,7 +176,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, centro.getIdCentro());
         System.out.println("Entra!");
-        return getListFamiliaEstadisticaConCiclos(dataSession, sqlQuery.list());
+        return getListFamiliaEstadisticaConCiclos(dataSession, sqlQuery.list(), centro);
     }
 
     private List<FamiliaEstadistica> getListFamiliaEstadistica(List<Object[]> datos) {
@@ -191,15 +191,16 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         return familiaEstadisticas;
     }
 
-    private List<FamiliaEstadistica> getListFamiliaEstadisticaConCiclos(DataSession dataSession, List<Object[]> datos) {
+    private List<FamiliaEstadistica> getListFamiliaEstadisticaConCiclos(DataSession dataSession, List<Object[]> datos, Centro centro) {
         List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String sql = "SELECT ciclo.idCiclo, ciclo.descripcion, COUNT(*) as valor FROM ciclo WHERE idFamilia = ? GROUP BY ciclo.idCiclo";
+        String sql = "SELECT DISTINCT COUNT(formacionacademica.idTitulado) FROM (familia JOIN ciclo ON ciclo.idFamilia=familia.idFamilia) JOIN formacionacademica ON formacionacademica.idCiclo = ciclo.idCiclo  WHERE familia.idFamilia = ? AND formacionacademica.idCentro = ?";
 
         for (Object[] dato : datos) {
             SQLQuery sqlQuery = session.createSQLQuery(sql);
             sqlQuery.setInteger(0, (Integer) dato[0]);
+            sqlQuery.setInteger(1, (Integer) centro.getIdCentro());
             FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1], ((Number) dato[2]).intValue(), (List<CicloEstadistica>) getListCicloEstadistica(sqlQuery.list()));
 
             familiaEstadisticas.add(familiaEstadistica);

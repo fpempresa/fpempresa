@@ -32,14 +32,11 @@ app.controller("EstadisticasCentroController", ['$scope', '$http', 'ix3Configura
                     url: ix3Configuration.server.api + "/Estadisticas/centro/" + centro.idCentro
                 }).then(function (estadisticas) {
                     centro['estadisticas'] = estadisticas.data;
-                    estadisticas.data.tituladosPorFamilia.forEach(getEstadisticasByFamilia);
                 });
             }
         }
         
-        function getEstadisticasByFamilia(familia) {
-            
-        }
+       
 
 
     }]);

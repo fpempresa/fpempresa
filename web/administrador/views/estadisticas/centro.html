@@ -7,7 +7,18 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <h1>Estadisticas centro</h1>
+                <h1>Estadisticas de centros</h1>
+                <ul>
+                    <li ng-repeat="centro in centros">
+                        <b>{{centro.nombre}}: {{centro.estadisticas.numeroTitulados}}</b>
+                        <ul>
+                            <li ng-repeat="familia in centro.estadisticas.tituladosPorFamilia">
+                                <b>{{familia.descripcion}}: {{familia.valor}}</b>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                    
             </div>
         </div>
     </div>

@@ -47,6 +47,11 @@ public class Ciclo {
 
     public Ciclo() {
     }
+    
+    public Ciclo(int idCiclo, String descripcion) {
+        this.idCiclo = idCiclo;
+        this.descripcion = descripcion;
+    }
 
     @Override
     public String toString() {

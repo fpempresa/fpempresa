@@ -19,6 +19,7 @@ package es.logongas.fpempresa.dao.estadisticas.impl;
 import es.logongas.fpempresa.dao.estadisticas.EstadisticaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.estadisticas.CicloEstadistica;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaEstadistica;
 import es.logongas.ix3.dao.DataSession;
 import java.util.ArrayList;
@@ -174,8 +175,8 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, centro.getIdCentro());
-
-        return getListFamiliaEstadistica(sqlQuery.list());
+        System.out.println("Entra!");
+        return getListFamiliaEstadisticaConCiclos(dataSession, sqlQuery.list());
     }
 
     private List<FamiliaEstadistica> getListFamiliaEstadistica(List<Object[]> datos) {
@@ -190,6 +191,33 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         return familiaEstadisticas;
     }
 
+    private List<FamiliaEstadistica> getListFamiliaEstadisticaConCiclos(DataSession dataSession, List<Object[]> datos) {
+        List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String sql = "SELECT ciclo.idCiclo, ciclo.descripcion, COUNT(*) as valor FROM ciclo WHERE idFamilia = ? GROUP BY ciclo.idCiclo";
+
+        for (Object[] dato : datos) {
+            SQLQuery sqlQuery = session.createSQLQuery(sql);
+            sqlQuery.setInteger(0, (Integer) dato[0]);
+            FamiliaEstadistica familiaEstadistica = new FamiliaEstadistica((Integer) dato[0], (String) dato[1], ((Number) dato[2]).intValue(), (List<CicloEstadistica>) getListCicloEstadistica(sqlQuery.list()));
+
+            familiaEstadisticas.add(familiaEstadistica);
+        }
+
+        return familiaEstadisticas;
+    }
+    
+    private List<CicloEstadistica> getListCicloEstadistica(List<Object[]> datos) {
+    List<CicloEstadistica> cicloEstadisticas = new ArrayList<CicloEstadistica>();    
+    
+        for (Object[] dato: datos) {
+            CicloEstadistica cicloEstadistica = new CicloEstadistica((Integer) dato[0], (String) dato[1], ((Number) dato[2]).intValue()); 
+            cicloEstadisticas.add(cicloEstadistica);
+        }
+    return cicloEstadisticas;
+    }
+
     @Override
     public Integer getSumCentros(DataSession dataSession) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
@@ -197,18 +225,18 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         String sql = "SELECT COUNT(*) FROM centro";
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
-                
+
         return Integer.parseInt(sqlQuery.list().get(0).toString()) - 1;
     }
 
     @Override
     public Integer getSumEmpresas(DataSession dataSession) {
-         Session session = (Session) dataSession.getDataBaseSessionImpl();
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT COUNT(*) FROM empresa";
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
-                
+
         return Integer.parseInt(sqlQuery.list().get(0).toString());
     }
 

@@ -38,6 +38,16 @@ public class FamiliaEstadistica extends Familia {
         this.tituladosPorCiclo = tituladosPorCiclo;
     }
 
+    public List<CicloEstadistica> getTituladosPorCiclo() {
+        return tituladosPorCiclo;
+    }
+
+    public void setTituladosPorCiclo(List<CicloEstadistica> tituladosPorCiclo) {
+        this.tituladosPorCiclo = tituladosPorCiclo;
+    }
+    
+    
+
     /**
      * @return the valor
      */

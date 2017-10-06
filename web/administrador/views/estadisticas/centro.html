@@ -11,9 +11,14 @@
                 <ul>
                     <li ng-repeat="centro in centros">
                         <b>{{centro.nombre}}: {{centro.estadisticas.numeroTitulados}}</b>
-                        <ul>
-                            <li ng-repeat="familia in centro.estadisticas.tituladosPorFamilia">
-                                <b>{{familia.descripcion}}: {{familia.valor}}</b>
+                        <ul  ng-repeat="familia in centro.estadisticas.tituladosPorFamilia">
+                            <li>
+                                <p>{{familia.descripcion}}: {{familia.valor}}</p>
+                                <ul ng-repeat="ciclo in familia.tituladosPorCiclo">
+                                    <li>
+                                        <i>{{ciclo.descripcion}}: {{ciclo.valor}}</i>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>

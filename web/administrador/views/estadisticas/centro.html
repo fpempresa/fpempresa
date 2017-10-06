@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-12 form__container" >
+    <div class="col-xs-12 form__container" style="min-height: 500px" >
         <div class="row" >
             <div class="col-xs-12 ">        
                 <ix3-business-messages></ix3-business-messages>
@@ -7,7 +7,8 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <h1>Estadisticas de centros</h1>
+                <p style="border-bottom: 1px solid #005594" class="form__title">Estadisticas de centros</p>
+                <br>
                 <ul>
                     <li ng-repeat="centro in centros">
                         <b>{{centro.nombre}}: {{centro.estadisticas.numeroTitulados}}</b>

@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-xs-12 form__container" style="min-height: 500px" >
+        <div class="row" >
+            <div class="col-xs-12 ">        
+                <ix3-business-messages></ix3-business-messages>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p style="border-bottom: 1px solid #005594" class="form__title">Estadisticas de centros</p>
+                <br>
+                <ul>
+                    <li ng-repeat="centro in centros">
+                        <b>{{centro.nombre}}: {{centro.estadisticas.numeroTitulados}}</b>
+                        <ul  ng-repeat="familia in centro.estadisticas.tituladosPorFamilia">
+                            <li>
+                                <p>{{familia.descripcion}}: {{familia.valor}}</p>
+                                <ul ng-repeat="ciclo in familia.tituladosPorCiclo">
+                                    <li>
+                                        <i>{{ciclo.descripcion}}: {{ciclo.valor}}</i>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                    
+            </div>
+        </div>
+    </div>
+</div>
+

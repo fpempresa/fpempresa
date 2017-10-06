@@ -48,7 +48,6 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
 
         $scope.updateEstadoUsuario = function (estadoUsuario) {
             $scope.doUpdate().then(function () {
-
                 $scope.service.updateEstadoUsuario($scope.model.idIdentity, estadoUsuario, $scope.expand).then(function (data) {
                     $scope.model = data;
                     $scope.businessMessages = null;

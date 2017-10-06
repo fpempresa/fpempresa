@@ -64,7 +64,6 @@ public class EstadisticasController {
             Centro centro = crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
 
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasCentro(new EstadisticasBusinessProcess.GetEstadisticasCentroArguments(principal, dataSession, centro));
-
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);

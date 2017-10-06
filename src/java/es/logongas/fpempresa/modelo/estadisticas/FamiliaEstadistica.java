@@ -17,19 +17,36 @@
 package es.logongas.fpempresa.modelo.estadisticas;
 
 import es.logongas.fpempresa.modelo.educacion.Familia;
+import java.util.List;
 
 /**
  *
  * @author logongas
  */
 public class FamiliaEstadistica extends Familia {
-
+    private List<CicloEstadistica> tituladosPorCiclo;
     private int valor;
 
     public FamiliaEstadistica(int idFamilia, String descripcion, int valor) {
         super(idFamilia, descripcion);
         this.valor = valor;
     }
+    
+    public FamiliaEstadistica(int idFamilia, String descripcion, int valor, List<CicloEstadistica> tituladosPorCiclo) {
+        super(idFamilia, descripcion);
+        this.valor = valor;
+        this.tituladosPorCiclo = tituladosPorCiclo;
+    }
+
+    public List<CicloEstadistica> getTituladosPorCiclo() {
+        return tituladosPorCiclo;
+    }
+
+    public void setTituladosPorCiclo(List<CicloEstadistica> tituladosPorCiclo) {
+        this.tituladosPorCiclo = tituladosPorCiclo;
+    }
+    
+    
 
     /**
      * @return the valor

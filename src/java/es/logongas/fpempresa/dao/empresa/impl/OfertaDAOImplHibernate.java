@@ -145,7 +145,7 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
             sb.append(" AND candidato.oferta.fecha<=? ");
         }
 
-        sb.append(" ORDER BY fecha DESC");
+        sb.append(" ORDER BY candidato.oferta.fecha DESC");
 
         Query query = session.createQuery(sb.toString());
         int paramNumber = 0;

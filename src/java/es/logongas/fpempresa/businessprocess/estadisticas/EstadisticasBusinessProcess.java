@@ -27,8 +27,6 @@ public interface EstadisticasBusinessProcess {
 
     Estadisticas getEstadisticasEmpresa(GetEstadisticasEmpresaArguments getEstadisticasEmpresaArguments) throws BusinessException;
 
-    Estadisticas getEstadisticasTitulado(GetEstadisticasTituladoArguments getEstadisticasTituladoArguments) throws BusinessException;
-
     Estadisticas getEstadisticasPublicas(GetEstadisticasPublicasArguments getEstadisticasPublicasArguments) throws BusinessException;
 
     public class GetEstadisticasAdministradorArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {

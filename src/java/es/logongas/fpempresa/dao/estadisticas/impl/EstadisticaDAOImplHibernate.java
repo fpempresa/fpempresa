@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.CicloEstadistica;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaEstadistica;
 import es.logongas.ix3.dao.DataSession;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
@@ -224,12 +225,13 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
     public Integer getSumCentros(DataSession dataSession) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        String sql = "SELECT COUNT(*) FROM centro";
+        String sql = "SELECT COUNT(*) FROM centro WHERE IdCentro>0";
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
-        return Integer.parseInt(sqlQuery.list().get(0).toString()) - 1;
-    }
+        BigInteger sumCentros=(BigInteger)sqlQuery.list().get(0);
+        return sumCentros.intValueExact();
+}
 
     @Override
     public Integer getSumEmpresas(DataSession dataSession) {
@@ -239,7 +241,8 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
-        return Integer.parseInt(sqlQuery.list().get(0).toString());
+        BigInteger sumEmpresas=(BigInteger)sqlQuery.list().get(0);
+        return sumEmpresas.intValueExact();
     }
 
 }

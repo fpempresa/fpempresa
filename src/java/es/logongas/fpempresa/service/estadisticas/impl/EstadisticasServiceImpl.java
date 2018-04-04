@@ -43,14 +43,7 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
     @Override
     public Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro) {
-        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession, centro), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession), estadisticaDAO.getSumCentros(dataSession), estadisticaDAO.getSumEmpresas(dataSession));
-        return estadisticas;
-    }
-    
-    
-    @Override
-    public Estadisticas getEstadisticasCentro(DataSession dataSession) {
-        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession), estadisticaDAO.getSumCentros(dataSession), estadisticaDAO.getSumEmpresas(dataSession));
+        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession, centro), estadisticaDAO.getOfertasGroupByFamilia(dataSession, centro), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, centro));
         return estadisticas;
     }
 
@@ -58,12 +51,6 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     public Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa) {
         Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession, empresa), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, empresa));
 
-        return estadisticas;
-    }
-
-    @Override
-    public Estadisticas getEstadisticasTitulado(DataSession dataSession, Titulado titulado) {
-        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getSumEmpresas(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession));
         return estadisticas;
     }
 

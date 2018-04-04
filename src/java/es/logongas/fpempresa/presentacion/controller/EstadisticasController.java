@@ -101,22 +101,6 @@ public class EstadisticasController {
         }
     }
 
-    @RequestMapping(value = {"/{path}/Estadisticas/titulado/{idTitulado}"}, method = RequestMethod.GET, produces = "application/json")
-    public void getEstadisticasTitulado(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idTitulado") int idTitulado) {
-
-        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
-            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
-
-            Titulado titulado = crudServiceFactory.getService(Titulado.class).read(dataSession, idTitulado);
-
-            Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasTitulado(new EstadisticasBusinessProcess.GetEstadisticasTituladoArguments(principal, dataSession, titulado));
-
-            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
-        } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
-        }
-    }
-
     @RequestMapping(value = {"/{path}/Estadisticas/publicas"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasPublicas(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {

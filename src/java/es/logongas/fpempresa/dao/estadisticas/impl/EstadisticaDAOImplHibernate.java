@@ -230,7 +230,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
         BigInteger sumCentros=(BigInteger)sqlQuery.list().get(0);
-        return sumCentros.intValueExact();
+        return sumCentros.intValue();
 }
 
     @Override
@@ -242,7 +242,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         SQLQuery sqlQuery = session.createSQLQuery(sql);
 
         BigInteger sumEmpresas=(BigInteger)sqlQuery.list().get(0);
-        return sumEmpresas.intValueExact();
+        return sumEmpresas.intValue();
     }
 
 }

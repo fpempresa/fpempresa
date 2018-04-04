@@ -48,6 +48,8 @@
     <!-- Servicios -->
     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImplAWS"  />
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
+    <bean class="es.logongas.fpempresa.service.download.impl.DownloadServiceImpl"  />
+    <bean class="es.logongas.fpempresa.service.hojacalculo.impl.HojaCalculoServiceImplPOI"  />
     <bean class="es.logongas.fpempresa.service.populate.PopulateServiceImpl"  />
     <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
@@ -56,6 +58,7 @@
     </bean> 
     
     <!-- BusinessProcess -->
+    <bean class="es.logongas.fpempresa.businessprocess.download.impl.DownloadBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.estadisticas.impl.EstadisticasBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.log.impl.LogBusinessProcessImpl"  />
 

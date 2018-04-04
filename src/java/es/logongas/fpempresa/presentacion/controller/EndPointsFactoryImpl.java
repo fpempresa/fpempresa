@@ -115,6 +115,9 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         //Centro
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class)));
+        
+        endPoints.add(EndPoint.createEndPoint(path + "/download/**", "GET", null));
+   
     }
 
     private void addTituladoEndPoints(List<EndPoint> endPoints, String path) {

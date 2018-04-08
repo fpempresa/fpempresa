@@ -55,17 +55,17 @@ public class DownloadController {
     @Autowired
     private Conversion conversion;
     
-    @RequestMapping(value = {"/{path}/download/ofertas.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
+    @RequestMapping(value = {"/{path}/download/nocentro/ofertas.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
     public void getEstadisticasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
-            Date fechaInicio=(Date)conversion.convertFromString(httpServletRequest.getParameter("fechaInicio") , Date.class);
-            Date fechaFin=(Date)conversion.convertFromString(httpServletRequest.getParameter("fechaFin") , Date.class);
-            
-            byte[] excel = downloadBusinessProcess.getHojaCalculoOfertasAdministrador(new DownloadBusinessProcess.GetHojaCalculoOfertasAdministradorArguments(principal, dataSession, fechaInicio, fechaFin));
-            controllerHelper.objectToHttpResponse(new HttpResult(null,excel,200,false,null,MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+            Date fechaInicio = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaInicio"), Date.class);
+            Date fechaFin = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaFin"), Date.class);
+
+            byte[] excel = downloadBusinessProcess.getHojaCalculoOfertasNoCentro(new DownloadBusinessProcess.GetHojaCalculoOfertasNoCentroArguments(principal, dataSession, fechaInicio, fechaFin));
+            controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }

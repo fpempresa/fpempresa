@@ -15,14 +15,26 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author logongas
  */
 public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
-
+    
+    private Class entityType;
+    
     @Autowired
     DownloadService downloadService;
 
 
     @Override
-    public byte[] getHojaCalculoOfertasAdministrador(GetHojaCalculoOfertasAdministradorArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException {
+    public byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException {
         return downloadService.getHojaCalculoOfertas(getHojaCalculoOfertasAdministradorArguments.dataSession,getHojaCalculoOfertasAdministradorArguments.fechaInicio,getHojaCalculoOfertasAdministradorArguments.fechaFin);
     }
+    
+    @Override
+    public void setEntityType(Class entityType) {
+        this.entityType = entityType;
+    }
+
+    @Override
+    public Class getEntityType() {
+        return this.entityType;
+    }    
     
 }

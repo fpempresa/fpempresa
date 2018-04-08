@@ -1,7 +1,6 @@
 package es.logongas.fpempresa.businessprocess.download;
 
-import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
-import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
+import es.logongas.ix3.businessprocess.BusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
@@ -11,26 +10,28 @@ import java.util.Date;
  *
  * @author logongas
  */
-public interface DownloadBusinessProcess {
+public interface DownloadBusinessProcess extends BusinessProcess  {
+    
+    byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException;
 
-    byte[] getHojaCalculoOfertasAdministrador(GetHojaCalculoOfertasAdministradorArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException;
 
-
-    public class GetHojaCalculoOfertasAdministradorArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+    public class GetHojaCalculoOfertasNoCentroArguments extends BusinessProcess.BusinessProcessArguments {
 
         public Date fechaInicio;
         public Date fechaFin;
 
-        public GetHojaCalculoOfertasAdministradorArguments() {
+        public GetHojaCalculoOfertasNoCentroArguments() {
         }
 
-        public GetHojaCalculoOfertasAdministradorArguments(Principal principal, DataSession dataSession, Date fechaInicio, Date fechaFin) {
+        public GetHojaCalculoOfertasNoCentroArguments(Principal principal, DataSession dataSession, Date fechaInicio, Date fechaFin) {
             super(principal, dataSession);
             this.fechaInicio = fechaInicio;
             this.fechaFin = fechaFin;
         }
 
     }
+
+
 
 
 

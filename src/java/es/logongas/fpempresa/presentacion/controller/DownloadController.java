@@ -17,6 +17,7 @@
 package es.logongas.fpempresa.presentacion.controller;
 
 import es.logongas.fpempresa.businessprocess.download.DownloadBusinessProcess;
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
@@ -32,6 +33,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -56,7 +58,7 @@ public class DownloadController {
     private Conversion conversion;
     
     @RequestMapping(value = {"/{path}/download/nocentro/ofertas.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
-    public void getEstadisticasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public void getHojaCalculoOfertasNoCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
@@ -72,6 +74,23 @@ public class DownloadController {
 
     }
 
+    @RequestMapping(value = {"/{path}/download/centro/{idCentro}/ofertas.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
+    public void getHojaCalculoOfertasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            Centro centro = crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
+            Date fechaInicio = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaInicio"), Date.class);
+            Date fechaFin = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaFin"), Date.class);
+
+            byte[] excel = downloadBusinessProcess.getHojaCalculoOfertasCentro(new DownloadBusinessProcess.GetHojaCalculoOfertasCentroArguments(principal, dataSession, centro, fechaInicio, fechaFin));
+            controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
 
 
 

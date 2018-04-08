@@ -5,6 +5,7 @@
  */
 package es.logongas.fpempresa.service.download.impl;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.download.DownloadService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
@@ -61,6 +62,34 @@ public class DownloadServiceImpl implements DownloadService {
         return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,fecha", "Puesto,Empresa,Fecha");
     }
 
-    
+    @Override
+    public byte[] getHojaCalculoOfertasCentro(DataSession dataSession, Centro centro, Date fechaInicio, Date fechaFin) throws BusinessException {
+        if (centro == null) {
+            throw new NullPointerException("El argumento centro no puede ser null");
+        }
+
+        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) crudServiceFactory.getService(Oferta.class);
+
+        Filters filters = new Filters();
+        List<Order> orders = new ArrayList<Order>();
+        SearchResponse searchResponse = new SearchResponse(false);
+
+        filters.add(new Filter("empresa.centro.idCentro", centro.getIdCentro(), FilterOperator.eq));
+
+        if (fechaInicio != null) {
+            filters.add(new Filter("fecha", fechaInicio, FilterOperator.ge));
+
+        }
+        if (fechaFin != null) {
+            filters.add(new Filter("fecha", fechaFin, FilterOperator.le));
+
+        }
+
+        orders.add(new Order("fecha", OrderDirection.Ascending));
+
+        List<Oferta> ofertas = ofertaCRUDService.search(dataSession, filters, orders, searchResponse);
+
+        return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,fecha", "Puesto,Empresa,Fecha");
+    } 
     
 }

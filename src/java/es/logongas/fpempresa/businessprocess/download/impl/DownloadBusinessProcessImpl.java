@@ -28,6 +28,11 @@ public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
     }
     
     @Override
+    public byte[] getHojaCalculoOfertasCentro(GetHojaCalculoOfertasCentroArguments getHojaCalculoOfertasCentroArguments) throws BusinessException {
+        return downloadService.getHojaCalculoOfertasCentro(getHojaCalculoOfertasCentroArguments.dataSession,getHojaCalculoOfertasCentroArguments.centro, getHojaCalculoOfertasCentroArguments.fechaInicio,getHojaCalculoOfertasCentroArguments.fechaFin);
+    }    
+    
+    @Override
     public void setEntityType(Class entityType) {
         this.entityType = entityType;
     }

@@ -10,7 +10,7 @@ import java.util.Date;
  * @author logongas
  */
 public interface DownloadService {
-    byte [] getHojaCalculoOfertas(DataSession dataSession,Date fechaInicio,Date fechaFin) throws BusinessException;
+    byte [] getHojaCalculoOfertasNoCentro(DataSession dataSession,Date fechaInicio,Date fechaFin) throws BusinessException;
     
     byte[] getHojaCalculoOfertasCentro(DataSession dataSession, Centro centro, Date fechaInicio, Date fechaFin) throws BusinessException;
     

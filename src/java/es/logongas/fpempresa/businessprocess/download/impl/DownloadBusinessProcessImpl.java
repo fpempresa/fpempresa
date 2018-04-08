@@ -24,7 +24,7 @@ public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
 
     @Override
     public byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException {
-        return downloadService.getHojaCalculoOfertas(getHojaCalculoOfertasAdministradorArguments.dataSession,getHojaCalculoOfertasAdministradorArguments.fechaInicio,getHojaCalculoOfertasAdministradorArguments.fechaFin);
+        return downloadService.getHojaCalculoOfertasNoCentro(getHojaCalculoOfertasAdministradorArguments.dataSession,getHojaCalculoOfertasAdministradorArguments.fechaInicio,getHojaCalculoOfertasAdministradorArguments.fechaFin);
     }
     
     @Override

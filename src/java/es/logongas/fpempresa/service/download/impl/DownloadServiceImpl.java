@@ -37,7 +37,7 @@ public class DownloadServiceImpl implements DownloadService {
     HojaCalculoService hojaCalculoService;
 
     @Override
-    public byte[] getHojaCalculoOfertas(DataSession dataSession, Date fechaInicio, Date fechaFin) throws BusinessException {
+    public byte[] getHojaCalculoOfertasNoCentro(DataSession dataSession, Date fechaInicio, Date fechaFin) throws BusinessException {
 
         OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) crudServiceFactory.getService(Oferta.class);
 

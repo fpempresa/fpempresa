@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author logongas
  */
 public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProcess {
-
+    
+    private Class entityType;
+    
     @Autowired
     EstadisticasService estadisticasService;
 
@@ -41,4 +43,14 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
         return estadisticasService.getEstadisticasPublicas(getEstadisticasPublicasArguments.dataSession);
     }
     
+    @Override
+    public void setEntityType(Class entityType) {
+        this.entityType = entityType;
+    }
+
+    @Override
+    public Class getEntityType() {
+        return this.entityType;
+    }
+ 
 }

@@ -131,8 +131,6 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "empresa.contacto,empresa.centro.contacto", "ciclos")));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "rechazado,oferta.empresa.contacto,oferta.empresa.centro.contacto", null)));
 
-        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
-        
         //titulado
         endPoints.add(EndPoint.createEndPointCrud(path, Configuracion.class));
         endPoints.add(EndPoint.createEndPointCrud(path, NotificacionOferta.class));

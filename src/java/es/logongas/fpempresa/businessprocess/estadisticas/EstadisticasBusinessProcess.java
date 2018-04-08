@@ -19,7 +19,7 @@ import es.logongas.ix3.dao.DataSession;
  *
  * @author logongas
  */
-public interface EstadisticasBusinessProcess {
+public interface EstadisticasBusinessProcess  extends BusinessProcess  {
 
     Estadisticas getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException;
 

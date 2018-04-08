@@ -20,7 +20,6 @@ import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessPr
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
-import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;

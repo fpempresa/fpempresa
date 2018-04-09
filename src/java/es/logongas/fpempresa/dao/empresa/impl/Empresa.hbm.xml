@@ -9,6 +9,7 @@
         <property name="nombreComercial" />
         <property name="razonSocial" />
         <property name="cif" />
+        <property name="fecha" type="date"  update="false" />
 
         
         <component name="direccion" >

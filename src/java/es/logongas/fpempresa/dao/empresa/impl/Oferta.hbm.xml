@@ -6,7 +6,7 @@
             <generator class="identity" />
         </id>
 
-        <property name="fecha" type="date" />
+        <property name="fecha" type="date" update="false" />
 
         <many-to-one name="empresa">
             <column name="idEmpresa"/>

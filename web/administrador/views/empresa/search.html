@@ -9,7 +9,22 @@
                 <div class="col-xs-4"> 
                     <input ng-model="filters.cif" type="text" class="form-control" id="nombre" name="nombre" placeholder="CIF"  > 
                 </div>             
-            </div>          
+            </div>  
+            <br>
+            <div class="row">
+                <div class="col-xs-3"> 
+                    <div  class="input-group ">
+                        <input ng-model="filters.$ge.fecha" type="text" class="form-control"  id="fechaDesde" name="fechaDesde" placeholder="fecha desde" ix3-date ix3-datepicker > 
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>                     
+                </div> 
+                <div class="col-xs-3"> 
+                    <div  class="input-group ">                    
+                        <input ng-model="filters.$le.fecha" type="text" class="form-control"  id="fechaHasta" name="fechaHasta" placeholder="fecha hasta" ix3-date ix3-datepicker > 
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div> 
+                </div> 
+            </div>            
             <br>
             <div class="row" >
                 <div class="col-xs-12 ">
@@ -22,8 +37,9 @@
                 <thead>                        
                     <tr class="data-table__head">
                         <th ix3-order-field-names="nombreComercial" style="width:   40%;text-align: center">Nombre Comercial</th>
-                        <th ix3-order-field-names="cif" style="width:   20%;text-align: center">CIF</th>
-                        <th ix3-order-field-names="direccion.municipio.descripcion" style="width:   30%;text-align: center">Municipio</th>
+                        <th ix3-order-field-names="cif" style="width:   15%;text-align: center">CIF</th>
+                        <th ix3-order-field-names="direccion.municipio.descripcion" style="width:   25%;text-align: center">Municipio</th>
+                        <th ix3-order-field-names="fecha" style="width:   20%;text-align: center">Fecha</th>                        
                         <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
@@ -32,6 +48,7 @@
                         <td ><a href ng-click="buttonEdit(empresa.idEmpresa)">{{empresa.nombreComercial}}</a></td>
                         <td >{{empresa.cif}}</td>
                         <td >{{empresa.direccion.municipio.descripcion}}</td>                   
+                        <td >{{empresa.fecha| date: 'dd/MM/yyyy'}}</td>                   
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(empresa.idEmpresa)">Borrar</button>
                             <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(empresa.idEmpresa)">Editar</button>

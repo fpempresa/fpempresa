@@ -5,7 +5,7 @@
             <ix3-business-messages></ix3-business-messages>
             <form name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
-                    <legend class="form__title">Empresa</legend>
+                    <legend class="form__title">Empresa <span ng-show="model.fecha" >({{model.fecha | date: 'dd/MM/yyyy'}})</span></legend>
 
 
                     <div class="row" >

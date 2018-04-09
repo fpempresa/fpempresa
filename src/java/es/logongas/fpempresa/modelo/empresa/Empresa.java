@@ -21,9 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
+import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
+import java.util.Calendar;
+import java.util.Date;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -44,6 +47,8 @@ public class Empresa {
 
     private String cif;
 
+    private Date fecha;    
+    
     @JsonProperty("direccion")
     @NotNull
     @Valid
@@ -74,6 +79,22 @@ public class Empresa {
     public Empresa() {
     }
 
+    @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
+    private void establecerFechaCreacion() {
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        date = cal.getTime();
+
+        this.fecha = date;
+    }    
+    
+    
     @Override
     public String toString() {
         return getNombreComercial();
@@ -175,6 +196,20 @@ public class Empresa {
      */
     public void setContacto(Contacto contacto) {
         this.contacto = contacto;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
 }

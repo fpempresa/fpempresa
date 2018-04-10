@@ -29,6 +29,7 @@
             <div class="row" >
                 <div class="col-xs-12 ">
                     <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                    <a ng-href="{{getContextPath()}}/api/centro/download/centro/{{user.centro.idCentro}}/empresas.xls?fechaInicio={{filters.$ge.fecha | date: &quot;yyyy-MM-ddTHH:mm:ss.sss'Z'&quot;}}&fechaFin={{filters.$le.fecha | date: &quot;yyyy-MM-ddTHH:mm:ss.sss'Z'&quot;}}"  class="btn form__button form__button--default" style="float:right"   >Descargar Excel</a>                                
                 </div>
             </div>
             <br>             

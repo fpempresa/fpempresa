@@ -6,6 +6,7 @@
 package es.logongas.fpempresa.service.download.impl;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.download.DownloadService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
@@ -18,6 +19,7 @@ import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.SearchResponse;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +47,7 @@ public class DownloadServiceImpl implements DownloadService {
         List<Order> orders = new ArrayList<Order>();
         SearchResponse searchResponse = new SearchResponse(false);
 
-        filters.add(new Filter("empresa.centro", null, FilterOperator.isnull));
+        filters.add(new Filter("empresa.centro", true, FilterOperator.isnull));
         if (fechaInicio != null) {
             filters.add(new Filter("fecha", fechaInicio, FilterOperator.ge));
 
@@ -91,5 +93,57 @@ public class DownloadServiceImpl implements DownloadService {
 
         return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,fecha", "Puesto,Empresa,Fecha");
     } 
+
+    @Override
+    public byte[] getHojaCalculoEmpresasNoCentro(DataSession dataSession, Date fechaInicio, Date fechaFin) throws BusinessException {
+
+        CRUDService<Empresa,Integer> empresaCRUDService = (CRUDService<Empresa,Integer>) crudServiceFactory.getService(Empresa.class);
+
+        Filters filters = new Filters();
+        List<Order> orders = new ArrayList<Order>();
+        SearchResponse searchResponse = new SearchResponse(false);
+
+        filters.add(new Filter("centro", true, FilterOperator.isnull));
+        if (fechaInicio != null) {
+            filters.add(new Filter("fecha", fechaInicio, FilterOperator.ge));
+
+        }
+        if (fechaFin != null) {
+            filters.add(new Filter("fecha", fechaFin, FilterOperator.le));
+
+        }
+
+        orders.add(new Order("fecha", OrderDirection.Ascending));
+
+        List<Empresa> empresas = empresaCRUDService.search(dataSession, filters, orders, searchResponse);
+
+        return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,fecha", "Nombre,Fecha");
+    }
+
+    @Override
+    public byte[] getHojaCalculoEmpresasCentro(DataSession dataSession, Centro centro, Date fechaInicio, Date fechaFin) throws BusinessException {
+
+        CRUDService<Empresa,Integer> empresaCRUDService = (CRUDService<Empresa,Integer>) crudServiceFactory.getService(Empresa.class);
+
+        Filters filters = new Filters();
+        List<Order> orders = new ArrayList<Order>();
+        SearchResponse searchResponse = new SearchResponse(false);
+
+        filters.add(new Filter("centro.idCentro", centro.getIdCentro(), FilterOperator.eq));
+        if (fechaInicio != null) {
+            filters.add(new Filter("fecha", fechaInicio, FilterOperator.ge));
+
+        }
+        if (fechaFin != null) {
+            filters.add(new Filter("fecha", fechaFin, FilterOperator.le));
+
+        }
+
+        orders.add(new Order("fecha", OrderDirection.Ascending));
+
+        List<Empresa> empresas = empresaCRUDService.search(dataSession, filters, orders, searchResponse);
+
+        return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,fecha", "Nombre,Fecha");
+    }
     
 }

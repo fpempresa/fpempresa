@@ -13,10 +13,15 @@ import java.util.Date;
  */
 public interface DownloadBusinessProcess extends BusinessProcess  {
     
-    byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException;
+    byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasNoCentroArguments) throws BusinessException;
 
     byte[] getHojaCalculoOfertasCentro(GetHojaCalculoOfertasCentroArguments getHojaCalculoOfertasCentroArguments) throws BusinessException;
 
+    byte[] getHojaCalculoEmpresasNoCentro(GetHojaCalculoEmpresasNoCentroArguments getHojaCalculoEmpresasNoCentroArguments) throws BusinessException;
+
+    byte[] getHojaCalculoEmpresasCentro(GetHojaCalculoEmpresasCentroArguments getHojaCalculoEmpresasCentroArguments) throws BusinessException;
+
+    
     public class GetHojaCalculoOfertasNoCentroArguments extends BusinessProcess.BusinessProcessArguments {
 
         public Date fechaInicio;
@@ -52,7 +57,39 @@ public interface DownloadBusinessProcess extends BusinessProcess  {
     }
 
 
+    public class GetHojaCalculoEmpresasNoCentroArguments extends BusinessProcess.BusinessProcessArguments {
 
+        public Date fechaInicio;
+        public Date fechaFin;
+
+        public GetHojaCalculoEmpresasNoCentroArguments() {
+        }
+
+        public GetHojaCalculoEmpresasNoCentroArguments(Principal principal, DataSession dataSession, Date fechaInicio, Date fechaFin) {
+            super(principal, dataSession);
+            this.fechaInicio = fechaInicio;
+            this.fechaFin = fechaFin;
+        }
+
+    }
+
+    public class GetHojaCalculoEmpresasCentroArguments extends BusinessProcess.BusinessProcessArguments {
+
+	public Centro centro;
+        public Date fechaInicio;
+        public Date fechaFin;
+
+        public GetHojaCalculoEmpresasCentroArguments() {
+        }
+
+        public GetHojaCalculoEmpresasCentroArguments(Principal principal, DataSession dataSession,Centro centro, Date fechaInicio, Date fechaFin) {
+            super(principal, dataSession);
+            this.centro = centro;
+            this.fechaInicio = fechaInicio;
+            this.fechaFin = fechaFin;
+        }
+
+    }
 
 
 

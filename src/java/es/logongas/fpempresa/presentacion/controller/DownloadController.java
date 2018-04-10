@@ -92,6 +92,39 @@ public class DownloadController {
 
     }
 
+    @RequestMapping(value = {"/{path}/download/nocentro/empresas.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
+    public void getHojaCalculoEmpresasNoCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            Date fechaInicio = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaInicio"), Date.class);
+            Date fechaFin = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaFin"), Date.class);
+
+            byte[] excel = downloadBusinessProcess.getHojaCalculoEmpresasNoCentro(new DownloadBusinessProcess.GetHojaCalculoEmpresasNoCentroArguments(principal, dataSession, fechaInicio, fechaFin));
+            controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
+
+    @RequestMapping(value = {"/{path}/download/centro/{idCentro}/empresas.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
+    public void getHojaCalculoEmpresasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            Centro centro = crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
+            Date fechaInicio = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaInicio"), Date.class);
+            Date fechaFin = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaFin"), Date.class);
+
+            byte[] excel = downloadBusinessProcess.getHojaCalculoEmpresasCentro(new DownloadBusinessProcess.GetHojaCalculoEmpresasCentroArguments(principal, dataSession, centro, fechaInicio, fechaFin));
+            controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
 
 }

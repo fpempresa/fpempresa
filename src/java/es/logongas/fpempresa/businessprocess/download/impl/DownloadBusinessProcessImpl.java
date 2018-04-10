@@ -23,13 +23,25 @@ public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
 
 
     @Override
-    public byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasAdministradorArguments) throws BusinessException {
-        return downloadService.getHojaCalculoOfertasNoCentro(getHojaCalculoOfertasAdministradorArguments.dataSession,getHojaCalculoOfertasAdministradorArguments.fechaInicio,getHojaCalculoOfertasAdministradorArguments.fechaFin);
+    public byte[] getHojaCalculoOfertasNoCentro(GetHojaCalculoOfertasNoCentroArguments getHojaCalculoOfertasNoCentroArguments) throws BusinessException {
+        return downloadService.getHojaCalculoOfertasNoCentro(getHojaCalculoOfertasNoCentroArguments.dataSession,getHojaCalculoOfertasNoCentroArguments.fechaInicio,getHojaCalculoOfertasNoCentroArguments.fechaFin);
     }
     
     @Override
     public byte[] getHojaCalculoOfertasCentro(GetHojaCalculoOfertasCentroArguments getHojaCalculoOfertasCentroArguments) throws BusinessException {
         return downloadService.getHojaCalculoOfertasCentro(getHojaCalculoOfertasCentroArguments.dataSession,getHojaCalculoOfertasCentroArguments.centro, getHojaCalculoOfertasCentroArguments.fechaInicio,getHojaCalculoOfertasCentroArguments.fechaFin);
+    }    
+    
+
+    @Override
+    public byte[] getHojaCalculoEmpresasNoCentro(GetHojaCalculoEmpresasNoCentroArguments getHojaCalculoEmpresasNoCentroArguments) throws BusinessException {
+        return downloadService.getHojaCalculoEmpresasNoCentro(getHojaCalculoEmpresasNoCentroArguments.dataSession,getHojaCalculoEmpresasNoCentroArguments.fechaInicio,getHojaCalculoEmpresasNoCentroArguments.fechaFin);
+
+    }
+
+    @Override
+    public byte[] getHojaCalculoEmpresasCentro(GetHojaCalculoEmpresasCentroArguments getHojaCalculoEmpresasCentroArguments) throws BusinessException {
+        return downloadService.getHojaCalculoEmpresasCentro(getHojaCalculoEmpresasCentroArguments.dataSession,getHojaCalculoEmpresasCentroArguments.centro, getHojaCalculoEmpresasCentroArguments.fechaInicio,getHojaCalculoEmpresasCentroArguments.fechaFin);    
     }    
     
     @Override
@@ -41,5 +53,6 @@ public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
     public Class getEntityType() {
         return this.entityType;
     }    
+
     
 }

@@ -14,4 +14,8 @@ public interface DownloadService {
     
     byte[] getHojaCalculoOfertasCentro(DataSession dataSession, Centro centro, Date fechaInicio, Date fechaFin) throws BusinessException;
     
+    byte [] getHojaCalculoEmpresasNoCentro(DataSession dataSession,Date fechaInicio,Date fechaFin) throws BusinessException;
+    
+    byte[] getHojaCalculoEmpresasCentro(DataSession dataSession, Centro centro, Date fechaInicio, Date fechaFin) throws BusinessException;
+        
 }

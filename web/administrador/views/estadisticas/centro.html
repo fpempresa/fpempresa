@@ -11,10 +11,10 @@
                 <br>
                 <ul>
                     <li ng-repeat="centro in centros">
-                        <b>{{centro.nombre}}: {{centro.estadisticas.numeroTitulados}}</b>
+                        <b>{{centro.nombre}}: <span title="N&ordm; de Titulados" >{{centro.estadisticas.numeroTitulados}}</span> - <span title="N&ordm; de T&iacute;tulos" >{{centro.estadisticas.tituladosPorFamilia | map :'tituladosPorCiclo' | flatten | map: 'valor' | sum}}</span></b>
                         <ul  ng-repeat="familia in centro.estadisticas.tituladosPorFamilia">
                             <li>
-                                <p>{{familia.descripcion}}: {{familia.valor}}</p>
+                                <p>{{familia.descripcion}}: <span title="N&ordm; de Titulados" >{{familia.valor}}</span> -  <span title="N&ordm; de T&iacute;tulos" >{{familia.tituladosPorCiclo | map:'valor' | sum}}</span></p>
                                 <ul ng-repeat="ciclo in familia.tituladosPorCiclo">
                                     <li>
                                         <i>{{ciclo.descripcion}}: {{ciclo.valor}}</i>

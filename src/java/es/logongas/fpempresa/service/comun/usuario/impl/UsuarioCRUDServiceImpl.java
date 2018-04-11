@@ -18,22 +18,32 @@ package es.logongas.fpempresa.service.comun.usuario.impl;
 
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
+import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
+import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.Order;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
+import es.logongas.ix3.dao.SearchResponse;
 import es.logongas.ix3.security.model.Group;
 import es.logongas.ix3.security.model.GroupMember;
+import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -50,9 +60,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Autowired
     MailService mailService;
-    
+
     @Autowired
     Conversion conversion;
+
+    @Autowired
+    CRUDServiceFactory crudServiceFactory;
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -86,13 +99,13 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new RuntimeException(ex);
         }
 
-        Boolean autoValidateEMail=(Boolean)conversion.convertFromString(Config.getSetting("app.autoValidateEMail"),Boolean.class);
-        if (autoValidateEMail==null) {
-            autoValidateEMail=false;
+        Boolean autoValidateEMail = (Boolean) conversion.convertFromString(Config.getSetting("app.autoValidateEMail"), Boolean.class);
+        if (autoValidateEMail == null) {
+            autoValidateEMail = false;
         }
-        
+
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
-        if (autoValidateEMail==true) {
+        if (autoValidateEMail == true) {
             usuario.setValidadoEmail(true);
         } else {
             usuario.setValidadoEmail(false);
@@ -102,7 +115,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         Usuario resultUsuario = getUsuarioDAO().insert(dataSession, usuario);
 
         if (resultUsuario != null) {
-            if (autoValidateEMail==true) {
+            if (autoValidateEMail == true) {
                 //No es necesario enviar el EMail de confirmación ya que auto valida el email
             } else {
                 enviarMailValidacionCuenta(usuario);
@@ -128,6 +141,37 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         }
 
         return super.update(dataSession, usuario);
+    }
+
+    @Override
+    public boolean delete(DataSession dataSession, Usuario entity) throws BusinessException {
+
+        try {
+            transactionManager.begin(dataSession);
+
+            if (entity.getTipoUsuario() == TipoUsuario.TITULADO) {
+                CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) crudServiceFactory.getService(Candidato.class);
+
+                Filters filters = new Filters();
+                filters.add(new Filter("usuario.idIdentity", entity.getIdIdentity(), FilterOperator.eq));
+
+                List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
+                for (Candidato candidato : candidatos) {
+                    candidatoCRUDService.delete(dataSession, candidato);
+                }
+
+            }
+            boolean success = super.delete(dataSession, entity);
+
+            transactionManager.commit(dataSession);
+
+            return success;
+        } finally {
+            if (transactionManager.isActive(dataSession)) {
+                transactionManager.rollback(dataSession);
+            }
+        }
+        
     }
 
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {

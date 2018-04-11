@@ -67,6 +67,7 @@ public class Usuario extends User implements Principal {
     @Label("Estado del usuario")
     private EstadoUsuario estadoUsuario;
 
+    @Label("Validado Correo Electrónico")
     private boolean validadoEmail;
 
     private String claveValidacionEmail;

@@ -43,6 +43,7 @@
            <div class="row" >
                 <div class="col-xs-12 ">
                     <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                    <a ng-href="{{getContextPath()}}/api/centro/download/centro/{{user.centro.idCentro}}/titulados.xls?idFamilia={{filters['ciclo.familia.idFamilia'].idFamilia}}&idCiclo={{filters['ciclo.idCiclo'].idCiclo}}&fechaInicio={{filters.$gt['titulado.formacionesAcademicas.fecha']?filters.$gt['titulado.formacionesAcademicas.fecha']+'-01-01T00:00:00.000Z':''}}&fechaFin={{filters.$gt['titulado.formacionesAcademicas.fecha']?filters.$gt['titulado.formacionesAcademicas.fecha']+'-12-31T23:59:59.999Z':''}}"  class="btn form__button form__button--default" style="float:right"   >Descargar Excel</a>                                
                 </div>
             </div>
                 <br>

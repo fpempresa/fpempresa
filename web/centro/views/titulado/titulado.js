@@ -17,9 +17,7 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
             if(filters.$gt['titulado.formacionesAcademicas.fecha']){
                 var yearString =  filters.$gt['titulado.formacionesAcademicas.fecha'];
                 filters.$gt['titulado.formacionesAcademicas.fecha'] = new Date((parseInt(yearString) -1) + '-12-31');
-                console.log('Fecha maxima: ' +  filters.$gt['titulado.formacionesAcademicas.fecha']);
                 filters.$lt['titulado.formacionesAcademicas.fecha'] = new Date((parseInt(yearString) + 1) + '-01-01');
-                console.log('Fecha minima: ' +  filters.$lt['titulado.formacionesAcademicas.fecha'])
             }
         }
         $scope.search();

@@ -18,6 +18,8 @@ package es.logongas.fpempresa.presentacion.controller;
 
 import es.logongas.fpempresa.businessprocess.download.DownloadBusinessProcess;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
@@ -127,4 +129,34 @@ public class DownloadController {
 
     }
 
+    @RequestMapping(value = {"/{path}/download/centro/{idCentro}/titulados.xls"}, method = RequestMethod.GET, produces = "application/vnd.ms-excel")
+    public void getHojaCalculoTituladosCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            Centro centro = crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
+            Date fechaInicio = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaInicio"), Date.class);
+            Date fechaFin = (Date) conversion.convertFromString(httpServletRequest.getParameter("fechaFin"), Date.class);
+            Integer idFamilia = (Integer) conversion.convertFromString(httpServletRequest.getParameter("idFamilia"), Integer.class);
+            Integer idCiclo = (Integer) conversion.convertFromString(httpServletRequest.getParameter("idCiclo"), Integer.class);
+
+            Familia familia=null;
+            if (idFamilia!=null) {
+                familia=crudServiceFactory.getService(Familia.class).read(dataSession, idFamilia);
+            }
+            
+            Ciclo ciclo=null;
+            if (idCiclo!=null) {
+                ciclo=crudServiceFactory.getService(Ciclo.class).read(dataSession, idCiclo);
+            }
+            
+            byte[] excel = downloadBusinessProcess.getHojaCalculoUsuariosTituladosCentro(new DownloadBusinessProcess.GetHojaCalculoUsuariosTituladosCentroArguments(principal, dataSession, centro, familia, ciclo, fechaInicio, fechaFin));
+            controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }    
+    
 }

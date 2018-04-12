@@ -42,7 +42,12 @@ public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
     @Override
     public byte[] getHojaCalculoEmpresasCentro(GetHojaCalculoEmpresasCentroArguments getHojaCalculoEmpresasCentroArguments) throws BusinessException {
         return downloadService.getHojaCalculoEmpresasCentro(getHojaCalculoEmpresasCentroArguments.dataSession,getHojaCalculoEmpresasCentroArguments.centro, getHojaCalculoEmpresasCentroArguments.fechaInicio,getHojaCalculoEmpresasCentroArguments.fechaFin);    
-    }    
+    }
+    
+    @Override
+    public byte[] getHojaCalculoUsuariosTituladosCentro(GetHojaCalculoUsuariosTituladosCentroArguments hojaCalculoUsuariosTituladosCentroArguments) throws BusinessException {
+        return downloadService.getHojaCalculoUsuariosTituladosCentro(hojaCalculoUsuariosTituladosCentroArguments.dataSession,hojaCalculoUsuariosTituladosCentroArguments.centro,hojaCalculoUsuariosTituladosCentroArguments.familia, hojaCalculoUsuariosTituladosCentroArguments.ciclo, hojaCalculoUsuariosTituladosCentroArguments.fechaInicio,hojaCalculoUsuariosTituladosCentroArguments.fechaFin);      
+    }
     
     @Override
     public void setEntityType(Class entityType) {
@@ -53,6 +58,8 @@ public class DownloadBusinessProcessImpl implements DownloadBusinessProcess {
     public Class getEntityType() {
         return this.entityType;
     }    
+
+
 
     
 }

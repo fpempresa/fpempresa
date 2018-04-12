@@ -6,6 +6,10 @@
 package es.logongas.fpempresa.service.download.impl;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.download.DownloadService;
@@ -122,7 +126,10 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public byte[] getHojaCalculoEmpresasCentro(DataSession dataSession, Centro centro, Date fechaInicio, Date fechaFin) throws BusinessException {
-
+        if (centro == null) {
+            throw new NullPointerException("El argumento centro no puede ser null");
+        }
+        
         CRUDService<Empresa,Integer> empresaCRUDService = (CRUDService<Empresa,Integer>) crudServiceFactory.getService(Empresa.class);
 
         Filters filters = new Filters();
@@ -144,6 +151,47 @@ public class DownloadServiceImpl implements DownloadService {
         List<Empresa> empresas = empresaCRUDService.search(dataSession, filters, orders, searchResponse);
 
         return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,fecha", "Nombre,Fecha");
+    }
+
+    @Override
+    public byte[] getHojaCalculoUsuariosTituladosCentro(DataSession dataSession, Centro centro, Familia familia, Ciclo ciclo, Date fechaInicio, Date fechaFin) throws BusinessException {
+        if (centro == null) {
+            throw new NullPointerException("El argumento centro no puede ser null");
+        }
+        
+        CRUDService<Usuario,Integer> tituladoCRUDService = (CRUDService<Usuario,Integer>) crudServiceFactory.getService(Usuario.class);
+
+        Filters filters = new Filters();
+        List<Order> orders = new ArrayList<Order>();
+        SearchResponse searchResponse = new SearchResponse(true);
+
+        filters.add(new Filter("tipoUsuario", TipoUsuario.TITULADO, FilterOperator.eq));
+        filters.add(new Filter("titulado.formacionesAcademicas.centro.idCentro", centro.getIdCentro(), FilterOperator.eq));
+        if (familia != null) {
+            filters.add(new Filter("titulado.formacionesAcademicas.ciclo.familia.idFamilia", familia.getIdFamilia(), FilterOperator.eq));
+
+        }        
+        if (ciclo != null) {
+            filters.add(new Filter("titulado.formacionesAcademicas.ciclo.idCiclo", ciclo.getIdCiclo(), FilterOperator.eq));
+
+        }        
+        if (fechaInicio != null) {
+            filters.add(new Filter("fecha", fechaInicio, FilterOperator.ge));
+
+        }
+        if (fechaFin != null) {
+            filters.add(new Filter("fecha", fechaFin, FilterOperator.le));
+
+        }
+        
+        
+
+        orders.add(new Order( "fecha", OrderDirection.Ascending));
+
+        List<Usuario> empresas = tituladoCRUDService.search(dataSession, filters, orders, searchResponse);
+
+        return hojaCalculoService.getHojaCalculo(empresas, "nombre,apellidos,fecha", "Nombre,Apellidos,Fecha");
+  
     }
     
 }

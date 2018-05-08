@@ -87,7 +87,7 @@ public class Titulado {
     @Size(max = 65000)
     private String otrasCompetencias;
 
-    @Label("Permisos de conducir")
+    @Label("Permiso de conducción")
     @Size(max = 255)
     private String permisosConducir;
 

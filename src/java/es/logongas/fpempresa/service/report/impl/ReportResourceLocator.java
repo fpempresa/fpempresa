@@ -10,7 +10,14 @@ import java.io.InputStream;
 public class ReportResourceLocator {
     
     public static InputStream getResource(String resourceName) {
-        return ReportResourceLocator.class.getResourceAsStream("../files/"+resourceName);
+        String fullPath="../files/"+resourceName;
+        InputStream inputStream=ReportResourceLocator.class.getResourceAsStream(fullPath);
+        
+        if (inputStream==null) {
+                throw new RuntimeException("No existe  el recurso:"+fullPath);
+        }        
+        
+        return inputStream;
     }
     
 }

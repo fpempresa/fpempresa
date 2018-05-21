@@ -21,32 +21,30 @@ import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
-import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
-import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.core.Order;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
-import es.logongas.ix3.dao.SearchResponse;
 import es.logongas.ix3.security.model.Group;
 import es.logongas.ix3.security.model.GroupMember;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -66,6 +64,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Autowired
     CRUDServiceFactory crudServiceFactory;
+    
+    @Autowired
+    ReportService reportService;    
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -326,5 +327,13 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         } catch (IOException ex) {
             throw new RuntimeException("Error al enviar email de reseteo de password", ex);
         }
+    }
+
+    @Override
+    public byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException {
+        Map<String, Object> parameters=new HashMap<>();
+        parameters.put("idIdentity", usuario.getIdIdentity());
+        
+        return reportService.exportToPdf(dataSession, "curriculum", parameters);
     }
 }

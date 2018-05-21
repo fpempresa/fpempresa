@@ -172,7 +172,25 @@ public class UsuarioRESTController {
         }
 
     }
+    
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/curriculum.pdf"}, method = RequestMethod.GET, produces = "application/pdf")
+    public void downloadCurriculum(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario) throws BusinessException {
 
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            byte[] curriculum = usuarioCRUDBusinessProcess.getCurriculum(new UsuarioCRUDBusinessProcess.GetCurriculumArguments(principal, dataSession, usuario));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null, curriculum, 200, false, null, MimeType.PDF), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
     @RequestMapping(value = {"/{path}/Usuario/enviarMailResetearContrasenya/{email:.+}"}, method = RequestMethod.POST)
     public void enviarMailResetearPassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("email") String email) {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {

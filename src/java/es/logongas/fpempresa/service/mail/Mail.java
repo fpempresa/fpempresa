@@ -23,6 +23,9 @@ public class Mail {
     private String htmlBody;
 
     private String textBody;
+    
+    private List<Attach> attachs=new ArrayList<Attach>();
+    
 
     public Mail() {
         this.to = new ArrayList();
@@ -78,6 +81,20 @@ public class Mail {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    /**
+     * @return the attachs
+     */
+    public List<Attach> getAttachs() {
+        return attachs;
+    }
+
+    /**
+     * @param attachs the attachs to set
+     */
+    public void setAttachs(List<Attach> attachs) {
+        this.attachs = attachs;
     }
 
 }

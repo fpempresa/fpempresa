@@ -21,14 +21,18 @@ import es.logongas.fpempresa.dao.empresa.CandidatoDAO;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
+import es.logongas.fpempresa.service.mail.Attach;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -39,6 +43,9 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
 
     @Autowired
     MailService mailService;
+    
+    @Autowired
+    ReportService reportService;    
 
     private CandidatoDAO getCandidatoDAO() {
         return (CandidatoDAO) getDAO();
@@ -87,6 +94,13 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
                         + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
                 );
                 mail.setFrom(Config.getSetting("mail.sender").toString());
+                
+                Map<String, Object> parameters=new HashMap<>();
+                parameters.put("idIdentity", candidato.getUsuario().getIdIdentity());
+                byte[] curriculum=reportService.exportToPdf(dataSession, "curriculum", parameters);
+                
+                mail.getAttachs().add(new Attach("curriculum.pdf", curriculum, "application/pdf"));
+                
                 mailService.send(mail);
             } catch (IOException ex) {
                 throw new RuntimeException("Error al enviar email notificacion de nuevo candidato a la empresa", ex);

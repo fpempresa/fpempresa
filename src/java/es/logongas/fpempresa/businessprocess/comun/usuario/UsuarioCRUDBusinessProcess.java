@@ -37,6 +37,9 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
     Usuario updateEstadoUsuario(UpdateEstadoUsuarioArguments updateEstadoUsuarioArguments) throws BusinessException;
 
     Usuario updateCentro(UpdateCentroArguments updateCentroArguments) throws BusinessException;
+    
+    
+    byte[]  getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException;
 
     public class UpdatePasswordArguments extends BusinessProcess.BusinessProcessArguments {
 
@@ -105,7 +108,20 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
 
     }
+    public class GetCurriculumArguments extends BusinessProcess.BusinessProcessArguments {
 
+        public Usuario usuario;
+
+        public GetCurriculumArguments() {
+        }
+
+        public GetCurriculumArguments(Principal principal, DataSession dataSession, Usuario usuario) {
+            super(principal, dataSession);
+
+            this.usuario = usuario;
+        }
+
+    }
     public class UpdateFotoArguments extends BusinessProcess.BusinessProcessArguments {
 
         final public Usuario usuario;

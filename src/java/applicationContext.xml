@@ -46,6 +46,7 @@
     </bean>
     
     <!-- Servicios -->
+    <bean class="es.logongas.fpempresa.service.report.impl.ReportServiceImplJasper"  />
     <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImplAWS"  />
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.download.impl.DownloadServiceImpl"  />

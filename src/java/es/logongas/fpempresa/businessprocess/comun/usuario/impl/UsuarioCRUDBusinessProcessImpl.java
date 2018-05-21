@@ -419,4 +419,11 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession, resetearContrasenyaArguments.claveResetearPassword, resetearContrasenyaArguments.nuevaContrasenya);
     }
 
+    @Override
+    public byte[] getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+
+        return usuarioCRUDService.getCurriculum(getCurriculumArguments.dataSession, getCurriculumArguments.usuario);
+    }
+
 }

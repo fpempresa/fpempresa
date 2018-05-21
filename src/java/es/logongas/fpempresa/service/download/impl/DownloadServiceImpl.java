@@ -120,8 +120,8 @@ public class DownloadServiceImpl implements DownloadService {
         orders.add(new Order("fecha", OrderDirection.Ascending));
 
         List<Empresa> empresas = empresaCRUDService.search(dataSession, filters, orders, searchResponse);
-
-        return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,fecha", "Nombre,Fecha");
+        
+        return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,direccion.datosDireccion,direccion.municipio.descripcion,direccion.municipio.provincia.descripcion,contacto.persona,contacto.telefono,contacto.email", "Nombre,Dirección,Municipio,Provincia,Persona de contacto,Teléfono,Correo");
     }
 
     @Override
@@ -150,7 +150,8 @@ public class DownloadServiceImpl implements DownloadService {
 
         List<Empresa> empresas = empresaCRUDService.search(dataSession, filters, orders, searchResponse);
 
-        return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,fecha", "Nombre,Fecha");
+        return hojaCalculoService.getHojaCalculo(empresas, "nombreComercial,direccion.datosDireccion,direccion.municipio.descripcion,direccion.municipio.provincia.descripcion,contacto.persona,contacto.telefono,contacto.email", "Nombre,Dirección,Municipio,Provincia,Persona de contacto,Teléfono,Correo");
+
     }
 
     @Override
@@ -188,9 +189,10 @@ public class DownloadServiceImpl implements DownloadService {
 
         orders.add(new Order( "fecha", OrderDirection.Ascending));
 
-        List<Usuario> empresas = tituladoCRUDService.search(dataSession, filters, orders, searchResponse);
+        List<Usuario> usuarios = tituladoCRUDService.search(dataSession, filters, orders, searchResponse);
 
-        return hojaCalculoService.getHojaCalculo(empresas, "nombre,apellidos,fecha", "Nombre,Apellidos,Fecha");
+        
+        return hojaCalculoService.getHojaCalculo(usuarios, "nombre,apellidos,titulado.telefono,titulado.telefonoAlternativo,email", "Nombre,Apellidos,Teléfono,Teléfono Alternativo,Correo");
   
     }
     

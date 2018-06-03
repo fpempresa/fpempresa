@@ -22,16 +22,21 @@ import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.FilterOperator;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
@@ -55,6 +60,39 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         return (OfertaDAO) getDAO();
     }
 
+    @Override
+    public boolean delete(DataSession dataSession, Oferta entity) throws BusinessException {
+
+        try {
+            transactionManager.begin(dataSession);
+
+    
+                CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+
+                Filters filters = new Filters();
+                filters.add(new Filter("oferta.idOferta", entity.getIdOferta(), FilterOperator.eq));
+
+                List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
+                for (Candidato candidato : candidatos) {
+                    candidatoCRUDService.delete(dataSession, candidato);
+                }
+
+     
+            boolean success = super.delete(dataSession, entity);
+
+            transactionManager.commit(dataSession);
+
+            return success;
+        } finally {
+            if (transactionManager.isActive(dataSession)) {
+                transactionManager.rollback(dataSession);
+            }
+        }
+        
+    }    
+    
+        
+    
     @Override
     public List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException {
         return getOfertaDAO().getOfertasUsuarioTitulado(dataSession, usuario, provincia, fechaInicio, fechaFin);

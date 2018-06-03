@@ -29,7 +29,7 @@ public class Candidato {
 
     private int idCandidato;
 
-    private Oferta Oferta;
+    private Oferta oferta;
 
     private Usuario usuario;
 
@@ -52,17 +52,17 @@ public class Candidato {
     }
 
     /**
-     * @return the Oferta
+     * @return the oferta
      */
     public Oferta getOferta() {
-        return Oferta;
+        return oferta;
     }
 
     /**
-     * @param Oferta the Oferta to set
+     * @param Oferta the oferta to set
      */
     public void setOferta(Oferta Oferta) {
-        this.Oferta = Oferta;
+        this.oferta = Oferta;
     }
 
     /**

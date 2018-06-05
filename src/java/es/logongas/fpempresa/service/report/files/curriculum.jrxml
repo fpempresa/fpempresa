@@ -293,7 +293,7 @@ where
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[ java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, new java.util.Locale("es", "ES")).format($F{fecha})]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, new java.util.Locale("es", "ES")).format($F{fechaNacimiento})]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

@@ -64,7 +64,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[ new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fechaInicio})
+				<textFieldExpression   class="java.lang.String"><![CDATA[new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fechaInicio})
 +" - " +
  ($F{fechaFin}==null?"presente":new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fechaFin}))]]></textFieldExpression>
 				</textField>

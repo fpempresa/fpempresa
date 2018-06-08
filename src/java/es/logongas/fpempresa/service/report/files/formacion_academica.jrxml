@@ -23,11 +23,10 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<parameter name="IdTitulado" isForPrompting="false" class="java.lang.Integer">
-		<defaultValueExpression ><![CDATA[new Integer(1695)]]></defaultValueExpression>
-	</parameter>
+	<parameter name="idTitulado" isForPrompting="false" class="java.lang.Integer"/>
 	<queryString><![CDATA[select 
-	FA.*,Centro.nombre as "nombreCentro",
+	FA.*,
+	Centro.nombre as "nombreCentro",
 	Ciclo.descripcion as "nombreCiclo",
 	Grado.Descripcion as "Grado",
 	Municipio.descripcion as "nombreMunicipio",
@@ -40,7 +39,7 @@ from
 	left join Municipio on Centro.idMunicipio=Municipio.idMunicipio
 	left join Provincia on Municipio.idProvincia=Provincia.idProvincia
 where 
-	idTitulado=$P{IdTitulado}]]></queryString>
+        FA.idTitulado=$P{idTitulado}]]></queryString>
 
 	<field name="idFormacionAcademica" class="java.lang.Integer"/>
 	<field name="tipoFormacionAcademica" class="java.lang.String"/>
@@ -88,7 +87,7 @@ where
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[ new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fecha})]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fecha})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

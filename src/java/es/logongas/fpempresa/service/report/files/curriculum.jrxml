@@ -114,7 +114,7 @@ where
 						x="0"
 						y="394"
 						width="535"
-						height="19"
+						height="25"
 						key="subreport-1"
 						positionType="Float"/>
 					<subreportParameter  name="idTitulado">

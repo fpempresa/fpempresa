@@ -62,37 +62,37 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
     @Override
     public boolean delete(DataSession dataSession, Oferta entity) throws BusinessException {
-
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
         try {
-            transactionManager.begin(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
 
-    
-                CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+            CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
 
-                Filters filters = new Filters();
-                filters.add(new Filter("oferta.idOferta", entity.getIdOferta(), FilterOperator.eq));
+            Filters filters = new Filters();
+            filters.add(new Filter("oferta.idOferta", entity.getIdOferta(), FilterOperator.eq));
 
-                List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
-                for (Candidato candidato : candidatos) {
-                    candidatoCRUDService.delete(dataSession, candidato);
-                }
+            List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
+            for (Candidato candidato : candidatos) {
+                candidatoCRUDService.delete(dataSession, candidato);
+            }
 
-     
             boolean success = super.delete(dataSession, entity);
 
-            transactionManager.commit(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
 
             return success;
         } finally {
-            if (transactionManager.isActive(dataSession)) {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
                 transactionManager.rollback(dataSession);
             }
         }
-        
-    }    
-    
-        
-    
+
+    }
+
     @Override
     public List<Oferta> getOfertasUsuarioTitulado(DataSession dataSession, Usuario usuario, Provincia provincia, Date fechaInicio, Date fechaFin) throws BusinessException {
         return getOfertaDAO().getOfertasUsuarioTitulado(dataSession, usuario, provincia, fechaInicio, fechaFin);

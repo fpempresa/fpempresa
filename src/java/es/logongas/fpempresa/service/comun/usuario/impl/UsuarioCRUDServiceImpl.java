@@ -64,9 +64,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Autowired
     CRUDServiceFactory crudServiceFactory;
-    
+
     @Autowired
-    ReportService reportService;    
+    ReportService reportService;
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -146,9 +146,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public boolean delete(DataSession dataSession, Usuario entity) throws BusinessException {
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
 
         try {
-            transactionManager.begin(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
 
             if (entity.getTipoUsuario() == TipoUsuario.TITULADO) {
                 CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) crudServiceFactory.getService(Candidato.class);
@@ -164,15 +167,17 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             }
             boolean success = super.delete(dataSession, entity);
 
-            transactionManager.commit(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
 
             return success;
         } finally {
-            if (transactionManager.isActive(dataSession)) {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
                 transactionManager.rollback(dataSession);
             }
         }
-        
+
     }
 
     private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
@@ -331,9 +336,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException {
-        Map<String, Object> parameters=new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("idIdentity", usuario.getIdIdentity());
-        
+
         return reportService.exportToPdf(dataSession, "curriculum", parameters);
     }
 }

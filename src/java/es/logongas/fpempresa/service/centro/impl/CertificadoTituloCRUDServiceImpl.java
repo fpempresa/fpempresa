@@ -41,9 +41,12 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
     @Override
     public CertificadoTitulo insert(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {
         GenericDAO<FormacionAcademica, Integer> formacionAcademicaDAO = daoFactory.getDAO(FormacionAcademica.class);
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
 
         try {
-            transactionManager.begin(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
 
             List<FormacionAcademica> formacionesAcademicas = getFormacionAcademicaFromCertificadoTitulo(dataSession, certificadoTitulo);
 
@@ -54,26 +57,31 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
 
             CertificadoTitulo certificadoTitulo1 = daoFactory.getDAO(CertificadoTitulo.class).insert(dataSession, certificadoTitulo);
 
-            transactionManager.commit(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
 
             return certificadoTitulo;
         } finally {
-            if (transactionManager.isActive(dataSession)) {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
                 transactionManager.rollback(dataSession);
             }
         }
-        
+
     }
 
     @Override
     public CertificadoTitulo update(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
+
         try {
             GenericDAO<FormacionAcademica, Integer> formacionAcademicaDAO = daoFactory.getDAO(FormacionAcademica.class);
 
             CertificadoTitulo certificadoTituloOriginal = getDAO().readOriginal(dataSession, certificadoTitulo.getIdCertificadoTitulo());
 
-
-            transactionManager.begin(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
 
             List<FormacionAcademica> formacionesAcademicasOriginales = getFormacionAcademicaFromCertificadoTitulo(dataSession, certificadoTituloOriginal);
 
@@ -91,24 +99,30 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
 
             CertificadoTitulo update = daoFactory.getDAO(CertificadoTitulo.class).update(dataSession, certificadoTitulo);
 
-            transactionManager.commit(dataSession);
-            
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
+
             return update;
-            
+
         } finally {
-            if (transactionManager.isActive(dataSession)) {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
                 transactionManager.rollback(dataSession);
             }
-        }        
-   
+        }
+
     }
 
     @Override
     public boolean delete(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
+
         try {
             GenericDAO<FormacionAcademica, Integer> formacionAcademicaDAO = daoFactory.getDAO(FormacionAcademica.class);
 
-            transactionManager.begin(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
 
             List<FormacionAcademica> formacionesAcademicasOriginales = getFormacionAcademicaFromCertificadoTitulo(dataSession, certificadoTitulo);
 
@@ -119,14 +133,16 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
 
             boolean delete = daoFactory.getDAO(CertificadoTitulo.class).delete(dataSession, certificadoTitulo);
 
-            transactionManager.commit(dataSession);
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
 
             return delete;
         } finally {
-            if (transactionManager.isActive(dataSession)) {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
                 transactionManager.rollback(dataSession);
             }
-        }        
+        }
     }
 
     private List<FormacionAcademica> getFormacionAcademicaFromCertificadoTitulo(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {

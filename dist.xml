@@ -3,7 +3,7 @@
     <description>Builds, tests, and runs the project fpempresa.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <target name="distOpenShift" depends="-configureAnt,-enableProduccion,clean,dist" >
+    <target name="distDocker" depends="-configureAnt,-enableProduccion,clean,dist" >
     </target>
 	
     <target name="-enableProduccion"  >
@@ -68,7 +68,7 @@
         <property file="nbproject/project.properties"/>    
         
         
-        <property name="max-memory-build-js" value="145" />
+        <property name="max-memory-build-js" value="300" />
          
     </target>
 
@@ -79,8 +79,7 @@
 
 
     <target name="-pre-compile-configureProduccion" if="enableProduccion">
-        <delete file="${build.web.dir}/META-INF/context.xml"/>
-        <delete file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml"/>
+
     </target>
 
     <target name="-pre-dist" if="enableProduccion" >
@@ -88,17 +87,12 @@
     </target>
 
     <target name="-post-dist" >
-        <delete dir="${DEP_DIR}" />
+        <move file="${dist.dir}/${war.name}" tofile="${dist.dir}/ROOT.war"/>
     </target>
 
     <target name="-pre-dist-configureProduccion" depends="-set-os,-exec-grunt,-exec-gulp" >       
         <!-- Poner los datos de la conexión de producción -->
-        <xmltask source="${build.web.dir}/META-INF/context.xml" dest="${build.web.dir}/META-INF/context.xml" preservetype="true" standalone="false">
-            <remove path="/Context/Resource[@type='javax.sql.DataSource']"/>
-        </xmltask>
-        
-        <!-- Cambiar el datasource de Hibernate -->
-        <replace file="${build.web.dir}/WEB-INF/classes/hibernate.cfg.xml" token="java:/comp/env/jdbc/fpempresa" value="java:/comp/env/jdbc/MySQLDS"/>
+        <replace file="${build.web.dir}/META-INF/context.xml" token="localhost:3306/fpempresa" value="database-fpempresa-${env.APP_ENVIRONMENT}:3306/fpempresa"/>
         
         <copy file="../private/config.properties.${env.APP_ENVIRONMENT}" tofile="./build/web/WEB-INF/classes/config.properties"/>
         <tstamp>

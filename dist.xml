@@ -90,7 +90,7 @@
         <move file="${dist.dir}/${war.name}" tofile="${dist.dir}/ROOT.war"/>
     </target>
 
-    <target name="-pre-dist-configureProduccion" depends="-set-os,-exec-grunt,-exec-gulp" >       
+    <target name="-pre-dist-configureProduccion" depends="-set-os,-exec-gulp" >       
         <!-- Poner los datos de la conexión de producción -->
         <replace file="${build.web.dir}/META-INF/context.xml" token="localhost:3306/fpempresa" value="database-fpempresa-${env.APP_ENVIRONMENT}:3306/fpempresa"/>
         
@@ -98,7 +98,7 @@
         <tstamp>
             <format property="VERSION" pattern="yyyyMMddHHmmss"/>
         </tstamp>            
-        <replace file="${build.web.dir}/site/fragments/footer/footer.html" token="@@BUILD-STAMP@@" value="${VERSION}"/>        
+        <replace file="${build.web.dir}/site/fragments/footer/footer.html" token="@@BUILD-STAMP@@" value="${VERSION}"/>       
     </target>
 
     <target name="-set-os" >
@@ -111,7 +111,7 @@
         </condition>
     </target>
 
-    <target name="-exec-grunt" if="grunt" >
+    <target name="-exec-grunt"  >
         <antcall target="-exec-grunt-linux"></antcall>
         <antcall target="-exec-grunt-windows"></antcall>
     </target>    
@@ -131,12 +131,12 @@
         </exec>
     </target>
     
-    <target name="-exec-gulp" unless="grunt" >
+    <target name="-exec-gulp"  >
         <antcall target="-exec-gulp-linux"></antcall>
         <antcall target="-exec-gulp-windows"></antcall>
     </target>  
     
-    <target name="-exec-gulp-linux" >	
+    <target name="-exec-gulp-linux" if="linuxos">	
         <exec executable="./node/bin/node64" failonerror="true" >
             <arg value="--max_old_space_size=${max-memory-build-js}"/>            
             <arg value="./node_modules/gulp/bin/gulp.js"/>

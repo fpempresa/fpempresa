@@ -10,34 +10,7 @@
         <property name="enableProduccion" value="yes"/>
     </target>        
         
-    <target name="sonar" depends="-configureAnt" >
-        <property file="./sonar-project.properties"/>
-        <!-- Estas propeiudades se deben actualizar según el servidor de sonar a usar -->
-        <property name="sonar.host.url" value="http://sonar.fpempresa.net" />
-        <property name="sonar.jdbc.url" value="jdbc:postgresql://localhost/sonar" />
-        
-        <property name="sonar.jdbc.username" value="" />
-        <property name="sonar.jdbc.password" value="" />
-	
-        <!-- Antes de ejecutar la tarea quizas haya que hacer un tunel ssh al servidor de sonar -->
-        <sonar />        
-    </target>	
-  
-  
-    <target name="jmeter" depends="-configureAnt" >
-        <jmeter
-            jmeterhome="${basedir}/jmeter"
-            testplan="${basedir}/jmeter/fpempresa.jmx"
-            resultlog="${basedir}/jmeter/fpempresa.jtl">
-            <property name="jmeter.save.saveservice.output_format" value="xml"/>
-            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
-            <property name="jmeter.save.saveservice.bytes" value="true"/>
-            <property name="file_format.testlog" value="${format}"/>
-            <property name="jmeter.save.saveservice.response_data.on_error" value="${funcMode}"/>
-        </jmeter>
-        <xslt in="${basedir}/jmeter/JMeterResults.jtl" out="${basedir}/jmeter/fpempresa.html" style="${basedir}/jmeter/extras/jmeter-results-report_21.xsl" force="true"/>
-		
-    </target>
+
   
     <target name="-configureAnt">
         <echo>Configurando Ant</echo>
@@ -58,12 +31,6 @@
         <!-- Manejo de ficheros XML -->
         <taskdef  name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
         
-        <!--tareas de sonar -->
-        <taskdef resource="org/sonar/ant/antlib.xml"></taskdef>  
-        
-        <!--tareas de JMeter -->
-        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>		
-		
         <!-- Propiedades del proyecto -->
         <property file="nbproject/project.properties"/>    
         

@@ -27,11 +27,6 @@
                 </ul>
                 <br>
                 <ul class="lateral-menu__menu">
-                    <li class="lateral-menu__header">Estadisticas</li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/estadisticas/centro')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/estadisticas/centro')}"  class="lateral-menu__item__link" href="#/estadisticas/centros">Centros</a></li>
-                </ul>
-                <br>
-                <ul class="lateral-menu__menu">
                     <li class="lateral-menu__header">Usuarios</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/ADMINISTRADOR')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/ADMINISTRADOR')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/ADMINISTRADOR">Administradores</a></li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/.*/tipoUsuario/CENTRO')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/[a-zA-Z]+/tipoUsuario/CENTRO')}"  class="lateral-menu__item__link" href="#/usuario/search/tipoUsuario/CENTRO">Profesores</a></li>
@@ -45,6 +40,12 @@
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar mi contrase&ntilde;a</a></li>
                     
                 </ul>
+                <br>
+                <ul class="lateral-menu__menu">
+                    <li class="lateral-menu__header">Avanzado</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/estadisticas/centro')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/estadisticas/centro')}"  class="lateral-menu__item__link" href="#/estadisticas/centros">Estadísticas de Centros</a></li>
+                    <li class="lateral-menu__item" ng-show="user.idIdentity==30"><a class="lateral-menu__item__link" href="{{getContextPath()}}/monitoring">Monitor</a></li>
+                 </ul>
             </div>
             <div class="col-xs-12 col-sm-10">
                 <div ui-view></div>                     

@@ -18,5 +18,9 @@ app.config(['$stateProvider', function($stateProvider) {
         $stateProvider.state('/docs/soporte', {
             url:'/docs/soporte',
             templateUrl: 'views/docs/soporte.html'
-        });        
+        });    
+        $stateProvider.state('/docs/cookies', {
+            url:'/docs/cookies',
+            templateUrl: 'views/docs/cookies.html'
+        });            
     }]);

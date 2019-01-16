@@ -72,39 +72,36 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
     @Override
     public void notificarCandidatoAEmpresas(DataSession dataSession, Candidato candidato) throws BusinessException {
         if (candidato.getOferta().getEmpresa().getCentro() == null) {
-            try {
-                Mail mail = new Mail();
-                Oferta oferta = candidato.getOferta();
-                mail.addTo(candidato.getOferta().getEmpresa().getContacto().getEmail());
-                mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
-                mail.setHtmlBody("Hola <strong>" + oferta.getEmpresa().getContacto().getPersona() + "</strong>,<br><br>"
-                        + "Un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
-                        + "<h4>Datos de la oferta</h4>"
-                        + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
-                        + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
-                        + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
-                        + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
-                        + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
-                        + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
-                        + "<strong>Descripción: </strong>" + oferta.getDescripcion()
-                        + "<h4>Datos del candidato</h4>"
-                        + "<strong>Nombre: </strong>" + candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos() + "<br>"
-                        + "<strong>Teléfono: </strong>" + candidato.getUsuario().getTitulado().getTelefono() + "<br>"
-                        + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" + "<br>"
-                        + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
-                );
-                mail.setFrom(Config.getSetting("mail.sender").toString());
-                
-                Map<String, Object> parameters=new HashMap<>();
-                parameters.put("idIdentity", candidato.getUsuario().getIdIdentity());
-                byte[] curriculum=reportService.exportToPdf(dataSession, "curriculum", parameters);
-                
-                mail.getAttachs().add(new Attach("curriculum.pdf", curriculum, "application/pdf"));
-                
-                mailService.send(mail);
-            } catch (IOException ex) {
-                throw new RuntimeException("Error al enviar email notificacion de nuevo candidato a la empresa", ex);
-            }
+            Mail mail = new Mail();
+            Oferta oferta = candidato.getOferta();
+            mail.addTo(candidato.getOferta().getEmpresa().getContacto().getEmail());
+            mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
+            mail.setHtmlBody("Hola <strong>" + oferta.getEmpresa().getContacto().getPersona() + "</strong>,<br><br>"
+                    + "Un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
+                    + "<h4>Datos de la oferta</h4>"
+                    + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
+                    + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
+                    + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
+                    + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
+                    + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
+                    + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
+                    + "<strong>Descripción: </strong>" + oferta.getDescripcion()
+                    + "<h4>Datos del candidato</h4>"
+                    + "<strong>Nombre: </strong>" + candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos() + "<br>"
+                    + "<strong>Teléfono: </strong>" + candidato.getUsuario().getTitulado().getTelefono() + "<br>"
+                    + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" + "<br>"
+                    + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
+            );
+            mail.setFrom(Config.getSetting("mail.sender").toString());
+
+            Map<String, Object> parameters=new HashMap<>();
+            parameters.put("idIdentity", candidato.getUsuario().getIdIdentity());
+            byte[] curriculum=reportService.exportToPdf(dataSession, "curriculum", parameters);
+
+            mail.getAttachs().add(new Attach("curriculum.pdf", curriculum, "application/pdf"));
+
+            mailService.send(mail);
+
         }
     }
 }

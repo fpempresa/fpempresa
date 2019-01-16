@@ -26,6 +26,6 @@ import java.io.IOException;
  */
 public interface MailService extends Service<Mail> {
 
-    public void send(Mail mail) throws IOException;
+    public void send(Mail mail);
 
 }

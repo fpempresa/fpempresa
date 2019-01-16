@@ -25,77 +25,27 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.model.RawMessage;
 import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
 import es.logongas.fpempresa.config.Config;
-import es.logongas.fpempresa.service.mail.Attach;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.mail.Address;
+import javax.mail.Message;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 /**
- * Servicio de envio de EMails.
+ * Servicio de envio de EMails por AWS Simple Email Service 
  *
  * @author rhuffus
  */
 public class MailServiceImplAWS implements MailService {
 
     @Override
-    public void send(Mail mail) throws IOException {
+    public void send(Mail mail) {
         try {
             Session session = Session.getDefaultInstance(new Properties());
-            MimeMessage message = new MimeMessage(session);
-            
-            message.setSubject(mail.getSubject(), "UTF-8");
-            message.setFrom(new InternetAddress(mail.getFrom()));
-            message.setRecipients(javax.mail.Message.RecipientType.TO, getAddresses(mail.getTo()));
-            
-            
-            MimeMultipart mimeMultiPart = new MimeMultipart("alternative");
-            
-            if ((mail.getTextBody()!=null) && (mail.getTextBody().isEmpty()==false)) {
-                MimeBodyPart textPart = new MimeBodyPart();
-                textPart.setContent(mail.getTextBody(), "text/plain; charset=UTF-8");
-                mimeMultiPart.addBodyPart(textPart);
-            }
-            
-            if ((mail.getHtmlBody()!=null) && (mail.getHtmlBody().isEmpty()==false)) {
-                MimeBodyPart htmlPart = new MimeBodyPart();
-                htmlPart.setContent(mail.getHtmlBody(), "text/html; charset=UTF-8");
-                mimeMultiPart.addBodyPart(htmlPart);
-            }
-            
-            MimeBodyPart contentBodyPart = new MimeBodyPart();
-            contentBodyPart.setContent(mimeMultiPart);
-            
-            
-            MimeMultipart mainBodyPart = new MimeMultipart("mixed");
-            mainBodyPart.addBodyPart(contentBodyPart);
-            message.setContent(mainBodyPart);
-            
 
-            for (Attach attach : mail.getAttachs()) {
-                MimeBodyPart att = new MimeBodyPart();
-                DataSource dataSource = new InputStreamDataSource(attach.getMimeType(), attach.getFileName(), attach.getData());
-                att.setDataHandler(new DataHandler(dataSource));
-                att.setFileName(dataSource.getName());
-                mainBodyPart.addBodyPart(att);
-            }
-
+            Message message=JavaMailHelper.getMessage(mail, session);
             
             //Aquí es el proceso de envio
             AWSCredentials credentials = new BasicAWSCredentials(Config.getSetting("aws.accessKey"), Config.getSetting("aws.secretKey"));
@@ -122,49 +72,8 @@ public class MailServiceImplAWS implements MailService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private Address[] getAddresses(List<String> addresses) {
-        try {
-            List<Address> addressesList = new ArrayList<Address>();
 
-            for (String address : addresses) {
-                addressesList.add(new InternetAddress(address));
-            }
 
-            Address[] addressesArray = new Address[addressesList.size()];
-            addressesList.toArray(addressesArray);
-            return addressesArray;
-        } catch (AddressException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
 
-    private class InputStreamDataSource implements DataSource {
-
-        private final String contentType;
-        private final String name;
-        private final byte[] data;
-
-        public InputStreamDataSource(String contentType, String name, byte[] data) {
-            this.contentType = contentType;
-            this.name = name;
-            this.data = data;
-        }
-
-        public String getContentType() {
-            return contentType;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public InputStream getInputStream() throws IOException {
-            return new ByteArrayInputStream(data);
-        }
-
-        public OutputStream getOutputStream() throws IOException {
-            throw new UnsupportedOperationException("Not implemented");
-        }
-    }
 
 }

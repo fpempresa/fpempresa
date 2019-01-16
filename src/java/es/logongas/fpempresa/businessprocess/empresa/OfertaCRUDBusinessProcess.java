@@ -10,6 +10,7 @@ import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.ix3.businessprocess.BusinessProcess;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
@@ -30,6 +31,8 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta, I
     public List<Oferta> getOfertasEmpresasCentro(GetOfertasEmpresasCentroArguments getOfertasEmpresasCentro) throws BusinessException;
 
     public List<Oferta> getOfertasEmpresa(GetOfertasEmpresaArguments getOfertasEmpresa) throws BusinessException;
+    
+    public void notificacionOferta(NotificacionOfertaArguments notificacionOfertaArguments) throws BusinessException;
 
     public class GetOfertasUsuarioTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -98,4 +101,19 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta, I
         }
 
     }
+    
+    public class NotificacionOfertaArguments extends BusinessProcess.BusinessProcessArguments {
+
+        public Oferta oferta;
+
+        public NotificacionOfertaArguments() {
+        }
+
+        public NotificacionOfertaArguments(Principal principal, DataSession dataSession, Oferta oferta) {
+            super(principal, dataSession);
+            this.oferta = oferta;
+        }
+
+    }    
+    
 }

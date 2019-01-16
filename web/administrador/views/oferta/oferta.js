@@ -6,13 +6,27 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         });
     }]);
 
-app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', function ($scope, genericControllerCrudList, controllerParams, dialog) {
+app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog','$http','notify','ix3Configuration', function ($scope, genericControllerCrudList, controllerParams, dialog, $http,notify,ix3Configuration) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.orderby = [
             {fieldName: "fecha", orderDirection: "DESC"}
         ];
         $scope.search();
+        
+        $scope.buttonNotificar=function(idOferta) {
+            var baseUrl=ix3Configuration.server.api;
+            var config = {
+                method: 'PATCH',
+                url: baseUrl + "/Oferta/" + idOferta + "/notificacionOferta"
+            };
+            $http(config).success(function () {
+                notify.info("Notificación Oferta","Correcta:" + idOferta);
+            }).error(function (data, status) {
+                notify.info("Notificación Oferta","Fallo:"+idOferta+"\n"+data);
+            });
+};
+        
     }]);
 
 

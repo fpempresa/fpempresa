@@ -6,10 +6,15 @@
 package es.logongas.fpempresa.businessprocess.empresa.impl;
 
 import es.logongas.fpempresa.businessprocess.empresa.OfertaCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.Page;
+import es.logongas.ix3.core.PageRequest;
+import es.logongas.ix3.dao.DataSession;
 import java.util.List;
 
 /**
@@ -52,6 +57,26 @@ public class OfertaCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ofert
         OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
         ofertaCRUDService.notificarOfertaATitulados(insertArguments.dataSession, oferta);
         return oferta;
+    }
+
+    @Override
+    public void notificacionOferta(NotificacionOfertaArguments notificacionOfertaArguments) throws BusinessException {
+        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
+        CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+        
+        Oferta oferta=notificacionOfertaArguments.oferta;
+        DataSession dataSession=notificacionOfertaArguments.dataSession;
+        
+        ofertaCRUDService.notificarOfertaATitulados(dataSession, oferta);
+        
+        PageRequest pageRequest=new PageRequest(0, 10000);
+
+        Page<Candidato> page=candidatoCRUDService.getCandidatosOferta(dataSession, oferta, true, false, 0, pageRequest);
+        
+        for(Candidato candidato:page.getContent()) {
+            candidatoCRUDService.notificarCandidatoAEmpresas(dataSession, candidato);
+        }
+        
     }
 
 }

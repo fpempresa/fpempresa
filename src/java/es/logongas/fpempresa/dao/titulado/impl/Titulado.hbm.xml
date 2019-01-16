@@ -46,7 +46,7 @@
         <component name="configuracion" >
             <component name="notificacionOferta" >
                 <property name="notificarPorEmail" />
-                <set name="provincias" table="tituladoprovincianotificacion"  cascade="all" inverse="false"  lazy="false" >
+                <set name="provincias" table="tituladoprovincianotificacion"  cascade="save-update,evict,lock,merge,refresh,replicate" inverse="false"  lazy="false" >
                     <key>
                         <column name="idTitulado"  />
                     </key>

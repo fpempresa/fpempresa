@@ -21,6 +21,7 @@ import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
@@ -36,6 +37,7 @@ import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.security.model.Group;
 import es.logongas.ix3.security.model.GroupMember;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
@@ -163,6 +165,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 for (Candidato candidato : candidatos) {
                     candidatoCRUDService.delete(dataSession, candidato);
                 }
+                
+                CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
+                
+                Titulado titulado=tituladoCRUDService.read(dataSession, entity.getTitulado().getIdTitulado());
+                tituladoCRUDService.delete(dataSession, titulado);
 
             }
             boolean success = super.delete(dataSession, entity);

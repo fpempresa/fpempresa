@@ -1,26 +1,8 @@
 "use strict";
 
-app.controller("TituladoSearchController", ['$scope', '$http', 'genericControllerCrudList', 'controllerParams', 'ix3Configuration', 'dialog', function ($scope, $http, genericControllerCrudList, controllerParams, ix3Configuration, dialog) {
+app.controller("TituladoSearchController", ['$scope', '$http', 'ix3Configuration','dialog', function ($scope, $http, ix3Configuration,dialog) {
         $scope.businessMessages = [];
-        genericControllerCrudList.extendScope($scope, controllerParams);
-        $scope.page.pageSize = 20;
-        $scope.distinct = true;
-        $scope.filters.tipoUsuario = "TITULADO";
-        $scope.filters['titulado.formacionesAcademicas.centro.idCentro'] = $scope.user.centro.idCentro;
-        $scope.preSearch = function (filters) {
-            if (filters['ciclo.familia.idFamilia']) {
-                filters['titulado.formacionesAcademicas.ciclo.familia.idFamilia'] = filters['ciclo.familia.idFamilia'].idFamilia;
-            }
-            if (filters['ciclo.idCiclo']) {
-                filters['titulado.formacionesAcademicas.ciclo.idCiclo'] = filters['ciclo.idCiclo'].idCiclo;
-            }
-            if(filters.$gt['titulado.formacionesAcademicas.fecha']){
-                var yearString =  filters.$gt['titulado.formacionesAcademicas.fecha'];
-                filters.$gt['titulado.formacionesAcademicas.fecha'] = new Date((parseInt(yearString) -1) + '-12-31');
-                filters.$lt['titulado.formacionesAcademicas.fecha'] = new Date((parseInt(yearString) + 1) + '-01-01');
-            }
-        }
-        $scope.search();
+        
         $scope.fail = {};
         $scope.apiUrl = ix3Configuration.server.api;
         $scope.mostrarCodigosMunicipio = function () {
@@ -34,15 +16,20 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'genericControlle
             alert("El listado de Titulados se importó correctamente");
             $scope.search();
         };
-
-
+        if ($scope.user && $scope.user.centro) {
+            $scope.centro=$scope.user.centro;
+            getEstadisticasByCentro($scope,$scope.user.centro);
+        }
+        
+        
+        
+        function getEstadisticasByCentro($scope,centro) {
+            $http({
+                method: "GET",
+                url: ix3Configuration.server.api + "/Estadisticas/centro/" + centro.idCentro + "?expand=tituladosPorFamilia.tituladosPorCiclo"
+            }).then(function (estadisticas) {
+                $scope.centro.estadisticas = estadisticas.data;
+            });
+        }        
+        
     }]);
-
-
-
-app.controller("TituladoViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'ix3Configuration', 'ageCalculator', function ($scope, genericControllerCrudDetail, controllerParams, ix3Configuration, ageCalculator) {
-        genericControllerCrudDetail.extendScope($scope, controllerParams);
-        $scope.ix3Configuration = ix3Configuration;
-        $scope.ageCalculator = ageCalculator;
-    }]);
-

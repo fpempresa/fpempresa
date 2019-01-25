@@ -435,6 +435,10 @@ fieldset[disabled] .form__button--danger.active {
   background-color: #FFFFFF;
   color: #000000;
 }
+.data-table__row__foot {
+  background-color: #0072c7;
+  color: #FFFFFF;
+}
 .panel-green {
   border-color: #5cb85c;
 }

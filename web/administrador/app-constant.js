@@ -35,6 +35,19 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
                         //Si no hay usuario, tiene que autenticarse
                         return 401;
                     }
+                }],
+            ['user', 'state', 'params', function (user, state, params) {
+                    if (user) {                    
+                        if (user.aceptadoRGPD===true) {
+                            return 200;
+                        } else {
+                            //Si no acepta la RGPD no se permite entrar
+                            return 401;
+                        }
+                    } else {
+                        //Si no hay usuario, tiene que autenticarse
+                        return 401;
+                    }
                 }]
         ]
     },

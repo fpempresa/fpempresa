@@ -52,6 +52,15 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     });
                     return deferred.promise;
                 };
+                service.aceptarRGPD = function () {
+                    var deferred = $q.defer();
+                    this.repository.aceptarRGPD().then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };                
 
                 service.resetearContrasenya = function (claveResetearContrasenya, newPassword) {
                     var deferred = $q.defer();

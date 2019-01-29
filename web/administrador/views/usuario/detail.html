@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="row" >
-                        <div class="col-xs-9  col-xs-offset-3 form-horizontal">
+                        <div class="col-xs-5  col-xs-offset-3 form-horizontal">
                             <div class="checkbox">
                                 <label>
                                     <input ng-model="model.validadoEmail" type="checkbox" id="validadoEmail" name="validadoEmail"  ix3-validation >
@@ -47,6 +47,14 @@
                                 </label>
                             </div>
                         </div> 
+                        <div class="col-xs-4  form-horizontal">
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="model.aceptadoRGPD" type="checkbox" id="aceptadoRGPD" name="aceptadoRGPD"  ix3-validation >
+                                    Aceptado RGPD
+                                </label>
+                            </div>
+                        </div>                         
                     </div>                     
                     
                     <div class="row" ng-show="controllerAction === 'NEW'" >

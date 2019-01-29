@@ -66,7 +66,49 @@
                   </div>
                 </div>                
             </div>
-
         </div>
+        
+        <div class="row" >
+            <div class="col-xs-12 ">
+
+
+
+
+
+                <table class="table table-bordered">
+                    <thead>                        
+                        <tr class="data-table__head">
+                            <th  style="text-align: center">Familia (Titulados / Titulos)</th>
+                            <th  style="text-align: center">Ciclo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="familia in centro.estadisticas.tituladosPorFamilia" class="data-table__row">
+                            <td >
+                                {{familia.descripcion}}: (<span title="N&ordm; de Titulados" >{{familia.valor}}</span>&nbsp;/&nbsp;<span title="N&ordm; de T&iacute;tulos" >{{familia.tituladosPorCiclo| map:'valor' | sum}}</span>)
+                            </td>
+                            <td >
+                                <p ng-repeat="ciclo in familia.tituladosPorCiclo">
+                                    {{ciclo.descripcion}}: {{ciclo.valor}}
+                                </p>
+                            </td>                          
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="data-table__row__foot">
+                          <td>Totales</td>
+                          <td>
+                            Titulados:  <span title="N&ordm; de Titulados" >{{centro.estadisticas.numeroTitulados}}</span> 
+                            <br>
+                            Titulos:  <span title="N&ordm; de T&iacute;tulos" >{{centro.estadisticas.tituladosPorFamilia| map :'tituladosPorCiclo' | flatten | map: 'valor' | sum}}</span>
+                          </td>
+                        </tr>
+                    </tfoot>
+                </table>                        
+
+
+
+            </div>
+        </div>  
     </div>
 </div>

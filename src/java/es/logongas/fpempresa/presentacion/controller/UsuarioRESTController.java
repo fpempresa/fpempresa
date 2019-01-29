@@ -217,6 +217,46 @@ public class UsuarioRESTController {
         }
     }
 
+    @RequestMapping(value = {"{path}/Usuario/{idUsuario}/aceptarRGPD/{secureKey}"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void aceptarRGPD(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario, @PathVariable("secureKey") String secureKey) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            usuarioCRUDBusinessProcess.aceptarRGPD(new UsuarioCRUDBusinessProcess.AceptarRGPDArguments(principal, dataSession, usuario, secureKey));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
+    @RequestMapping(value = {"{path}/Usuario/aceptarRGPD"}, method = RequestMethod.PATCH, produces = "application/json")
+    public void aceptarRGPD(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, (Integer)principal.getSid());
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            usuarioCRUDBusinessProcess.aceptarRGPD(new UsuarioCRUDBusinessProcess.AceptarRGPDArguments(principal, dataSession, usuario, null));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+
+    }
+    
+    
     public static class ResetPassword {
 
         private String claveResetearContrasenya;

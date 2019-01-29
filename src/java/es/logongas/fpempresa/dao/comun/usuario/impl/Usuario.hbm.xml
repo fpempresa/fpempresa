@@ -40,6 +40,10 @@
         <property name="fechaClaveResetearContrasenya"/>
     
         <property name="fecha" update="false"/>
+        
+        <property name="aceptadoRGPD"/>
+        <property name="enviadoCorreoRGPD"/>
+        <property name="secureKeyRGPD"/>
     
     </joined-subclass>
 </hibernate-mapping>

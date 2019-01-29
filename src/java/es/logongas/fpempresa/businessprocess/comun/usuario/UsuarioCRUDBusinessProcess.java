@@ -38,6 +38,7 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
 
     Usuario updateCentro(UpdateCentroArguments updateCentroArguments) throws BusinessException;
     
+    void aceptarRGPD(AceptarRGPDArguments aceptarRGPDArguments) throws BusinessException;
     
     byte[]  getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException;
 
@@ -149,6 +150,20 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
 
     }
+    
+    public class AceptarRGPDArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public Usuario usuario;
+        final public String secureKey;
+
+        public AceptarRGPDArguments(Principal principal, DataSession dataSession, Usuario usuario, String secureKey) {
+            super(principal, dataSession);
+
+            this.usuario = usuario;
+            this.secureKey = secureKey;
+        }
+
+    }    
 
     public class UpdateCentroArguments extends BusinessProcess.BusinessProcessArguments {
 

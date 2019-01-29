@@ -21,7 +21,6 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -42,5 +41,9 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException;
     
     byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException;    
+    
+    void aceptarRGPD(DataSession dataSession, Usuario usuario) throws BusinessException;    
+    void enviarCorreoRGPD(DataSession dataSession, Usuario usuario) throws BusinessException; 
+    boolean isValidSecureKeyAceptadoRGPD(Usuario usuario,String secureKey) throws BusinessException; 
 
 }

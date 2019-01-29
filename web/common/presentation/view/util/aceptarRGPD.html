@@ -1,0 +1,38 @@
+<div class="row" >
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <p>
+                                Hola {{user.nombre}}, como sabrás , ha entrado vigor un nuevo reglamento de protección de datos.
+                                
+                                Para adecuarnos a la nueva normativa hemos actualizado  
+                                los <a href="{{getContextPath()}}/site/index.html#/docs/terminos"  target="_blank">terminos del servicio</a> y 
+                                la <a href="{{getContextPath()}}/site/index.html#/docs/privacidad"  target="_blank">politica de privacidad</a> 
+                                de empleaFP
+                            </p>
+                            <p>
+                                Por lo que debes aceptarlos para poder seguir usando empleaFP.
+                            </p>
+                            <p>
+                                Si no aceptas los nuevos términos , no tienes mas que enviarnos un correo electrónico a <a href = "mailto: soporte@empleafp.com">soporte@empleafp.com</a> y borraremos todos tus datos.
+                            </p>                            
+                        </div>  
+                    </div>
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">                           
+                            <div class=" pull-right">
+                                <button type="button" class="btn form__button form__button--danger" ng-click="buttonCancel()" >No aceptar</button>
+                                <button type="button" class="btn form__button form__button--default" ng-click="buttonOK()">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

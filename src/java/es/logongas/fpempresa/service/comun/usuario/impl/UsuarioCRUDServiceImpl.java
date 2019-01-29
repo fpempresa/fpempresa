@@ -106,6 +106,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             autoValidateEMail = false;
         }
 
+        //Los nuevos usuarios , han aceptado la RGPD
+        usuario.setEnviadoCorreoRGPD(true);
+        usuario.setAceptadoRGPD(true);
+        usuario.setSecureKeyRGPD(SecureKeyGenerator.getSecureKey());
+        
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
         if (autoValidateEMail == true) {
             usuario.setValidadoEmail(true);
@@ -320,4 +325,54 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
         return reportService.exportToPdf(dataSession, "curriculum", parameters);
     }
+    
+    @Override
+    public void aceptarRGPD(DataSession dataSession, Usuario usuario) throws BusinessException {
+        usuario.setAceptadoRGPD(true);
+        getUsuarioDAO().update(dataSession, usuario);
+    }
+    
+    @Override
+    public void enviarCorreoRGPD(DataSession dataSession, Usuario usuario) throws BusinessException {
+        throw new UnsupportedOperationException("Sin implementar el envio de correos por la RGPD");     
+        
+//        try {
+//            Mail mail = new Mail();
+//            mail.addTo(usuario.getEmail());
+//            mail.setFrom(Config.getSetting("mail.sender").toString());
+//            mail.setSubject("Confirma tu correo para acceder a empleaFP");
+//            mail.setHtmlBody(""
+//                    + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
+//                    + "Acabas de registrarte en <a href=\"http://www.empleafp.com\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
+//                    + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
+//                    + "<a href=\"" + (String) Config.getSetting("app.url") + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>");
+//            mailService.send(mail);
+//        } catch (IOException ex) {
+//            throw new RuntimeException("Error al enviar email de aceptación de RGPD", ex);
+//        }        
+//        usuario.setSecureKeyRGPD(SecureKeyGenerator.getSecureKey());
+//        usuario.setEnviadoCorreoRGPD(true);
+//        getUsuarioDAO().update(dataSession, usuario);
+    }    
+
+    
+    @Override
+    public boolean isValidSecureKeyAceptadoRGPD(Usuario usuario,String secureKey) throws BusinessException {
+        if (usuario==null) {
+            throw new NullPointerException("El usuario no puede estar vacio");
+        }
+        
+        if ((secureKey==null) || (secureKey.trim().equals(""))) {
+            return false;
+        }
+        
+         if ((usuario.getSecureKeyRGPD()==null) || (usuario.getSecureKeyRGPD().trim().equals(""))) {
+            return false;
+        }       
+        
+        return usuario.getSecureKeyRGPD().equals(secureKey);
+    }  
+    
+        
+    
 }

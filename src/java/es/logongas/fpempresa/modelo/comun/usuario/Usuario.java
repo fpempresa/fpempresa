@@ -77,6 +77,10 @@ public class Usuario extends User implements Principal {
     private Date fechaClaveResetearContrasenya;
 
     private Date fecha;
+    
+    private boolean aceptadoRGPD;    
+    private boolean enviadoCorreoRGPD;    
+    private String secureKeyRGPD;    
 
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
@@ -319,6 +323,48 @@ public class Usuario extends User implements Principal {
 
     public void setFechaClaveResetearContrasenya(Date fechaClaveResetearContrasenya) {
         this.fechaClaveResetearContrasenya = fechaClaveResetearContrasenya;
+    }
+
+    /**
+     * @return the aceptadoRGPD
+     */
+    public boolean isAceptadoRGPD() {
+        return aceptadoRGPD;
+    }
+
+    /**
+     * @param aceptadoRGPD the aceptadoRGPD to set
+     */
+    public void setAceptadoRGPD(boolean aceptadoRGPD) {
+        this.aceptadoRGPD = aceptadoRGPD;
+    }
+
+    /**
+     * @return the enviadoCorreoRGPD
+     */
+    public boolean isEnviadoCorreoRGPD() {
+        return enviadoCorreoRGPD;
+    }
+
+    /**
+     * @param enviadoCorreoRGPD the enviadoCorreoRGPD to set
+     */
+    public void setEnviadoCorreoRGPD(boolean enviadoCorreoRGPD) {
+        this.enviadoCorreoRGPD = enviadoCorreoRGPD;
+    }
+
+    /**
+     * @return the secureKeyRGPD
+     */
+    public String getSecureKeyRGPD() {
+        return secureKeyRGPD;
+    }
+
+    /**
+     * @param secureKeyRGPD the secureKeyRGPD to set
+     */
+    public void setSecureKeyRGPD(String secureKeyRGPD) {
+        this.secureKeyRGPD = secureKeyRGPD;
     }
 
 }

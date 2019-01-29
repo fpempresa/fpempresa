@@ -68,6 +68,17 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     return deferred.promise;
                 };
 
+                repository.aceptarRGPD = function () {
+                    var deferred = $q.defer();
+                    this.remoteDAO.aceptarRGPD().then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+
             }]);
 
     }]);

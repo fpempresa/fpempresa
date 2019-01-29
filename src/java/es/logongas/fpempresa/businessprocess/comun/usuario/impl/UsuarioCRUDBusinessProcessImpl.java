@@ -425,4 +425,42 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         return usuarioCRUDService.getCurriculum(getCurriculumArguments.dataSession, getCurriculumArguments.usuario);
     }
 
+    @Override
+    public void aceptarRGPD(AceptarRGPDArguments aceptarRGPDArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        Usuario principal = (Usuario) aceptarRGPDArguments.principal;
+        boolean allow;
+        String message=null;
+        
+        if (usuarioCRUDService.isValidSecureKeyAceptadoRGPD(aceptarRGPDArguments.usuario, aceptarRGPDArguments.secureKey)==true) {
+            allow=true;
+        } else {
+            if (principal == null) {
+                allow=false;
+                message="No ha sido posible validar la identidad del usuario";
+            } else {
+                if (principal.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                    //El administrador siempre puede validar la RGPD de cualquier usuario
+                    allow=true;
+                } else  {
+                    if (aceptarRGPDArguments.usuario.getSid().equals(principal.getSid())==true){
+                        //Si el usuario  es el mismo que el que se quiere validar la RGPD se puede validar a si mismo
+                        allow=true;
+                    } else {
+                       allow=false;
+                       message="No se puede aceptar la RGPD de otro usuario";
+                    }
+                } 
+            }
+        }
+
+
+        if (allow) {
+            usuarioCRUDService.aceptarRGPD(aceptarRGPDArguments.dataSession, aceptarRGPDArguments.usuario);
+        } else {
+            throw new BusinessException(message);
+        }
+        
+    }
+
 }

@@ -55,6 +55,7 @@
                 return 200;
             }
 
+            var status;
             for (var i = 0; i < acl.length; i++) {
                 var aceFn = acl[i];
                 var locals = {
@@ -62,13 +63,23 @@
                     state:state, 
                     params:params
                 }
-                var status = $injector.invoke(aceFn, undefined, locals);
-                if (status) {
-                    return status;
+                var aceStatus = $injector.invoke(aceFn, undefined, locals);
+                if (typeof aceStatus === 'undefined') {
+                    throw new Error("El valor de retorno del ACE no puede ser undefined:" + i);
+                }
+                
+                if (typeof status === 'undefined') {
+                    status=aceStatus;
+                } else {
+                    status=Math.max(aceStatus, status)
                 }
             }
 
-            return defaultStatus;
+            if (typeof status !== 'undefined') {
+                return status;
+            } else {
+                return defaultStatus;
+            }
 
         }
 

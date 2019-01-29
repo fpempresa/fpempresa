@@ -28,9 +28,11 @@ import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Properties;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Session;
 
 /**
@@ -57,7 +59,7 @@ public class MailServiceImplAWS implements MailService {
             RawMessage rawMessage = new RawMessage(ByteBuffer.wrap(outputStream.toByteArray()));
             SendRawEmailRequest rawEmailRequest = new SendRawEmailRequest(rawMessage);
             client.sendRawEmail(rawEmailRequest);
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException | IOException | MessagingException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -75,5 +77,5 @@ public class MailServiceImplAWS implements MailService {
 
 
 
-
+    
 }

@@ -6,9 +6,9 @@ package es.logongas.fpempresa.service.mail;
  * @author logongas
  */
 public class Attach {
-    private String fileName;
-    private byte[] data;
-    private String mimeType;
+    private final String fileName;
+    private final byte[] data;
+    private final String mimeType;
 
     public Attach(String fileName, byte[] data, String mimeType) {
         this.fileName = fileName;

@@ -25,8 +25,7 @@ import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
-import es.logongas.fpempresa.service.mail.Mail;
-import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
@@ -59,7 +58,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> implements UsuarioCRUDService {
 
     @Autowired
-    MailService mailService;
+    Notification notification;
 
     @Autowired
     Conversion conversion;
@@ -121,7 +120,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             if (autoValidateEMail == true) {
                 //No es necesario enviar el EMail de confirmación ya que auto valida el email
             } else {
-                enviarMailValidacionCuenta(usuario);
+                notification.validarCuenta(usuario);
             }
         }
 
@@ -140,7 +139,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 .equals(usuario.getEmail())) {
             usuario.setValidadoEmail(false);
             usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
-            enviarMailValidacionCuenta(usuario);
+            notification.validarCuenta(usuario);
         }
 
         return super.update(dataSession, usuario);
@@ -299,19 +298,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         }
     }
 
-    private void enviarMailValidacionCuenta(Usuario usuario) {
-        Mail mail = new Mail();
-        mail.addTo(usuario.getEmail());
-        mail.setFrom(Config.getSetting("mail.sender").toString());
-        mail.setSubject("Confirma tu correo para acceder a empleaFP");
-        mail.setHtmlBody(""
-                + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
-                + "Acabas de registrarte en <a href=\"http://www.empleafp.com\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
-                + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
-                + "<a href=\"" + (String) Config.getSetting("app.url") + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>");
-        mailService.send(mail);
-    }
-
     @Override
     public void enviarMailResetearPassword(DataSession dataSession, String email) throws BusinessException {
 
@@ -320,15 +306,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             usuario.setFechaClaveResetearContrasenya(new Date());
             usuario.setClaveResetearContrasenya(SecureKeyGenerator.getSecureKey());
             getUsuarioDAO().update(dataSession, usuario);
-            Mail mail = new Mail();
-            mail.addTo(usuario.getEmail());
-            mail.setFrom(Config.getSetting("mail.sender").toString());
-            mail.setSubject("Resetear contraseña en empleaFP");
-            mail.setHtmlBody(""
-                    + "Has solicitado cambiar tu contraseña en <a href=\"http://www.empleafp.com\">empleaFP</a>.<br><br>"
-                    + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
-                    + "<a href=\"" + Config.getSetting("app.url") + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>");
-            mailService.send(mail);
+            notification.resetearContrasenya(usuario);
         } else {
             throw new BusinessException("No existe el usuario");
         }

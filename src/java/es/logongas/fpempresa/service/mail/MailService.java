@@ -17,7 +17,6 @@
 package es.logongas.fpempresa.service.mail;
 
 import es.logongas.ix3.service.Service;
-import java.io.IOException;
 
 /**
  * Servicio de envio de EMails.

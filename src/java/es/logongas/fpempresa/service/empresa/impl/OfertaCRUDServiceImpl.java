@@ -17,7 +17,6 @@
 package es.logongas.fpempresa.service.empresa.impl;
 
 import com.amazonaws.services.simpleworkflow.flow.annotations.Asynchronous;
-import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
@@ -25,12 +24,11 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
-import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
-import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
@@ -39,7 +37,6 @@ import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +51,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     protected CRUDServiceFactory serviceFactory;
 
     @Autowired
-    MailService mailService;
+    Notification notification;
 
     private OfertaDAO getOfertaDAO() {
         return (OfertaDAO) getDAO();
@@ -123,22 +120,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
   
             Usuario usuario = usuarioCRUDService.getUsuarioFromTitulado(dataSession, titulado.getIdTitulado()); //TODO esto no es muy eficiente
             if (usuario!=null) {
-                Mail mail = new Mail();
-                mail.addTo(usuario.getEmail());
-                mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
-                mail.setHtmlBody("Hola <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
-                        + "Hay una nueva oferta de trabajo en una de tus provincias seleccionadas:<br>"
-                        + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
-                        + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
-                        + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
-                        + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
-                        + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
-                        + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
-                        + "<strong>Descripción: </strong>" + oferta.getDescripcion() + "<br>" + "<br>"
-                        + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
-                );
-                mail.setFrom(Config.getSetting("mail.sender").toString());
-                mailService.send(mail);
+                notification.nuevaOferta(usuario, oferta);
             }
 
         }

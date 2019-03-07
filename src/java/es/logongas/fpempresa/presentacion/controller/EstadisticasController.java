@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.ix3.core.Principal;
+import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.service.CRUDServiceFactory;
@@ -53,6 +54,8 @@ public class EstadisticasController {
     private DataSessionFactory dataSessionFactory;
     @Autowired
     private ControllerHelper controllerHelper;
+    @Autowired
+    private Conversion conversion;    
 
     @RequestMapping(value = {"/{path}/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
@@ -60,9 +63,13 @@ public class EstadisticasController {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
+            
+            Integer anyoInicio=(Integer)conversion.convertFromString(httpServletRequest.getParameter("anyoInicio"), Integer.class);
+            Integer anyoFin=(Integer)conversion.convertFromString(httpServletRequest.getParameter("anyoFin"), Integer.class);
+              
             Centro centro = crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
 
-            Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasCentro(new EstadisticasBusinessProcess.GetEstadisticasCentroArguments(principal, dataSession, centro));
+            Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasCentro(new EstadisticasBusinessProcess.GetEstadisticasCentroArguments(principal, dataSession, centro,anyoInicio,anyoFin));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);

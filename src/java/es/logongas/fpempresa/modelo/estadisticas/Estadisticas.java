@@ -24,34 +24,34 @@ import java.util.List;
  */
 public class Estadisticas {
 
-    private final List<FamiliaEstadistica> tituladosPorFamilia;
+    private final List<FamiliaEstadistica> titulosFPPorFamilia;
     private final List<FamiliaEstadistica> ofertasPorFamilia;
     private final List<FamiliaEstadistica> candidatosPorFamilia;
 
-    private final int numeroTitulados;
+    private final int numeroTitulosFP;
     private final int numeroOfertas;
     private final int numeroCentros;
     private final int numeroCandidatos;
     private final int numeroEmpresas;
 
-    public Estadisticas(List<FamiliaEstadistica> tituladosPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia) {
-        this.tituladosPorFamilia = tituladosPorFamilia;
+    public Estadisticas(List<FamiliaEstadistica> titulosFPPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia) {
+        this.titulosFPPorFamilia = titulosFPPorFamilia;
         this.ofertasPorFamilia = ofertasPorFamilia;
         this.candidatosPorFamilia = candidatosPorFamilia;
 
-        this.numeroTitulados = getSum(this.tituladosPorFamilia);
+        this.numeroTitulosFP = getSum(this.titulosFPPorFamilia);
         this.numeroOfertas = getSum(this.ofertasPorFamilia);
         this.numeroCandidatos = getSum(this.candidatosPorFamilia);
         this.numeroCentros = 0;
         this.numeroEmpresas = 0;
     }
 
-    public Estadisticas(List<FamiliaEstadistica> tituladosPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia, Integer numeroCentros, Integer numeroEmpresas) {
-        this.tituladosPorFamilia = tituladosPorFamilia;
+    public Estadisticas(List<FamiliaEstadistica> titulosFPPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia, Integer numeroCentros, Integer numeroEmpresas) {
+        this.titulosFPPorFamilia = titulosFPPorFamilia;
         this.ofertasPorFamilia = ofertasPorFamilia;
         this.candidatosPorFamilia = candidatosPorFamilia;
 
-        this.numeroTitulados = getSum(this.tituladosPorFamilia);
+        this.numeroTitulosFP = getSum(this.titulosFPPorFamilia);
         this.numeroOfertas = getSum(this.ofertasPorFamilia);
         this.numeroCandidatos = getSum(this.candidatosPorFamilia);
         this.numeroCentros = numeroCentros;
@@ -59,23 +59,23 @@ public class Estadisticas {
     }
 
     public Estadisticas(Integer numeroEmpresas, List<FamiliaEstadistica> ofertasPorFamilia) {
-        this.tituladosPorFamilia = null;
+        this.titulosFPPorFamilia = null;
         this.ofertasPorFamilia = ofertasPorFamilia;
         this.candidatosPorFamilia = null;
 
-        this.numeroTitulados = 0;
+        this.numeroTitulosFP = 0;
         this.numeroOfertas = getSum(this.ofertasPorFamilia);
         this.numeroCandidatos = 0;
         this.numeroCentros = 0;
         this.numeroEmpresas = numeroEmpresas;
     }
 
-    public Estadisticas(List<FamiliaEstadistica> tituladosPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia, Integer numeroCentros) {
-        this.tituladosPorFamilia = tituladosPorFamilia;
+    public Estadisticas(List<FamiliaEstadistica> titulosFPPorFamilia, List<FamiliaEstadistica> ofertasPorFamilia, List<FamiliaEstadistica> candidatosPorFamilia, Integer numeroCentros) {
+        this.titulosFPPorFamilia = titulosFPPorFamilia;
         this.ofertasPorFamilia = ofertasPorFamilia;
         this.candidatosPorFamilia = candidatosPorFamilia;
 
-        this.numeroTitulados = getSum(this.tituladosPorFamilia);
+        this.numeroTitulosFP = getSum(this.titulosFPPorFamilia);
         this.numeroOfertas = getSum(this.ofertasPorFamilia);
         this.numeroCandidatos = getSum(this.candidatosPorFamilia);
         this.numeroCentros = numeroCentros;
@@ -95,10 +95,10 @@ public class Estadisticas {
     }
 
     /**
-     * @return the tituladosPorFamilia
+     * @return the titulosFPPorFamilia
      */
-    public List<FamiliaEstadistica> getTituladosPorFamilia() {
-        return tituladosPorFamilia;
+    public List<FamiliaEstadistica> getTitulosFPPorFamilia() {
+        return titulosFPPorFamilia;
     }
 
     /**
@@ -116,10 +116,10 @@ public class Estadisticas {
     }
 
     /**
-     * @return the numeroTitulados
+     * @return the numeroTitulosFP
      */
-    public int getNumeroTitulados() {
-        return numeroTitulados;
+    public int getNumeroTitulosFP() {
+        return numeroTitulosFP;
     }
 
     public int getNumeroEmpresas() {

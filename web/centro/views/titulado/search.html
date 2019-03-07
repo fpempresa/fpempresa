@@ -10,24 +10,43 @@
                 <div class="alert alert-info" role="alert">Debido a la entrada el vigor de la Reglamento General de Protección de Datos no es posible ver los datos individuales de los titulados</div>
             </div>
         </div>
+        
+        
+        <div class="row">
+            <div class="col-sm-12">
+                Filtrar por año:
+                <select ng-model="anyo"  name="anyo" class="form-control" ng-options="anyoSeleccionado as anyoSeleccionado for anyoSeleccionado in anyos "  style="width:auto;display: inline-block;"   >
+                    <option value="">-- Elige Año --</option>
+                </select> 
+                <button type="button" class="btn form__button form__button--default" ng-click="buttonSearch()">Filtrar</button>
+            </div>            
+        </div> 
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+            </div>            
+        </div> 
+        
+        
         <div class="row" >
+            
             <div class="col-xs-12 ">
 
 
 
-
+                
 
                 <table class="table table-bordered">
                     <thead>                        
                         <tr class="data-table__head">
-                            <th  style="text-align: center">Familia (Titulados / Titulos)</th>
+                            <th  style="text-align: center">Familia (N&ordm; de Titulos)</th>
                             <th  style="text-align: center">Ciclo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="familia in centro.estadisticas.tituladosPorFamilia" class="data-table__row">
+                        <tr ng-repeat="familia in centro.estadisticas.titulosFPPorFamilia" class="data-table__row">
                             <td >
-                                {{familia.descripcion}}: (<span title="N&ordm; de Titulados" >{{familia.valor}}</span>&nbsp;/&nbsp;<span title="N&ordm; de T&iacute;tulos" >{{familia.tituladosPorCiclo| map:'valor' | sum}}</span>)
+                                {{familia.descripcion}}:<span title="N&ordm; de títulos" >{{familia.valor}}</span>
                             </td>
                             <td >
                                 <p ng-repeat="ciclo in familia.tituladosPorCiclo">
@@ -40,9 +59,7 @@
                         <tr class="data-table__row__foot">
                           <td>Totales</td>
                           <td>
-                            Titulados:  <span title="N&ordm; de Titulados" >{{centro.estadisticas.numeroTitulados}}</span> 
-                            <br>
-                            Titulos:  <span title="N&ordm; de T&iacute;tulos" >{{centro.estadisticas.tituladosPorFamilia| map :'tituladosPorCiclo' | flatten | map: 'valor' | sum}}</span>
+                            Titulos:  <span title="N&ordm; de Titulados" >{{centro.estadisticas.numeroTitulosFP}}</span> 
                           </td>
                         </tr>
                     </tfoot>

@@ -31,7 +31,7 @@ public interface EstadisticasService extends Service<Estadisticas> {
 
     Estadisticas getEstadisticasAdministrador(DataSession dataSession);
 
-    Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro);
+    Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin);
 
     Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa);
 

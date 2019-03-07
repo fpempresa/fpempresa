@@ -16,20 +16,33 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'ix3Configuration
             alert("El listado de Titulados se importó correctamente");
             $scope.search();
         };
+        
+        $scope.anyo=null;
+        $scope.anyos=[];
+        var currentYear=(new Date()).getFullYear();
+        for(var anyo=currentYear;anyo>=1980;anyo--) {
+            $scope.anyos.push(anyo);
+        }        
+        
+        
         if ($scope.user && $scope.user.centro) {
             $scope.centro=$scope.user.centro;
-            getEstadisticasByCentro($scope,$scope.user.centro);
+            getEstadisticasByCentro($scope,$scope.user.centro,$scope.anyo,$scope.anyo);
         }
         
+
         
-        
-        function getEstadisticasByCentro($scope,centro) {
+        function getEstadisticasByCentro($scope,centro,anyoInicio,anyoFin) {
             $http({
                 method: "GET",
-                url: ix3Configuration.server.api + "/Estadisticas/centro/" + centro.idCentro + "?expand=tituladosPorFamilia.tituladosPorCiclo"
+                url: ix3Configuration.server.api + "/Estadisticas/centro/" + centro.idCentro + "?expand=titulosFPPorFamilia.tituladosPorCiclo&anyoInicio=" + (anyoInicio==null?'':anyoInicio) +"&anyoFin=" + (anyoFin==null?'':anyoFin)
             }).then(function (estadisticas) {
                 $scope.centro.estadisticas = estadisticas.data;
             });
-        }        
+        } 
+        
+        $scope.buttonSearch=function() {
+            getEstadisticasByCentro($scope,$scope.user.centro,$scope.anyo,$scope.anyo);
+        }
         
     }]);

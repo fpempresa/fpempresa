@@ -29,17 +29,17 @@ public interface EstadisticaDAO {
 
     List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Empresa empresa);
 
-    List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Centro centro);
+    List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin);
 
     List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession);
 
     List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Empresa empresa);
 
-    List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Centro centro);
+    List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin);
 
-    List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession);
+    List<FamiliaEstadistica> getTitulosFPGroupByFamilia(DataSession dataSession);
 
-    List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession, Centro centro);
+    List<FamiliaEstadistica> getTitulosFPGroupByFamilia(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin);
     
     Integer getSumCentros(DataSession dataSession);
 

@@ -29,7 +29,7 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
 
     @Override
     public Estadisticas getEstadisticasCentro(GetEstadisticasCentroArguments getEstadisticasCentroArguments) throws BusinessException {
-        return estadisticasService.getEstadisticasCentro(getEstadisticasCentroArguments.dataSession, getEstadisticasCentroArguments.centro);
+        return estadisticasService.getEstadisticasCentro(getEstadisticasCentroArguments.dataSession, getEstadisticasCentroArguments.centro,getEstadisticasCentroArguments.anyoInicio,getEstadisticasCentroArguments.anyoFin);
     }
 
     @Override

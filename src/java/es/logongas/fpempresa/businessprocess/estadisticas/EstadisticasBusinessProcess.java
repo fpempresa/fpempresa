@@ -43,6 +43,8 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
     public class GetEstadisticasCentroArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
         public Centro centro;
+        public Integer anyoInicio;
+        public Integer anyoFin;
 
         public GetEstadisticasCentroArguments() {
         }
@@ -50,7 +52,15 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
         public GetEstadisticasCentroArguments(Principal principal, DataSession dataSession, Centro centro) {
             super(principal, dataSession);
             this.centro = centro;
+            this.anyoInicio = null;
+            this.anyoFin = null;            
         }
+        public GetEstadisticasCentroArguments(Principal principal, DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin) {
+            super(principal, dataSession);
+            this.centro = centro;
+            this.anyoInicio = anyoInicio;
+            this.anyoFin = anyoFin;
+        }        
 
     }
 

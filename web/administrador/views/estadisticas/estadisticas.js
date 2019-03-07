@@ -29,7 +29,7 @@ app.controller("EstadisticasCentroController", ['$scope', '$http', 'ix3Configura
         function getEstadisticasByCentro($scope,centro) {
             $http({
                 method: "GET",
-                url: ix3Configuration.server.api + "/Estadisticas/centro/" + centro.idCentro + "?expand=tituladosPorFamilia.tituladosPorCiclo"
+                url: ix3Configuration.server.api + "/Estadisticas/centro/" + centro.idCentro + "?expand=titulosFPPorFamilia.tituladosPorCiclo"
             }).then(function (estadisticas) {
                 centro['estadisticas'] = estadisticas.data;
                 $scope.indexCentroActual++;

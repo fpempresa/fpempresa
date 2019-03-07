@@ -36,27 +36,27 @@ public class EstadisticasServiceImpl implements EstadisticasService {
 
     @Override
     public Estadisticas getEstadisticasAdministrador(DataSession dataSession) {
-        Estadisticas estadisticasAdministrador = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession));
+        Estadisticas estadisticasAdministrador = new Estadisticas(estadisticaDAO.getTitulosFPGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession));
 
         return estadisticasAdministrador;
     }
 
     @Override
-    public Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro) {
-        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession, centro), estadisticaDAO.getOfertasGroupByFamilia(dataSession, centro), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, centro));
+    public Estadisticas getEstadisticasCentro(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin) {
+        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTitulosFPGroupByFamilia(dataSession, centro, anyoInicio, anyoFin), estadisticaDAO.getOfertasGroupByFamilia(dataSession, centro, anyoInicio, anyoFin), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, centro, anyoInicio, anyoFin));
         return estadisticas;
     }
 
     @Override
     public Estadisticas getEstadisticasEmpresa(DataSession dataSession, Empresa empresa) {
-        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession, empresa), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, empresa));
+        Estadisticas estadisticas = new Estadisticas(estadisticaDAO.getTitulosFPGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession, empresa), estadisticaDAO.getCandidatosGroupByFamilia(dataSession, empresa));
 
         return estadisticas;
     }
 
     @Override
     public Estadisticas getEstadisticasPublicas(DataSession dataSession) {
-        Estadisticas estadisticasPublicas = new Estadisticas(estadisticaDAO.getTituladosGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession), estadisticaDAO.getSumCentros(dataSession), estadisticaDAO.getSumEmpresas(dataSession));
+        Estadisticas estadisticasPublicas = new Estadisticas(estadisticaDAO.getTitulosFPGroupByFamilia(dataSession), estadisticaDAO.getOfertasGroupByFamilia(dataSession), estadisticaDAO.getCandidatosGroupByFamilia(dataSession), estadisticaDAO.getSumCentros(dataSession), estadisticaDAO.getSumEmpresas(dataSession));
         return estadisticasPublicas;
     }
 

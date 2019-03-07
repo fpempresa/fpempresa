@@ -8,7 +8,7 @@
                     <h2 class="brand-heading">empleaFP</h2>
                     <hr>
                     <p class="intro-text">La mayor bolsa de trabajo espec&iacute;fica de la<br>Formaci&oacute;n Profesional</p>
-                    <p class="intro-text-alternative">{{chartData.numeroOfertas}} ofertas,{{chartData.numeroTitulados}} titulados,{{chartData.numeroCentros}} centros</p>
+                    <p class="intro-text-alternative">{{chartData.numeroOfertas}} ofertas,{{chartData.numeroTitulosFP}} títulos,{{chartData.numeroCentros}} centros</p>
                     
                     <p><button class="btn btn-xl form__button form__button--primary" href=""  ng-click="createAccount()"  >Crear una cuenta</button></p>
                     <a href ng-click="navigateWithScroll('/', 'ofrecemos')" class="btn button-circle">
@@ -77,7 +77,7 @@
                         <h3 class="panel-title"> <i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;Titulados por familia</h3>
                     </div>
                     <div class="panel-body">
-                        <div style="height: 300px;position: relative;top:0px;left:0px;"  fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Titulados" title-x="Familias profesionales" serie="chartData.tituladosPorFamilia"   ></div>
+                        <div style="height: 300px;position: relative;top:0px;left:0px;"  fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Titulados" title-x="Familias profesionales" serie="chartData.titulosFPPorFamilia"   ></div>
                     </div>
                 </div> 
             </div>

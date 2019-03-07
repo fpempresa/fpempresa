@@ -72,7 +72,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
     }
 
     @Override
-    public List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Centro centro) {
+    public List<FamiliaEstadistica> getOfertasGroupByFamilia(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
@@ -81,13 +81,15 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "WHERE\n"
                 + "   empresa.idCentro=?"
+                + (anyoInicio!=null?" AND YEAR(oferta.fecha)>=" + anyoInicio.intValue() + " ":"")
+                + (anyoFin!=null?" AND YEAR(oferta.fecha)<=" + anyoFin.intValue() + " ":"")
                 + "\n"
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
-        sqlQuery.setInteger(0, centro.getIdCentro());
-
+        sqlQuery.setInteger(0, centro.getIdCentro());        
+        
         return getListFamiliaEstadistica(sqlQuery.list());
     }
 
@@ -127,7 +129,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
     }
 
     @Override
-    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Centro centro) {
+    public List<FamiliaEstadistica> getCandidatosGroupByFamilia(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
@@ -136,6 +138,8 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 + "   familia JOIN ( oferta  INNER  JOIN empresa ON oferta.idEmpresa=empresa.idEmpresa INNER  JOIN candidato ON oferta.idOferta=candidato.idOferta ) ON familia.idFamilia=oferta.idFamilia\n"
                 + "WHERE\n"
                 + "  empresa.idCentro=?\n"
+                + (anyoInicio!=null?" AND YEAR(candidato.fecha)>=" + anyoInicio.intValue() + " ":"")
+                + (anyoFin!=null?" AND YEAR(candidato.fecha)<=" + anyoFin.intValue() + " ":"")
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 
@@ -146,11 +150,11 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
     }
 
     @Override
-    public List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession) {
+    public List<FamiliaEstadistica> getTitulosFPGroupByFamilia(DataSession dataSession) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
-                + "   familia.idFamilia,familia.descripcion,COUNT(*) as valor\n"
+                + "   familia.idFamilia,familia.descripcion,COUNT(formacionacademica.idTitulado) as valor\n"
                 + "FROM\n"
                 + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
                 + "GROUP BY\n"
@@ -162,21 +166,23 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
     }
 
     @Override
-    public List<FamiliaEstadistica> getTituladosGroupByFamilia(DataSession dataSession, Centro centro) {
+    public List<FamiliaEstadistica> getTitulosFPGroupByFamilia(DataSession dataSession, Centro centro,Integer anyoInicio,Integer anyoFin) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "SELECT \n"
-                + "   familia.idFamilia,familia.descripcion, COUNT(DISTINCT formacionacademica.idTitulado) as valor\n"
+                + "   familia.idFamilia,familia.descripcion, COUNT(formacionacademica.idTitulado) as valor\n"
                 + "FROM\n"
                 + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
                 + "WHERE\n"
                 + "   formacionacademica.idCentro=?\n"
+                + (anyoInicio!=null?" AND YEAR(formacionacademica.fecha)>=" + anyoInicio.intValue() + " ":"")
+                + (anyoFin!=null?" AND YEAR(formacionacademica.fecha)<=" + anyoFin.intValue() + " ":"")              
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setInteger(0, centro.getIdCentro());
-        return getListFamiliaEstadisticaConCiclos(dataSession, sqlQuery.list(), centro);
+        return getListFamiliaEstadisticaConCiclos(dataSession, sqlQuery.list(), centro, anyoInicio, anyoFin);
     }
 
     private List<FamiliaEstadistica> getListFamiliaEstadistica(List<Object[]> datos) {
@@ -191,14 +197,23 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         return familiaEstadisticas;
     }
 
-    private List<FamiliaEstadistica> getListFamiliaEstadisticaConCiclos(DataSession dataSession, List<Object[]> datos, Centro centro) {
+    private List<FamiliaEstadistica> getListFamiliaEstadisticaConCiclos(DataSession dataSession, List<Object[]> datos, Centro centro,Integer anyoInicio,Integer anyoFin) {
         List<FamiliaEstadistica> familiaEstadisticas = new ArrayList<FamiliaEstadistica>();
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
         String sql = "";
 
         for (Object[] dato : datos) {
-            sql = "SELECT count(formacionacademica.idTitulado) as 'Valor', ciclo.descripcion, ciclo.idCiclo FROM (familia JOIN ciclo ON ciclo.idFamilia=familia.idFamilia) JOIN formacionacademica ON formacionacademica.idCiclo = ciclo.idCiclo  AND formacionacademica.idCentro = ? WHERE ciclo.idFamilia = ? GROUP BY ciclo.idCiclo";
+            sql =     "SELECT \n" 
+                    + "  count(formacionacademica.idTitulado) as 'Valor', ciclo.descripcion, ciclo.idCiclo \n" 
+                    + "FROM \n" 
+                    + "  (familia JOIN ciclo ON ciclo.idFamilia=familia.idFamilia) JOIN formacionacademica ON formacionacademica.idCiclo = ciclo.idCiclo  AND formacionacademica.idCentro = ? " 
+                    + "WHERE " 
+                    + "  ciclo.idFamilia = ? "
+                    + (anyoInicio!=null?" AND YEAR(formacionacademica.fecha)>=" + anyoInicio.intValue() + " ":"")
+                    + (anyoFin!=null?" AND YEAR(formacionacademica.fecha)<=" + anyoFin.intValue() + " ":"")                     
+                    + "GROUP BY " 
+                    + "  ciclo.idCiclo";
             SQLQuery sqlQuery = session.createSQLQuery(sql);
             sqlQuery.setInteger(0, (Integer) centro.getIdCentro());
             sqlQuery.setInteger(1, (Integer) dato[0]);

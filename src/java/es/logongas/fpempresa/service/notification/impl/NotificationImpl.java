@@ -25,6 +25,7 @@ import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
+import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class NotificationImpl implements Notification {
 
     @Autowired
     ReportService reportService;
+    
+    @Autowired
+    Conversion conversion;
 
     @Override
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
@@ -62,7 +66,7 @@ public class NotificationImpl implements Notification {
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
-        mailService.send(mail);
+        sendMail(mail);
     }
 
     @Override
@@ -96,7 +100,7 @@ public class NotificationImpl implements Notification {
 
         mail.getAttachs().add(new Attach("curriculum.pdf", curriculum, "application/pdf"));
 
-        mailService.send(mail);
+        sendMail(mail);
     }
 
     @Override
@@ -111,7 +115,7 @@ public class NotificationImpl implements Notification {
                 + "<a href=\"" + Config.getSetting("app.url") + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)                
         );
-        mailService.send(mail);
+        sendMail(mail);
     }
 
     @Override
@@ -127,9 +131,16 @@ public class NotificationImpl implements Notification {
                 + "<a href=\"" + (String) Config.getSetting("app.url") + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)               
         );
-        mailService.send(mail);
+        sendMail(mail);
     }
 
+    private void sendMail(Mail mail) {
+        if (isEnabledEMailNotifications()) {
+             mailService.send(mail);
+        }
+    }
+    
+    
     private String toHTMLRetornoCarro(String plainText) {
         if (plainText == null) {
             return null;
@@ -147,5 +158,14 @@ public class NotificationImpl implements Notification {
     public Class getEntityType() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
+    private boolean isEnabledEMailNotifications() {
+        Boolean enabledEMailNotifications=(Boolean)conversion.convertFromString(Config.getSetting("app.enabledEMailNotifications"),Boolean.class);
+        if (enabledEMailNotifications==null) {
+            return false;
+        } else {
+            return enabledEMailNotifications;
+        }
+    }
+    
 }

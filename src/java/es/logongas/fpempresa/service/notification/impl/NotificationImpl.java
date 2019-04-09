@@ -29,6 +29,8 @@ import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -36,7 +38,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author logongas
  */
 public class NotificationImpl implements Notification {
-
+    protected final Log log = LogFactory.getLog(getClass());
+    
     final static String PIE_RGPD_MAIL="Este mensaje se dirige exclusivamente a  su destinatario y puede contener información privilegiada , confidencial , sujeta  al secreto profesional o datos de carácter personal, cuya difusión está prohibida por la Ley . Si no es la persona destinataria indicada, no puede  copiar este mensaje ni entregarlo a terceros bajo ningún concepto. Si ha recibido este mensaje por error o lo ha conseguido por otros medios, le pedimos que nos lo comunique inmediatamente por esta misma vía y lo elimine irreversiblemente.\nEn aras del cumplimiento del  Reglamento  (UE)  2016/679  del  Parlamento  Europeo  y  del  Consejo,  de  27  de  abril  de  2016 , la Asociación de Centros de Formación Profesional, garantiza la confidencialidad de los datos personales de sus clientes.\n\nLe comunicamos que su dirección de correo electrónico forma parte de una base de datos gestionada bajo la responsabilidad de Asociación de Centros de Formación Profesional, con la única finalidad de prestarle los servicios por usted solicitados, por su condición de cliente, proveedor, o porque nos haya solicitado información en algún momento. Es voluntad de Asociación de Centros de Formación Profesional, evitar el envío deliberado de correo no solicitado, por lo cual podrá en todo momento, ejercitar sus derechos de acceso, rectificación, cancelación , oposición , portabilidad de datos u olvido de sus datos de carácter personal por correo ordinario a: Asociación de Centros de Formación Profesional, IES Puerta Bonita C/ Padre Amigó, 5 CP 28025 Madrid (Madrid) o en el correo electrónico soporte@empleafp.com";
     
     @Autowired
@@ -47,7 +50,7 @@ public class NotificationImpl implements Notification {
     
     @Autowired
     Conversion conversion;
-
+    
     @Override
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
         Mail mail = new Mail();
@@ -62,7 +65,7 @@ public class NotificationImpl implements Notification {
                 + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
                 + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
                 + "<strong>Descripción: </strong>" + toHTMLRetornoCarro(oferta.getDescripcion()) + "<br>" + "<br>"
-                + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
@@ -89,7 +92,7 @@ public class NotificationImpl implements Notification {
                 + "<strong>Nombre: </strong>" + candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos() + "<br>"
                 + "<strong>Teléfono: </strong>" + candidato.getUsuario().getTitulado().getTelefono() + "<br>"
                 + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" + "<br>"
-                + "Accede a tu cuenta de <a href=\"http://www.empleafp.com\">empleaFP</a> para poder ampliar la información"
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
@@ -110,9 +113,9 @@ public class NotificationImpl implements Notification {
         mail.setFrom(Config.getSetting("mail.sender"));
         mail.setSubject("Resetear contraseña en empleaFP");
         mail.setHtmlBody(""
-                + "Has solicitado cambiar tu contraseña en <a href=\"http://www.empleafp.com\">empleaFP</a>.<br><br>"
+                + "Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">empleaFP</a>.<br><br>"
                 + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
-                + "<a href=\"" + Config.getSetting("app.url") + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
+                + "<a href=\"" + getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)                
         );
         sendMail(mail);
@@ -126,9 +129,9 @@ public class NotificationImpl implements Notification {
         mail.setSubject("Confirma tu correo para acceder a empleaFP");
         mail.setHtmlBody(""
                 + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
-                + "Acabas de registrarte en <a href=\"http://www.empleafp.com\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
+                + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
                 + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
-                + "<a href=\"" + (String) Config.getSetting("app.url") + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
+                + "<a href=\"" + getAppURL() + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)               
         );
         sendMail(mail);
@@ -137,6 +140,9 @@ public class NotificationImpl implements Notification {
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
              mailService.send(mail);
+             log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
+        } else {
+            log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         }
     }
     
@@ -166,6 +172,10 @@ public class NotificationImpl implements Notification {
         } else {
             return enabledEMailNotifications;
         }
+    }
+    
+    public String getAppURL() {
+        return Config.getSetting("app.url");
     }
     
 }

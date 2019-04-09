@@ -29,37 +29,33 @@ public class TituladoDAOImplHibernate extends GenericDAOImplHibernate<Titulado, 
         StringBuilder stringBuilder = new StringBuilder();
 
         String query = ""
-                + "SELECT DISTINCT titulado.* FROM titulado\n"
-                + "NATURAL JOIN tituladoprovincianotificacion\n"
-                + "NATURAL JOIN formacionacademica\n"
-                + "WHERE titulado.notificarPorEmail = 1\n"
-                + "AND tituladoprovincianotificacion.idProvincia = (\n"
-                + "	SELECT idProvincia\n"
-                + "	FROM municipio\n"
-                + "	INNER JOIN oferta\n"
-                + "	ON municipio.idMunicipio = oferta.idMunicipio\n"
-                + "	WHERE oferta.idOferta = ?\n"
-                + "	)\n"
-                + "AND formacionacademica.idCiclo IN (\n"
-                + "	SELECT idCiclo\n"
-                + "	FROM ofertaciclo\n"
-                + "	WHERE ofertaciclo.idOferta = ?\n"
-                + "	)\n";
+            +" SELECT "
+            +"	DISTINCT 	titulado.* "
+            +" FROM "
+            +"	titulado "
+            +"		INNER JOIN tituladoprovincianotificacion ON titulado.idTitulado=tituladoprovincianotificacion.idTitulado "
+            +"		INNER JOIN formacionacademica  ON titulado.idTitulado=formacionacademica.idTitulado "
+            +" WHERE "
+            +"	titulado.notificarPorEmail = 1 AND "
+            +"	tituladoprovincianotificacion.idProvincia=? AND "
+            +"	formacionacademica.idCiclo IN ( "
+            +"		SELECT idCiclo "
+            +"		FROM ofertaciclo "
+            +"		WHERE ofertaciclo.idOferta = ? "
+            +"	) "
+            +"	AND tipoFormacionAcademica='CICLO_FORMATIVO' ";                
+
 
         Centro centro = oferta.getEmpresa().getCentro();
         if (centro != null) {
-            query += "AND titulado.idTitulado IN (\n"
-                    + "	SELECT idTitulado\n"
-                    + "	FROM formacionacademica\n"
-                    + "	WHERE formacionacademica.idCentro = ?\n"
-                    + "	)";
+            query += "	AND formacionacademica.idCentro=? ";
         }
 
         stringBuilder.append(query);
 
         SQLQuery sqlQuery = session.createSQLQuery(stringBuilder.toString());
         sqlQuery.addEntity(Titulado.class);
-        sqlQuery.setInteger(0, oferta.getIdOferta());
+        sqlQuery.setInteger(0, oferta.getMunicipio().getProvincia().getIdProvincia());
         sqlQuery.setInteger(1, oferta.getIdOferta());
 
         if (centro != null) {

@@ -56,7 +56,7 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
             $location.path("/oferta/view_todas/" + idOferta).search({});
         };
         $scope.orderby = [
-            {fieldName: "fecha", orderDirection: "DESC"}
+           
         ];
 
         $scope.search();

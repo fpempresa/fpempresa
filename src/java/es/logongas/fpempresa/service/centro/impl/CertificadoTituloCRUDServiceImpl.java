@@ -17,7 +17,9 @@
  */
 package es.logongas.fpempresa.service.centro.impl;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.ix3.core.BusinessException;
@@ -61,6 +63,7 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
                 transactionManager.commit(dataSession);
             }
 
+            generarIncidencias(dataSession, certificadoTitulo);
             return certificadoTitulo;
         } finally {
             if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
@@ -103,6 +106,7 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
                 transactionManager.commit(dataSession);
             }
 
+            generarIncidencias(dataSession, update);
             return update;
 
         } finally {
@@ -110,6 +114,92 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
                 transactionManager.rollback(dataSession);
             }
         }
+
+    }
+
+    @Override
+    public CertificadoTitulo read(DataSession dataSession, Integer primaryKey) throws BusinessException {
+        CertificadoTitulo certificadoTitulo = super.read(dataSession, primaryKey);
+        generarIncidencias(dataSession, certificadoTitulo);
+        return certificadoTitulo;
+    }
+
+    @Override
+    public CertificadoTitulo readByNaturalKey(DataSession dataSession, Object value) throws BusinessException {
+        CertificadoTitulo certificadoTitulo = super.readByNaturalKey(dataSession, value);
+        generarIncidencias(dataSession, certificadoTitulo);
+        return certificadoTitulo;
+    }
+
+    @Override
+    public CertificadoTitulo readOriginal(DataSession dataSession, Integer primaryKey) throws BusinessException {
+        CertificadoTitulo certificadoTitulo = super.readOriginal(dataSession, primaryKey);
+        generarIncidencias(dataSession, certificadoTitulo);
+        return certificadoTitulo;
+    }
+
+    @Override
+    public CertificadoTitulo readOriginalByNaturalKey(DataSession dataSession, Object value) throws BusinessException {
+        CertificadoTitulo certificadoTitulo = super.readOriginalByNaturalKey(dataSession, value);
+        generarIncidencias(dataSession, certificadoTitulo);
+        return certificadoTitulo;
+    }
+
+    private void generarIncidencias(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {
+        StringBuilder incidencias = new StringBuilder();
+
+        List<FormacionAcademica> formacionesAcademicas = getFormacionAcademicaFromCentroCiclo(dataSession, certificadoTitulo.getCiclo(), certificadoTitulo.getCentro());
+
+        for (String nif : certificadoTitulo.getNifnies()) {
+            List<FormacionAcademica> formacionesAcademicasNIF = filterByNIF(formacionesAcademicas, nif);
+
+            if (formacionesAcademicasNIF.isEmpty()) {
+                //Esta información por RGPD no la mostramos.
+                //incidencias.append(nif + ":No existe el titulado con el ciclo en este centro\n");
+            } else if (existsAnyo(formacionesAcademicasNIF, certificadoTitulo.getAnyo())==false) {
+                incidencias.append(nif + " : No coincide el Año\n");
+            }
+        }
+
+        certificadoTitulo.setIncidencias(incidencias.toString());
+    }
+
+    private List<FormacionAcademica> filterByNIF(List<FormacionAcademica> formacionesAcademicas, String nifTitulado) {
+        List<FormacionAcademica> formacionesAcademicasFilter = new ArrayList<>();
+
+        if ((nifTitulado == null) || (nifTitulado.trim().isEmpty())) {
+            return formacionesAcademicasFilter;
+        }
+
+        for (FormacionAcademica formacionAcademica : formacionesAcademicas) {
+
+            if ((formacionAcademica != null) && (formacionAcademica.getTitulado() != null)) {
+                String nif = formacionAcademica.getTitulado().getNumeroDocumento();
+                if (nifTitulado.equalsIgnoreCase(formacionAcademica.getTitulado().getNumeroDocumento())) {
+                    formacionesAcademicasFilter.add(formacionAcademica);
+                }
+            }
+
+        }
+
+        return formacionesAcademicasFilter;
+
+    }
+
+    private boolean existsAnyo(List<FormacionAcademica> formacionesAcademicas, int anyo) {
+
+        Calendar calendar = Calendar.getInstance();
+
+        for (FormacionAcademica formacionAcademica : formacionesAcademicas) {
+
+            calendar.setTime(formacionAcademica.getFecha());
+            int anyoFormacionAcademica = calendar.get(Calendar.YEAR);
+            if (anyoFormacionAcademica == anyo) {
+                return true;
+            }
+        }
+
+        return false;
 
     }
 
@@ -167,6 +257,19 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
             }
 
         }
+
+        return formacionesAcademicas;
+    }
+
+    private List<FormacionAcademica> getFormacionAcademicaFromCentroCiclo(DataSession dataSession, Ciclo ciclo, Centro centro) throws BusinessException {
+        GenericDAO<FormacionAcademica, Integer> formacionAcademicaDAO = daoFactory.getDAO(FormacionAcademica.class);
+
+        Filters filters = new Filters();
+        filters.add(new Filter("titulado.tipoDocumento", TipoDocumento.NIF_NIE));
+        filters.add(new Filter("centro.idCentro", centro.getIdCentro()));
+        filters.add(new Filter("ciclo.idCiclo", ciclo.getIdCiclo()));
+
+        List<FormacionAcademica> formacionesAcademicas = formacionAcademicaDAO.search(dataSession, filters, null, null);
 
         return formacionesAcademicas;
     }

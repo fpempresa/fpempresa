@@ -18,5 +18,7 @@
         <property name="anyo" /> 
            
         <property name="nifnie" />
+        
+        <property name="incidencias" update="false" lazy="true" formula="'N/A'" />        
     </class>
 </hibernate-mapping>

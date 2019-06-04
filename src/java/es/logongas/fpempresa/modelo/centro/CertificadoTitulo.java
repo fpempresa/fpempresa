@@ -47,6 +47,9 @@ public class CertificadoTitulo {
     @NotBlank
     @Label("NIF/NIE")
     private String nifnie;
+    
+    @Label("Incidencias")
+    private String incidencias;    
 
     public boolean isCertificadoNifNie(String nifnie) {
 
@@ -150,6 +153,20 @@ public class CertificadoTitulo {
      */
     public void setNifnie(String nifnie) {
         this.nifnie = nifnie;
+    }
+
+    /**
+     * @return the incidencias
+     */
+    public String getIncidencias() {
+        return incidencias;
+    }
+
+    /**
+     * @param incidencias the incidencias to set
+     */
+    public void setIncidencias(String incidencias) {
+        this.incidencias = incidencias;
     }
 
 }

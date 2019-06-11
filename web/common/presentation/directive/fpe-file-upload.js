@@ -7,7 +7,8 @@ angular.module("common").directive('fpeFileUpload', ['ix3Configuration', functio
                 text: "@",
                 url: "@",
                 success: "&",
-                fail: "&"
+                fail: "&",
+                disabled: "="
             },
             templateUrl: getContextPath() + '/common/presentation/directive/fpe-file-upload.html',
             link: function ($scope, element, attributes) {

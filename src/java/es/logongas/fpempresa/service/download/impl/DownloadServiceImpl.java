@@ -65,7 +65,7 @@ public class DownloadServiceImpl implements DownloadService {
 
         List<Oferta> ofertas = ofertaCRUDService.search(dataSession, filters, orders, searchResponse);
 
-        return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,fecha", "Puesto,Empresa,Fecha");
+        return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,familia.descripcion,fecha", "Puesto,Empresa,Familia Profesional,Fecha");
     }
 
     @Override
@@ -95,7 +95,7 @@ public class DownloadServiceImpl implements DownloadService {
 
         List<Oferta> ofertas = ofertaCRUDService.search(dataSession, filters, orders, searchResponse);
 
-        return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,fecha", "Puesto,Empresa,Fecha");
+        return hojaCalculoService.getHojaCalculo(ofertas, "puesto,empresa.nombreComercial,familia.descripcion,fecha", "Puesto,Empresa,Familia Profesional,Fecha");
     } 
 
     @Override

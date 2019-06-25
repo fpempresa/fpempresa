@@ -77,6 +77,9 @@ public class Usuario extends User implements Principal {
     private Date fechaClaveResetearContrasenya;
 
     private Date fecha;
+    
+    private Date fechaUltimoAcceso;
+    
 
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
@@ -303,6 +306,14 @@ public class Usuario extends User implements Principal {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public Date getFechaUltimoAcceso() {
+        return fechaUltimoAcceso;
+    }
+
+    public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+        this.fechaUltimoAcceso = fechaUltimoAcceso;
     }
 
     public String getClaveResetearContrasenya() {

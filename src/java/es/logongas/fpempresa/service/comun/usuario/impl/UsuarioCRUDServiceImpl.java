@@ -79,6 +79,13 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     @Override
+    public void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario) throws BusinessException {
+       getUsuarioDAO().updateFechaUltimoAcceso(dataSession, usuario);
+    }
+    
+
+
+    @Override
     public boolean checkPassword(DataSession dataSession, Usuario usuario, String password) throws BusinessException {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 

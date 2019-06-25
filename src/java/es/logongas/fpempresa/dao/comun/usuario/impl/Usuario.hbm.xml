@@ -40,6 +40,7 @@
         <property name="fechaClaveResetearContrasenya"/>
     
         <property name="fecha" update="false"/>
+        <property name="fechaUltimoAcceso" />
     
     </joined-subclass>
 </hibernate-mapping>

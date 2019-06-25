@@ -1,0 +1,1 @@
+ALTER TABLE `usuario` ADD COLUMN `fechaUltimoAcceso` DATETIME NULL DEFAULT NULL AFTER `fecha`;

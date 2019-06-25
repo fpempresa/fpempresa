@@ -28,6 +28,8 @@ import es.logongas.ix3.dao.GenericDAO;
 public interface UsuarioDAO extends GenericDAO<Usuario, Integer> {
 
     void updateEncryptedPassword(DataSession dataSession, Usuario usuario, String encriptedPassword);
+    
+    void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario);
 
     String getEncryptedPassword(DataSession dataSession, Usuario usuario);
 

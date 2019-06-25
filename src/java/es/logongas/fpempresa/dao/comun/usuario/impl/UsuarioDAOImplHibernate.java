@@ -21,6 +21,7 @@ import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
+import java.util.Date;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -42,6 +43,19 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         query.executeUpdate();
     }
 
+    @Override
+    public void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario) {
+
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        Query query = session.createSQLQuery("UPDATE usuario SET fechaUltimoAcceso=? WHERE idIdentity=?");
+        query.setTimestamp(0, new Date());
+        query.setInteger(1, usuario.getIdIdentity());
+
+        query.executeUpdate();
+    }    
+    
+    
     @Override
     public String getEncryptedPassword(DataSession dataSession, Usuario usuario) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();

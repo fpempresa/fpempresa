@@ -108,6 +108,11 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                     throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
                 }
 
+                
+                
+                updateFechaUltimoAcceso(dataSession,usuario);
+
+                
                 Principal principal = usuario;
                 return principal;
             } else {
@@ -119,6 +124,13 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
     }
 
+    private void updateFechaUltimoAcceso(DataSession dataSession,Usuario usuario) throws BusinessException {
+        UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
+
+        usuarioService.updateFechaUltimoAcceso(dataSession, usuario);    
+    }
+    
+    
     @Override
     public Principal getPrincipalBySID(Serializable sid, DataSession dataSession) throws BusinessException {
         Integer idIdentity = (Integer) sid;

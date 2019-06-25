@@ -16,5 +16,11 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         $scope.cambiarContrasenya = function () {
             dialog.create('cambiarContrasenya', $scope.model);
         };
+        
+        $scope.borrarCuenta = function () {
+            if (confirm("¿Esta seguro que desea borrar la cuenta y todos sus datos de empleaFP?")) {
+                alert('Para borrar todos sus datos de empleaFP debe enviar un correo electronico a: \nsoporte@empleafp.com\nindicando en el asunto que desea darse de baja')
+            }
+        };        
 
     }]);

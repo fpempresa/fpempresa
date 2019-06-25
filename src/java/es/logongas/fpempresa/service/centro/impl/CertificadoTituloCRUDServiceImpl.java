@@ -19,20 +19,25 @@ package es.logongas.fpempresa.service.centro.impl;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
+import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
 import es.logongas.ix3.service.CRUDService;
+import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -40,6 +45,11 @@ import java.util.List;
  */
 public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<CertificadoTitulo, Integer> implements CRUDService<CertificadoTitulo, Integer> {
 
+
+    @Autowired
+    protected CRUDServiceFactory serviceFactory;
+    
+    
     @Override
     public CertificadoTitulo insert(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {
         GenericDAO<FormacionAcademica, Integer> formacionAcademicaDAO = daoFactory.getDAO(FormacionAcademica.class);
@@ -147,6 +157,8 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
 
     private void generarIncidencias(DataSession dataSession, CertificadoTitulo certificadoTitulo) throws BusinessException {
         StringBuilder incidencias = new StringBuilder();
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        
 
         List<FormacionAcademica> formacionesAcademicas = getFormacionAcademicaFromCentroCiclo(dataSession, certificadoTitulo.getCiclo(), certificadoTitulo.getCentro());
 
@@ -157,7 +169,11 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
                 //Esta información por RGPD no la mostramos.
                 //incidencias.append(nif + ":No existe el titulado con el ciclo en este centro\n");
             } else if (existsAnyo(formacionesAcademicasNIF, certificadoTitulo.getAnyo())==false) {
-                incidencias.append(nif + " : No coincide el Año\n");
+                Titulado titulado=formacionesAcademicasNIF.get(0).getTitulado();
+                Usuario usuario=usuarioCRUDService.getUsuarioFromTitulado(dataSession, titulado.getIdTitulado());
+                String nombreCompletoTitulado=usuario.getNombre()+ " " + usuario.getApellidos();
+                
+                incidencias.append(nombreCompletoTitulado + " "  + " : No coincide el Año\n");
             }
         }
 
@@ -174,7 +190,6 @@ public class CertificadoTituloCRUDServiceImpl extends CRUDServiceImpl<Certificad
         for (FormacionAcademica formacionAcademica : formacionesAcademicas) {
 
             if ((formacionAcademica != null) && (formacionAcademica.getTitulado() != null)) {
-                String nif = formacionAcademica.getTitulado().getNumeroDocumento();
                 if (nifTitulado.equalsIgnoreCase(formacionAcademica.getTitulado().getNumeroDocumento())) {
                     formacionesAcademicasFilter.add(formacionAcademica);
                 }

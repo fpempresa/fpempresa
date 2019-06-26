@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <legend class="form__title">Últimos accesos de los Usuarios</legend>
+            <div class="row">
+                <div class="col-xs-3"> 
+                    <div  class="input-group ">
+                        <input ng-model="filters.$dge.fechaUltimoAcceso" ix3-clear="filters.$isnull.fechaUltimoAcceso" ng-disabled="filters.$isnull.fechaUltimoAcceso" type="text" class="form-control"  id="fechaUltimoAccesoDesde" name="fechaUltimoAccesoDesde" placeholder="fecha desde" ix3-date ix3-datepicker > 
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>                     
+                </div> 
+                <div class="col-xs-3"> 
+                    <div  class="input-group ">                    
+                        <input ng-model="filters.$dle.fechaUltimoAcceso" ix3-clear="filters.$isnull.fechaUltimoAcceso" ng-disabled="filters.$isnull.fechaUltimoAcceso"  type="text" class="form-control"  id="fechaUltimoAccesoHasta" name="fechaUltimoAccesoHasta" placeholder="fecha hasta" ix3-date ix3-datepicker > 
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div> 
+                </div> 
+                 <div class="col-xs-6"> 
+                    <div class="checkbox">
+                        <label>
+                            <input ng-model="filters.$isnull.fechaUltimoAcceso" type="checkbox" id="fechaUltimoAccesoNull" name="fechaUltimoAccesoNull" >
+                            Sin fecha de último acceso
+                        </label>
+                     </div>  
+                </div>                
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>             
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th                                           style="width:   45%;text-align: center">Correo</th>
+                        <th ix3-order-field-names="fechaUltimoAcceso" style="width:   100px;text-align: center">Fecha Último acceso</th>
+                        <th ix3-order-field-names="fecha"             style="width:   100px;text-align: center">Fecha Creacion</th>
+                        <th                                           style="text-align: center">Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="model in models" class="data-table__row">
+                        <td >{{model.email}}</td>
+                        <td style="text-align: center">{{model.fechaUltimoAcceso| date: 'dd/MM/yyyy'}}</td> 
+                        <td style="text-align: center">{{model.fecha| date: 'dd/MM/yyyy'}}</td> 
+                        <td >{{model.nombre}}</td>                        
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+UPDATE usuario SET fechaUltimoAcceso=SYSDATE() WHERE fechaUltimoAcceso IS NULL;

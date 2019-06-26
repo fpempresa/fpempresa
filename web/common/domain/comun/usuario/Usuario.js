@@ -27,8 +27,8 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                             }
                         },
                         {
-                            label: "Condiciones y politicas",
-                            message: 'Debe aceptar los terminos del servicio y la política de privacidad de FPempresa',
+                            label: "Terminos de uso y privacidad",
+                            message: 'Debe aceptar los terminos de uso y la política de privacidad',
                             executeInActions: ['INSERT'],
                             rule: function () {
                                 if (this.aceptarCondicionesPolitica === true) {
@@ -37,7 +37,36 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                                     return false;
                                 }
                             }
+                        },
+                        {
+                            label: "Envio de correos",
+                            message: 'Debe aceptar que se envien correos electrónicos',
+                            executeInActions: ['INSERT'],
+                            rule: function () {
+                                if (this.aceptarEnvioCorreos === true) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        },                      
+                        {
+                            label: "Exactitud y veracidad",
+                            message: 'Debe aceptar que los centros educativos puedan comprobar los datos académicos',
+                            executeInActions: ['INSERT'],
+                            rule: function () {
+                                if (this.tipoUsuario === 'TITULADO') {
+                                    if (this.aceptarVerificarTitulo === true) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                } else {
+                                    return true;
+                                }
+                            }
                         }
+
                     ]
                 };
 

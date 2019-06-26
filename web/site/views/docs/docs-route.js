@@ -7,20 +7,8 @@ app.config(['$stateProvider', function($stateProvider) {
             url:'/docs/contacto',
             templateUrl: 'views/docs/contacto.html'
         });
-        $stateProvider.state('/docs/privacidad', {
-            url:'/docs/privacidad',
-            templateUrl: 'views/docs/privacidad.html'
-        });
-        $stateProvider.state('/docs/terminos', {
-            url:'/docs/terminos',
-            templateUrl: 'views/docs/terminos.html'
-        });
         $stateProvider.state('/docs/soporte', {
             url:'/docs/soporte',
             templateUrl: 'views/docs/soporte.html'
-        });    
-        $stateProvider.state('/docs/cookies', {
-            url:'/docs/cookies',
-            templateUrl: 'views/docs/cookies.html'
-        });            
+        });               
     }]);

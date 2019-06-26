@@ -40,7 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class NotificationImpl implements Notification {
     protected final Log log = LogFactory.getLog(getClass());
     
-    final static String PIE_RGPD_MAIL="Este mensaje se dirige exclusivamente a  su destinatario y puede contener información privilegiada , confidencial , sujeta  al secreto profesional o datos de carácter personal, cuya difusión está prohibida por la Ley . Si no es la persona destinataria indicada, no puede  copiar este mensaje ni entregarlo a terceros bajo ningún concepto. Si ha recibido este mensaje por error o lo ha conseguido por otros medios, le pedimos que nos lo comunique inmediatamente por esta misma vía y lo elimine irreversiblemente.\nEn aras del cumplimiento del  Reglamento  (UE)  2016/679  del  Parlamento  Europeo  y  del  Consejo,  de  27  de  abril  de  2016 , la Asociación de Centros de Formación Profesional, garantiza la confidencialidad de los datos personales de sus clientes.\n\nLe comunicamos que su dirección de correo electrónico forma parte de una base de datos gestionada bajo la responsabilidad de Asociación de Centros de Formación Profesional, con la única finalidad de prestarle los servicios por usted solicitados, por su condición de cliente, proveedor, o porque nos haya solicitado información en algún momento. Es voluntad de Asociación de Centros de Formación Profesional, evitar el envío deliberado de correo no solicitado, por lo cual podrá en todo momento, ejercitar sus derechos de acceso, rectificación, cancelación , oposición , portabilidad de datos u olvido de sus datos de carácter personal por correo ordinario a: Asociación de Centros de Formación Profesional, IES Puerta Bonita C/ Padre Amigó, 5 CP 28025 Madrid (Madrid) o en el correo electrónico soporte@empleafp.com";
+    final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.\n\nPodrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico soporte@empleafp.com. Solicite más información dirigiéndose al correo electrónico indicado.\n\nEn virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.\n\n<a href=\"mailto:soporte@empleafp.com?Subject=Deseo%20darme%20de%20baja%20de%20empleaFP%20y%20que%20sean%20boborrados%20todos%20mis%20datos\">Darse de baja de empleaFP</a>";
     
     @Autowired
     MailService mailService;
@@ -64,8 +64,10 @@ public class NotificationImpl implements Notification {
                 + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
                 + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
                 + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
-                + "<strong>Descripción: </strong>" + toHTMLRetornoCarro(oferta.getDescripcion()) + "<br>" + "<br>"
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información"
+                + "<strong>Descripción: </strong>" + toHTMLRetornoCarro(oferta.getDescripcion()) + "<br>" 
+                + "<br>"
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información.<br>"
+                + "Ah, y <span stylle=\"font-weight: bold;\">no responsas</span> a esta dirección de correo , si necesitas ayuda puedes contactar en soporte@empleafp.com."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
@@ -91,8 +93,10 @@ public class NotificationImpl implements Notification {
                 + "<h4>Datos del candidato</h4>"
                 + "<strong>Nombre: </strong>" + candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos() + "<br>"
                 + "<strong>Teléfono: </strong>" + candidato.getUsuario().getTitulado().getTelefono() + "<br>"
-                + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" + "<br>"
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información"
+                + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" 
+                + "<br>"
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información.<br>"
+                + "Ah, y <span stylle=\"font-weight: bold;\">no responsas</span> a esta dirección de correo , si necesitas ayuda puedes contactar en soporte@empleafp.com."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));

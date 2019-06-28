@@ -174,8 +174,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 
                 CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
                 
-                Titulado titulado=tituladoCRUDService.read(dataSession, entity.getTitulado().getIdTitulado());
-                tituladoCRUDService.delete(dataSession, titulado);
+                if (entity.getTitulado()!=null) {
+                    Titulado titulado=tituladoCRUDService.read(dataSession, entity.getTitulado().getIdTitulado());
+                    tituladoCRUDService.delete(dataSession, titulado);
+                }
 
             }
             boolean success = super.delete(dataSession, entity);

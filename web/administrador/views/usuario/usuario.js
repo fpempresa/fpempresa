@@ -43,6 +43,8 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
             //Al insertar un usuario siempre debe aceptar las politicas
             //Lo hacemos aqui pq al ser el administrador el que los crea suponemos que el usuario las ha aceptado
             $scope.model.aceptarCondicionesPolitica = true;
+            $scope.model.aceptarEnvioCorreos = true;
+            $scope.model.aceptarVerificarTitulo = true;
         };
 
 

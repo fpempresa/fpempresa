@@ -32,6 +32,8 @@ app.controller("EmpresarioNewEditController", ['$scope', 'genericControllerCrudD
             $scope.model.empresa=$scope.user.empresa;
             $scope.model.tipoUsuario='EMPRESA';
             $scope.model.aceptarCondicionesPolitica = true;
+            $scope.model.aceptarEnvioCorreos = true;
+            $scope.model.aceptarVerificarTitulo = true;            
         };
 
 

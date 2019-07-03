@@ -33,6 +33,8 @@ app.controller("ProfesorNewEditController", ['$scope', 'genericControllerCrudDet
         $scope.preInsert = function () {
             //Al insertar un usuario siempre debe aceptar las politicas
             $scope.model.aceptarCondicionesPolitica = true;
+            $scope.model.aceptarEnvioCorreos = true;
+            $scope.model.aceptarVerificarTitulo = true;
         };
         
         $scope.cambiarContrasenya = function () {

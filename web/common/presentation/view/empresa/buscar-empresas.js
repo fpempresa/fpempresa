@@ -8,7 +8,7 @@
         angular.extend($scope.filters, currentDialog.params.filters);
 
         $scope.orderby=[
-            {fieldName:"nombreComercial",orderDirection:"ASC"}
+            {fieldName:"fecha",orderDirection:"DESC"}
         ];
 
         currentDialog.open({

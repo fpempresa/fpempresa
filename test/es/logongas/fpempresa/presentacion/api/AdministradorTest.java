@@ -53,11 +53,11 @@ public class AdministradorTest {
                 get("/api/administrador/Estadisticas/administrador").
                 then().
                 statusCode(HttpStatus.SC_OK).
-                body("tituladosPorFamilia", not(nullValue())).
+                body("titulosFPPorFamilia", not(nullValue())).
                 body("ofertasPorFamilia", not(nullValue())).
                 body("candidatosPorFamilia", not(nullValue())).
                 body("numeroCandidatos", not(nullValue())).
-                body("numeroTitulados", not(nullValue())).
+                body("numeroTitulosFP", not(nullValue())).
                 body("numeroOfertas", not(nullValue()));
     }
 

@@ -7,21 +7,17 @@ package es.logongas.fpempresa.presentacion.api;
 
 import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.given;
-import com.jayway.restassured.parsing.Parser;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ValidatableResponse;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
-import es.logongas.fpempresa.modelo.educacion.Grado;
-import es.logongas.fpempresa.modelo.educacion.LeyEducativa;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.presentacion.controller.UsuarioRESTController;
 import es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios;
 import static es.logongas.fpempresa.service.populate.GeneradorDatosAleatorios.getMunicipioAleatorio;
 import es.logongas.ix3.util.ReflectionUtil;
-import es.logongas.ix3.web.util.MimeType;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,7 +38,7 @@ public abstract class TestUtil {
     static {
 
         RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8084;
+        RestAssured.port = 8080;
         RestAssured.basePath = "/fpempresa";
     }
 
@@ -56,7 +52,7 @@ public abstract class TestUtil {
 
     static public void testSchema(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
 
         ValidatableResponse validatableResponse
@@ -82,10 +78,10 @@ public abstract class TestUtil {
 
     static public Response testPaginatedSearch(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Map<String, Object> params) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         
                 Response response= given().log().ifValidationFails().
@@ -117,10 +113,10 @@ public abstract class TestUtil {
 
     static public Response testSearch(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Map<String, Object> params) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         Response response=given().log().ifValidationFails().
         queryParams(params).
@@ -146,7 +142,7 @@ public abstract class TestUtil {
 
     static public void testCreate(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
 
         ValidatableResponse validatableResponse
@@ -170,10 +166,10 @@ public abstract class TestUtil {
 
     static public ValidatableResponse testRead(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, int id, Map<String, Object> params) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         ValidatableResponse validatableResponse
                 = given().log().ifValidationFails().
@@ -199,10 +195,10 @@ public abstract class TestUtil {
 
     static public int testInsert(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Object entity, String primaryKeyName,Map<String, Object> params) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         Response response = given().log().ifValidationFails().
                 queryParams(params).
@@ -235,10 +231,10 @@ public abstract class TestUtil {
 
     static public void testUpdate(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, Object entity, String primaryKeyName, Map<String, Object> params) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         Response response = given().log().ifValidationFails().
                 queryParams(params).
@@ -265,7 +261,7 @@ public abstract class TestUtil {
 
     static public void testDelete(String appPath, Class entityClass, boolean success, int httpStatus, Map<String, String> cookies, int id) {
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
 
         ValidatableResponse validatableResponse
@@ -327,7 +323,7 @@ public abstract class TestUtil {
 
         
         if (cookies == null) {
-            cookies = new HashMap<String, String>();
+            cookies = new HashMap<>();
         }
 
         ValidatableResponse validatableResponse
@@ -362,7 +358,7 @@ public abstract class TestUtil {
         Familia familia=new Familia();
         familia.setIdFamilia(14);
         oferta.setFamilia(familia);
-        Set<Ciclo> ciclos = new HashSet<Ciclo>();
+        Set<Ciclo> ciclos = new HashSet<>();
         Ciclo ciclo=new Ciclo();
         ciclo.setFamilia(familia);
         ciclo.setIdCiclo(196);

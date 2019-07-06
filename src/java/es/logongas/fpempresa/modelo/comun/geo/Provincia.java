@@ -17,6 +17,8 @@
 package es.logongas.fpempresa.modelo.comun.geo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import es.logongas.ix3.core.annotations.ValuesList;
+import javax.validation.constraints.NotNull;
 
 /**
  * Entidad con las provincias.
@@ -30,6 +32,11 @@ public class Provincia {
 
     private String descripcion;
 
+    @JsonProperty("comunidadAutonoma")
+    @NotNull
+    @ValuesList(shortLength = true)
+    private ComunidadAutonoma comunidadAutonoma;
+    
     public Provincia() {
     }
 
@@ -64,6 +71,20 @@ public class Provincia {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the comunidadAutonoma
+     */
+    public ComunidadAutonoma getComunidadAutonoma() {
+        return comunidadAutonoma;
+    }
+
+    /**
+     * @param comunidadAutonoma the comunidadAutonoma to set
+     */
+    public void setComunidadAutonoma(ComunidadAutonoma comunidadAutonoma) {
+        this.comunidadAutonoma = comunidadAutonoma;
     }
 
 }

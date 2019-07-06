@@ -132,7 +132,7 @@ public class TituloIdioma {
     }
 
     @AssertTrue(message = "Debe indicar el nombre del idioma")
-    private boolean isOtroIdioma() {
+    private boolean isOtroIdiomaRequerido() {
         if (idioma == Idioma.OTRO) {
             if ((otroIdioma == null) || (otroIdioma.trim().isEmpty())) {
                 return false;

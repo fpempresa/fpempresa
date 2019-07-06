@@ -26,7 +26,6 @@ import java.util.Map;
 import org.apache.http.HttpStatus;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import org.junit.AfterClass;
@@ -48,7 +47,6 @@ public class ProfesorTest {
     static Empresa empresaCentro;
     static Oferta oferta;
     static Usuario usuarioTitulado;
-    static Candidato candidato;
     static FormacionAcademica formacionAcademica;
 
     @BeforeClass
@@ -98,7 +96,7 @@ public class ProfesorTest {
         oferta=TestUtil.createOfertaAplicacionesWeb(empresaCentro);
         
         
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("empresa.centro.idCentro", centro.getIdCentro());
         
         
@@ -152,73 +150,70 @@ public class ProfesorTest {
 
     @Test
     public void test_08_insertar_candidato() {
-        candidato=new Candidato();
+        Candidato candidato=new Candidato();
         candidato.setOferta(oferta);
         candidato.setUsuario(usuarioTitulado);
-        int idCandidato=TestUtil.testInsert("titulado", Candidato.class, true, 0, cookiesTitulado, candidato, "idCandidato", null);
-        candidato.setIdCandidato(idCandidato);
+        TestUtil.testInsert("centro", Candidato.class, false, HttpStatus.SC_FORBIDDEN, cookiesTitulado, candidato, "idCandidato", null);
     }
     
     @Test
     public void test_09_numero_candidatos() {
 
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("$namedsearch", "getNumCandidatosOferta");        
         params.put("oferta", oferta.getIdOferta());        
         
         given().log().ifValidationFails().
         queryParams(params).
         cookies(cookiesProfesor).
-        when().log().ifValidationFails().get("/api/centro/Candidato").then().parser("text/plain", Parser.TEXT).body(containsString("1"));
+        when().log().ifValidationFails().get("/api/centro/Candidato").then().parser("text/plain", Parser.TEXT).body(containsString("0"));
 
     }    
     
     @Test
     public void test_10_buscar_candidatos() {
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("$namedsearch", "getCandidatosOferta");        
         params.put("oferta", oferta.getIdOferta());        
         params.put("certificados", "false");        
         params.put("maxAnyoTitulo", 200);        
         params.put("ocultarRechazados", "false");        
 
-        TestUtil.testPaginatedSearch("centro", Candidato.class, true, 0, cookiesProfesor, params).then().statusCode(HttpStatus.SC_OK).body("content",hasSize(equalTo(1)));
+        TestUtil.testPaginatedSearch("centro", Candidato.class, false, HttpStatus.SC_FORBIDDEN, cookiesProfesor, params);
     
     }     
     
     @Test
     public void test_11_obtener_candidato() {
-        TestUtil.testRead("centro", Candidato.class, true, 0, cookiesProfesor, candidato.getIdCandidato(),null).body("idCandidato",equalTo(candidato.getIdCandidato()));
+        TestUtil.testRead("centro", Candidato.class, false, HttpStatus.SC_FORBIDDEN, cookiesProfesor, 1,null);
     }     
     
     @Test
     public void test_12_obtener_foto() {       
         given().log().ifValidationFails().
         cookies(cookiesProfesor).
-        when().log().ifValidationFails().get("/api/centro/Candidato/{idCandidato}/foto",candidato.getIdCandidato()).then().statusCode(HttpStatus.SC_OK);
+        when().log().ifValidationFails().get("/api/centro/Candidato/{idCandidato}/foto",1).then().statusCode(HttpStatus.SC_FORBIDDEN);
     }     
     
     @Test
     public void test_13_borrar_candidato() {
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("oferta.idOferta", oferta.getIdOferta());        
         params.put("usuario.idIdentity", usuarioTitulado.getIdIdentity());        
 
-        TestUtil.testSearch("titulado", Candidato.class, true, 0, cookiesTitulado, params).then().body("",hasSize(equalTo(1))).body("[0].idCandidato",equalTo(candidato.getIdCandidato()));
-        
-        TestUtil.testDelete("titulado",Candidato.class, true, 0, cookiesTitulado, candidato.getIdCandidato()); 
+        TestUtil.testDelete("centro",Candidato.class, false, HttpStatus.SC_FORBIDDEN, cookiesTitulado, 1);
     }    
     
     @Test
     public void test_14_buscar_candidatos() {
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("$namedsearch", "getCandidatosOferta");        
         params.put("oferta", oferta.getIdOferta());        
         params.put("certificados", "false");        
         params.put("maxAnyoTitulo", 200);        
         params.put("ocultarRechazados", "false");        
 
-        TestUtil.testPaginatedSearch("centro", Candidato.class, true, 0, cookiesProfesor, params).then().statusCode(HttpStatus.SC_OK).body("content",hasSize(equalTo(0)));
+        TestUtil.testPaginatedSearch("centro", Candidato.class, false, HttpStatus.SC_FORBIDDEN, cookiesProfesor, params);
     
     } 
     
@@ -226,7 +221,7 @@ public class ProfesorTest {
     public void test_15_crud_empresa() {
         Empresa empresa = GeneradorDatosAleatorios.createEmpresaAleatoria(centro);
 
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("centro.idCentro", centro.getIdCentro());        
         
         CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
@@ -276,26 +271,26 @@ public class ProfesorTest {
                 get("/api/centro/Estadisticas/centro/{idCentro}",centro.getIdCentro()).
                 then().
                 statusCode(HttpStatus.SC_OK).
-                body("tituladosPorFamilia", not(nullValue())).
+                body("titulosFPPorFamilia", not(nullValue())).
                 body("ofertasPorFamilia", not(nullValue())).
                 body("candidatosPorFamilia", not(nullValue())).
                 body("numeroCandidatos", not(nullValue())).
-                body("numeroTitulados", not(nullValue())).
+                body("numeroTitulosFP", not(nullValue())).
                 body("numeroOfertas", not(nullValue()));
     }
     
     @Test
     public void test_21_buscar_titulados() {
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("tipoUsuario",TipoUsuario.TITULADO.name());         
         params.put("titulado.formacionesAcademicas.centro.idCentro", centro.getIdCentro());         
  
-        TestUtil.testPaginatedSearch("centro", Usuario.class, true, 0, cookiesProfesor, params).then().body("content",hasSize(equalTo(1))).body("content[0].idIdentity",equalTo(usuarioTitulado.getIdIdentity()));
+        TestUtil.testPaginatedSearch("centro", Usuario.class, false, HttpStatus.SC_FORBIDDEN, cookiesProfesor, params);
     }
     
     @Test
     public void test_22_leer_titulados() {      
-        TestUtil.testRead("centro", Usuario.class, true, 0, cookiesProfesor,usuarioTitulado.getIdIdentity() ,null).body("idIdentity",equalTo(usuarioTitulado.getIdIdentity()));
+        TestUtil.testRead("centro", Usuario.class, false, HttpStatus.SC_FORBIDDEN, cookiesProfesor,usuarioTitulado.getIdIdentity() ,null);
     }
     
     @Test
@@ -308,7 +303,7 @@ public class ProfesorTest {
         Usuario usuario = GeneradorDatosAleatorios.createUsuarioAleatorio(TipoUsuario.CENTRO);
         usuario.setCentro(centro);
         
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("centro.idCentro", centro.getIdCentro());        
         params.put("tipoUsuario",TipoUsuario.CENTRO.name() );        
         
@@ -338,7 +333,7 @@ public class ProfesorTest {
         certificadoTitulo.setCiclo(formacionAcademica.getCiclo());
         certificadoTitulo.setNifnie(usuarioTitulado.getTitulado().getNumeroDocumento()+","+GeneradorDatosAleatorios.getNif()+"\n"+GeneradorDatosAleatorios.getNif());
               
-        Map<String,Object> params=new HashMap<String,Object>();
+        Map<String,Object> params=new HashMap<>();
         params.put("centro.idCentro", centro.getIdCentro());                
         
         

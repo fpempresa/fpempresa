@@ -13,6 +13,7 @@
     <property name="hibernate.cache.use_query_cache">true</property>
     -->
     <!-- BEGIN:Tablas Comunes -->
+    <mapping resource="es/logongas/fpempresa/dao/comun/geo/impl/ComunidadAutonoma.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/geo/impl/Provincia.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/geo/impl/Municipio.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/comun/usuario/impl/Usuario.hbm.xml"/>

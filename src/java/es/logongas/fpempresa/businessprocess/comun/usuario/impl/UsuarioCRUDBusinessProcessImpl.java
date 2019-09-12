@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.logongas.fpempresa.businessprocess.comun.usuario.impl;
 
 import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
@@ -24,6 +19,22 @@ import es.logongas.ix3.security.authorization.BusinessSecurityException;
  */
 public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usuario, Integer> implements UsuarioCRUDBusinessProcess {
 
+    @Override
+    public Usuario update(UpdateArguments<Usuario> updateArguments) throws BusinessException {
+        Usuario principal = (Usuario) updateArguments.principal;
+        Usuario usuario = updateArguments.entity;
+        Usuario usuarioOriginal=updateArguments.originalEntity;
+       
+        if (principal.getTipoUsuario()!=TipoUsuario.ADMINISTRADOR) {
+            usuario.setValidadoEmail(usuarioOriginal.isValidadoEmail());
+        }
+
+        return super.update(updateArguments); 
+    }
+
+    
+    
+    
     @Override
     public void updatePassword(UpdatePasswordArguments updatePasswordArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);

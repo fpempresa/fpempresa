@@ -147,8 +147,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             usuario.setValidadoEmail(false);
             usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
             notification.validarCuenta(usuario);
-        } else {
-            usuario.setValidadoEmail(usuarioOriginal.isValidadoEmail());
         }
 
         return super.update(dataSession, usuario);

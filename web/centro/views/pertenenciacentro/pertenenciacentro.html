@@ -5,15 +5,15 @@
 
 
             <div ng-if="user.centro === null">
-                <p class="form__text form__text--help" >Actualmente no perteneces a ningún centro educativo.</p>
-                <p class="form__text form__text--help">Unas vez indicado el centro no podr&aacute;s acceder hasta que el centro te acepte o rechace.</p> 
+                <p class="form__text form__text--help" >Actualmente no perteneces a ningún centro educativo. Unas vez indicado el centro no podr&aacute;s acceder hasta que el centro te acepte o rechace.</p> 
             </div>
             <div ng-if="user.centro !== null">
-                <p class="form__text form__text--help">Actualmente perteneces al centro educativo '{{user.centro.toString()}}'.</p> 
-                <p class="form__text form__text--help">Si cambias de centro no podr&aacute;s acceder hasta que tu nuevo centro te acepte o rechace.</p> 
+                <p class="form__text form__text--help">Actualmente perteneces al centro educativo '{{user.centro.toString()}}'. Si cambias de centro no podr&aacute;s acceder hasta que tu nuevo centro te acepte o rechace.</p> 
             </div>
 
-
+            <div >
+                <p class="form__text form__text--help"><i class="fa fa-warning"></i> ¿No aparece tu centro pero si que está asociado  <a href="https://fpempresa.net/">FPempresa</a> ?, ponte en contacto con nosotros en <a href="mailto:soporte@empleafp.com">soporte@empleafp.com</a></p> 
+            </div>
 
 
 

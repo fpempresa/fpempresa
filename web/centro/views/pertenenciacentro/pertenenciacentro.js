@@ -9,6 +9,10 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams
             $scope.filters.$ne.idCentro = $scope.user.centro.idCentro; //No debe salir el propio centro al que pertenece.
         }
         $scope.filters.estadoCentro = "PERTENECE_A_FPEMPRESA";
+        $scope.orderby = [
+            {fieldName: "direccion.municipio.provincia.descripcion", orderDirection: "ASC"},
+            {fieldName: "nombre", orderDirection: "ASC"}          
+        ];
 
         $scope.buttonPertenenciaCentro = function (centro) {
             $scope.pertenenciaCentro(centro);

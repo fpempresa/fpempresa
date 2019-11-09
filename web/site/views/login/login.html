@@ -32,10 +32,10 @@
                     <div class="col-sm-12 controls">
                         <button type="button" class="btn  btn-block btn-lg form__button form__button--primary  " ng-click="login(email, password)" >Entrar</button>
                         <br>
-                        <br>
+                        <p class="form__text form__text--help" data-ng-show="businessMessages.length > 0" ><i class="fa fa-key"></i> ¿Has olvidado tu contraseña? <a href="" ng-click="olvidadoContrasenya()" >Pincha aquí para crear una nueva</a> </p> 
+                        <p class="form__text form__text--help" data-ng-show="businessMessages.length > 0" ><i class="fa fa-warning"></i> ¿Problemas para entrar? Ponte en contacto con nosotros en <a href="mailto:soporte@empleafp.com">soporte@empleafp.com</a></p> 
                         <h4>&iquest;No tienes cuenta en empleaFP?</h4>  
                         <button type="button" class="btn  btn-block btn-lg  form__button form__button--default" ng-click="createAccount()" >Crear una nueva cuenta</button>
-                        <a href="" ng-click="olvidadoContrasenya()" style="margin-top:10px; display: block">¿Has olvidado la contrase&ntilde;a?</a>
                     </div>
                 </div>
 

@@ -76,8 +76,10 @@ public class Usuario extends User implements Principal {
 
     private Date fechaClaveResetearContrasenya;
 
+    @Label("Creado")
     private Date fecha;
     
+    @Label("Último Acceso")
     private Date fechaUltimoAcceso;
     
 

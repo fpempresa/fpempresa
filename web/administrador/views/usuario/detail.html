@@ -49,6 +49,26 @@
                         </div> 
                     </div>                     
                     
+                    <legend class="form__title">Fechas</legend>
+                    <div class="row" >
+                        <div class="col-xs-6 form-horizontal">
+                            <div class="form-group">
+                                <label for="fecha" class="col-xs-6  control-label" ix3-label></label>
+                                <div class="col-xs-6 ">
+                                    <input ng-model="model.fecha" type="text" class="form-control" id="fecha" name="fecha"  ix3-date  ix3-validation readonly="true">
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-6 form-horizontal">
+                            <div class="form-group">
+                                <label for="fechaUltimoAcceso" class="col-xs-6  control-label" ix3-label></label>
+                                <div class="col-xs-6 ">
+                                    <input ng-model="model.fechaUltimoAcceso" type="text" class="form-control" id="fechaUltimoAcceso" name="fechaUltimoAcceso"  ix3-date  ix3-validation readonly="true">
+                                </div>
+                            </div> 
+                        </div>
+                    </div>                    
+
                     <div class="row" ng-show="controllerAction === 'NEW'" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">

@@ -9,8 +9,15 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'ix3Configuration
             dialog.create('mostrarCodigosMunicipio');
         };
         $scope.failImportJson = function (data) {
-            if (data && data.jqXHR && data.jqXHR.responseText)
-                $scope.businessMessages = JSON.parse(data.jqXHR.responseText);
+            if (data && data.jqXHR) {
+                if (data.jqXHR.status === 500) {
+                    alert("Uf, esto es embarazoso pero \n ha ocurrido un error al procesar la petición:\n"+data.jqXHR.responseText);
+                } else {
+                    if (data.jqXHR.responseText) {
+                        $scope.businessMessages = JSON.parse(data.jqXHR.responseText);
+                    }
+                }
+            }
         };
         $scope.updateList = function () {
             alert("El listado de Titulados se importó correctamente");

@@ -1,4 +1,4 @@
-app.controller("HeaderController", ['$scope','session','goPage',function ($scope,session,goPage) {
+app.controller("HeaderController", ['$scope','session','goPage','dialog',function ($scope,session,goPage,dialog) {
         $scope.logout=function() {
             session.logout().then(function() {
                 goPage.homeApp();
@@ -9,5 +9,8 @@ app.controller("HeaderController", ['$scope','session','goPage',function ($scope
         $scope.soporte=function() {
                 goPage.soporte();
 
-        }           
+        }  
+        $scope.cambiarContrasenya = function () {
+            dialog.create('cambiarContrasenya', $scope.user);
+        }
 }]);

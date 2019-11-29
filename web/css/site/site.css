@@ -571,6 +571,39 @@ fieldset[disabled] .form__button--danger.active {
 .lateral-menu__item__link--selected {
   color: #005594 !important;
 }
+.menu-hamburger__generic,
+.menu-hamburger,
+.menu-hamburger__header,
+.menu-hamburger__item,
+.menu-hamburger__link {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  list-style-type: none;
+  display: block;
+}
+.menu-hamburger__header {
+  color: #FFFFFF;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 15px;
+}
+.menu-hamburger__item {
+  text-transform: none;
+  font-size: 15px;
+  width: 100%;
+}
+.menu-hamburger__link {
+  color: #FFFFFF;
+  text-decoration: none !important;
+  font-size: 15px;
+  width: 100%;
+  display: inline-block;
+  height: 100%!important;
+}
+.menu-hamburger__link:hover {
+  color: #FFFFFF !important;
+}
 .g-padding--xxs {
   padding: 0px;
 }

@@ -17,13 +17,27 @@
             <ul class="nav navbar-nav">
 
                 <li class="hidden">
-                    <a href="{{getContextPath()}}/site/index.html" fpe-click-button-on-click="buttonMenuHeader"></a>
+                    <a href="{{getContextPath()}}/site/index.html" data-toggle="collapse" data-target=".navbar-collapse"></a>
                 </li>
-                <li>
-                    <a href ng-click="soporte()" fpe-click-button-on-click="buttonMenuHeader">Soporte</a>
+                <li class="hidden-xs">
+                    <a href ng-click="soporte()" data-toggle="collapse" data-target=".navbar-collapse">Soporte</a>
                 </li>                
                 <li>
-                    <a href ng-click="logout()" fpe-click-button-on-click="buttonMenuHeader">Cerrar sesi&oacute;n</a>
+                    <a href ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse">Cerrar sesi&oacute;n</a>
+                </li>
+                <li class="hidden-md hidden-lg hidden-sm menu-hamburger">
+                    <div class="menu-hamburger__header">Gestiona tu bolsa</div>
+                    <ul>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/curriculum/titulado/edit/{{user.titulado.idTitulado}}">Datos personales</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/curriculum/formacionacademica/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Formaci&oacute;n académica</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/curriculum/experiencialaboral/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Experiencia laboral</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/curriculum/tituloidioma/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Idiomas</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/oferta/search_todas">Todas las ofertas</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/oferta/search_inscrito">Ofertas inscritas</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/usuario/edit/{{user.idIdentity}}">Mis datos</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href="#/configuracion">Configuraci&oacute;n</a></li>
+                        <li class="menu-hamburger__item" ><a class="menu-hamburger__link" data-toggle="collapse" data-target=".navbar-collapse" href ng-click="cambiarContrasenya()">Cambiar mi contrase&ntilde;a</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>

@@ -1,6 +1,4 @@
 <div class=" form__page form__page--no-padding container">
-    <br>
-    <br>
     <div class="row">
         <div class="col-xs-12 col-sm-2">
             <div class="text-center">
@@ -10,14 +8,15 @@
         </div>
         <div class="col-xs-12 col-sm-10 form--center">
             <h3 class="form__main-title">Bienvenido, {{user.name}}</h3>
-            <p class="form__text form__text--help">
+            <div class="g-padding--bottom-s@xs g-padding--bottom-m@sm"></div>
+            <p class="form__text form__text--help hidden-xs">
                 Desde aqui podr&aacute;s modificar tu curriculum, buscar empleo y configurar tu cuenta
             </p>          
         </div>
     </div>
-
+    <div class="g-padding--bottom-s@xs g-padding--bottom-l@sm"></div>
     <div class="row">
-        <div class="col-xs-12 col-sm-2" style="padding-right: 0px!important;">
+        <div class="col-xs-12 col-sm-2 hidden-xs" style="padding-right: 0px!important;">
             <ul class="lateral-menu__menu">
                 <li class="lateral-menu__header">Mi curriculum</li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('$/^')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('$/^')}" class="lateral-menu__item__link" href="#/">Resumen</a></li>
@@ -48,3 +47,4 @@
     <br>
     <br>
 </div>
+

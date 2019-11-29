@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-sm-12 form__container" >
         <div>
-            <legend class="form__title">Titulados</legend>
+            <legend class="form__title">Estadisticas del titulados</legend>
             <ix3-business-messages style="overflow-y: scroll; overflow-x: hidden; max-height: 600px"></ix3-business-messages>
         </div>
         
-        <div class="row">
+        <div class="row" ng-show="mostrarCartelRGPD()">
             <div class="col-sm-12">
                 <div class="alert alert-info" role="alert">Debido a la entrada el vigor de la Reglamento General de Protección de Datos no es posible ver los datos individuales de los titulados</div>
             </div>
@@ -39,8 +39,8 @@
                 <table class="table table-bordered">
                     <thead>                        
                         <tr class="data-table__head">
-                            <th  style="text-align: center">Familia (N&ordm; de Titulos)</th>
-                            <th  style="text-align: center">Ciclo</th>
+                            <th  style="text-align: center">Familia (N&ordm; de Títulos)</th>
+                            <th  style="text-align: center">Ciclo (N&ordm; de Títulos)</th>
                         </tr>
                     </thead>
                     <tbody>

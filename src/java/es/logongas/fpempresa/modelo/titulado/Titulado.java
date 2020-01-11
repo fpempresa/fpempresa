@@ -94,8 +94,10 @@ public class Titulado {
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void provinciaDeNotificacionIgualALaDireccion() {
         if (configuracion.getNotificacionOferta().getProvincias().isEmpty()) {
-            configuracion.getNotificacionOferta().getProvincias().add(direccion.getMunicipio().getProvincia());
-            configuracion.getNotificacionOferta().setNotificarPorEmail(true);
+            if ((direccion!=null) && (direccion.getMunicipio()!=null) && (direccion.getMunicipio().getProvincia()!=null)) {
+                configuracion.getNotificacionOferta().getProvincias().add(direccion.getMunicipio().getProvincia());
+                configuracion.getNotificacionOferta().setNotificarPorEmail(true);
+            }
         }
     }
 

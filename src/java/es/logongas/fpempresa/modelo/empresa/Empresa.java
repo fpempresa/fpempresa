@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -40,11 +41,14 @@ public class Empresa {
     private int idEmpresa;
 
     @NotBlank
+    @Size(max = 200)
     private String nombreComercial;
 
     @NotBlank
+    @Size(max = 200)
     private String razonSocial;
 
+    @Size(max = 9)
     private String cif;
 
     private Date fecha;    

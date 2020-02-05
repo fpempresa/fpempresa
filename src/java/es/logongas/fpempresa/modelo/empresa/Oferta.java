@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -47,6 +48,7 @@ public class Oferta {
     private Empresa empresa;
 
     @NotEmpty
+    @Size(max = 200)
     private String puesto;
 
     @NotEmpty

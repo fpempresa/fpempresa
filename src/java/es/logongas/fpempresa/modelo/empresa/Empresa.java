@@ -75,6 +75,27 @@ public class Empresa {
             }
         }
     }
+    
+    @ConstraintRule(fieldName = "Correo electrónico",message = "Es requerido", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarCorreo(RuleContext<Empresa> ruleContext) {
+        
+        if (this.centro!=null) {
+            //Si es una emrpesa de un centro no hay que validar nada pq el correo no es requerido
+            return true;
+        }
+        
+        if (this.contacto==null) {
+            return false;
+        }
+        
+        String mail=this.contacto.getEmail();
+        if ((mail==null) || (mail.trim().isEmpty())) {
+            return false;
+        }
+        
+        return true;
+    }
+        
 
     public Empresa() {
     }

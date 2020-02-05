@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
+import java.util.List;
 
 /**
  *
@@ -42,6 +43,7 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
 
     void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException;
     
-    byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException;    
-
+    byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException; 
+    
+    List<Usuario> getUsuariosFromEmpresa(DataSession dataSession, int idEmpresa) throws BusinessException;
 }

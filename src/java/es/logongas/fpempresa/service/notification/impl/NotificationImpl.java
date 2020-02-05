@@ -17,17 +17,23 @@
 package es.logongas.fpempresa.service.notification.impl;
 
 import es.logongas.fpempresa.config.Config;
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.Attach;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
+import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.service.CRUDServiceFactory;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,6 +56,9 @@ public class NotificationImpl implements Notification {
     
     @Autowired
     Conversion conversion;
+    
+    @Autowired
+    CRUDServiceFactory serviceFactory;    
     
     @Override
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
@@ -78,9 +87,46 @@ public class NotificationImpl implements Notification {
     public void nuevoCandidato(DataSession dataSession, Candidato candidato) {
         Mail mail = new Mail();
         Oferta oferta = candidato.getOferta();
-        mail.addTo(candidato.getOferta().getEmpresa().getContacto().getEmail());
+        if (oferta==null) {
+            throw new NullPointerException("oferta is null");
+        }
+        Empresa empresa=oferta.getEmpresa();
+        if (empresa==null) {
+            throw new NullPointerException("empresa is null");
+        }
+        Contacto contacto=empresa.getContacto();
+        String direccionEMail=null;
+        String persona=null;
+        if (contacto!=null) {
+            direccionEMail=contacto.getEmail();
+        } 
+        
+        if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
+            UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+
+            List<Usuario> usuarios;
+            try {
+                usuarios = usuarioCRUDService.getUsuariosFromEmpresa(dataSession, empresa.getIdEmpresa());
+            } catch (BusinessException ex) {
+                throw new RuntimeException(ex);
+            }
+            
+            if (usuarios.isEmpty()) {
+                throw new RuntimeException("No existe ningun usuario al que notificar");
+            }
+            Usuario usuario=usuarios.get(0);
+            direccionEMail=usuario.getEmail();
+            persona=usuario.getNombre();
+            
+            if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
+                throw new RuntimeException("El usuario no tiene email:"+usuario.getLogin());
+            }
+        }
+        
+        
+        mail.addTo(direccionEMail);
         mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
-        mail.setHtmlBody("Hola <strong>" + oferta.getEmpresa().getContacto().getPersona() + "</strong>,<br><br>"
+        mail.setHtmlBody("Hola <strong>" + persona + "</strong>,<br><br>"
                 + "Un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
                 + "<h4>Datos de la oferta</h4>"
                 + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"

@@ -218,6 +218,16 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         }
 
     }
+    
+    @Override
+    public List<Usuario> getUsuariosFromEmpresa(DataSession dataSession, int idEmpresa) throws BusinessException {
+        Filters filters = new Filters();
+        filters.add(new Filter("empresa.idEmpresa", idEmpresa));
+        List<Usuario> usuarios = this.getDAO().search(dataSession, filters, null, null);
+
+        return usuarios;
+
+    }    
 
     private Set<GroupMember> getMembersOf(DataSession dataSession, Usuario usuario) {
         try {

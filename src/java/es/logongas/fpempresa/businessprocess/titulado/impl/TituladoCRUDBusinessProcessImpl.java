@@ -11,9 +11,9 @@ import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
-import es.logongas.fpempresa.service.titulado.impl.TituladoCRUDServiceImpl;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
+import java.util.List;
 
 /**
  *
@@ -59,6 +59,20 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
     public void importarTitulados(ImportarTituladosArguments importarTituladosArguments) throws BusinessException {
         TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
         tituladoCRUDService.importarTitulados(importarTituladosArguments.dataSession, importarTituladosArguments.multipartFile);
+    }
+
+    @Override
+    public int getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta(GetNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta) throws BusinessException {
+        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
+        
+        List<Titulado> titulados=tituladoCRUDService.getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta.dataSession, getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta.oferta);
+        
+        if (titulados==null) {
+            throw new RuntimeException("La lista de titulados no puede ser null");
+        } 
+        
+        return titulados.size();
+        
     }
 
 }

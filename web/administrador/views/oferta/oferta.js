@@ -31,6 +31,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
            
             ofertas.forEach(function(oferta) {
                 $scope.getNumCandidatosOferta(oferta);
+                $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta(oferta);
             });
         };
         
@@ -48,8 +49,23 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });
-        }        
+        }         
         
+        $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta = function (oferta) {
+
+            var query = {
+                filters: {
+                    'oferta':oferta.idOferta
+                },
+                namedSearch:"getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta"
+            }
+
+            serviceFactory.getService("Titulado").search(query).then(function (data) {
+                oferta.numTituladosSuscritosPorProvinciaOfertaYCiclos = data;
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }
         
     }]);
 

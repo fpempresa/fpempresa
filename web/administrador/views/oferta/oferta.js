@@ -45,8 +45,27 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
                 }
             });
         };
+        
+        $scope.postGet = function () {
+            $scope.search();
+        };
+        
+        $scope.search = function () {
 
+            var query = {
+                filters: {
+                    'oferta':$scope.model.idOferta
+                },
+                namedSearch:"getNumCandidatosOferta"
+            }
 
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                $scope.numeroCandidatos = data;
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }
+        
         $scope.checkTodosCiclos = function (todosCiclos) {
 
             if (todosCiclos) {
@@ -135,6 +154,26 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                 $scope.ciclos = [];
             }
         });
+
+        $scope.postGet = function () {
+            $scope.search();
+        };
+        
+        $scope.search = function () {
+
+            var query = {
+                filters: {
+                    'oferta':$scope.model.idOferta
+                },
+                namedSearch:"getNumCandidatosOferta"
+            }
+
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                $scope.numeroCandidatos = data;
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }
 
         $scope.compareCiclo = function (cicloA, cicloB) {
             if (cicloA && cicloB) {

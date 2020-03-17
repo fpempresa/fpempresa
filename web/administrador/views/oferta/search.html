@@ -44,6 +44,7 @@
                         <th ix3-order-field-names="puesto" style="width:   40%;text-align: center">Puesto</th>
                         <th ix3-order-field-names="empresa.nombreComercial" style="width:   20%;text-align: center">Empresa</th>
                         <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
+                        <th style="min-width: 70px; width: 70px;text-align: center">Candidat.</th>
                         <th ix3-order-field-names="fecha" style="width:   30%;text-align: center">Fecha</th>
                         <th style="min-width: 140px; width: 140px;text-align: center">Acciones</th>
                     </tr>
@@ -54,6 +55,7 @@
                         <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
                         <td >{{model.empresa.nombreComercial}}</td>
                         <td >{{model.familia.descripcion}}</td>
+                        <td >{{model.numeroCandidatos}}</td>
                         <td >{{model.fecha| date: 'dd/MM/yyyy'}}</td>
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(model.idOferta)">Borrar</button>

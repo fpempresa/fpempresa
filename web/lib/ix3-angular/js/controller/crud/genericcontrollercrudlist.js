@@ -31,6 +31,9 @@
             scope.preSearch = function (filters) {
 
             };
+            scope.postSearch = function () {
+
+            };            
             //Paginacion y busqueda
             if (!scope.page.pageNumber) {
                 scope.page.pageNumber = 0;
@@ -81,6 +84,7 @@
                 promise.then(function (data) {
                     if (angular.isArray(data)) {
                         scope.models = data;
+                        scope.postSearch(scope.models);
                     } else {
                         //Si no es un array es un objeto "Page" Y lo comprobamos
                         if (data.hasOwnProperty("pageNumber") && data.hasOwnProperty("content") && data.hasOwnProperty("totalPages")) {
@@ -88,6 +92,7 @@
                             if (scope.page.pageNumber === data.pageNumber) {
                                 scope.models = data.content;
                                 scope.page.totalPages = data.totalPages;
+                                scope.postSearch(scope.models);
                             }
                         } else {
                             throw Error("Los datos retornados por el servidor no son un objeto 'Page'");

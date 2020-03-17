@@ -6,7 +6,7 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         });
     }]);
 
-app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog','$http','notify','ix3Configuration', function ($scope, genericControllerCrudList, controllerParams, dialog, $http,notify,ix3Configuration) {
+app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog','$http','notify','ix3Configuration',  'serviceFactory',  function ($scope, genericControllerCrudList, controllerParams, dialog, $http,notify,ix3Configuration, serviceFactory) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.orderby = [
@@ -25,7 +25,31 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
             }).error(function (data, status) {
                 notify.info("Notificación Oferta","Fallo:"+idOferta+"\n"+data);
             });
-};
+        };
+        
+        $scope.postSearch=function(ofertas) {
+           
+            ofertas.forEach(function(oferta) {
+                $scope.getNumCandidatosOferta(oferta);
+            });
+        };
+        
+        $scope.getNumCandidatosOferta = function (oferta) {
+
+            var query = {
+                filters: {
+                    'oferta':oferta.idOferta
+                },
+                namedSearch:"getNumCandidatosOferta"
+            }
+
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                oferta.numeroCandidatos = data;
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }        
+        
         
     }]);
 

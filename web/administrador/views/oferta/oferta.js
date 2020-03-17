@@ -29,13 +29,17 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
         
         $scope.postSearch=function(ofertas) {
            
-            ofertas.forEach(function(oferta) {
-                $scope.getNumCandidatosOferta(oferta);
-                $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta(oferta);
-            });
+            $scope.getNumCandidatosOferta(ofertas,0);
+            $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta(ofertas,0);
         };
         
-        $scope.getNumCandidatosOferta = function (oferta) {
+        $scope.getNumCandidatosOferta = function (ofertas,index) {
+
+            if (!(ofertas && index<ofertas.length)) {
+                return;
+            }
+            
+            var oferta=ofertas[index];
 
             var query = {
                 filters: {
@@ -46,12 +50,21 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
 
             serviceFactory.getService("Candidato").search(query).then(function (data) {
                 oferta.numeroCandidatos = data;
+                
+                $scope.getNumCandidatosOferta(ofertas,index+1);
+                
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });
         }         
         
-        $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta = function (oferta) {
+        $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta = function (ofertas,index) {
+
+            if (!(ofertas && ofertas.length>index)) {
+                return;
+            }
+            
+            var oferta=ofertas[index];
 
             var query = {
                 filters: {
@@ -62,6 +75,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
 
             serviceFactory.getService("Titulado").search(query).then(function (data) {
                 oferta.numTituladosSuscritosPorProvinciaOfertaYCiclos = data;
+                $scope.getNumTituladosSuscritosPorProvinciaOfertaYCiclosOferta(ofertas,index+1);
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });

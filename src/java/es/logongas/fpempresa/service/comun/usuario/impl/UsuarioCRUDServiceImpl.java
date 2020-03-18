@@ -23,6 +23,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
+import es.logongas.fpempresa.security.util.PasswordValidator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
@@ -75,6 +76,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public void updatePassword(DataSession dataSession, Usuario usuario, String newPassword) throws BusinessException {
+        
+        PasswordValidator passwordValidator=new PasswordValidator(usuario.getPassword(),"Contraseña");
+        if (passwordValidator.isValid()==false) {
+            throw new BusinessException(passwordValidator.getBusinessMessages());
+        }        
+        
         getUsuarioDAO().updateEncryptedPassword(dataSession, usuario, getEncryptedPasswordFromPlainPassword(newPassword));
     }
 
@@ -108,6 +115,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new RuntimeException(ex);
         }
 
+        PasswordValidator passwordValidator=new PasswordValidator(usuario.getPassword(),"Contraseña");
+        if (passwordValidator.isValid()==false) {
+            throw new BusinessException(passwordValidator.getBusinessMessages());
+        }
+        
+        
         Boolean autoValidateEMail = (Boolean) conversion.convertFromString(Config.getSetting("app.autoValidateEMail"), Boolean.class);
         if (autoValidateEMail == null) {
             autoValidateEMail = false;

@@ -77,7 +77,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     @Override
     public void updatePassword(DataSession dataSession, Usuario usuario, String newPassword) throws BusinessException {
         
-        PasswordValidator passwordValidator=new PasswordValidator(usuario.getPassword(),"Contraseña");
+        PasswordValidator passwordValidator=new PasswordValidator(newPassword,"Contraseña");
         if (passwordValidator.isValid()==false) {
             throw new BusinessException(passwordValidator.getBusinessMessages());
         }        

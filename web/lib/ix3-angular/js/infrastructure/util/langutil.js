@@ -8,7 +8,9 @@ angular.module("es.logongas.ix3").factory("langUtil", [function () {
         return {
             getFunctionName: getFunctionName,
             splitValues:splitValues,
-            setValue:setValue
+            setValue:setValue,
+            getValue:getValue,
+            hasOwnProperty:hasOwnProperty
         };
 
         /**
@@ -46,14 +48,91 @@ angular.module("es.logongas.ix3").factory("langUtil", [function () {
          */
         function setValue(obj, key, newValue) {
             var keys = key.split('.');
+            var newObj=obj;
             for (var i = 0; i < keys.length - 1; i++) {
-                if (!obj[keys[i]]) {
-                    obj[keys[i]] = {};
+                if (!newObj[keys[i]]) {
+                    newObj[keys[i]] = {};
                 }
-                obj = obj[keys[i]];
+                newObj = newObj[keys[i]];
 
             }
-            obj[keys[keys.length - 1]] = newValue;
+            newObj[keys[keys.length - 1]] = newValue;
+            
+            return obj;
+        }
+        
+        /**
+         * Es como la función de JS de hasOwnProperty pero funciona con nombres de propiedades anidadas.
+         * Ej. Funciona con "a.b.c". Comprobaría que existe la propieda "a" que es un objeto , dentro la propiedad "b" y dentro de "b" la propiedad "c"
+         * @param {Object} obj
+         * @param {String} propertyNames
+         * @returns {boolean}
+         */
+        function getValue(obj,propertyNames) {
+            
+            if (typeof(propertyNames)!=='string') {
+                throw Error("El parámetro 'propertyNames' debe ser un String pero es del tipo:" + typeof(propertyNames));
+            }
+            
+            var keys = propertyNames.split('.');
+            var newObj=obj;
+            for (var i = 0; i < keys.length; i++) {
+                var key=keys[i];
+                
+                if (typeof(newObj)!=='object') {
+                    throw Error("No es un objeto la propiedad " + key + " de '" + propertyNames + "' en el objeto " + JSON.stringify(obj) );
+                }
+                if (newObj===null) {
+                    throw Error("El objeto es null en la propiedad " + key + " de '" + propertyNames + "' en el objeto " + JSON.stringify(obj) );
+                }                
+                
+                if (Object.prototype.hasOwnProperty.call(newObj, key)==false) {
+                    throw Error("No existe la propiedad " + key + " de '" + propertyNames + "' en el objeto " + JSON.stringify(obj) );
+                }
+                
+                
+                newObj = newObj[key];
+
+            }
+            
+            return newObj;
+        }
+        
+        /**
+         * Es como la función de JS de hasOwnProperty pero funciona con nombres de propiedades anidadas.
+         * Ej. Funciona con "a.b.c". Comprobaría que existe la propieda "a" que es un objeto , dentro la propiedad "b" y dentro de "b" la propiedad "c"
+         * @param {Object} obj
+         * @param {String} propertyNames
+         * @returns {boolean}
+         */
+        function hasOwnProperty(obj,propertyNames) {
+            
+            if (typeof(propertyNames)!=='string') {
+                throw Error("El parámetro 'propertyNames' debe ser un String pero es del tipo:" + typeof(propertyNames));
+            }
+            
+            var keys = propertyNames.split('.');
+            var newObj=obj;
+            for (var i = 0; i < keys.length; i++) {
+                var key=keys[i];
+                
+                if (typeof(newObj)!=='object') {
+                    return false;
+                }
+                if (newObj===null) {
+                    return false;
+                }                
+                
+                if (Object.prototype.hasOwnProperty.call(newObj, key)==false) {
+                    return false;
+                }
+                
+                
+                newObj = newObj[key];
+
+            }
+            
+            return true;
         }
         
         

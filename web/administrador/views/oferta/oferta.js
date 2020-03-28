@@ -96,6 +96,9 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             dialog.create('buscarEmpresas', params).then(function (empresa) {
                 if (empresa) {
                     $scope.model.empresa = empresa;
+
+                    var municipio=angular.copy($scope.model.empresa.direccion.municipio);
+                    $scope.model.municipio = municipio;
                 }
             });
         };

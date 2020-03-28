@@ -66,6 +66,8 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
         $scope.postCreate = function () {
             $scope.model.empresa = session.getUser().empresa;
+            var municipio=angular.copy(session.getUser().empresa.direccion.municipio);            
+            $scope.model.municipio = municipio;            
         };
 
         $scope.checkTodosCiclos = function (todosCiclos) {

@@ -23,6 +23,12 @@ app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDeta
         
         $scope.postCreate = function () {
             $scope.model.centro = $scope.user.centro;
+            var provincia=angular.copy($scope.model.centro.direccion.municipio.provincia);
+            $scope.model.direccion={
+                municipio: {
+                    provincia:provincia
+                }
+            };
         };
         
     }]);

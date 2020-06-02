@@ -41,7 +41,7 @@
         Expands expands=new Expands();
         expands.add("empresa");
         expands.add("empresa.direccion.municipio.provincia");
-        expands.add("centro");
+        expands.add("centro.direccion.municipio.provincia");
         expands.add("titulado.direccion.municipio.provincia");
         BeanMapper beanMapper=new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null);
         if (sid == null) {

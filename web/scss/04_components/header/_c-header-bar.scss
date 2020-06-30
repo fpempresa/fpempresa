@@ -1,0 +1,31 @@
+.c-header-bar {
+    
+
+    display:flex;
+    flex-direction: row;
+
+    box-shadow:  0px 11px 10px -13px rgba(0,0,0,0.67);
+    background-color: rgba($background-color, 1);
+    height: 80px; 
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    align-items: center;
+    max-width: getPageMaxWidth(); 
+
+
+    &__item {
+        padding-left:getPadding(3);
+        padding-right:getPadding(3);
+        z-index: 100;
+        
+        &--right {
+            margin-left: auto;
+        }
+        &--left {
+            margin-right: auto;
+        }        
+    }
+       
+    
+}

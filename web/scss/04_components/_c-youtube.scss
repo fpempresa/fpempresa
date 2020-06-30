@@ -1,0 +1,12 @@
+.c-youtube {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    
+    width: 100%; 
+    max-width: getPageMaxWidth()/2;
+    height: 56.25vw;
+    max-height: (getPageMaxWidth()/2)/(16/9);
+    
+    
+}

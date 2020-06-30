@@ -1,0 +1,25 @@
+.c-label {
+    font-family: getFontFamily(sans);
+    color: getColor(default,8);
+    font-size: getFontSize(1s);
+    text-align: left;
+    display:block;
+    padding-top: getPadding(6);
+    padding-bottom: getPadding(3);
+    line-height: 1.5;
+    
+
+    &--right {
+       text-align: right; 
+    }    
+    
+    &--option {
+        color: getColor(default,9);
+        padding-top: getPadding(0);
+        cursor: pointer;
+        position: relative;top: -2px;
+    }
+    
+}    
+
+

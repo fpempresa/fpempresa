@@ -1,31 +1,21 @@
-<section class="container-fluid form__page" >
-    <div class="row"  >    
-        <div class="col-xs-12 form--center"  >
-            <h3 class="form__main-title" >&nbsp;&nbsp;Resetear Contraseña&nbsp;&nbsp;</h3>
-        </div>
+<section  class="c-section" data-scroll-trigger="true" >
+    <div class="c-section__content  g--padding-vertical-15 " >
+        <form  name="mainForm" id="mainForm" ix3-form class="c-form g--center" style="width: 100%; max-width:500px" novalidate>
+            <h1 class="c-title c-title--left g--margin-bottom-7">
+                <span class="c-title__pre">Crear una</span>
+                Nueva contraseña
+            </h1>
+            <label for="password" class="c-label">Nueva Contraseña</label>
+            <input  ng-model="model.password" id="password" name="password" class="c-input" required>
+            <label for="confirmPassword" class="c-label">Confirmar contraseña</label>
+            <input ng-model="model.confirmPassword" id="confirmPassword" name="confirmPassword" type="password" class="c-input" required>
+            <div class="c-form__buttons">
+
+                <button type="submit" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="aceptar()">Aceptar</button>
+            </div>
+            <ix3-business-messages></ix3-business-messages>
+                                     
+
+        </form>
     </div>
-    <div class="row"  >
-        <div class="col-xs-4 col-xs-offset-4 form__container form--center" >
-            <form class="form-horizontal" name="mainForm" id="mainForm" ix3-form>
-                <ix3-business-messages></ix3-business-messages>
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="password">Nueva Contrase&ntilde;a:</label>
-                    <div class="col-sm-8"> 
-                        <input ng-model="model.password" type="password" class="form-control" id="password" name="password"  required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="confirmPassword">Confirmar contrase&ntilde;a:</label>
-                    <div class="col-sm-8"> 
-                        <input ng-model="model.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword"  required>
-                    </div>
-                </div>
-                <div class="form-group"> 
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-lg form__button form__button--primary pull-right" ng-click="aceptar()">Aceptar</button>
-                    </div>
-                </div>
-            </form>
-        </div>   
-    </div>            
 </section>

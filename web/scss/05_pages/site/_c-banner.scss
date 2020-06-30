@@ -1,0 +1,11 @@
+.c-banner {
+    background-image: url(../img/site/banner.jpg);  
+    height: 70vh;  
+    min-height: 500px;  
+    margin:0 auto;
+    overflow: hidden;
+    max-width: getPageMaxWidth(); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center
+}

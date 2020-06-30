@@ -1,0 +1,66 @@
+@function getColor($color-name:default,$index:5) {
+
+    $gama-colores:map-get($colors,""+$color-name);
+    
+    $real-index:$index;
+    @if ($index>length($gama-colores)) {
+        $real-index:length($gama-colores);
+    }
+    
+    @return nth($gama-colores,$real-index)
+}
+
+@function getPageMaxWidth() {
+    @return $page-max-width;
+}
+
+@function getPadding($padding-name) {
+    @return map-get($padding-variants,""+$padding-name);
+}
+
+@function getMargin($margin-name) {
+    @return map-get($margin-variants,""+$margin-name);
+}
+
+@function getBoxShadow($box-shadow-name) {
+    @return map-get($box-shadow-variants,""+$box-shadow-name);
+}
+
+@function getBorderRadious($border-radius-name) {
+    @return map-get($border-radius-variants,""+$border-radius-name);
+}
+
+@function getFontFamily($font-family-name:default) {
+    @return map-get($font-family-variants,""+$font-family-name);
+}
+
+
+@function getFontSize($font-size-name:default) {
+    @return map-get($font-size-variants,""+$font-size-name);
+}
+
+@function getBreak($break-name:default) {
+    @return map-get($breaks,""+$break-name);
+}
+
+
+
+@function colors-variants($colors) {
+     $variants:();
+     
+    @each $color-name,$colorsRange in $colors {
+
+        @for $i from 1 through length($colorsRange) {
+            $real-color-name:""+$i;
+            @if $color-name != "" {
+                $real-color-name:$color-name+"-"+$i;
+            }
+            
+            $variants:append($variants,($real-color-name,nth($colorsRange,$i)));
+        }
+    
+    }
+    
+    @return $variants;
+    
+}

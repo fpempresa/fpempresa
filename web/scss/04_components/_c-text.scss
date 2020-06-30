@@ -1,0 +1,26 @@
+
+
+.c-text {
+    font-family: getFontFamily(sans);
+    color: getColor(default,9);
+    font-size: getFontSize();
+    text-align: left;
+    line-height: 1.8;
+    margin-top: getMargin(0);
+    margin-bottom: getMargin(5);
+    
+ 
+    &--center {
+       text-align: center; 
+    }
+    
+    &--justify {
+         text-align: justify;
+    }    
+    
+    &--size-alt {
+       font-size: getFontSize(2l);
+    }     
+    
+}    
+

@@ -8,12 +8,14 @@ package es.logongas.fpempresa.businessprocess.estadisticas;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.BusinessProcess;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
+import java.util.List;
 
 /**
  *
@@ -22,12 +24,10 @@ import es.logongas.ix3.dao.DataSession;
 public interface EstadisticasBusinessProcess  extends BusinessProcess  {
 
     Estadisticas getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException;
-
     Estadisticas getEstadisticasCentro(GetEstadisticasCentroArguments getEstadisticasCentroArguments) throws BusinessException;
-
     Estadisticas getEstadisticasEmpresa(GetEstadisticasEmpresaArguments getEstadisticasEmpresaArguments) throws BusinessException;
-
     Estadisticas getEstadisticasPublicas(GetEstadisticasPublicasArguments getEstadisticasPublicasArguments) throws BusinessException;
+    List<FamiliaOfertasEstadistica> getEstadisticasFamiliaOfertasPublicas(GetEstadisticasFamiliaOfertasPublicasArguments getEstadisticasFamiliaOfertasPublicasArguments) throws BusinessException;
 
     public class GetEstadisticasAdministradorArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -104,5 +104,16 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
         }
 
     }
+    
+    public class GetEstadisticasFamiliaOfertasPublicasArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
+        public GetEstadisticasFamiliaOfertasPublicasArguments() {
+        }
+
+        public GetEstadisticasFamiliaOfertasPublicasArguments(Principal principal, DataSession dataSession) {
+            super(principal, dataSession);
+        }
+
+    }    
 
 }

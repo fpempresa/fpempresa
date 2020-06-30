@@ -1,0 +1,43 @@
+
+
+.c-title {
+    font-family: getFontFamily(title);
+    color: getColor(alt,5);
+    font-size: getFontSize(3l);
+    text-align: center;
+    margin-bottom: getMargin(4);
+    line-height: 1.4;
+    
+    &--left {
+        text-align: left;
+    }
+    
+    &--color-alt {
+        color: getColor(default,7);
+    }
+    
+    &--size-alt {
+        
+        font-size: getFontSize(2l);
+    }
+    
+    @media  (min-width: getBreak(tablet)) {
+        font-size: getFontSize(4l);
+        
+        &--size-alt {
+            font-size: getFontSize(3l);
+        }
+    }
+    
+    &__pre {
+        display:block;
+        font-family: getFontFamily(sans);
+        font-size: getFontSize(2s);
+        font-weight: 500;
+        color: getColor(gris,6);        
+        text-transform: uppercase;
+        margin: 0px;       
+    }
+
+}    
+

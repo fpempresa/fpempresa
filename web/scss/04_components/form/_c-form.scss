@@ -1,0 +1,42 @@
+.c-form {  
+    
+    width: 100%;
+    background-color: getColor(gris,3);
+    box-shadow: getBoxShadow(7);
+    border-radius: getBorderRadious(5);
+    padding: getPadding(9);
+    border:1px solid getColor(gris,4);
+   
+    &__buttons {
+        padding-top: getPadding(10);
+        padding-bottom: getPadding(5);
+        
+        display:flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        
+        & > * {
+            margin-left: getPadding(3);
+        }
+        
+        & :first-child {
+            margin-left: 0px;
+        }
+        
+    }
+    
+    
+    &--no-style {
+        background-color: transparent;
+        box-shadow: none;
+        border-radius: none;
+        padding: 0px;
+        border: none;
+        
+    }
+    
+}
+
+
+  

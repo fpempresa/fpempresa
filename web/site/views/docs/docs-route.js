@@ -3,12 +3,13 @@ app.config(['$stateProvider', function($stateProvider) {
             url:'/docs/faq',
             templateUrl: 'views/docs/faq.html'
         });
-        $stateProvider.state('/docs/contacto', {
-            url:'/docs/contacto',
-            templateUrl: 'views/docs/contacto.html'
+        $stateProvider.state('/docs/donde', {
+            url:'/docs/donde',
+            templateUrl: 'views/docs/donde.html'
         });
         $stateProvider.state('/docs/soporte', {
             url:'/docs/soporte',
-            templateUrl: 'views/docs/soporte.html'
+            templateUrl: 'views/docs/soporte.html',
+            controller: 'SoporteController'
         });               
     }]);

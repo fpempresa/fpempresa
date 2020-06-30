@@ -1,17 +1,45 @@
-<div class="container fpempresa-container" style="padding-top:100px;padding-bottom:20px;">
-    <div class="row" >
-        <div class="col-md-offset-1 col-md-10 formulario-neutro">
-            <div>
-                <h1>Soporte</h1>
-                <div class="row" >
-                    <div class="col-md-12">
-                        <h2>¿Tienes alguna duda sobre "empleaFP"?</h2>
-                        <p>Ponte en contacto con nosotros</p>
-                        <p><i class="fa fa-envelope-square fa-3x" aria-hidden="true"></i> <span style="font-size: xx-large">soporte@empleafp.com</span> </p>
-                        <p>Atenderemos todas tus dudas sobre el funcionamiento.</p>
-                    </div>
-                </div>    
+<section  class="c-section"  >
+    <div class="c-section__content  g--padding-vertical-11 " >
+        <img class="c-image c-image--top" src="../img/site/docs/soporte.jpg" alt="privacidad"/>
+    </div>
+</section>
+
+<section  class="c-section"  >
+    <div class="c-section__content c-section__content--size-alt  g--padding-bottom-11" >
+
+        <h1 class="c-title  c-title--left g--margin-bottom-7">
+            <span class="c-title__pre">Si tienes dudas</span>
+            Envíanos un mensaje
+        </h1>
+        <p class="c-text  c-text--justify">
+            Si no está claro como funciona empleaFP, hay algún error o simplemente nos quieres decir algo, mándanos el mensaje.
+        </p>
+
+        <p class="c-text  c-text--justify g--margin-bottom-11">
+            Pero no puedes es usar este formulario para enviarnos el curriculum o decirnos que te interesa una oferta, para eso debe entrar en empleaFP e inscribirte en la oferta en la que estés interesado.
+        </p>
+
+
+        <form class="c-form g--center" name="mainForm" id="mainForm" ix3-form style="width: 100%; max-width:750px" novalidate>
+
+            <label for="nombre" class="c-label">Nombre</label>
+            <input ng-model="model.nombre" type="text" id="nombre" name="nombre" class="c-input" required>           
+            <label for="email" class="c-label">Correo electrónico</label>
+            <input  ng-model="model.correo" type="email" name="email" id="email" class="c-input" required>
+            <label for="mensaje" class="c-label">Mensaje</label>
+            <textarea  ng-model="model.mensaje"  rows="10" name="mensaje" id="mensaje" class="c-input" required></textarea>
+            <label class="c-label c-label--option g--padding-top-7">
+                <input ng-model="model.aceptadoLOPD" class="c-input" type="checkbox"  name="aceptadoLOPD"  >SI ENTIENDO Y ACEPTO la <a class="c-button c-button--tertiary g--padding-0" href="#/legal/politica-privacidad">política de privacidad</a>* y autorizo el tratamiento de los datos para las finalidades mencionadas. (Su negativa a facilitarnos la autorización implicará la imposibilidad de tratar sus datos con la finalidad indicada).
+            </label>
+            <div class="c-form__buttons">
+                <button type="submit" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="enviarMensajeSoporte()">Enviar</button>
             </div>
-        </div>
-    </div>  
-</div>
+            <ix3-business-messages></ix3-business-messages>
+
+            <p class="c-legal c-legal-text--size-alt">*Debe aceptar la Política de Privacidad para poder enviar el formulario. Conforme al RGPD y la LOPDGDD, informamos de que los datos personales facilitados serán tratados por Asociación de Centros de Formación Profesional-FPempresa, con la finalidad de contestar a las dudas y/o quejas planteadas a través del presente formulario y facilitar la información solicitada.Podrá ejercer, si lo desea, los derechos de acceso, rectificación, supresión, y demás reconocidos en la normativa mencionada. Para obtener más información acerca de cómo estamos tratando sus datos, acceda a nuestra <a  href="#/legal/politica-privacidad">política de privacidad</a>.</p>
+
+        </form>
+
+    </div>
+</section>
+

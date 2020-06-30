@@ -1,0 +1,71 @@
+
+
+
+@mixin class-variants($prefix-class-name,$variants,$break-name:"",$hover:false, $focus:false, $active:false, $disabled:false) {
+    $media-name:"";
+    @if ($break-name != "") {
+        $media-name:"\\@"+$break-name;
+    }
+
+
+    
+    @each $variant-name, $value in $variants {
+        $real-variant-name:"";
+        @if ($variant-name != "") {
+            $real-variant-name:-#{safe-name($variant-name)}
+        }
+        
+        .#{$prefix-class-name}#{$real-variant-name}#{$media-name} {
+            @content($value);
+        }
+        @if ($hover==true) {
+            .#{$prefix-class-name}#{$real-variant-name}#{$media-name}#{"\\:hover"}:hover {
+                @content($value);
+            } 
+        } 
+        @if ($focus==true) {
+            .#{$prefix-class-name}#{$real-variant-name}#{$media-name}#{"\\:focus"}:focus {
+                @content($value);
+            } 
+        }
+        @if ($active==true) {
+            .#{$prefix-class-name}#{$real-variant-name}#{$media-name}#{"\\:active"}:active {
+                @content($value);
+            } 
+        }
+        @if ($disabled==true) {
+            .#{$prefix-class-name}#{$real-variant-name}#{$media-name}#{"\\:disabled"}:disabled {
+                @content($value);
+            } 
+        }             
+    } 
+}
+
+@mixin class-responsive-variants($prefix-class-name,$variants,$responsive:true, $hover:false, $focus:false, $active:false, $disabled:false ) {
+
+    @if $responsive==true {
+
+        @each $break-name, $break-value in $breaks {
+
+
+            @if ($break-name != "") {
+                @media (min-width: $break-value)  {
+                    @include class-variants($prefix-class-name,$variants,$break-name,$hover, $focus, $active, $disabled)  using ($value) {
+                        @content($value);
+                    }
+                }
+            } @else {
+                @include class-variants($prefix-class-name,$variants,"",$hover, $focus, $active, $disabled)  using ($value) {
+                    @content($value);
+                }
+            }
+
+        }
+    } @else {
+        @include class-variants($prefix-class-name,$variants,"",$hover, $focus, $active, $disabled)  using ($value) {
+            @content($value);
+        } 
+    }
+}
+
+

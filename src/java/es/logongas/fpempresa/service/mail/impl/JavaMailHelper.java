@@ -49,7 +49,9 @@ public class JavaMailHelper {
             message.setSubject(mail.getSubject(), "UTF-8");
             message.setFrom(new InternetAddress(mail.getFrom()));
             message.setRecipients(javax.mail.Message.RecipientType.TO, getAddresses(mail.getTo()));
-            
+            if (mail.getReply()!=null) {
+                 message.setReplyTo(new InternetAddress[] {new InternetAddress(mail.getReply())});
+            }
             
             MimeMultipart mimeMultiPart = new MimeMultipart("alternative");
             

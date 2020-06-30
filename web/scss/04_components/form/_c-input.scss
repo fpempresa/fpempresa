@@ -1,0 +1,31 @@
+.c-input {
+
+    display:block;
+    font-family: getFontFamily(sans);
+    font-size: getFontSize(1s);
+    border:1px solid getColor(gris,4);
+    background-color: getColor(gris,1);
+    color: getColor(default,9);
+    width: 100%;
+
+    padding: getPadding(3);
+    border-radius: getBorderRadious(3);
+
+    outline: none!important;
+
+    &:focus {
+        border:1px solid getColor(gris,4);  
+        box-shadow: getBoxShadow(3);
+    }
+
+    &[type="checkbox"],  &[type="radio"] {
+        display:inline;
+        margin-right: getMargin(1);
+        padding: getPadding(0);
+        width: auto;
+        cursor: pointer;
+        vertical-align: baseline;
+    }
+
+}
+

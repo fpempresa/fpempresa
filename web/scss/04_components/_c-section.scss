@@ -1,0 +1,24 @@
+.c-section {
+    width: 100%;
+
+    &__content {
+        width: 100%;
+        max-width: getPageMaxWidth();
+        margin-top:0px;
+        margin-bottom:0px;
+        margin-left:auto;
+        margin-right:auto;
+        
+        padding-left:getPadding(4);
+        padding-right:getPadding(4);
+        
+        &--size-alt {
+            max-width: getPageMaxWidth()/2;
+        } 
+    }
+
+    &--alt-color {
+        background-color: getColor(default,8);
+    }    
+
+}

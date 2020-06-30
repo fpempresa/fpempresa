@@ -1,0 +1,52 @@
+.c-legal-text {
+    font-family: getFontFamily(sarif);
+    color: getColor(default,9);
+    font-size: getFontSize();
+    text-align: left;
+    display:block;
+    margin-bottom: getMargin(3);
+
+
+    &--size-alt {
+       font-size: getFontSize(2s);
+    }   
+    
+    &--item{
+        margin-left: getMargin(7);
+        display:list-item;
+        list-style-type: disc;  
+    }
+}
+
+.c-legal-header {    
+    
+    
+    
+    &--h2 {
+        font-family: getFontFamily(sarif);
+        color: getColor(default,8);
+        font-size: getFontSize(2l);
+        text-align: center;
+        margin-bottom: getMargin(6);
+        margin-top: getMargin(9);
+    }
+    &--h3 {
+        
+        font-family: getFontFamily(sarif);
+        color: getColor(default,8);
+        font-size: getFontSize(1l);
+        text-align: left;
+        margin-bottom: getMargin(4);
+        margin-top: getMargin(8);
+    }
+    &--h4 {
+        font-family: getFontFamily(sarif);
+        color: getColor(default,8);
+        font-size: getFontSize();
+        text-align: left;
+        font-weight: bold;
+        margin-bottom: getMargin(3);
+        margin-top: getMargin(6);
+    }
+}
+

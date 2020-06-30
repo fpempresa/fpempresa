@@ -5,9 +5,9 @@ angular.module('es.logongas.ix3').directive('ix3BusinessMessages', ['ix3Configur
             restrict: 'E',
             replace:true,
             template: '<div data-ng-show="realScope.businessMessages.length > 0">' +
-                    '       <div ng-class="{\'alert-error\':bootstrap.version===2,\'alert-danger\':bootstrap.version>=3}" style="text-align:left" class="alert"  >' +
+                    '       <div ng-class="{\'alert-error\':bootstrap.version===2,\'alert-danger\':bootstrap.version>=3,\'c-messages\':bootstrap.version===-1}" style="text-align:left" class="alert"  >' +
                     '           <button type="button" class="close" ng-click="realScope.businessMessages=[]">&times;</button>' +
-                    '           <strong>Se han producido los siguientes errores:</strong>' +
+                    '           <strong ng-hide="bootstrap.version===-1">Se han producido los siguientes errores:</strong>' +
                     '           <ul >' +
                     '               <li data-ng-repeat="businessMessage in realScope.businessMessages">' +
                     '                   <strong data-ng-hide="((businessMessage.propertyName == null) || (businessMessage.propertyName == \'\')) && ((businessMessage.label == null) || (businessMessage.label == \'\'))">{{businessMessage.label || businessMessage.propertyName}}:&nbsp;&nbsp;</strong>{{businessMessage.message}}' +

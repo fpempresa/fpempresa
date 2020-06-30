@@ -1,0 +1,28 @@
+.g--transition-y-minus-80 {
+    transition: transform 1.5s ease-in-out;
+    transform: translateY(-80px);
+}
+.g--transition-y-minus-60 {
+    transition: transform 1.5s ease-in-out;
+    transform: translateY(-60px);
+}
+
+.g--transition-y-plus-10 {
+    transition: transform 1.5s ease-in-out;
+    transform: translateY(10px);
+}
+
+.g--transition-y-plus-20 {
+    transition: transform 1.5s ease-in-out;
+    transform: translateY(20px);
+}
+
+.kk {
+    opacity:0.5;
+}
+
+.g--transition-opacity {
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+}
+

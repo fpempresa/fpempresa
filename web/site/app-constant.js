@@ -2,7 +2,7 @@
 
 angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",{
     bootstrap: {
-        version:3
+        version:-1
     },
     server: {
         api:getContextPath() + "/api/site"

@@ -4,4 +4,10 @@ app.config(['$stateProvider', function ($stateProvider) {
             templateUrl: 'views/main/main.html',
             controller: 'MainController'
         });
+        $stateProvider.state('/ofertas', {
+            url:'/ofertas',
+            templateUrl: 'views/main/main.html',
+            controller: 'MainController',
+            scroll:"section-ultimas-ofertas"
+        });        
     }]);

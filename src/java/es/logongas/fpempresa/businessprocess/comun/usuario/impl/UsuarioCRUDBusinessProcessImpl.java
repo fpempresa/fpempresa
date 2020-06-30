@@ -5,6 +5,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.rule.ActionRule;
@@ -12,6 +13,7 @@ import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -19,6 +21,9 @@ import es.logongas.ix3.security.authorization.BusinessSecurityException;
  */
 public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usuario, Integer> implements UsuarioCRUDBusinessProcess {
 
+    @Autowired
+    Notification notification;    
+    
     @Override
     public Usuario update(UpdateArguments<Usuario> updateArguments) throws BusinessException {
         Usuario principal = (Usuario) updateArguments.principal;
@@ -435,5 +440,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 
         return usuarioCRUDService.getCurriculum(getCurriculumArguments.dataSession, getCurriculumArguments.usuario);
     }
-
+    
+    @Override
+    public void enviarMensajeSoporte(EnviarMensajeSoporteArguments enviarMensajeSoporteArguments) throws BusinessException {
+        notification.mensajeSoporte(enviarMensajeSoporteArguments.nombre, enviarMensajeSoporteArguments.correo, enviarMensajeSoporteArguments.mensaje);
+    }    
+    
 }

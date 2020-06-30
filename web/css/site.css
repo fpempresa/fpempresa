@@ -1,0 +1,10302 @@
+@charset "UTF-8";
+.ui-dialog {
+  background-color: #FFFFFF;
+}
+
+.ui-widget-header {
+  background: none;
+  background-color: #0056B8;
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+html {
+  line-height: 1.15;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input {
+  /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select {
+  /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type=search] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10+.
+ */
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: 0;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: "Basic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(../fonts/basic/Basic-Regular.ttf);
+}
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(../fonts/Roboto_Mono/RobotoMono-Regular.ttf);
+}
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(../fonts/Roboto_Mono/RobotoMono-Bold.ttf);
+}
+.l-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-row: 1fr 1fr;
+}
+.l-2x2--gap-1 {
+  grid-column-gap: 4px;
+  grid-row-gap: 4px;
+}
+.l-2x2--gap-2 {
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+}
+.l-2x2--gap-3 {
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+}
+.l-2x2--gap-4 {
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+}
+.l-2x2--gap-5 {
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.l-horizontal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.l-horizontal--space-around {
+  justify-content: space-around;
+}
+.l-horizontal--center {
+  justify-content: center;
+}
+.l-horizontal--space-between {
+  justify-content: space-between;
+}
+.l-horizontal--space-evenly {
+  justify-content: space-evenly;
+}
+.l-horizontal--1-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 1);
+}
+.l-horizontal--2-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 2);
+}
+.l-horizontal--3-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 3);
+}
+.l-horizontal--4-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 4);
+}
+.l-horizontal--5-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 5);
+}
+.l-horizontal--6-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 6);
+}
+.l-horizontal--7-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 7);
+}
+.l-horizontal--8-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 8);
+}
+.l-horizontal--9-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 9);
+}
+.l-horizontal--10-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 10);
+}
+.l-horizontal--11-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 11);
+}
+.l-horizontal--12-columns .l-horizontal__item {
+  width: 100%/3;
+  width: calc(100% / 12);
+}
+.l-masonry {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+}
+.l-masonry:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.l-masonry__area {
+  width: 350px;
+  float: left;
+}
+
+.c-button {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  display: inline-block;
+  opacity: 1;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  outline: none !important;
+}
+
+.c-button--primary {
+  color: #FFFFFF;
+  border-width: 1px;
+  border-color: #0056B8;
+  padding: 12px;
+  background-color: #0056B8;
+}
+.c-button--primary:hover {
+  color: #FFFFFF;
+  border-width: 1px;
+  border-color: #003B80;
+  background-color: #003B80;
+}
+
+.c-button--secondary {
+  color: #0056B8;
+  border-width: 1px;
+  border-color: #0056B8;
+  padding: 12px;
+  background-color: transparent;
+}
+.c-button--secondary:hover {
+  color: #0056B8;
+  border-width: 1px;
+  border-color: #0056B8;
+  background-color: #EDF2F7;
+}
+
+.c-button--tertiary {
+  color: #0056B8;
+  border-width: 0px;
+  padding: 0px;
+  background-color: transparent;
+}
+.c-button--tertiary:hover {
+  color: #003B80;
+  border-width: 0px;
+  background-color: transparent;
+}
+
+.c-button--alt-primary {
+  color: #FFFFFF;
+  border-width: 1px;
+  border-color: #ED8936;
+  padding: 12px;
+  background-color: #ED8936;
+}
+.c-button--alt-primary:hover {
+  color: #FFFFFF;
+  border-width: 1px;
+  border-color: #DD6B20;
+  background-color: #DD6B20;
+}
+
+.c-button--alt-secondary {
+  color: #ED8936;
+  border-width: 1px;
+  border-color: #ED8936;
+  padding: 12px;
+  background-color: transparent;
+}
+.c-button--alt-secondary:hover {
+  color: #DD6B20;
+  border-width: 1px;
+  border-color: #DD6B20;
+  background-color: #FFFAF0;
+}
+
+.c-button--alt-tertiary {
+  color: #ED8936;
+  border-width: 0px;
+  padding: 0px;
+  background-color: transparent;
+}
+.c-button--alt-tertiary:hover {
+  color: #DD6B20;
+  border-width: 0px;
+  background-color: transparent;
+}
+
+@media (min-width: 640px) {
+  .c-button--primary\@movil {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #0056B8;
+    padding: 12px;
+    background-color: #0056B8;
+  }
+  .c-button--primary\@movil:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #003B80;
+    background-color: #003B80;
+  }
+
+  .c-button--secondary\@movil {
+    color: #0056B8;
+    border-width: 1px;
+    border-color: #0056B8;
+    padding: 12px;
+    background-color: transparent;
+  }
+  .c-button--secondary\@movil:hover {
+    color: #0056B8;
+    border-width: 1px;
+    border-color: #0056B8;
+    background-color: #EDF2F7;
+  }
+
+  .c-button--tertiary\@movil {
+    color: #0056B8;
+    border-width: 0px;
+    padding: 0px;
+    background-color: transparent;
+  }
+  .c-button--tertiary\@movil:hover {
+    color: #003B80;
+    border-width: 0px;
+    background-color: transparent;
+  }
+
+  .c-button--alt-primary\@movil {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #ED8936;
+    padding: 12px;
+    background-color: #ED8936;
+  }
+  .c-button--alt-primary\@movil:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #DD6B20;
+    background-color: #DD6B20;
+  }
+
+  .c-button--alt-secondary\@movil {
+    color: #ED8936;
+    border-width: 1px;
+    border-color: #ED8936;
+    padding: 12px;
+    background-color: transparent;
+  }
+  .c-button--alt-secondary\@movil:hover {
+    color: #DD6B20;
+    border-width: 1px;
+    border-color: #DD6B20;
+    background-color: #FFFAF0;
+  }
+
+  .c-button--alt-tertiary\@movil {
+    color: #ED8936;
+    border-width: 0px;
+    padding: 0px;
+    background-color: transparent;
+  }
+  .c-button--alt-tertiary\@movil:hover {
+    color: #DD6B20;
+    border-width: 0px;
+    background-color: transparent;
+  }
+}
+@media (min-width: 768px) {
+  .c-button--primary\@tablet {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #0056B8;
+    padding: 12px;
+    background-color: #0056B8;
+  }
+  .c-button--primary\@tablet:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #003B80;
+    background-color: #003B80;
+  }
+
+  .c-button--secondary\@tablet {
+    color: #0056B8;
+    border-width: 1px;
+    border-color: #0056B8;
+    padding: 12px;
+    background-color: transparent;
+  }
+  .c-button--secondary\@tablet:hover {
+    color: #0056B8;
+    border-width: 1px;
+    border-color: #0056B8;
+    background-color: #EDF2F7;
+  }
+
+  .c-button--tertiary\@tablet {
+    color: #0056B8;
+    border-width: 0px;
+    padding: 0px;
+    background-color: transparent;
+  }
+  .c-button--tertiary\@tablet:hover {
+    color: #003B80;
+    border-width: 0px;
+    background-color: transparent;
+  }
+
+  .c-button--alt-primary\@tablet {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #ED8936;
+    padding: 12px;
+    background-color: #ED8936;
+  }
+  .c-button--alt-primary\@tablet:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #DD6B20;
+    background-color: #DD6B20;
+  }
+
+  .c-button--alt-secondary\@tablet {
+    color: #ED8936;
+    border-width: 1px;
+    border-color: #ED8936;
+    padding: 12px;
+    background-color: transparent;
+  }
+  .c-button--alt-secondary\@tablet:hover {
+    color: #DD6B20;
+    border-width: 1px;
+    border-color: #DD6B20;
+    background-color: #FFFAF0;
+  }
+
+  .c-button--alt-tertiary\@tablet {
+    color: #ED8936;
+    border-width: 0px;
+    padding: 0px;
+    background-color: transparent;
+  }
+  .c-button--alt-tertiary\@tablet:hover {
+    color: #DD6B20;
+    border-width: 0px;
+    background-color: transparent;
+  }
+}
+@media (min-width: 1024px) {
+  .c-button--primary\@desktop {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #0056B8;
+    padding: 12px;
+    background-color: #0056B8;
+  }
+  .c-button--primary\@desktop:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #003B80;
+    background-color: #003B80;
+  }
+
+  .c-button--secondary\@desktop {
+    color: #0056B8;
+    border-width: 1px;
+    border-color: #0056B8;
+    padding: 12px;
+    background-color: transparent;
+  }
+  .c-button--secondary\@desktop:hover {
+    color: #0056B8;
+    border-width: 1px;
+    border-color: #0056B8;
+    background-color: #EDF2F7;
+  }
+
+  .c-button--tertiary\@desktop {
+    color: #0056B8;
+    border-width: 0px;
+    padding: 0px;
+    background-color: transparent;
+  }
+  .c-button--tertiary\@desktop:hover {
+    color: #003B80;
+    border-width: 0px;
+    background-color: transparent;
+  }
+
+  .c-button--alt-primary\@desktop {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #ED8936;
+    padding: 12px;
+    background-color: #ED8936;
+  }
+  .c-button--alt-primary\@desktop:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #DD6B20;
+    background-color: #DD6B20;
+  }
+
+  .c-button--alt-secondary\@desktop {
+    color: #ED8936;
+    border-width: 1px;
+    border-color: #ED8936;
+    padding: 12px;
+    background-color: transparent;
+  }
+  .c-button--alt-secondary\@desktop:hover {
+    color: #DD6B20;
+    border-width: 1px;
+    border-color: #DD6B20;
+    background-color: #FFFAF0;
+  }
+
+  .c-button--alt-tertiary\@desktop {
+    color: #ED8936;
+    border-width: 0px;
+    padding: 0px;
+    background-color: transparent;
+  }
+  .c-button--alt-tertiary\@desktop:hover {
+    color: #DD6B20;
+    border-width: 0px;
+    background-color: transparent;
+  }
+}
+.c-button--size-alt {
+  font-size: 24px;
+  padding: 20px;
+}
+
+.c-form {
+  width: 100%;
+  background-color: #E2E8F0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  padding: 48px;
+  border: 1px solid #CBD5E0;
+}
+.c-form__buttons {
+  padding-top: 64px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.c-form__buttons > * {
+  margin-left: 12px;
+}
+.c-form__buttons :first-child {
+  margin-left: 0px;
+}
+.c-form--no-style {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: none;
+  padding: 0px;
+  border: none;
+}
+
+.c-input {
+  display: block;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 14px;
+  border: 1px solid #CBD5E0;
+  background-color: #F7FAFC;
+  color: #00244D;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  outline: none !important;
+}
+.c-input:focus {
+  border: 1px solid #CBD5E0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+.c-input[type=checkbox], .c-input[type=radio] {
+  display: inline;
+  margin-right: 4px;
+  padding: 0px;
+  width: auto;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+
+.c-label {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  color: #003B80;
+  font-size: 14px;
+  text-align: left;
+  display: block;
+  padding-top: 24px;
+  padding-bottom: 12px;
+  line-height: 1.5;
+}
+.c-label--right {
+  text-align: right;
+}
+.c-label--option {
+  color: #00244D;
+  padding-top: 0px;
+  cursor: pointer;
+  position: relative;
+  top: -2px;
+}
+
+.c-legal-text {
+  color: #00244D;
+  font-size: 16px;
+  text-align: left;
+  display: block;
+  margin-bottom: 12px;
+}
+.c-legal-text--size-alt {
+  font-size: 12px;
+}
+.c-legal-text--item {
+  margin-left: 32px;
+  display: list-item;
+  list-style-type: disc;
+}
+
+.c-legal-header--h2 {
+  color: #003B80;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 24px;
+  margin-top: 48px;
+}
+.c-legal-header--h3 {
+  color: #003B80;
+  font-size: 18px;
+  text-align: left;
+  margin-bottom: 16px;
+  margin-top: 40px;
+}
+.c-legal-header--h4 {
+  color: #003B80;
+  font-size: 16px;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 12px;
+  margin-top: 24px;
+}
+
+.c-messages {
+  display: block;
+  color: #F56565;
+  background-color: #FED7D7;
+  padding: 16px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  border: 1px solid #FEB2B2;
+  border-radius: 4px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 14px;
+}
+.c-messages .close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+}
+.c-messages li {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  list-style-type: disc;
+  padding-left: 0px;
+  margin-left: 20px;
+  line-height: 1.5;
+}
+
+.c-header-bar {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 11px 10px -13px rgba(0, 0, 0, 0.67);
+  background-color: white;
+  height: 80px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  align-items: center;
+  max-width: 1600px;
+}
+.c-header-bar__item {
+  padding-left: 12px;
+  padding-right: 12px;
+  z-index: 100;
+}
+.c-header-bar__item--right {
+  margin-left: auto;
+}
+.c-header-bar__item--left {
+  margin-right: auto;
+}
+
+.c-horizontal-menu__items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 90;
+}
+@media (max-width: 768px) {
+  .c-horizontal-menu__items {
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    left: 0%;
+    background-color: #FFFFFF;
+    width: 100%;
+    box-shadow: 0px 11px 10px -13px rgba(0, 0, 0, 0.67);
+    height: calc(100vh - 80px);
+  }
+  .c-horizontal-menu__items--movil-hide {
+    display: none;
+  }
+  .c-horizontal-menu__items--animation-rollout {
+    display: flex;
+    animation-name: animation-rollout;
+    animation-duration: 0.8s;
+  }
+  .c-horizontal-menu__items--animation-rollin {
+    display: flex;
+    animation-name: animation-rollin;
+    animation-duration: 0.8s;
+  }
+}
+.c-horizontal-menu__item {
+  text-transform: none;
+  font-family: Basic;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: #0056B8;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+@media (max-width: 900px) {
+  .c-horizontal-menu__item {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+.c-horizontal-menu__hamburger {
+  color: #0056B8;
+  font-size: 24px;
+  display: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none !important;
+}
+.c-horizontal-menu__hamburger:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "";
+}
+.c-horizontal-menu__hamburger--cerrar:before {
+  content: "";
+}
+@media (max-width: 768px) {
+  .c-horizontal-menu__hamburger {
+    display: block;
+  }
+}
+
+@keyframes animation-rollout {
+  from {
+    transform: translate(100%, 0%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+@keyframes animation-rollin {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100%, 0);
+  }
+}
+.c-blockquote {
+  display: block;
+}
+.c-blockquote__text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-style: italic;
+  color: #0056B8;
+  font-size: 30px;
+  text-align: center;
+}
+.c-blockquote__text:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "";
+  font-size: 30px;
+  padding-right: 24px;
+  color: #ED8936;
+}
+.c-blockquote__text:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "";
+  font-size: 30px;
+  padding-left: 24px;
+  color: #ED8936;
+}
+.c-blockquote__name {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-style: italic;
+  color: #ED8936;
+  font-size: 16px;
+  padding-top: 48px;
+  padding-bottom: 32px;
+  text-align: center;
+}
+.c-blockquote__image {
+  display: block;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c-body {
+  background-color: #FFFFFF;
+  width: 100%;
+}
+
+.c-image {
+  display: block;
+  border-radius: 16px;
+  opacity: 0.8;
+  width: 90%;
+  margin: auto;
+}
+.c-image--top {
+  width: 100%;
+  height: 46.875vw;
+  max-width: 640px;
+  max-height: 300px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  opacity: 0.9;
+}
+
+.c-panel {
+  position: relative;
+  height: 340px;
+  width: 310px;
+  border-top: 7px solid #DD6B20;
+  background-color: rgba(247, 250, 252, 0.9);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin: 16px;
+  padding: 16px;
+  margin-top: 30px;
+}
+.c-panel__footer {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 24px;
+}
+
+.c-section {
+  width: 100%;
+}
+.c-section__content {
+  width: 100%;
+  max-width: 1600px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.c-section__content--size-alt {
+  max-width: 800px;
+}
+.c-section--alt-color {
+  background-color: #003B80;
+}
+
+.c-simple-panel {
+  background-color: #FFFFFF;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  padding: 20px;
+}
+.c-simple-panel--inverse {
+  background-color: #EDF2F7;
+  box-shadow: inset -3px -3px 7px #ffffffb0, inset 3px 3px 5px rgba(94, 104, 121, 0.692);
+}
+
+.c-text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  color: #00244D;
+  font-size: 16px;
+  text-align: left;
+  line-height: 1.8;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+.c-text--center {
+  text-align: center;
+}
+.c-text--justify {
+  text-align: justify;
+}
+.c-text--size-alt {
+  font-size: 20px;
+}
+
+.c-title {
+  font-family: Basic;
+  color: #ED8936;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.c-title--left {
+  text-align: left;
+}
+.c-title--color-alt {
+  color: #0056B8;
+}
+.c-title--size-alt {
+  font-size: 20px;
+}
+@media (min-width: 768px) {
+  .c-title {
+    font-size: 30px;
+  }
+  .c-title--size-alt {
+    font-size: 24px;
+  }
+}
+.c-title__pre {
+  display: block;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 12px;
+  font-weight: 500;
+  color: #718096;
+  text-transform: uppercase;
+  margin: 0px;
+}
+
+.c-youtube {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 800px;
+  height: 56.25vw;
+  max-height: 450px;
+}
+
+.c-banner {
+  background-image: url(../img/site/banner.jpg);
+  height: 70vh;
+  min-height: 500px;
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 1600px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.c-number {
+  display: inline;
+  margin-bottom: 12px;
+}
+.c-number__value {
+  color: #ED8936;
+  font-family: "Roboto Mono",Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.c-number__label {
+  color: #003B80;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 0px;
+}
+@media (min-width: 768px) {
+  .c-number__value {
+    font-size: 48px;
+  }
+  .c-number__label {
+    font-size: 20px;
+  }
+}
+
+.c-ofertas {
+  background-color: #FFFFFF;
+  margin: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+.c-ofertas__image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100px;
+}
+.c-ofertas__content {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.c-ofertas__familia {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 18px;
+  color: #ED8936;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  line-height: 1.4;
+}
+.c-ofertas__puesto {
+  border-top: 1px solid #E2E8F0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  font-size: 14px;
+  color: #003B80;
+  line-height: 1.4;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.g--color-gris-1 {
+  color: #F7FAFC;
+}
+
+.g--color-gris-2 {
+  color: #EDF2F7;
+}
+
+.g--color-gris-3 {
+  color: #E2E8F0;
+}
+
+.g--color-gris-4 {
+  color: #CBD5E0;
+}
+
+.g--color-gris-5 {
+  color: #A0AEC0;
+}
+
+.g--color-gris-6 {
+  color: #718096;
+}
+
+.g--color-gris-7 {
+  color: #4A5568;
+}
+
+.g--color-gris-8 {
+  color: #2D3748;
+}
+
+.g--color-gris-9 {
+  color: #1A202C;
+}
+
+.g--color-rojo-1 {
+  color: #FFF5F5;
+}
+
+.g--color-rojo-2 {
+  color: #FED7D7;
+}
+
+.g--color-rojo-3 {
+  color: #FEB2B2;
+}
+
+.g--color-rojo-4 {
+  color: #FC8181;
+}
+
+.g--color-rojo-5 {
+  color: #F56565;
+}
+
+.g--color-rojo-6 {
+  color: #E53E3E;
+}
+
+.g--color-rojo-7 {
+  color: #C53030;
+}
+
+.g--color-rojo-8 {
+  color: #9B2C2C;
+}
+
+.g--color-rojo-9 {
+  color: #742A2A;
+}
+
+.g--color-verde-1 {
+  color: #F0FFF4;
+}
+
+.g--color-verde-2 {
+  color: #C6F6D5;
+}
+
+.g--color-verde-3 {
+  color: #9AE6B4;
+}
+
+.g--color-verde-4 {
+  color: #68D391;
+}
+
+.g--color-verde-5 {
+  color: #48BB78;
+}
+
+.g--color-verde-6 {
+  color: #38A169;
+}
+
+.g--color-verde-7 {
+  color: #2F855A;
+}
+
+.g--color-verde-8 {
+  color: #276749;
+}
+
+.g--color-verde-9 {
+  color: #22543D;
+}
+
+.g--color-amarillo-1 {
+  color: #FFFFF0;
+}
+
+.g--color-amarillo-2 {
+  color: #FEFCBF;
+}
+
+.g--color-amarillo-3 {
+  color: #FAF089;
+}
+
+.g--color-amarillo-4 {
+  color: #F6E05E;
+}
+
+.g--color-amarillo-5 {
+  color: #ECC94B;
+}
+
+.g--color-amarillo-6 {
+  color: #D69E2E;
+}
+
+.g--color-amarillo-7 {
+  color: #B7791F;
+}
+
+.g--color-amarillo-8 {
+  color: #975A16;
+}
+
+.g--color-amarillo-9 {
+  color: #744210;
+}
+
+.g--color-default-1 {
+  color: #F0F7FF;
+}
+
+.g--color-default-2 {
+  color: #BDDCFF;
+}
+
+.g--color-default-3 {
+  color: #8AC0FF;
+}
+
+.g--color-default-4 {
+  color: #52A3FF;
+}
+
+.g--color-default-5 {
+  color: #1F87FF;
+}
+
+.g--color-default-6 {
+  color: #006DEB;
+}
+
+.g--color-default-7 {
+  color: #0056B8;
+}
+
+.g--color-default-8 {
+  color: #003B80;
+}
+
+.g--color-default-9 {
+  color: #00244D;
+}
+
+.g--color-alt-1 {
+  color: #FFFAF0;
+}
+
+.g--color-alt-2 {
+  color: #FEEBC8;
+}
+
+.g--color-alt-3 {
+  color: #FBD38D;
+}
+
+.g--color-alt-4 {
+  color: #F6AD55;
+}
+
+.g--color-alt-5 {
+  color: #ED8936;
+}
+
+.g--color-alt-6 {
+  color: #DD6B20;
+}
+
+.g--color-alt-7 {
+  color: #C05621;
+}
+
+.g--color-alt-8 {
+  color: #9C4221;
+}
+
+.g--color-alt-9 {
+  color: #7B341E;
+}
+
+.g--color-negro-1 {
+  color: #000000;
+}
+
+.g--color-blanco-1 {
+  color: #FFFFFF;
+}
+
+@media (min-width: 640px) {
+  .g--color-gris-1\@movil {
+    color: #F7FAFC;
+  }
+
+  .g--color-gris-2\@movil {
+    color: #EDF2F7;
+  }
+
+  .g--color-gris-3\@movil {
+    color: #E2E8F0;
+  }
+
+  .g--color-gris-4\@movil {
+    color: #CBD5E0;
+  }
+
+  .g--color-gris-5\@movil {
+    color: #A0AEC0;
+  }
+
+  .g--color-gris-6\@movil {
+    color: #718096;
+  }
+
+  .g--color-gris-7\@movil {
+    color: #4A5568;
+  }
+
+  .g--color-gris-8\@movil {
+    color: #2D3748;
+  }
+
+  .g--color-gris-9\@movil {
+    color: #1A202C;
+  }
+
+  .g--color-rojo-1\@movil {
+    color: #FFF5F5;
+  }
+
+  .g--color-rojo-2\@movil {
+    color: #FED7D7;
+  }
+
+  .g--color-rojo-3\@movil {
+    color: #FEB2B2;
+  }
+
+  .g--color-rojo-4\@movil {
+    color: #FC8181;
+  }
+
+  .g--color-rojo-5\@movil {
+    color: #F56565;
+  }
+
+  .g--color-rojo-6\@movil {
+    color: #E53E3E;
+  }
+
+  .g--color-rojo-7\@movil {
+    color: #C53030;
+  }
+
+  .g--color-rojo-8\@movil {
+    color: #9B2C2C;
+  }
+
+  .g--color-rojo-9\@movil {
+    color: #742A2A;
+  }
+
+  .g--color-verde-1\@movil {
+    color: #F0FFF4;
+  }
+
+  .g--color-verde-2\@movil {
+    color: #C6F6D5;
+  }
+
+  .g--color-verde-3\@movil {
+    color: #9AE6B4;
+  }
+
+  .g--color-verde-4\@movil {
+    color: #68D391;
+  }
+
+  .g--color-verde-5\@movil {
+    color: #48BB78;
+  }
+
+  .g--color-verde-6\@movil {
+    color: #38A169;
+  }
+
+  .g--color-verde-7\@movil {
+    color: #2F855A;
+  }
+
+  .g--color-verde-8\@movil {
+    color: #276749;
+  }
+
+  .g--color-verde-9\@movil {
+    color: #22543D;
+  }
+
+  .g--color-amarillo-1\@movil {
+    color: #FFFFF0;
+  }
+
+  .g--color-amarillo-2\@movil {
+    color: #FEFCBF;
+  }
+
+  .g--color-amarillo-3\@movil {
+    color: #FAF089;
+  }
+
+  .g--color-amarillo-4\@movil {
+    color: #F6E05E;
+  }
+
+  .g--color-amarillo-5\@movil {
+    color: #ECC94B;
+  }
+
+  .g--color-amarillo-6\@movil {
+    color: #D69E2E;
+  }
+
+  .g--color-amarillo-7\@movil {
+    color: #B7791F;
+  }
+
+  .g--color-amarillo-8\@movil {
+    color: #975A16;
+  }
+
+  .g--color-amarillo-9\@movil {
+    color: #744210;
+  }
+
+  .g--color-default-1\@movil {
+    color: #F0F7FF;
+  }
+
+  .g--color-default-2\@movil {
+    color: #BDDCFF;
+  }
+
+  .g--color-default-3\@movil {
+    color: #8AC0FF;
+  }
+
+  .g--color-default-4\@movil {
+    color: #52A3FF;
+  }
+
+  .g--color-default-5\@movil {
+    color: #1F87FF;
+  }
+
+  .g--color-default-6\@movil {
+    color: #006DEB;
+  }
+
+  .g--color-default-7\@movil {
+    color: #0056B8;
+  }
+
+  .g--color-default-8\@movil {
+    color: #003B80;
+  }
+
+  .g--color-default-9\@movil {
+    color: #00244D;
+  }
+
+  .g--color-alt-1\@movil {
+    color: #FFFAF0;
+  }
+
+  .g--color-alt-2\@movil {
+    color: #FEEBC8;
+  }
+
+  .g--color-alt-3\@movil {
+    color: #FBD38D;
+  }
+
+  .g--color-alt-4\@movil {
+    color: #F6AD55;
+  }
+
+  .g--color-alt-5\@movil {
+    color: #ED8936;
+  }
+
+  .g--color-alt-6\@movil {
+    color: #DD6B20;
+  }
+
+  .g--color-alt-7\@movil {
+    color: #C05621;
+  }
+
+  .g--color-alt-8\@movil {
+    color: #9C4221;
+  }
+
+  .g--color-alt-9\@movil {
+    color: #7B341E;
+  }
+
+  .g--color-negro-1\@movil {
+    color: #000000;
+  }
+
+  .g--color-blanco-1\@movil {
+    color: #FFFFFF;
+  }
+}
+@media (min-width: 768px) {
+  .g--color-gris-1\@tablet {
+    color: #F7FAFC;
+  }
+
+  .g--color-gris-2\@tablet {
+    color: #EDF2F7;
+  }
+
+  .g--color-gris-3\@tablet {
+    color: #E2E8F0;
+  }
+
+  .g--color-gris-4\@tablet {
+    color: #CBD5E0;
+  }
+
+  .g--color-gris-5\@tablet {
+    color: #A0AEC0;
+  }
+
+  .g--color-gris-6\@tablet {
+    color: #718096;
+  }
+
+  .g--color-gris-7\@tablet {
+    color: #4A5568;
+  }
+
+  .g--color-gris-8\@tablet {
+    color: #2D3748;
+  }
+
+  .g--color-gris-9\@tablet {
+    color: #1A202C;
+  }
+
+  .g--color-rojo-1\@tablet {
+    color: #FFF5F5;
+  }
+
+  .g--color-rojo-2\@tablet {
+    color: #FED7D7;
+  }
+
+  .g--color-rojo-3\@tablet {
+    color: #FEB2B2;
+  }
+
+  .g--color-rojo-4\@tablet {
+    color: #FC8181;
+  }
+
+  .g--color-rojo-5\@tablet {
+    color: #F56565;
+  }
+
+  .g--color-rojo-6\@tablet {
+    color: #E53E3E;
+  }
+
+  .g--color-rojo-7\@tablet {
+    color: #C53030;
+  }
+
+  .g--color-rojo-8\@tablet {
+    color: #9B2C2C;
+  }
+
+  .g--color-rojo-9\@tablet {
+    color: #742A2A;
+  }
+
+  .g--color-verde-1\@tablet {
+    color: #F0FFF4;
+  }
+
+  .g--color-verde-2\@tablet {
+    color: #C6F6D5;
+  }
+
+  .g--color-verde-3\@tablet {
+    color: #9AE6B4;
+  }
+
+  .g--color-verde-4\@tablet {
+    color: #68D391;
+  }
+
+  .g--color-verde-5\@tablet {
+    color: #48BB78;
+  }
+
+  .g--color-verde-6\@tablet {
+    color: #38A169;
+  }
+
+  .g--color-verde-7\@tablet {
+    color: #2F855A;
+  }
+
+  .g--color-verde-8\@tablet {
+    color: #276749;
+  }
+
+  .g--color-verde-9\@tablet {
+    color: #22543D;
+  }
+
+  .g--color-amarillo-1\@tablet {
+    color: #FFFFF0;
+  }
+
+  .g--color-amarillo-2\@tablet {
+    color: #FEFCBF;
+  }
+
+  .g--color-amarillo-3\@tablet {
+    color: #FAF089;
+  }
+
+  .g--color-amarillo-4\@tablet {
+    color: #F6E05E;
+  }
+
+  .g--color-amarillo-5\@tablet {
+    color: #ECC94B;
+  }
+
+  .g--color-amarillo-6\@tablet {
+    color: #D69E2E;
+  }
+
+  .g--color-amarillo-7\@tablet {
+    color: #B7791F;
+  }
+
+  .g--color-amarillo-8\@tablet {
+    color: #975A16;
+  }
+
+  .g--color-amarillo-9\@tablet {
+    color: #744210;
+  }
+
+  .g--color-default-1\@tablet {
+    color: #F0F7FF;
+  }
+
+  .g--color-default-2\@tablet {
+    color: #BDDCFF;
+  }
+
+  .g--color-default-3\@tablet {
+    color: #8AC0FF;
+  }
+
+  .g--color-default-4\@tablet {
+    color: #52A3FF;
+  }
+
+  .g--color-default-5\@tablet {
+    color: #1F87FF;
+  }
+
+  .g--color-default-6\@tablet {
+    color: #006DEB;
+  }
+
+  .g--color-default-7\@tablet {
+    color: #0056B8;
+  }
+
+  .g--color-default-8\@tablet {
+    color: #003B80;
+  }
+
+  .g--color-default-9\@tablet {
+    color: #00244D;
+  }
+
+  .g--color-alt-1\@tablet {
+    color: #FFFAF0;
+  }
+
+  .g--color-alt-2\@tablet {
+    color: #FEEBC8;
+  }
+
+  .g--color-alt-3\@tablet {
+    color: #FBD38D;
+  }
+
+  .g--color-alt-4\@tablet {
+    color: #F6AD55;
+  }
+
+  .g--color-alt-5\@tablet {
+    color: #ED8936;
+  }
+
+  .g--color-alt-6\@tablet {
+    color: #DD6B20;
+  }
+
+  .g--color-alt-7\@tablet {
+    color: #C05621;
+  }
+
+  .g--color-alt-8\@tablet {
+    color: #9C4221;
+  }
+
+  .g--color-alt-9\@tablet {
+    color: #7B341E;
+  }
+
+  .g--color-negro-1\@tablet {
+    color: #000000;
+  }
+
+  .g--color-blanco-1\@tablet {
+    color: #FFFFFF;
+  }
+}
+@media (min-width: 1024px) {
+  .g--color-gris-1\@desktop {
+    color: #F7FAFC;
+  }
+
+  .g--color-gris-2\@desktop {
+    color: #EDF2F7;
+  }
+
+  .g--color-gris-3\@desktop {
+    color: #E2E8F0;
+  }
+
+  .g--color-gris-4\@desktop {
+    color: #CBD5E0;
+  }
+
+  .g--color-gris-5\@desktop {
+    color: #A0AEC0;
+  }
+
+  .g--color-gris-6\@desktop {
+    color: #718096;
+  }
+
+  .g--color-gris-7\@desktop {
+    color: #4A5568;
+  }
+
+  .g--color-gris-8\@desktop {
+    color: #2D3748;
+  }
+
+  .g--color-gris-9\@desktop {
+    color: #1A202C;
+  }
+
+  .g--color-rojo-1\@desktop {
+    color: #FFF5F5;
+  }
+
+  .g--color-rojo-2\@desktop {
+    color: #FED7D7;
+  }
+
+  .g--color-rojo-3\@desktop {
+    color: #FEB2B2;
+  }
+
+  .g--color-rojo-4\@desktop {
+    color: #FC8181;
+  }
+
+  .g--color-rojo-5\@desktop {
+    color: #F56565;
+  }
+
+  .g--color-rojo-6\@desktop {
+    color: #E53E3E;
+  }
+
+  .g--color-rojo-7\@desktop {
+    color: #C53030;
+  }
+
+  .g--color-rojo-8\@desktop {
+    color: #9B2C2C;
+  }
+
+  .g--color-rojo-9\@desktop {
+    color: #742A2A;
+  }
+
+  .g--color-verde-1\@desktop {
+    color: #F0FFF4;
+  }
+
+  .g--color-verde-2\@desktop {
+    color: #C6F6D5;
+  }
+
+  .g--color-verde-3\@desktop {
+    color: #9AE6B4;
+  }
+
+  .g--color-verde-4\@desktop {
+    color: #68D391;
+  }
+
+  .g--color-verde-5\@desktop {
+    color: #48BB78;
+  }
+
+  .g--color-verde-6\@desktop {
+    color: #38A169;
+  }
+
+  .g--color-verde-7\@desktop {
+    color: #2F855A;
+  }
+
+  .g--color-verde-8\@desktop {
+    color: #276749;
+  }
+
+  .g--color-verde-9\@desktop {
+    color: #22543D;
+  }
+
+  .g--color-amarillo-1\@desktop {
+    color: #FFFFF0;
+  }
+
+  .g--color-amarillo-2\@desktop {
+    color: #FEFCBF;
+  }
+
+  .g--color-amarillo-3\@desktop {
+    color: #FAF089;
+  }
+
+  .g--color-amarillo-4\@desktop {
+    color: #F6E05E;
+  }
+
+  .g--color-amarillo-5\@desktop {
+    color: #ECC94B;
+  }
+
+  .g--color-amarillo-6\@desktop {
+    color: #D69E2E;
+  }
+
+  .g--color-amarillo-7\@desktop {
+    color: #B7791F;
+  }
+
+  .g--color-amarillo-8\@desktop {
+    color: #975A16;
+  }
+
+  .g--color-amarillo-9\@desktop {
+    color: #744210;
+  }
+
+  .g--color-default-1\@desktop {
+    color: #F0F7FF;
+  }
+
+  .g--color-default-2\@desktop {
+    color: #BDDCFF;
+  }
+
+  .g--color-default-3\@desktop {
+    color: #8AC0FF;
+  }
+
+  .g--color-default-4\@desktop {
+    color: #52A3FF;
+  }
+
+  .g--color-default-5\@desktop {
+    color: #1F87FF;
+  }
+
+  .g--color-default-6\@desktop {
+    color: #006DEB;
+  }
+
+  .g--color-default-7\@desktop {
+    color: #0056B8;
+  }
+
+  .g--color-default-8\@desktop {
+    color: #003B80;
+  }
+
+  .g--color-default-9\@desktop {
+    color: #00244D;
+  }
+
+  .g--color-alt-1\@desktop {
+    color: #FFFAF0;
+  }
+
+  .g--color-alt-2\@desktop {
+    color: #FEEBC8;
+  }
+
+  .g--color-alt-3\@desktop {
+    color: #FBD38D;
+  }
+
+  .g--color-alt-4\@desktop {
+    color: #F6AD55;
+  }
+
+  .g--color-alt-5\@desktop {
+    color: #ED8936;
+  }
+
+  .g--color-alt-6\@desktop {
+    color: #DD6B20;
+  }
+
+  .g--color-alt-7\@desktop {
+    color: #C05621;
+  }
+
+  .g--color-alt-8\@desktop {
+    color: #9C4221;
+  }
+
+  .g--color-alt-9\@desktop {
+    color: #7B341E;
+  }
+
+  .g--color-negro-1\@desktop {
+    color: #000000;
+  }
+
+  .g--color-blanco-1\@desktop {
+    color: #FFFFFF;
+  }
+}
+.g--background-color-gris-1 {
+  background-color: #F7FAFC;
+}
+
+.g--background-color-gris-2 {
+  background-color: #EDF2F7;
+}
+
+.g--background-color-gris-3 {
+  background-color: #E2E8F0;
+}
+
+.g--background-color-gris-4 {
+  background-color: #CBD5E0;
+}
+
+.g--background-color-gris-5 {
+  background-color: #A0AEC0;
+}
+
+.g--background-color-gris-6 {
+  background-color: #718096;
+}
+
+.g--background-color-gris-7 {
+  background-color: #4A5568;
+}
+
+.g--background-color-gris-8 {
+  background-color: #2D3748;
+}
+
+.g--background-color-gris-9 {
+  background-color: #1A202C;
+}
+
+.g--background-color-rojo-1 {
+  background-color: #FFF5F5;
+}
+
+.g--background-color-rojo-2 {
+  background-color: #FED7D7;
+}
+
+.g--background-color-rojo-3 {
+  background-color: #FEB2B2;
+}
+
+.g--background-color-rojo-4 {
+  background-color: #FC8181;
+}
+
+.g--background-color-rojo-5 {
+  background-color: #F56565;
+}
+
+.g--background-color-rojo-6 {
+  background-color: #E53E3E;
+}
+
+.g--background-color-rojo-7 {
+  background-color: #C53030;
+}
+
+.g--background-color-rojo-8 {
+  background-color: #9B2C2C;
+}
+
+.g--background-color-rojo-9 {
+  background-color: #742A2A;
+}
+
+.g--background-color-verde-1 {
+  background-color: #F0FFF4;
+}
+
+.g--background-color-verde-2 {
+  background-color: #C6F6D5;
+}
+
+.g--background-color-verde-3 {
+  background-color: #9AE6B4;
+}
+
+.g--background-color-verde-4 {
+  background-color: #68D391;
+}
+
+.g--background-color-verde-5 {
+  background-color: #48BB78;
+}
+
+.g--background-color-verde-6 {
+  background-color: #38A169;
+}
+
+.g--background-color-verde-7 {
+  background-color: #2F855A;
+}
+
+.g--background-color-verde-8 {
+  background-color: #276749;
+}
+
+.g--background-color-verde-9 {
+  background-color: #22543D;
+}
+
+.g--background-color-amarillo-1 {
+  background-color: #FFFFF0;
+}
+
+.g--background-color-amarillo-2 {
+  background-color: #FEFCBF;
+}
+
+.g--background-color-amarillo-3 {
+  background-color: #FAF089;
+}
+
+.g--background-color-amarillo-4 {
+  background-color: #F6E05E;
+}
+
+.g--background-color-amarillo-5 {
+  background-color: #ECC94B;
+}
+
+.g--background-color-amarillo-6 {
+  background-color: #D69E2E;
+}
+
+.g--background-color-amarillo-7 {
+  background-color: #B7791F;
+}
+
+.g--background-color-amarillo-8 {
+  background-color: #975A16;
+}
+
+.g--background-color-amarillo-9 {
+  background-color: #744210;
+}
+
+.g--background-color-default-1 {
+  background-color: #F0F7FF;
+}
+
+.g--background-color-default-2 {
+  background-color: #BDDCFF;
+}
+
+.g--background-color-default-3 {
+  background-color: #8AC0FF;
+}
+
+.g--background-color-default-4 {
+  background-color: #52A3FF;
+}
+
+.g--background-color-default-5 {
+  background-color: #1F87FF;
+}
+
+.g--background-color-default-6 {
+  background-color: #006DEB;
+}
+
+.g--background-color-default-7 {
+  background-color: #0056B8;
+}
+
+.g--background-color-default-8 {
+  background-color: #003B80;
+}
+
+.g--background-color-default-9 {
+  background-color: #00244D;
+}
+
+.g--background-color-alt-1 {
+  background-color: #FFFAF0;
+}
+
+.g--background-color-alt-2 {
+  background-color: #FEEBC8;
+}
+
+.g--background-color-alt-3 {
+  background-color: #FBD38D;
+}
+
+.g--background-color-alt-4 {
+  background-color: #F6AD55;
+}
+
+.g--background-color-alt-5 {
+  background-color: #ED8936;
+}
+
+.g--background-color-alt-6 {
+  background-color: #DD6B20;
+}
+
+.g--background-color-alt-7 {
+  background-color: #C05621;
+}
+
+.g--background-color-alt-8 {
+  background-color: #9C4221;
+}
+
+.g--background-color-alt-9 {
+  background-color: #7B341E;
+}
+
+.g--background-color-negro-1 {
+  background-color: #000000;
+}
+
+.g--background-color-blanco-1 {
+  background-color: #FFFFFF;
+}
+
+@media (min-width: 640px) {
+  .g--background-color-gris-1\@movil {
+    background-color: #F7FAFC;
+  }
+
+  .g--background-color-gris-2\@movil {
+    background-color: #EDF2F7;
+  }
+
+  .g--background-color-gris-3\@movil {
+    background-color: #E2E8F0;
+  }
+
+  .g--background-color-gris-4\@movil {
+    background-color: #CBD5E0;
+  }
+
+  .g--background-color-gris-5\@movil {
+    background-color: #A0AEC0;
+  }
+
+  .g--background-color-gris-6\@movil {
+    background-color: #718096;
+  }
+
+  .g--background-color-gris-7\@movil {
+    background-color: #4A5568;
+  }
+
+  .g--background-color-gris-8\@movil {
+    background-color: #2D3748;
+  }
+
+  .g--background-color-gris-9\@movil {
+    background-color: #1A202C;
+  }
+
+  .g--background-color-rojo-1\@movil {
+    background-color: #FFF5F5;
+  }
+
+  .g--background-color-rojo-2\@movil {
+    background-color: #FED7D7;
+  }
+
+  .g--background-color-rojo-3\@movil {
+    background-color: #FEB2B2;
+  }
+
+  .g--background-color-rojo-4\@movil {
+    background-color: #FC8181;
+  }
+
+  .g--background-color-rojo-5\@movil {
+    background-color: #F56565;
+  }
+
+  .g--background-color-rojo-6\@movil {
+    background-color: #E53E3E;
+  }
+
+  .g--background-color-rojo-7\@movil {
+    background-color: #C53030;
+  }
+
+  .g--background-color-rojo-8\@movil {
+    background-color: #9B2C2C;
+  }
+
+  .g--background-color-rojo-9\@movil {
+    background-color: #742A2A;
+  }
+
+  .g--background-color-verde-1\@movil {
+    background-color: #F0FFF4;
+  }
+
+  .g--background-color-verde-2\@movil {
+    background-color: #C6F6D5;
+  }
+
+  .g--background-color-verde-3\@movil {
+    background-color: #9AE6B4;
+  }
+
+  .g--background-color-verde-4\@movil {
+    background-color: #68D391;
+  }
+
+  .g--background-color-verde-5\@movil {
+    background-color: #48BB78;
+  }
+
+  .g--background-color-verde-6\@movil {
+    background-color: #38A169;
+  }
+
+  .g--background-color-verde-7\@movil {
+    background-color: #2F855A;
+  }
+
+  .g--background-color-verde-8\@movil {
+    background-color: #276749;
+  }
+
+  .g--background-color-verde-9\@movil {
+    background-color: #22543D;
+  }
+
+  .g--background-color-amarillo-1\@movil {
+    background-color: #FFFFF0;
+  }
+
+  .g--background-color-amarillo-2\@movil {
+    background-color: #FEFCBF;
+  }
+
+  .g--background-color-amarillo-3\@movil {
+    background-color: #FAF089;
+  }
+
+  .g--background-color-amarillo-4\@movil {
+    background-color: #F6E05E;
+  }
+
+  .g--background-color-amarillo-5\@movil {
+    background-color: #ECC94B;
+  }
+
+  .g--background-color-amarillo-6\@movil {
+    background-color: #D69E2E;
+  }
+
+  .g--background-color-amarillo-7\@movil {
+    background-color: #B7791F;
+  }
+
+  .g--background-color-amarillo-8\@movil {
+    background-color: #975A16;
+  }
+
+  .g--background-color-amarillo-9\@movil {
+    background-color: #744210;
+  }
+
+  .g--background-color-default-1\@movil {
+    background-color: #F0F7FF;
+  }
+
+  .g--background-color-default-2\@movil {
+    background-color: #BDDCFF;
+  }
+
+  .g--background-color-default-3\@movil {
+    background-color: #8AC0FF;
+  }
+
+  .g--background-color-default-4\@movil {
+    background-color: #52A3FF;
+  }
+
+  .g--background-color-default-5\@movil {
+    background-color: #1F87FF;
+  }
+
+  .g--background-color-default-6\@movil {
+    background-color: #006DEB;
+  }
+
+  .g--background-color-default-7\@movil {
+    background-color: #0056B8;
+  }
+
+  .g--background-color-default-8\@movil {
+    background-color: #003B80;
+  }
+
+  .g--background-color-default-9\@movil {
+    background-color: #00244D;
+  }
+
+  .g--background-color-alt-1\@movil {
+    background-color: #FFFAF0;
+  }
+
+  .g--background-color-alt-2\@movil {
+    background-color: #FEEBC8;
+  }
+
+  .g--background-color-alt-3\@movil {
+    background-color: #FBD38D;
+  }
+
+  .g--background-color-alt-4\@movil {
+    background-color: #F6AD55;
+  }
+
+  .g--background-color-alt-5\@movil {
+    background-color: #ED8936;
+  }
+
+  .g--background-color-alt-6\@movil {
+    background-color: #DD6B20;
+  }
+
+  .g--background-color-alt-7\@movil {
+    background-color: #C05621;
+  }
+
+  .g--background-color-alt-8\@movil {
+    background-color: #9C4221;
+  }
+
+  .g--background-color-alt-9\@movil {
+    background-color: #7B341E;
+  }
+
+  .g--background-color-negro-1\@movil {
+    background-color: #000000;
+  }
+
+  .g--background-color-blanco-1\@movil {
+    background-color: #FFFFFF;
+  }
+}
+@media (min-width: 768px) {
+  .g--background-color-gris-1\@tablet {
+    background-color: #F7FAFC;
+  }
+
+  .g--background-color-gris-2\@tablet {
+    background-color: #EDF2F7;
+  }
+
+  .g--background-color-gris-3\@tablet {
+    background-color: #E2E8F0;
+  }
+
+  .g--background-color-gris-4\@tablet {
+    background-color: #CBD5E0;
+  }
+
+  .g--background-color-gris-5\@tablet {
+    background-color: #A0AEC0;
+  }
+
+  .g--background-color-gris-6\@tablet {
+    background-color: #718096;
+  }
+
+  .g--background-color-gris-7\@tablet {
+    background-color: #4A5568;
+  }
+
+  .g--background-color-gris-8\@tablet {
+    background-color: #2D3748;
+  }
+
+  .g--background-color-gris-9\@tablet {
+    background-color: #1A202C;
+  }
+
+  .g--background-color-rojo-1\@tablet {
+    background-color: #FFF5F5;
+  }
+
+  .g--background-color-rojo-2\@tablet {
+    background-color: #FED7D7;
+  }
+
+  .g--background-color-rojo-3\@tablet {
+    background-color: #FEB2B2;
+  }
+
+  .g--background-color-rojo-4\@tablet {
+    background-color: #FC8181;
+  }
+
+  .g--background-color-rojo-5\@tablet {
+    background-color: #F56565;
+  }
+
+  .g--background-color-rojo-6\@tablet {
+    background-color: #E53E3E;
+  }
+
+  .g--background-color-rojo-7\@tablet {
+    background-color: #C53030;
+  }
+
+  .g--background-color-rojo-8\@tablet {
+    background-color: #9B2C2C;
+  }
+
+  .g--background-color-rojo-9\@tablet {
+    background-color: #742A2A;
+  }
+
+  .g--background-color-verde-1\@tablet {
+    background-color: #F0FFF4;
+  }
+
+  .g--background-color-verde-2\@tablet {
+    background-color: #C6F6D5;
+  }
+
+  .g--background-color-verde-3\@tablet {
+    background-color: #9AE6B4;
+  }
+
+  .g--background-color-verde-4\@tablet {
+    background-color: #68D391;
+  }
+
+  .g--background-color-verde-5\@tablet {
+    background-color: #48BB78;
+  }
+
+  .g--background-color-verde-6\@tablet {
+    background-color: #38A169;
+  }
+
+  .g--background-color-verde-7\@tablet {
+    background-color: #2F855A;
+  }
+
+  .g--background-color-verde-8\@tablet {
+    background-color: #276749;
+  }
+
+  .g--background-color-verde-9\@tablet {
+    background-color: #22543D;
+  }
+
+  .g--background-color-amarillo-1\@tablet {
+    background-color: #FFFFF0;
+  }
+
+  .g--background-color-amarillo-2\@tablet {
+    background-color: #FEFCBF;
+  }
+
+  .g--background-color-amarillo-3\@tablet {
+    background-color: #FAF089;
+  }
+
+  .g--background-color-amarillo-4\@tablet {
+    background-color: #F6E05E;
+  }
+
+  .g--background-color-amarillo-5\@tablet {
+    background-color: #ECC94B;
+  }
+
+  .g--background-color-amarillo-6\@tablet {
+    background-color: #D69E2E;
+  }
+
+  .g--background-color-amarillo-7\@tablet {
+    background-color: #B7791F;
+  }
+
+  .g--background-color-amarillo-8\@tablet {
+    background-color: #975A16;
+  }
+
+  .g--background-color-amarillo-9\@tablet {
+    background-color: #744210;
+  }
+
+  .g--background-color-default-1\@tablet {
+    background-color: #F0F7FF;
+  }
+
+  .g--background-color-default-2\@tablet {
+    background-color: #BDDCFF;
+  }
+
+  .g--background-color-default-3\@tablet {
+    background-color: #8AC0FF;
+  }
+
+  .g--background-color-default-4\@tablet {
+    background-color: #52A3FF;
+  }
+
+  .g--background-color-default-5\@tablet {
+    background-color: #1F87FF;
+  }
+
+  .g--background-color-default-6\@tablet {
+    background-color: #006DEB;
+  }
+
+  .g--background-color-default-7\@tablet {
+    background-color: #0056B8;
+  }
+
+  .g--background-color-default-8\@tablet {
+    background-color: #003B80;
+  }
+
+  .g--background-color-default-9\@tablet {
+    background-color: #00244D;
+  }
+
+  .g--background-color-alt-1\@tablet {
+    background-color: #FFFAF0;
+  }
+
+  .g--background-color-alt-2\@tablet {
+    background-color: #FEEBC8;
+  }
+
+  .g--background-color-alt-3\@tablet {
+    background-color: #FBD38D;
+  }
+
+  .g--background-color-alt-4\@tablet {
+    background-color: #F6AD55;
+  }
+
+  .g--background-color-alt-5\@tablet {
+    background-color: #ED8936;
+  }
+
+  .g--background-color-alt-6\@tablet {
+    background-color: #DD6B20;
+  }
+
+  .g--background-color-alt-7\@tablet {
+    background-color: #C05621;
+  }
+
+  .g--background-color-alt-8\@tablet {
+    background-color: #9C4221;
+  }
+
+  .g--background-color-alt-9\@tablet {
+    background-color: #7B341E;
+  }
+
+  .g--background-color-negro-1\@tablet {
+    background-color: #000000;
+  }
+
+  .g--background-color-blanco-1\@tablet {
+    background-color: #FFFFFF;
+  }
+}
+@media (min-width: 1024px) {
+  .g--background-color-gris-1\@desktop {
+    background-color: #F7FAFC;
+  }
+
+  .g--background-color-gris-2\@desktop {
+    background-color: #EDF2F7;
+  }
+
+  .g--background-color-gris-3\@desktop {
+    background-color: #E2E8F0;
+  }
+
+  .g--background-color-gris-4\@desktop {
+    background-color: #CBD5E0;
+  }
+
+  .g--background-color-gris-5\@desktop {
+    background-color: #A0AEC0;
+  }
+
+  .g--background-color-gris-6\@desktop {
+    background-color: #718096;
+  }
+
+  .g--background-color-gris-7\@desktop {
+    background-color: #4A5568;
+  }
+
+  .g--background-color-gris-8\@desktop {
+    background-color: #2D3748;
+  }
+
+  .g--background-color-gris-9\@desktop {
+    background-color: #1A202C;
+  }
+
+  .g--background-color-rojo-1\@desktop {
+    background-color: #FFF5F5;
+  }
+
+  .g--background-color-rojo-2\@desktop {
+    background-color: #FED7D7;
+  }
+
+  .g--background-color-rojo-3\@desktop {
+    background-color: #FEB2B2;
+  }
+
+  .g--background-color-rojo-4\@desktop {
+    background-color: #FC8181;
+  }
+
+  .g--background-color-rojo-5\@desktop {
+    background-color: #F56565;
+  }
+
+  .g--background-color-rojo-6\@desktop {
+    background-color: #E53E3E;
+  }
+
+  .g--background-color-rojo-7\@desktop {
+    background-color: #C53030;
+  }
+
+  .g--background-color-rojo-8\@desktop {
+    background-color: #9B2C2C;
+  }
+
+  .g--background-color-rojo-9\@desktop {
+    background-color: #742A2A;
+  }
+
+  .g--background-color-verde-1\@desktop {
+    background-color: #F0FFF4;
+  }
+
+  .g--background-color-verde-2\@desktop {
+    background-color: #C6F6D5;
+  }
+
+  .g--background-color-verde-3\@desktop {
+    background-color: #9AE6B4;
+  }
+
+  .g--background-color-verde-4\@desktop {
+    background-color: #68D391;
+  }
+
+  .g--background-color-verde-5\@desktop {
+    background-color: #48BB78;
+  }
+
+  .g--background-color-verde-6\@desktop {
+    background-color: #38A169;
+  }
+
+  .g--background-color-verde-7\@desktop {
+    background-color: #2F855A;
+  }
+
+  .g--background-color-verde-8\@desktop {
+    background-color: #276749;
+  }
+
+  .g--background-color-verde-9\@desktop {
+    background-color: #22543D;
+  }
+
+  .g--background-color-amarillo-1\@desktop {
+    background-color: #FFFFF0;
+  }
+
+  .g--background-color-amarillo-2\@desktop {
+    background-color: #FEFCBF;
+  }
+
+  .g--background-color-amarillo-3\@desktop {
+    background-color: #FAF089;
+  }
+
+  .g--background-color-amarillo-4\@desktop {
+    background-color: #F6E05E;
+  }
+
+  .g--background-color-amarillo-5\@desktop {
+    background-color: #ECC94B;
+  }
+
+  .g--background-color-amarillo-6\@desktop {
+    background-color: #D69E2E;
+  }
+
+  .g--background-color-amarillo-7\@desktop {
+    background-color: #B7791F;
+  }
+
+  .g--background-color-amarillo-8\@desktop {
+    background-color: #975A16;
+  }
+
+  .g--background-color-amarillo-9\@desktop {
+    background-color: #744210;
+  }
+
+  .g--background-color-default-1\@desktop {
+    background-color: #F0F7FF;
+  }
+
+  .g--background-color-default-2\@desktop {
+    background-color: #BDDCFF;
+  }
+
+  .g--background-color-default-3\@desktop {
+    background-color: #8AC0FF;
+  }
+
+  .g--background-color-default-4\@desktop {
+    background-color: #52A3FF;
+  }
+
+  .g--background-color-default-5\@desktop {
+    background-color: #1F87FF;
+  }
+
+  .g--background-color-default-6\@desktop {
+    background-color: #006DEB;
+  }
+
+  .g--background-color-default-7\@desktop {
+    background-color: #0056B8;
+  }
+
+  .g--background-color-default-8\@desktop {
+    background-color: #003B80;
+  }
+
+  .g--background-color-default-9\@desktop {
+    background-color: #00244D;
+  }
+
+  .g--background-color-alt-1\@desktop {
+    background-color: #FFFAF0;
+  }
+
+  .g--background-color-alt-2\@desktop {
+    background-color: #FEEBC8;
+  }
+
+  .g--background-color-alt-3\@desktop {
+    background-color: #FBD38D;
+  }
+
+  .g--background-color-alt-4\@desktop {
+    background-color: #F6AD55;
+  }
+
+  .g--background-color-alt-5\@desktop {
+    background-color: #ED8936;
+  }
+
+  .g--background-color-alt-6\@desktop {
+    background-color: #DD6B20;
+  }
+
+  .g--background-color-alt-7\@desktop {
+    background-color: #C05621;
+  }
+
+  .g--background-color-alt-8\@desktop {
+    background-color: #9C4221;
+  }
+
+  .g--background-color-alt-9\@desktop {
+    background-color: #7B341E;
+  }
+
+  .g--background-color-negro-1\@desktop {
+    background-color: #000000;
+  }
+
+  .g--background-color-blanco-1\@desktop {
+    background-color: #FFFFFF;
+  }
+}
+.g--border-color-gris-1 {
+  border-color: #F7FAFC;
+}
+
+.g--border-color-gris-2 {
+  border-color: #EDF2F7;
+}
+
+.g--border-color-gris-3 {
+  border-color: #E2E8F0;
+}
+
+.g--border-color-gris-4 {
+  border-color: #CBD5E0;
+}
+
+.g--border-color-gris-5 {
+  border-color: #A0AEC0;
+}
+
+.g--border-color-gris-6 {
+  border-color: #718096;
+}
+
+.g--border-color-gris-7 {
+  border-color: #4A5568;
+}
+
+.g--border-color-gris-8 {
+  border-color: #2D3748;
+}
+
+.g--border-color-gris-9 {
+  border-color: #1A202C;
+}
+
+.g--border-color-rojo-1 {
+  border-color: #FFF5F5;
+}
+
+.g--border-color-rojo-2 {
+  border-color: #FED7D7;
+}
+
+.g--border-color-rojo-3 {
+  border-color: #FEB2B2;
+}
+
+.g--border-color-rojo-4 {
+  border-color: #FC8181;
+}
+
+.g--border-color-rojo-5 {
+  border-color: #F56565;
+}
+
+.g--border-color-rojo-6 {
+  border-color: #E53E3E;
+}
+
+.g--border-color-rojo-7 {
+  border-color: #C53030;
+}
+
+.g--border-color-rojo-8 {
+  border-color: #9B2C2C;
+}
+
+.g--border-color-rojo-9 {
+  border-color: #742A2A;
+}
+
+.g--border-color-verde-1 {
+  border-color: #F0FFF4;
+}
+
+.g--border-color-verde-2 {
+  border-color: #C6F6D5;
+}
+
+.g--border-color-verde-3 {
+  border-color: #9AE6B4;
+}
+
+.g--border-color-verde-4 {
+  border-color: #68D391;
+}
+
+.g--border-color-verde-5 {
+  border-color: #48BB78;
+}
+
+.g--border-color-verde-6 {
+  border-color: #38A169;
+}
+
+.g--border-color-verde-7 {
+  border-color: #2F855A;
+}
+
+.g--border-color-verde-8 {
+  border-color: #276749;
+}
+
+.g--border-color-verde-9 {
+  border-color: #22543D;
+}
+
+.g--border-color-amarillo-1 {
+  border-color: #FFFFF0;
+}
+
+.g--border-color-amarillo-2 {
+  border-color: #FEFCBF;
+}
+
+.g--border-color-amarillo-3 {
+  border-color: #FAF089;
+}
+
+.g--border-color-amarillo-4 {
+  border-color: #F6E05E;
+}
+
+.g--border-color-amarillo-5 {
+  border-color: #ECC94B;
+}
+
+.g--border-color-amarillo-6 {
+  border-color: #D69E2E;
+}
+
+.g--border-color-amarillo-7 {
+  border-color: #B7791F;
+}
+
+.g--border-color-amarillo-8 {
+  border-color: #975A16;
+}
+
+.g--border-color-amarillo-9 {
+  border-color: #744210;
+}
+
+.g--border-color-default-1 {
+  border-color: #F0F7FF;
+}
+
+.g--border-color-default-2 {
+  border-color: #BDDCFF;
+}
+
+.g--border-color-default-3 {
+  border-color: #8AC0FF;
+}
+
+.g--border-color-default-4 {
+  border-color: #52A3FF;
+}
+
+.g--border-color-default-5 {
+  border-color: #1F87FF;
+}
+
+.g--border-color-default-6 {
+  border-color: #006DEB;
+}
+
+.g--border-color-default-7 {
+  border-color: #0056B8;
+}
+
+.g--border-color-default-8 {
+  border-color: #003B80;
+}
+
+.g--border-color-default-9 {
+  border-color: #00244D;
+}
+
+.g--border-color-alt-1 {
+  border-color: #FFFAF0;
+}
+
+.g--border-color-alt-2 {
+  border-color: #FEEBC8;
+}
+
+.g--border-color-alt-3 {
+  border-color: #FBD38D;
+}
+
+.g--border-color-alt-4 {
+  border-color: #F6AD55;
+}
+
+.g--border-color-alt-5 {
+  border-color: #ED8936;
+}
+
+.g--border-color-alt-6 {
+  border-color: #DD6B20;
+}
+
+.g--border-color-alt-7 {
+  border-color: #C05621;
+}
+
+.g--border-color-alt-8 {
+  border-color: #9C4221;
+}
+
+.g--border-color-alt-9 {
+  border-color: #7B341E;
+}
+
+.g--border-color-negro-1 {
+  border-color: #000000;
+}
+
+.g--border-color-blanco-1 {
+  border-color: #FFFFFF;
+}
+
+@media (min-width: 640px) {
+  .g--border-color-gris-1\@movil {
+    border-color: #F7FAFC;
+  }
+
+  .g--border-color-gris-2\@movil {
+    border-color: #EDF2F7;
+  }
+
+  .g--border-color-gris-3\@movil {
+    border-color: #E2E8F0;
+  }
+
+  .g--border-color-gris-4\@movil {
+    border-color: #CBD5E0;
+  }
+
+  .g--border-color-gris-5\@movil {
+    border-color: #A0AEC0;
+  }
+
+  .g--border-color-gris-6\@movil {
+    border-color: #718096;
+  }
+
+  .g--border-color-gris-7\@movil {
+    border-color: #4A5568;
+  }
+
+  .g--border-color-gris-8\@movil {
+    border-color: #2D3748;
+  }
+
+  .g--border-color-gris-9\@movil {
+    border-color: #1A202C;
+  }
+
+  .g--border-color-rojo-1\@movil {
+    border-color: #FFF5F5;
+  }
+
+  .g--border-color-rojo-2\@movil {
+    border-color: #FED7D7;
+  }
+
+  .g--border-color-rojo-3\@movil {
+    border-color: #FEB2B2;
+  }
+
+  .g--border-color-rojo-4\@movil {
+    border-color: #FC8181;
+  }
+
+  .g--border-color-rojo-5\@movil {
+    border-color: #F56565;
+  }
+
+  .g--border-color-rojo-6\@movil {
+    border-color: #E53E3E;
+  }
+
+  .g--border-color-rojo-7\@movil {
+    border-color: #C53030;
+  }
+
+  .g--border-color-rojo-8\@movil {
+    border-color: #9B2C2C;
+  }
+
+  .g--border-color-rojo-9\@movil {
+    border-color: #742A2A;
+  }
+
+  .g--border-color-verde-1\@movil {
+    border-color: #F0FFF4;
+  }
+
+  .g--border-color-verde-2\@movil {
+    border-color: #C6F6D5;
+  }
+
+  .g--border-color-verde-3\@movil {
+    border-color: #9AE6B4;
+  }
+
+  .g--border-color-verde-4\@movil {
+    border-color: #68D391;
+  }
+
+  .g--border-color-verde-5\@movil {
+    border-color: #48BB78;
+  }
+
+  .g--border-color-verde-6\@movil {
+    border-color: #38A169;
+  }
+
+  .g--border-color-verde-7\@movil {
+    border-color: #2F855A;
+  }
+
+  .g--border-color-verde-8\@movil {
+    border-color: #276749;
+  }
+
+  .g--border-color-verde-9\@movil {
+    border-color: #22543D;
+  }
+
+  .g--border-color-amarillo-1\@movil {
+    border-color: #FFFFF0;
+  }
+
+  .g--border-color-amarillo-2\@movil {
+    border-color: #FEFCBF;
+  }
+
+  .g--border-color-amarillo-3\@movil {
+    border-color: #FAF089;
+  }
+
+  .g--border-color-amarillo-4\@movil {
+    border-color: #F6E05E;
+  }
+
+  .g--border-color-amarillo-5\@movil {
+    border-color: #ECC94B;
+  }
+
+  .g--border-color-amarillo-6\@movil {
+    border-color: #D69E2E;
+  }
+
+  .g--border-color-amarillo-7\@movil {
+    border-color: #B7791F;
+  }
+
+  .g--border-color-amarillo-8\@movil {
+    border-color: #975A16;
+  }
+
+  .g--border-color-amarillo-9\@movil {
+    border-color: #744210;
+  }
+
+  .g--border-color-default-1\@movil {
+    border-color: #F0F7FF;
+  }
+
+  .g--border-color-default-2\@movil {
+    border-color: #BDDCFF;
+  }
+
+  .g--border-color-default-3\@movil {
+    border-color: #8AC0FF;
+  }
+
+  .g--border-color-default-4\@movil {
+    border-color: #52A3FF;
+  }
+
+  .g--border-color-default-5\@movil {
+    border-color: #1F87FF;
+  }
+
+  .g--border-color-default-6\@movil {
+    border-color: #006DEB;
+  }
+
+  .g--border-color-default-7\@movil {
+    border-color: #0056B8;
+  }
+
+  .g--border-color-default-8\@movil {
+    border-color: #003B80;
+  }
+
+  .g--border-color-default-9\@movil {
+    border-color: #00244D;
+  }
+
+  .g--border-color-alt-1\@movil {
+    border-color: #FFFAF0;
+  }
+
+  .g--border-color-alt-2\@movil {
+    border-color: #FEEBC8;
+  }
+
+  .g--border-color-alt-3\@movil {
+    border-color: #FBD38D;
+  }
+
+  .g--border-color-alt-4\@movil {
+    border-color: #F6AD55;
+  }
+
+  .g--border-color-alt-5\@movil {
+    border-color: #ED8936;
+  }
+
+  .g--border-color-alt-6\@movil {
+    border-color: #DD6B20;
+  }
+
+  .g--border-color-alt-7\@movil {
+    border-color: #C05621;
+  }
+
+  .g--border-color-alt-8\@movil {
+    border-color: #9C4221;
+  }
+
+  .g--border-color-alt-9\@movil {
+    border-color: #7B341E;
+  }
+
+  .g--border-color-negro-1\@movil {
+    border-color: #000000;
+  }
+
+  .g--border-color-blanco-1\@movil {
+    border-color: #FFFFFF;
+  }
+}
+@media (min-width: 768px) {
+  .g--border-color-gris-1\@tablet {
+    border-color: #F7FAFC;
+  }
+
+  .g--border-color-gris-2\@tablet {
+    border-color: #EDF2F7;
+  }
+
+  .g--border-color-gris-3\@tablet {
+    border-color: #E2E8F0;
+  }
+
+  .g--border-color-gris-4\@tablet {
+    border-color: #CBD5E0;
+  }
+
+  .g--border-color-gris-5\@tablet {
+    border-color: #A0AEC0;
+  }
+
+  .g--border-color-gris-6\@tablet {
+    border-color: #718096;
+  }
+
+  .g--border-color-gris-7\@tablet {
+    border-color: #4A5568;
+  }
+
+  .g--border-color-gris-8\@tablet {
+    border-color: #2D3748;
+  }
+
+  .g--border-color-gris-9\@tablet {
+    border-color: #1A202C;
+  }
+
+  .g--border-color-rojo-1\@tablet {
+    border-color: #FFF5F5;
+  }
+
+  .g--border-color-rojo-2\@tablet {
+    border-color: #FED7D7;
+  }
+
+  .g--border-color-rojo-3\@tablet {
+    border-color: #FEB2B2;
+  }
+
+  .g--border-color-rojo-4\@tablet {
+    border-color: #FC8181;
+  }
+
+  .g--border-color-rojo-5\@tablet {
+    border-color: #F56565;
+  }
+
+  .g--border-color-rojo-6\@tablet {
+    border-color: #E53E3E;
+  }
+
+  .g--border-color-rojo-7\@tablet {
+    border-color: #C53030;
+  }
+
+  .g--border-color-rojo-8\@tablet {
+    border-color: #9B2C2C;
+  }
+
+  .g--border-color-rojo-9\@tablet {
+    border-color: #742A2A;
+  }
+
+  .g--border-color-verde-1\@tablet {
+    border-color: #F0FFF4;
+  }
+
+  .g--border-color-verde-2\@tablet {
+    border-color: #C6F6D5;
+  }
+
+  .g--border-color-verde-3\@tablet {
+    border-color: #9AE6B4;
+  }
+
+  .g--border-color-verde-4\@tablet {
+    border-color: #68D391;
+  }
+
+  .g--border-color-verde-5\@tablet {
+    border-color: #48BB78;
+  }
+
+  .g--border-color-verde-6\@tablet {
+    border-color: #38A169;
+  }
+
+  .g--border-color-verde-7\@tablet {
+    border-color: #2F855A;
+  }
+
+  .g--border-color-verde-8\@tablet {
+    border-color: #276749;
+  }
+
+  .g--border-color-verde-9\@tablet {
+    border-color: #22543D;
+  }
+
+  .g--border-color-amarillo-1\@tablet {
+    border-color: #FFFFF0;
+  }
+
+  .g--border-color-amarillo-2\@tablet {
+    border-color: #FEFCBF;
+  }
+
+  .g--border-color-amarillo-3\@tablet {
+    border-color: #FAF089;
+  }
+
+  .g--border-color-amarillo-4\@tablet {
+    border-color: #F6E05E;
+  }
+
+  .g--border-color-amarillo-5\@tablet {
+    border-color: #ECC94B;
+  }
+
+  .g--border-color-amarillo-6\@tablet {
+    border-color: #D69E2E;
+  }
+
+  .g--border-color-amarillo-7\@tablet {
+    border-color: #B7791F;
+  }
+
+  .g--border-color-amarillo-8\@tablet {
+    border-color: #975A16;
+  }
+
+  .g--border-color-amarillo-9\@tablet {
+    border-color: #744210;
+  }
+
+  .g--border-color-default-1\@tablet {
+    border-color: #F0F7FF;
+  }
+
+  .g--border-color-default-2\@tablet {
+    border-color: #BDDCFF;
+  }
+
+  .g--border-color-default-3\@tablet {
+    border-color: #8AC0FF;
+  }
+
+  .g--border-color-default-4\@tablet {
+    border-color: #52A3FF;
+  }
+
+  .g--border-color-default-5\@tablet {
+    border-color: #1F87FF;
+  }
+
+  .g--border-color-default-6\@tablet {
+    border-color: #006DEB;
+  }
+
+  .g--border-color-default-7\@tablet {
+    border-color: #0056B8;
+  }
+
+  .g--border-color-default-8\@tablet {
+    border-color: #003B80;
+  }
+
+  .g--border-color-default-9\@tablet {
+    border-color: #00244D;
+  }
+
+  .g--border-color-alt-1\@tablet {
+    border-color: #FFFAF0;
+  }
+
+  .g--border-color-alt-2\@tablet {
+    border-color: #FEEBC8;
+  }
+
+  .g--border-color-alt-3\@tablet {
+    border-color: #FBD38D;
+  }
+
+  .g--border-color-alt-4\@tablet {
+    border-color: #F6AD55;
+  }
+
+  .g--border-color-alt-5\@tablet {
+    border-color: #ED8936;
+  }
+
+  .g--border-color-alt-6\@tablet {
+    border-color: #DD6B20;
+  }
+
+  .g--border-color-alt-7\@tablet {
+    border-color: #C05621;
+  }
+
+  .g--border-color-alt-8\@tablet {
+    border-color: #9C4221;
+  }
+
+  .g--border-color-alt-9\@tablet {
+    border-color: #7B341E;
+  }
+
+  .g--border-color-negro-1\@tablet {
+    border-color: #000000;
+  }
+
+  .g--border-color-blanco-1\@tablet {
+    border-color: #FFFFFF;
+  }
+}
+@media (min-width: 1024px) {
+  .g--border-color-gris-1\@desktop {
+    border-color: #F7FAFC;
+  }
+
+  .g--border-color-gris-2\@desktop {
+    border-color: #EDF2F7;
+  }
+
+  .g--border-color-gris-3\@desktop {
+    border-color: #E2E8F0;
+  }
+
+  .g--border-color-gris-4\@desktop {
+    border-color: #CBD5E0;
+  }
+
+  .g--border-color-gris-5\@desktop {
+    border-color: #A0AEC0;
+  }
+
+  .g--border-color-gris-6\@desktop {
+    border-color: #718096;
+  }
+
+  .g--border-color-gris-7\@desktop {
+    border-color: #4A5568;
+  }
+
+  .g--border-color-gris-8\@desktop {
+    border-color: #2D3748;
+  }
+
+  .g--border-color-gris-9\@desktop {
+    border-color: #1A202C;
+  }
+
+  .g--border-color-rojo-1\@desktop {
+    border-color: #FFF5F5;
+  }
+
+  .g--border-color-rojo-2\@desktop {
+    border-color: #FED7D7;
+  }
+
+  .g--border-color-rojo-3\@desktop {
+    border-color: #FEB2B2;
+  }
+
+  .g--border-color-rojo-4\@desktop {
+    border-color: #FC8181;
+  }
+
+  .g--border-color-rojo-5\@desktop {
+    border-color: #F56565;
+  }
+
+  .g--border-color-rojo-6\@desktop {
+    border-color: #E53E3E;
+  }
+
+  .g--border-color-rojo-7\@desktop {
+    border-color: #C53030;
+  }
+
+  .g--border-color-rojo-8\@desktop {
+    border-color: #9B2C2C;
+  }
+
+  .g--border-color-rojo-9\@desktop {
+    border-color: #742A2A;
+  }
+
+  .g--border-color-verde-1\@desktop {
+    border-color: #F0FFF4;
+  }
+
+  .g--border-color-verde-2\@desktop {
+    border-color: #C6F6D5;
+  }
+
+  .g--border-color-verde-3\@desktop {
+    border-color: #9AE6B4;
+  }
+
+  .g--border-color-verde-4\@desktop {
+    border-color: #68D391;
+  }
+
+  .g--border-color-verde-5\@desktop {
+    border-color: #48BB78;
+  }
+
+  .g--border-color-verde-6\@desktop {
+    border-color: #38A169;
+  }
+
+  .g--border-color-verde-7\@desktop {
+    border-color: #2F855A;
+  }
+
+  .g--border-color-verde-8\@desktop {
+    border-color: #276749;
+  }
+
+  .g--border-color-verde-9\@desktop {
+    border-color: #22543D;
+  }
+
+  .g--border-color-amarillo-1\@desktop {
+    border-color: #FFFFF0;
+  }
+
+  .g--border-color-amarillo-2\@desktop {
+    border-color: #FEFCBF;
+  }
+
+  .g--border-color-amarillo-3\@desktop {
+    border-color: #FAF089;
+  }
+
+  .g--border-color-amarillo-4\@desktop {
+    border-color: #F6E05E;
+  }
+
+  .g--border-color-amarillo-5\@desktop {
+    border-color: #ECC94B;
+  }
+
+  .g--border-color-amarillo-6\@desktop {
+    border-color: #D69E2E;
+  }
+
+  .g--border-color-amarillo-7\@desktop {
+    border-color: #B7791F;
+  }
+
+  .g--border-color-amarillo-8\@desktop {
+    border-color: #975A16;
+  }
+
+  .g--border-color-amarillo-9\@desktop {
+    border-color: #744210;
+  }
+
+  .g--border-color-default-1\@desktop {
+    border-color: #F0F7FF;
+  }
+
+  .g--border-color-default-2\@desktop {
+    border-color: #BDDCFF;
+  }
+
+  .g--border-color-default-3\@desktop {
+    border-color: #8AC0FF;
+  }
+
+  .g--border-color-default-4\@desktop {
+    border-color: #52A3FF;
+  }
+
+  .g--border-color-default-5\@desktop {
+    border-color: #1F87FF;
+  }
+
+  .g--border-color-default-6\@desktop {
+    border-color: #006DEB;
+  }
+
+  .g--border-color-default-7\@desktop {
+    border-color: #0056B8;
+  }
+
+  .g--border-color-default-8\@desktop {
+    border-color: #003B80;
+  }
+
+  .g--border-color-default-9\@desktop {
+    border-color: #00244D;
+  }
+
+  .g--border-color-alt-1\@desktop {
+    border-color: #FFFAF0;
+  }
+
+  .g--border-color-alt-2\@desktop {
+    border-color: #FEEBC8;
+  }
+
+  .g--border-color-alt-3\@desktop {
+    border-color: #FBD38D;
+  }
+
+  .g--border-color-alt-4\@desktop {
+    border-color: #F6AD55;
+  }
+
+  .g--border-color-alt-5\@desktop {
+    border-color: #ED8936;
+  }
+
+  .g--border-color-alt-6\@desktop {
+    border-color: #DD6B20;
+  }
+
+  .g--border-color-alt-7\@desktop {
+    border-color: #C05621;
+  }
+
+  .g--border-color-alt-8\@desktop {
+    border-color: #9C4221;
+  }
+
+  .g--border-color-alt-9\@desktop {
+    border-color: #7B341E;
+  }
+
+  .g--border-color-negro-1\@desktop {
+    border-color: #000000;
+  }
+
+  .g--border-color-blanco-1\@desktop {
+    border-color: #FFFFFF;
+  }
+}
+.g--opacity-0 {
+  opacity: 0;
+}
+
+.g--opacity-1 {
+  opacity: 0.1;
+}
+
+.g--opacity-2 {
+  opacity: 0.2;
+}
+
+.g--opacity-3 {
+  opacity: 0.3;
+}
+
+.g--opacity-4 {
+  opacity: 0.4;
+}
+
+.g--opacity-5 {
+  opacity: 0.5;
+}
+
+.g--opacity-6 {
+  opacity: 0.6;
+}
+
+.g--opacity-7 {
+  opacity: 0.7;
+}
+
+.g--opacity-8 {
+  opacity: 0.8;
+}
+
+.g--opacity-9 {
+  opacity: 0.9;
+}
+
+.g--opacity-10 {
+  opacity: 1;
+}
+
+@media (min-width: 640px) {
+  .g--opacity-0\@movil {
+    opacity: 0;
+  }
+
+  .g--opacity-1\@movil {
+    opacity: 0.1;
+  }
+
+  .g--opacity-2\@movil {
+    opacity: 0.2;
+  }
+
+  .g--opacity-3\@movil {
+    opacity: 0.3;
+  }
+
+  .g--opacity-4\@movil {
+    opacity: 0.4;
+  }
+
+  .g--opacity-5\@movil {
+    opacity: 0.5;
+  }
+
+  .g--opacity-6\@movil {
+    opacity: 0.6;
+  }
+
+  .g--opacity-7\@movil {
+    opacity: 0.7;
+  }
+
+  .g--opacity-8\@movil {
+    opacity: 0.8;
+  }
+
+  .g--opacity-9\@movil {
+    opacity: 0.9;
+  }
+
+  .g--opacity-10\@movil {
+    opacity: 1;
+  }
+}
+@media (min-width: 768px) {
+  .g--opacity-0\@tablet {
+    opacity: 0;
+  }
+
+  .g--opacity-1\@tablet {
+    opacity: 0.1;
+  }
+
+  .g--opacity-2\@tablet {
+    opacity: 0.2;
+  }
+
+  .g--opacity-3\@tablet {
+    opacity: 0.3;
+  }
+
+  .g--opacity-4\@tablet {
+    opacity: 0.4;
+  }
+
+  .g--opacity-5\@tablet {
+    opacity: 0.5;
+  }
+
+  .g--opacity-6\@tablet {
+    opacity: 0.6;
+  }
+
+  .g--opacity-7\@tablet {
+    opacity: 0.7;
+  }
+
+  .g--opacity-8\@tablet {
+    opacity: 0.8;
+  }
+
+  .g--opacity-9\@tablet {
+    opacity: 0.9;
+  }
+
+  .g--opacity-10\@tablet {
+    opacity: 1;
+  }
+}
+@media (min-width: 1024px) {
+  .g--opacity-0\@desktop {
+    opacity: 0;
+  }
+
+  .g--opacity-1\@desktop {
+    opacity: 0.1;
+  }
+
+  .g--opacity-2\@desktop {
+    opacity: 0.2;
+  }
+
+  .g--opacity-3\@desktop {
+    opacity: 0.3;
+  }
+
+  .g--opacity-4\@desktop {
+    opacity: 0.4;
+  }
+
+  .g--opacity-5\@desktop {
+    opacity: 0.5;
+  }
+
+  .g--opacity-6\@desktop {
+    opacity: 0.6;
+  }
+
+  .g--opacity-7\@desktop {
+    opacity: 0.7;
+  }
+
+  .g--opacity-8\@desktop {
+    opacity: 0.8;
+  }
+
+  .g--opacity-9\@desktop {
+    opacity: 0.9;
+  }
+
+  .g--opacity-10\@desktop {
+    opacity: 1;
+  }
+}
+.g--font-size-2s {
+  font-size: 12px;
+}
+
+.g--font-size-1s {
+  font-size: 14px;
+}
+
+.g--font-size-default {
+  font-size: 16px;
+}
+
+.g--font-size-1l {
+  font-size: 18px;
+}
+
+.g--font-size-2l {
+  font-size: 20px;
+}
+
+.g--font-size-3l {
+  font-size: 24px;
+}
+
+.g--font-size-4l {
+  font-size: 30px;
+}
+
+.g--font-size-5l {
+  font-size: 36px;
+}
+
+.g--font-size-6l {
+  font-size: 48px;
+}
+
+.g--font-size-7l {
+  font-size: 64px;
+}
+
+@media (min-width: 640px) {
+  .g--font-size-2s\@movil {
+    font-size: 12px;
+  }
+
+  .g--font-size-1s\@movil {
+    font-size: 14px;
+  }
+
+  .g--font-size-default\@movil {
+    font-size: 16px;
+  }
+
+  .g--font-size-1l\@movil {
+    font-size: 18px;
+  }
+
+  .g--font-size-2l\@movil {
+    font-size: 20px;
+  }
+
+  .g--font-size-3l\@movil {
+    font-size: 24px;
+  }
+
+  .g--font-size-4l\@movil {
+    font-size: 30px;
+  }
+
+  .g--font-size-5l\@movil {
+    font-size: 36px;
+  }
+
+  .g--font-size-6l\@movil {
+    font-size: 48px;
+  }
+
+  .g--font-size-7l\@movil {
+    font-size: 64px;
+  }
+}
+@media (min-width: 768px) {
+  .g--font-size-2s\@tablet {
+    font-size: 12px;
+  }
+
+  .g--font-size-1s\@tablet {
+    font-size: 14px;
+  }
+
+  .g--font-size-default\@tablet {
+    font-size: 16px;
+  }
+
+  .g--font-size-1l\@tablet {
+    font-size: 18px;
+  }
+
+  .g--font-size-2l\@tablet {
+    font-size: 20px;
+  }
+
+  .g--font-size-3l\@tablet {
+    font-size: 24px;
+  }
+
+  .g--font-size-4l\@tablet {
+    font-size: 30px;
+  }
+
+  .g--font-size-5l\@tablet {
+    font-size: 36px;
+  }
+
+  .g--font-size-6l\@tablet {
+    font-size: 48px;
+  }
+
+  .g--font-size-7l\@tablet {
+    font-size: 64px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--font-size-2s\@desktop {
+    font-size: 12px;
+  }
+
+  .g--font-size-1s\@desktop {
+    font-size: 14px;
+  }
+
+  .g--font-size-default\@desktop {
+    font-size: 16px;
+  }
+
+  .g--font-size-1l\@desktop {
+    font-size: 18px;
+  }
+
+  .g--font-size-2l\@desktop {
+    font-size: 20px;
+  }
+
+  .g--font-size-3l\@desktop {
+    font-size: 24px;
+  }
+
+  .g--font-size-4l\@desktop {
+    font-size: 30px;
+  }
+
+  .g--font-size-5l\@desktop {
+    font-size: 36px;
+  }
+
+  .g--font-size-6l\@desktop {
+    font-size: 48px;
+  }
+
+  .g--font-size-7l\@desktop {
+    font-size: 64px;
+  }
+}
+.g--font-family-sans {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+}
+
+.g--font-family-default {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+}
+
+.g--font-family-serif {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.g--font-family-mono {
+  font-family: "Roboto Mono",Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.g--font-family-title {
+  font-family: Basic;
+}
+
+@media (min-width: 640px) {
+  .g--font-family-sans\@movil {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  }
+
+  .g--font-family-default\@movil {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  }
+
+  .g--font-family-serif\@movil {
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  .g--font-family-mono\@movil {
+    font-family: "Roboto Mono",Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .g--font-family-title\@movil {
+    font-family: Basic;
+  }
+}
+@media (min-width: 768px) {
+  .g--font-family-sans\@tablet {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  }
+
+  .g--font-family-default\@tablet {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  }
+
+  .g--font-family-serif\@tablet {
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  .g--font-family-mono\@tablet {
+    font-family: "Roboto Mono",Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .g--font-family-title\@tablet {
+    font-family: Basic;
+  }
+}
+@media (min-width: 1024px) {
+  .g--font-family-sans\@desktop {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  }
+
+  .g--font-family-default\@desktop {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+  }
+
+  .g--font-family-serif\@desktop {
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  .g--font-family-mono\@desktop {
+    font-family: "Roboto Mono",Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .g--font-family-title\@desktop {
+    font-family: Basic;
+  }
+}
+.g--font-bold {
+  font-weight: bold;
+}
+
+.g--center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.g--margin-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.g--margin-1 {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.g--margin-2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.g--margin-3 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.g--margin-4 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.g--margin-5 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.g--margin-6 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.g--margin-7 {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+.g--margin-8 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.g--margin-9 {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  margin-left: 48px;
+  margin-right: 48px;
+}
+
+.g--margin-10 {
+  margin-top: 64px;
+  margin-bottom: 64px;
+  margin-left: 64px;
+  margin-right: 64px;
+}
+
+.g--margin-11 {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.g--margin-12 {
+  margin-top: 96px;
+  margin-bottom: 96px;
+  margin-left: 96px;
+  margin-right: 96px;
+}
+
+.g--margin-13 {
+  margin-top: 128px;
+  margin-bottom: 128px;
+  margin-left: 128px;
+  margin-right: 128px;
+}
+
+.g--margin-14 {
+  margin-top: 160px;
+  margin-bottom: 160px;
+  margin-left: 160px;
+  margin-right: 160px;
+}
+
+.g--margin-15 {
+  margin-top: 192px;
+  margin-bottom: 192px;
+  margin-left: 192px;
+  margin-right: 192px;
+}
+
+.g--margin-16 {
+  margin-top: 224px;
+  margin-bottom: 224px;
+  margin-left: 224px;
+  margin-right: 224px;
+}
+
+.g--margin-17 {
+  margin-top: 256px;
+  margin-bottom: 256px;
+  margin-left: 256px;
+  margin-right: 256px;
+}
+
+.g--margin-18 {
+  margin-top: 320px;
+  margin-bottom: 320px;
+  margin-left: 320px;
+  margin-right: 320px;
+}
+
+.g--margin-19 {
+  margin-top: 480px;
+  margin-bottom: 480px;
+  margin-left: 480px;
+  margin-right: 480px;
+}
+
+.g--margin-20 {
+  margin-top: 640px;
+  margin-bottom: 640px;
+  margin-left: 640px;
+  margin-right: 640px;
+}
+
+.g--margin-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-0\@movil {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .g--margin-1\@movil {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .g--margin-2\@movil {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .g--margin-3\@movil {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .g--margin-4\@movil {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .g--margin-5\@movil {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .g--margin-6\@movil {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .g--margin-7\@movil {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .g--margin-8\@movil {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .g--margin-9\@movil {
+    margin-top: 48px;
+    margin-bottom: 48px;
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  .g--margin-10\@movil {
+    margin-top: 64px;
+    margin-bottom: 64px;
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .g--margin-11\@movil {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .g--margin-12\@movil {
+    margin-top: 96px;
+    margin-bottom: 96px;
+    margin-left: 96px;
+    margin-right: 96px;
+  }
+
+  .g--margin-13\@movil {
+    margin-top: 128px;
+    margin-bottom: 128px;
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+
+  .g--margin-14\@movil {
+    margin-top: 160px;
+    margin-bottom: 160px;
+    margin-left: 160px;
+    margin-right: 160px;
+  }
+
+  .g--margin-15\@movil {
+    margin-top: 192px;
+    margin-bottom: 192px;
+    margin-left: 192px;
+    margin-right: 192px;
+  }
+
+  .g--margin-16\@movil {
+    margin-top: 224px;
+    margin-bottom: 224px;
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+
+  .g--margin-17\@movil {
+    margin-top: 256px;
+    margin-bottom: 256px;
+    margin-left: 256px;
+    margin-right: 256px;
+  }
+
+  .g--margin-18\@movil {
+    margin-top: 320px;
+    margin-bottom: 320px;
+    margin-left: 320px;
+    margin-right: 320px;
+  }
+
+  .g--margin-19\@movil {
+    margin-top: 480px;
+    margin-bottom: 480px;
+    margin-left: 480px;
+    margin-right: 480px;
+  }
+
+  .g--margin-20\@movil {
+    margin-top: 640px;
+    margin-bottom: 640px;
+    margin-left: 640px;
+    margin-right: 640px;
+  }
+
+  .g--margin-auto\@movil {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-0\@tablet {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .g--margin-1\@tablet {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .g--margin-2\@tablet {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .g--margin-3\@tablet {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .g--margin-4\@tablet {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .g--margin-5\@tablet {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .g--margin-6\@tablet {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .g--margin-7\@tablet {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .g--margin-8\@tablet {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .g--margin-9\@tablet {
+    margin-top: 48px;
+    margin-bottom: 48px;
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  .g--margin-10\@tablet {
+    margin-top: 64px;
+    margin-bottom: 64px;
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .g--margin-11\@tablet {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .g--margin-12\@tablet {
+    margin-top: 96px;
+    margin-bottom: 96px;
+    margin-left: 96px;
+    margin-right: 96px;
+  }
+
+  .g--margin-13\@tablet {
+    margin-top: 128px;
+    margin-bottom: 128px;
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+
+  .g--margin-14\@tablet {
+    margin-top: 160px;
+    margin-bottom: 160px;
+    margin-left: 160px;
+    margin-right: 160px;
+  }
+
+  .g--margin-15\@tablet {
+    margin-top: 192px;
+    margin-bottom: 192px;
+    margin-left: 192px;
+    margin-right: 192px;
+  }
+
+  .g--margin-16\@tablet {
+    margin-top: 224px;
+    margin-bottom: 224px;
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+
+  .g--margin-17\@tablet {
+    margin-top: 256px;
+    margin-bottom: 256px;
+    margin-left: 256px;
+    margin-right: 256px;
+  }
+
+  .g--margin-18\@tablet {
+    margin-top: 320px;
+    margin-bottom: 320px;
+    margin-left: 320px;
+    margin-right: 320px;
+  }
+
+  .g--margin-19\@tablet {
+    margin-top: 480px;
+    margin-bottom: 480px;
+    margin-left: 480px;
+    margin-right: 480px;
+  }
+
+  .g--margin-20\@tablet {
+    margin-top: 640px;
+    margin-bottom: 640px;
+    margin-left: 640px;
+    margin-right: 640px;
+  }
+
+  .g--margin-auto\@tablet {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-0\@desktop {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .g--margin-1\@desktop {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .g--margin-2\@desktop {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .g--margin-3\@desktop {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .g--margin-4\@desktop {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .g--margin-5\@desktop {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .g--margin-6\@desktop {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .g--margin-7\@desktop {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .g--margin-8\@desktop {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .g--margin-9\@desktop {
+    margin-top: 48px;
+    margin-bottom: 48px;
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  .g--margin-10\@desktop {
+    margin-top: 64px;
+    margin-bottom: 64px;
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .g--margin-11\@desktop {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .g--margin-12\@desktop {
+    margin-top: 96px;
+    margin-bottom: 96px;
+    margin-left: 96px;
+    margin-right: 96px;
+  }
+
+  .g--margin-13\@desktop {
+    margin-top: 128px;
+    margin-bottom: 128px;
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+
+  .g--margin-14\@desktop {
+    margin-top: 160px;
+    margin-bottom: 160px;
+    margin-left: 160px;
+    margin-right: 160px;
+  }
+
+  .g--margin-15\@desktop {
+    margin-top: 192px;
+    margin-bottom: 192px;
+    margin-left: 192px;
+    margin-right: 192px;
+  }
+
+  .g--margin-16\@desktop {
+    margin-top: 224px;
+    margin-bottom: 224px;
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+
+  .g--margin-17\@desktop {
+    margin-top: 256px;
+    margin-bottom: 256px;
+    margin-left: 256px;
+    margin-right: 256px;
+  }
+
+  .g--margin-18\@desktop {
+    margin-top: 320px;
+    margin-bottom: 320px;
+    margin-left: 320px;
+    margin-right: 320px;
+  }
+
+  .g--margin-19\@desktop {
+    margin-top: 480px;
+    margin-bottom: 480px;
+    margin-left: 480px;
+    margin-right: 480px;
+  }
+
+  .g--margin-20\@desktop {
+    margin-top: 640px;
+    margin-bottom: 640px;
+    margin-left: 640px;
+    margin-right: 640px;
+  }
+
+  .g--margin-auto\@desktop {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.g--margin-vertical-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.g--margin-vertical-1 {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.g--margin-vertical-2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.g--margin-vertical-3 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.g--margin-vertical-4 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.g--margin-vertical-5 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.g--margin-vertical-6 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.g--margin-vertical-7 {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.g--margin-vertical-8 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.g--margin-vertical-9 {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
+
+.g--margin-vertical-10 {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.g--margin-vertical-11 {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.g--margin-vertical-12 {
+  margin-top: 96px;
+  margin-bottom: 96px;
+}
+
+.g--margin-vertical-13 {
+  margin-top: 128px;
+  margin-bottom: 128px;
+}
+
+.g--margin-vertical-14 {
+  margin-top: 160px;
+  margin-bottom: 160px;
+}
+
+.g--margin-vertical-15 {
+  margin-top: 192px;
+  margin-bottom: 192px;
+}
+
+.g--margin-vertical-16 {
+  margin-top: 224px;
+  margin-bottom: 224px;
+}
+
+.g--margin-vertical-17 {
+  margin-top: 256px;
+  margin-bottom: 256px;
+}
+
+.g--margin-vertical-18 {
+  margin-top: 320px;
+  margin-bottom: 320px;
+}
+
+.g--margin-vertical-19 {
+  margin-top: 480px;
+  margin-bottom: 480px;
+}
+
+.g--margin-vertical-20 {
+  margin-top: 640px;
+  margin-bottom: 640px;
+}
+
+.g--margin-vertical-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-vertical-0\@movil {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .g--margin-vertical-1\@movil {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .g--margin-vertical-2\@movil {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .g--margin-vertical-3\@movil {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .g--margin-vertical-4\@movil {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .g--margin-vertical-5\@movil {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .g--margin-vertical-6\@movil {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .g--margin-vertical-7\@movil {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .g--margin-vertical-8\@movil {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .g--margin-vertical-9\@movil {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .g--margin-vertical-10\@movil {
+    margin-top: 64px;
+    margin-bottom: 64px;
+  }
+
+  .g--margin-vertical-11\@movil {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  .g--margin-vertical-12\@movil {
+    margin-top: 96px;
+    margin-bottom: 96px;
+  }
+
+  .g--margin-vertical-13\@movil {
+    margin-top: 128px;
+    margin-bottom: 128px;
+  }
+
+  .g--margin-vertical-14\@movil {
+    margin-top: 160px;
+    margin-bottom: 160px;
+  }
+
+  .g--margin-vertical-15\@movil {
+    margin-top: 192px;
+    margin-bottom: 192px;
+  }
+
+  .g--margin-vertical-16\@movil {
+    margin-top: 224px;
+    margin-bottom: 224px;
+  }
+
+  .g--margin-vertical-17\@movil {
+    margin-top: 256px;
+    margin-bottom: 256px;
+  }
+
+  .g--margin-vertical-18\@movil {
+    margin-top: 320px;
+    margin-bottom: 320px;
+  }
+
+  .g--margin-vertical-19\@movil {
+    margin-top: 480px;
+    margin-bottom: 480px;
+  }
+
+  .g--margin-vertical-20\@movil {
+    margin-top: 640px;
+    margin-bottom: 640px;
+  }
+
+  .g--margin-vertical-auto\@movil {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-vertical-0\@tablet {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .g--margin-vertical-1\@tablet {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .g--margin-vertical-2\@tablet {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .g--margin-vertical-3\@tablet {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .g--margin-vertical-4\@tablet {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .g--margin-vertical-5\@tablet {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .g--margin-vertical-6\@tablet {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .g--margin-vertical-7\@tablet {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .g--margin-vertical-8\@tablet {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .g--margin-vertical-9\@tablet {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .g--margin-vertical-10\@tablet {
+    margin-top: 64px;
+    margin-bottom: 64px;
+  }
+
+  .g--margin-vertical-11\@tablet {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  .g--margin-vertical-12\@tablet {
+    margin-top: 96px;
+    margin-bottom: 96px;
+  }
+
+  .g--margin-vertical-13\@tablet {
+    margin-top: 128px;
+    margin-bottom: 128px;
+  }
+
+  .g--margin-vertical-14\@tablet {
+    margin-top: 160px;
+    margin-bottom: 160px;
+  }
+
+  .g--margin-vertical-15\@tablet {
+    margin-top: 192px;
+    margin-bottom: 192px;
+  }
+
+  .g--margin-vertical-16\@tablet {
+    margin-top: 224px;
+    margin-bottom: 224px;
+  }
+
+  .g--margin-vertical-17\@tablet {
+    margin-top: 256px;
+    margin-bottom: 256px;
+  }
+
+  .g--margin-vertical-18\@tablet {
+    margin-top: 320px;
+    margin-bottom: 320px;
+  }
+
+  .g--margin-vertical-19\@tablet {
+    margin-top: 480px;
+    margin-bottom: 480px;
+  }
+
+  .g--margin-vertical-20\@tablet {
+    margin-top: 640px;
+    margin-bottom: 640px;
+  }
+
+  .g--margin-vertical-auto\@tablet {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-vertical-0\@desktop {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .g--margin-vertical-1\@desktop {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .g--margin-vertical-2\@desktop {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .g--margin-vertical-3\@desktop {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .g--margin-vertical-4\@desktop {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .g--margin-vertical-5\@desktop {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .g--margin-vertical-6\@desktop {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .g--margin-vertical-7\@desktop {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .g--margin-vertical-8\@desktop {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .g--margin-vertical-9\@desktop {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .g--margin-vertical-10\@desktop {
+    margin-top: 64px;
+    margin-bottom: 64px;
+  }
+
+  .g--margin-vertical-11\@desktop {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  .g--margin-vertical-12\@desktop {
+    margin-top: 96px;
+    margin-bottom: 96px;
+  }
+
+  .g--margin-vertical-13\@desktop {
+    margin-top: 128px;
+    margin-bottom: 128px;
+  }
+
+  .g--margin-vertical-14\@desktop {
+    margin-top: 160px;
+    margin-bottom: 160px;
+  }
+
+  .g--margin-vertical-15\@desktop {
+    margin-top: 192px;
+    margin-bottom: 192px;
+  }
+
+  .g--margin-vertical-16\@desktop {
+    margin-top: 224px;
+    margin-bottom: 224px;
+  }
+
+  .g--margin-vertical-17\@desktop {
+    margin-top: 256px;
+    margin-bottom: 256px;
+  }
+
+  .g--margin-vertical-18\@desktop {
+    margin-top: 320px;
+    margin-bottom: 320px;
+  }
+
+  .g--margin-vertical-19\@desktop {
+    margin-top: 480px;
+    margin-bottom: 480px;
+  }
+
+  .g--margin-vertical-20\@desktop {
+    margin-top: 640px;
+    margin-bottom: 640px;
+  }
+
+  .g--margin-vertical-auto\@desktop {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+.g--margin-horizontal-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.g--margin-horizontal-1 {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.g--margin-horizontal-2 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.g--margin-horizontal-3 {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.g--margin-horizontal-4 {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.g--margin-horizontal-5 {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.g--margin-horizontal-6 {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.g--margin-horizontal-7 {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+.g--margin-horizontal-8 {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.g--margin-horizontal-9 {
+  margin-left: 48px;
+  margin-right: 48px;
+}
+
+.g--margin-horizontal-10 {
+  margin-left: 64px;
+  margin-right: 64px;
+}
+
+.g--margin-horizontal-11 {
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.g--margin-horizontal-12 {
+  margin-left: 96px;
+  margin-right: 96px;
+}
+
+.g--margin-horizontal-13 {
+  margin-left: 128px;
+  margin-right: 128px;
+}
+
+.g--margin-horizontal-14 {
+  margin-left: 160px;
+  margin-right: 160px;
+}
+
+.g--margin-horizontal-15 {
+  margin-left: 192px;
+  margin-right: 192px;
+}
+
+.g--margin-horizontal-16 {
+  margin-left: 224px;
+  margin-right: 224px;
+}
+
+.g--margin-horizontal-17 {
+  margin-left: 256px;
+  margin-right: 256px;
+}
+
+.g--margin-horizontal-18 {
+  margin-left: 320px;
+  margin-right: 320px;
+}
+
+.g--margin-horizontal-19 {
+  margin-left: 480px;
+  margin-right: 480px;
+}
+
+.g--margin-horizontal-20 {
+  margin-left: 640px;
+  margin-right: 640px;
+}
+
+.g--margin-horizontal-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-horizontal-0\@movil {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .g--margin-horizontal-1\@movil {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .g--margin-horizontal-2\@movil {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .g--margin-horizontal-3\@movil {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .g--margin-horizontal-4\@movil {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .g--margin-horizontal-5\@movil {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .g--margin-horizontal-6\@movil {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .g--margin-horizontal-7\@movil {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .g--margin-horizontal-8\@movil {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .g--margin-horizontal-9\@movil {
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  .g--margin-horizontal-10\@movil {
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .g--margin-horizontal-11\@movil {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .g--margin-horizontal-12\@movil {
+    margin-left: 96px;
+    margin-right: 96px;
+  }
+
+  .g--margin-horizontal-13\@movil {
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+
+  .g--margin-horizontal-14\@movil {
+    margin-left: 160px;
+    margin-right: 160px;
+  }
+
+  .g--margin-horizontal-15\@movil {
+    margin-left: 192px;
+    margin-right: 192px;
+  }
+
+  .g--margin-horizontal-16\@movil {
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+
+  .g--margin-horizontal-17\@movil {
+    margin-left: 256px;
+    margin-right: 256px;
+  }
+
+  .g--margin-horizontal-18\@movil {
+    margin-left: 320px;
+    margin-right: 320px;
+  }
+
+  .g--margin-horizontal-19\@movil {
+    margin-left: 480px;
+    margin-right: 480px;
+  }
+
+  .g--margin-horizontal-20\@movil {
+    margin-left: 640px;
+    margin-right: 640px;
+  }
+
+  .g--margin-horizontal-auto\@movil {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-horizontal-0\@tablet {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .g--margin-horizontal-1\@tablet {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .g--margin-horizontal-2\@tablet {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .g--margin-horizontal-3\@tablet {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .g--margin-horizontal-4\@tablet {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .g--margin-horizontal-5\@tablet {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .g--margin-horizontal-6\@tablet {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .g--margin-horizontal-7\@tablet {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .g--margin-horizontal-8\@tablet {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .g--margin-horizontal-9\@tablet {
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  .g--margin-horizontal-10\@tablet {
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .g--margin-horizontal-11\@tablet {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .g--margin-horizontal-12\@tablet {
+    margin-left: 96px;
+    margin-right: 96px;
+  }
+
+  .g--margin-horizontal-13\@tablet {
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+
+  .g--margin-horizontal-14\@tablet {
+    margin-left: 160px;
+    margin-right: 160px;
+  }
+
+  .g--margin-horizontal-15\@tablet {
+    margin-left: 192px;
+    margin-right: 192px;
+  }
+
+  .g--margin-horizontal-16\@tablet {
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+
+  .g--margin-horizontal-17\@tablet {
+    margin-left: 256px;
+    margin-right: 256px;
+  }
+
+  .g--margin-horizontal-18\@tablet {
+    margin-left: 320px;
+    margin-right: 320px;
+  }
+
+  .g--margin-horizontal-19\@tablet {
+    margin-left: 480px;
+    margin-right: 480px;
+  }
+
+  .g--margin-horizontal-20\@tablet {
+    margin-left: 640px;
+    margin-right: 640px;
+  }
+
+  .g--margin-horizontal-auto\@tablet {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-horizontal-0\@desktop {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .g--margin-horizontal-1\@desktop {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .g--margin-horizontal-2\@desktop {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .g--margin-horizontal-3\@desktop {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .g--margin-horizontal-4\@desktop {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .g--margin-horizontal-5\@desktop {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .g--margin-horizontal-6\@desktop {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .g--margin-horizontal-7\@desktop {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .g--margin-horizontal-8\@desktop {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .g--margin-horizontal-9\@desktop {
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  .g--margin-horizontal-10\@desktop {
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .g--margin-horizontal-11\@desktop {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .g--margin-horizontal-12\@desktop {
+    margin-left: 96px;
+    margin-right: 96px;
+  }
+
+  .g--margin-horizontal-13\@desktop {
+    margin-left: 128px;
+    margin-right: 128px;
+  }
+
+  .g--margin-horizontal-14\@desktop {
+    margin-left: 160px;
+    margin-right: 160px;
+  }
+
+  .g--margin-horizontal-15\@desktop {
+    margin-left: 192px;
+    margin-right: 192px;
+  }
+
+  .g--margin-horizontal-16\@desktop {
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+
+  .g--margin-horizontal-17\@desktop {
+    margin-left: 256px;
+    margin-right: 256px;
+  }
+
+  .g--margin-horizontal-18\@desktop {
+    margin-left: 320px;
+    margin-right: 320px;
+  }
+
+  .g--margin-horizontal-19\@desktop {
+    margin-left: 480px;
+    margin-right: 480px;
+  }
+
+  .g--margin-horizontal-20\@desktop {
+    margin-left: 640px;
+    margin-right: 640px;
+  }
+
+  .g--margin-horizontal-auto\@desktop {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.g--margin-top-0 {
+  margin-top: 0px;
+}
+
+.g--margin-top-1 {
+  margin-top: 4px;
+}
+
+.g--margin-top-2 {
+  margin-top: 8px;
+}
+
+.g--margin-top-3 {
+  margin-top: 12px;
+}
+
+.g--margin-top-4 {
+  margin-top: 16px;
+}
+
+.g--margin-top-5 {
+  margin-top: 20px;
+}
+
+.g--margin-top-6 {
+  margin-top: 24px;
+}
+
+.g--margin-top-7 {
+  margin-top: 32px;
+}
+
+.g--margin-top-8 {
+  margin-top: 40px;
+}
+
+.g--margin-top-9 {
+  margin-top: 48px;
+}
+
+.g--margin-top-10 {
+  margin-top: 64px;
+}
+
+.g--margin-top-11 {
+  margin-top: 80px;
+}
+
+.g--margin-top-12 {
+  margin-top: 96px;
+}
+
+.g--margin-top-13 {
+  margin-top: 128px;
+}
+
+.g--margin-top-14 {
+  margin-top: 160px;
+}
+
+.g--margin-top-15 {
+  margin-top: 192px;
+}
+
+.g--margin-top-16 {
+  margin-top: 224px;
+}
+
+.g--margin-top-17 {
+  margin-top: 256px;
+}
+
+.g--margin-top-18 {
+  margin-top: 320px;
+}
+
+.g--margin-top-19 {
+  margin-top: 480px;
+}
+
+.g--margin-top-20 {
+  margin-top: 640px;
+}
+
+.g--margin-top-auto {
+  margin-top: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-top-0\@movil {
+    margin-top: 0px;
+  }
+
+  .g--margin-top-1\@movil {
+    margin-top: 4px;
+  }
+
+  .g--margin-top-2\@movil {
+    margin-top: 8px;
+  }
+
+  .g--margin-top-3\@movil {
+    margin-top: 12px;
+  }
+
+  .g--margin-top-4\@movil {
+    margin-top: 16px;
+  }
+
+  .g--margin-top-5\@movil {
+    margin-top: 20px;
+  }
+
+  .g--margin-top-6\@movil {
+    margin-top: 24px;
+  }
+
+  .g--margin-top-7\@movil {
+    margin-top: 32px;
+  }
+
+  .g--margin-top-8\@movil {
+    margin-top: 40px;
+  }
+
+  .g--margin-top-9\@movil {
+    margin-top: 48px;
+  }
+
+  .g--margin-top-10\@movil {
+    margin-top: 64px;
+  }
+
+  .g--margin-top-11\@movil {
+    margin-top: 80px;
+  }
+
+  .g--margin-top-12\@movil {
+    margin-top: 96px;
+  }
+
+  .g--margin-top-13\@movil {
+    margin-top: 128px;
+  }
+
+  .g--margin-top-14\@movil {
+    margin-top: 160px;
+  }
+
+  .g--margin-top-15\@movil {
+    margin-top: 192px;
+  }
+
+  .g--margin-top-16\@movil {
+    margin-top: 224px;
+  }
+
+  .g--margin-top-17\@movil {
+    margin-top: 256px;
+  }
+
+  .g--margin-top-18\@movil {
+    margin-top: 320px;
+  }
+
+  .g--margin-top-19\@movil {
+    margin-top: 480px;
+  }
+
+  .g--margin-top-20\@movil {
+    margin-top: 640px;
+  }
+
+  .g--margin-top-auto\@movil {
+    margin-top: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-top-0\@tablet {
+    margin-top: 0px;
+  }
+
+  .g--margin-top-1\@tablet {
+    margin-top: 4px;
+  }
+
+  .g--margin-top-2\@tablet {
+    margin-top: 8px;
+  }
+
+  .g--margin-top-3\@tablet {
+    margin-top: 12px;
+  }
+
+  .g--margin-top-4\@tablet {
+    margin-top: 16px;
+  }
+
+  .g--margin-top-5\@tablet {
+    margin-top: 20px;
+  }
+
+  .g--margin-top-6\@tablet {
+    margin-top: 24px;
+  }
+
+  .g--margin-top-7\@tablet {
+    margin-top: 32px;
+  }
+
+  .g--margin-top-8\@tablet {
+    margin-top: 40px;
+  }
+
+  .g--margin-top-9\@tablet {
+    margin-top: 48px;
+  }
+
+  .g--margin-top-10\@tablet {
+    margin-top: 64px;
+  }
+
+  .g--margin-top-11\@tablet {
+    margin-top: 80px;
+  }
+
+  .g--margin-top-12\@tablet {
+    margin-top: 96px;
+  }
+
+  .g--margin-top-13\@tablet {
+    margin-top: 128px;
+  }
+
+  .g--margin-top-14\@tablet {
+    margin-top: 160px;
+  }
+
+  .g--margin-top-15\@tablet {
+    margin-top: 192px;
+  }
+
+  .g--margin-top-16\@tablet {
+    margin-top: 224px;
+  }
+
+  .g--margin-top-17\@tablet {
+    margin-top: 256px;
+  }
+
+  .g--margin-top-18\@tablet {
+    margin-top: 320px;
+  }
+
+  .g--margin-top-19\@tablet {
+    margin-top: 480px;
+  }
+
+  .g--margin-top-20\@tablet {
+    margin-top: 640px;
+  }
+
+  .g--margin-top-auto\@tablet {
+    margin-top: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-top-0\@desktop {
+    margin-top: 0px;
+  }
+
+  .g--margin-top-1\@desktop {
+    margin-top: 4px;
+  }
+
+  .g--margin-top-2\@desktop {
+    margin-top: 8px;
+  }
+
+  .g--margin-top-3\@desktop {
+    margin-top: 12px;
+  }
+
+  .g--margin-top-4\@desktop {
+    margin-top: 16px;
+  }
+
+  .g--margin-top-5\@desktop {
+    margin-top: 20px;
+  }
+
+  .g--margin-top-6\@desktop {
+    margin-top: 24px;
+  }
+
+  .g--margin-top-7\@desktop {
+    margin-top: 32px;
+  }
+
+  .g--margin-top-8\@desktop {
+    margin-top: 40px;
+  }
+
+  .g--margin-top-9\@desktop {
+    margin-top: 48px;
+  }
+
+  .g--margin-top-10\@desktop {
+    margin-top: 64px;
+  }
+
+  .g--margin-top-11\@desktop {
+    margin-top: 80px;
+  }
+
+  .g--margin-top-12\@desktop {
+    margin-top: 96px;
+  }
+
+  .g--margin-top-13\@desktop {
+    margin-top: 128px;
+  }
+
+  .g--margin-top-14\@desktop {
+    margin-top: 160px;
+  }
+
+  .g--margin-top-15\@desktop {
+    margin-top: 192px;
+  }
+
+  .g--margin-top-16\@desktop {
+    margin-top: 224px;
+  }
+
+  .g--margin-top-17\@desktop {
+    margin-top: 256px;
+  }
+
+  .g--margin-top-18\@desktop {
+    margin-top: 320px;
+  }
+
+  .g--margin-top-19\@desktop {
+    margin-top: 480px;
+  }
+
+  .g--margin-top-20\@desktop {
+    margin-top: 640px;
+  }
+
+  .g--margin-top-auto\@desktop {
+    margin-top: auto;
+  }
+}
+.g--margin-bottom-0 {
+  margin-bottom: 0px;
+}
+
+.g--margin-bottom-1 {
+  margin-bottom: 4px;
+}
+
+.g--margin-bottom-2 {
+  margin-bottom: 8px;
+}
+
+.g--margin-bottom-3 {
+  margin-bottom: 12px;
+}
+
+.g--margin-bottom-4 {
+  margin-bottom: 16px;
+}
+
+.g--margin-bottom-5 {
+  margin-bottom: 20px;
+}
+
+.g--margin-bottom-6 {
+  margin-bottom: 24px;
+}
+
+.g--margin-bottom-7 {
+  margin-bottom: 32px;
+}
+
+.g--margin-bottom-8 {
+  margin-bottom: 40px;
+}
+
+.g--margin-bottom-9 {
+  margin-bottom: 48px;
+}
+
+.g--margin-bottom-10 {
+  margin-bottom: 64px;
+}
+
+.g--margin-bottom-11 {
+  margin-bottom: 80px;
+}
+
+.g--margin-bottom-12 {
+  margin-bottom: 96px;
+}
+
+.g--margin-bottom-13 {
+  margin-bottom: 128px;
+}
+
+.g--margin-bottom-14 {
+  margin-bottom: 160px;
+}
+
+.g--margin-bottom-15 {
+  margin-bottom: 192px;
+}
+
+.g--margin-bottom-16 {
+  margin-bottom: 224px;
+}
+
+.g--margin-bottom-17 {
+  margin-bottom: 256px;
+}
+
+.g--margin-bottom-18 {
+  margin-bottom: 320px;
+}
+
+.g--margin-bottom-19 {
+  margin-bottom: 480px;
+}
+
+.g--margin-bottom-20 {
+  margin-bottom: 640px;
+}
+
+.g--margin-bottom-auto {
+  margin-bottom: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-bottom-0\@movil {
+    margin-bottom: 0px;
+  }
+
+  .g--margin-bottom-1\@movil {
+    margin-bottom: 4px;
+  }
+
+  .g--margin-bottom-2\@movil {
+    margin-bottom: 8px;
+  }
+
+  .g--margin-bottom-3\@movil {
+    margin-bottom: 12px;
+  }
+
+  .g--margin-bottom-4\@movil {
+    margin-bottom: 16px;
+  }
+
+  .g--margin-bottom-5\@movil {
+    margin-bottom: 20px;
+  }
+
+  .g--margin-bottom-6\@movil {
+    margin-bottom: 24px;
+  }
+
+  .g--margin-bottom-7\@movil {
+    margin-bottom: 32px;
+  }
+
+  .g--margin-bottom-8\@movil {
+    margin-bottom: 40px;
+  }
+
+  .g--margin-bottom-9\@movil {
+    margin-bottom: 48px;
+  }
+
+  .g--margin-bottom-10\@movil {
+    margin-bottom: 64px;
+  }
+
+  .g--margin-bottom-11\@movil {
+    margin-bottom: 80px;
+  }
+
+  .g--margin-bottom-12\@movil {
+    margin-bottom: 96px;
+  }
+
+  .g--margin-bottom-13\@movil {
+    margin-bottom: 128px;
+  }
+
+  .g--margin-bottom-14\@movil {
+    margin-bottom: 160px;
+  }
+
+  .g--margin-bottom-15\@movil {
+    margin-bottom: 192px;
+  }
+
+  .g--margin-bottom-16\@movil {
+    margin-bottom: 224px;
+  }
+
+  .g--margin-bottom-17\@movil {
+    margin-bottom: 256px;
+  }
+
+  .g--margin-bottom-18\@movil {
+    margin-bottom: 320px;
+  }
+
+  .g--margin-bottom-19\@movil {
+    margin-bottom: 480px;
+  }
+
+  .g--margin-bottom-20\@movil {
+    margin-bottom: 640px;
+  }
+
+  .g--margin-bottom-auto\@movil {
+    margin-bottom: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-bottom-0\@tablet {
+    margin-bottom: 0px;
+  }
+
+  .g--margin-bottom-1\@tablet {
+    margin-bottom: 4px;
+  }
+
+  .g--margin-bottom-2\@tablet {
+    margin-bottom: 8px;
+  }
+
+  .g--margin-bottom-3\@tablet {
+    margin-bottom: 12px;
+  }
+
+  .g--margin-bottom-4\@tablet {
+    margin-bottom: 16px;
+  }
+
+  .g--margin-bottom-5\@tablet {
+    margin-bottom: 20px;
+  }
+
+  .g--margin-bottom-6\@tablet {
+    margin-bottom: 24px;
+  }
+
+  .g--margin-bottom-7\@tablet {
+    margin-bottom: 32px;
+  }
+
+  .g--margin-bottom-8\@tablet {
+    margin-bottom: 40px;
+  }
+
+  .g--margin-bottom-9\@tablet {
+    margin-bottom: 48px;
+  }
+
+  .g--margin-bottom-10\@tablet {
+    margin-bottom: 64px;
+  }
+
+  .g--margin-bottom-11\@tablet {
+    margin-bottom: 80px;
+  }
+
+  .g--margin-bottom-12\@tablet {
+    margin-bottom: 96px;
+  }
+
+  .g--margin-bottom-13\@tablet {
+    margin-bottom: 128px;
+  }
+
+  .g--margin-bottom-14\@tablet {
+    margin-bottom: 160px;
+  }
+
+  .g--margin-bottom-15\@tablet {
+    margin-bottom: 192px;
+  }
+
+  .g--margin-bottom-16\@tablet {
+    margin-bottom: 224px;
+  }
+
+  .g--margin-bottom-17\@tablet {
+    margin-bottom: 256px;
+  }
+
+  .g--margin-bottom-18\@tablet {
+    margin-bottom: 320px;
+  }
+
+  .g--margin-bottom-19\@tablet {
+    margin-bottom: 480px;
+  }
+
+  .g--margin-bottom-20\@tablet {
+    margin-bottom: 640px;
+  }
+
+  .g--margin-bottom-auto\@tablet {
+    margin-bottom: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-bottom-0\@desktop {
+    margin-bottom: 0px;
+  }
+
+  .g--margin-bottom-1\@desktop {
+    margin-bottom: 4px;
+  }
+
+  .g--margin-bottom-2\@desktop {
+    margin-bottom: 8px;
+  }
+
+  .g--margin-bottom-3\@desktop {
+    margin-bottom: 12px;
+  }
+
+  .g--margin-bottom-4\@desktop {
+    margin-bottom: 16px;
+  }
+
+  .g--margin-bottom-5\@desktop {
+    margin-bottom: 20px;
+  }
+
+  .g--margin-bottom-6\@desktop {
+    margin-bottom: 24px;
+  }
+
+  .g--margin-bottom-7\@desktop {
+    margin-bottom: 32px;
+  }
+
+  .g--margin-bottom-8\@desktop {
+    margin-bottom: 40px;
+  }
+
+  .g--margin-bottom-9\@desktop {
+    margin-bottom: 48px;
+  }
+
+  .g--margin-bottom-10\@desktop {
+    margin-bottom: 64px;
+  }
+
+  .g--margin-bottom-11\@desktop {
+    margin-bottom: 80px;
+  }
+
+  .g--margin-bottom-12\@desktop {
+    margin-bottom: 96px;
+  }
+
+  .g--margin-bottom-13\@desktop {
+    margin-bottom: 128px;
+  }
+
+  .g--margin-bottom-14\@desktop {
+    margin-bottom: 160px;
+  }
+
+  .g--margin-bottom-15\@desktop {
+    margin-bottom: 192px;
+  }
+
+  .g--margin-bottom-16\@desktop {
+    margin-bottom: 224px;
+  }
+
+  .g--margin-bottom-17\@desktop {
+    margin-bottom: 256px;
+  }
+
+  .g--margin-bottom-18\@desktop {
+    margin-bottom: 320px;
+  }
+
+  .g--margin-bottom-19\@desktop {
+    margin-bottom: 480px;
+  }
+
+  .g--margin-bottom-20\@desktop {
+    margin-bottom: 640px;
+  }
+
+  .g--margin-bottom-auto\@desktop {
+    margin-bottom: auto;
+  }
+}
+.g--margin-left-0 {
+  margin-left: 0px;
+}
+
+.g--margin-left-1 {
+  margin-left: 4px;
+}
+
+.g--margin-left-2 {
+  margin-left: 8px;
+}
+
+.g--margin-left-3 {
+  margin-left: 12px;
+}
+
+.g--margin-left-4 {
+  margin-left: 16px;
+}
+
+.g--margin-left-5 {
+  margin-left: 20px;
+}
+
+.g--margin-left-6 {
+  margin-left: 24px;
+}
+
+.g--margin-left-7 {
+  margin-left: 32px;
+}
+
+.g--margin-left-8 {
+  margin-left: 40px;
+}
+
+.g--margin-left-9 {
+  margin-left: 48px;
+}
+
+.g--margin-left-10 {
+  margin-left: 64px;
+}
+
+.g--margin-left-11 {
+  margin-left: 80px;
+}
+
+.g--margin-left-12 {
+  margin-left: 96px;
+}
+
+.g--margin-left-13 {
+  margin-left: 128px;
+}
+
+.g--margin-left-14 {
+  margin-left: 160px;
+}
+
+.g--margin-left-15 {
+  margin-left: 192px;
+}
+
+.g--margin-left-16 {
+  margin-left: 224px;
+}
+
+.g--margin-left-17 {
+  margin-left: 256px;
+}
+
+.g--margin-left-18 {
+  margin-left: 320px;
+}
+
+.g--margin-left-19 {
+  margin-left: 480px;
+}
+
+.g--margin-left-20 {
+  margin-left: 640px;
+}
+
+.g--margin-left-auto {
+  margin-left: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-left-0\@movil {
+    margin-left: 0px;
+  }
+
+  .g--margin-left-1\@movil {
+    margin-left: 4px;
+  }
+
+  .g--margin-left-2\@movil {
+    margin-left: 8px;
+  }
+
+  .g--margin-left-3\@movil {
+    margin-left: 12px;
+  }
+
+  .g--margin-left-4\@movil {
+    margin-left: 16px;
+  }
+
+  .g--margin-left-5\@movil {
+    margin-left: 20px;
+  }
+
+  .g--margin-left-6\@movil {
+    margin-left: 24px;
+  }
+
+  .g--margin-left-7\@movil {
+    margin-left: 32px;
+  }
+
+  .g--margin-left-8\@movil {
+    margin-left: 40px;
+  }
+
+  .g--margin-left-9\@movil {
+    margin-left: 48px;
+  }
+
+  .g--margin-left-10\@movil {
+    margin-left: 64px;
+  }
+
+  .g--margin-left-11\@movil {
+    margin-left: 80px;
+  }
+
+  .g--margin-left-12\@movil {
+    margin-left: 96px;
+  }
+
+  .g--margin-left-13\@movil {
+    margin-left: 128px;
+  }
+
+  .g--margin-left-14\@movil {
+    margin-left: 160px;
+  }
+
+  .g--margin-left-15\@movil {
+    margin-left: 192px;
+  }
+
+  .g--margin-left-16\@movil {
+    margin-left: 224px;
+  }
+
+  .g--margin-left-17\@movil {
+    margin-left: 256px;
+  }
+
+  .g--margin-left-18\@movil {
+    margin-left: 320px;
+  }
+
+  .g--margin-left-19\@movil {
+    margin-left: 480px;
+  }
+
+  .g--margin-left-20\@movil {
+    margin-left: 640px;
+  }
+
+  .g--margin-left-auto\@movil {
+    margin-left: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-left-0\@tablet {
+    margin-left: 0px;
+  }
+
+  .g--margin-left-1\@tablet {
+    margin-left: 4px;
+  }
+
+  .g--margin-left-2\@tablet {
+    margin-left: 8px;
+  }
+
+  .g--margin-left-3\@tablet {
+    margin-left: 12px;
+  }
+
+  .g--margin-left-4\@tablet {
+    margin-left: 16px;
+  }
+
+  .g--margin-left-5\@tablet {
+    margin-left: 20px;
+  }
+
+  .g--margin-left-6\@tablet {
+    margin-left: 24px;
+  }
+
+  .g--margin-left-7\@tablet {
+    margin-left: 32px;
+  }
+
+  .g--margin-left-8\@tablet {
+    margin-left: 40px;
+  }
+
+  .g--margin-left-9\@tablet {
+    margin-left: 48px;
+  }
+
+  .g--margin-left-10\@tablet {
+    margin-left: 64px;
+  }
+
+  .g--margin-left-11\@tablet {
+    margin-left: 80px;
+  }
+
+  .g--margin-left-12\@tablet {
+    margin-left: 96px;
+  }
+
+  .g--margin-left-13\@tablet {
+    margin-left: 128px;
+  }
+
+  .g--margin-left-14\@tablet {
+    margin-left: 160px;
+  }
+
+  .g--margin-left-15\@tablet {
+    margin-left: 192px;
+  }
+
+  .g--margin-left-16\@tablet {
+    margin-left: 224px;
+  }
+
+  .g--margin-left-17\@tablet {
+    margin-left: 256px;
+  }
+
+  .g--margin-left-18\@tablet {
+    margin-left: 320px;
+  }
+
+  .g--margin-left-19\@tablet {
+    margin-left: 480px;
+  }
+
+  .g--margin-left-20\@tablet {
+    margin-left: 640px;
+  }
+
+  .g--margin-left-auto\@tablet {
+    margin-left: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-left-0\@desktop {
+    margin-left: 0px;
+  }
+
+  .g--margin-left-1\@desktop {
+    margin-left: 4px;
+  }
+
+  .g--margin-left-2\@desktop {
+    margin-left: 8px;
+  }
+
+  .g--margin-left-3\@desktop {
+    margin-left: 12px;
+  }
+
+  .g--margin-left-4\@desktop {
+    margin-left: 16px;
+  }
+
+  .g--margin-left-5\@desktop {
+    margin-left: 20px;
+  }
+
+  .g--margin-left-6\@desktop {
+    margin-left: 24px;
+  }
+
+  .g--margin-left-7\@desktop {
+    margin-left: 32px;
+  }
+
+  .g--margin-left-8\@desktop {
+    margin-left: 40px;
+  }
+
+  .g--margin-left-9\@desktop {
+    margin-left: 48px;
+  }
+
+  .g--margin-left-10\@desktop {
+    margin-left: 64px;
+  }
+
+  .g--margin-left-11\@desktop {
+    margin-left: 80px;
+  }
+
+  .g--margin-left-12\@desktop {
+    margin-left: 96px;
+  }
+
+  .g--margin-left-13\@desktop {
+    margin-left: 128px;
+  }
+
+  .g--margin-left-14\@desktop {
+    margin-left: 160px;
+  }
+
+  .g--margin-left-15\@desktop {
+    margin-left: 192px;
+  }
+
+  .g--margin-left-16\@desktop {
+    margin-left: 224px;
+  }
+
+  .g--margin-left-17\@desktop {
+    margin-left: 256px;
+  }
+
+  .g--margin-left-18\@desktop {
+    margin-left: 320px;
+  }
+
+  .g--margin-left-19\@desktop {
+    margin-left: 480px;
+  }
+
+  .g--margin-left-20\@desktop {
+    margin-left: 640px;
+  }
+
+  .g--margin-left-auto\@desktop {
+    margin-left: auto;
+  }
+}
+.g--margin-right-0 {
+  margin-right: 0px;
+}
+
+.g--margin-right-1 {
+  margin-right: 4px;
+}
+
+.g--margin-right-2 {
+  margin-right: 8px;
+}
+
+.g--margin-right-3 {
+  margin-right: 12px;
+}
+
+.g--margin-right-4 {
+  margin-right: 16px;
+}
+
+.g--margin-right-5 {
+  margin-right: 20px;
+}
+
+.g--margin-right-6 {
+  margin-right: 24px;
+}
+
+.g--margin-right-7 {
+  margin-right: 32px;
+}
+
+.g--margin-right-8 {
+  margin-right: 40px;
+}
+
+.g--margin-right-9 {
+  margin-right: 48px;
+}
+
+.g--margin-right-10 {
+  margin-right: 64px;
+}
+
+.g--margin-right-11 {
+  margin-right: 80px;
+}
+
+.g--margin-right-12 {
+  margin-right: 96px;
+}
+
+.g--margin-right-13 {
+  margin-right: 128px;
+}
+
+.g--margin-right-14 {
+  margin-right: 160px;
+}
+
+.g--margin-right-15 {
+  margin-right: 192px;
+}
+
+.g--margin-right-16 {
+  margin-right: 224px;
+}
+
+.g--margin-right-17 {
+  margin-right: 256px;
+}
+
+.g--margin-right-18 {
+  margin-right: 320px;
+}
+
+.g--margin-right-19 {
+  margin-right: 480px;
+}
+
+.g--margin-right-20 {
+  margin-right: 640px;
+}
+
+.g--margin-right-auto {
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .g--margin-right-0\@movil {
+    margin-right: 0px;
+  }
+
+  .g--margin-right-1\@movil {
+    margin-right: 4px;
+  }
+
+  .g--margin-right-2\@movil {
+    margin-right: 8px;
+  }
+
+  .g--margin-right-3\@movil {
+    margin-right: 12px;
+  }
+
+  .g--margin-right-4\@movil {
+    margin-right: 16px;
+  }
+
+  .g--margin-right-5\@movil {
+    margin-right: 20px;
+  }
+
+  .g--margin-right-6\@movil {
+    margin-right: 24px;
+  }
+
+  .g--margin-right-7\@movil {
+    margin-right: 32px;
+  }
+
+  .g--margin-right-8\@movil {
+    margin-right: 40px;
+  }
+
+  .g--margin-right-9\@movil {
+    margin-right: 48px;
+  }
+
+  .g--margin-right-10\@movil {
+    margin-right: 64px;
+  }
+
+  .g--margin-right-11\@movil {
+    margin-right: 80px;
+  }
+
+  .g--margin-right-12\@movil {
+    margin-right: 96px;
+  }
+
+  .g--margin-right-13\@movil {
+    margin-right: 128px;
+  }
+
+  .g--margin-right-14\@movil {
+    margin-right: 160px;
+  }
+
+  .g--margin-right-15\@movil {
+    margin-right: 192px;
+  }
+
+  .g--margin-right-16\@movil {
+    margin-right: 224px;
+  }
+
+  .g--margin-right-17\@movil {
+    margin-right: 256px;
+  }
+
+  .g--margin-right-18\@movil {
+    margin-right: 320px;
+  }
+
+  .g--margin-right-19\@movil {
+    margin-right: 480px;
+  }
+
+  .g--margin-right-20\@movil {
+    margin-right: 640px;
+  }
+
+  .g--margin-right-auto\@movil {
+    margin-right: auto;
+  }
+}
+@media (min-width: 768px) {
+  .g--margin-right-0\@tablet {
+    margin-right: 0px;
+  }
+
+  .g--margin-right-1\@tablet {
+    margin-right: 4px;
+  }
+
+  .g--margin-right-2\@tablet {
+    margin-right: 8px;
+  }
+
+  .g--margin-right-3\@tablet {
+    margin-right: 12px;
+  }
+
+  .g--margin-right-4\@tablet {
+    margin-right: 16px;
+  }
+
+  .g--margin-right-5\@tablet {
+    margin-right: 20px;
+  }
+
+  .g--margin-right-6\@tablet {
+    margin-right: 24px;
+  }
+
+  .g--margin-right-7\@tablet {
+    margin-right: 32px;
+  }
+
+  .g--margin-right-8\@tablet {
+    margin-right: 40px;
+  }
+
+  .g--margin-right-9\@tablet {
+    margin-right: 48px;
+  }
+
+  .g--margin-right-10\@tablet {
+    margin-right: 64px;
+  }
+
+  .g--margin-right-11\@tablet {
+    margin-right: 80px;
+  }
+
+  .g--margin-right-12\@tablet {
+    margin-right: 96px;
+  }
+
+  .g--margin-right-13\@tablet {
+    margin-right: 128px;
+  }
+
+  .g--margin-right-14\@tablet {
+    margin-right: 160px;
+  }
+
+  .g--margin-right-15\@tablet {
+    margin-right: 192px;
+  }
+
+  .g--margin-right-16\@tablet {
+    margin-right: 224px;
+  }
+
+  .g--margin-right-17\@tablet {
+    margin-right: 256px;
+  }
+
+  .g--margin-right-18\@tablet {
+    margin-right: 320px;
+  }
+
+  .g--margin-right-19\@tablet {
+    margin-right: 480px;
+  }
+
+  .g--margin-right-20\@tablet {
+    margin-right: 640px;
+  }
+
+  .g--margin-right-auto\@tablet {
+    margin-right: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .g--margin-right-0\@desktop {
+    margin-right: 0px;
+  }
+
+  .g--margin-right-1\@desktop {
+    margin-right: 4px;
+  }
+
+  .g--margin-right-2\@desktop {
+    margin-right: 8px;
+  }
+
+  .g--margin-right-3\@desktop {
+    margin-right: 12px;
+  }
+
+  .g--margin-right-4\@desktop {
+    margin-right: 16px;
+  }
+
+  .g--margin-right-5\@desktop {
+    margin-right: 20px;
+  }
+
+  .g--margin-right-6\@desktop {
+    margin-right: 24px;
+  }
+
+  .g--margin-right-7\@desktop {
+    margin-right: 32px;
+  }
+
+  .g--margin-right-8\@desktop {
+    margin-right: 40px;
+  }
+
+  .g--margin-right-9\@desktop {
+    margin-right: 48px;
+  }
+
+  .g--margin-right-10\@desktop {
+    margin-right: 64px;
+  }
+
+  .g--margin-right-11\@desktop {
+    margin-right: 80px;
+  }
+
+  .g--margin-right-12\@desktop {
+    margin-right: 96px;
+  }
+
+  .g--margin-right-13\@desktop {
+    margin-right: 128px;
+  }
+
+  .g--margin-right-14\@desktop {
+    margin-right: 160px;
+  }
+
+  .g--margin-right-15\@desktop {
+    margin-right: 192px;
+  }
+
+  .g--margin-right-16\@desktop {
+    margin-right: 224px;
+  }
+
+  .g--margin-right-17\@desktop {
+    margin-right: 256px;
+  }
+
+  .g--margin-right-18\@desktop {
+    margin-right: 320px;
+  }
+
+  .g--margin-right-19\@desktop {
+    margin-right: 480px;
+  }
+
+  .g--margin-right-20\@desktop {
+    margin-right: 640px;
+  }
+
+  .g--margin-right-auto\@desktop {
+    margin-right: auto;
+  }
+}
+.g--padding-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.g--padding-1 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.g--padding-2 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.g--padding-3 {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.g--padding-4 {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.g--padding-5 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.g--padding-6 {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.g--padding-7 {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.g--padding-8 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.g--padding-9 {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-left: 48px;
+  padding-right: 48px;
+}
+
+.g--padding-10 {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  padding-left: 64px;
+  padding-right: 64px;
+}
+
+.g--padding-11 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.g--padding-12 {
+  padding-top: 96px;
+  padding-bottom: 96px;
+  padding-left: 96px;
+  padding-right: 96px;
+}
+
+.g--padding-13 {
+  padding-top: 128px;
+  padding-bottom: 128px;
+  padding-left: 128px;
+  padding-right: 128px;
+}
+
+.g--padding-14 {
+  padding-top: 160px;
+  padding-bottom: 160px;
+  padding-left: 160px;
+  padding-right: 160px;
+}
+
+.g--padding-15 {
+  padding-top: 192px;
+  padding-bottom: 192px;
+  padding-left: 192px;
+  padding-right: 192px;
+}
+
+.g--padding-16 {
+  padding-top: 224px;
+  padding-bottom: 224px;
+  padding-left: 224px;
+  padding-right: 224px;
+}
+
+.g--padding-17 {
+  padding-top: 256px;
+  padding-bottom: 256px;
+  padding-left: 256px;
+  padding-right: 256px;
+}
+
+.g--padding-18 {
+  padding-top: 320px;
+  padding-bottom: 320px;
+  padding-left: 320px;
+  padding-right: 320px;
+}
+
+.g--padding-19 {
+  padding-top: 480px;
+  padding-bottom: 480px;
+  padding-left: 480px;
+  padding-right: 480px;
+}
+
+.g--padding-20 {
+  padding-top: 640px;
+  padding-bottom: 640px;
+  padding-left: 640px;
+  padding-right: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-0\@movil {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .g--padding-1\@movil {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .g--padding-2\@movil {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .g--padding-3\@movil {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .g--padding-4\@movil {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .g--padding-5\@movil {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .g--padding-6\@movil {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .g--padding-7\@movil {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .g--padding-8\@movil {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .g--padding-9\@movil {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .g--padding-10\@movil {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .g--padding-11\@movil {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .g--padding-12\@movil {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+
+  .g--padding-13\@movil {
+    padding-top: 128px;
+    padding-bottom: 128px;
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+
+  .g--padding-14\@movil {
+    padding-top: 160px;
+    padding-bottom: 160px;
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .g--padding-15\@movil {
+    padding-top: 192px;
+    padding-bottom: 192px;
+    padding-left: 192px;
+    padding-right: 192px;
+  }
+
+  .g--padding-16\@movil {
+    padding-top: 224px;
+    padding-bottom: 224px;
+    padding-left: 224px;
+    padding-right: 224px;
+  }
+
+  .g--padding-17\@movil {
+    padding-top: 256px;
+    padding-bottom: 256px;
+    padding-left: 256px;
+    padding-right: 256px;
+  }
+
+  .g--padding-18\@movil {
+    padding-top: 320px;
+    padding-bottom: 320px;
+    padding-left: 320px;
+    padding-right: 320px;
+  }
+
+  .g--padding-19\@movil {
+    padding-top: 480px;
+    padding-bottom: 480px;
+    padding-left: 480px;
+    padding-right: 480px;
+  }
+
+  .g--padding-20\@movil {
+    padding-top: 640px;
+    padding-bottom: 640px;
+    padding-left: 640px;
+    padding-right: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-0\@tablet {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .g--padding-1\@tablet {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .g--padding-2\@tablet {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .g--padding-3\@tablet {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .g--padding-4\@tablet {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .g--padding-5\@tablet {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .g--padding-6\@tablet {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .g--padding-7\@tablet {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .g--padding-8\@tablet {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .g--padding-9\@tablet {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .g--padding-10\@tablet {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .g--padding-11\@tablet {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .g--padding-12\@tablet {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+
+  .g--padding-13\@tablet {
+    padding-top: 128px;
+    padding-bottom: 128px;
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+
+  .g--padding-14\@tablet {
+    padding-top: 160px;
+    padding-bottom: 160px;
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .g--padding-15\@tablet {
+    padding-top: 192px;
+    padding-bottom: 192px;
+    padding-left: 192px;
+    padding-right: 192px;
+  }
+
+  .g--padding-16\@tablet {
+    padding-top: 224px;
+    padding-bottom: 224px;
+    padding-left: 224px;
+    padding-right: 224px;
+  }
+
+  .g--padding-17\@tablet {
+    padding-top: 256px;
+    padding-bottom: 256px;
+    padding-left: 256px;
+    padding-right: 256px;
+  }
+
+  .g--padding-18\@tablet {
+    padding-top: 320px;
+    padding-bottom: 320px;
+    padding-left: 320px;
+    padding-right: 320px;
+  }
+
+  .g--padding-19\@tablet {
+    padding-top: 480px;
+    padding-bottom: 480px;
+    padding-left: 480px;
+    padding-right: 480px;
+  }
+
+  .g--padding-20\@tablet {
+    padding-top: 640px;
+    padding-bottom: 640px;
+    padding-left: 640px;
+    padding-right: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-0\@desktop {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .g--padding-1\@desktop {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .g--padding-2\@desktop {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .g--padding-3\@desktop {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .g--padding-4\@desktop {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .g--padding-5\@desktop {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .g--padding-6\@desktop {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .g--padding-7\@desktop {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .g--padding-8\@desktop {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .g--padding-9\@desktop {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .g--padding-10\@desktop {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .g--padding-11\@desktop {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .g--padding-12\@desktop {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+
+  .g--padding-13\@desktop {
+    padding-top: 128px;
+    padding-bottom: 128px;
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+
+  .g--padding-14\@desktop {
+    padding-top: 160px;
+    padding-bottom: 160px;
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .g--padding-15\@desktop {
+    padding-top: 192px;
+    padding-bottom: 192px;
+    padding-left: 192px;
+    padding-right: 192px;
+  }
+
+  .g--padding-16\@desktop {
+    padding-top: 224px;
+    padding-bottom: 224px;
+    padding-left: 224px;
+    padding-right: 224px;
+  }
+
+  .g--padding-17\@desktop {
+    padding-top: 256px;
+    padding-bottom: 256px;
+    padding-left: 256px;
+    padding-right: 256px;
+  }
+
+  .g--padding-18\@desktop {
+    padding-top: 320px;
+    padding-bottom: 320px;
+    padding-left: 320px;
+    padding-right: 320px;
+  }
+
+  .g--padding-19\@desktop {
+    padding-top: 480px;
+    padding-bottom: 480px;
+    padding-left: 480px;
+    padding-right: 480px;
+  }
+
+  .g--padding-20\@desktop {
+    padding-top: 640px;
+    padding-bottom: 640px;
+    padding-left: 640px;
+    padding-right: 640px;
+  }
+}
+.g--padding-vertical-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.g--padding-vertical-1 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.g--padding-vertical-2 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.g--padding-vertical-3 {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.g--padding-vertical-4 {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.g--padding-vertical-5 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.g--padding-vertical-6 {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.g--padding-vertical-7 {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.g--padding-vertical-8 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.g--padding-vertical-9 {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.g--padding-vertical-10 {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.g--padding-vertical-11 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.g--padding-vertical-12 {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+.g--padding-vertical-13 {
+  padding-top: 128px;
+  padding-bottom: 128px;
+}
+
+.g--padding-vertical-14 {
+  padding-top: 160px;
+  padding-bottom: 160px;
+}
+
+.g--padding-vertical-15 {
+  padding-top: 192px;
+  padding-bottom: 192px;
+}
+
+.g--padding-vertical-16 {
+  padding-top: 224px;
+  padding-bottom: 224px;
+}
+
+.g--padding-vertical-17 {
+  padding-top: 256px;
+  padding-bottom: 256px;
+}
+
+.g--padding-vertical-18 {
+  padding-top: 320px;
+  padding-bottom: 320px;
+}
+
+.g--padding-vertical-19 {
+  padding-top: 480px;
+  padding-bottom: 480px;
+}
+
+.g--padding-vertical-20 {
+  padding-top: 640px;
+  padding-bottom: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-vertical-0\@movil {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .g--padding-vertical-1\@movil {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .g--padding-vertical-2\@movil {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .g--padding-vertical-3\@movil {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .g--padding-vertical-4\@movil {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .g--padding-vertical-5\@movil {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .g--padding-vertical-6\@movil {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .g--padding-vertical-7\@movil {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .g--padding-vertical-8\@movil {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .g--padding-vertical-9\@movil {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .g--padding-vertical-10\@movil {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .g--padding-vertical-11\@movil {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .g--padding-vertical-12\@movil {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  .g--padding-vertical-13\@movil {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+
+  .g--padding-vertical-14\@movil {
+    padding-top: 160px;
+    padding-bottom: 160px;
+  }
+
+  .g--padding-vertical-15\@movil {
+    padding-top: 192px;
+    padding-bottom: 192px;
+  }
+
+  .g--padding-vertical-16\@movil {
+    padding-top: 224px;
+    padding-bottom: 224px;
+  }
+
+  .g--padding-vertical-17\@movil {
+    padding-top: 256px;
+    padding-bottom: 256px;
+  }
+
+  .g--padding-vertical-18\@movil {
+    padding-top: 320px;
+    padding-bottom: 320px;
+  }
+
+  .g--padding-vertical-19\@movil {
+    padding-top: 480px;
+    padding-bottom: 480px;
+  }
+
+  .g--padding-vertical-20\@movil {
+    padding-top: 640px;
+    padding-bottom: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-vertical-0\@tablet {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .g--padding-vertical-1\@tablet {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .g--padding-vertical-2\@tablet {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .g--padding-vertical-3\@tablet {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .g--padding-vertical-4\@tablet {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .g--padding-vertical-5\@tablet {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .g--padding-vertical-6\@tablet {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .g--padding-vertical-7\@tablet {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .g--padding-vertical-8\@tablet {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .g--padding-vertical-9\@tablet {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .g--padding-vertical-10\@tablet {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .g--padding-vertical-11\@tablet {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .g--padding-vertical-12\@tablet {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  .g--padding-vertical-13\@tablet {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+
+  .g--padding-vertical-14\@tablet {
+    padding-top: 160px;
+    padding-bottom: 160px;
+  }
+
+  .g--padding-vertical-15\@tablet {
+    padding-top: 192px;
+    padding-bottom: 192px;
+  }
+
+  .g--padding-vertical-16\@tablet {
+    padding-top: 224px;
+    padding-bottom: 224px;
+  }
+
+  .g--padding-vertical-17\@tablet {
+    padding-top: 256px;
+    padding-bottom: 256px;
+  }
+
+  .g--padding-vertical-18\@tablet {
+    padding-top: 320px;
+    padding-bottom: 320px;
+  }
+
+  .g--padding-vertical-19\@tablet {
+    padding-top: 480px;
+    padding-bottom: 480px;
+  }
+
+  .g--padding-vertical-20\@tablet {
+    padding-top: 640px;
+    padding-bottom: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-vertical-0\@desktop {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .g--padding-vertical-1\@desktop {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .g--padding-vertical-2\@desktop {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .g--padding-vertical-3\@desktop {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .g--padding-vertical-4\@desktop {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .g--padding-vertical-5\@desktop {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .g--padding-vertical-6\@desktop {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .g--padding-vertical-7\@desktop {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .g--padding-vertical-8\@desktop {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .g--padding-vertical-9\@desktop {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .g--padding-vertical-10\@desktop {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .g--padding-vertical-11\@desktop {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .g--padding-vertical-12\@desktop {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  .g--padding-vertical-13\@desktop {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+
+  .g--padding-vertical-14\@desktop {
+    padding-top: 160px;
+    padding-bottom: 160px;
+  }
+
+  .g--padding-vertical-15\@desktop {
+    padding-top: 192px;
+    padding-bottom: 192px;
+  }
+
+  .g--padding-vertical-16\@desktop {
+    padding-top: 224px;
+    padding-bottom: 224px;
+  }
+
+  .g--padding-vertical-17\@desktop {
+    padding-top: 256px;
+    padding-bottom: 256px;
+  }
+
+  .g--padding-vertical-18\@desktop {
+    padding-top: 320px;
+    padding-bottom: 320px;
+  }
+
+  .g--padding-vertical-19\@desktop {
+    padding-top: 480px;
+    padding-bottom: 480px;
+  }
+
+  .g--padding-vertical-20\@desktop {
+    padding-top: 640px;
+    padding-bottom: 640px;
+  }
+}
+.g--padding-horizontal-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.g--padding-horizontal-1 {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.g--padding-horizontal-2 {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.g--padding-horizontal-3 {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.g--padding-horizontal-4 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.g--padding-horizontal-5 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.g--padding-horizontal-6 {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.g--padding-horizontal-7 {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.g--padding-horizontal-8 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.g--padding-horizontal-9 {
+  padding-left: 48px;
+  padding-right: 48px;
+}
+
+.g--padding-horizontal-10 {
+  padding-left: 64px;
+  padding-right: 64px;
+}
+
+.g--padding-horizontal-11 {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.g--padding-horizontal-12 {
+  padding-left: 96px;
+  padding-right: 96px;
+}
+
+.g--padding-horizontal-13 {
+  padding-left: 128px;
+  padding-right: 128px;
+}
+
+.g--padding-horizontal-14 {
+  padding-left: 160px;
+  padding-right: 160px;
+}
+
+.g--padding-horizontal-15 {
+  padding-left: 192px;
+  padding-right: 192px;
+}
+
+.g--padding-horizontal-16 {
+  padding-left: 224px;
+  padding-right: 224px;
+}
+
+.g--padding-horizontal-17 {
+  padding-left: 256px;
+  padding-right: 256px;
+}
+
+.g--padding-horizontal-18 {
+  padding-left: 320px;
+  padding-right: 320px;
+}
+
+.g--padding-horizontal-19 {
+  padding-left: 480px;
+  padding-right: 480px;
+}
+
+.g--padding-horizontal-20 {
+  padding-left: 640px;
+  padding-right: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-horizontal-0\@movil {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .g--padding-horizontal-1\@movil {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .g--padding-horizontal-2\@movil {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .g--padding-horizontal-3\@movil {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .g--padding-horizontal-4\@movil {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .g--padding-horizontal-5\@movil {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .g--padding-horizontal-6\@movil {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .g--padding-horizontal-7\@movil {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .g--padding-horizontal-8\@movil {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .g--padding-horizontal-9\@movil {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .g--padding-horizontal-10\@movil {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .g--padding-horizontal-11\@movil {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .g--padding-horizontal-12\@movil {
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+
+  .g--padding-horizontal-13\@movil {
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+
+  .g--padding-horizontal-14\@movil {
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .g--padding-horizontal-15\@movil {
+    padding-left: 192px;
+    padding-right: 192px;
+  }
+
+  .g--padding-horizontal-16\@movil {
+    padding-left: 224px;
+    padding-right: 224px;
+  }
+
+  .g--padding-horizontal-17\@movil {
+    padding-left: 256px;
+    padding-right: 256px;
+  }
+
+  .g--padding-horizontal-18\@movil {
+    padding-left: 320px;
+    padding-right: 320px;
+  }
+
+  .g--padding-horizontal-19\@movil {
+    padding-left: 480px;
+    padding-right: 480px;
+  }
+
+  .g--padding-horizontal-20\@movil {
+    padding-left: 640px;
+    padding-right: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-horizontal-0\@tablet {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .g--padding-horizontal-1\@tablet {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .g--padding-horizontal-2\@tablet {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .g--padding-horizontal-3\@tablet {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .g--padding-horizontal-4\@tablet {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .g--padding-horizontal-5\@tablet {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .g--padding-horizontal-6\@tablet {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .g--padding-horizontal-7\@tablet {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .g--padding-horizontal-8\@tablet {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .g--padding-horizontal-9\@tablet {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .g--padding-horizontal-10\@tablet {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .g--padding-horizontal-11\@tablet {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .g--padding-horizontal-12\@tablet {
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+
+  .g--padding-horizontal-13\@tablet {
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+
+  .g--padding-horizontal-14\@tablet {
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .g--padding-horizontal-15\@tablet {
+    padding-left: 192px;
+    padding-right: 192px;
+  }
+
+  .g--padding-horizontal-16\@tablet {
+    padding-left: 224px;
+    padding-right: 224px;
+  }
+
+  .g--padding-horizontal-17\@tablet {
+    padding-left: 256px;
+    padding-right: 256px;
+  }
+
+  .g--padding-horizontal-18\@tablet {
+    padding-left: 320px;
+    padding-right: 320px;
+  }
+
+  .g--padding-horizontal-19\@tablet {
+    padding-left: 480px;
+    padding-right: 480px;
+  }
+
+  .g--padding-horizontal-20\@tablet {
+    padding-left: 640px;
+    padding-right: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-horizontal-0\@desktop {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .g--padding-horizontal-1\@desktop {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .g--padding-horizontal-2\@desktop {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .g--padding-horizontal-3\@desktop {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .g--padding-horizontal-4\@desktop {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .g--padding-horizontal-5\@desktop {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .g--padding-horizontal-6\@desktop {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .g--padding-horizontal-7\@desktop {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .g--padding-horizontal-8\@desktop {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .g--padding-horizontal-9\@desktop {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .g--padding-horizontal-10\@desktop {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .g--padding-horizontal-11\@desktop {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .g--padding-horizontal-12\@desktop {
+    padding-left: 96px;
+    padding-right: 96px;
+  }
+
+  .g--padding-horizontal-13\@desktop {
+    padding-left: 128px;
+    padding-right: 128px;
+  }
+
+  .g--padding-horizontal-14\@desktop {
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .g--padding-horizontal-15\@desktop {
+    padding-left: 192px;
+    padding-right: 192px;
+  }
+
+  .g--padding-horizontal-16\@desktop {
+    padding-left: 224px;
+    padding-right: 224px;
+  }
+
+  .g--padding-horizontal-17\@desktop {
+    padding-left: 256px;
+    padding-right: 256px;
+  }
+
+  .g--padding-horizontal-18\@desktop {
+    padding-left: 320px;
+    padding-right: 320px;
+  }
+
+  .g--padding-horizontal-19\@desktop {
+    padding-left: 480px;
+    padding-right: 480px;
+  }
+
+  .g--padding-horizontal-20\@desktop {
+    padding-left: 640px;
+    padding-right: 640px;
+  }
+}
+.g--padding-top-0 {
+  padding-top: 0px;
+}
+
+.g--padding-top-1 {
+  padding-top: 4px;
+}
+
+.g--padding-top-2 {
+  padding-top: 8px;
+}
+
+.g--padding-top-3 {
+  padding-top: 12px;
+}
+
+.g--padding-top-4 {
+  padding-top: 16px;
+}
+
+.g--padding-top-5 {
+  padding-top: 20px;
+}
+
+.g--padding-top-6 {
+  padding-top: 24px;
+}
+
+.g--padding-top-7 {
+  padding-top: 32px;
+}
+
+.g--padding-top-8 {
+  padding-top: 40px;
+}
+
+.g--padding-top-9 {
+  padding-top: 48px;
+}
+
+.g--padding-top-10 {
+  padding-top: 64px;
+}
+
+.g--padding-top-11 {
+  padding-top: 80px;
+}
+
+.g--padding-top-12 {
+  padding-top: 96px;
+}
+
+.g--padding-top-13 {
+  padding-top: 128px;
+}
+
+.g--padding-top-14 {
+  padding-top: 160px;
+}
+
+.g--padding-top-15 {
+  padding-top: 192px;
+}
+
+.g--padding-top-16 {
+  padding-top: 224px;
+}
+
+.g--padding-top-17 {
+  padding-top: 256px;
+}
+
+.g--padding-top-18 {
+  padding-top: 320px;
+}
+
+.g--padding-top-19 {
+  padding-top: 480px;
+}
+
+.g--padding-top-20 {
+  padding-top: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-top-0\@movil {
+    padding-top: 0px;
+  }
+
+  .g--padding-top-1\@movil {
+    padding-top: 4px;
+  }
+
+  .g--padding-top-2\@movil {
+    padding-top: 8px;
+  }
+
+  .g--padding-top-3\@movil {
+    padding-top: 12px;
+  }
+
+  .g--padding-top-4\@movil {
+    padding-top: 16px;
+  }
+
+  .g--padding-top-5\@movil {
+    padding-top: 20px;
+  }
+
+  .g--padding-top-6\@movil {
+    padding-top: 24px;
+  }
+
+  .g--padding-top-7\@movil {
+    padding-top: 32px;
+  }
+
+  .g--padding-top-8\@movil {
+    padding-top: 40px;
+  }
+
+  .g--padding-top-9\@movil {
+    padding-top: 48px;
+  }
+
+  .g--padding-top-10\@movil {
+    padding-top: 64px;
+  }
+
+  .g--padding-top-11\@movil {
+    padding-top: 80px;
+  }
+
+  .g--padding-top-12\@movil {
+    padding-top: 96px;
+  }
+
+  .g--padding-top-13\@movil {
+    padding-top: 128px;
+  }
+
+  .g--padding-top-14\@movil {
+    padding-top: 160px;
+  }
+
+  .g--padding-top-15\@movil {
+    padding-top: 192px;
+  }
+
+  .g--padding-top-16\@movil {
+    padding-top: 224px;
+  }
+
+  .g--padding-top-17\@movil {
+    padding-top: 256px;
+  }
+
+  .g--padding-top-18\@movil {
+    padding-top: 320px;
+  }
+
+  .g--padding-top-19\@movil {
+    padding-top: 480px;
+  }
+
+  .g--padding-top-20\@movil {
+    padding-top: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-top-0\@tablet {
+    padding-top: 0px;
+  }
+
+  .g--padding-top-1\@tablet {
+    padding-top: 4px;
+  }
+
+  .g--padding-top-2\@tablet {
+    padding-top: 8px;
+  }
+
+  .g--padding-top-3\@tablet {
+    padding-top: 12px;
+  }
+
+  .g--padding-top-4\@tablet {
+    padding-top: 16px;
+  }
+
+  .g--padding-top-5\@tablet {
+    padding-top: 20px;
+  }
+
+  .g--padding-top-6\@tablet {
+    padding-top: 24px;
+  }
+
+  .g--padding-top-7\@tablet {
+    padding-top: 32px;
+  }
+
+  .g--padding-top-8\@tablet {
+    padding-top: 40px;
+  }
+
+  .g--padding-top-9\@tablet {
+    padding-top: 48px;
+  }
+
+  .g--padding-top-10\@tablet {
+    padding-top: 64px;
+  }
+
+  .g--padding-top-11\@tablet {
+    padding-top: 80px;
+  }
+
+  .g--padding-top-12\@tablet {
+    padding-top: 96px;
+  }
+
+  .g--padding-top-13\@tablet {
+    padding-top: 128px;
+  }
+
+  .g--padding-top-14\@tablet {
+    padding-top: 160px;
+  }
+
+  .g--padding-top-15\@tablet {
+    padding-top: 192px;
+  }
+
+  .g--padding-top-16\@tablet {
+    padding-top: 224px;
+  }
+
+  .g--padding-top-17\@tablet {
+    padding-top: 256px;
+  }
+
+  .g--padding-top-18\@tablet {
+    padding-top: 320px;
+  }
+
+  .g--padding-top-19\@tablet {
+    padding-top: 480px;
+  }
+
+  .g--padding-top-20\@tablet {
+    padding-top: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-top-0\@desktop {
+    padding-top: 0px;
+  }
+
+  .g--padding-top-1\@desktop {
+    padding-top: 4px;
+  }
+
+  .g--padding-top-2\@desktop {
+    padding-top: 8px;
+  }
+
+  .g--padding-top-3\@desktop {
+    padding-top: 12px;
+  }
+
+  .g--padding-top-4\@desktop {
+    padding-top: 16px;
+  }
+
+  .g--padding-top-5\@desktop {
+    padding-top: 20px;
+  }
+
+  .g--padding-top-6\@desktop {
+    padding-top: 24px;
+  }
+
+  .g--padding-top-7\@desktop {
+    padding-top: 32px;
+  }
+
+  .g--padding-top-8\@desktop {
+    padding-top: 40px;
+  }
+
+  .g--padding-top-9\@desktop {
+    padding-top: 48px;
+  }
+
+  .g--padding-top-10\@desktop {
+    padding-top: 64px;
+  }
+
+  .g--padding-top-11\@desktop {
+    padding-top: 80px;
+  }
+
+  .g--padding-top-12\@desktop {
+    padding-top: 96px;
+  }
+
+  .g--padding-top-13\@desktop {
+    padding-top: 128px;
+  }
+
+  .g--padding-top-14\@desktop {
+    padding-top: 160px;
+  }
+
+  .g--padding-top-15\@desktop {
+    padding-top: 192px;
+  }
+
+  .g--padding-top-16\@desktop {
+    padding-top: 224px;
+  }
+
+  .g--padding-top-17\@desktop {
+    padding-top: 256px;
+  }
+
+  .g--padding-top-18\@desktop {
+    padding-top: 320px;
+  }
+
+  .g--padding-top-19\@desktop {
+    padding-top: 480px;
+  }
+
+  .g--padding-top-20\@desktop {
+    padding-top: 640px;
+  }
+}
+.g--padding-bottom-0 {
+  padding-bottom: 0px;
+}
+
+.g--padding-bottom-1 {
+  padding-bottom: 4px;
+}
+
+.g--padding-bottom-2 {
+  padding-bottom: 8px;
+}
+
+.g--padding-bottom-3 {
+  padding-bottom: 12px;
+}
+
+.g--padding-bottom-4 {
+  padding-bottom: 16px;
+}
+
+.g--padding-bottom-5 {
+  padding-bottom: 20px;
+}
+
+.g--padding-bottom-6 {
+  padding-bottom: 24px;
+}
+
+.g--padding-bottom-7 {
+  padding-bottom: 32px;
+}
+
+.g--padding-bottom-8 {
+  padding-bottom: 40px;
+}
+
+.g--padding-bottom-9 {
+  padding-bottom: 48px;
+}
+
+.g--padding-bottom-10 {
+  padding-bottom: 64px;
+}
+
+.g--padding-bottom-11 {
+  padding-bottom: 80px;
+}
+
+.g--padding-bottom-12 {
+  padding-bottom: 96px;
+}
+
+.g--padding-bottom-13 {
+  padding-bottom: 128px;
+}
+
+.g--padding-bottom-14 {
+  padding-bottom: 160px;
+}
+
+.g--padding-bottom-15 {
+  padding-bottom: 192px;
+}
+
+.g--padding-bottom-16 {
+  padding-bottom: 224px;
+}
+
+.g--padding-bottom-17 {
+  padding-bottom: 256px;
+}
+
+.g--padding-bottom-18 {
+  padding-bottom: 320px;
+}
+
+.g--padding-bottom-19 {
+  padding-bottom: 480px;
+}
+
+.g--padding-bottom-20 {
+  padding-bottom: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-bottom-0\@movil {
+    padding-bottom: 0px;
+  }
+
+  .g--padding-bottom-1\@movil {
+    padding-bottom: 4px;
+  }
+
+  .g--padding-bottom-2\@movil {
+    padding-bottom: 8px;
+  }
+
+  .g--padding-bottom-3\@movil {
+    padding-bottom: 12px;
+  }
+
+  .g--padding-bottom-4\@movil {
+    padding-bottom: 16px;
+  }
+
+  .g--padding-bottom-5\@movil {
+    padding-bottom: 20px;
+  }
+
+  .g--padding-bottom-6\@movil {
+    padding-bottom: 24px;
+  }
+
+  .g--padding-bottom-7\@movil {
+    padding-bottom: 32px;
+  }
+
+  .g--padding-bottom-8\@movil {
+    padding-bottom: 40px;
+  }
+
+  .g--padding-bottom-9\@movil {
+    padding-bottom: 48px;
+  }
+
+  .g--padding-bottom-10\@movil {
+    padding-bottom: 64px;
+  }
+
+  .g--padding-bottom-11\@movil {
+    padding-bottom: 80px;
+  }
+
+  .g--padding-bottom-12\@movil {
+    padding-bottom: 96px;
+  }
+
+  .g--padding-bottom-13\@movil {
+    padding-bottom: 128px;
+  }
+
+  .g--padding-bottom-14\@movil {
+    padding-bottom: 160px;
+  }
+
+  .g--padding-bottom-15\@movil {
+    padding-bottom: 192px;
+  }
+
+  .g--padding-bottom-16\@movil {
+    padding-bottom: 224px;
+  }
+
+  .g--padding-bottom-17\@movil {
+    padding-bottom: 256px;
+  }
+
+  .g--padding-bottom-18\@movil {
+    padding-bottom: 320px;
+  }
+
+  .g--padding-bottom-19\@movil {
+    padding-bottom: 480px;
+  }
+
+  .g--padding-bottom-20\@movil {
+    padding-bottom: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-bottom-0\@tablet {
+    padding-bottom: 0px;
+  }
+
+  .g--padding-bottom-1\@tablet {
+    padding-bottom: 4px;
+  }
+
+  .g--padding-bottom-2\@tablet {
+    padding-bottom: 8px;
+  }
+
+  .g--padding-bottom-3\@tablet {
+    padding-bottom: 12px;
+  }
+
+  .g--padding-bottom-4\@tablet {
+    padding-bottom: 16px;
+  }
+
+  .g--padding-bottom-5\@tablet {
+    padding-bottom: 20px;
+  }
+
+  .g--padding-bottom-6\@tablet {
+    padding-bottom: 24px;
+  }
+
+  .g--padding-bottom-7\@tablet {
+    padding-bottom: 32px;
+  }
+
+  .g--padding-bottom-8\@tablet {
+    padding-bottom: 40px;
+  }
+
+  .g--padding-bottom-9\@tablet {
+    padding-bottom: 48px;
+  }
+
+  .g--padding-bottom-10\@tablet {
+    padding-bottom: 64px;
+  }
+
+  .g--padding-bottom-11\@tablet {
+    padding-bottom: 80px;
+  }
+
+  .g--padding-bottom-12\@tablet {
+    padding-bottom: 96px;
+  }
+
+  .g--padding-bottom-13\@tablet {
+    padding-bottom: 128px;
+  }
+
+  .g--padding-bottom-14\@tablet {
+    padding-bottom: 160px;
+  }
+
+  .g--padding-bottom-15\@tablet {
+    padding-bottom: 192px;
+  }
+
+  .g--padding-bottom-16\@tablet {
+    padding-bottom: 224px;
+  }
+
+  .g--padding-bottom-17\@tablet {
+    padding-bottom: 256px;
+  }
+
+  .g--padding-bottom-18\@tablet {
+    padding-bottom: 320px;
+  }
+
+  .g--padding-bottom-19\@tablet {
+    padding-bottom: 480px;
+  }
+
+  .g--padding-bottom-20\@tablet {
+    padding-bottom: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-bottom-0\@desktop {
+    padding-bottom: 0px;
+  }
+
+  .g--padding-bottom-1\@desktop {
+    padding-bottom: 4px;
+  }
+
+  .g--padding-bottom-2\@desktop {
+    padding-bottom: 8px;
+  }
+
+  .g--padding-bottom-3\@desktop {
+    padding-bottom: 12px;
+  }
+
+  .g--padding-bottom-4\@desktop {
+    padding-bottom: 16px;
+  }
+
+  .g--padding-bottom-5\@desktop {
+    padding-bottom: 20px;
+  }
+
+  .g--padding-bottom-6\@desktop {
+    padding-bottom: 24px;
+  }
+
+  .g--padding-bottom-7\@desktop {
+    padding-bottom: 32px;
+  }
+
+  .g--padding-bottom-8\@desktop {
+    padding-bottom: 40px;
+  }
+
+  .g--padding-bottom-9\@desktop {
+    padding-bottom: 48px;
+  }
+
+  .g--padding-bottom-10\@desktop {
+    padding-bottom: 64px;
+  }
+
+  .g--padding-bottom-11\@desktop {
+    padding-bottom: 80px;
+  }
+
+  .g--padding-bottom-12\@desktop {
+    padding-bottom: 96px;
+  }
+
+  .g--padding-bottom-13\@desktop {
+    padding-bottom: 128px;
+  }
+
+  .g--padding-bottom-14\@desktop {
+    padding-bottom: 160px;
+  }
+
+  .g--padding-bottom-15\@desktop {
+    padding-bottom: 192px;
+  }
+
+  .g--padding-bottom-16\@desktop {
+    padding-bottom: 224px;
+  }
+
+  .g--padding-bottom-17\@desktop {
+    padding-bottom: 256px;
+  }
+
+  .g--padding-bottom-18\@desktop {
+    padding-bottom: 320px;
+  }
+
+  .g--padding-bottom-19\@desktop {
+    padding-bottom: 480px;
+  }
+
+  .g--padding-bottom-20\@desktop {
+    padding-bottom: 640px;
+  }
+}
+.g--padding-left-0 {
+  padding-left: 0px;
+}
+
+.g--padding-left-1 {
+  padding-left: 4px;
+}
+
+.g--padding-left-2 {
+  padding-left: 8px;
+}
+
+.g--padding-left-3 {
+  padding-left: 12px;
+}
+
+.g--padding-left-4 {
+  padding-left: 16px;
+}
+
+.g--padding-left-5 {
+  padding-left: 20px;
+}
+
+.g--padding-left-6 {
+  padding-left: 24px;
+}
+
+.g--padding-left-7 {
+  padding-left: 32px;
+}
+
+.g--padding-left-8 {
+  padding-left: 40px;
+}
+
+.g--padding-left-9 {
+  padding-left: 48px;
+}
+
+.g--padding-left-10 {
+  padding-left: 64px;
+}
+
+.g--padding-left-11 {
+  padding-left: 80px;
+}
+
+.g--padding-left-12 {
+  padding-left: 96px;
+}
+
+.g--padding-left-13 {
+  padding-left: 128px;
+}
+
+.g--padding-left-14 {
+  padding-left: 160px;
+}
+
+.g--padding-left-15 {
+  padding-left: 192px;
+}
+
+.g--padding-left-16 {
+  padding-left: 224px;
+}
+
+.g--padding-left-17 {
+  padding-left: 256px;
+}
+
+.g--padding-left-18 {
+  padding-left: 320px;
+}
+
+.g--padding-left-19 {
+  padding-left: 480px;
+}
+
+.g--padding-left-20 {
+  padding-left: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-left-0\@movil {
+    padding-left: 0px;
+  }
+
+  .g--padding-left-1\@movil {
+    padding-left: 4px;
+  }
+
+  .g--padding-left-2\@movil {
+    padding-left: 8px;
+  }
+
+  .g--padding-left-3\@movil {
+    padding-left: 12px;
+  }
+
+  .g--padding-left-4\@movil {
+    padding-left: 16px;
+  }
+
+  .g--padding-left-5\@movil {
+    padding-left: 20px;
+  }
+
+  .g--padding-left-6\@movil {
+    padding-left: 24px;
+  }
+
+  .g--padding-left-7\@movil {
+    padding-left: 32px;
+  }
+
+  .g--padding-left-8\@movil {
+    padding-left: 40px;
+  }
+
+  .g--padding-left-9\@movil {
+    padding-left: 48px;
+  }
+
+  .g--padding-left-10\@movil {
+    padding-left: 64px;
+  }
+
+  .g--padding-left-11\@movil {
+    padding-left: 80px;
+  }
+
+  .g--padding-left-12\@movil {
+    padding-left: 96px;
+  }
+
+  .g--padding-left-13\@movil {
+    padding-left: 128px;
+  }
+
+  .g--padding-left-14\@movil {
+    padding-left: 160px;
+  }
+
+  .g--padding-left-15\@movil {
+    padding-left: 192px;
+  }
+
+  .g--padding-left-16\@movil {
+    padding-left: 224px;
+  }
+
+  .g--padding-left-17\@movil {
+    padding-left: 256px;
+  }
+
+  .g--padding-left-18\@movil {
+    padding-left: 320px;
+  }
+
+  .g--padding-left-19\@movil {
+    padding-left: 480px;
+  }
+
+  .g--padding-left-20\@movil {
+    padding-left: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-left-0\@tablet {
+    padding-left: 0px;
+  }
+
+  .g--padding-left-1\@tablet {
+    padding-left: 4px;
+  }
+
+  .g--padding-left-2\@tablet {
+    padding-left: 8px;
+  }
+
+  .g--padding-left-3\@tablet {
+    padding-left: 12px;
+  }
+
+  .g--padding-left-4\@tablet {
+    padding-left: 16px;
+  }
+
+  .g--padding-left-5\@tablet {
+    padding-left: 20px;
+  }
+
+  .g--padding-left-6\@tablet {
+    padding-left: 24px;
+  }
+
+  .g--padding-left-7\@tablet {
+    padding-left: 32px;
+  }
+
+  .g--padding-left-8\@tablet {
+    padding-left: 40px;
+  }
+
+  .g--padding-left-9\@tablet {
+    padding-left: 48px;
+  }
+
+  .g--padding-left-10\@tablet {
+    padding-left: 64px;
+  }
+
+  .g--padding-left-11\@tablet {
+    padding-left: 80px;
+  }
+
+  .g--padding-left-12\@tablet {
+    padding-left: 96px;
+  }
+
+  .g--padding-left-13\@tablet {
+    padding-left: 128px;
+  }
+
+  .g--padding-left-14\@tablet {
+    padding-left: 160px;
+  }
+
+  .g--padding-left-15\@tablet {
+    padding-left: 192px;
+  }
+
+  .g--padding-left-16\@tablet {
+    padding-left: 224px;
+  }
+
+  .g--padding-left-17\@tablet {
+    padding-left: 256px;
+  }
+
+  .g--padding-left-18\@tablet {
+    padding-left: 320px;
+  }
+
+  .g--padding-left-19\@tablet {
+    padding-left: 480px;
+  }
+
+  .g--padding-left-20\@tablet {
+    padding-left: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-left-0\@desktop {
+    padding-left: 0px;
+  }
+
+  .g--padding-left-1\@desktop {
+    padding-left: 4px;
+  }
+
+  .g--padding-left-2\@desktop {
+    padding-left: 8px;
+  }
+
+  .g--padding-left-3\@desktop {
+    padding-left: 12px;
+  }
+
+  .g--padding-left-4\@desktop {
+    padding-left: 16px;
+  }
+
+  .g--padding-left-5\@desktop {
+    padding-left: 20px;
+  }
+
+  .g--padding-left-6\@desktop {
+    padding-left: 24px;
+  }
+
+  .g--padding-left-7\@desktop {
+    padding-left: 32px;
+  }
+
+  .g--padding-left-8\@desktop {
+    padding-left: 40px;
+  }
+
+  .g--padding-left-9\@desktop {
+    padding-left: 48px;
+  }
+
+  .g--padding-left-10\@desktop {
+    padding-left: 64px;
+  }
+
+  .g--padding-left-11\@desktop {
+    padding-left: 80px;
+  }
+
+  .g--padding-left-12\@desktop {
+    padding-left: 96px;
+  }
+
+  .g--padding-left-13\@desktop {
+    padding-left: 128px;
+  }
+
+  .g--padding-left-14\@desktop {
+    padding-left: 160px;
+  }
+
+  .g--padding-left-15\@desktop {
+    padding-left: 192px;
+  }
+
+  .g--padding-left-16\@desktop {
+    padding-left: 224px;
+  }
+
+  .g--padding-left-17\@desktop {
+    padding-left: 256px;
+  }
+
+  .g--padding-left-18\@desktop {
+    padding-left: 320px;
+  }
+
+  .g--padding-left-19\@desktop {
+    padding-left: 480px;
+  }
+
+  .g--padding-left-20\@desktop {
+    padding-left: 640px;
+  }
+}
+.g--padding-right-0 {
+  padding-right: 0px;
+}
+
+.g--padding-right-1 {
+  padding-right: 4px;
+}
+
+.g--padding-right-2 {
+  padding-right: 8px;
+}
+
+.g--padding-right-3 {
+  padding-right: 12px;
+}
+
+.g--padding-right-4 {
+  padding-right: 16px;
+}
+
+.g--padding-right-5 {
+  padding-right: 20px;
+}
+
+.g--padding-right-6 {
+  padding-right: 24px;
+}
+
+.g--padding-right-7 {
+  padding-right: 32px;
+}
+
+.g--padding-right-8 {
+  padding-right: 40px;
+}
+
+.g--padding-right-9 {
+  padding-right: 48px;
+}
+
+.g--padding-right-10 {
+  padding-right: 64px;
+}
+
+.g--padding-right-11 {
+  padding-right: 80px;
+}
+
+.g--padding-right-12 {
+  padding-right: 96px;
+}
+
+.g--padding-right-13 {
+  padding-right: 128px;
+}
+
+.g--padding-right-14 {
+  padding-right: 160px;
+}
+
+.g--padding-right-15 {
+  padding-right: 192px;
+}
+
+.g--padding-right-16 {
+  padding-right: 224px;
+}
+
+.g--padding-right-17 {
+  padding-right: 256px;
+}
+
+.g--padding-right-18 {
+  padding-right: 320px;
+}
+
+.g--padding-right-19 {
+  padding-right: 480px;
+}
+
+.g--padding-right-20 {
+  padding-right: 640px;
+}
+
+@media (min-width: 640px) {
+  .g--padding-right-0\@movil {
+    padding-right: 0px;
+  }
+
+  .g--padding-right-1\@movil {
+    padding-right: 4px;
+  }
+
+  .g--padding-right-2\@movil {
+    padding-right: 8px;
+  }
+
+  .g--padding-right-3\@movil {
+    padding-right: 12px;
+  }
+
+  .g--padding-right-4\@movil {
+    padding-right: 16px;
+  }
+
+  .g--padding-right-5\@movil {
+    padding-right: 20px;
+  }
+
+  .g--padding-right-6\@movil {
+    padding-right: 24px;
+  }
+
+  .g--padding-right-7\@movil {
+    padding-right: 32px;
+  }
+
+  .g--padding-right-8\@movil {
+    padding-right: 40px;
+  }
+
+  .g--padding-right-9\@movil {
+    padding-right: 48px;
+  }
+
+  .g--padding-right-10\@movil {
+    padding-right: 64px;
+  }
+
+  .g--padding-right-11\@movil {
+    padding-right: 80px;
+  }
+
+  .g--padding-right-12\@movil {
+    padding-right: 96px;
+  }
+
+  .g--padding-right-13\@movil {
+    padding-right: 128px;
+  }
+
+  .g--padding-right-14\@movil {
+    padding-right: 160px;
+  }
+
+  .g--padding-right-15\@movil {
+    padding-right: 192px;
+  }
+
+  .g--padding-right-16\@movil {
+    padding-right: 224px;
+  }
+
+  .g--padding-right-17\@movil {
+    padding-right: 256px;
+  }
+
+  .g--padding-right-18\@movil {
+    padding-right: 320px;
+  }
+
+  .g--padding-right-19\@movil {
+    padding-right: 480px;
+  }
+
+  .g--padding-right-20\@movil {
+    padding-right: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .g--padding-right-0\@tablet {
+    padding-right: 0px;
+  }
+
+  .g--padding-right-1\@tablet {
+    padding-right: 4px;
+  }
+
+  .g--padding-right-2\@tablet {
+    padding-right: 8px;
+  }
+
+  .g--padding-right-3\@tablet {
+    padding-right: 12px;
+  }
+
+  .g--padding-right-4\@tablet {
+    padding-right: 16px;
+  }
+
+  .g--padding-right-5\@tablet {
+    padding-right: 20px;
+  }
+
+  .g--padding-right-6\@tablet {
+    padding-right: 24px;
+  }
+
+  .g--padding-right-7\@tablet {
+    padding-right: 32px;
+  }
+
+  .g--padding-right-8\@tablet {
+    padding-right: 40px;
+  }
+
+  .g--padding-right-9\@tablet {
+    padding-right: 48px;
+  }
+
+  .g--padding-right-10\@tablet {
+    padding-right: 64px;
+  }
+
+  .g--padding-right-11\@tablet {
+    padding-right: 80px;
+  }
+
+  .g--padding-right-12\@tablet {
+    padding-right: 96px;
+  }
+
+  .g--padding-right-13\@tablet {
+    padding-right: 128px;
+  }
+
+  .g--padding-right-14\@tablet {
+    padding-right: 160px;
+  }
+
+  .g--padding-right-15\@tablet {
+    padding-right: 192px;
+  }
+
+  .g--padding-right-16\@tablet {
+    padding-right: 224px;
+  }
+
+  .g--padding-right-17\@tablet {
+    padding-right: 256px;
+  }
+
+  .g--padding-right-18\@tablet {
+    padding-right: 320px;
+  }
+
+  .g--padding-right-19\@tablet {
+    padding-right: 480px;
+  }
+
+  .g--padding-right-20\@tablet {
+    padding-right: 640px;
+  }
+}
+@media (min-width: 1024px) {
+  .g--padding-right-0\@desktop {
+    padding-right: 0px;
+  }
+
+  .g--padding-right-1\@desktop {
+    padding-right: 4px;
+  }
+
+  .g--padding-right-2\@desktop {
+    padding-right: 8px;
+  }
+
+  .g--padding-right-3\@desktop {
+    padding-right: 12px;
+  }
+
+  .g--padding-right-4\@desktop {
+    padding-right: 16px;
+  }
+
+  .g--padding-right-5\@desktop {
+    padding-right: 20px;
+  }
+
+  .g--padding-right-6\@desktop {
+    padding-right: 24px;
+  }
+
+  .g--padding-right-7\@desktop {
+    padding-right: 32px;
+  }
+
+  .g--padding-right-8\@desktop {
+    padding-right: 40px;
+  }
+
+  .g--padding-right-9\@desktop {
+    padding-right: 48px;
+  }
+
+  .g--padding-right-10\@desktop {
+    padding-right: 64px;
+  }
+
+  .g--padding-right-11\@desktop {
+    padding-right: 80px;
+  }
+
+  .g--padding-right-12\@desktop {
+    padding-right: 96px;
+  }
+
+  .g--padding-right-13\@desktop {
+    padding-right: 128px;
+  }
+
+  .g--padding-right-14\@desktop {
+    padding-right: 160px;
+  }
+
+  .g--padding-right-15\@desktop {
+    padding-right: 192px;
+  }
+
+  .g--padding-right-16\@desktop {
+    padding-right: 224px;
+  }
+
+  .g--padding-right-17\@desktop {
+    padding-right: 256px;
+  }
+
+  .g--padding-right-18\@desktop {
+    padding-right: 320px;
+  }
+
+  .g--padding-right-19\@desktop {
+    padding-right: 480px;
+  }
+
+  .g--padding-right-20\@desktop {
+    padding-right: 640px;
+  }
+}
+.g--transition-y-minus-80 {
+  transition: transform 1.5s ease-in-out;
+  transform: translateY(-80px);
+}
+
+.g--transition-y-minus-60 {
+  transition: transform 1.5s ease-in-out;
+  transform: translateY(-60px);
+}
+
+.g--transition-y-plus-10 {
+  transition: transform 1.5s ease-in-out;
+  transform: translateY(10px);
+}
+
+.g--transition-y-plus-20 {
+  transition: transform 1.5s ease-in-out;
+  transform: translateY(20px);
+}
+
+.kk {
+  opacity: 0.5;
+}
+
+.g--transition-opacity {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}

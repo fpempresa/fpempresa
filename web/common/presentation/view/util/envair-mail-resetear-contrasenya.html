@@ -1,26 +1,18 @@
 <div class="row" >
     <div class="col-xs-12 form__container" >
         <div>
-            <ix3-business-messages></ix3-business-messages>
-            <form name="mainForm" id="mainForm"  ix3-form>
-                <div class="row">
-                    <p>Introduzca su email y le enviaremos las instrucciones para resetear su contraseña</p>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <label for="userEmail">Email:</label>
-                        <input type="email" class="form-control" id="userEmail" name="userEmail" ng-model="userEmail">
-                    </div>
-                </div>
-                <br>
-                <div class="row" >
-                    <div class="col-xs-12 ">                           
-                        <div class=" pull-right">
-                            <button type="button" class="btn form__button form__button--default" ng-click="buttonCancel()" >Cancelar</button>
-                            <button type="button" class="btn form__button form__button--primary" ng-click="buttonOK()">Resetear Contrase&ntilde;a</button>
-                        </div>
-                    </div>
-                </div>                    
+            <form name="mainForm" id="mainForm"  ix3-form class="c-form c-form--no-style">
+                <p class="c-text">Introduzca su correo electrónico y le enviaremos a dicho correo las instrucciones para resetear su contraseña</p>
+
+                <label class="c-label" for="userEmail">Correo electrónico</label>
+                <input type="email" class="c-input" id="userEmail" name="userEmail" ng-model="userEmail">
+
+
+                <div class="c-form__buttons  g--margin-left-auto">
+                    <button type="button" class="c-button c-button--secondary" ng-click="buttonCancel()" >Cancelar</button>
+                    <button type="button" class="c-button c-button--primary" ng-click="buttonOK()">Resetear Contrase&ntilde;a</button>
+                </div> 
+                <ix3-business-messages></ix3-business-messages>
             </form>
         </div>
     </div>

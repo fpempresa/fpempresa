@@ -1,0 +1,31 @@
+.c-number {
+    
+    display: inline;
+    margin-bottom: getMargin(3);
+    
+    &__value {
+        color: getColor(alt,5);
+        font-family: getFontFamily(mono);
+        font-size: getFontSize(5l);
+        text-align: center;
+        margin-bottom: getMargin(2);
+    }
+    
+    &__label {
+        color: getColor(default,8);
+        font-family: getFontFamily(sans);
+        font-size: getFontSize();
+        text-align: center;
+        margin-top: 0px;
+    }
+    
+    @media  (min-width: getBreak(tablet)) {
+        &__value {
+            font-size: getFontSize(6l);
+        }
+        &__label {
+            font-size: getFontSize(2l);
+        } 
+    }
+    
+}

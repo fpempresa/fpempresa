@@ -1,0 +1,36 @@
+@include class-responsive-variants(g--margin,$margin-variants)  using ($value) {
+    margin-top:$value;
+    margin-bottom: $value;
+    margin-left:$value;
+    margin-right: $value;
+}
+
+
+
+
+@include class-responsive-variants(g--margin-vertical,$margin-variants)  using ($value) {
+    margin-top:$value;
+    margin-bottom: $value;
+}
+@include class-responsive-variants(g--margin-horizontal,$margin-variants)  using ($value) {
+    margin-left:$value;
+    margin-right: $value;
+}
+
+
+
+
+@include class-responsive-variants(g--margin-top,$margin-variants)  using ($value) {
+    margin-top:$value;
+}
+@include class-responsive-variants(g--margin-bottom,$margin-variants)  using ($value) {
+    margin-bottom: $value;
+}
+
+@include class-responsive-variants(g--margin-left,$margin-variants)  using ($value) {
+    margin-left:$value;
+}
+
+@include class-responsive-variants(g--margin-right,$margin-variants)  using ($value) {
+    margin-right: $value;
+}

@@ -1,0 +1,24 @@
+/* latin-ext */
+@font-face {
+  font-family: 'Basic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(../fonts/basic/Basic-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(../fonts/Roboto_Mono/RobotoMono-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(../fonts/Roboto_Mono/RobotoMono-Bold.ttf);
+}

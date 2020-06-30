@@ -1,8 +1,4 @@
-<%-- 
-    Document   : testing
-    Created on : 28-sep-2016, 15:46:26
-    Author     : GnommoStudios
---%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.service.CRUDServiceFactory"%>
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@page import="es.logongas.ix3.dao.DataSession"%>
@@ -23,7 +19,7 @@
             CRUDServiceFactory serviceFactory = webApplicationContext.getBean(CRUDServiceFactory.class);
             UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
             if (usuarioCRUDService.validarEmail(dataSession, request.getParameter("token"))) {
-                message = "Su email se ha verificado correctamente";
+                message = "Su correo electrónico se ha verificado correctamente";
             } else {
                 message = "El token proporcionado es inválido";
             }
@@ -43,25 +39,17 @@
     }
 %>
 
+<section  class="c-section" data-scroll-trigger="true" >
+    <div class="c-section__content  g--padding-vertical-15 " >
+        <form  name="mainForm" id="mainForm" ix3-form class="c-form g--center" style="width: 100%; max-width:500px" novalidate>
+            <h1 class="c-title c-title--left g--margin-bottom-7">
+                <span class="c-title__pre">Vamos a validar</span>
+                Tu dirección de correo
+            </h1>
+            
+            <p class="c-text c-text--size-alt g--padding-top-7"><%=message%></p>
+                                     
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<section class="container-fluid form__page" >
-
-    <div class="row"  >    
-        <div class="col-xs-12 form--center"  >
-            <h3 class="form__main-title" >&nbsp;&nbsp;Validar Mail&nbsp;&nbsp;</h3>
-            <br>
-            <br>
-            <br>
-        </div>
+        </form>
     </div>
-
-
-    <div class="row"  >
-        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 form__container form--center" >
-            <h3><%=message%></h3>
-        </div>  
-    </div>                
 </section>
-

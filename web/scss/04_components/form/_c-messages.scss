@@ -1,0 +1,36 @@
+.c-messages {
+    display:block;
+    color: getColor(rojo,5);
+    background-color: getColor(rojo,2);
+    padding: getPadding(4);
+    margin-bottom: getMargin(3);
+    margin-top: getMargin(3);
+    border: 1px solid getColor(rojo,3);
+    border-radius: getBorderRadious(2);
+    font-family: getFontFamily(sans);
+    font-size: getFontSize(1s);
+    
+    & .close {
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        float: right;
+        font-size: 21px;
+        font-weight: bold;
+        line-height: 1;
+        color: #000000;
+        text-shadow: 0 1px 0 #ffffff;
+        opacity: 0.2;        
+    }
+    
+    & li {
+        padding-top: getPadding(1);
+        padding-bottom: getPadding(1);
+        list-style-type: disc;
+        padding-left: 0px;
+        margin-left:getMargin(5);
+        line-height: 1.5;
+    }
+    
+}

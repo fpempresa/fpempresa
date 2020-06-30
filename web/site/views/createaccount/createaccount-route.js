@@ -10,13 +10,6 @@ app.config(['$stateProvider', function ($stateProvider) {
             templateUrl: 'views/createaccount/init.html',
             controller: 'CreateAccountInitController'
         });
-        $stateProvider.state('/createaccount/register', {
-            url:'/createaccount/register/:tipoUsuario',
-            templateUrl: 'views/createaccount/register.html',
-            controller: 'CreateAccountRegisterController'
-        });
-
-
         $stateProvider.state('/createaccount/end', {
             url:'/createaccount/end/:tipoUsuario',
             templateUrl: 'views/createaccount/end.html',

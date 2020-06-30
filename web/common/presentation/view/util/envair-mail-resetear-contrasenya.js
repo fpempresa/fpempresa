@@ -6,7 +6,7 @@
         $scope.businessMessages = [];
 
         currentDialog.open({
-            width: 550,
+            width: 400,
             height: 'auto',
             title: "Solicitar nueva contraseña"
         });

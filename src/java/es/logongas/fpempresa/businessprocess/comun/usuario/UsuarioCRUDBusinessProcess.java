@@ -23,23 +23,15 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario, Integer> {
 
     void updatePassword(UpdatePasswordArguments updatePasswordArguments) throws BusinessException;
-
     void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException;
-
     void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException;
-
     Usuario getUsuarioFromTitulado(GetUsuarioFromTituladoArguments getUsuarioFromTituladoArguments) throws BusinessException;
-
     byte[] getFoto(GetFotoArguments getFotoArguments) throws BusinessException;
-
     void updateFoto(UpdateFotoArguments updateFotoArguments) throws BusinessException;
-
     Usuario updateEstadoUsuario(UpdateEstadoUsuarioArguments updateEstadoUsuarioArguments) throws BusinessException;
-
     Usuario updateCentro(UpdateCentroArguments updateCentroArguments) throws BusinessException;
-    
-    
     byte[]  getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException;
+    void  enviarMensajeSoporte(EnviarMensajeSoporteArguments enviarMensajeSoporteArguments) throws BusinessException;
 
     public class UpdatePasswordArguments extends BusinessProcess.BusinessProcessArguments {
 
@@ -163,4 +155,20 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
 
     }
+    
+    public class EnviarMensajeSoporteArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public String nombre;
+        final public String correo;
+        final public String mensaje;
+
+        public EnviarMensajeSoporteArguments(Principal principal, DataSession dataSession, String nombre, String correo,String mensaje) {
+            super(principal, dataSession);
+            this.nombre = nombre;
+            this.correo = correo;
+            this.mensaje = mensaje;
+        }
+    }
+    
+    
 }

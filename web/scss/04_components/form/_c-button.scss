@@ -1,0 +1,66 @@
+.c-button {
+    font-family: getFontFamily("sans");
+    font-size: getFontSize();
+    padding:getPadding(3);
+
+    border-radius: getBorderRadious(2);
+    border-width: 1px;
+    border-style: solid;
+    
+  
+    display: inline-block;
+    
+    opacity:1;
+    
+    transition: background-color 0.5s ease;
+    cursor: pointer;
+    
+    outline: none!important;
+}
+
+@include class-responsive-variants(c-button-,$buttons-variants)  using ($value) {
+    $colors:$value;
+    $text-colors:map-get($colors,"text");
+    $border-colors:map-get($colors,"border");                
+    $background-colors:map-get($colors,"background");                
+
+    @if (length($text-colors)>0) {
+        color:nth($text-colors,1);
+    }
+    @if (length($border-colors)>0) {
+        border-width: 1px;
+        border-color:nth($border-colors,1);
+        padding: getPadding(3);      
+    } @else {
+        border-width: 0px;
+        padding: 0px;
+    }
+    @if (length($background-colors)>0) {
+        background-color:nth($background-colors,1);
+    } @else {
+        background-color:transparent;
+    }                
+
+    &:hover {
+        @if (length($text-colors)>1) {
+            color:nth($text-colors,2);
+        }
+        @if (length($border-colors)>1) {
+            border-width: 1px;
+            border-color:nth($border-colors,2);
+        } @else {
+            border-width: 0px;
+        }
+        @if (length($background-colors)>1) {
+            background-color:nth($background-colors,2);
+        } @else {
+            background-color:transparent;
+        }
+    }
+}
+
+.c-button--size-alt {
+    font-size: getFontSize(3l);
+    padding:getPadding(5);
+}
+

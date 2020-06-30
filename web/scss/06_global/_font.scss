@@ -1,0 +1,11 @@
+@include class-responsive-variants(g--font-size,$font-size-variants)  using ($value) {
+    font-size:$value;
+}
+
+@include class-responsive-variants(g--font-family,$font-family-variants)  using ($value) {
+    font-family:$value;
+}
+
+.g--font-bold {
+    font-weight: bold;
+}

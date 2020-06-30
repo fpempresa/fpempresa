@@ -26,9 +26,11 @@ public class Mail {
     
     private List<Attach> attachs=new ArrayList<Attach>();
     
+    private String reply;
 
     public Mail() {
         this.to = new ArrayList();
+        this.reply=null;
     }
 
     public Mail(List<String> to, String from, String subject, String htmlBody, String textBody) {
@@ -37,6 +39,7 @@ public class Mail {
         this.subject = subject;
         this.htmlBody = htmlBody;
         this.textBody = textBody;
+        this.reply=null;
     }
 
     public String getSubject() {
@@ -95,6 +98,20 @@ public class Mail {
      */
     public void setAttachs(List<Attach> attachs) {
         this.attachs = attachs;
+    }
+
+    /**
+     * @return the reply
+     */
+    public String getReply() {
+        return reply;
+    }
+
+    /**
+     * @param reply the reply to set
+     */
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 
 }

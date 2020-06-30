@@ -1,0 +1,37 @@
+@include class-responsive-variants(g--padding,$padding-variants)  using ($value) {
+    padding-top:$value;
+    padding-bottom: $value;
+    padding-left:$value;
+    padding-right: $value;
+}
+
+
+
+
+@include class-responsive-variants(g--padding-vertical,$padding-variants)  using ($value) {
+    padding-top:$value;
+    padding-bottom: $value;
+}
+@include class-responsive-variants(g--padding-horizontal,$padding-variants)  using ($value) {
+    padding-left:$value;
+    padding-right: $value;
+}
+
+
+
+
+@include class-responsive-variants(g--padding-top,$padding-variants)  using ($value) {
+    padding-top:$value;
+}
+@include class-responsive-variants(g--padding-bottom,$padding-variants)  using ($value) {
+    padding-bottom: $value;
+}
+
+@include class-responsive-variants(g--padding-left,$padding-variants)  using ($value) {
+    padding-left:$value;
+}
+
+@include class-responsive-variants(g--padding-right,$padding-variants)  using ($value) {
+    padding-right: $value;
+}
+

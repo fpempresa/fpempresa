@@ -1,0 +1,117 @@
+.c-horizontal-menu {
+
+    $break-menu: 768px;
+        
+        
+        
+    &__items {
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        z-index:90;
+    }
+    
+    @media  (max-width: $break-menu) {
+        &__items {
+            flex-direction: column;
+            position:absolute;
+            top: 80px;
+            left:0%;
+            background-color: getColor(blanco);
+            width: 100%;
+            box-shadow:  0px 11px 10px -13px rgba(0,0,0,0.67);
+            height: calc(100vh - 80px);
+            
+        } 
+
+
+        &__items--movil-hide {
+            display: none;
+        }
+        
+        &__items--animation-rollout {
+            display: flex;
+            animation-name: animation-rollout;
+            animation-duration: 0.8s;
+        }
+        &__items--animation-rollin {
+            display: flex;
+            animation-name: animation-rollin;
+            animation-duration: 0.8s;
+        }         
+    }
+    
+
+    &__item {
+        text-transform: none;
+        font-family: getFontFamily(title);
+        font-size: getFontSize(1l);
+        letter-spacing: 1.5px;
+        color: getColor(default,7);
+
+        margin-top: getMargin(5);
+        margin-bottom: getMargin(5);
+        margin-left: getMargin(6);
+        margin-right: getMargin(6); 
+    }
+
+    @media  (max-width: 900px) {
+        &__item {
+        margin-top: getMargin(3);
+        margin-bottom: getMargin(3);
+        margin-left: getMargin(3);
+        margin-right: getMargin(3);
+        }
+        
+        
+    }
+    
+    &__hamburger {
+        color: getColor(default,7);
+        font-size: getFontSize(3l);
+        display: none;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        outline: none!important;
+
+        &:before {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            content: "\f0c9";  
+        }
+        
+        &--cerrar:before {
+            content: "\f00d";
+        }
+    }
+   
+    @media  (max-width: $break-menu) {
+        &__hamburger {
+            display: block;
+        }
+        
+
+    }    
+
+}
+
+
+
+
+    @keyframes animation-rollout {
+        from {
+            transform: translate(100%,0%);
+        }
+        to {
+            transform: translate(0,0);
+        }
+    } 
+    @keyframes animation-rollin {
+        from {
+            transform: translate(0,0);
+        }
+        to {
+            transform: translate(100%,0);
+        }
+    }

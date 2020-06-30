@@ -1,0 +1,130 @@
+$breaks:(
+    "":0,
+    "movil":640px,
+    "tablet":768px,
+    "desktop":1024px
+);
+
+
+
+
+
+//Ancho máximo de la página
+$page-max-width:1600px;
+
+$opacity-variants:(
+    "0":0,
+    "1":0.1,
+    "2":0.2,
+    "3":0.3,
+    "4":0.4,
+    "5":0.5,
+    "6":0.6,
+    "7":0.7,
+    "8":0.8,
+    "9":0.9,
+    "10":1,
+
+);
+$padding-variants:(
+    "0":0px,
+    "1":4px,
+    "2":8px,
+    "3":12px,
+    "4":16px,
+    "5":20px,
+    "6":24px,
+    "7":32px,
+    "8":40px,
+    "9":48px,
+    "10":64px,
+    "11":80px,
+    "12":96px,
+    "13":128px,
+    "14":160px,
+    "15":192px,
+    "16":224px,
+    "17":256px,
+    "18":320px,
+    "19":480px,
+    "20":640px
+);
+
+$margin-variants:map-merge($padding-variants,("auto":auto));
+
+$box-shadow-variants:(
+    "0":unquote("none"),
+    "1":unquote("0 0 0 1px rgba(0, 0, 0, 0.05)"),
+    "2":unquote("0 1px 2px 0 rgba(0, 0, 0, 0.05)"),
+    "3":unquote("0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"),
+    "4":unquote("0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"),
+    "5":unquote("0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"),
+    "6":unquote("0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"),
+    "7":unquote("0 25px 50px -12px rgba(0, 0, 0, 0.25)"),
+    "inset":unquote("inset -3px -3px 7px #ffffffb0, inset 3px 3px 5px rgba(94, 104, 121, 0.692)")
+);
+
+$border-radius-variants:(
+    "0":0px,
+    "1":2px,
+    "2":4px,
+    "3":6px,
+    "4":8px,
+    "5":16px
+);
+
+
+$font-family-variants:(
+    "sans":unquote("system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" "),
+    "default":unquote("system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" "),
+    "serif":unquote("Georgia, Cambria, \"Times New Roman\", Times, serif"),
+    "mono":unquote("\"Roboto Mono\",Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"),
+    "title":unquote("Basic")
+);
+
+$font-size-variants:(
+    "2s":12px,
+    "1s":14px,
+    "default":16px,
+    "1l":18px,
+    "2l":20px,
+    "3l":24px,
+    "4l":30px,
+    "5l":36px,
+    "6l":48px,
+    "7l":64px
+);
+
+
+$buttons-variants:( 
+    "primary":(
+        "text":(getColor(blanco),getColor(blanco)),
+        "border":(getColor(default,7),getColor(default,8)),
+        "background":(getColor(default,7),getColor(default,8))
+    ),
+    "secondary":(
+        "text":(getColor(default,7),getColor(default,7)),
+        "border":(getColor(default,7),getColor(default,7)),
+        "background":(transparent,getColor(gris,2))
+    ),
+    "tertiary":(
+        "text":(getColor(default,7),getColor(default,8)),
+        "border":(),
+        "background":()
+    ),
+    "alt-primary":(
+        "text":(getColor(blanco),getColor(blanco)),
+        "border":(getColor(alt,5),getColor(alt,6)),
+        "background":(getColor(alt,5),getColor(alt,6))
+    ),
+    "alt-secondary":(
+        "text":(getColor(alt,5),getColor(alt,6)),
+        "border":(getColor(alt,5),getColor(alt,6)),
+        "background":(transparent,getColor(alt,1))
+    ),
+    "alt-tertiary":(
+        "text":(getColor(alt,5),getColor(alt,6)),
+        "border":(),
+        "background":()
+    )
+);

@@ -1,37 +1,33 @@
-<section ng-controller="CreateAccountEndController"  class="container-fluid form__page" >
+<section class="c-section" ng-controller="CreateAccountEndController"   >
+    <div class="c-section__content  g--padding-vertical-13 g--padding-vertical-15@tablet">
 
-    <div class="row"  >    
-        <div class="col-xs-12 form--center"  >
-            <h3 class="form__main-title" >&nbsp;&nbsp;Cuenta creada&nbsp;&nbsp;</h3>
-        </div>
+        
+        <form class="c-form g--center" style="width: 100%; max-width:500px" novalidate>
+            <h1 class="c-title  c-title--left g--margin-bottom-7">
+                <span class="c-title__pre">Tu nueva cuenta</span>
+                Se ha creado
+            </h1>
+
+
+            <p class="c-text"  ng-if="model.tipoUsuario === 'TITULADO'">Tu cuenta de empleaFP como Titulado ya est&aacute; creada</p>
+            <p class="c-text"  ng-if="model.tipoUsuario === 'EMPRESA'">Tu cuenta de empleaFP como Empresa ya est&aacute; creada</p>
+            <p class="c-text"  ng-if="model.tipoUsuario === 'CENTRO'">Tu cuenta de empleaFP como Centro Educativo ya est&aacute; creada</p>
+            
+            <p class="c-text" >Te acabamos de enviar un correo electrónico con instrucciones para validar tu dirección de correo.</p>
+            <p class="c-text" >Si no lo recibes, comprueba que no esté en la carpeta de spam y si no es así ponte en contacto con nosotros.</p>
+            
+            
+            <div class="c-form__buttons">
+
+            <button type="button" class="c-button c-button--primary" ng-click="login()" >Inicia sesi&oacute;n</button>
+    
+            </div>
+                                        
+
+        </form>
+        
     </div>
-
-
-    <div class="row"  >
-        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 form__container form--center" >
-
-            <img ng-src="{{getContextPath()}}/img/icons/titulado_azul.png" alt="registro" ng-if="model.tipoUsuario === 'TITULADO'" style="text-align: center">
-            <img ng-src="{{getContextPath()}}/img/icons/centro_azul.png" alt="registro" ng-if="model.tipoUsuario === 'CENTRO'" style="text-align: center">
-            <img ng-src="{{getContextPath()}}/img/icons/empresa_azul.png" alt="registro" ng-if="model.tipoUsuario === 'EMPRESA'" style="text-align: center">
-
-
-            <h3 class="form__title" >¡Felicidades!</h3>
-
-
-            <h3 class="form__title"  ng-if="model.tipoUsuario === 'TITULADO'">Tu cuenta de empleaFP como <strong>Titulado</strong> ya est&aacute; creada</h3>
-            <h3 class="form__title"  ng-if="model.tipoUsuario === 'EMPRESA'">Tu cuenta de empleaFP como <strong>Empresa</strong> ya est&aacute; creada</h3>
-            <h3 class="form__title"  ng-if="model.tipoUsuario === 'CENTRO'">Tu cuenta de empleaFP como <strong>Centro Educativo</strong> ya est&aacute; creada</h3>
-            
-            <p class="form__text" >Ahora ya puedes pulsar en "Inicia sesi&oacute;n" para acceder a todas las ventajas que ofrece empleaFP</p>
-            
-            <br>                       
-            <button type="button" class="btn  btn-block btn-lg form__button form__button--primary" ng-click="login()" >Inicia sesi&oacute;n</button>
-
-
-        </div>  
-    </div>                
 </section>
-
 
 
 

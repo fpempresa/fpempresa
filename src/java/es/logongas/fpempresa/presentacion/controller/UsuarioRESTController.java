@@ -216,6 +216,21 @@ public class UsuarioRESTController {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
     }
+    
+    @RequestMapping(value = {"/{path}/Usuario/mensajeSoporte"}, method = RequestMethod.POST)
+    public void mensajeSoporte(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonIn) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            JsonReader jsonReader = jsonFactory.getJsonReader(MensajeSoporte.class);
+            MensajeSoporte mensajeSoporte = (MensajeSoporte) jsonReader.fromJson(jsonIn, dataSession);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.enviarMensajeSoporte(new UsuarioCRUDBusinessProcess.EnviarMensajeSoporteArguments(principal, dataSession, mensajeSoporte.nombre, mensajeSoporte.correo,mensajeSoporte.mensaje));
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }    
+    
 
     public static class ResetPassword {
 
@@ -290,5 +305,54 @@ public class UsuarioRESTController {
         }
 
     }
+    
+    public static class MensajeSoporte {
 
+        private String nombre;
+        private String correo;    
+        private String mensaje;    
+
+        /**
+         * @return the nombre
+         */
+        public String getNombre() {
+            return nombre;
+        }
+
+        /**
+         * @param nombre the nombre to set
+         */
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        /**
+         * @return the correo
+         */
+        public String getCorreo() {
+            return correo;
+        }
+
+        /**
+         * @param correo the correo to set
+         */
+        public void setCorreo(String correo) {
+            this.correo = correo;
+        }
+
+        /**
+         * @return the mensaje
+         */
+        public String getMensaje() {
+            return mensaje;
+        }
+
+        /**
+         * @param mensaje the mensaje to set
+         */
+        public void setMensaje(String mensaje) {
+            this.mensaje = mensaje;
+        }
+    
+    }
 }

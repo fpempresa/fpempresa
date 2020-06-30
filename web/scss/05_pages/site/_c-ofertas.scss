@@ -1,0 +1,40 @@
+.c-ofertas {
+    
+    background-color: getColor(blanco);
+    margin: getMargin(3);
+    box-shadow: getBoxShadow(7);
+    border-radius: getBorderRadious(3);
+    
+    &__image {
+        background-repeat:no-repeat;
+        background-position:center;
+        background-size: cover;
+        width: 100%;
+        height: 100px;
+    }
+    
+    &__content {
+        padding-left: getPadding(4);
+        padding-right: getPadding(4);
+    }
+    
+    &__familia {
+        font-family: getFontFamily();
+        font-size: getFontSize(1l);
+        color: getColor(alt);
+        padding-top: getPadding(4);
+        padding-bottom: getPadding(4);
+        line-height: 1.4;
+    }
+    
+    &__puesto {
+        border-top:1px solid getColor(gris,3);
+        font-family: getFontFamily();
+        font-size: getFontSize(1s);
+        color: getColor(default,8);
+        line-height: 1.4;
+        padding-top: getPadding(4);
+        padding-bottom: getPadding(4);
+    }
+    
+}

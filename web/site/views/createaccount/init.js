@@ -10,51 +10,34 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 //Sobreescribimos el valor si nos los pasan en la URL
                 $scope.model.tipoUsuario = $stateParams.tipoUsuario;
             }
+
+            switch ($scope.model.tipoUsuario) {
+                case "CENTRO":
+                    $scope.model.estadoUsuario=null;
+                    break;
+                case "TITULADO":
+                    $scope.model.estadoUsuario="ACEPTADO";
+                    break;
+                case "EMPRESA":
+                    $scope.model.estadoUsuario="ACEPTADO";
+                    break;
+                default:
+                    throw Error("Tipo de usuario desonocido:" + $scope.model.tipoUsuario);
+            }
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;
         });
 
-        $scope.next = function () {
-
+        $scope.registrarse = function () {
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
-                $location.path("/createaccount/register/" + $scope.model.tipoUsuario);
+                usuarioService.insert($scope.model).then(function () {
+                    $location.path("/createaccount/end/" + $scope.model.tipoUsuario);
+                }, function (businessMessages) {
+                    $scope.businessMessages = businessMessages;
+                });
             }
-
         };
-
-        $scope.$validators = [
-            {
-                message: 'El registro de Titulados no está habilitado',
-                rule: function () {
-                    if ($scope.model.tipoUsuario === "TITULADO") {
-                        return true;
-                    } else {
-                        return true;
-                    }
-                }
-            },            
-            {
-                message: 'El registro de Profesores no está habilitado',
-                rule: function () {
-                    if ($scope.model.tipoUsuario === "CENTRO") {
-                        return true;
-                    } else {
-                        return true;
-                    }
-                }
-            },
-            {
-                message: 'El registro de Empresas no está habilitado',
-                rule: function () {
-                    if ($scope.model.tipoUsuario === "EMPRESA") {
-                        return true;
-                    } else {
-                        return true;
-                    }
-                }
-            }
-        ];
 
 
     }]);

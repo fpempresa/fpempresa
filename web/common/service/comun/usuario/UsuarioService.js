@@ -62,7 +62,17 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     });
                     return deferred.promise;
                 };
-
+                
+                service.enviarMensajeSoporte = function (mensajeSoporte) {
+                    var deferred = $q.defer();
+                    this.repository.enviarMensajeSoporte(mensajeSoporte).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+                
                 service.update = function (id, entity, expand) {
                     var deferred = $q.defer();
 

@@ -17,42 +17,11 @@
         <![endif]-->        
         
         <link href="../lib/jquery-ui/css/jquery-ui.css"                 rel="stylesheet" type="text/css" /> 
-        <link href="../lib/bootstrap/css/bootstrap.css"                 rel="stylesheet" type="text/css" />
-        <link href="../lib/fontawesome/css/font-awesome.css"            rel="stylesheet" type="text/css" />
         <link href="../lib/notify/current/css/pnotify.custom.min.css"   rel="stylesheet" type="text/css" /> 
+        <link href="../lib/fontawesome-5/css/all.css" rel="stylesheet" type="text/css"/>
         <link href="../lib/sweetalert/css/sweet-alert.css"              rel="stylesheet" type="text/css" />
         <link href="../lib/jquery-plugin-blueimp-fileupload/css/jquery.fileupload.css" rel="stylesheet" type="text/css"/>
-        <link href="../css/site/site.css"                               rel="stylesheet" type="text/css" />
-        <link href="../lib/cookieconsent/cookieconsent.css"             rel="stylesheet" type="text/css"/>
-        
-        <script src="../lib/cookieconsent/cookieconsent.js" type="text/javascript"></script>
-        <script>
-           
-        window.addEventListener("load", function(){
-        window.cookieconsent.initialise({
-          "palette": {
-            "popup": {
-              "background": "#000000",
-              "text": "#ffffff"
-            },
-            "button": {
-              "background": "#005594",
-              "text": "#ffffff"
-            }
-          },
-          "position": "bottom-right",
-          "content": {
-            "message": "Este sitio web usa unicamente cookies técnicas para el funcionamiento de la página.  Mas información en",
-            "dismiss": "Aceptar",
-            "link": "Politica de Cookies",
-            "href": "#/legal/cookies",
-            target: ''
-          },
-          onInitialise: function (status) {
-          },
-        })});
-       
-        </script>
+        <link href="../css/site.css"                                    rel="stylesheet" type="text/css" />
 
         <script type="text/javascript" src="../common/server.js.jsp"></script>          
         
@@ -60,14 +29,9 @@
         
         <!-- jquery -->
         <script type="text/javascript" src="../lib/jquery/js/jquery.js"></script>
-        <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.js"></script>
         <script type='text/javascript' src="../lib/jquery-ui/js/jquery-ui.js"></script>
         <script type='text/javascript' src="../lib/jquery-ui/js/jquery.ui.datepicker-es.js"></script>
         <script type="text/javascript" src="../lib/jquery-plugin-blueimp-fileupload/js/jquery.fileupload.js"></script>
-        
-        <!-- highcharts -->
-        <script type="text/javascript" src="../lib/highcharts/js/highcharts.js"></script>
-        
         
         <!-- angular-deps -->
         <script type='text/javascript' src='../lib/lodash/js/lodash.js'></script>
@@ -75,7 +39,8 @@
         <script type='text/javascript' src='../lib/notify/current/js/pnotify.custom.min.js'></script>
         <script type="text/javascript" src="../lib/stacktrace/js/stacktrace.js"></script>
         <script type="text/javascript" src="../lib/sweetalert/js/sweet-alert.js"></script>
-
+        <script type="text/javascript" src="../lib/easing/js/jquery.easing.min.js"></script>
+        
         <!-- angular -->
         <script type='text/javascript' src='../lib/angularjs/js/angular.js'></script>
         <script type='text/javascript' src='../lib/angularjs/js/angular-locale_es-es.js'></script>
@@ -151,6 +116,8 @@
         <script type="text/javascript" src="../common/presentation/directive/fpe-ok-button.js"></script>        
         <script type="text/javascript" src="../common/presentation/directive/currentdate.js"></script>
         <script type="text/javascript" src="../common/presentation/directive/fpe-simple-bar-chart.js"></script>
+        <script type="text/javascript" src="../common/presentation/directive/horizontal-menu.js"></script>
+        <script type="text/javascript" src="../common/presentation/service/animate-scroll.js"></script>
         <script type="text/javascript" src="../common/presentation/view/empresa/buscar-empresas.js"></script>
         <script type="text/javascript" src="../common/presentation/view/empresa/ver-empresa.js"></script>        
         <script type="text/javascript" src="../common/presentation/view/util/cambiarcontrasenya.js"></script>
@@ -166,7 +133,9 @@
         
         
         <!-- fpempresa-site -->
-        <script type="text/javascript" src="lib/easing/js/jquery.easing.min.js"></script>
+        <script type='text/javascript' src='./lib/countUp/countUp.js'></script>
+        <script type='text/javascript' src='./lib/waypoints/waypoints.js'></script>
+        <script type='text/javascript' src='./lib/masonry/masonry.pkgd.min.js'></script> 
         
         <script type="text/javascript" src="app.js" ></script>
         <script type="text/javascript" src="app-constant.js" ></script>
@@ -175,19 +144,19 @@
         <script type="text/javascript" src="app-run.js" ></script>
         <script type="text/javascript" src="index.js"></script>
        
+        <script type="text/javascript" src="common/directive/change-on-scroll.js"></script>
         <script type="text/javascript" src="common/directive/clickbuttononclick.js"></script>
-        <script type="text/javascript" src="common/directive/hideonscroll.js"></script>
-        <script type="text/javascript" src="common/service/animatescroll.js"></script>
-        <script type="text/javascript" src="common/service/routescroll.js"></script>
-        
+        <script type="text/javascript" src="common/directive/mansonry-layout.js"></script>
+
         <script type='text/javascript' src='fragments/footer/footer.js'></script>
         <script type='text/javascript' src='fragments/header/header.js'></script>            
         
         <script type="text/javascript" src="views/createaccount/createaccount-route.js" ></script>
-        <script type="text/javascript" src="views/createaccount/register.js" ></script>
         <script type="text/javascript" src="views/createaccount/init.js" ></script>
         <script type="text/javascript" src="views/createaccount/end.js" ></script>
         <script type="text/javascript" src="views/docs/docs-route.js" ></script> 
+        <script type="text/javascript" src="views/docs/soporte.js" ></script> 
+        <script type="text/javascript" src="views/info/info-route.js" ></script> 
         <script type="text/javascript" src="views/legal/legal-route.js" ></script> 
         <script type="text/javascript" src="views/login/login-route.js"></script>
         <script type="text/javascript" src="views/login/login.js"></script>
@@ -203,9 +172,9 @@
 
     </head>
 
-    <body id="top"  ng-controller="IndexController"  style="background-color: #F6F8F7">   
+    <body id="top"  ng-controller="IndexController"  class="c-body">   
     <ng-include src="'fragments/header/header.html'"></ng-include>
-    <ui-view>
+    <ui-view autoscroll='true'>
             <br>
             <br>
             <br>

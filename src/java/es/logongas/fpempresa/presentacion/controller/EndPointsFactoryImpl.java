@@ -25,6 +25,7 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.Idioma;
@@ -98,6 +99,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     private void addSiteEndPoints(List<EndPoint> endPoints, String path) {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,<password,acl,memberOf,validadoEmail>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/familiasOfertas", "GET", new BeanMapper(FamiliaOfertasEstadistica.class, null, "*")));
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
 
         //endPoints.add(EndPoint.createEndPoint(path + "/Usuario/olvidoPassword/*", "POST", null));

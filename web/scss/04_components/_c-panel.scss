@@ -1,0 +1,32 @@
+.c-panel {
+    
+    position:relative;
+    height: 340px;
+    width: 310px;
+    border-top: 7px solid getColor(alt,6);     
+    background-color: rgba(getColor(gris,1),0.9);
+    box-shadow: getBoxShadow(7);
+    border-bottom-left-radius: getBorderRadious(3);
+    border-bottom-right-radius: getBorderRadious(3);
+    margin: getMargin(4);
+    padding: getPadding(4);
+    margin-top:30px;
+    
+    &__head {
+
+    }
+    
+    &__body {
+
+       
+    }
+
+    &__footer {
+        position:absolute; 
+        bottom:0; 
+        margin-bottom:getMargin(6);  
+    }
+}
+
+
+  

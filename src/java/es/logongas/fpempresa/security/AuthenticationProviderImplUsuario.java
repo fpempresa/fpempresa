@@ -66,7 +66,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             if (usuarioService.checkPassword(dataSession, usuario, plainPassword)) {
 
                 if (!usuario.isValidadoEmail()) {
-                    throw new BusinessException("Tu cuenta no está validada. Por favor, accede a tu correo electrónico y sigue las instrucciones que te enviamos para validarla.");
+                    throw new BusinessException("Tu cuenta no está validada. Si no has recibido un correo para validarla, ponte en contacto con el soporte de empleaFP.");
                 }
 
                 switch (usuario.getTipoUsuario()) {

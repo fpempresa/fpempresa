@@ -134,7 +134,28 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                     return deferred.promise;
                 };
 
+                remoteDAO.enviarMensajeSoporte = function (mensajeSoporte) {
+                    var deferred = this.$q.defer();
 
+
+                    var config = {
+                        method: 'POST',
+                        url: this.baseUrl + '/' + this.entityName + "/mensajeSoporte",
+                        data: mensajeSoporte
+                    };
+
+                    this.$http(config).success(function (data, status, headers, config) {
+                        deferred.resolve(null);
+                    }).error(function (data, status, headers, config) {
+                        if (status === 400) {
+                            deferred.reject(data);
+                        } else {
+                            throw new Error("Fallo la petición al servidor:" + status + "\n" + data);
+                        }
+                    });
+
+                    return deferred.promise;
+                };
             }]);
 
     }]);

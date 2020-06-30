@@ -1,0 +1,18 @@
+@include class-responsive-variants(g--color,colors-variants($colors))  using ($value) {
+    color:$value;
+}
+
+
+@include class-responsive-variants(g--background-color,colors-variants($colors))  using ($value) {
+    background-color:$value;
+}
+
+
+@include class-responsive-variants(g--border-color,colors-variants($colors))  using ($value) {
+    border-color:$value;
+}
+
+
+@include class-responsive-variants(g--opacity,$opacity-variants)  using ($value) {
+    opacity:$value;
+}

@@ -1,0 +1,76 @@
+@charset 'UTF-8';
+
+$colors:(
+    "gris":    (#F7FAFC,#EDF2F7,#E2E8F0,#CBD5E0,#A0AEC0,#718096,#4A5568,#2D3748,#1A202C),
+    "rojo":    (#FFF5F5,#FED7D7,#FEB2B2,#FC8181,#F56565,#E53E3E,#C53030,#9B2C2C,#742A2A),
+    "verde":   (#F0FFF4,#C6F6D5,#9AE6B4,#68D391,#48BB78,#38A169,#2F855A,#276749,#22543D),
+    "amarillo":(#FFFFF0,#FEFCBF,#FAF089,#F6E05E,#ECC94B,#D69E2E,#B7791F,#975A16,#744210),
+    "default": (#F0F7FF,#BDDCFF,#8AC0FF,#52A3FF,#1F87FF,#006DEB,#0056B8,#003B80,#00244D),
+    "alt":     (#FFFAF0,#FEEBC8,#FBD38D,#F6AD55,#ED8936,#DD6B20,#C05621,#9C4221,#7B341E),
+    "negro":   (#000000), 
+    "blanco":  (#FFFFFF)
+);
+
+$background-color:#FFFFFF;
+
+
+@import
+'01_utilities/functions/_system.scss',
+'01_utilities/functions/_util.scss',
+'01_utilities/mixins/_class-responsive-variants.scss',
+'01_utilities/variables/_system.scss';
+
+
+
+
+@import
+'02_base/reset/_jquery-ui.scss',
+'02_base/reset/_meyer.scss',
+'02_base/reset/_normalize.scss',
+'02_base/reset/_personal.scss',
+'02_base/_typography.scss';
+
+@import
+'03_layout/_l-2x2.scss',
+'03_layout/_l-horizontal.scss',
+'03_layout/_l-masonry.scss';
+
+
+@import 
+"04_components/form/_c-button.scss",
+'04_components/form/_c-form.scss',
+'04_components/form/_c-input.scss',
+'04_components/form/_c-label.scss',
+'04_components/form/_c-legal.scss',
+'04_components/form/_c-messages.scss';
+
+@import 
+"04_components/header/_c-header-bar.scss",
+"04_components/header/_c-horizontal-menu.scss";
+
+@import
+'04_components/_c-blockquote.scss',
+'04_components/_c-body.scss',
+'04_components/_c-image.scss',
+'04_components/_c-panel.scss',
+'04_components/_c-section.scss',
+'04_components/_c-simple-panel.scss',
+'04_components/_c-text.scss',
+'04_components/_c-title.scss',
+'04_components/_c-youtube.scss';
+
+@import 
+'05_pages/site/_c-banner.scss',
+'05_pages/site/_c-number.scss',
+'05_pages/site/_c-ofertas.scss';
+
+
+@import
+'06_global/_color.scss',
+'06_global/_font.scss',
+'06_global/_layout.scss',
+'06_global/_margin.scss',
+'06_global/_padding.scss',
+'06_global/_transitions.scss';
+
+

@@ -20,6 +20,7 @@ import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessPr
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
@@ -27,6 +28,7 @@ import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -113,6 +115,18 @@ public class EstadisticasController {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasPublicas(new EstadisticasBusinessProcess.GetEstadisticasPublicasArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+    
+    @RequestMapping(value = {"/{path}/Estadisticas/familiasOfertas"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasOfertasPublicas(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+            List<FamiliaOfertasEstadistica>  familiasOfertasEstadistica=estadisticasBusinessProcess.getEstadisticasFamiliaOfertasPublicas(new EstadisticasBusinessProcess.GetEstadisticasFamiliaOfertasPublicasArguments(principal, dataSession));
+            controllerHelper.objectToHttpResponse(new HttpResult(familiasOfertasEstadistica), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }

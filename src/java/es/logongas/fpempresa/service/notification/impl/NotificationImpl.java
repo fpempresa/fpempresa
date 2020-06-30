@@ -35,6 +35,7 @@ import es.logongas.ix3.service.CRUDServiceFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,14 +188,37 @@ public class NotificationImpl implements Notification {
         sendMail(mail);
     }
 
-    private void sendMail(Mail mail) {
-        if (isEnabledEMailNotifications()) {
+    
+    @Override
+    public void mensajeSoporte( String nombre, String correo,String mensaje) {
+        Mail mail = new Mail();
+        mail.addTo(Config.getSetting("app.correoSoporte"));
+        mail.setFrom(Config.getSetting("mail.sender"));
+        mail.setReply(correo);
+        mail.setSubject("Petición de soporte de " + nombre);
+        mail.setHtmlBody(""
+                + StringEscapeUtils.escapeHtml4(nombre) + " ha enviado el siguiente mensaje para el soporte de " + getAppURL() + ":<br>"
+                + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(mensaje))
+                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)          
+        );
+        
+        sendMail(mail,true);
+    }
+    
+    private void sendMail(Mail mail,boolean forever) {
+        if (isEnabledEMailNotifications() || (forever==true)) {
              mailService.send(mail);
              log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         } else {
             log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         }
+    }    
+    
+    private void sendMail(Mail mail) {
+        sendMail(mail,false);
     }
+    
+    
     
     
     private String toHTMLRetornoCarro(String plainText) {

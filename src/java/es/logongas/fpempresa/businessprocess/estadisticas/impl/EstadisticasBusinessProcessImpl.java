@@ -7,8 +7,10 @@ package es.logongas.fpempresa.businessprocess.estadisticas.impl;
 
 import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessProcess;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.core.BusinessException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -44,6 +46,11 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
     }
     
     @Override
+    public List<FamiliaOfertasEstadistica> getEstadisticasFamiliaOfertasPublicas(GetEstadisticasFamiliaOfertasPublicasArguments getEstadisticasFamiliaOfertasPublicasArguments) throws BusinessException {
+        return estadisticasService.getEstadisticasFamiliaOfertasPublicas(getEstadisticasFamiliaOfertasPublicasArguments.dataSession);
+    }
+    
+    @Override
     public void setEntityType(Class entityType) {
         this.entityType = entityType;
     }
@@ -52,5 +59,5 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
     public Class getEntityType() {
         return this.entityType;
     }
- 
+
 }

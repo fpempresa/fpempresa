@@ -1,12 +1,12 @@
 .c-simple-panel {  
     
-    background-color: getColor(blanco);
+    background-color: getColor(blanco,1);
     box-shadow: getBoxShadow(7);
     border-radius: getBorderRadious(5);
     padding: getPadding(5);
     
     &--inverse {
-        background-color: getColor(gris,2);
+        background-color: getColor(blanco,6);
         box-shadow: getBoxShadow(inset);
     }
     

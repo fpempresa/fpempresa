@@ -1,11 +1,11 @@
 .c-form {  
     
     width: 100%;
-    background-color: getColor(gris,3);
+    background-color: getColor(gris,1);
     box-shadow: getBoxShadow(7);
     border-radius: getBorderRadious(5);
     padding: getPadding(9);
-    border:1px solid getColor(gris,4);
+    border:1px solid getColor(gris,2);
    
     &__buttons {
         padding-top: getPadding(10);

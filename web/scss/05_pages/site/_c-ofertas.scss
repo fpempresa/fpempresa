@@ -1,6 +1,6 @@
 .c-ofertas {
     
-    background-color: getColor(blanco);
+    background-color: getColor(blanco,1);
     margin: getMargin(3);
     box-shadow: getBoxShadow(7);
     border-radius: getBorderRadious(3);
@@ -28,7 +28,7 @@
     }
     
     &__puesto {
-        border-top:1px solid getColor(gris,3);
+        border-top:1px solid getColor(gris,1);
         font-family: getFontFamily();
         font-size: getFontSize(1s);
         color: getColor(default,8);

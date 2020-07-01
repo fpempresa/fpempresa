@@ -98,14 +98,14 @@ $font-size-variants:(
 
 $buttons-variants:( 
     "primary":(
-        "text":(getColor(blanco),getColor(blanco)),
+        "text":(getColor(blanco,1),getColor(blanco,1)),
         "border":(getColor(default,7),getColor(default,8)),
         "background":(getColor(default,7),getColor(default,8))
     ),
     "secondary":(
         "text":(getColor(default,7),getColor(default,7)),
         "border":(getColor(default,7),getColor(default,7)),
-        "background":(transparent,getColor(gris,2))
+        "background":(transparent,getColor(default,1))
     ),
     "tertiary":(
         "text":(getColor(default,7),getColor(default,8)),
@@ -113,7 +113,7 @@ $buttons-variants:(
         "background":()
     ),
     "alt-primary":(
-        "text":(getColor(blanco),getColor(blanco)),
+        "text":(getColor(blanco,1),getColor(blanco,1)),
         "border":(getColor(alt,5),getColor(alt,6)),
         "background":(getColor(alt,5),getColor(alt,6))
     ),

@@ -21,7 +21,9 @@ app.config(['$stateProvider', function($stateProvider) {
         });   
         $stateProvider.state('/info/titulado', {
             url:'/info/titulado',
-            templateUrl: 'views/info/titulado.html'
+            templateUrl: 'views/info/titulado.html',
+            controller: 'TituladoController'
+            
         });   
           
     }]);

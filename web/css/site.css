@@ -4548,6 +4548,10 @@ p {
   font-weight: bold;
 }
 
+.g--justify {
+  text-align: justify;
+}
+
 .g--center {
   display: block;
   margin-left: auto;

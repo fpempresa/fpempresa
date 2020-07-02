@@ -15,11 +15,13 @@
                     <button  class="c-horizontal-menu__hamburger" id="buttonHamburger"></button>
                     <ul class="c-horizontal-menu__items c-horizontal-menu__items--movil-hide">
                         <li class="c-horizontal-menu__item"><a href="#/docs/soporte" fpe-click-button-on-click="buttonHamburger" >Soporte</a></li>
-                        <li class="c-horizontal-menu__item"><a href="#/ofertas" fpe-click-button-on-click="buttonHamburger" >Ofertas</a></li>                       
+                        <li class="c-horizontal-menu__item"><a href="#/ofertas" fpe-click-button-on-click="buttonHamburger" >Ofertas</a></li>
                         <li class="c-horizontal-menu__item">
-                            <a ng-if="!user" href="#/login" class="c-button  c-button--alt-tertiary c-button--alt-secondary@tablet" fpe-click-button-on-click="buttonHamburger"  >Acceder</a>
+                            <a ng-if="!user" href="#/login" class="c-button  c-button--tertiary c-button--secondary@tablet" fpe-click-button-on-click="buttonHamburger"  >Acceder</a>
                             <button ng-if="user" ng-click="document.getElementById('buttonHamburger').click();homeUsuario()" class="c-button  c-button--alt-tertiary" fpe-click-button-on-click="buttonHamburger" ><i class="fas fa-user"></i>&nbsp;{{user.name}}</button>
                         </li>
+                        <li ng-if="!user" class="c-horizontal-menu__item"><button ng-click="createAccount()" class="c-button  c-button--alt-tertiary c-button--alt-secondary@tablet" fpe-click-button-on-click="buttonHamburger" >Nuevo&nbsp;usuario</button></li>                       
+
                     </ul>
                 </nav>
             </div>

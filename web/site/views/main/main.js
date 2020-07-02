@@ -1,4 +1,4 @@
-app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http', function ($scope, goPage, ix3Configuration, $http) {
+app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http','notify', function ($scope, goPage, ix3Configuration, $http,notify) {
         $scope.login = function () {
             goPage.login();
         };
@@ -21,6 +21,10 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
             }, 500);
  
         };
+        
+        $scope.notifyOferta=function() {
+            notify.error(undefined,"Entra en empleaFP para ver la oferta",3000);
+        }
         
         $http({
             method: "GET",

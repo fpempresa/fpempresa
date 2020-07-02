@@ -1,0 +1,41 @@
+//Se necesitan estas clases para que funciona PNotify
+
+.alert {
+  padding: getPadding(4);
+  margin-bottom: getPadding(5);
+  border: 1px solid transparent;
+  border-radius: getBorderRadious(2);
+  font-family: getFontFamily(sans);
+  font-size: getFontSize();
+  line-height: 1.4;
+}
+
+.alert h4 {
+  margin-top: 0px;
+  color: inherit;
+  font-weight: 600;
+}
+
+.alert-success {
+  color: getColor(verde,7);
+  background-color: getColor(verde,1);
+  border-color: getColor(verde,2);
+}
+
+.alert-info {
+  color: getColor(default,8);
+  background-color: getColor(default,1);
+  border-color: getColor(default,2);
+}
+
+.alert-warning {
+  color: getColor(alt,5);
+  background-color: getColor(alt,1);
+  border-color: getColor(alt,2);
+}
+
+.alert-danger {
+  color: getColor(rojo,6);
+  background-color: getColor(rojo,1);
+  border-color: getColor(rojo,2);
+}

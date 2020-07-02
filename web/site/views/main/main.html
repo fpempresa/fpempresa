@@ -10,7 +10,7 @@
                                 <p class="c-text">Regístrate para encontrar empleo adecuado a tu formación</p>
                             </div>
                             <div class="c-panel__footer">
-                                <a  class="c-button  c-button--alt-primary"  ng-click="createAccount()">Registrarse</a>                        
+                                <a  class="c-button  c-button--alt-primary"  ng-click="createAccount()">Nuevo usuario</a>                        
                             </div>
 
                         </div>
@@ -19,7 +19,7 @@
             </div>
         </section>
         <section class="c-section" >
-            <div class="c-section__content g--padding-top-12 ">
+            <div class="c-section__content g--padding-vertical-10 ">
                 <div  class="l-horizontal l-horizontal--space-around " >
 
                     <div class="c-panel">
@@ -57,18 +57,19 @@
             </div>
         </section>  
 
-        <section class="c-section" change-on-scroll data-scroll-offset="50%" >
-            <div class="c-section__content  g--padding-vertical-10  ">
-                <div class="c-simple-panel c-simple-panel--inverse  g--center" style="max-width: 525px ;" >
-                    <h1 class="c-title c-title--color-alt ">Nuestros números</h1>
+        <section class="c-section  c-section--alt-color" change-on-scroll data-scroll-offset="50%" >
+            <div class="c-section__content  g--margin-vertical-8">
+                <div class="g--center" style="max-width: 620px ;" >
                     <div class="l-horizontal l-horizontal--space-around "   >
                         <div class="c-number">
+                            <i class="far fa-file-alt c-number__icon"></i>
                             <p class=" c-number__value " data-scroll-up-count="true" >{{nuestrosNumeros.numOfertas | number}}</p>
                             <p class="c-number__label ">Ofertas</p>
                         </div>
                         <div class="c-number">
+                            <i class="fas fa-graduation-cap  c-number__icon"></i>
                             <p class=" c-number__value " data-scroll-up-count="true" >{{nuestrosNumeros.numeroTitulosFP | number}}</p>
-                            <p class="c-number__label ">Títulos de FP</p>
+                            <p class="c-number__label " title="" >Títulos de FP</p>
                         </div> 
                     </div>
                 </div> 
@@ -76,11 +77,40 @@
         </section>
 
 
+        <section class="c-section " id="section-ultimas-ofertas" >
+            <div class="c-section__content  g--padding-top-10 g--padding-horizontal-0">
+                <h1 class="c-title g--font-size-5l">Últimas ofertas</h1>
+                <div class="l-masonry" id="masonry" >
+                    <div class="l-masonry__area" ng-repeat="familiaOfertas in familiasOfertas" ng-cloak ng-init="$last && masonry()">
+                        <div class="c-ofertas">
+                            <div class="c-ofertas__image" style="background-image: url('../img/familias/{{familiaOfertas.idFamilia}}.jpg');"></div>
+                            <div class="c-ofertas__content">
+                                <h2 class="c-ofertas__familia">{{familiaOfertas.descripcion}} </h2>
+                                <div class="c-ofertas__puesto" ng-repeat="oferta in familiaOfertas.ofertasEstadistica" ng-click="notifyOferta()">{{oferta.puesto}} ({{oferta.provincia.descripcion}})</div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </section>
+
+        <section class="c-section"  >
+            <div class="c-section__content  g--padding-vertical-5 " >
+                <h1 class="c-title c-title--color-alt" >Regístrate para ver las ofertas</h1>
+                <div class="l-horizontal l-horizontal--center "   >
+                    <a  class="c-button  c-button--alt-primary c-button--size-alt"   ng-click="createAccount()">Nuevo usuario</a> 
+                </div>
+            </div>       
+        </section>
+
         <section class="c-section " >
-            <div class="c-section__content  g--padding-top-6">
+            <div class="c-section__content  g--padding-top-12">
                 <div class="l-horizontal l-horizontal--space-evenly g--margin-horizontal-6"   >
                     <div class="l-horizontal__item g--padding-bottom-6" style="max-width:500px;">
-                        <h1 class="c-title   c-title--left">Nuestro proyecto</h1>
+                        <h1 class="c-title   c-title--left">
+                            <span class="c-title__pre">Nuestro</span>
+                            Proyecto
+                        </h1>
                         <p class="c-text c-text--size-alt " >
                             empleaFP es una bolsa de empleo nacida de la colaboración entre los centros de Formación Profesional y las empresas.
                         </p>
@@ -100,33 +130,6 @@
         </section> 
 
 
-
-        <section class="c-section " id="section-ultimas-ofertas" >
-            <div class="c-section__content  g--padding-top-12 g--padding-horizontal-0">
-                <h1 class="c-title">Últimas ofertas</h1>
-                <div class="l-masonry" id="masonry" >
-                    <div class="l-masonry__area" ng-repeat="familiaOfertas in familiasOfertas" ng-cloak ng-init="$last && masonry()">
-                        <div class="c-ofertas">
-                            <div class="c-ofertas__image" style="background-image: url('../img/familias/{{familiaOfertas.idFamilia}}.jpg');"></div>
-                            <div class="c-ofertas__content">
-                                <h2 class="c-ofertas__familia">{{familiaOfertas.descripcion}} </h2>
-                                <div class="c-ofertas__puesto" ng-repeat="oferta in familiaOfertas.ofertasEstadistica">{{oferta.puesto}} ({{oferta.provincia.descripcion}})</div>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-            </div>
-        </section>
-
-        <section class="c-section"  >
-            <div class="c-section__content  g--padding-vertical-5 " >
-                <h1 class="c-title c-title--color-alt" >Regístrate para ver las ofertas</h1>
-                <div class="l-horizontal l-horizontal--center "   >
-                    <a  class="c-button  c-button--alt-primary c-button--size-alt"   ng-click="createAccount()">Registrarse</a> 
-                </div>
-            </div>       
-        </section>
-
         <section  class="c-section"  >
             <div class="c-section__content  g--padding-vertical-12 " >
                 <iframe class="c-youtube"  src="https://www.youtube-nocookie.com/embed/w-ghOqT9LNk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -145,7 +148,7 @@
             </div>
         </section>
 
-        <section class="c-section c-section--dark-color">
+        <section class="c-section ">
             <div class="c-section__content g--padding-vertical-9">
 
                 <div class="l-horizontal l-horizontal--center">

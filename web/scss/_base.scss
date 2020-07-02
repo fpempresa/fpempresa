@@ -24,7 +24,8 @@ $background-color:#FFFFFF;
 
 
 @import
-'02_base/reset/_jquery-ui.scss',
+'02_base/override/_jquery-ui.scss',
+'02_base/override/_pnotify.scss',
 '02_base/reset/_meyer.scss',
 '02_base/reset/_normalize.scss',
 '02_base/reset/_personal.scss',

@@ -3,6 +3,16 @@
     display: inline;
     margin-bottom: getMargin(3);
     
+    &__icon {
+        display: block;
+        text-align: center;
+        
+        color: getColor(default,8);
+        font-size: getFontSize(5l);
+        
+        margin-bottom: getMargin(3);
+    }
+    
     &__value {
         color: getColor(alt,5);
         font-family: getFontFamily(mono);

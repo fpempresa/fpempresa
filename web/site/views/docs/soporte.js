@@ -16,7 +16,7 @@ app.controller('SoporteController', ['$scope', '$location', '$stateParams', 'ser
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
                 usuarioService.enviarMensajeSoporte($scope.model).then(function () {
-                    alert("El soporte ha recibido tu mensaje")
+                    notify.info(undefined,"Su mensaje ha sido enviado correctamente",4000);
                     $scope.model = {};
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;

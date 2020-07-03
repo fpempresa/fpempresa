@@ -38,14 +38,19 @@
             <div class="l-horizontal l-horizontal--2-columns">
                 <div class="l-horizontal__item g--padding-right-3" >
                     <label for="password" class="c-label" control-label>Contraseña</label>
-                    <input ng-model="model.password" type="password" class="c-input" id="password" name="password"  required>
                 </div>
                 <div class="l-horizontal__item g--padding-left-3" >
                     <label class="c-label" for="confirmPassword" control-label>Confirmar contraseña</label>
+                </div>
+            </div>
+            <div class="l-horizontal l-horizontal--2-columns">
+                <div class="l-horizontal__item g--padding-right-3" >
+                    <input ng-model="model.password" type="password" class="c-input" id="password" name="password"  required>
+                </div>
+                <div class="l-horizontal__item g--padding-left-3" >
                     <input ng-model="model.confirmPassword" type="password" class="c-input" id="confirmPassword" name="confirmPassword"  required>
                 </div>
             </div>
-
 
             <label class="c-label">Protección de datos</label>
             <div  ng-if="model.tipoUsuario === 'TITULADO'">

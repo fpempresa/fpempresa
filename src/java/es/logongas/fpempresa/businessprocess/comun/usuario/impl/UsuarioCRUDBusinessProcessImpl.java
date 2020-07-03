@@ -443,7 +443,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     
     @Override
     public void enviarMensajeSoporte(EnviarMensajeSoporteArguments enviarMensajeSoporteArguments) throws BusinessException {
-        notification.mensajeSoporte(enviarMensajeSoporteArguments.nombre, enviarMensajeSoporteArguments.correo, enviarMensajeSoporteArguments.mensaje);
+        
+        throw new BusinessException("Esta funcionalidad está deshabilitada");
+        
+        //notification.mensajeSoporte(enviarMensajeSoporteArguments.nombre, enviarMensajeSoporteArguments.correo, enviarMensajeSoporteArguments.mensaje);
     }    
     
 }

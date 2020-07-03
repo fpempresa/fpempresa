@@ -4975,10 +4975,57 @@ p {
     font-family: Basic;
   }
 }
-.g--font-bold {
+.g--font-weight-normal {
+  font-weight: normal;
+}
+
+.g--font-weight-bold {
   font-weight: bold;
 }
 
+.g--font-weight-medium {
+  font-weight: 500;
+}
+
+@media (min-width: 640px) {
+  .g--font-weight-normal\@movil {
+    font-weight: normal;
+  }
+
+  .g--font-weight-bold\@movil {
+    font-weight: bold;
+  }
+
+  .g--font-weight-medium\@movil {
+    font-weight: 500;
+  }
+}
+@media (min-width: 768px) {
+  .g--font-weight-normal\@tablet {
+    font-weight: normal;
+  }
+
+  .g--font-weight-bold\@tablet {
+    font-weight: bold;
+  }
+
+  .g--font-weight-medium\@tablet {
+    font-weight: 500;
+  }
+}
+@media (min-width: 1024px) {
+  .g--font-weight-normal\@desktop {
+    font-weight: normal;
+  }
+
+  .g--font-weight-bold\@desktop {
+    font-weight: bold;
+  }
+
+  .g--font-weight-medium\@desktop {
+    font-weight: 500;
+  }
+}
 .g--justify {
   text-align: justify;
 }

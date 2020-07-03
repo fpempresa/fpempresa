@@ -6,8 +6,8 @@
     font-family:$value;
 }
 
-.g--font-bold {
-    font-weight: bold;
+@include class-responsive-variants(g--font-weight,$font-weight-variants)  using ($value) {
+    font-weight:$value;
 }
 
 .g--justify {

@@ -96,6 +96,13 @@ $font-size-variants:(
 );
 
 
+$font-weight-variants:(
+    "normal":normal,
+    "bold":bold,
+    "medium":500
+);
+
+
 $buttons-variants:( 
     "primary":(
         "text":(getColor(blanco,1),getColor(blanco,1)),

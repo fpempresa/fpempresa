@@ -1,10 +1,14 @@
 "use strict";
 
-angular.module("common").directive('horizontalMenu', ['$filter',function($filter) {
+angular.module("common").directive('horizontalMenu', ['$rootScope',function($rootScope) {
         return {
             restrict: 'A',
             link: function($scope, element, attributes) {
-                 new HorizontalMenu(element[0]);
+                var horizontalMenu=new HorizontalMenu(element[0]);
+                $rootScope[attributes.horizontalMenu+"HideMenuItems"]=function() {
+                    horizontalMenu.hideMenuItems();
+                }
+                
             }
         };
     }]);

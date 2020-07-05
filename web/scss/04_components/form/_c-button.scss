@@ -64,3 +64,19 @@
     padding:getPadding(5);
 }
 
+.c-button--menu {
+    font-size: getFontSize(1l);
+    padding-top:getPadding(2);
+    padding-bottom:getPadding(2);    
+    font-weight:getFontWeight();
+}
+
+
+@media  (max-width: getBreak(tablet)-1) {
+    .c-button--menu {
+        padding:getPadding(0);
+        font-weight:getFontWeight(medium);
+    }
+}  
+
+

@@ -1,6 +1,6 @@
 .c-horizontal-menu {
 
-    $break-menu: 768px;
+    $break-menu: getBreak(tablet)-1;
         
         
         
@@ -49,23 +49,21 @@
         letter-spacing: 1.5px;
         color: getColor(default,7);
 
-        margin-top: getMargin(5);
-        margin-bottom: getMargin(5);
-        margin-left: getMargin(6);
-        margin-right: getMargin(6); 
+        padding-top: getMargin(5);
+        padding-bottom: getMargin(5);
+        padding-left: getMargin(6);
+        padding-right: getMargin(6); 
+        
     }
-
-    @media  (max-width: 900px) {
+    @media  (max-width: $break-menu) {
         &__item {
-        margin-top: getMargin(3);
-        margin-bottom: getMargin(3);
-        margin-left: getMargin(3);
-        margin-right: getMargin(3);
+            width: 100%;
+            text-align: center;
         }
+
         
-        
-    }
-    
+    }    
+
     &__hamburger {
         color: getColor(default,7);
         font-size: getFontSize(3l);

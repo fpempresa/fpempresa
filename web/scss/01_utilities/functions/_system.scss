@@ -43,6 +43,9 @@
     @return map-get($breaks,""+$break-name);
 }
 
+@function getFontWeight($font-weight-name:default) {
+    @return map-get($font-weight-variants,""+$font-weight-name);
+}
 
 
 @function colors-variants($colors) {

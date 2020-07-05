@@ -948,6 +948,19 @@ p {
   padding: 20px;
 }
 
+.c-button--menu {
+  font-size: 18px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-weight: normal;
+}
+
+@media (max-width: 767px) {
+  .c-button--menu {
+    padding: 0px;
+    font-weight: 500;
+  }
+}
 .c-form {
   width: 100%;
   background-color: #F0F0F0;
@@ -1127,7 +1140,7 @@ p {
   align-items: center;
   z-index: 90;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .c-horizontal-menu__items {
     flex-direction: column;
     position: absolute;
@@ -1158,17 +1171,15 @@ p {
   font-size: 18px;
   letter-spacing: 1.5px;
   color: #0056B8;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 24px;
-  margin-right: 24px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .c-horizontal-menu__item {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    margin-left: 12px;
-    margin-right: 12px;
+    width: 100%;
+    text-align: center;
   }
 }
 .c-horizontal-menu__hamburger {
@@ -1188,7 +1199,7 @@ p {
 .c-horizontal-menu__hamburger--cerrar:before {
   content: "";
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .c-horizontal-menu__hamburger {
     display: block;
   }
@@ -4979,6 +4990,10 @@ p {
   font-weight: normal;
 }
 
+.g--font-weight-default {
+  font-weight: normal;
+}
+
 .g--font-weight-bold {
   font-weight: bold;
 }
@@ -4989,6 +5004,10 @@ p {
 
 @media (min-width: 640px) {
   .g--font-weight-normal\@movil {
+    font-weight: normal;
+  }
+
+  .g--font-weight-default\@movil {
     font-weight: normal;
   }
 
@@ -5005,6 +5024,10 @@ p {
     font-weight: normal;
   }
 
+  .g--font-weight-default\@tablet {
+    font-weight: normal;
+  }
+
   .g--font-weight-bold\@tablet {
     font-weight: bold;
   }
@@ -5015,6 +5038,10 @@ p {
 }
 @media (min-width: 1024px) {
   .g--font-weight-normal\@desktop {
+    font-weight: normal;
+  }
+
+  .g--font-weight-default\@desktop {
     font-weight: normal;
   }
 

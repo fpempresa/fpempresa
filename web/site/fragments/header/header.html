@@ -1,29 +1,35 @@
 <header class="c-section" ng-controller="HeaderController">
     <div class="c-section__content g--padding-horizontal-0">
         <div class="c-header-bar">
-            <a href="#/"  class="c-header-bar__item">
+            <a href="#/" ng-click="mainHideMenuItems()" class="c-header-bar__item">
                 <picture>
                     <source srcset="../img/logos/empleafp_corto.png" media="(max-width: 420px)">
-                    <source srcset="../img/logos/empleafp.png" media="(max-width: 768px)">
-                    <source srcset="../img/logos/empleafp_corto.png" media="(max-width: 850px)">
+                    <source srcset="../img/logos/empleafp.png" media="(max-width: 767px)">
+                    <source srcset="../img/logos/empleafp_corto.png" media="(max-width: 890px)">
                     <img src="../img/logos/empleafp.png" alt="fpempresa"/>
                 </picture> 
             </a>
             <a href="https://www.dualizabankia.com/"  class="c-header-bar__item">
-                <img  src="../img/logos/dualiza.png" alt="dualiza"/>
+                
+                <picture>
+                    <source srcset="../img/logos/dualiza_corto.png" media="(max-width: 420px)">
+                    <source srcset="../img/logos/dualiza.png" media="(max-width: 767px)">
+                    <source srcset="../img/logos/dualiza_corto.png" media="(max-width: 890px)">
+                    <img  src="../img/logos/dualiza.png" alt="dualiza"/>
+                </picture> 
+                
             </a>
             <div class="c-header-bar__item c-header-bar__item--right">
-                <nav class="c-horizontal-menu"  horizontal-menu>
+                <nav class="c-horizontal-menu"  horizontal-menu="main">
                     <button  class="c-horizontal-menu__hamburger" id="buttonHamburger"></button>
                     <ul class="c-horizontal-menu__items c-horizontal-menu__items--movil-hide">
-                        <li class="c-horizontal-menu__item"><a href="#/docs/soporte" fpe-click-button-on-click="buttonHamburger" >Soporte</a></li>
-                        <li class="c-horizontal-menu__item"><a href="#/ofertas" fpe-click-button-on-click="buttonHamburger" >Ofertas</a></li>
-                        <li class="c-horizontal-menu__item">
-                            <a ng-if="!user" href="#/login" class="c-button  c-button--tertiary c-button--secondary@tablet g--font-weight-medium g--font-weight-normal@tablet g--font-size-1l" fpe-click-button-on-click="buttonHamburger"  >Acceder</a>
-                            <button ng-if="user" ng-click="document.getElementById('buttonHamburger').click();homeUsuario()" class="c-button  c-button--alt-tertiary   g--font-size-1l" fpe-click-button-on-click="buttonHamburger" ><i class="fas fa-user"></i>&nbsp;{{user.name}}</button>
+                        <li class="c-horizontal-menu__item"><a href="#/docs/soporte" ng-click="mainHideMenuItems()" >Soporte</a></li>
+                        <li class="c-horizontal-menu__item"><a href="#/ofertas" ng-click="mainHideMenuItems()" >Ofertas</a></li>
+                        <li ng-if="!user" class="c-horizontal-menu__item g--padding-horizontal-0 "><button ng-click="mainHideMenuItems();createAccount()" class="c-button  c-button--alt-tertiary c-button--alt-secondary@tablet c-button--menu"   >Nuevo&nbsp;usuario</button></li>
+                        <li class="c-horizontal-menu__item g--padding-left-2  g--padding-right-0">
+                            <a ng-if="!user" href="#/login" class="c-button  c-button--tertiary c-button--secondary@tablet c-button--menu"  ng-click="mainHideMenuItems()"  >Acceder</a>
+                            <button ng-if="user" ng-click="mainHideMenuItems();homeUsuario()" class="c-button  c-button--alt-tertiary c-button--menu "  ><i class="fas fa-user"></i>&nbsp;{{user.name}}</button>
                         </li>
-                        <li ng-if="!user" class="c-horizontal-menu__item"><button ng-click="createAccount()" class="c-button  c-button--alt-tertiary c-button--alt-secondary@tablet g--font-weight-medium g--font-weight-normal@tablet g--font-size-1l" fpe-click-button-on-click="buttonHamburger" >Nuevo&nbsp;usuario</button></li>                       
-
                     </ul>
                 </nav>
             </div>

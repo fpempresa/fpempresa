@@ -13,10 +13,6 @@ app.controller("LoginController", ['$scope', 'session', 'goPage', 'dialog', func
             });
         };
 
-        $scope.olvidadoContrasenya = function () {
-            dialog.create('enviarMailResetearContrasenya');
-        };
-
 
         $scope.createAccount = function () {
             goPage.createAccount();

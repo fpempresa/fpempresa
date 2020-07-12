@@ -9,16 +9,6 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'ix3Configuration
             dialog.create('mostrarCodigosMunicipio');
         };
         
-        $scope.mostrarCartelRGPD=function() {
-            var date=new Date('2019-01-26'); //Es la fecha en la que se quito lo de ver los datos de los usuarios
-            
-            if ($scope.user.fecha>=date) {
-                return false;
-            } else {
-                return true;
-            }
-        };
-        
         $scope.failImportJson = function (data) {
             if (data && data.jqXHR) {
                 if (data.jqXHR.status === 500) {

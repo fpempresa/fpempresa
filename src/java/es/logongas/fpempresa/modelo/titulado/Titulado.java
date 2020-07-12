@@ -34,6 +34,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Calendar;
 
 /**
  *
@@ -101,6 +102,28 @@ public class Titulado {
         }
     }
 
+    @ConstraintRule(fieldName = "Fecha Nacimiento", message = "El titulado debe tener al menos 16 años", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean validarFechaNacimiento(RuleContext<Titulado> ruleContext) {
+        int edadMinima=16;
+        
+        if (this.fechaNacimiento==null) {
+            return true;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -edadMinima);
+        Date fechaMaxima=calendar.getTime();
+
+        
+        if (this.fechaNacimiento.after(fechaMaxima)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    
     @ConstraintRule(fieldName = "Nº Documento", message = "El NIF/NIE '${entity.numeroDocumento}' no es válido", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarNIF(RuleContext<Titulado> ruleContext) {
         Validador validadorCIF = new Validador();

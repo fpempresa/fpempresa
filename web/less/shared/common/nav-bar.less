@@ -14,16 +14,27 @@
                 line-height: @navbar-height*0.3;
             }
             font-weight: bold;
+            color:#0056B8;
         }
     }
 }
-
+.navbar-toggle {
+    padding: 4px 6px;
+    font-size: 24px;
+    color: #0056B8;
+    &:focus,
+        &:active {
+        outline: none;
+    }
+}
+        
 .navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid fade(@color-light, 30%);
     text-transform: uppercase;
     font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background-color: @color-dark;
+    background-color: #FFFFFF;
+    box-shadow:  0px 11px 10px -13px rgba(0,0,0,0.67);
     .navbar-brand {
         font-weight: 700;
         &:focus {
@@ -31,8 +42,8 @@
         }
         .navbar-toggle {
             padding: 4px 6px;
-            font-size: 16px;
-            color: @color-light;
+            font-size: 30px;
+            color: #0056B8;
             &:focus,
                 &:active {
                 outline: none;
@@ -84,7 +95,7 @@
 
     .top-nav-collapse {
         padding: 0;
-        background-color: @color-dark;
+        background-color: #FFFFFF;
     }
 
     .navbar-custom.top-nav-collapse {

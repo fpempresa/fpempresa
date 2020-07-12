@@ -30,6 +30,7 @@
   vertical-align: middle;
   line-height: 48px;
   font-weight: bold;
+  color: #0056B8;
 }
 @media (max-width: 767px) {
   .navbar-nav li a {
@@ -37,12 +38,22 @@
     line-height: 24px;
   }
 }
+.navbar-toggle {
+  padding: 4px 6px;
+  font-size: 24px;
+  color: #0056B8;
+}
+.navbar-toggle:focus,
+.navbar-toggle:active {
+  outline: none;
+}
 .navbar-custom {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(247, 249, 248, 0.3);
   text-transform: uppercase;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #005594;
+  background-color: #FFFFFF;
+  box-shadow: 0px 11px 10px -13px rgba(0, 0, 0, 0.67);
 }
 .navbar-custom .navbar-brand {
   font-weight: 700;
@@ -52,8 +63,8 @@
 }
 .navbar-custom .navbar-brand .navbar-toggle {
   padding: 4px 6px;
-  font-size: 16px;
-  color: #F7F9F8;
+  font-size: 30px;
+  color: #0056B8;
 }
 .navbar-custom .navbar-brand .navbar-toggle:focus,
 .navbar-custom .navbar-brand .navbar-toggle:active {
@@ -91,7 +102,7 @@
   }
   .top-nav-collapse {
     padding: 0;
-    background-color: #005594;
+    background-color: #FFFFFF;
   }
   .navbar-custom.top-nav-collapse {
     border-bottom: 1px solid rgba(247, 249, 248, 0.3);
@@ -205,7 +216,7 @@
   background-color: #005594;
 }
 .form__page {
-  background-color: #F6F8F7;
+  background-color: #FFFFFF;
   padding-top: 150px;
   padding-bottom: 50px;
 }
@@ -214,9 +225,12 @@
   padding-bottom: 10px;
 }
 .form__container {
-  border: 1px solid #005594;
-  background-color: #F1F1F1;
+  border: 1px solid #D9D9D9;
+  background-color: #F0F0F0;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   padding: 30px;
+  margin: 20px;
 }
 .form--center {
   text-align: center;
@@ -450,7 +464,7 @@ fieldset[disabled] .form__button--danger.active {
   width: 100%;
 }
 .menu-hamburger__link {
-  color: #FFFFFF;
+  color: #0056B8;
   text-decoration: none !important;
   font-size: 15px;
   width: 100%;
@@ -458,7 +472,7 @@ fieldset[disabled] .form__button--danger.active {
   height: 100%!important;
 }
 .menu-hamburger__link:hover {
-  color: #FFFFFF !important;
+  color: #0056B8 !important;
 }
 .g-padding--xxs {
   padding: 0px;
@@ -1415,6 +1429,6 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
-  background-color: #F6F8F7;
+  background-color: #FFFFFF;
 }
 /*# sourceMappingURL=titulado.css.map */

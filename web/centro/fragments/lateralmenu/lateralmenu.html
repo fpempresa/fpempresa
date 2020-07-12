@@ -6,10 +6,13 @@
                 <img class="img-circle" src="../img/photo_user.png" alt="User Pic">
             </div> 
             <div class="col-xs-12 col-sm-10 form--center">
-                <h3 class="form__main-title">Bienvenido, {{user.name}}</h3>
-                <h4 class="form__title" ng-show="user.centro!==null">Del centro "{{user.centro.toString()}}"</h4>  
+                
+                <h1 class="c-title  c-title--left g--margin-bottom-7 g--center" style="width: 100%">
+                    <span class="c-title__pre">{{user.name}}</span>
+                    {{user.centro.toString()}}
+                </h1>
                 <p class="form__text form__text--help">
-                    Desde aqui podr&aacute;s gestionar la bolsa de trabajo de tu centro
+                    Gestiona la bolsa de empleo de tu centro
                 </p>          
             </div>
         </div>

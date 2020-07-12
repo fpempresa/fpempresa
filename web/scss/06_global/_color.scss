@@ -1,15 +1,15 @@
 @include class-responsive-variants(g--color,colors-variants($colors))  using ($value) {
-    color:$value;
+    color:$value !important;
 }
 
 
 @include class-responsive-variants(g--background-color,colors-variants($colors))  using ($value) {
-    background-color:$value;
+    background-color:$value !important;
 }
 
 
 @include class-responsive-variants(g--border-color,colors-variants($colors))  using ($value) {
-    border-color:$value;
+    border-color:$value !important;
 }
 
 

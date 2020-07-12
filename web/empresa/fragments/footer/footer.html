@@ -1,24 +1,26 @@
-<footer ng-controller="FooterController" class="container-fluid section__container  section--background-color-dark section--color-light-high">
-
-            <p class="section__text  section--color-light-high"  >
-                <a href="https://twitter.com/fp_empresa" target="_blank" class="social__icon"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-                <a href="https://www.linkedin.com/company/fpempresa" target="_blank" class="social__icon"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-                <a href="https://www.youtube.com/channel/UCsTaCVxldCjUWHmDUEGpNBA" target="_blank" class="social__icon"><i class="fa fa-youtube-square"></i></a>&nbsp;&nbsp;
-                <a href="https://www.facebook.com/asocfpempresa" target="_blank" class="social__icon"><i class="fa fa-facebook-square"></i></a>&nbsp;&nbsp;
-                <a href="https://www.instagram.com/fpempresa/" target="_blank" class="social__icon"><i class="fa fa-instagram"></i></a>&nbsp;&nbsp;                
-                <br>
-                <br>                
-                <a href="{{getContextPath()}}/site/index.html#/docs/faq" >Preguntas</a>&nbsp;|&nbsp;
-                <a href="{{getContextPath()}}/site/index.html#/docs/contacto" >Contacto</a>&nbsp;|&nbsp;
-                <a href="http://www.fpempresa.net" >Asociaci&oacute;n</a>
-                <br>
-                <br>                
-                <a href="{{getContextPath()}}/site/index.html#/legal/aviso-legal" >Aviso Legal</a>&nbsp;|&nbsp;
-                <a href="{{getContextPath()}}/site/index.html#/legal/politica-privacidad" >Política de Privacidad</a>&nbsp;|&nbsp;
-                <a href="{{getContextPath()}}/site/index.html#/legal/terminos-uso" >Terminos de uso</a>&nbsp;|&nbsp;                  
-                <a href="{{getContextPath()}}/site/index.html#/legal/cookies" >Política de Cookies</a>
-                <br>                
-                <br>
-                &copy; 2013-<currentdate format="yyyy"></currentdate> Asociaci&oacute;n de Centros de FP (AC-FP)
-        </p> 
-        </footer>
+<footer class="c-section c-section--dark-color " ng-controller="FooterController">
+    <div class="c-section__content c-section__content--size-alt g--padding-top-10 g--padding-horizontal-0">
+        <div class="l-horizontal l-horizontal--space-around">
+            <ul class="g--padding-4">
+                <li><a href="{{getContextPath()}}/site/index.html#/info/titulado"   class="c-text g--color-default-1" >Titulado</a></li>
+                <li><a href="{{getContextPath()}}/site/index.html#/info/empresa"   class="c-text g--color-default-1" >Empresa</a></li>
+                <li><a href="{{getContextPath()}}/site/index.html#/info/centro-educativo"  class="c-text g--color-default-1" >Centro Educativo</a></li> 
+                <li><a href="{{getContextPath()}}/site/index.html#/docs/faq"  class="c-text g--color-default-1" >Preguntas frecuentes</a></li>
+            </ul>
+            <ul class="g--padding-4">
+                <li><a href="{{getContextPath()}}/site/index.html#/legal/aviso-legal" class="c-text g--color-default-1"  >Aviso Legal</a></li>
+                <li><a href="{{getContextPath()}}/site/index.html#/legal/politica-privacidad"  class="c-text g--color-default-1" >Política de Privacidad</a></li>
+                <li><a href="{{getContextPath()}}/site/index.html#/legal/terminos-uso" class="c-text g--color-default-1"  >Términos de uso</a></li>
+                <li><a href="{{getContextPath()}}/site/index.html#/legal/cookies"  class="c-text g--color-default-1" >Política de Cookies</a></li>
+            </ul>
+        </div>
+        <div class="l-horizontal l-horizontal--space-between g--padding-top-7 g--padding-horizontal-7 g--margin-left-auto g--margin-right-auto" style="width:100%;max-width: 400px;">
+            <div><a href="https://twitter.com/fp_empresa" target="_blank" class="g--color-default-1"><i class="fa fa-twitter-square fa-3x"></i></a></div>
+              <div>  <a href="https://www.linkedin.com/company/fpempresa" target="_blank" class="g--color-default-1"><i class="fa fa-linkedin-square  fa-3x"></i></a></div>
+              <div>  <a href="https://www.youtube.com/channel/UCsTaCVxldCjUWHmDUEGpNBA" target="_blank" class="g--color-default-1"><i class="fa fa-youtube-square  fa-3x"></i></a></div>
+              <div>  <a href="https://www.facebook.com/asocfpempresa" target="_blank" class="g--color-default-1"><i class="fa fa-facebook-square  fa-3x"></i></a></div>
+              <div>  <a href="https://www.instagram.com/fpempresa/" target="_blank" class="g--color-default-1 g--margin-right-auto"><i class="fa fa-instagram  fa-3x"></i></a></div>
+        </div>        
+        <p class="c-text g--color-default-1 c-text--center g--padding-top-7 g--padding-bottom-0 g--margin-0 g--padding-horizontal-4"><a href="https://fpempresa.net/" class="g--color-default-1" target="_blank">&copy; 2013-<currentdate format="yyyy"></currentdate> Asociaci&oacute;n de Centros de Formación Profesional - FPEmpresa</a></p>
+    </div>
+</footer>

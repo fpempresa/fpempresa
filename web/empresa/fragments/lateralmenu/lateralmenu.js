@@ -14,8 +14,18 @@ app.controller("LateralMenuController", ['$scope', '$state', '$location', 'dialo
             }
         };
 
+        $scope.getUrlIfEmpresa=function(url) {
+            if ( ($scope.user) && ($scope.user.empresa) ) {
+                return url;
+            } else {
+                "";
+            }
+        };
+
         $scope.cambiarContrasenya = function () {
-            dialog.create("cambiarContrasenya", $scope.user);
+            if ( ($scope.user) && ($scope.user.empresa) ){
+                dialog.create("cambiarContrasenya", $scope.user);
+            }
         };
 
     }]);

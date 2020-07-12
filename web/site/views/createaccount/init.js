@@ -11,19 +11,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 $scope.model.tipoUsuario = $stateParams.tipoUsuario;
             }
 
-            switch ($scope.model.tipoUsuario) {
-                case "CENTRO":
-                    $scope.model.estadoUsuario=null;
-                    break;
-                case "TITULADO":
-                    $scope.model.estadoUsuario="ACEPTADO";
-                    break;
-                case "EMPRESA":
-                    $scope.model.estadoUsuario="ACEPTADO";
-                    break;
-                default:
-                    throw Error("Tipo de usuario desonocido:" + $scope.model.tipoUsuario);
-            }
+
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;
         });
@@ -31,6 +19,22 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
         $scope.registrarse = function () {
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
+                
+                switch ($scope.model.tipoUsuario) {
+                    case "CENTRO":
+                        $scope.model.estadoUsuario=null;
+                        break;
+                    case "TITULADO":
+                        $scope.model.estadoUsuario="ACEPTADO";
+                        break;
+                    case "EMPRESA":
+                        $scope.model.estadoUsuario="ACEPTADO";
+                        break;
+                    default:
+                        throw Error("Tipo de usuario desonocido:" + $scope.model.tipoUsuario);
+                }                
+                
+                
                 usuarioService.insert($scope.model).then(function () {
                     $location.path("/createaccount/end/" + $scope.model.tipoUsuario);
                 }, function (businessMessages) {

@@ -3,10 +3,10 @@
 
         <h1 class="c-title  c-title--left g--margin-bottom-7 g--center" style="width: 100%; max-width:550px">
             <span class="c-title__pre">Accede a</span>
-            Tu cuenta de empleaFP
+            Tu cuenta de EmpleaFP
         </h1>
         <p class="c-text  c-text--justify g--margin-bottom-10 g--center" style="width: 100%; max-width:550px">
-            Entra en empleaFP para encontrar el empleo que estás buscando
+            Entra en EmpleaFP para encontrar el empleo que estás buscando
         </p>
 
         <form class="c-form g--center" style="width: 100%; max-width:550px" novalidate>
@@ -16,10 +16,10 @@
             <input ng-model="password" type="password" name="password" id="password" class="c-input">
             <div class="c-form__buttons">
                 <button type="submit" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="login(email, password)">Entrar</button>
-                <button class="c-button c-button--alt-tertiary g--center g--padding-top-4"  ng-click="olvidadoContrasenya()">¿Has olvidado tu contraseña?</button>
+                <a href="#/enviar-mail-resetear-contrasenya" class="c-button c-button--alt-tertiary g--center g--padding-top-4"  >¿Has olvidado tu contraseña?</a>
             </div>
             <ix3-business-messages></ix3-business-messages>
-            <p class="c-text  g--padding-top-6 ">¿No tienes cuenta en empleaFP? <button type="submit" class="c-button c-button--alt-tertiary "  ng-click="createAccount()">Crear un nuevo usuario</button></p>
+            <p class="c-text  g--padding-top-6 ">¿No tienes cuenta en EmpleaFP? <button type="submit" class="c-button c-button--alt-tertiary "  ng-click="createAccount()">Crear un nuevo usuario</button></p>
 
 
         </form>

@@ -1,10 +1,14 @@
 <section  class="c-section" data-scroll-trigger="true" >
     <div class="c-section__content  g--padding-vertical-15 " >
-        <form  name="mainForm" id="mainForm" ix3-form class="c-form g--center" style="width: 100%; max-width:500px" novalidate>
-            <h1 class="c-title c-title--left g--margin-bottom-7">
-                <span class="c-title__pre">Crear una</span>
-                Nueva contraseña
-            </h1>
+
+
+        <h1 class="c-title  c-title--left g--margin-bottom-7 g--center" style="width: 100%; max-width:550px">
+            <span class="c-title__pre">Crear una</span>
+            Nueva contraseña
+        </h1>
+        
+        <form  name="mainForm" id="mainForm" ix3-form class="c-form g--center" style="width: 100%; max-width:550px" novalidate>
+
             <label for="password" class="c-label">Nueva Contraseña</label>
             <input  ng-model="model.password" id="password" name="password" class="c-input" required>
             <label for="confirmPassword" class="c-label">Confirmar contraseña</label>
@@ -14,7 +18,7 @@
                 <button type="submit" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="aceptar()">Aceptar</button>
             </div>
             <ix3-business-messages></ix3-business-messages>
-                                     
+
 
         </form>
     </div>

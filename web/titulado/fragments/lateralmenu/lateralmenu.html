@@ -10,7 +10,7 @@
             <h3 class="form__main-title">Bienvenido, {{user.name}}</h3>
             <div class="g-padding--bottom-s@xs g-padding--bottom-m@sm"></div>
             <p class="form__text form__text--help hidden-xs">
-                Desde aqui podr&aacute;s modificar tu curriculum, buscar empleo y configurar tu cuenta
+                Desde aqui podr&aacute;s modificar tu currículum, buscar empleo y configurar tu cuenta
             </p>          
         </div>
     </div>
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-2 hidden-xs" style="padding-right: 0px!important;">
             <ul class="lateral-menu__menu">
-                <li class="lateral-menu__header">Mi curriculum</li>
+                <li class="lateral-menu__header">Mi currículum</li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('$/^')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('$/^')}" class="lateral-menu__item__link" href="#/">Resumen</a></li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/curriculum/titulado/.*')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/curriculum/titulado/.*')}"  class="lateral-menu__item__link" href="#/curriculum/titulado/edit/{{user.titulado.idTitulado}}">Datos personales</a></li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/curriculum/formacionacademica/.*')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/curriculum/formacionacademica/.*')}"  class="lateral-menu__item__link" href="#/curriculum/formacionacademica/search/titulado.idTitulado/{{user.titulado.idTitulado}}">Formaci&oacute;n académica</a></li>

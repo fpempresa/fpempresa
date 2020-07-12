@@ -19,7 +19,7 @@
             CRUDServiceFactory serviceFactory = webApplicationContext.getBean(CRUDServiceFactory.class);
             UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
             if (usuarioCRUDService.validarEmail(dataSession, request.getParameter("token"))) {
-                message = "Su correo electrónico se ha verificado correctamente";
+                message = "Tu correo electrónico se ha validado correctamente";
             } else {
                 message = "El token proporcionado es inválido";
             }
@@ -39,17 +39,17 @@
     }
 %>
 
-<section  class="c-section" data-scroll-trigger="true" >
-    <div class="c-section__content  g--padding-vertical-15 " >
-        <form  name="mainForm" id="mainForm" ix3-form class="c-form g--center" style="width: 100%; max-width:500px" novalidate>
-            <h1 class="c-title c-title--left g--margin-bottom-7">
+<section  class="c-section"  >
+    <div class="c-section__content c-section__content--size-alt  g--padding-top-14 g--margin-bottom-10 g--center" >
+        
+        <h1 class="c-title  c-title--left g--margin-bottom-7 " style="width: 100%; max-width:500px">
                 <span class="c-title__pre">Vamos a validar</span>
                 Tu dirección de correo
-            </h1>
-            
-            <p class="c-text c-text--size-alt g--padding-top-7"><%=message%></p>
-                                     
+        </h1>
+        
 
-        </form>
+        <p class="c-text c-text--size-alt g--padding-top-7"><%=message%></p>
+
+
     </div>
 </section>

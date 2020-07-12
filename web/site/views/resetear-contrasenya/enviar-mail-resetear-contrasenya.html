@@ -1,0 +1,23 @@
+<section  class="c-section"  >
+    <div class="c-section__content c-section__content--size-alt  g--padding-top-14 g--margin-bottom-10 g--center" >
+
+        <h1 class="c-title  c-title--left g--margin-bottom-7 g--center" style="width: 100%; max-width:550px">
+            <span class="c-title__pre">Deseas</span>
+            Cambiar tu contraseña
+        </h1>
+        <p class="c-text  c-text--justify g--margin-bottom-10 g--center" style="width: 100%; max-width:550px">
+            Indica tu correo electrónico y te enviamos las instrucciones para cambiar tu contraseña
+        </p>
+
+        <form name="mainForm" class="c-form g--center" style="width: 100%; max-width:550px" novalidate>
+            <label for="userEmail" class="c-label">Correo electrónico</label>
+            <input  ng-model="userEmail" class="c-input" name="userEmail" id="userEmail" >
+            <div class="c-form__buttons">
+                <button type="button" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="cambiarContrasenya()">Enviar correo</button>
+            </div>
+            <ix3-business-messages></ix3-business-messages>
+
+
+        </form>
+    </div>
+</section>            

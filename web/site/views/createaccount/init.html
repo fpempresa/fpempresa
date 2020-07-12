@@ -6,7 +6,7 @@
                 Nuevo usuario
         </h1>
         <p class="c-text  c-text--justify g--margin-bottom-10 g--center" style="width: 100%; max-width:700px">
-            Crea una cuenta en empleaFP para acceder a las ofertas de empleo
+            Crea una cuenta en EmpleaFP para acceder a las ofertas de empleo
         </p>
 
         <form class="c-form g--center" name="mainForm" id="mainForm" ix3-form style="width: 100%; max-width:700px" novalidate>
@@ -55,7 +55,7 @@
             <label class="c-label">Protección de datos</label>
             <div  ng-if="model.tipoUsuario === 'TITULADO'">
                 <p class="c-legal-text c-legal-text--size-alt g--justify">Conforme al artículo 11 de la LOPDGDD, y al RGPD, la ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA tratará los datos facilitados con la finalidad de gestionar su inscripción en la plataforma como TITULADO/CANDIDATO de formación profesional que busca empleo.</p>
-                <p class="c-legal-text c-legal-text--size-alt g--justify">Para poder gestionar su candidatura, será necesario ceder sus datos a los futuros empleadores para que estos valoren su candidatura. En caso de que lo autorice expresamente, los centros educativos podrán visualizar sus datos académicos mencionados en el curriculum. </p>
+                <p class="c-legal-text c-legal-text--size-alt g--justify">Para poder gestionar su candidatura, será necesario ceder sus datos a los futuros empleadores para que estos valoren su candidatura. En caso de que lo autorice expresamente, los centros educativos podrán visualizar sus datos académicos mencionados en el currículum. </p>
                 <p class="c-legal-text c-legal-text--size-alt g--justify">Siempre que nos lo autorice previamente enviaremos información relacionada con las ofertas de empleo publicadas en el portal por los centros o empresas. </p>
                 <p class="c-legal-text c-legal-text--size-alt g--justify">Usted  podrá ejercer, si lo desea, los derechos de acceso, rectificación, supresión y demás reconocidos en la normativa mencionada. Para obtener más información acerca de cómo estamos tratando sus datos, acceda a nuestra <a href="{{getContextPath()}}/site/index.html#/legal/politica-privacidad"  target="_blank">politica de privacidad</a>. </p>
                 <p class="c-legal-text c-legal-text--size-alt g--justify">La nueva normativa en protección de datos nos obliga tratar en todo momento los datos actualizados, por lo que, su perfil solo estará disponible un año desde el ultimo acceso al portal salvo que proceda a  actualizar sus datos, en cuyo caso, el periodo empezará a contar desde la última actualización realizada. Trascurrido más de un año, desde el ultimo acceso a la plataforma o sin llevar a cabo ninguna actualización de los datos, su cuenta será cancelada/ eliminada.</p>
@@ -82,7 +82,7 @@
                 <span  ng-if="model.tipoUsuario === 'CENTRO'">Entiendo y acepto recibir información relativas a las ofertas de trabajo publicadas por mi centro al correo electrónico facilitado.</span>
             </label>
             <label class="c-label c-label--option"  ng-if="model.tipoUsuario === 'TITULADO'" >
-                <input ng-model="model.aceptarVerificarTitulo" class="c-input" type="checkbox" id="aceptarVerificarTitulo" name="aceptarVerificarTitulo"  >Entiendo y acepto que los centros educativos puedan visualizar mis datos académicos con la finalidad de garantizar la exactitud y veracidad de los datos académicos recogidos en mi curriculum.
+                <input ng-model="model.aceptarVerificarTitulo" class="c-input" type="checkbox" id="aceptarVerificarTitulo" name="aceptarVerificarTitulo"  >Entiendo y acepto que los centros educativos puedan visualizar mis datos académicos con la finalidad de garantizar la exactitud y veracidad de los datos académicos recogidos en mi currículum.
             </label>
             
             <div class="c-form__buttons">

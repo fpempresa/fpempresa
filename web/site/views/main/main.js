@@ -23,7 +23,7 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
         };
         
         $scope.notifyOferta=function() {
-            notify.error(undefined,"Entra en empleaFP para ver la oferta",3000);
+            notify.error(undefined,"Accede en EmpleaFP para ver la oferta",3000);
         }
         
         $http({

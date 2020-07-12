@@ -70,7 +70,7 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
     @Override
     public Usuario getUsuarioPorClaveValidacionEmail(DataSession dataSession, String claveValidacionEmail) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
-        String hql = "SELECT usuario FROM Usuario usuario WHERE usuario.validadoEmail = 0 AND usuario.claveValidacionEmail = :claveValidacionEmail";
+        String hql = "SELECT usuario FROM Usuario usuario WHERE  usuario.claveValidacionEmail = :claveValidacionEmail";
         Query query = session.createQuery(hql);
         query.setString("claveValidacionEmail", claveValidacionEmail);
         Usuario usuario = (Usuario) query.uniqueResult();

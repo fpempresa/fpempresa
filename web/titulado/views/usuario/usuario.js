@@ -18,8 +18,8 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         };
         
         $scope.borrarCuenta = function () {
-            if (confirm("¿Esta seguro que desea borrar la cuenta y todos sus datos de empleaFP?")) {
-                alert('Para borrar todos sus datos de empleaFP debe enviar un correo electronico a: \nsoporte@empleafp.com\nindicando en el asunto que desea darse de baja')
+            if (confirm("¿Esta seguro que desea borrar la cuenta y todos sus datos de EmpleaFP?")) {
+                alert('Para borrar todos sus datos de EmpleaFP debe enviar un correo electronico a: \nsoporte@empleafp.com\nindicando en el asunto que desea darse de baja')
             }
         };        
 

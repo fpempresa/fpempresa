@@ -14,6 +14,13 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 app.controller("EmpresaNewEditController", ['$scope', '$window', '$location', 'genericControllerCrudDetail', 'controllerParams', 'session', function ($scope, $window, $location, genericControllerCrudDetail, controllerParams, session) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
+
+        $scope.postCreate = function () {
+            $scope.model.contacto={};
+            $scope.model.contacto.persona=$scope.user.nombre + " " + $scope.user.apellidos;
+            $scope.model.contacto.email=$scope.user.email;
+        }
+
         $scope.finishOK = function (oldControllerAction) {
             if (oldControllerAction === "NEW") {
                 $window.location.assign($window.location.pathname);

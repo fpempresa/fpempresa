@@ -41,9 +41,10 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
 
 app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
-
+        $scope.inscrito = false;
         $scope.namedSearch = "getOfertasUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
+        $scope.filters.fechaInicio=moment().subtract(180,"days").toDate();
         $scope.page.pageSize = 20;
         
         $scope.preSearch = function (filters) {
@@ -66,8 +67,10 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
 
 app.controller("OfertaInscritoSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
+        $scope.inscrito = true;
         $scope.namedSearch = "getOfertasInscritoUsuarioTitulado";
         $scope.filters.usuario = $scope.user.idIdentity;
+        $scope.filters.fechaInicio=moment().subtract(180,"days").toDate();
         $scope.preSearch = function (filters) {
             if (filters.provincia) {
                 filters.provincia = filters.provincia.idProvincia;

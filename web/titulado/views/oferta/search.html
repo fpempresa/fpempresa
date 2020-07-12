@@ -2,7 +2,7 @@
     <div class="col-sm-12 form__container" >
         <div class="row">
             <div class="col-sm-12">
-                <legend class="form__title">Ofertas</legend>
+                <legend class="form__title">Ofertas <span ng-if="inscrito==true">Inscritas<span></legend>
             </div>
         </div>  
         <form name="mainForm" id="mainForm" ix3-form>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <br>
-            <div class="alert alert-info" ng-if="models.length <= 0" role="alert">
+            <div class="alert alert-info" ng-if="(models.length <= 0) && inscrito===false" role="alert">
                 <p>¡Ups!. Parece que no hemos encontrado ninguna oferta para ti. Esto es debido a que EmpleaFP solo te muestra ofertas de los ciclos que poseas.</p>
             </div>
         </form>

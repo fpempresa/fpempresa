@@ -9,8 +9,19 @@ app.controller("HeaderController", ['$scope','session','goPage','dialog',functio
         $scope.soporte=function() {
                 goPage.soporte();
 
-        }  
+        } 
+        
+        $scope.getUrlIfTitulado=function(url) {
+            if ( ($scope.user) && ($scope.user.titulado) ) {
+                return url;
+            } else {
+                "";
+            }
+        }
+        
         $scope.cambiarContrasenya = function () {
-            dialog.create('cambiarContrasenya', $scope.user);
+            if ( ($scope.user) && ($scope.user.titulado) ) {
+                dialog.create('cambiarContrasenya', $scope.user);
+            }
         }
 }]);

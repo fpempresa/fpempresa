@@ -15,8 +15,18 @@ app.controller("LateralMenuController", ['$scope', '$location', '$state', 'dialo
         };
 
 
+        $scope.getUrlIfTitulado=function(url) {
+            if ( ($scope.user) && ($scope.user.titulado) ) {
+                return url;
+            } else {
+                "";
+            }
+        }
+
         $scope.cambiarContrasenya = function () {
-            dialog.create('cambiarContrasenya', $scope.user);
+             if ( ($scope.user) && ($scope.user.titulado) ) {
+                dialog.create('cambiarContrasenya', $scope.user);
+            }
         }
 
         $scope.ix3Configuration=ix3Configuration;

@@ -74,7 +74,7 @@ where
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="50"  isSplitAllowed="true" >
+			<band height="89"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
@@ -104,6 +104,9 @@ where
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[(
 	$F{tipoFormacionAcademica}.equals("CICLO_FORMATIVO")?$F{Grado} + " en " + $F{nombreCiclo}:$F{otroTitulo}
+)+
+(
+	$F{formacionDual}.equals(new Integer(1))?" (Modalidad Dual)":""
 )]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
@@ -120,6 +123,23 @@ where
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[(
 	$F{tipoFormacionAcademica}.equals("CICLO_FORMATIVO")?($F{idCentro}.intValue()<0?$F{otroCentro}:$F{nombreCentro}+" "+$F{nombreMunicipio}+ "(" + $F{nombreProvincia} + ")"):$F{otroCentro}
+)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="201"
+						y="47"
+						width="394"
+						height="17"
+						forecolor="#ED8936"
+						key="textField-4"
+						positionType="Float"/>
+					<box></box>
+					<textElement>
+						<font size="10" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[(
+	$F{certificadoTitulo}.equals(new Integer(1))?"El centro educativo certifica que posee el título":""
 )]]></textFieldExpression>
 				</textField>
 			</band>

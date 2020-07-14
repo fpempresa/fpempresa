@@ -6,14 +6,14 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
             url: "/oferta/search_todas",
             templateUrl: 'views/oferta/search.html',
             controller: 'OfertaTodasSearchController',
-            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha")
+            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa.direccion.municipio.provincia,ciclos,ciclos,fecha")
         });
 
         $stateProvider.state("lateralmenu.oferta_view_todas", {
             url: '/oferta/view_todas/:id',
             templateUrl: 'views/oferta/detail.html',
             controller: 'OfertaViewController',
-            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha", "VIEW"), {inscrito: function () {
+            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa.direccion.municipio.provincia,ciclos,ciclos,fecha", "VIEW"), {inscrito: function () {
                     return false;
                 }})
         });
@@ -22,14 +22,14 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
             url: "/oferta/search_inscrito",
             templateUrl: 'views/oferta/search.html',
             controller: 'OfertaInscritoSearchController',
-            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha")
+            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa.direccion.municipio.provincia,ciclos,ciclos,fecha")
         });
 
         $stateProvider.state("lateralmenu.oferta_view_inscrito", {
             url: '/oferta/view_inscrito/:id',
             templateUrl: 'views/oferta/detail.html',
             controller: 'OfertaViewController',
-            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha", "VIEW"), {inscrito: function () {
+            resolve: angular.extend(crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa.direccion.municipio.provincia,ciclos,ciclos,fecha", "VIEW"), {inscrito: function () {
                     return true;
                 }})
         });
@@ -91,10 +91,9 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         $scope.inscrito = inscrito;
 
-        $scope.verEmpresa = function (id) {
-
+        $scope.verEmpresa = function (empresa) {
             var params = {
-                id: id
+                empresa: empresa
             };
 
             dialog.create('verEmpresa', params);

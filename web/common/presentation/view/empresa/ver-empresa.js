@@ -1,16 +1,26 @@
 (function (undefined) {
     "use strict";
 
-    VerEmpresaController.$inject = ['$scope', 'genericControllerCrudDetail', 'currentDialog', 'controllerParams'];
-    function VerEmpresaController($scope, genericControllerCrudDetail, currentDialog, controllerParams) {
-        controllerParams.id = currentDialog.params.id;
+    VerEmpresaController.$inject = ['$scope', 'genericControllerCrudDetail', 'currentDialog', 'controllerParams', '$q', '$timeout'];
+    function VerEmpresaController($scope, genericControllerCrudDetail, currentDialog, controllerParams, $q, $timeout) {
+        controllerParams.get =function() {
+            var defered = $q.defer();
+
+            $timeout(function() {
+                var data=currentDialog.params.empresa;
+                defered.resolve(data);
+            },1);
+
+            return defered.promise;
+        };
+        
+        
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
 
         currentDialog.open({
             width: 850,
-            height: 700,
-            title: "Ver empresa"
+            title: "Empresa"
         });
 
         $scope.finishOK = function () {

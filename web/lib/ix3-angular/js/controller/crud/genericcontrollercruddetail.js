@@ -2,20 +2,82 @@
 
 (function () {
 
-    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'schemaEntities', '$q', ];
+    GenericControllerCrudDetail.$inject = ['serviceFactory', '$window', 'formValidator', '$location', 'schemaEntities', '$q'];
     function GenericControllerCrudDetail(serviceFactory, $window, formValidator, $location, schemaEntities, $q) {
 
         this.extendScope = function (scope, controllerParams) {
+            
+            scope['create'] = function () {
+                var defered = $q.defer();
+                
+                var parent = {};
+                if ((scope.parentProperty) && (scope.parentId)) {
+                    parent[scope.parentProperty] = scope.parentId;
+                }
+                
+                scope.service.create(scope.expand, parent).then(function (data) {
+                    defered.resolve(data);
+                }, function (businessMessages) {
+                    defered.reject(businessMessages);
+                });
+                
+                return defered.promise;
+            };            
+            scope['get'] = function () {
+                var defered = $q.defer();
+
+                scope.service.get(scope.id, scope.expand).then(function (data) {
+                    var realData;
+                    if (data === null) {
+                        //Si retornamos null, realmente lo transformamo en un objeto sin datos, pq sino fallan los select
+                        realData = {};
+                    } else {
+                        realData= data;
+                    }
+                    defered.resolve(data);
+                }, function (businessMessages) {
+                    defered.reject(businessMessages);
+                });
+
+                return defered.promise;
+            };
+            scope['insert'] = function () {
+                var defered = $q.defer();
+                scope.service.insert(scope.model, scope.expand).then(function (data) {
+                    defered.resolve(data);
+                }, function (businessMessages) {
+                    defered.reject(businessMessages);
+                });
+                
+                return defered.promise;
+            };            
+            scope['update'] = function () {
+                var defered = $q.defer();
+                scope.service.update(scope.id, scope.model, scope.expand).then(function (data) {
+                    defered.resolve(data);
+                }, function (businessMessages) {
+                    defered.reject(businessMessages);
+                });
+                
+                return defered.promise;
+            };   
+            scope['delete'] = function () {
+                var defered = $q.defer();
+                scope.service.delete(scope.id).then(function (data) {
+                    defered.resolve(data);
+                }, function (businessMessages) {
+                    defered.reject(businessMessages);
+                });
+                
+                return defered.promise;
+            };
+            
             scope.labelButtonOK = null;
             scope.labelButtonCancel = null;
             scope.model = {};
             scope.models = {};
             scope.businessMessages = null;
-            angular.extend(scope, controllerParams);
-            scope.service = serviceFactory.getService(scope.entity);
-            scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
-            scope.childPrefixRoute = "/" + scope.entity.toLowerCase();
-            scope.runningOKAction=false;
+            
             scope.preCreate = function () {
             };
             scope.postCreate = function () {
@@ -36,21 +98,23 @@
             };
             scope.postDelete = function () {
             };
-
+            
+            angular.extend(scope, controllerParams);
+            scope.service = serviceFactory.getService(scope.entity);
+            scope.idName = schemaEntities.getSchema(scope.entity).primaryKeyPropertyName;
+            scope.childPrefixRoute = "/" + scope.entity.toLowerCase();
+            scope.runningOKAction=false;
+            
+            
 
             scope.doGet = function () {
                 var defered = $q.defer();
 
                 scope.preGet();
-                scope.service.get(scope.id, scope.expand).then(function (data) {
-                    if (data === null) {
-                        //Si retornamos null, realmente lo transformamo en un objeto sin datos, pq sino fallan los select
-                        scope.model = {};
-                    } else {
-                        scope.model = data;
-                    }
+                scope['get']().then(function (data) {
+                    scope.model = data;
                     scope.businessMessages = null;
-
+                    
                     scope.postGet();
                     defered.resolve(data);
                 }, function (businessMessages) {
@@ -64,12 +128,9 @@
             scope.doCreate = function () {
                 var defered = $q.defer();
 
-                var parent = {};
-                if ((scope.parentProperty) && (scope.parentId)) {
-                    parent[scope.parentProperty] = scope.parentId;
-                }
+
                 scope.preCreate();
-                scope.service.create(scope.expand, parent).then(function (data) {
+                scope['create']().then(function (data) {
                     scope.model = data;
                     scope.businessMessages = null;
 
@@ -89,7 +150,7 @@
                 scope.preInsert();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
-                    scope.service.insert(scope.model, scope.expand).then(function (data) {
+                    scope['insert']().then(function (data) {
                         scope.model = data;
                         scope.businessMessages = null;
                         scope.controllerAction = "EDIT";
@@ -113,7 +174,7 @@
                 scope.preUpdate();
                 scope.businessMessages = formValidator.validate(scope.mainForm, scope.$validators);
                 if (scope.businessMessages.length === 0) {
-                    scope.service.update(scope.id, scope.model, scope.expand).then(function (data) {
+                    scope['update']().then(function (data) {
                         scope.model = data;
                         scope.businessMessages = null;
 
@@ -133,8 +194,8 @@
             scope.doDelete = function () {
                 var defered = $q.defer();
 
-                scope.preDelete()
-                scope.service.delete(scope.id).then(function (data) {
+                scope.preDelete();
+                scope['delete']().then(function (data) {
                     scope.businessMessages = null;
 
                     scope.postDelete();

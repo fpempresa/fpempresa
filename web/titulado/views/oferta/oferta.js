@@ -155,7 +155,7 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
                 });
             } else {
                 $scope.desinscribirseOferta().then(function () {
-                    alert("Te has borrado correctamente de la oferta. La empresa ya no podrá ver tu curriculum");
+                    alert("Te has desinscrito correctamente de la oferta");
                 });
             }
 

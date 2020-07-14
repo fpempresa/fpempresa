@@ -13,7 +13,6 @@
 
         currentDialog.open({
             width: 600,
-            height: 800,
             title: "Buscar empresa"
         });
 

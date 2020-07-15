@@ -5,4 +5,7 @@ app.controller("HeaderController", ['$scope', 'goPage', function ($scope, goPage
         $scope.createAccount = function () {
             goPage.createAccount();
         };
+        $scope.soporte = function () {
+            goPage.soporte();
+        };        
     }]);

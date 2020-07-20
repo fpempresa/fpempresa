@@ -1,3 +1,20 @@
+/**
+ *   FPempresa
+ *   Copyright (C) 2020  Lorenzo González
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Affero General Public License as
+ *   published by the Free Software Foundation, either version 3 of the
+ *   License, or (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Affero General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Affero General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 "use strict";
 
 angular.module("common").directive('fpeSimpleBarChart', [function () {
@@ -12,73 +29,122 @@ angular.module("common").directive('fpeSimpleBarChart', [function () {
             },
             link: function ($scope, element, attributes) {
 
-                $scope.$watch("serie", function (newSerie,oldSerie) {
-                    
-                    if (newSerie===oldSerie) {
-                        return;
-                    }
-                    
-                    if (element.highcharts()) {
-                        element.highcharts().destroy();
-                    }
-                    if (newSerie === null)  {
+                var chart = null;
+                var labels = [];
+                var data = [];
+
+                $scope.$watch("serie", function (newSerie, oldSerie) {
+
+                    if (newSerie === oldSerie) {
                         return;
                     }
 
-                    var labels = [];
-                    var data = [];
+                    while (labels.length > 0) {
+                        data.pop();
+                    }
+                    while (data.length > 0) {
+                        data.pop();
+                    }
+
+                    if (newSerie === null) {
+                        if (chart !== null) {
+                            chart.update();
+                        } else {
+                            return;
+                        }
+                    }
+
+                    var titleX = $scope.titleX;
+                    var title = $scope.title;
+                    var titleY = $scope.titleY;
+
+
+
                     for (var i = 0; i < $scope.serie.length; i++) {
                         labels.push($scope.serie[i].$toString);
                         data.push($scope.serie[i].valor);
                     }
 
-                    element.highcharts({
-                        chart: {
-                            type: 'column'
-                        },
-                        credits: {
-                            enabled: false
-                        },
-                        title: {
-                            text: $scope.title
-                        },
-                        subtitle: {
-                            text: $scope.subtitle
-                        },
-                        xAxis: {
-                            categories: labels
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: $scope.titleY
-                            }
-                        },
-                        plotOptions: {
-                            column: {
-                                pointPadding: 0.2,
-                                borderWidth: 0,
-                                dataLabels: {
-                                    enabled: true,
-                                    color: "#000000",
-                                    style: {
-                                        fontWeight: 'bold'
+
+                    if (chart !== null) {
+                        chart.update();
+                    } else {
+                        chart = new Chart(element,
+                                {
+                                    type: "bar",
+                                    data: {
+                                        labels: labels,
+                                        datasets: [
+                                            {
+                                                data: data,
+                                                fill: false,
+                                                backgroundColor: "#428bca",
+                                                datalabels: {
+                                                    color: "#000000",
+                                                    anchor: "end",
+                                                    align: "top",
+                                                    clamp: true
+                                                }
+                                            }
+                                        ]
                                     },
-                                    formatter: function () {
-                                        return this.y;
+                                    options: {
+                                        title: {
+                                            display: true,
+                                            text: title
+                                        },
+                                        legend: {
+                                            display: false
+                                        },
+                                        scales: {
+                                            xAxes: [
+                                                {
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        labelString: titleX,
+                                                        padding: {
+                                                            top:10,
+                                                            bottom:0
+                                                        },
+                                                        fontSize:14,
+                                                        fontStyle:"bold"
+                                                    },
+                                                    ticks: {
+                                                        // Include a dollar sign in the ticks
+                                                        callback: function (value, index, values) {
+                                                            var max=16;
+                                                            var label=""+value;
+                                                            if (label.length>max) {
+                                                                label=label.substr(0,max)+"...";
+                                                            }
+                                                            
+                                                            return label;
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            yAxes: [
+                                                {
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        labelString: titleY,
+                                                        fontSize:14,
+                                                        fontStyle:"bold"
+                                                    },
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    }
+                                                }
+                                            ]
+
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        series: [{
-                                name: $scope.titleX,
-                                data: data
 
-                            }],
-                        exporting: {
-                            enabled: false
-                        }
-                    });
+                        );
+                    }
+
+
 
                 })
 

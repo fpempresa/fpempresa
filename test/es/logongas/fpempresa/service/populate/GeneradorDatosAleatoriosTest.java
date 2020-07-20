@@ -5,7 +5,7 @@
  */
 package es.logongas.fpempresa.service.populate;
 
-import com.aeat.valida.Validador;
+import es.logongas.fpempresa.util.validators.CIFNIFValidator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,27 +20,31 @@ public class GeneradorDatosAleatoriosTest {
 
     @Test
     public void test_generador_cif() {
-        Validador validadorCIF = new Validador();        
+         
         
         String cif=GeneradorDatosAleatorios.getCif();
-        int valor=validadorCIF.checkNif(cif);
+        CIFNIFValidator cifnifValidator = new CIFNIFValidator(cif);       
         
-        if (valor<=0) {
-            throw new RuntimeException("error de validacion:" + valor);
+        boolean success=cifnifValidator.isValid();
+        
+        if (success==false) {
+            throw new RuntimeException("error de validacion:" + cif);
         }
 
     } 
     
     @Test
     public void test_generador_nif() {
-        Validador validadorCIF = new Validador();        
+      
         
         String nif=GeneradorDatosAleatorios.getNif();
 
-        int valor=validadorCIF.checkNif(nif);
+        CIFNIFValidator cifnifValidator = new CIFNIFValidator(nif);
         
-        if (valor<=0) {
-            throw new RuntimeException("error de validacion:" + valor);
+        boolean success=cifnifValidator.isValid();
+        
+        if (success==false) {
+            throw new RuntimeException("error de validacion:" + nif);
         }
 
     }  

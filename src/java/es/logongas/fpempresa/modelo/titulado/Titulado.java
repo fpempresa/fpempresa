@@ -17,7 +17,6 @@
  */
 package es.logongas.fpempresa.modelo.titulado;
 
-import com.aeat.valida.Validador;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.fpempresa.modelo.titulado.configuracion.Configuracion;
 import es.logongas.ix3.core.annotations.Label;
@@ -34,6 +33,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import es.logongas.fpempresa.util.validators.CIFNIFValidator;
 import java.util.Calendar;
 
 /**
@@ -126,10 +126,11 @@ public class Titulado {
     
     @ConstraintRule(fieldName = "Nº Documento", message = "El NIF/NIE '${entity.numeroDocumento}' no es válido", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarNIF(RuleContext<Titulado> ruleContext) {
-        Validador validadorCIF = new Validador();
 
         if ((this.tipoDocumento == TipoDocumento.NIF_NIE) && (this.numeroDocumento != null)) {
-            if (validadorCIF.checkNif(this.numeroDocumento.toUpperCase()) > 0) {
+            CIFNIFValidator cifnifValidator = new CIFNIFValidator(this.numeroDocumento.toUpperCase());
+            
+            if (cifnifValidator.isValid()==true) {
                 return true;
             } else {
                 return false;
@@ -141,10 +142,11 @@ public class Titulado {
 
     @ConstraintRule(fieldName = "Nº Documento", message = "No puede ser un CIF", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarNoCIF(RuleContext<Titulado> ruleContext) {
-        Validador validadorCIF = new Validador();
 
         if ((this.tipoDocumento == TipoDocumento.NIF_NIE) && (this.numeroDocumento != null)) {
-            if (validadorCIF.checkNif(this.numeroDocumento.toUpperCase()) > 0) {
+            CIFNIFValidator cifnifValidator = new CIFNIFValidator(this.numeroDocumento.toUpperCase());
+            
+            if (cifnifValidator.isValid()==true) {
                 //Comprobamos que no sea un CIF
                 if (this.numeroDocumento.matches("^[0-9xyzXYZ].*") == false) {
                     return false;

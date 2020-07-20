@@ -23,7 +23,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
-import es.logongas.fpempresa.security.util.PasswordValidator;
+import es.logongas.fpempresa.util.validators.PasswordValidator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;

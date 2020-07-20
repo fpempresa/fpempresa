@@ -1,30 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * FPempresa Copyright (C) 2020 Lorenzo González
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
+
+
+
 package es.logongas.fpempresa.presentacion.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
 import es.logongas.fpempresa.businessprocess.titulado.TituladoCRUDBusinessProcess;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
-import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.json.JsonFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

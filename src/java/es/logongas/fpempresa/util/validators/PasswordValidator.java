@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.security.util;
+package es.logongas.fpempresa.util.validators;
 
 import es.logongas.ix3.core.BusinessMessage;
 import java.util.ArrayList;

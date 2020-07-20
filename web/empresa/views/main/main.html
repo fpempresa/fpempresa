@@ -1,3 +1,20 @@
+<!--
+FPempresa
+Copyright (C) 2020  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
 <div class="row">
     <div class="col-xs-12 form__container" >
         <form name="mainForm" id="mainForm"  ix3-form>
@@ -67,7 +84,7 @@
                             <h3 class="panel-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;Titulados de EmpleaFP por familia</h3>
                         </div>
                         <div class="panel-body">
-                            <div style="height: 300px;position: relative;top:0px;left:0px;"  fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Candidatos" title-x="Familias profesionales" serie="chartData.titulosFPPorFamilia"   ></div>
+                            <canvas  fpe-simple-bar-chart title=""  title-y="Nº de Candidatos" title-x="Familias profesionales" serie="chartData.titulosFPPorFamilia"   ></canvas>
                         </div>
                     </div>                                      
                 </div>
@@ -79,7 +96,7 @@
                             <h3 class="panel-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Ofertas por familia</h3>
                         </div>
                         <div class="panel-body">
-                            <div style="height: 300px;position: relative;top:0px;left:0px;" fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Ofertas" title-x="Familias profesionales" serie="chartData.ofertasPorFamilia" ></div>
+                            <canvas fpe-simple-bar-chart title=""  title-y="Nº de Ofertas" title-x="Familias profesionales" serie="chartData.ofertasPorFamilia" ></canvas>
                         </div>
                     </div>                    
                 </div>
@@ -91,7 +108,7 @@
                             <h3 class="panel-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;Candidatos por familia</h3>
                         </div>
                         <div class="panel-body">
-                            <div style="height: 300px;position: relative;top:0px;left:0px;"  fpe-simple-bar-chart title="" subtitle="" title-y="Nº de Candidatos" title-x="Familias profesionales" serie="chartData.candidatosPorFamilia"   ></div>
+                            <canvas  fpe-simple-bar-chart title=""  title-y="Nº de Candidatos" title-x="Familias profesionales" serie="chartData.candidatosPorFamilia"   ></canvas>
                         </div>
                     </div>                                      
                 </div>

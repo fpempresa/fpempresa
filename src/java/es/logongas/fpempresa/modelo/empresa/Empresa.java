@@ -16,11 +16,11 @@
  */
 package es.logongas.fpempresa.modelo.empresa;
 
-import com.aeat.valida.Validador;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
+import es.logongas.fpempresa.util.validators.CIFNIFValidator;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
@@ -68,11 +68,14 @@ public class Empresa {
 
     @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
-        Validador validadorCIF = new Validador();
+        
         if (this.cif == null) {
             return true;
+        } else if (this.cif.isEmpty()==true) {
+            return true;
         } else {
-            if (validadorCIF.checkNif(this.cif) > 0 || this.cif.isEmpty()) {
+            CIFNIFValidator cifnifValidator = new CIFNIFValidator(this.cif);
+            if (cifnifValidator.isValid()) {
                 return true;
             } else {
                 return false;

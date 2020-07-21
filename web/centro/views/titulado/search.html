@@ -80,22 +80,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
             </div>
         </div>  
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="row">
-            <div class="col-sm-12">            
-                <div class="panel panel-info">
-                  <div class="panel-heading">Importación de titulados desde fichero json</div>
-                  <div class="panel-body">
-                      <input type="checkbox" ng-init="false" ng-model="fileuploadEnabled" id="fileuploadDisable">&nbsp; Declaro haber informado y recabado la autorización  del/de los titulado/s para la inclusión de sus datos en la plataforma y bolsa de empleo EmpleaFP   haciéndome responsable  los daños  caudados como consecuencia de la falta de  dicha autorización.                      
-                        <fpe-file-upload disabled="!fileuploadEnabled" text="Selecionar archivo..." url="{{apiUrl + '/../titulado/importar-csv'}}" fail="failImportJson(data)" success="updateList(event,data)"></fpe-file-upload>
-                        <a ng-click="mostrarCodigosMunicipio()" style="cursor: pointer"><i class="fa fa-question-circle"></i> Ayuda</a>
-                  </div>
-                </div>                
-            </div>
-
         </div>
     </div>
 </div>

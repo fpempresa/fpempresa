@@ -60,15 +60,19 @@ public class CIFNIFValidator {
         if (PATTERN_CIF.matcher(nif).matches()) {
             int calculoDC = 0;
             for (int i = 1; i < 8; i++) {
+                int digit=nif.charAt(i) - '0';
+                int addValue;
+                
                 if ((i == 2) || (i == 4) || (i == 6)) {
-                    calculoDC += nif.charAt(i) - '0';
+                    addValue= digit;
                 } else {
-                    int j = (nif.charAt(i) - '0') * 2;
-                    if (j > 9) {
-                        j -= 9;
+                    addValue = digit * 2;
+                    if (addValue > 9) {
+                        addValue -= 9;
                     }
-                    calculoDC += j;
                 }
+                
+                calculoDC=calculoDC+addValue;
             }
             calculoDC = 10 - calculoDC % 10;
             if (calculoDC == 10) {
@@ -88,18 +92,22 @@ public class CIFNIFValidator {
         if (PATTERN_CIF_OTRO.matcher(nif).matches()) {
             int calculoDC = 0;
             for (int i = 1; i < 8; i++) {
+                int digit=nif.charAt(i) - '0';
+                int addValue;
+                
                 if ((i == 2) || (i == 4) || (i == 6)) {
-                    calculoDC += nif.charAt(i) - '0';
+                    addValue=digit;
                 } else {
-                    int j = (nif.charAt(i) - '0') * 2;
-                    if (j > 9) {
-                        j -= 9;
+                    addValue = digit * 2;
+                    if (addValue > 9) {
+                        addValue -= 9;
                     }
-                    calculoDC += j;
                 }
+                
+                calculoDC=calculoDC+addValue;
             }
             calculoDC = 10 - calculoDC % 10;
-            if (arrLettersDcCif[(calculoDC - 1)] == nif.charAt(8)) {
+            if (arrLettersDcCif[calculoDC - 1] == nif.charAt(8)) {
                 //CIF de organización o extranjero
                 return true;
             }

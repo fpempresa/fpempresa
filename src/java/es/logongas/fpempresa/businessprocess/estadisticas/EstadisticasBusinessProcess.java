@@ -18,6 +18,7 @@ package es.logongas.fpempresa.businessprocess.estadisticas;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.BusinessProcess;
@@ -38,7 +39,8 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
     Estadisticas getEstadisticasEmpresa(GetEstadisticasEmpresaArguments getEstadisticasEmpresaArguments) throws BusinessException;
     Estadisticas getEstadisticasPublicas(GetEstadisticasPublicasArguments getEstadisticasPublicasArguments) throws BusinessException;
     List<FamiliaOfertasEstadistica> getEstadisticasFamiliaOfertasPublicas(GetEstadisticasFamiliaOfertasPublicasArguments getEstadisticasFamiliaOfertasPublicasArguments) throws BusinessException;
-
+    EstadisticasPrincipal getEstadisticasPrincipal(GetEstadisticasPrincipalArguments getEstadisticasPrincipalArguments);
+    
     public class GetEstadisticasAdministradorArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
         public GetEstadisticasAdministradorArguments() {
@@ -126,4 +128,15 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
 
     }    
 
+    public class GetEstadisticasPrincipalArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
+        public GetEstadisticasPrincipalArguments() {
+        }
+
+        public GetEstadisticasPrincipalArguments(Principal principal, DataSession dataSession) {
+            super(principal, dataSession);
+        }
+
+    }     
+    
 }

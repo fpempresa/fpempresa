@@ -21,7 +21,9 @@ import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
+import java.math.BigInteger;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
@@ -73,6 +75,16 @@ public class TituladoDAOImplHibernate extends GenericDAOImplHibernate<Titulado, 
         }
 
         return (List<Titulado>) sqlQuery.list();
+    }
+
+    @Override
+    public long countTitulados(DataSession dataSession) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+        
+        Query query = session.createSQLQuery("SELECT COUNT(*) FROM titulado");
+        long numTitulados = ((BigInteger) query.uniqueResult()).longValue();
+
+        return numTitulados;
     }
 
 }

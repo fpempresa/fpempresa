@@ -24,6 +24,7 @@ import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -185,6 +186,16 @@ public class OfertaDAOImplHibernate extends GenericDAOImplHibernate<Oferta, Inte
         query.setInteger(0, empresa.getIdEmpresa());
 
         return (List<Oferta>) query.list();
+    }
+
+    @Override
+    public long countOfertas(DataSession dataSession) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+        
+        Query query = session.createSQLQuery("SELECT COUNT(*) FROM oferta");
+        long numOfertas = ((BigInteger) query.uniqueResult()).longValue();
+
+        return numOfertas;
     }
 
 }

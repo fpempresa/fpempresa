@@ -17,6 +17,7 @@ package es.logongas.fpempresa.businessprocess.estadisticas.impl;
 
 import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessProcess;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.core.BusinessException;
@@ -68,6 +69,11 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
     @Override
     public Class getEntityType() {
         return this.entityType;
+    }
+
+    @Override
+    public EstadisticasPrincipal getEstadisticasPrincipal(GetEstadisticasPrincipalArguments getEstadisticasPrincipalArguments) {
+        return estadisticasService.getEstadisticasPrincipal(getEstadisticasPrincipalArguments.dataSession);
     }
 
 }

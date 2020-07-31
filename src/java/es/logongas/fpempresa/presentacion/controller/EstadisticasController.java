@@ -20,6 +20,7 @@ import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessPr
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.core.conversion.Conversion;
@@ -131,4 +132,17 @@ public class EstadisticasController {
             controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
         }
     }
+    
+    @RequestMapping(value = {"/{path}/Estadisticas/principal"}, method = RequestMethod.GET, produces = "application/json")
+    public void getEstadisticasPrincipal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+            EstadisticasPrincipal estadisticasPrincipal=estadisticasBusinessProcess.getEstadisticasPrincipal(new EstadisticasBusinessProcess.GetEstadisticasPrincipalArguments(principal, dataSession));
+            controllerHelper.objectToHttpResponse(new HttpResult(estadisticasPrincipal), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }    
+    
 }

@@ -28,4 +28,7 @@ import java.util.List;
 public interface TituladoDAO extends GenericDAO<Titulado, Integer> {
 
     List<Titulado> getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(DataSession dataSession, Oferta oferta);
+    
+    long countTitulados(DataSession dataSession);
+    
 }

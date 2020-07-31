@@ -19,6 +19,7 @@ package es.logongas.fpempresa.service.estadisticas;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
@@ -40,4 +41,7 @@ public interface EstadisticasService extends Service<Estadisticas> {
     Estadisticas getEstadisticasPublicas(DataSession dataSession);
 
     List<FamiliaOfertasEstadistica> getEstadisticasFamiliaOfertasPublicas(DataSession dataSession) throws BusinessException;
+    
+    EstadisticasPrincipal getEstadisticasPrincipal(DataSession dataSession);    
+    
 }

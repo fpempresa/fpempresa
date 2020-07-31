@@ -16,21 +16,26 @@
  */
 package es.logongas.fpempresa.service.estadisticas.impl;
 
+import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.dao.estadisticas.EstadisticaDAO;
+import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
+import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
 import es.logongas.fpempresa.modelo.estadisticas.OfertaEstadistica;
+import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Order;
 import es.logongas.ix3.core.OrderDirection;
 import es.logongas.ix3.core.Page;
 import es.logongas.ix3.core.PageRequest;
+import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
@@ -57,6 +62,8 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     EstadisticaDAO estadisticaDAO;
     @Autowired
     private CRUDServiceFactory crudServiceFactory;
+    @Autowired
+    private DAOFactory daoFactory;
     
     @Override
     public Estadisticas getEstadisticasAdministrador(DataSession dataSession) {
@@ -152,7 +159,20 @@ public class EstadisticasServiceImpl implements EstadisticasService {
         return familiasOfertasEstadistica;
     }
         
-    
+    @Override
+    public EstadisticasPrincipal getEstadisticasPrincipal(DataSession dataSession) {
+        
+       OfertaDAO ofertaDAO=(OfertaDAO)daoFactory.getDAO(Oferta.class);
+       TituladoDAO tituladoDAO=(TituladoDAO)daoFactory.getDAO(Titulado.class);
+
+       long numOfertas=ofertaDAO.countOfertas(dataSession);
+       long numTitulados=tituladoDAO.countTitulados(dataSession);
+       
+       EstadisticasPrincipal estadisticasPrincipal=new EstadisticasPrincipal(numOfertas, numTitulados);
+       
+       return estadisticasPrincipal;
+       
+    }
 
     @Override
     public void setEntityType(Class<Estadisticas> entityType) {
@@ -188,5 +208,5 @@ public class EstadisticasServiceImpl implements EstadisticasService {
         return false;
         
     }    
-    
+
 }

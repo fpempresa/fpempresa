@@ -21,8 +21,8 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
         };
         $scope.familiasOfertas = [];
         $scope.nuestrosNumeros={
-            numOfertas:0,
-            numeroTitulosFP:0
+            numeroOfertas:0,
+            numeroTitulados:0
         };
         $scope.createAccount = function () {
             goPage.createAccount();
@@ -54,10 +54,10 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
         
         $http({
             method: "GET",
-            url: ix3Configuration.server.api + "/Estadisticas/publicas/"
-        }).then(function (chartData) {
-            $scope.nuestrosNumeros.numOfertas=chartData.data.numeroOfertas;
-            $scope.nuestrosNumeros.numeroTitulosFP=chartData.data.numeroTitulosFP;
+            url: ix3Configuration.server.api + "/Estadisticas/principal"
+        }).then(function (response) {
+            $scope.nuestrosNumeros.numeroOfertas=response.data.numeroOfertas;
+            $scope.nuestrosNumeros.numeroTitulados=response.data.numeroTitulados;
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;
         });

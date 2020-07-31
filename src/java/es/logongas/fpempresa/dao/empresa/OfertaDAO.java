@@ -39,4 +39,6 @@ public interface OfertaDAO extends GenericDAO<Oferta, Integer> {
     List<Oferta> getOfertasEmpresasCentro(DataSession dataSession, Centro centro);
 
     List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa);
+    
+    long countOfertas(DataSession dataSession);
 }

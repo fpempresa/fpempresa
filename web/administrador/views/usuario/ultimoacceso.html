@@ -20,31 +20,43 @@ along with this program.  If not, see http://www.gnu.org/licenses/
         <div>
             <legend class="form__title">Últimos accesos de los Usuarios</legend>
             <div class="row">
-                <div class="col-xs-3"> 
-                    <div  class="input-group ">
-                        <input ng-model="filters.$dge.fechaUltimoAcceso" ix3-clear="filters.$isnull.fechaUltimoAcceso" ng-disabled="filters.$isnull.fechaUltimoAcceso" type="text" class="form-control"  id="fechaUltimoAccesoDesde" name="fechaUltimoAccesoDesde" placeholder="fecha desde" ix3-date ix3-datepicker > 
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    </div>                     
-                </div> 
-                <div class="col-xs-3"> 
-                    <div  class="input-group ">                    
-                        <input ng-model="filters.$dle.fechaUltimoAcceso" ix3-clear="filters.$isnull.fechaUltimoAcceso" ng-disabled="filters.$isnull.fechaUltimoAcceso"  type="text" class="form-control"  id="fechaUltimoAccesoHasta" name="fechaUltimoAccesoHasta" placeholder="fecha hasta" ix3-date ix3-datepicker > 
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    </div> 
-                </div> 
-                 <div class="col-xs-6"> 
-                    <div class="checkbox">
+                <div class="col-xs-6"> 
+                    <div class="radio">
                         <label>
-                            <input ng-model="filters.$isnull.fechaUltimoAcceso" type="checkbox" id="fechaUltimoAccesoNull" name="fechaUltimoAccesoNull" >
-                            Sin fecha de último acceso
+                            <input ng-model="tipoBusqueda" type="radio"  name="tipoBusqueda" value="USUARIOS_NOTIFICAR" >
+                            Usuarios para notificar que se va a borrar su cuenta
                         </label>
-                     </div>  
-                </div>                
+                    </div>  
+                </div> 
+                <div class="col-xs-6"> 
+                    <div class="radio">
+                        <label>
+                            <input ng-model="tipoBusqueda" type="radio"  name="tipoBusqueda" value="USUARIOS_BORRAR" >
+                            Usuarios que se deben borrar
+                        </label>
+                    </div>  
+                </div> 
             </div>
             <br>
             <div class="row" >
                 <div class="col-xs-12 ">
-                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                    <button type="button" class="btn form__button form__button--default " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonNotificarUsuarioInactivoAllPage()"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'" ><i class="fa fa-envelope"></i> Notificar a todos los usuarios de esta Página</button>
+                    <button type="button" class="btn form__button form__button--danger " ng-click="buttonSoftDeleteAllPage()" ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"  ><i class="fa fa-trash" aria-hidden="true"></i> Borrar  todos los usuarios de esta Página</button>
+                </div>
+            </div>
+            <br>
+            <div class="row" ng-show="procesando!==null" >
+                <div class="col-xs-12 ">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">Procesando</div>
+                        <div class="panel-body">{{procesando}}</div>
+                    </div>
                 </div>
             </div>
             <br>             
@@ -52,18 +64,27 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th                                           style="width:   45%;text-align: center">Correo</th>
-                        <th ix3-order-field-names="fechaUltimoAcceso" style="width:   100px;text-align: center">Fecha Último acceso</th>
-                        <th ix3-order-field-names="fecha"             style="width:   100px;text-align: center">Fecha Creacion</th>
-                        <th                                           style="text-align: center">Nombre</th>
+                        <th                                           style="text-align: left">#</th>
+                        <th                                           style="text-align: left">Correo</th>
+                        <th  style="text-align: left">Fecha Último acceso</th>
+                        <th  style="text-align: left">Fecha Notificacion Borrado</th>
+                        <th              style="text-align: celeftnter">Fecha Creacion</th>
+                        <th                                           style="text-align: left">Nombre</th>
+                        <th style="min-width: 140px; width: 140px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="model in models" class="data-table__row">
+                        <td >{{model.idIdentity}}</td>
                         <td >{{model.email}}</td>
                         <td style="text-align: center">{{model.fechaUltimoAcceso| date: 'dd/MM/yyyy'}}</td> 
+                        <td style="text-align: center">{{model.fechaEnvioCorreoAvisoBorrarUsuario| date: 'dd/MM/yyyy'}}</td> 
                         <td style="text-align: center">{{model.fecha| date: 'dd/MM/yyyy'}}</td> 
-                        <td >{{model.nombre}}</td>                        
+                        <td >{{model.nombre}}</td> 
+                        <td >
+                            <button class="btn btn-xs form__button form__button--primary" type="button" ng-click="buttonNotificarUsuarioInactivo(model)" title="Notificar que la cuenta se va a borrar"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'"><i class="fa fa-envelope"></i></button>                            
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonSoftDelete(model)" title="Borrar la cuenta"  ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td> 
                     </tr>
                 </tbody>
             </table> 

@@ -231,7 +231,45 @@ public class UsuarioRESTController {
         }
     }    
     
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/notificarUsuarioInactivo"}, method = RequestMethod.PATCH)
+    public void notificarUsuarioInactivo(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario) throws BusinessException {
 
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            usuarioCRUDBusinessProcess.notificarUsuarioInactivo(new UsuarioCRUDBusinessProcess.NotificarUsuarioInactivoArguments(principal, dataSession, usuario));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+    
+    @RequestMapping(value = {"/{path}/Usuario/{idUsuario}/softDelete"}, method = RequestMethod.PATCH)
+    public void softDelete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idUsuario") int idUsuario) throws BusinessException {
+
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idUsuario);
+
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+
+            usuarioCRUDBusinessProcess.softDelete(new UsuarioCRUDBusinessProcess.SoftDeleteArguments(principal, dataSession, usuario));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+        }
+    }
+    
+    
     public static class ResetPassword {
 
         private String claveResetearContrasenya;

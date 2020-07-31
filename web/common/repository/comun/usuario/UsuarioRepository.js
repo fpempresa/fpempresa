@@ -95,6 +95,30 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     });
                     return deferred.promise;
                 };
+                
+                
+                repository.notificarUsuarioInactivo = function (idIdentity) {
+                    var deferred = $q.defer();
+                    this.remoteDAO.notificarUsuarioInactivo(idIdentity).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+                repository.softDelete = function (idIdentity) {
+                    var deferred = $q.defer();
+                    this.remoteDAO.softDelete(idIdentity).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+                
+                
 
             }]);
 

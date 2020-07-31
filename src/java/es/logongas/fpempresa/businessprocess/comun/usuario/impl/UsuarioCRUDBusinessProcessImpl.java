@@ -462,4 +462,19 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         //notification.mensajeSoporte(enviarMensajeSoporteArguments.nombre, enviarMensajeSoporteArguments.correo, enviarMensajeSoporteArguments.mensaje);
     }    
     
+    @Override
+    public void notificarUsuarioInactivo(NotificarUsuarioInactivoArguments notificarUsuarioInactivoArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+
+        usuarioCRUDService.notificarUsuarioInactivo(notificarUsuarioInactivoArguments.dataSession, notificarUsuarioInactivoArguments.usuario);
+    }
+    
+    @Override
+    public void softDelete(SoftDeleteArguments softDeleteArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+
+        usuarioCRUDService.softDelete(softDeleteArguments.dataSession, softDeleteArguments.usuario); 
+    }
+
+    
 }

@@ -41,6 +41,7 @@
     
         <property name="fecha" update="false"/>
         <property name="fechaUltimoAcceso" />
-    
+	<property name="fechaEnvioCorreoAvisoBorrarUsuario" />
+
     </joined-subclass>
 </hibernate-mapping>

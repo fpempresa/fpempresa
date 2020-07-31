@@ -82,7 +82,9 @@ public class Usuario extends User implements Principal {
     @Label("Último Acceso")
     private Date fechaUltimoAcceso;
     
-
+    @Label("Fecha envio correo aviso borrar usuario")
+    private Date fechaEnvioCorreoAvisoBorrarUsuario;
+    
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
     }
@@ -334,4 +336,12 @@ public class Usuario extends User implements Principal {
         this.fechaClaveResetearContrasenya = fechaClaveResetearContrasenya;
     }
 
+    public Date getFechaEnvioCorreoAvisoBorrarUsuario() {
+        return fechaEnvioCorreoAvisoBorrarUsuario;
+    }
+
+    public void setFechaEnvioCorreoAvisoBorrarUsuario(Date fechaEnvioCorreoAvisoBorrarUsuario) {
+        this.fechaEnvioCorreoAvisoBorrarUsuario = fechaEnvioCorreoAvisoBorrarUsuario;
+    }
+    
 }

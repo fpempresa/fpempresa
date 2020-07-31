@@ -173,6 +173,52 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
 
                     return deferred.promise;
                 };
+                
+                
+                remoteDAO.notificarUsuarioInactivo = function (idIdentity) {
+                    var deferred = this.$q.defer();
+
+                    var config = {
+                        method: 'PATCH',
+                        url: this.baseUrl + '/' + this.entityName + "/" + idIdentity + "/notificarUsuarioInactivo",
+                        data: null
+                    };
+
+                    this.$http(config).success(function (data, status, headers, config) {
+                        deferred.resolve(data);
+                    }).error(function (data, status, headers, config) {
+                        if (status === 400) {
+                            deferred.reject(data);
+                        } else {
+                            throw new Error("Fallo al notificarUsuarioInactivo la entidad:" + status + "\n" + idIdentity);
+                        }
+                    });
+
+                    return deferred.promise;
+                };
+                
+                remoteDAO.softDelete = function (idIdentity) {
+                    var deferred = this.$q.defer();
+
+                    var config = {
+                        method: 'PATCH',
+                        url: this.baseUrl + '/' + this.entityName + "/" + idIdentity + "/softDelete",
+                        data: null
+                    };
+
+                    this.$http(config).success(function (data, status, headers, config) {
+                        deferred.resolve(data);
+                    }).error(function (data, status, headers, config) {
+                        if (status === 400) {
+                            deferred.reject(data);
+                        } else {
+                            throw new Error("Fallo al softDelete de la entidad:" + status + "\n" + idIdentity);
+                        }
+                    });
+
+                    return deferred.promise;
+                };
+                
             }]);
 
     }]);

@@ -21,6 +21,8 @@ import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
+import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.util.validators.PasswordValidator;
@@ -28,6 +30,8 @@ import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
+import es.logongas.fpempresa.util.DateUtil;
+import es.logongas.fpempresa.util.RandomUtil;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
@@ -42,11 +46,14 @@ import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -87,10 +94,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario) throws BusinessException {
-       getUsuarioDAO().updateFechaUltimoAcceso(dataSession, usuario);
+       getUsuarioDAO().updateFechaUltimoAccesoAndClearFechaEnvioCorreoAvisoBorrarUsuario(dataSession, usuario);
     }
-    
 
+       
 
     @Override
     public boolean checkPassword(DataSession dataSession, Usuario usuario, String password) throws BusinessException {
@@ -352,4 +359,112 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
         return reportService.exportToPdf(dataSession, "curriculum", parameters);
     }
+    
+    @Override
+    public void notificarUsuarioInactivo(DataSession dataSession, Usuario usuario) throws BusinessException {
+        
+        if (usuario==null) { 
+            throw new RuntimeException("El usuario no puede ser null");
+        }        
+
+        if (usuario.getTipoUsuario() != TipoUsuario.TITULADO) { 
+            throw new RuntimeException("Solo se puede notificar a usuarios de tipo Titulado. Pero el tipo es " + usuario.getTipoUsuario() + " para el usuario " + usuario.getIdIdentity() );
+        }
+        
+        notification.usuarioInactivo(usuario);
+        getUsuarioDAO().updateFechaEnvioCorreoAvisoBorrarUsuario(dataSession, usuario);
+    }
+
+    @Override
+    public void softDelete(DataSession dataSession, Usuario usuario) throws BusinessException{
+        
+        if (usuario==null) { 
+            throw new RuntimeException("El usuario no puede ser null");
+        }        
+
+        if (usuario.getTipoUsuario() != TipoUsuario.TITULADO) { 
+            throw new RuntimeException("Solo se puede notificar a usuarios de tipo Titulado. Pero el tipo es " + usuario.getTipoUsuario() + " para el usuario " + usuario.getIdIdentity() );
+        }
+        
+     
+        
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
+
+        try {
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
+
+            CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) crudServiceFactory.getService(Candidato.class);
+            Filters filters = new Filters();
+            filters.add(new Filter("usuario.idIdentity", usuario.getIdIdentity(), FilterOperator.eq));
+            List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
+            for (Candidato candidato : candidatos) {
+                candidatoCRUDService.delete(dataSession, candidato);
+            }
+            
+            
+              
+            if (usuario.getTitulado()!=null) { 
+  
+                CRUDService<ExperienciaLaboral,Integer> experienciaLaboralCRUDService = crudServiceFactory.getService(ExperienciaLaboral.class);
+                filters = new Filters();
+                filters.add(new Filter("titulado.idTitulado", usuario.getTitulado().getIdTitulado(), FilterOperator.eq));
+                List<ExperienciaLaboral> experienciasLaborales = experienciaLaboralCRUDService.search(dataSession, filters, null, null);
+                for (ExperienciaLaboral experienciaLaboral : experienciasLaborales) {
+                    experienciaLaboralCRUDService.delete(dataSession, experienciaLaboral);
+                } 
+
+
+
+
+                CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
+
+                Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
+
+                //Se cambia la fecha de nacimiento pq hay fechas errorneas y no dejaba borrar al titulado.
+                Date fechaNacimiento = DateUtil.add(titulado.getFechaNacimiento(), DateUtil.Interval.YEAR, -17);
+                titulado.setFechaNacimiento(fechaNacimiento);
+                
+                titulado.getDireccion().setDatosDireccion("Sin dirección");
+                titulado.setNumeroDocumento("2721C3A8");
+                titulado.setTipoDocumento(TipoDocumento.OTRO);
+                titulado.setOtrasCompetencias(null);
+                titulado.setPermisosConducir(null);
+                titulado.setResumen(null);
+                titulado.setTelefono(null);
+                titulado.setTelefonoAlternativo(null);
+                titulado.getConfiguracion().getNotificacionOferta().setNotificarPorEmail(false);
+
+                tituladoCRUDService.update(dataSession, titulado);
+
+            }   
+                
+            Random random=new Random();
+            usuario.setNombre("Nadie");
+            usuario.setApellidos("Nobody");
+            usuario.setEmail("nobody_" + usuario.getIdIdentity() + "_" +  random.nextInt(1000) + "@empleafp.com");
+            usuario.setFechaUltimoAcceso(new GregorianCalendar(2050, Calendar.JANUARY, 1).getTime());
+            usuario.setFechaEnvioCorreoAvisoBorrarUsuario(null);
+            usuario.setFoto(new byte[]{});
+            this.update(dataSession, usuario);
+            
+            String newPassword=RandomUtil.createRandomPaswword(12);
+            this.updatePassword(dataSession, usuario, newPassword);
+
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
+
+            
+        } finally {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                transactionManager.rollback(dataSession);
+            }
+        }   
+        
+    }
+    
+    
+    
 }

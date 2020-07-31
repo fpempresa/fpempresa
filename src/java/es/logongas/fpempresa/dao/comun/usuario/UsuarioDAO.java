@@ -29,7 +29,8 @@ public interface UsuarioDAO extends GenericDAO<Usuario, Integer> {
 
     void updateEncryptedPassword(DataSession dataSession, Usuario usuario, String encriptedPassword);
     
-    void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario);
+    void updateFechaUltimoAccesoAndClearFechaEnvioCorreoAvisoBorrarUsuario(DataSession dataSession, Usuario usuario);
+    void updateFechaEnvioCorreoAvisoBorrarUsuario(DataSession dataSession, Usuario usuario);
 
     String getEncryptedPassword(DataSession dataSession, Usuario usuario);
 

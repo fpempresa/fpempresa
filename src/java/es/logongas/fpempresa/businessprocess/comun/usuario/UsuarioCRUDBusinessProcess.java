@@ -39,6 +39,8 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
     Usuario updateCentro(UpdateCentroArguments updateCentroArguments) throws BusinessException;
     byte[]  getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException;
     void  enviarMensajeSoporte(EnviarMensajeSoporteArguments enviarMensajeSoporteArguments) throws BusinessException;
+    void  notificarUsuarioInactivo(NotificarUsuarioInactivoArguments notificarUsuarioInactivoArguments) throws BusinessException;
+    void  softDelete(SoftDeleteArguments softDeleteArguments) throws BusinessException;
 
     public class UpdatePasswordArguments extends BusinessProcess.BusinessProcessArguments {
 
@@ -177,5 +179,25 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
     }
     
+
+    public class NotificarUsuarioInactivoArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public Usuario usuario;
+
+        public NotificarUsuarioInactivoArguments(Principal principal, DataSession dataSession,Usuario usuario) {
+            super(principal, dataSession);
+            this.usuario = usuario;
+        }
+    }
+    
+    public class SoftDeleteArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public Usuario usuario;
+
+        public SoftDeleteArguments(Principal principal, DataSession dataSession,Usuario usuario) {
+            super(principal, dataSession);
+            this.usuario = usuario;
+        }
+    }    
     
 }

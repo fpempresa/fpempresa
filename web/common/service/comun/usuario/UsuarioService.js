@@ -90,6 +90,26 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     return deferred.promise;
                 };
                 
+                service.notificarUsuarioInactivo = function (idIdentity) {
+                    var deferred = $q.defer();
+                    this.repository.notificarUsuarioInactivo(idIdentity).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };                
+                
+                service.softDelete = function (idIdentity) {
+                    var deferred = $q.defer();
+                    this.repository.softDelete(idIdentity).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+                
                 service.update = function (id, entity, expand) {
                     var deferred = $q.defer();
 

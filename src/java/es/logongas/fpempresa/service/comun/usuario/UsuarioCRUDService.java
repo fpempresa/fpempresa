@@ -46,4 +46,8 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException; 
     
     List<Usuario> getUsuariosFromEmpresa(DataSession dataSession, int idEmpresa) throws BusinessException;
+
+    void notificarUsuarioInactivo(DataSession dataSession, Usuario usuario) throws BusinessException;
+
+    void softDelete(DataSession dataSession, Usuario usuario) throws BusinessException;
 }

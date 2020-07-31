@@ -44,16 +44,32 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
     }
 
     @Override
-    public void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario) {
+    public void updateFechaUltimoAccesoAndClearFechaEnvioCorreoAvisoBorrarUsuario(DataSession dataSession, Usuario usuario) {
 
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        Query query = session.createSQLQuery("UPDATE usuario SET fechaUltimoAcceso=? WHERE idIdentity=?");
+        Query query = session.createSQLQuery("UPDATE usuario SET fechaUltimoAcceso=? ,fechaEnvioCorreoAvisoBorrarUsuario=NULL WHERE idIdentity=?");
+        
         query.setTimestamp(0, new Date());
         query.setInteger(1, usuario.getIdIdentity());
 
         query.executeUpdate();
     }    
+    
+    @Override
+    public void updateFechaEnvioCorreoAvisoBorrarUsuario(DataSession dataSession, Usuario usuario) {
+
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        Query query = session.createSQLQuery("UPDATE usuario SET fechaEnvioCorreoAvisoBorrarUsuario=? WHERE idIdentity=?");
+        
+        Date fecha=new Date();
+        
+        query.setTimestamp(0, fecha);
+        query.setInteger(1, usuario.getIdIdentity());
+
+        query.executeUpdate();
+    }      
     
     
     @Override

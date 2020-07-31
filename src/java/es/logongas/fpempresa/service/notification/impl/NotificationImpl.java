@@ -202,21 +202,35 @@ public class NotificationImpl implements Notification {
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)          
         );
         
-        sendMail(mail,true);
+        sendMail(mail);
     }
     
-    private void sendMail(Mail mail,boolean forever) {
-        if (isEnabledEMailNotifications() || (forever==true)) {
+    @Override
+    public void usuarioInactivo(Usuario usuario) {
+        String msg=
+                  " Hola " + StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ",<br>"
+                + "hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP.com</a>.<br>"
+                + "La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados de tu currículum.<br>"
+                + "<strong>Si no accedes antes de 15 días</strong> a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP.com</a>, procederemos a <strong>borrarla</strong>.";
+        
+        Mail mail = new Mail();
+        mail.addTo(usuario.getEmail());
+        mail.setFrom(Config.getSetting("mail.sender"));
+        mail.setSubject("Tu cuenta de EmpleaFP.com va a ser borrada por falta de uso");
+        mail.setHtmlBody(msg + "<br><br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL));
+        
+        sendMail(mail);
+    }  
+    
+    private void sendMail(Mail mail) {
+        if (isEnabledEMailNotifications()) {
              mailService.send(mail);
              log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         } else {
             log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         }
     }    
-    
-    private void sendMail(Mail mail) {
-        sendMail(mail,false);
-    }
+
     
     
     

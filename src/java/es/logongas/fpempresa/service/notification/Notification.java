@@ -33,4 +33,5 @@ public interface Notification extends Service  {
     void resetearContrasenya(Usuario usuario);    
     void validarCuenta(Usuario usuario);
     void mensajeSoporte( String nombre, String correo,String mensaje);
+    void usuarioInactivo(Usuario usuario);
 }

@@ -16,6 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http','notify', function ($scope, goPage, ix3Configuration, $http,notify) {
+        $scope.numImage = Math.floor(Math.random() * 6);
+        
         $scope.login = function () {
             goPage.login();
         };
@@ -40,7 +42,7 @@ app.controller('MainController', ['$scope', 'goPage', 'ix3Configuration', '$http
         };
         
         $scope.notifyOferta=function() {
-            notify.error(undefined,"Accede en EmpleaFP para ver la oferta",3000);
+            notify.error(undefined,"Accede a EmpleaFP para ver la oferta",3000);
         }
         
         $http({

@@ -1303,6 +1303,9 @@ p {
   bottom: 0;
   margin-bottom: 24px;
 }
+.c-panel--tall {
+  height: 470px;
+}
 
 .c-section {
   width: 100%;
@@ -10805,10 +10808,6 @@ p {
 .g--transition-y-plus-20 {
   transition: transform 1.5s ease-in-out;
   transform: translateY(20px);
-}
-
-.kk {
-  opacity: 0.5;
 }
 
 .g--transition-opacity {

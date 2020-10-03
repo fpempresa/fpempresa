@@ -65,21 +65,16 @@ public class NotificationImpl implements Notification {
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
-        mail.setSubject("Nueva oferta de trabajo: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()));
-        mail.setHtmlBody("Hola " + usuario.getNombre() + ",<br><br>"
-                + "Hay una nueva oferta de trabajo en una de tus provincias seleccionadas.<br>"
-                + "Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br><br><br>"
-                + "Provincia: " + oferta.getMunicipio().getProvincia() + "<br>"
-                + "Municipio:  " + oferta.getMunicipio() + "<br>"
-                + "Ciclos:  " + oferta.getCiclos() + "<br>"
-                + "Familia:  " + oferta.getFamilia() + "<br>"
-                + "Empresa:  " + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "<br>"
-                + "Puesto:  " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()+"") + "<br>"
-                + "Descripción:  " + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "<br>" 
+        mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
+        mail.setHtmlBody("Hola " + usuario.getNombre() + ",<br>"
+                + "hay una nueva oferta de trabajo en el municipio de " + oferta.getMunicipio() + " de la empresa \"" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "\".<br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br><br>"
+                + "<strong>\"" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "\"</strong><br>"    
+                + "<br>"
+                + "<br>"
                 + "<br>"
                 + "<br>"
                 + "Si necesitas ayuda puedes contactar con nosotros en " + Config.getSetting("app.correoSoporte") + "."
-                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
+                + "<br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
         sendMail(mail);
@@ -101,6 +96,7 @@ public class NotificationImpl implements Notification {
         String persona=null;
         if (contacto!=null) {
             direccionEMail=contacto.getEmail();
+            persona=contacto.getPersona()+"";
         } 
         
         if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
@@ -118,7 +114,7 @@ public class NotificationImpl implements Notification {
             }
             Usuario usuario=usuarios.get(0);
             direccionEMail=usuario.getEmail();
-            persona=usuario.getNombre();
+            persona=usuario.getNombre()+"";
             
             if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
                 throw new RuntimeException("El usuario no tiene email:"+usuario.getLogin());
@@ -127,17 +123,16 @@ public class NotificationImpl implements Notification {
         
         
         mail.addTo(direccionEMail);
-        mail.setSubject("Nuevo candidato para la oferta de trabajo: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()));
-        mail.setHtmlBody("Hola <strong>" + StringEscapeUtils.escapeHtml4(persona) + "</strong>,<br><br>"
-                + "Un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
+        mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
+        mail.setHtmlBody("Hola <strong>" + StringEscapeUtils.escapeHtml4(persona) + "</strong>,<br>"
+                + "un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
                 + "<h4>Datos del candidato</h4>"
                 + "Nombre: " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "<br>"
                 + "Email: " + candidato.getUsuario().getEmail() + "<br><br>" 
                 + "<h4>Datos de la oferta</h4>"
                 + "Puesto: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "<br>"
                 + "Descripción: " + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion()))
-                + "<br>"
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para poder ampliar la información.<br>"
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para poder ampliar la información.<br><br><br><br>"
                 + "Si necesitas ayuda puedes contactar en " + Config.getSetting("app.correoSoporte") + "."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
@@ -219,11 +214,11 @@ public class NotificationImpl implements Notification {
     
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
-             mailService.send(mail);
+        mailService.send(mail);
              log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         } else {
             log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
-        }
+        }    
     }    
 
     

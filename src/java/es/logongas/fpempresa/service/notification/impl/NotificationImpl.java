@@ -47,7 +47,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class NotificationImpl implements Notification {
     protected final Log log = LogFactory.getLog(getClass());
     
-    final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.\n\nPodrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico soporte@empleafp.com. Solicite más información dirigiéndose al correo electrónico indicado.\n\nEn virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.\n\n<a href=\"mailto:soporte@empleafp.com?Subject=Deseo%20darme%20de%20baja%20de%20empleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de empleaFP</a>";
+    final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.\n\nPodrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico " + Config.getSetting("app.correoSoporte") + ". Solicite más información dirigiéndose al correo electrónico indicado.\n\nEn virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.\n\n<a href=\"mailto:" + Config.getSetting("app.correoSoporte") + "?Subject=Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de EmpleaFP</a>";
     
     @Autowired
     MailService mailService;
@@ -65,19 +65,20 @@ public class NotificationImpl implements Notification {
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
-        mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
-        mail.setHtmlBody("Hola <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
-                + "Hay una nueva oferta de trabajo en una de tus provincias seleccionadas:<br>"
-                + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
-                + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
-                + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
-                + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
-                + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
-                + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
-                + "<strong>Descripción: </strong>" + toHTMLRetornoCarro(oferta.getDescripcion()) + "<br>" 
+        mail.setSubject("Nueva oferta de trabajo: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()));
+        mail.setHtmlBody("Hola " + usuario.getNombre() + ",<br><br>"
+                + "Hay una nueva oferta de trabajo en una de tus provincias seleccionadas.<br>"
+                + "Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br><br><br>"
+                + "Provincia: " + oferta.getMunicipio().getProvincia() + "<br>"
+                + "Municipio:  " + oferta.getMunicipio() + "<br>"
+                + "Ciclos:  " + oferta.getCiclos() + "<br>"
+                + "Familia:  " + oferta.getFamilia() + "<br>"
+                + "Empresa:  " + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "<br>"
+                + "Puesto:  " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()+"") + "<br>"
+                + "Descripción:  " + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "<br>" 
                 + "<br>"
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información.<br>"
-                + "Ah, y <span stylle=\"font-weight: bold;\">no responsas</span> a esta dirección de correo , si necesitas ayuda puedes contactar en soporte@empleafp.com."
+                + "<br>"
+                + "Si necesitas ayuda puedes contactar con nosotros en " + Config.getSetting("app.correoSoporte") + "."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
@@ -126,24 +127,18 @@ public class NotificationImpl implements Notification {
         
         
         mail.addTo(direccionEMail);
-        mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
-        mail.setHtmlBody("Hola <strong>" + persona + "</strong>,<br><br>"
+        mail.setSubject("Nuevo candidato para la oferta de trabajo: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()));
+        mail.setHtmlBody("Hola <strong>" + StringEscapeUtils.escapeHtml4(persona) + "</strong>,<br><br>"
                 + "Un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
-                + "<h4>Datos de la oferta</h4>"
-                + "<strong>Provincia: </strong>" + oferta.getMunicipio().getProvincia() + "<br>"
-                + "<strong>Municipio: </strong>" + oferta.getMunicipio() + "<br>"
-                + "<strong>Ciclos: </strong>" + oferta.getCiclos() + "<br>"
-                + "<strong>Familia: </strong>" + oferta.getFamilia() + "<br>"
-                + "<strong>Empresa: </strong>" + oferta.getEmpresa() + "<br>"
-                + "<strong>Puesto: </strong>" + oferta.getPuesto() + "<br>"
-                + "<strong>Descripción: </strong>" + oferta.getDescripcion()
                 + "<h4>Datos del candidato</h4>"
-                + "<strong>Nombre: </strong>" + candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos() + "<br>"
-                + "<strong>Teléfono: </strong>" + candidato.getUsuario().getTitulado().getTelefono() + "<br>"
-                + "<strong>Email: </strong>" + candidato.getUsuario().getEmail() + "<br>" 
+                + "Nombre: " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "<br>"
+                + "Email: " + candidato.getUsuario().getEmail() + "<br><br>" 
+                + "<h4>Datos de la oferta</h4>"
+                + "Puesto: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "<br>"
+                + "Descripción: " + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion()))
                 + "<br>"
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">empleaFP</a> para poder ampliar la información.<br>"
-                + "Ah, y <span stylle=\"font-weight: bold;\">no responsas</span> a esta dirección de correo , si necesitas ayuda puedes contactar en soporte@empleafp.com."
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para poder ampliar la información.<br>"
+                + "Si necesitas ayuda puedes contactar en " + Config.getSetting("app.correoSoporte") + "."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
@@ -162,9 +157,9 @@ public class NotificationImpl implements Notification {
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setFrom(Config.getSetting("mail.sender"));
-        mail.setSubject("Resetear contraseña en empleaFP");
+        mail.setSubject("Resetear contraseña en EmpleaFP");
         mail.setHtmlBody(""
-                + "Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">empleaFP</a>.<br><br>"
+                + "Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">EmpleaFP</a>.<br><br>"
                 + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
                 + "<a href=\"" + getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)                
@@ -177,10 +172,10 @@ public class NotificationImpl implements Notification {
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setFrom(Config.getSetting("mail.sender"));
-        mail.setSubject("Confirma tu correo para acceder a empleaFP");
+        mail.setSubject("Confirma tu correo para acceder a EmpleaFP");
         mail.setHtmlBody(""
-                + "Bienvenido <strong>" + usuario.getNombre() + " " + usuario.getApellidos() + "</strong>,<br><br>"
-                + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">empleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
+                + "Bienvenido " + usuario.getNombre() + " " + usuario.getApellidos() + ",<br><br>"
+                + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">EmpleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
                 + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
                 + "<a href=\"" + getAppURL() + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)               

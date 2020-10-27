@@ -19,4 +19,8 @@ angular.module("common").constant("getContextPath", getContextPath);
 
 angular.module("common").run(['$rootScope', 'getContextPath', function ($rootScope, getContextPath) {
         $rootScope.getContextPath = getContextPath;
+        $rootScope.locationOrigin = function () {
+            return window.location.origin;
+        }
+
 }]);

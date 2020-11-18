@@ -104,9 +104,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         try {
             byte[] curriculum=usuarioCRUDService.getCurriculum(updateFotoArguments.dataSession, updateFotoArguments.usuario);
         } catch (Exception ex) {
-            //updateFotoArguments.usuario.setFoto(oldFoto);
-            //usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
-            //throw ex;
+            updateFotoArguments.usuario.setFoto(oldFoto);
+            usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
+            throw ex;
         }
     }
 

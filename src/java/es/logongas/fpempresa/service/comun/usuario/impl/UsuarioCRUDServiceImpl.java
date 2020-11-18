@@ -357,7 +357,15 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("idIdentity", usuario.getIdIdentity());
 
-        return reportService.exportToPdf(dataSession, "curriculum", parameters);
+        byte[] curriculum;
+                
+        try {
+            curriculum=reportService.exportToPdf(dataSession, "curriculum", parameters);
+        } catch (Exception ex) {
+            throw new RuntimeException("idIdentity="+usuario.getIdIdentity(),ex);
+        }
+        
+        return curriculum;
     }
     
     @Override

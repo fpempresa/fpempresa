@@ -46,7 +46,7 @@ public class ReportServiceImplJasper implements ReportService {
             return JasperExportManager.exportReportToPdf(jasperPrint);
 
         } catch (JRException ex) {
-            throw new RuntimeException(getStringFromMap(parameters),ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -59,18 +59,5 @@ public class ReportServiceImplJasper implements ReportService {
     public Class getEntityType() {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
-
-
-    private String getStringFromMap(Map<String, Object> parameters)  {
-        StringBuilder sb=new StringBuilder();
-        
-        for(Entry<String, Object> entry:parameters.entrySet()) {
-            sb.append(entry.getKey()+"="+entry.getValue()+" , ");
-        }
-        
-        return sb.toString();
-    }
-    
-    
 
 }

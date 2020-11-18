@@ -97,7 +97,7 @@ where
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nombre}.toString()+" "+$F{apellidos}.toString()]]></textFieldExpression>
 				</textField>
-				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<image  onErrorType="Blank" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
 						y="0"

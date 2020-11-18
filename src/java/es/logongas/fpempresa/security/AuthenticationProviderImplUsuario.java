@@ -29,8 +29,8 @@ import es.logongas.ix3.security.authentication.Credential;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import java.io.Serializable;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -43,7 +43,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
     @Autowired
     CRUDServiceFactory crudServiceFactory;
 
-    protected final Log log = LogFactory.getLog(getClass());
+    protected final Logger log = LogManager.getLogger(getClass());
 
     @Override
     public Principal authenticate(Credential credential, DataSession dataSession) throws BusinessException {

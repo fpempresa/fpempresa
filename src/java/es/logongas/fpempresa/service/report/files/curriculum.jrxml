@@ -106,7 +106,7 @@ where
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.awt.Image"><![CDATA[javax.imageio.ImageIO.read(new java.io.ByteArrayInputStream((byte[])$F{foto}))]]></imageExpression>
+					<imageExpression class="java.awt.Image"><![CDATA[es.logongas.fpempresa.util.ImageUtil.getImageLogFail((byte[])$F{foto},"IdIdentity="+$F{idIdentity})]]></imageExpression>
 				</image>
 				<subreport  isUsingCache="true">
 					<reportElement

@@ -32,8 +32,8 @@ import es.logongas.ix3.web.util.HttpResult;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class EstadisticasController {
 
-    private static final Log log = LogFactory.getLog(EstadisticasController.class);
+    private static final Logger log = LogManager.getLogger(EstadisticasController.class);
 
     @Autowired
     CRUDServiceFactory crudServiceFactory;

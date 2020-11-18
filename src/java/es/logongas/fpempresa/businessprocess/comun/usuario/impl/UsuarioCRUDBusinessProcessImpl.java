@@ -19,6 +19,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
+import es.logongas.fpempresa.util.ImageUtil;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.rule.ActionRule;
@@ -36,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usuario, Integer> implements UsuarioCRUDBusinessProcess {
 
-    private static final Logger log = LogManager.getLogger(UsuarioCRUDBusinessProcessImpl.class);    
+    static final Logger log = LogManager.getLogger(UsuarioCRUDBusinessProcessImpl.class);    
     
     @Autowired
     Notification notification;    
@@ -100,13 +101,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
         //Comprobar si la foto se puede convertir en Imagen. Se hace pq luego sino falla JarperReports ya que no se ve la imagen
-        try {
-            javax.imageio.ImageIO.read(new java.io.ByteArrayInputStream(updateFotoArguments.foto));
-        } catch (Exception ex) {
-            //throw new BusinessException("El formato de la imagen no es válida");
-            log.warn("Image Fail.Fallo al cargar la imagen.  IdIdentity=" + updateFotoArguments.usuario.getIdIdentity());
+        if (ImageUtil.isValid(updateFotoArguments.foto)==false) {
+            throw new BusinessException("El formato de la imagen no es válida");           
         }
-        
+
         updateFotoArguments.usuario.setFoto(updateFotoArguments.foto);
         usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
 
@@ -463,14 +461,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     @Override
     public byte[] getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-
-        //Comprobar si la foto se puede convertir en Imagen. Se hace pq luego sino falla JarperReports ya que no se ve la imagen
-        try {
-            javax.imageio.ImageIO.read(new java.io.ByteArrayInputStream(getCurriculumArguments.usuario.getFoto()));
-        } catch (Exception ex) {
-            log.warn("Image Fail. Fallo al transforma la imagen para obtener el Curriculum.  IdIdentity=" + getCurriculumArguments.usuario.getIdIdentity());
-        }
-        
         
         return usuarioCRUDService.getCurriculum(getCurriculumArguments.dataSession, getCurriculumArguments.usuario);
     }

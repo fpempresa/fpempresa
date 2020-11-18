@@ -26,6 +26,8 @@ import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -34,6 +36,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usuario, Integer> implements UsuarioCRUDBusinessProcess {
 
+    private static final Log log = LogFactory.getLog(UsuarioCRUDBusinessProcessImpl.class);    
+    
     @Autowired
     Notification notification;    
 
@@ -95,19 +99,17 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     public void updateFoto(UpdateFotoArguments updateFotoArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
-        byte[] oldFoto=usuarioCRUDService.read(updateFotoArguments.dataSession, updateFotoArguments.usuario.getIdIdentity()).getFoto();
-        
+        //Comprobar si la foto se puede convertir en Imagen. Se hace pq luego sino falla JarperReports ya que no se ve la imagen
+        try {
+            javax.imageio.ImageIO.read(new java.io.ByteArrayInputStream(updateFotoArguments.foto));
+        } catch (Exception ex) {
+            //throw new BusinessException("El formato de la imagen no es válida");
+            log.warn("Image Fail.Fallo al cargar la imagen.  IdIdentity=" + updateFotoArguments.usuario.getIdIdentity());
+        }
         
         updateFotoArguments.usuario.setFoto(updateFotoArguments.foto);
         usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
-        
-        try {
-            byte[] curriculum=usuarioCRUDService.getCurriculum(updateFotoArguments.dataSession, updateFotoArguments.usuario);
-        } catch (Exception ex) {
-            updateFotoArguments.usuario.setFoto(oldFoto);
-            usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
-            throw ex;
-        }
+
     }
 
     @Override
@@ -462,6 +464,14 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     public byte[] getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
+        //Comprobar si la foto se puede convertir en Imagen. Se hace pq luego sino falla JarperReports ya que no se ve la imagen
+        try {
+            javax.imageio.ImageIO.read(new java.io.ByteArrayInputStream(getCurriculumArguments.usuario.getFoto()));
+        } catch (Exception ex) {
+            log.warn("Image Fail. Fallo al transforma la imagen para obtener el Curriculum.  IdIdentity=" + getCurriculumArguments.usuario.getIdIdentity());
+        }
+        
+        
         return usuarioCRUDService.getCurriculum(getCurriculumArguments.dataSession, getCurriculumArguments.usuario);
     }
     

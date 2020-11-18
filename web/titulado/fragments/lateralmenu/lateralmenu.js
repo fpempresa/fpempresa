@@ -53,7 +53,7 @@ app.controller("LateralMenuController", ['$scope', '$location', '$state', 'dialo
             $scope.fotoIndex=$scope.fotoIndex+1;
         }
         $scope.failUpdateFoto=function() {
-            alert("No ha sido posible subir la foto.\nPrueba con otra o hazla mas pequeña.")
+            alert("No ha sido posible subir la foto.\nPrueba con otra o hazla mas pequeña.\nEl formato debe ser JPEG.")
         }
 
     }]);

@@ -25,45 +25,54 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Utilidades para el tratamiento de imagenes.
+ *
  * @author logongas
  */
 public class ImageUtil {
-    
-    static final Logger log = LogManager.getLogger(ImageUtil.class); 
-    
+
+    static final Logger log = LogManager.getLogger(ImageUtil.class);
+
     public static boolean isValid(byte[] rawImage) {
         try {
-            Image image=getImage(rawImage);
-            return true;
+            Image image = getImage(rawImage);
+            if (image == null) {
+                return false;
+            } else {
+                return true;
+            }
         } catch (Exception ex) {
             return false;
         }
     }
-    
+
     public static Image getImage(byte[] rawImage) {
-        
+
         try {
             return ImageIO.read(new ByteArrayInputStream(rawImage));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
-    
+
     /**
      * Esta funciona está para ser usada desde JaperReports, ya que desde ahí no podemos capturar el error y hacer un log
      * @param rawImage
      * @param msgFail
-     * @return 
+     * @return
      */
     public static Image getImageLogFail(byte[] rawImage,String msgFail) {
-        
+
         try {
-            log.warn("getImage Fail... msgFail="+msgFail);
-            return getImage(rawImage);
+            Image image = getImage(rawImage);
+            
+            if (image == null) {
+                log.warn("getImage Fail-Is null-msgFail=" + msgFail);
+            }
+            
+            return image;
         } catch (Exception ex) {
-            log.warn("getImage Fail. msgFail="+msgFail);
+            log.warn("getImage Fail-Exception=" + ex.getMessage() + "-msgFail="+msgFail);
             throw new RuntimeException(ex);
         }
-    }    
+    }
 }
-

@@ -18,8 +18,10 @@
 package es.logongas.fpempresa.util;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import javax.imageio.ImageIO;
+import org.apache.commons.io.output.NullOutputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +36,10 @@ public class ImageUtil {
 
     public static boolean isValid(byte[] rawImage) {
         try {
-            Image image = getImage(rawImage);
+            BufferedImage image = getImage(rawImage);
+            
+            ImageIO.write(image,"jpeg",new NullOutputStream());
+            
             if (image == null) {
                 return false;
             } else {
@@ -45,7 +50,7 @@ public class ImageUtil {
         }
     }
 
-    public static Image getImage(byte[] rawImage) {
+    public static BufferedImage getImage(byte[] rawImage) {
 
         try {
             return ImageIO.read(new ByteArrayInputStream(rawImage));
@@ -63,11 +68,13 @@ public class ImageUtil {
     public static Image getImageLogFail(byte[] rawImage,String msgFail) {
 
         try {
-            Image image = getImage(rawImage);
+            BufferedImage image = getImage(rawImage);
             
             if (image == null) {
                 log.warn("getImage Fail-Is null-msgFail=" + msgFail);
             }
+            
+            ImageIO.write(image,"jpeg",new NullOutputStream());
             
             return image;
         } catch (Exception ex) {

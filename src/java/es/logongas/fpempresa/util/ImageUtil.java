@@ -58,6 +58,7 @@ public class ImageUtil {
     public static Image getImageLogFail(byte[] rawImage,String msgFail) {
         
         try {
+            log.warn("getImage Fail... msgFail="+msgFail);
             return getImage(rawImage);
         } catch (Exception ex) {
             log.warn("getImage Fail. msgFail="+msgFail);

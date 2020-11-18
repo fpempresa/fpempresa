@@ -26,8 +26,8 @@ import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -36,7 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usuario, Integer> implements UsuarioCRUDBusinessProcess {
 
-    private static final Log log = LogFactory.getLog(UsuarioCRUDBusinessProcessImpl.class);    
+    private static final Logger log = LogManager.getLogger(UsuarioCRUDBusinessProcessImpl.class);    
     
     @Autowired
     Notification notification;    

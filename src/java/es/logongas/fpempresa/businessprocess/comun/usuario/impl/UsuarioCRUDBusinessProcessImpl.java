@@ -36,7 +36,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 
     @Autowired
     Notification notification;    
-    
+
     @Override
     public Usuario update(UpdateArguments<Usuario> updateArguments) throws BusinessException {
         Usuario principal = (Usuario) updateArguments.principal;
@@ -95,8 +95,19 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     public void updateFoto(UpdateFotoArguments updateFotoArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
+        byte[] oldFoto=usuarioCRUDService.read(updateFotoArguments.dataSession, updateFotoArguments.usuario.getIdIdentity()).getFoto();
+        
+        
         updateFotoArguments.usuario.setFoto(updateFotoArguments.foto);
         usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
+        
+        try {
+            byte[] curriculum=usuarioCRUDService.getCurriculum(updateFotoArguments.dataSession, updateFotoArguments.usuario);
+        } catch (Exception ex) {
+            updateFotoArguments.usuario.setFoto(oldFoto);
+            usuarioCRUDService.update(updateFotoArguments.dataSession, updateFotoArguments.usuario);
+            throw ex;
+        }
     }
 
     @Override

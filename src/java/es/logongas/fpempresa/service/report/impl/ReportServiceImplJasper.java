@@ -23,6 +23,7 @@ import es.logongas.ix3.dao.DataSession;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Map;
+import java.util.Map.Entry;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -45,7 +46,7 @@ public class ReportServiceImplJasper implements ReportService {
             return JasperExportManager.exportReportToPdf(jasperPrint);
 
         } catch (JRException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(getStringFromMap(parameters),ex);
         }
     }
 
@@ -60,5 +61,16 @@ public class ReportServiceImplJasper implements ReportService {
     }
 
 
+    private String getStringFromMap(Map<String, Object> parameters)  {
+        StringBuilder sb=new StringBuilder();
+        
+        for(Entry<String, Object> entry:parameters.entrySet()) {
+            sb.append(entry.getKey()+"="+entry.getValue()+" , ");
+        }
+        
+        return sb.toString();
+    }
+    
+    
 
 }

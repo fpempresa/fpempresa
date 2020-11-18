@@ -67,19 +67,20 @@ public class ImageUtil {
      */
     public static Image getImageLogFail(byte[] rawImage,String msgFail) {
 
-        try {
+
             BufferedImage image = getImage(rawImage);
             
             if (image == null) {
                 log.warn("getImage Fail-Is null-msgFail=" + msgFail);
+                return null;
             }
             
-            ImageIO.write(image,"jpeg",new NullOutputStream());
-            
+            try {
+                ImageIO.write(image,"jpeg",new NullOutputStream());
+            } catch (Exception ex) {
+                log.warn("getImage Fail-Exception=" + ex.getMessage() + "-msgFail="+msgFail);
+            }
             return image;
-        } catch (Exception ex) {
-            log.warn("getImage Fail-Exception=" + ex.getMessage() + "-msgFail="+msgFail);
-            throw new RuntimeException(ex);
-        }
+     
     }
 }

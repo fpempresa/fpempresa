@@ -63,7 +63,7 @@ public class ImageUtil {
         Image image;
 
         BufferedImage bufferedImage=readImage(rawImage);
-        
+
 
         if (canWriteImageToJPEG(bufferedImage)) {
             image=bufferedImage;
@@ -109,12 +109,12 @@ public class ImageUtil {
         
             BufferedImage bufferedImageWhite = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = bufferedImageWhite.createGraphics();
-            graphics2D.setColor(Color.RED); 
+            graphics2D.setColor(Color.WHITE); 
             graphics2D.fillRect(0, 0, bufferedImageWhite.getWidth(), bufferedImageWhite.getHeight());
             graphics2D.drawImage(bufferedImage, 0, 0, bufferedImageWhite.getWidth(), bufferedImageWhite.getHeight(), null);
             graphics2D.dispose();
         
-            return bufferedImage;
+            return bufferedImageWhite;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

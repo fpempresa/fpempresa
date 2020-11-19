@@ -17,6 +17,8 @@
  */
 package es.logongas.fpempresa.util;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -35,29 +37,21 @@ public class ImageUtil {
     static final Logger log = LogManager.getLogger(ImageUtil.class);
 
     public static boolean isValid(byte[] rawImage) {
-        try {
-            BufferedImage image = getImage(rawImage);
-            
-            ImageIO.write(image,"jpeg",new NullOutputStream());
-            
-            if (image == null) {
-                return false;
-            } else {
+        BufferedImage bufferedImage=readImage(rawImage);
+
+        if (canWriteImageToJPEG(bufferedImage)) {
+            return true;
+        } else {
+            BufferedImage bufferedImageWhiteBackground=getBufferedImageToWhiteBackground(bufferedImage);
+
+            if (canWriteImageToJPEG(bufferedImageWhiteBackground)) {
                 return true;
+            } else {
+                return false;
             }
-        } catch (Exception ex) {
-            return false;
         }
     }
 
-    public static BufferedImage getImage(byte[] rawImage) {
-
-        try {
-            return ImageIO.read(new ByteArrayInputStream(rawImage));
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
 
     /**
      * Esta funciona está para ser usada desde JaperReports, ya que desde ahí no podemos capturar el error y hacer un log
@@ -66,21 +60,64 @@ public class ImageUtil {
      * @return
      */
     public static Image getImageLogFail(byte[] rawImage,String msgFail) {
+        Image image;
 
+        BufferedImage bufferedImage=readImage(rawImage);
+        
 
-            BufferedImage image = getImage(rawImage);
-            
-            if (image == null) {
-                log.warn("getImage Fail-Is null-msgFail=" + msgFail);
-                return null;
+        if (canWriteImageToJPEG(bufferedImage)) {
+            image=bufferedImage;
+        } else {
+            BufferedImage bufferedImageWhiteBackground=getBufferedImageToWhiteBackground(bufferedImage);
+
+            if (canWriteImageToJPEG(bufferedImageWhiteBackground)) {
+                image=bufferedImageWhiteBackground;
+            } else {
+                log.warn("Fail Image to JPEG-msgFail="+msgFail);
+                image=bufferedImageWhiteBackground;
             }
-            
-            try {
-                ImageIO.write(image,"jpeg",new NullOutputStream());
-            } catch (Exception ex) {
-                log.warn("getImage Fail-Exception=" + ex.getMessage() + "-msgFail="+msgFail);
-            }
-            return image;
-     
+        }
+
+        return image;
     }
+
+    
+    private static BufferedImage readImage(byte[] rawImage) {
+        try {
+        
+            BufferedImage bufferedImage=ImageIO.read(new ByteArrayInputStream(rawImage));
+        
+            return bufferedImage;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    private static boolean canWriteImageToJPEG(BufferedImage image) {
+        try {
+        
+            ImageIO.write(image,"jpeg",new NullOutputStream());
+        
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }    
+    
+    private static BufferedImage getBufferedImageToWhiteBackground(BufferedImage bufferedImage) {
+        try {
+        
+            BufferedImage bufferedImageWhite = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics2D = bufferedImageWhite.createGraphics();
+            graphics2D.setColor(Color.RED); 
+            graphics2D.fillRect(0, 0, bufferedImageWhite.getWidth(), bufferedImageWhite.getHeight());
+            graphics2D.drawImage(bufferedImage, 0, 0, bufferedImageWhite.getWidth(), bufferedImageWhite.getHeight(), null);
+            graphics2D.dispose();
+        
+            return bufferedImage;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }    
+    
 }

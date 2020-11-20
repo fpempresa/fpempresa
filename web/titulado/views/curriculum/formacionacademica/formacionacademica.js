@@ -19,7 +19,7 @@
 app.config(['crudRoutesProvider', function(crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
             entity:"FormacionAcademica",
-            expand:"ciclo.familia,ciclo.grado",
+            expand:"ciclo.familia,ciclo.grado,centro.direccion.municipio.provincia",
             crudName:"curriculum.FormacionAcademica"
         });
     }]);

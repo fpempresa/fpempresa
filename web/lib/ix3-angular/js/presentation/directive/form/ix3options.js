@@ -32,6 +32,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
                         var ngSelectController = arrControllers[2];
 
                         var filters = attributes.ix3Options;
+                        var description = attributes.ix3Description;
                         var ix3OptionsDepend = attributes.ix3OptionsDepend;
                         var ix3OptionsDefault = attributes.ix3OptionsDefault;
                         
@@ -120,11 +121,17 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
 
                         var ngOptions;
                         if (schemaProperty.type === "OBJECT") {
+                            var realFilters="";
                             if ((filters) && (filters.trim() !== "")) {
-                                ngOptions = "value.toString() for value in values | " + filters + " track by value." + schemaProperty.primaryKeyPropertyName + "";
-                            } else {
-                                ngOptions = "value.toString() for value in values track by value." + schemaProperty.primaryKeyPropertyName + "";
+                                realFilters="| " + filters;
                             }
+                            var realDescription="value.toString()";
+                            if ((description) && (description.trim() !== "")) {
+                                realDescription=description;
+                            }                            
+                                
+                            ngOptions = realDescription + " for value in values " + realFilters + " track by value." + schemaProperty.primaryKeyPropertyName + "";
+
                         } else {
                             if ((filters) && (filters.trim() !== "")) {
                                 ngOptions = "value.key as value.description for value in values | " + filters;
@@ -263,7 +270,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
                         }
                     }
                 }
-
+         
                 var promise = $q.when(filterValues);
 
                 return promise;
@@ -289,14 +296,19 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
                     var primaryKeyPropertyName = dependSchemaProperty.primaryKeyPropertyName;
                     if (depend[dependPropertyName]) {
                         var primaryKeyValue = depend[dependPropertyName][primaryKeyPropertyName];
-                        if (value[dependPropertyName]) {
-                            if (value[dependPropertyName][primaryKeyPropertyName] !== primaryKeyValue) {
+                        if (langUtil.hasOwnProperty(value,dependPropertyName)===true) {
+                            if (langUtil.getValue(value,dependPropertyName)) {
+                                if (langUtil.getValue(value,dependPropertyName)[primaryKeyPropertyName] !== primaryKeyValue) {
+                                    add = false;
+                                    break;
+                                }
+                            } else {
                                 add = false;
                                 break;
                             }
                         } else {
                             add = false;
-                            break;
+                            break;                            
                         }
                     } else {
                         //Si no hay valor , veamos que hacemos
@@ -311,7 +323,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
                                     var algunoIgual = false;
 
                                     for (var i = 0; i < defaultValue.length; i++) {
-                                        if (value[dependPropertyName][primaryKeyPropertyName] === defaultValue[i]) {
+                                        if (langUtil.getValue(value,dependPropertyName)[primaryKeyPropertyName] === defaultValue[i]) {
                                             algunoIgual = true;
                                             break;
                                         }
@@ -323,7 +335,7 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
                                     }
 
                                 } else {
-                                    if (value[dependPropertyName][primaryKeyPropertyName] !== defaultValue) {
+                                    if (langUtil.getValue(value,dependPropertyName)[primaryKeyPropertyName] !== defaultValue) {
                                         add = false;
                                         break;
                                     }

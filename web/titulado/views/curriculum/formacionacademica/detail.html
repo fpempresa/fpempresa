@@ -34,7 +34,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
                         <label for="model.centro" class="col-sm-3  control-label" ix3-label ></label>
                         <div class="col-sm-7">
-                            <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-options  >
+                            <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-options="ix3OrderBy:['direccion.municipio.provincia.descripcion','nombre']"  ix3-description=" value.direccion.municipio.provincia.toString()+'-'+value.toString() " >
                                 <option value="">-- Elige Opcion --</option>
                             </select>
                         </div>

@@ -39,7 +39,9 @@ public class ImageUtil {
     public static boolean isValid(byte[] rawImage) {
         BufferedImage bufferedImage=readImage(rawImage);
 
-        if (canWriteImageToJPEG(bufferedImage)) {
+        if (bufferedImage==null) {
+            return false;
+        } if (canWriteImageToJPEG(bufferedImage)) {
             return true;
         } else {
             BufferedImage bufferedImageWhiteBackground=getBufferedImageToWhiteBackground(bufferedImage);
@@ -65,17 +67,17 @@ public class ImageUtil {
         BufferedImage bufferedImage=readImage(rawImage);
 
 
-        if (canWriteImageToJPEG(bufferedImage)) {
+        if (bufferedImage==null) {
+            image=null;
+        } if (canWriteImageToJPEG(bufferedImage)) {
             image=bufferedImage;
         } else {
             BufferedImage bufferedImageWhiteBackground=getBufferedImageToWhiteBackground(bufferedImage);
 
-            if (canWriteImageToJPEG(bufferedImageWhiteBackground)) {
-                image=bufferedImageWhiteBackground;
-            } else {
+            if (canWriteImageToJPEG(bufferedImageWhiteBackground)==false) {
                 log.warn("Fail Image to JPEG-msgFail="+msgFail);
-                image=bufferedImageWhiteBackground;
             }
+            image=bufferedImageWhiteBackground;
         }
 
         return image;

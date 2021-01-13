@@ -66,13 +66,18 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
             var query = {
                 filters: {
-                    'oferta':$scope.model.idOferta
+                    oferta:$scope.model.idOferta,
+                    ocultarRechazados:false,
+                    certificados:false,
+                    maxAnyoTitulo:200
                 },
-                namedSearch:"getNumCandidatosOferta"
+                namedSearch:"getCandidatosOferta",
+                pageNumber:0,
+                pageSize:100
             };
 
             serviceFactory.getService("Candidato").search(query).then(function (data) {
-                $scope.numeroCandidatos = data;
+                $scope.candidatos=data.content;
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });

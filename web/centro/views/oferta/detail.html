@@ -185,10 +185,16 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                                     <i class="fa fa-archive fa-4x"></i>
                                                 </div>
                                                 <div class="col-xs-9 text-right">
-                                                    <div class="section__text--size-high">{{numeroCandidatos}}</div>
-                                                    <div class="section__text--size-high"><ng-pluralize count="numeroCandidatos" when="{'0': 'Ningún Candidato','1': 'Candidato','other': 'Candidatos'}"></ng-pluralize></div>
+                                                    <div class="section__text--size-high" ng-show="candidatos.length>0">{{candidatos.length}}</div>
+                                                    <div class="section__text--size-high"><ng-pluralize count="candidatos.length" when="{'0': 'Ningún Candidato','1': 'Candidato','other': 'Candidatos'}"></ng-pluralize></div>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
+                                        <div class="panel-body" ng-show="candidatos.length>0">
+                                            <ul>
+                                                <li ng-repeat="candidato in candidatos | orderBy:'-fecha'" >{{candidato.fecha | date: 'dd/MM/yyyy'}}&nbsp;&nbsp;&nbsp;&nbsp;{{candidato.usuario.nombre}} {{candidato.usuario.apellidos}}</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div> 

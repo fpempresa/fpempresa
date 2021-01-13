@@ -18,30 +18,29 @@
 (function (undefined) {
     "use strict";
 
-    AvisoInscripcionController.$inject = ['$scope', 'currentDialog'];
-    function AvisoInscripcionController($scope, currentDialog) {
+    AvisoDesinscripcionController.$inject = ['$scope', 'currentDialog'];
+    function AvisoDesinscripcionController($scope, currentDialog) {
         $scope.datosContacto = currentDialog.params.datosContacto;
-
-        $scope.buttonInscribirse = function () {
+        $scope.buttonDesinscribirse = function () {
             currentDialog.closeOK();
         };       
         
         
         currentDialog.open({
             width: 600,
-            height: 530,
-            title: "Inscripción en la oferta"
+            height: 220,
+            title: "Desinscripción de la oferta"
         });        
     }
 
-    angular.module("common").controller("AvisoInscripcionController", AvisoInscripcionController);
+    angular.module("common").controller("AvisoDesinscripcionController", AvisoDesinscripcionController);
 
 
     angular.module("common").config(['dialogProvider', 'getContextPath', 'crudRoutesProvider', function (dialogProvider, getContextPath, crudRoutesProvider) {
 
-            dialogProvider.when('avisoInscripcion', {
-                templateUrl: getContextPath() + "/titulado/views/oferta/aviso-inscripcion.html",
-                controller: 'AvisoInscripcionController'
+            dialogProvider.when('avisoDesinscripcion', {
+                templateUrl: getContextPath() + "/titulado/views/oferta/aviso-desinscripcion.html",
+                controller: 'AvisoDesinscripcionController'
             });
 
         }]);

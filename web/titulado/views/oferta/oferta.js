@@ -121,17 +121,15 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
 
             if ($scope.model.empresa.centro) {
                 var promise = dialog.create('avisoInscripcion', {
-                    titulo: "Inscripción en la oferta",
-                    mensaje: "Aunque estés inscrito en la oferta debes ponerte en contacto directamente con las empresa a través de los datos que se muestran a continuación para que la empresa puedar ver tus datos",
                     datosContacto: $scope.model.contacto.textoLibre
                 });
 
-                promise["finally"](function () {
+                promise.then(function () {
                     $scope.inscribirseOferta();
                 });
             } else {
                 $scope.inscribirseOferta().then(function () {
-                    alert("Te has inscrito correctamente en la oferta. La empresa recibirá tu curriculum");
+                    alert("Te has inscrito correctamente en la oferta. La empresa ha recibido un correo electrónico con tu curriculum");
                 });
             }
 
@@ -161,13 +159,11 @@ app.controller("OfertaViewController", ['$scope', '$q', 'genericControllerCrudDe
         $scope.buttonDesinscribirseOferta = function () {
 
             if ($scope.model.empresa.centro) {
-                var promise = dialog.create('avisoInscripcion', {
-                    titulo: "Desinscripción de la oferta",
-                    mensaje: "Aunque te desinscribas de la oferta recuerda que tus datos los debistes de enviar tu directamente a la información de contacto que aparece en el siguiente campo.",
+                var promise = dialog.create('avisoDesinscripcion', {
                     datosContacto: $scope.model.contacto.textoLibre
                 });
 
-                promise["finally"](function () {
+                promise.then(function () {
                     $scope.desinscribirseOferta();
                 });
             } else {

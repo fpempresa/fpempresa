@@ -1,0 +1,10 @@
+.l-extremos {
+  display: flex;
+}
+.l-extremos__izquierda {
+  margin-right: auto;
+}
+.l-extremos__derecha {
+  margin-left: auto;
+}
+/*# sourceMappingURL=l-extremos.css.map */

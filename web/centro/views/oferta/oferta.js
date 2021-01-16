@@ -35,8 +35,13 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
 
 
 app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
+        var numPageSizeCandidatos=10;
+        
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-
+        $scope.candidatos=[];
+        $scope.pageCandidatos=undefined;
+        $scope.numCandidatosOferta=0;
+        
         $scope.buscarEmpresa = function () {
 
             var params = {
@@ -58,12 +63,10 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         };
 
         $scope.postGet = function () {
-            $scope.search();
+            $scope.searchCandidatos(0);
         };
 
-        $scope.search = function () {
-
-
+        $scope.searchCandidatos = function (pageNumber) {
             var query = {
                 filters: {
                     oferta:$scope.model.idOferta,
@@ -72,12 +75,14 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
                     maxAnyoTitulo:200
                 },
                 namedSearch:"getCandidatosOferta",
-                pageNumber:0,
-                pageSize:100
+                pageNumber:pageNumber,
+                pageSize:numPageSizeCandidatos
             };
 
             serviceFactory.getService("Candidato").search(query).then(function (data) {
-                $scope.candidatos=data.content;
+                $scope.pageCandidatos=data;
+                $scope.numCandidatosOferta=data.totalRows;
+                $scope.candidatos=$scope.candidatos.concat(data.content);
             }, function (businessMessages) {
                 $scope.businessMessages = businessMessages;
             });
@@ -137,8 +142,12 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
     }]);
 
 app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
+        var numPageSizeCandidatos=10;
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-
+        $scope.candidatos=[];
+        $scope.pageCandidatos=undefined;
+        $scope.numCandidatosOferta=0;
+        
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
 
             if (newFamilia === oldFamilia) {
@@ -180,11 +189,41 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
             }
         }
 
+        $scope.postGet = function () {
+            $scope.searchCandidatos(0);
+        };
+
+        $scope.searchCandidatos = function (pageNumber) {
+            var query = {
+                filters: {
+                    oferta:$scope.model.idOferta,
+                    ocultarRechazados:false,
+                    certificados:false,
+                    maxAnyoTitulo:200
+                },
+                namedSearch:"getCandidatosOferta",
+                pageNumber:pageNumber,
+                pageSize:numPageSizeCandidatos
+            };
+
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                $scope.pageCandidatos=data;
+                $scope.numCandidatosOferta=data.totalRows;
+                $scope.candidatos=$scope.candidatos.concat(data.content);
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
+        }
+
     }]);
 
 app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
+        var numPageSizeCandidatos=10;
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-
+        $scope.candidatos=[];
+        $scope.pageCandidatos=undefined;
+        $scope.numCandidatosOferta=0;
+        
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
 
             if (newFamilia === oldFamilia) {
@@ -224,6 +263,32 @@ app.controller("OfertaDeleteController", ['$scope', 'genericControllerCrudDetail
             } else {
                 return false;
             }
+        }
+
+        $scope.postGet = function () {
+            $scope.searchCandidatos(0);
+        };
+
+        $scope.searchCandidatos = function (pageNumber) {
+            var query = {
+                filters: {
+                    oferta:$scope.model.idOferta,
+                    ocultarRechazados:false,
+                    certificados:false,
+                    maxAnyoTitulo:200
+                },
+                namedSearch:"getCandidatosOferta",
+                pageNumber:pageNumber,
+                pageSize:numPageSizeCandidatos
+            };
+
+            serviceFactory.getService("Candidato").search(query).then(function (data) {
+                $scope.pageCandidatos=data;
+                $scope.numCandidatosOferta=data.totalRows;
+                $scope.candidatos=$scope.candidatos.concat(data.content);
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });
         }
 
     }]);

@@ -185,16 +185,17 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                                     <i class="fa fa-archive fa-4x"></i>
                                                 </div>
                                                 <div class="col-xs-9 text-right">
-                                                    <div class="section__text--size-high" ng-show="candidatos.length>0">{{candidatos.length}}</div>
-                                                    <div class="section__text--size-high"><ng-pluralize count="candidatos.length" when="{'0': 'Ningún Candidato','1': 'Candidato','other': 'Candidatos'}"></ng-pluralize></div>
+                                                    <div class="section__text--size-high" ng-show="numCandidatosOferta>0">{{numCandidatosOferta}}</div>
+                                                    <div class="section__text--size-high"><ng-pluralize count="numCandidatosOferta" when="{'0': 'Ningún Candidato','1': 'Candidato','other': 'Candidatos'}"></ng-pluralize></div>
                                                 </div>
                                             </div>
                                             
                                         </div>
-                                        <div class="panel-body" ng-show="candidatos.length>0">
+                                        <div class="panel-body" ng-show="numCandidatosOferta>0">
                                             <ul>
-                                                <li ng-repeat="candidato in candidatos | orderBy:'-fecha'" >{{candidato.fecha | date: 'dd/MM/yyyy'}}&nbsp;&nbsp;&nbsp;&nbsp;{{candidato.usuario.nombre}} {{candidato.usuario.apellidos}}</li>
+                                                <li ng-repeat="candidato in candidatos" >{{candidato.fecha | date: 'dd/MM/yyyy'}}&nbsp;&nbsp;&nbsp;&nbsp;{{candidato.usuario.nombre}} {{candidato.usuario.apellidos}}</li>
                                             </ul>
+                                            <a href="javascript:void(0)" ng-click="searchCandidatos(pageCandidatos.pageNumber+1)" ng-show="pageCandidatos.pageNumber+1<pageCandidatos.totalPages">Cargar mas candidatos...</a>
                                         </div>
                                     </div>
                                 </div> 

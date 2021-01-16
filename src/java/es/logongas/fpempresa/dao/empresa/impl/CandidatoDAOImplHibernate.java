@@ -97,7 +97,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
                     + ") ");
         }
 
-        String sqlPartOrderBy = "";
+        String sqlPartOrderBy = " ORDER BY fecha ";
         String sqlPartSelectObject = " SELECT candidato ";
         String sqlPartSelectCount = " SELECT COUNT(candidato) ";
 

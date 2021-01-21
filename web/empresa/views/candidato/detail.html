@@ -15,8 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 -->
-<div class="row" >
-    <div class="col-sm-12 form__container"  style="height: 100%" >
+<div  >
+    <div class="form__container"  style="height: 100%; width:97%" >
         <form name="mainForm" id="mainForm"  ix3-form>
             <div class="row">
                 <div class="col-sm-12" > 
@@ -42,7 +42,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <tbody>
 
                             <tr>
-                                <td style="width: 40%;"><div style="text-align: center"><img class="img-circle" width="120px" ng-src="{{ix3Configuration.server.api}}/Candidato/{{model.idCandidato}}/foto" alt="Foto usuario"></div></td>
+                                <td style="width: 40%;"><div style="text-align: center"><img class="img-circle" width="60px" ng-src="{{ix3Configuration.server.api}}/Candidato/{{model.idCandidato}}/foto" alt="Foto usuario"></div></td>
                                 <td >
                                     <div class="profile__value profile__value--name">{{model.usuario.getNombreCompleto()}}</div> 
                                     <br>
@@ -56,7 +56,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <tr>
                                 <td class="profile__caption"><i class="glyphicon glyphicon-earphone"></i>&nbsp;Telefono</td>
                                 <td class="profile__value">{{model.usuario.titulado.telefono}}  {{model.usuario.titulado.telefonoAlternativo}}</td>
-                            </tr>
+                            </tr>                      
                             <tr>
                                 <td class="profile__caption"><i class="glyphicon glyphicon-credit-card"></i>&nbsp;{{model.usuario.titulado.getTipoDocumentoDescription()}}</td>
                                 <td class="profile__value">{{model.usuario.titulado.numeroDocumento}}</td>

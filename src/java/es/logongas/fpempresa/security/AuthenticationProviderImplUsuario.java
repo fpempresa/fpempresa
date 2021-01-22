@@ -116,9 +116,11 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                 Principal principal = usuario;
                 return principal;
             } else {
+                log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin());
                 return null;
             }
         } else {
+            log.warn("Intento fallido de login. Usuario no existe : " + credentialImplLoginPassword.getLogin());
             return null;
         }
 

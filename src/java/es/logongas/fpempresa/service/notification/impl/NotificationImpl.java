@@ -32,6 +32,8 @@ import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDServiceFactory;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -212,6 +214,18 @@ public class NotificationImpl implements Notification {
         sendMail(mail);
     }  
     
+    @Override
+    public void exception(String subject, String msg, Throwable throwable) {
+        Mail mail = new Mail();
+        mail.addTo(Config.getSetting("app.correoSoporte"));
+        mail.setFrom(Config.getSetting("mail.sender"));
+        mail.setSubject(subject);
+        mail.setTextBody(getAppURL()+"\n"+msg+"\n"+getStackTraceAsString(throwable));
+        
+        sendMail(mail);
+    }
+    
+    
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
         mailService.send(mail);
@@ -254,6 +268,14 @@ public class NotificationImpl implements Notification {
     
     public String getAppURL() {
         return Config.getSetting("app.url");
+    }
+
+    private String getStackTraceAsString(Throwable throwable) {
+        StringWriter stringWriter = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(stringWriter));
+        String stackTrace=stringWriter.toString();
+        
+        return stackTrace;
     }
     
 }

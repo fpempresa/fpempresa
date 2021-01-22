@@ -23,6 +23,11 @@
         <Logger name="org.hibernate.SQL" level="WARN" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="Fichero"/>      
-        </Logger>                    
+        </Logger>  
+        <Logger name="org.hibernate.hql.internal.ast.HqlSqlWalker" level="WARN" additivity="false">
+            <RegexFilter regex=".*\[DEPRECATION\].*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="Fichero"/> 
+        </Logger>                
     </Loggers>
 </Configuration>

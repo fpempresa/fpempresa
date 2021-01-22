@@ -55,6 +55,21 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         return super.update(updateArguments); 
     }
 
+    @Override
+    public Usuario insert(InsertArguments<Usuario> insertArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        Usuario usuario = insertArguments.entity;
+        
+        if (usuario!=null) {
+            Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
+            if (usuarioPrevio!=null) {
+                throw new BusinessException("Ya existe un usuario con el correo: '"+ usuario.getEmail()+"'");
+            }
+        }
+        
+        return super.insert(insertArguments); 
+    }
+
     
     
     
@@ -408,7 +423,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         return true;
 
     }
-
+    
     @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckUpdateAdministradorAndEstado'", groups = RuleGroupPredefined.PreUpdate.class)
     private boolean isCheckUpdateAdministradorAndEstado(RuleContext<Usuario> ruleContext) throws BusinessException {
         Usuario principal = (Usuario) ruleContext.getPrincipal();

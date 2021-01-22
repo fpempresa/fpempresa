@@ -75,7 +75,7 @@ public class EstadisticasController {
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasCentro(new EstadisticasBusinessProcess.GetEstadisticasCentroArguments(principal, dataSession, centro,anyoInicio,anyoFin));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -92,7 +92,7 @@ public class EstadisticasController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -106,7 +106,7 @@ public class EstadisticasController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -117,7 +117,7 @@ public class EstadisticasController {
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasPublicas(new EstadisticasBusinessProcess.GetEstadisticasPublicasArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -129,7 +129,7 @@ public class EstadisticasController {
             List<FamiliaOfertasEstadistica>  familiasOfertasEstadistica=estadisticasBusinessProcess.getEstadisticasFamiliaOfertasPublicas(new EstadisticasBusinessProcess.GetEstadisticasFamiliaOfertasPublicasArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(familiasOfertasEstadistica), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -141,7 +141,7 @@ public class EstadisticasController {
             EstadisticasPrincipal estadisticasPrincipal=estadisticasBusinessProcess.getEstadisticasPrincipal(new EstadisticasBusinessProcess.GetEstadisticasPrincipalArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticasPrincipal), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }    
     

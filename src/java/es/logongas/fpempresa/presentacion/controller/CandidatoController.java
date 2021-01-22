@@ -69,7 +69,7 @@ public class CandidatoController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 

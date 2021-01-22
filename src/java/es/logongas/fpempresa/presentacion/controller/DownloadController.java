@@ -71,7 +71,7 @@ public class DownloadController {
             byte[] excel = downloadBusinessProcess.getHojaCalculoOfertasNoCentro(new DownloadBusinessProcess.GetHojaCalculoOfertasNoCentroArguments(principal, dataSession, fechaInicio, fechaFin));
             controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -89,7 +89,7 @@ public class DownloadController {
             byte[] excel = downloadBusinessProcess.getHojaCalculoOfertasCentro(new DownloadBusinessProcess.GetHojaCalculoOfertasCentroArguments(principal, dataSession, centro, fechaInicio, fechaFin));
             controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -106,7 +106,7 @@ public class DownloadController {
             byte[] excel = downloadBusinessProcess.getHojaCalculoEmpresasNoCentro(new DownloadBusinessProcess.GetHojaCalculoEmpresasNoCentroArguments(principal, dataSession, fechaInicio, fechaFin));
             controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -124,7 +124,7 @@ public class DownloadController {
             byte[] excel = downloadBusinessProcess.getHojaCalculoEmpresasCentro(new DownloadBusinessProcess.GetHojaCalculoEmpresasCentroArguments(principal, dataSession, centro, fechaInicio, fechaFin));
             controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -154,7 +154,7 @@ public class DownloadController {
             byte[] excel = downloadBusinessProcess.getHojaCalculoUsuariosTituladosCentro(new DownloadBusinessProcess.GetHojaCalculoUsuariosTituladosCentroArguments(principal, dataSession, centro, familia, ciclo, fechaInicio, fechaFin));
             controllerHelper.objectToHttpResponse(new HttpResult(null, excel, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }    

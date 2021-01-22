@@ -55,7 +55,7 @@ public class LogController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -71,7 +71,7 @@ public class LogController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }

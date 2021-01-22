@@ -80,7 +80,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -106,7 +106,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -126,7 +126,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -146,7 +146,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -168,7 +168,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -188,7 +188,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, curriculum, 200, false, null, MimeType.PDF), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     @RequestMapping(value = {"/{path}/Usuario/enviarMailResetearContrasenya/{email:.+}"}, method = RequestMethod.POST)
@@ -199,7 +199,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.enviarMailResetearContrasenya(new UsuarioCRUDBusinessProcess.EnviarMailResetearContrasenyaArguments(principal, dataSession, email));
             controllerHelper.objectToHttpResponse(new HttpResult(email), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -213,7 +213,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.resetearContrasenya(new UsuarioCRUDBusinessProcess.ResetearContrasenyaArguments(principal, dataSession, resetPassword.claveResetearContrasenya, resetPassword.nuevaContrasenya));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -227,7 +227,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.enviarMensajeSoporte(new UsuarioCRUDBusinessProcess.EnviarMensajeSoporteArguments(principal, dataSession, mensajeSoporte.nombre, mensajeSoporte.correo,mensajeSoporte.mensaje));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }    
     
@@ -246,7 +246,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -265,7 +265,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletResponse);
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     

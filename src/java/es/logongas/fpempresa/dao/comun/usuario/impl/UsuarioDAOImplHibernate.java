@@ -84,26 +84,6 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
     }
 
     @Override
-    public Usuario getUsuarioPorClaveValidacionEmail(DataSession dataSession, String claveValidacionEmail) {
-        Session session = (Session) dataSession.getDataBaseSessionImpl();
-        String hql = "SELECT usuario FROM Usuario usuario WHERE  usuario.claveValidacionEmail = :claveValidacionEmail";
-        Query query = session.createQuery(hql);
-        query.setString("claveValidacionEmail", claveValidacionEmail);
-        Usuario usuario = (Usuario) query.uniqueResult();
-        return usuario;
-    }
-
-    @Override
-    public Usuario getUsuarioPorClaveResetearContrasenya(DataSession dataSession, String claveResetearContrasenya) {
-        Session session = (Session) dataSession.getDataBaseSessionImpl();
-        String hql = "SELECT usuario FROM Usuario usuario WHERE usuario.claveResetearContrasenya = :claveResetearContrasenya";
-        Query query = session.createQuery(hql);
-        query.setString("claveResetearContrasenya", claveResetearContrasenya);
-        Usuario usuario = (Usuario) query.uniqueResult();
-        return usuario;
-    }
-
-    @Override
     public Usuario getUsuarioPorEmail(DataSession dataSession, String email) {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
         String hql = "SELECT usuario FROM Usuario usuario WHERE usuario.email = :email";
@@ -112,5 +92,5 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         Usuario usuario = (Usuario) query.uniqueResult();
         return usuario;
     }
-
+    
 }

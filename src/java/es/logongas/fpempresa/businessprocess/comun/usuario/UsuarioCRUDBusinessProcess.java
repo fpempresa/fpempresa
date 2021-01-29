@@ -21,7 +21,6 @@ import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,6 +31,7 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
     void updatePassword(UpdatePasswordArguments updatePasswordArguments) throws BusinessException;
     void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException;
     void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException;
+    void validarEmail(ValidarEmailArguments validarEmailArguments) throws BusinessException;
     Usuario getUsuarioFromTitulado(GetUsuarioFromTituladoArguments getUsuarioFromTituladoArguments) throws BusinessException;
     byte[] getFoto(GetFotoArguments getFotoArguments) throws BusinessException;
     void updateFoto(UpdateFotoArguments updateFotoArguments) throws BusinessException;
@@ -60,16 +60,18 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
 
     public class ResetearContrasenyaArguments extends BusinessProcess.BusinessProcessArguments {
 
-        final public String claveResetearPassword;
+        final public Usuario usuario;
+        final public String claveResetearContrasenya;
         final public String nuevaContrasenya;
 
-        public ResetearContrasenyaArguments(Principal principal, DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) {
+        public ResetearContrasenyaArguments(Principal principal, DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) {
             super(principal, dataSession);
-            this.claveResetearPassword = claveResetearContrasenya;
+            this.usuario = usuario;
+            this.claveResetearContrasenya = claveResetearContrasenya;
             this.nuevaContrasenya = nuevaContrasenya;
         }
     }
-
+    
     public class EnviarMailResetearContrasenyaArguments extends BusinessProcess.BusinessProcessArguments {
 
         final public String email;
@@ -80,6 +82,18 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
     }
 
+    public class ValidarEmailArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public Usuario usuario;
+        final public String claveValidarEmail;
+
+        public ValidarEmailArguments(Principal principal, DataSession dataSession,Usuario usuario, String claveValidarEmail) {
+            super(principal, dataSession);
+            this.usuario = usuario;
+            this.claveValidarEmail = claveValidarEmail;
+        }
+    }    
+    
     public class GetUsuarioFromTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
         public Titulado titulado;

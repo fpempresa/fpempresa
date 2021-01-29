@@ -305,23 +305,30 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     @Override
-    public boolean validarEmail(DataSession dataSession, String claveValidacionEmail) throws BusinessException {
-        Usuario usuario = getUsuarioDAO().getUsuarioPorClaveValidacionEmail(dataSession, claveValidacionEmail);
+    public void validarEmail(DataSession dataSession, Usuario usuario, String claveValidacionEmail) throws BusinessException {
         if (usuario != null) {
+            if (equalsClavesSeguras(claveValidacionEmail,usuario.getClaveValidacionEmail())==false) {
+                throw new BusinessException("El token no es válido");
+            }
+            
             usuario.setValidadoEmail(true);
             getUsuarioDAO().update(dataSession, usuario);
-            return true;
+        } else {
+            throw new BusinessException("El usuario no existe");
         }
-        return false;
     }
 
     @Override
-    public void resetearContrasenya(DataSession dataSession, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
-        Usuario usuario = getUsuarioDAO().getUsuarioPorClaveResetearContrasenya(dataSession, claveResetearContrasenya);
+    public void resetearContrasenya(DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
         if (usuario != null) {
             if (!usuario.isValidadoEmail()) {
                 throw new BusinessException("La cuenta no está activada");
             }
+            
+            if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
+                throw new BusinessException("El token no es válido");
+            }           
+            
             Date now = new Date();
             long diasClaveResetearPaswordEsValida = Integer.parseInt(Config.getSetting("app.diasClaveResetearPasswordEsValida"));
             if (usuario.getFechaClaveResetearContrasenya().getTime() + diasClaveResetearPaswordEsValida * 1000 * 60 * 60 * 24 > now.getTime()) {
@@ -333,12 +340,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 throw new BusinessException("El token ha caducado");
             }
         } else {
-            throw new BusinessException("El token proporcionado es invalido");
+            throw new BusinessException("El usuario no existe");
         }
     }
 
     @Override
-    public void enviarMailResetearPassword(DataSession dataSession, String email) throws BusinessException {
+    public void enviarMailResetearContrasenya(DataSession dataSession, String email) throws BusinessException {
 
         Usuario usuario = getUsuarioDAO().getUsuarioPorEmail(dataSession, email);
         if (usuario != null) {
@@ -474,5 +481,18 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
     
     
+    private boolean equalsClavesSeguras(String clave1,String clave2) {
+        if ((clave1==null) || (clave2==null)) {
+            return false;
+        }
+        
+        if ((clave1.trim().isEmpty()) || (clave2.trim().isEmpty())) {
+            return false;
+        }
+        
+        return clave1.equals(clave2);
+        
+    }
     
+
 }

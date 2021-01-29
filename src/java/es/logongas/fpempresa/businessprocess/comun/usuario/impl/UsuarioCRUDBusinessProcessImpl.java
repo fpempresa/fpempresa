@@ -464,13 +464,13 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     @Override
     public void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-        usuarioCRUDService.enviarMailResetearPassword(enviarMailResetearContrasenyaArguments.dataSession, enviarMailResetearContrasenyaArguments.email);
+        usuarioCRUDService.enviarMailResetearContrasenya(enviarMailResetearContrasenyaArguments.dataSession, enviarMailResetearContrasenyaArguments.email);
     }
 
     @Override
     public void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-        usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession, resetearContrasenyaArguments.claveResetearPassword, resetearContrasenyaArguments.nuevaContrasenya);
+        usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession,resetearContrasenyaArguments.usuario, resetearContrasenyaArguments.claveResetearContrasenya, resetearContrasenyaArguments.nuevaContrasenya);
     }
 
     @Override
@@ -502,5 +502,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         usuarioCRUDService.softDelete(softDeleteArguments.dataSession, softDeleteArguments.usuario); 
     }
 
-    
+    @Override
+    public void validarEmail(ValidarEmailArguments validarEmailArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        usuarioCRUDService.validarEmail(validarEmailArguments.dataSession,validarEmailArguments.usuario, validarEmailArguments.claveValidarEmail);
+    } 
 }

@@ -128,9 +128,29 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                     return deferred.promise;
                 };
 
-                remoteDAO.resetearContrasenya = function (claveResetearContrasenya, nuevaContrasenya) {
+                remoteDAO.validarEmail = function (idIdentity, claveValidarEmail) {
+                    var deferred = this.$q.defer();
+                    var config = {
+                        method: 'POST',
+                        url: this.baseUrl + '/' + this.entityName + "/validarEmail/" + idIdentity + "/" + claveValidarEmail
+                    };
+                    this.$http(config).success(function () {
+                        deferred.resolve(null);
+                    }).error(function (data, status) {
+                        if (status === 400) {
+                            deferred.reject(data);
+                        } else {
+                            throw new Error("Fallo al enviar la peticion de cambio de contaseña:" + status + "\n" + data);
+                        }
+                    });
+                    return deferred.promise;
+                };
+
+
+                remoteDAO.resetearContrasenya = function (idIdentity, claveResetearContrasenya, nuevaContrasenya) {
                     var deferred = this.$q.defer();
                     var data = {
+                        idIdentity: idIdentity,
                         claveResetearContrasenya: claveResetearContrasenya,
                         nuevaContrasenya: nuevaContrasenya
                     };

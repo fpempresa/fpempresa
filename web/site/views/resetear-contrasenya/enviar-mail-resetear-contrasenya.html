@@ -28,7 +28,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
         <form name="mainForm" class="c-form g--center" style="width: 100%; max-width:550px" novalidate>
             <label for="userEmail" class="c-label">Correo electrónico</label>
-            <input  ng-model="userEmail" class="c-input" name="userEmail" id="userEmail" >
+            <input type="email"  ng-model="userEmail" class="c-input" name="userEmail" id="userEmail" ng-required="true" >
             <div class="c-form__buttons">
                 <button type="button" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="cambiarContrasenya()">Enviar correo</button>
             </div>

@@ -23,7 +23,7 @@ app.config(['$stateProvider', function ($stateProvider) {
         });
         
         $stateProvider.state('olvido-contrasenya-formulario', {
-            url: '/resetear-contrasenya/:token',
+            url: '/resetear-contrasenya/:idIdentity/:claveResetearContrasenya',
             templateUrl: 'views/resetear-contrasenya/resetear-contrasenya.html',
             controller: 'ResetearContrasenyaController'
         });        

@@ -34,9 +34,5 @@ public interface UsuarioDAO extends GenericDAO<Usuario, Integer> {
 
     String getEncryptedPassword(DataSession dataSession, Usuario usuario);
 
-    Usuario getUsuarioPorClaveValidacionEmail(DataSession dataSession, String claveValidacionEmail);
-
-    Usuario getUsuarioPorClaveResetearContrasenya(DataSession dataSession, String claveResetearContrasenya);
-
     Usuario getUsuarioPorEmail(DataSession dataSession, String email);
 }

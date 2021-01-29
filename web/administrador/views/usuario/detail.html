@@ -62,7 +62,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                     <input ng-model="model.validadoEmail" type="checkbox" id="validadoEmail" name="validadoEmail"  ix3-validation >
                                     Validado el correo electrónico
                                 </label>
-                                <br><br><spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#/validar-email/{{model.claveValidacionEmail}}</spam>
+                                <br><br><spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
                             </div>
                         </div> 
                     </div>                                         

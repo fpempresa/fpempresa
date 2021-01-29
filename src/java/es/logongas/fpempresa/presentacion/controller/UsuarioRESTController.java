@@ -203,14 +203,35 @@ public class UsuarioRESTController {
         }
     }
 
+    @RequestMapping(value = {"/{path}/Usuario/validarEmail/{idIdentity:.+}/{claveValidarEmail:.+}"}, method = RequestMethod.POST)
+    public void validarEmail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idIdentity") int idIdentity, @PathVariable("claveValidarEmail") String claveValidarEmail) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idIdentity);
+            
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.validarEmail(new UsuarioCRUDBusinessProcess.ValidarEmailArguments(principal, dataSession, usuario, claveValidarEmail));
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+        }
+    }    
+    
+    
     @RequestMapping(value = {"/{path}/Usuario/resetearContrasenya"}, method = RequestMethod.POST)
     public void resetearContrasenya(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonIn) {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
             JsonReader jsonReader = jsonFactory.getJsonReader(ResetPassword.class);
             ResetPassword resetPassword = (ResetPassword) jsonReader.fromJson(jsonIn, dataSession);
+
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, resetPassword.idIdentity);
+            
             UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
-            usuarioCRUDBusinessProcess.resetearContrasenya(new UsuarioCRUDBusinessProcess.ResetearContrasenyaArguments(principal, dataSession, resetPassword.claveResetearContrasenya, resetPassword.nuevaContrasenya));
+            usuarioCRUDBusinessProcess.resetearContrasenya(new UsuarioCRUDBusinessProcess.ResetearContrasenyaArguments(principal, dataSession, usuario, resetPassword.claveResetearContrasenya, resetPassword.nuevaContrasenya));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
@@ -272,17 +293,27 @@ public class UsuarioRESTController {
     
     public static class ResetPassword {
 
+        private int idIdentity;
         private String claveResetearContrasenya;
         private String nuevaContrasenya;
 
         public ResetPassword() {
         }
 
-        public ResetPassword(String claveResetearContrasenya, String nuevaContrasenya) {
+        public ResetPassword(int idIdentity, String claveResetearContrasenya, String nuevaContrasenya) {
+            this.idIdentity = idIdentity;
             this.claveResetearContrasenya = claveResetearContrasenya;
             this.nuevaContrasenya = nuevaContrasenya;
         }
 
+        public int getIdIdentity() {
+            return idIdentity;
+        }
+
+        public void setIdIdentity(int idIdentity) {
+            this.idIdentity = idIdentity;
+        }
+        
         public String getClaveResetearContrasenya() {
             return claveResetearContrasenya;
         }

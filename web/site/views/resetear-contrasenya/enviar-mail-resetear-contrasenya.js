@@ -29,7 +29,7 @@
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
                 usuarioService.enviarMailResetearContrasenya($scope.userEmail).then(function () {
-                    alert("Se ha enviado el correo con la información para cambiar su contraseña.");
+                    alert("Te hemos enviado un correo con la información para cambiar tu contraseña.");
                     $scope.userEmail="";
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;

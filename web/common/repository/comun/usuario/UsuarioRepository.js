@@ -74,9 +74,20 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     return deferred.promise;
                 };
 
-                repository.resetearContrasenya = function (claveResetearContrasenya, nuevaContrasenya) {
+                repository.validarEmail = function (idIdentity, claveValidarEmail) {
                     var deferred = $q.defer();
-                    this.remoteDAO.resetearContrasenya(claveResetearContrasenya, nuevaContrasenya).then(function () {
+                    this.remoteDAO.validarEmail(idIdentity, claveValidarEmail).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+
+                repository.resetearContrasenya = function (idIdentity, claveResetearContrasenya, nuevaContrasenya) {
+                    var deferred = $q.defer();
+                    this.remoteDAO.resetearContrasenya(idIdentity, claveResetearContrasenya, nuevaContrasenya).then(function () {
                         deferred.resolve();
                     }, function (data) {
                         richDomain.extend(data);

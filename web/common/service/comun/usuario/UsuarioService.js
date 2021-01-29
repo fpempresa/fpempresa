@@ -60,6 +60,18 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     return deferred.promise;
                 };
 
+                service.validarEmail = function (idIdentity, claveValidarEmail) {
+                    var deferred = $q.defer();
+                    this.repository.validarEmail(idIdentity, claveValidarEmail
+                            ).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+
+
                 service.enviarMailResetearContrasenya = function (mail) {
                     var deferred = $q.defer();
                     this.repository.enviarMailResetearContrasenya(mail).then(function () {
@@ -70,9 +82,9 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     return deferred.promise;
                 };
 
-                service.resetearContrasenya = function (claveResetearContrasenya, newPassword) {
+                service.resetearContrasenya = function (idIdentity, claveResetearContrasenya, newPassword) {
                     var deferred = $q.defer();
-                    this.repository.resetearContrasenya(claveResetearContrasenya, newPassword).then(function () {
+                    this.repository.resetearContrasenya(idIdentity, claveResetearContrasenya, newPassword).then(function () {
                         deferred.resolve();
                     }, function (data) {
                         deferred.reject(data);

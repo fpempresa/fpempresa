@@ -158,7 +158,7 @@ public class NotificationImpl implements Notification {
         mail.setHtmlBody(""
                 + "Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">EmpleaFP</a>.<br><br>"
                 + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
-                + "<a href=\"" + getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
+                + "<a href=\"" + getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)                
         );
         sendMail(mail);
@@ -174,7 +174,7 @@ public class NotificationImpl implements Notification {
                 + "Bienvenido " + usuario.getNombre() + " " + usuario.getApellidos() + ",<br><br>"
                 + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">EmpleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
                 + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
-                + "<a href=\"" + getAppURL() + "/site/index.html#/validar-email/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
+                + "<a href=\"" + getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)               
         );
         sendMail(mail);

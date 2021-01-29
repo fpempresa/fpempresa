@@ -29,17 +29,15 @@ app.controller("ResetearContrasenyaController", ['$scope', 'formValidator', 'ser
             }];
         $scope.aceptar = function () {
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
-            if (!$stateParams.token) {
-                $scope.businessMessages = 'No se ha especificado ningún token de seguridad';
-            } else {
-                if ($scope.businessMessages.length === 0) {
-                    usuarioService.resetearContrasenya($stateParams.token, $scope.model.password).then(function () {
-                        alert("Su contraseña se ha cambiado correctamente.")
-                        $state.go('/');
-                    }, function (businessMessages) {
-                        $scope.businessMessages = businessMessages;
-                    });
-                }
+
+            if ($scope.businessMessages.length === 0) {
+                usuarioService.resetearContrasenya($stateParams.idIdentity,$stateParams.claveResetearContrasenya, $scope.model.password).then(function () {
+                    alert("Tu contraseña se ha cambiado correctamente.")
+                    $state.go('/');
+                }, function (businessMessages) {
+                    $scope.businessMessages = businessMessages;
+                });
             }
+
         };
     }]);

@@ -17,7 +17,10 @@
 package es.logongas.fpempresa.service.notification.impl;
 
 import es.logongas.fpempresa.service.notification.Notification;
+import es.logongas.ix3.security.authorization.BusinessSecurityException;
 import es.logongas.ix3.web.util.ExceptionNotify;
+import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -30,8 +33,37 @@ public class ExceptionNotifyImpl implements ExceptionNotify {
     Notification notification;
     
     @Override
-    public void notify(String title, String body, Throwable throwable) {
-        notification.exception(title, body, throwable);
+    public void notify(Throwable throwable, HttpServletRequest httpServletRequest) {
+        String className=throwable.getClass().getSimpleName();
+        
+        if (throwable instanceof BusinessSecurityException) {
+            notification.exception(className + ":"+ throwable.getLocalizedMessage(), throwable.toString(), null);
+        } else {
+            notification.exception(className + ":"+ throwable.getLocalizedMessage(), getHttpRequestAsString(httpServletRequest), throwable);
+        }
     }
     
+    private String getHttpRequestAsString(HttpServletRequest httpServletRequest) {
+        StringBuilder sb=new StringBuilder();
+        sb.append("\n\tURL=");
+        sb.append(httpServletRequest.getRequestURI()); 
+        sb.append("\n\tQueryString=");
+        sb.append(httpServletRequest.getQueryString()); 
+        sb.append("\n\tMethod=");
+        sb.append(httpServletRequest.getMethod()); 
+        sb.append("\n\tHeaders:");
+        Enumeration<String> names=httpServletRequest.getHeaderNames();
+        while (names.hasMoreElements()) {
+            String name=names.nextElement();
+            String value=httpServletRequest.getHeader(name);
+
+            sb.append("\n\t\t");
+            sb.append(name);
+            sb.append("=");
+            sb.append(value);
+         
+        }
+
+        return sb.toString();
+    }    
 }

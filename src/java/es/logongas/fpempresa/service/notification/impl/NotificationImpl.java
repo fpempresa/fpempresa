@@ -271,6 +271,10 @@ public class NotificationImpl implements Notification {
     }
 
     private String getStackTraceAsString(Throwable throwable) {
+        if (throwable==null) {
+            return "";
+        }
+        
         StringWriter stringWriter = new StringWriter();
         throwable.printStackTrace(new PrintWriter(stringWriter));
         String stackTrace=stringWriter.toString();

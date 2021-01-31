@@ -42,6 +42,9 @@
         <property name="fecha" update="false"/>
         <property name="fechaUltimoAcceso" />
 	<property name="fechaEnvioCorreoAvisoBorrarUsuario" />
-
+  
+        <property name="lockedUntil"/>
+        <property name="numFailedLogins"/>
+        
     </joined-subclass>
 </hibernate-mapping>

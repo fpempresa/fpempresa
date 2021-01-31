@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
 
     void updatePassword(DataSession dataSession, Usuario usuario, String newPassword) throws BusinessException;
     
-    void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario) throws BusinessException;
+    void updateSuccessfulLogin(DataSession dataSession, Usuario usuario) throws BusinessException;
     
     boolean checkPassword(DataSession dataSession, Usuario usuario, String password) throws BusinessException;
 
@@ -50,4 +51,8 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     void notificarUsuarioInactivo(DataSession dataSession, Usuario usuario) throws BusinessException;
 
     void softDelete(DataSession dataSession, Usuario usuario) throws BusinessException;
+
+    public boolean isLocked(DataSession dataSession, Usuario usuario);
+    public Date getLockedUntil(DataSession dataSession, Usuario usuario);
+    public void updateFailedLogin(DataSession dataSession, Usuario usuario);
 }

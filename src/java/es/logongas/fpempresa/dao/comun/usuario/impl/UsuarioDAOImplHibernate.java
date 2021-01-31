@@ -44,17 +44,30 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
     }
 
     @Override
-    public void updateFechaUltimoAccesoAndClearFechaEnvioCorreoAvisoBorrarUsuario(DataSession dataSession, Usuario usuario) {
+    public void updateSuccessfulLogin(DataSession dataSession, Usuario usuario) {
 
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
-        Query query = session.createSQLQuery("UPDATE usuario SET fechaUltimoAcceso=? ,fechaEnvioCorreoAvisoBorrarUsuario=NULL WHERE idIdentity=?");
+        Query query = session.createSQLQuery("UPDATE usuario SET fechaUltimoAcceso=? ,fechaEnvioCorreoAvisoBorrarUsuario=NULL,lockedUntil=null,numFailedLogins=0 WHERE idIdentity=?");
         
         query.setTimestamp(0, new Date());
         query.setInteger(1, usuario.getIdIdentity());
 
         query.executeUpdate();
-    }    
+    } 
+    
+    @Override
+    public void updateFailedLogin(DataSession dataSession, Usuario usuario, Date lockedUntil, int numFailedLogins) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        Query query = session.createSQLQuery("UPDATE usuario SET lockedUntil=?,numFailedLogins=? WHERE idIdentity=?");
+        
+        query.setTimestamp(0, lockedUntil);
+        query.setInteger(1, numFailedLogins);
+        query.setInteger(2, usuario.getIdIdentity());
+
+        query.executeUpdate();
+    }
     
     @Override
     public void updateFechaEnvioCorreoAvisoBorrarUsuario(DataSession dataSession, Usuario usuario) {

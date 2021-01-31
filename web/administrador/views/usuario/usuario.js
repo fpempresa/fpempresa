@@ -80,6 +80,12 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
         $scope.cambiarContrasenya = function () {
             dialog.create('cambiarContrasenya', $scope.model);
         };
+        
+        $scope.buttonDesbloquear = function () {
+            $scope.model.lockedUntil=null;
+            $scope.model.numFailedLogins=0;
+            
+        };        
 
     }]);
 

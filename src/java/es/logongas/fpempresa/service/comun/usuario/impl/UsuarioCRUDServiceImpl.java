@@ -93,8 +93,8 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     @Override
-    public void updateFechaUltimoAcceso(DataSession dataSession, Usuario usuario) throws BusinessException {
-       getUsuarioDAO().updateFechaUltimoAccesoAndClearFechaEnvioCorreoAvisoBorrarUsuario(dataSession, usuario);
+    public void updateSuccessfulLogin(DataSession dataSession, Usuario usuario) throws BusinessException {
+       getUsuarioDAO().updateSuccessfulLogin(dataSession, usuario);
     }
 
        
@@ -492,6 +492,79 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         
         return clave1.equals(clave2);
         
+    }
+
+    @Override
+    public boolean isLocked(DataSession dataSession, Usuario usuario) {
+        if (usuario.getLockedUntil()==null) {
+            return false;
+        }
+        
+        Date ahora=new Date();
+        
+        if (ahora.after(usuario.getLockedUntil())) {
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
+
+    @Override
+    public Date getLockedUntil(DataSession dataSession, Usuario usuario) {
+        if (isLocked(dataSession, usuario)==false) {
+            return null;
+        } else {
+            return usuario.getLockedUntil();
+        }
+    }
+
+    @Override
+    public void updateFailedLogin(DataSession dataSession, Usuario usuario) {
+        int currentNumFailedLogins=usuario.getNumFailedLogins();
+        
+        int numFailedLogins=currentNumFailedLogins+1;
+        int maxMinutesLocked=24*60; //Un dia
+        int minFailsUntilLock=5;
+        int numMinutesLockedAccount=calculateMinutesLockedAccount(numFailedLogins, maxMinutesLocked, minFailsUntilLock);
+        
+        Date lockedUntil;
+        if (numMinutesLockedAccount>0) {
+            Date ahora=new Date();
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(ahora);
+            calendar.add(Calendar.MINUTE,numMinutesLockedAccount);
+            lockedUntil = calendar.getTime();
+        } else {
+            lockedUntil=null;
+        }
+        
+        getUsuarioDAO().updateFailedLogin(dataSession,usuario, lockedUntil, numFailedLogins);
+        
+    }
+    
+    /**
+     * https://en.wikipedia.org/wiki/Logistic_function
+     * @param numFailedLogins
+     * @return 
+     */
+    private int calculateMinutesLockedAccount(int numFailedLogins,int maxMinutesLocked,int minFailsUntilLock) {
+        double k=0.891;
+        int x0=8;
+        
+        int minutesLockedAccount;
+        
+        if (numFailedLogins<minFailsUntilLock) {
+            minutesLockedAccount=0;
+        } else {
+            minutesLockedAccount=(int)Math.floor(maxMinutesLocked/(1+Math.exp(-k*((numFailedLogins-minFailsUntilLock)-x0))));
+        }
+        
+        if (minutesLockedAccount>maxMinutesLocked) {
+            minutesLockedAccount=maxMinutesLocked;
+        }
+        
+        return minutesLockedAccount;
     }
     
 

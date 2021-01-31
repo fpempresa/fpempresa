@@ -20,7 +20,6 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
-import es.logongas.ix3.security.model.Identity;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.security.authentication.impl.CredentialImplLoginPassword;
@@ -29,6 +28,8 @@ import es.logongas.ix3.security.authentication.Credential;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
     @Override
     public Principal authenticate(Credential credential, DataSession dataSession) throws BusinessException {
-
+        
         if ((credential instanceof CredentialImplLoginPassword) == false) {
             return null;
         }
@@ -60,78 +61,89 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
         Usuario usuario = usuarioService.readOriginalByNaturalKey(dataSession, credentialImplLoginPassword.getLogin());
 
-        if (usuario != null) {
-            String plainPassword = credentialImplLoginPassword.getPassword();
+        if (usuario == null) {
+            log.warn("Intento fallido de login. Usuario no existe : " + credentialImplLoginPassword.getLogin());
+            throw new BusinessException("El correo no existe");
+        }
+        
+        if (usuarioService.isLocked(dataSession, usuario)==true) {
+            Date dateLockedUntil=usuarioService.getLockedUntil(dataSession, usuario);
+            
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy' a las 'HH:mm:ss");
+            String stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
+            
+            throw new BusinessException("La cuenta está bloqueada hasta el " + stringLockedUntil);
+        }        
+        
+            
+            
+        String plainPassword = credentialImplLoginPassword.getPassword();
 
-            if (usuarioService.checkPassword(dataSession, usuario, plainPassword)) {
+        if (usuarioService.checkPassword(dataSession, usuario, plainPassword)==false) {
+            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin());
+            
+            usuarioService.updateFailedLogin(dataSession, usuario);
+            
+            throw new BusinessException("La contraseña no es válida");
+        }
+        
+        
+        
+        
+        if (!usuario.isValidadoEmail()) {
+            throw new BusinessException("Tu cuenta no está validada. Si no has recibido un correo para validarla, ponte en contacto con el soporte de empleaFP.");
+        }
+        
+        switch (usuario.getTipoUsuario()) {
+            case ADMINISTRADOR:
 
-                if (!usuario.isValidadoEmail()) {
-                    throw new BusinessException("Tu cuenta no está validada. Si no has recibido un correo para validarla, ponte en contacto con el soporte de empleaFP.");
+                if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                    throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:" + usuario.getEstadoUsuario());
                 }
 
-                switch (usuario.getTipoUsuario()) {
-                    case ADMINISTRADOR:
+                break;
+            case CENTRO:
 
-                        if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:" + usuario.getEstadoUsuario());
-                        }
-
-                        break;
-                    case CENTRO:
-
-                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getCentro() != null)) {
-                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" + usuario.getCentro() + "'");
-                        }
-
-                        if ((usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
-                            throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
-                        }
-
-                        break;
-                    case EMPRESA:
-
-                        if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getEmpresa() != null)) {
-                            throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" + usuario.getEmpresa() + "'");
-                        }
-
-                        break;
-                    case TITULADO:
-
-                        if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
-                            throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:" + usuario.getEstadoUsuario());
-                        }
-
-                        break;
+                if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getCentro() != null)) {
+                    throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" + usuario.getCentro() + "'");
                 }
 
-                if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) && (usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
+                if ((usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
                     throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
                 }
 
-                
-                
-                updateFechaUltimoAcceso(dataSession,usuario);
+                break;
+            case EMPRESA:
 
-                
-                Principal principal = usuario;
-                return principal;
-            } else {
-                log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin());
-                return null;
-            }
-        } else {
-            log.warn("Intento fallido de login. Usuario no existe : " + credentialImplLoginPassword.getLogin());
-            return null;
+                if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getEmpresa() != null)) {
+                    throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" + usuario.getEmpresa() + "'");
+                }
+
+                break;
+            case TITULADO:
+
+                if (usuario.getEstadoUsuario() != EstadoUsuario.ACEPTADO) {
+                    throw new BusinessException("Debes estar 'Aceptado' para poder entrar, pero tu estado es:" + usuario.getEstadoUsuario());
+                }
+
+                break;
         }
 
-    }
+        if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) && (usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
+            throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
+        }
 
-    private void updateFechaUltimoAcceso(DataSession dataSession,Usuario usuario) throws BusinessException {
-        UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
 
-        usuarioService.updateFechaUltimoAcceso(dataSession, usuario);    
+
+        usuarioService.updateSuccessfulLogin(dataSession, usuario);
+
+
+        Principal principal = usuario;
+        return principal;
+
+
+
     }
-    
     
     @Override
     public Principal getPrincipalBySID(Serializable sid, DataSession dataSession) throws BusinessException {
@@ -139,13 +151,6 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
 
         return usuarioService.readOriginal(dataSession, idIdentity);
-    }
-
-    protected Principal getPrincipalByLogin(String login, DataSession dataSession) throws BusinessException {
-        UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
-        Identity identity = usuarioService.readOriginalByNaturalKey(dataSession, login);
-
-        return identity;
     }
 
 }

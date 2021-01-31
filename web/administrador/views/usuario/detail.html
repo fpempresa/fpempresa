@@ -62,10 +62,15 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                     <input ng-model="model.validadoEmail" type="checkbox" id="validadoEmail" name="validadoEmail"  ix3-validation >
                                     Validado el correo electrónico
                                 </label>
-                                <br><br><spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
                             </div>
                         </div> 
                     </div>                                         
+                    <div class="row" >
+                        <div class="col-xs-10  col-xs-offset-2 form-horizontal">
+                            <br>
+                            <spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
+                        </div> 
+                    </div> 
                     
                     <legend class="form__title">Fechas</legend>
                     <div class="row" >
@@ -73,7 +78,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="fecha" class="col-xs-6  control-label" ix3-label></label>
                                 <div class="col-xs-6 ">
-                                    <input ng-model="model.fecha" type="text" class="form-control" id="fecha" name="fecha"  ix3-date  ix3-validation readonly="true">
+                                    <input ng-model="model.fecha" type="text" class="form-control" id="fecha" name="fecha"  ix3-date="dd/MM/yyyy HH:mm:ss"  ix3-validation readonly="true">
                                 </div>
                             </div> 
                         </div>
@@ -81,12 +86,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="fechaUltimoAcceso" class="col-xs-6  control-label" ix3-label></label>
                                 <div class="col-xs-6 ">
-                                    <input ng-model="model.fechaUltimoAcceso" type="text" class="form-control" id="fechaUltimoAcceso" name="fechaUltimoAcceso"  ix3-date  ix3-validation readonly="true">
+                                    <input ng-model="model.fechaUltimoAcceso" type="text" class="form-control" id="fechaUltimoAcceso" name="fechaUltimoAcceso"  ix3-date="dd/MM/yyyy HH:mm:ss"  ix3-validation readonly="true">
                                 </div>
                             </div> 
                         </div>
-                    </div>                    
-
+                    </div>  
+                    
+                    <legend class="form__title" ng-show="controllerAction === 'NEW'" >Contraseña</legend>
+                    
                     <div class="row" ng-show="controllerAction === 'NEW'" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">
@@ -106,6 +113,31 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         </div>  
                     </div>
 
+                    <legend class="form__title"  ng-show="controllerAction !== 'NEW'">Bloqueo de cuenta</legend>
+                    <div class="row" ng-show="controllerAction !== 'NEW'" >
+
+                        <div class="col-xs-6 form-horizontal">
+                            <div class="form-group">
+                                <label for="lockedUntil" class="col-xs-6  control-label" ix3-label></label>
+                                <div class="col-xs-6 ">
+                                    <input ng-model="model.lockedUntil" type="text" class="form-control" id="lockedUntil" name="lockedUntil"  ix3-date="dd/MM/yyyy HH:mm:ss"  ix3-validation ng-required="false"  readonly="true">
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-6 form-horizontal">
+                            <div class="form-group">
+                                <label for="numFailedLogins" class="col-xs-6  control-label" ix3-label></label>
+                                <div class="col-xs-6 ">
+                                    <input ng-model="model.numFailedLogins" type="text" class="form-control" id="numFailedLogins" name="numFailedLogins"    ix3-validation  ng-required="false" readonly="true">
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" ng-show="controllerAction === 'EDIT'" >
+                        <div class="col-xs-9 col-xs-offset-3 form-horizontal" >
+                            <button type="button"  class="btn form__button form__button--default" ng-click="buttonDesbloquear()">Desbloquear</button>
+                        </div>
+                    </div>                    
                     <legend class="form__title" ng-show="model.tipoUsuario === 'CENTRO'">Centro al que pertenece</legend>
                     <div class="row" ng-show="model.tipoUsuario === 'CENTRO'" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">

@@ -85,6 +85,13 @@ public class Usuario extends User implements Principal {
     @Label("Fecha envio correo aviso borrar usuario")
     private Date fechaEnvioCorreoAvisoBorrarUsuario;
     
+    @Label("Bloqueado hasta")
+    private Date lockedUntil;
+    
+    @Label("Nº de intentos fallidos")
+    private int numFailedLogins;  
+    
+    
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
     }
@@ -342,6 +349,34 @@ public class Usuario extends User implements Principal {
 
     public void setFechaEnvioCorreoAvisoBorrarUsuario(Date fechaEnvioCorreoAvisoBorrarUsuario) {
         this.fechaEnvioCorreoAvisoBorrarUsuario = fechaEnvioCorreoAvisoBorrarUsuario;
+    }
+
+    /**
+     * @return the lockedUntil
+     */
+    public Date getLockedUntil() {
+        return lockedUntil;
+    }
+
+    /**
+     * @param lockedUntil the lockedUntil to set
+     */
+    public void setLockedUntil(Date lockedUntil) {
+        this.lockedUntil = lockedUntil;
+    }
+
+    /**
+     * @return the numFailedLogins
+     */
+    public int getNumFailedLogins() {
+        return numFailedLogins;
+    }
+
+    /**
+     * @param numFailedLogins the numFailedLogins to set
+     */
+    public void setNumFailedLogins(int numFailedLogins) {
+        this.numFailedLogins = numFailedLogins;
     }
     
 }

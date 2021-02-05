@@ -26,6 +26,7 @@ import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -47,9 +48,11 @@ public class FormacionAcademica {
     private Ciclo ciclo;
 
     @Label("Nombre centro")
+    @Size(max = 255)
     private String otroCentro;
 
     @Label("Titulo")
+    @Size(max = 255)
     private String otroTitulo;
 
     @NotNull

@@ -17,7 +17,6 @@ package es.logongas.fpempresa.security;
 
 import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
-import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
@@ -30,6 +29,7 @@ import es.logongas.ix3.service.CRUDServiceFactory;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,23 +69,17 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         if (usuarioService.isLocked(dataSession, usuario)==true) {
             Date dateLockedUntil=usuarioService.getLockedUntil(dataSession, usuario);
             
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy' a las 'HH:mm:ss");
-            String stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
+            String stringLockedUntil;
+            if (DateUtils.isSameDay(dateLockedUntil, new Date())) {
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("'las 'HH:mm:ss");
+                stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
+            } else {
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("'el 'dd/MM/yyyy' a las 'HH:mm:ss");
+                stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
+            }
             
-            throw new BusinessException("La cuenta está bloqueada hasta el " + stringLockedUntil);
+            throw new BusinessException("La cuenta está bloqueada hasta " + stringLockedUntil);
         }        
-        
-            
-            
-        String plainPassword = credentialImplLoginPassword.getPassword();
-
-        if (usuarioService.checkPassword(dataSession, usuario, plainPassword)==false) {
-            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin());
-            
-            usuarioService.updateFailedLogin(dataSession, usuario);
-            
-            throw new BusinessException("La contraseña no es válida");
-        }
         
         
         
@@ -93,7 +87,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         if (!usuario.isValidadoEmail()) {
             throw new BusinessException("Tu cuenta no está validada. Si no has recibido un correo para validarla, ponte en contacto con el soporte de empleaFP.");
         }
-        
+           
         switch (usuario.getTipoUsuario()) {
             case ADMINISTRADOR:
 
@@ -129,8 +123,12 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                 break;
         }
 
-        if ((usuario.getTipoUsuario() == TipoUsuario.CENTRO) && (usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {
-            throw new BusinessException("Tu centro debe pertenecer a FPempresa para poder entrar");
+        
+        String plainPassword = credentialImplLoginPassword.getPassword();
+        if (usuarioService.checkPassword(dataSession, usuario, plainPassword)==false) {
+            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin());
+            usuarioService.updateFailedLogin(dataSession, usuario);
+            throw new BusinessException("La contraseña no es válida");
         }
 
 

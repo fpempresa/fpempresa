@@ -36,6 +36,8 @@ public class DateUtil {
     }
 
     public enum Interval {
+        MINUTE(Calendar.MINUTE),
+        HOUR(Calendar.HOUR),        
         DAY(Calendar.DATE),
         MONTH(Calendar.MONTH),
         YEAR(Calendar.YEAR);
@@ -52,5 +54,5 @@ public class DateUtil {
         
         
     }
-
+    
 }

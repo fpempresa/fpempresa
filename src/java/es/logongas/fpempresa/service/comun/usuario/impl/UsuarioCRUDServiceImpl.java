@@ -330,11 +330,16 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             }           
             
             Date now = new Date();
-            long diasClaveResetearPaswordEsValida = Integer.parseInt(Config.getSetting("app.diasClaveResetearPasswordEsValida"));
-            if (usuario.getFechaClaveResetearContrasenya().getTime() + diasClaveResetearPaswordEsValida * 1000 * 60 * 60 * 24 > now.getTime()) {
+            int diasClaveResetearPaswordEsValida = Integer.parseInt(Config.getSetting("app.diasClaveResetearPasswordEsValida"));
+            if (now.before(DateUtil.add(usuario.getFechaClaveResetearContrasenya(), DateUtil.Interval.DAY, diasClaveResetearPaswordEsValida)))  {
                 this.updatePassword(dataSession, usuario, nuevaContrasenya);
                 usuario.setFechaClaveResetearContrasenya(null);
                 usuario.setClaveResetearContrasenya(null);
+                
+                //Tambien desbloqueamos la cuenta
+                usuario.setLockedUntil(null);
+                usuario.setNumFailedLogins(0);
+                
                 getUsuarioDAO().update(dataSession, usuario);
             } else {
                 throw new BusinessException("El token ha caducado");
@@ -524,17 +529,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         int currentNumFailedLogins=usuario.getNumFailedLogins();
         
         int numFailedLogins=currentNumFailedLogins+1;
-        int maxMinutesLocked=24*60; //Un dia
-        int minFailsUntilLock=5;
-        int numMinutesLockedAccount=calculateMinutesLockedAccount(numFailedLogins, maxMinutesLocked, minFailsUntilLock);
-        
+        int numMinutesLockedAccount=calculateMinutesLockedAccount(numFailedLogins);
+
         Date lockedUntil;
         if (numMinutesLockedAccount>0) {
             Date ahora=new Date();
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(ahora);
-            calendar.add(Calendar.MINUTE,numMinutesLockedAccount);
-            lockedUntil = calendar.getTime();
+            lockedUntil=DateUtil.add(ahora, DateUtil.Interval.MINUTE, numMinutesLockedAccount);
         } else {
             lockedUntil=null;
         }
@@ -545,10 +545,14 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     
     /**
      * https://en.wikipedia.org/wiki/Logistic_function
+     * Los minutos de bloqueo son: 1,2,6,16,39,93,207,....
      * @param numFailedLogins
      * @return 
      */
-    private int calculateMinutesLockedAccount(int numFailedLogins,int maxMinutesLocked,int minFailsUntilLock) {
+    private int calculateMinutesLockedAccount(int numFailedLogins) {
+        int maxMinutesLocked=Integer.parseInt(Config.getSetting("app.account.maxMinutesLocked"));
+        int minFailsUntilLock= Integer.parseInt(Config.getSetting("app.account.minFailsUntilLock"));
+        
         double k=0.891;
         int x0=8;
         

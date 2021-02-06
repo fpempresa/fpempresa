@@ -18,6 +18,7 @@ package es.logongas.fpempresa.service.notification.impl;
 
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
+import es.logongas.ix3.util.ExceptionUtil;
 import es.logongas.ix3.web.util.ExceptionNotify;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
@@ -37,31 +38,20 @@ public class ExceptionNotifyImpl implements ExceptionNotify {
         String className=throwable.getClass().getSimpleName();
         
         if (throwable instanceof BusinessSecurityException) {
-            notification.exception(className + ":"+ throwable.getLocalizedMessage(), throwable.toString(), null);
+            //No se notifican por correo las de seguridad
         } else {
-            notification.exception(className + ":"+ throwable.getLocalizedMessage(), getHttpRequestAsString(httpServletRequest), throwable);
+            notification.exception(className + ":"+ ExceptionUtil.getOriginalExceptionFromThrowable(throwable).getLocalizedMessage(), getHttpRequestAsString(httpServletRequest), throwable);
         }
-    }
+    }  
     
     private String getHttpRequestAsString(HttpServletRequest httpServletRequest) {
         StringBuilder sb=new StringBuilder();
-        sb.append("\n\tURL=");
-        sb.append(httpServletRequest.getRequestURI()); 
-        sb.append("\n\tQueryString=");
-        sb.append(httpServletRequest.getQueryString()); 
-        sb.append("\n\tMethod=");
         sb.append(httpServletRequest.getMethod()); 
-        sb.append("\n\tHeaders:");
-        Enumeration<String> names=httpServletRequest.getHeaderNames();
-        while (names.hasMoreElements()) {
-            String name=names.nextElement();
-            String value=httpServletRequest.getHeader(name);
-
-            sb.append("\n\t\t");
-            sb.append(name);
-            sb.append("=");
-            sb.append(value);
-         
+        sb.append(" "); 
+        sb.append(httpServletRequest.getRequestURI()); 
+        if (httpServletRequest.getQueryString()!=null) {
+            sb.append(" "); 
+            sb.append(httpServletRequest.getQueryString()); 
         }
 
         return sb.toString();

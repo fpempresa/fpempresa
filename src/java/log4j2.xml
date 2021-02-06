@@ -4,12 +4,24 @@
         <Console name="Consola" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
         </Console>
-        <RollingFile name="Fichero" fileName="${sys:catalina.base}/logs/fpempresa.log" filePattern="${sys:catalina.base}/logs/fpempresa.%d{yyyy-MM-dd}.log">
-            <PatternLayout pattern="%d{HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+        <RollingFile name="Fichero" fileName="${sys:catalina.base}/logs/fpempresa.log" filePattern="${sys:catalina.base}/logs/fpempresa.%d{yyyy-w}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
-            </Policies>      
-        </RollingFile>    
+            </Policies>
+        </RollingFile>
+        <RollingFile name="FicheroSeguridad" fileName="${sys:catalina.base}/logs/fpempresa_security.log" filePattern="${sys:catalina.base}/logs/fpempresa_security.%d{yyyy-w}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %MAP{message} %throwable{short.localizedMessage}%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>     
+        </RollingFile> 
+        <RollingFile name="FicheroExcepciones" fileName="${sys:catalina.base}/logs/fpempresa_exceptions.log" filePattern="${sys:catalina.base}/logs/fpempresa_exceptions.%d{yyyy-w}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %MAP{message}%n%MAP{Method} %MAP{RequestURI} %MAP{QueryString}%n%throwable%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>     
+        </RollingFile> 
     </Appenders>
     <Loggers>
         <Root level="WARN">
@@ -23,11 +35,19 @@
         <Logger name="org.hibernate.SQL" level="WARN" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="Fichero"/>      
-        </Logger>  
+        </Logger>           
         <Logger name="org.hibernate.hql.internal.ast.HqlSqlWalker" level="WARN" additivity="false">
             <RegexFilter regex=".*\[DEPRECATION\].*" onMatch="DENY" onMismatch="NEUTRAL"/>
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="Fichero"/> 
-        </Logger>                
+        </Logger> 
+        <Logger name="java.lang.Exception" level="WARN" additivity="false">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="FicheroExcepciones"/>      
+        </Logger> 
+        <Logger name="es.logongas.ix3.security.authorization.BusinessSecurityException" level="WARN" additivity="false">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="FicheroSeguridad"/>      
+        </Logger>         
     </Loggers>
 </Configuration>

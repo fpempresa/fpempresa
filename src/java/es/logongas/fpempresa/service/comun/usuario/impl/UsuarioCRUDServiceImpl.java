@@ -535,6 +535,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         if (numMinutesLockedAccount>0) {
             Date ahora=new Date();
             lockedUntil=DateUtil.add(ahora, DateUtil.Interval.MINUTE, numMinutesLockedAccount);
+            log.warn("Bloqueada cuenta " + usuario.getEmail() + " durante " + numMinutesLockedAccount + " minutos");
         } else {
             lockedUntil=null;
         }

@@ -29,6 +29,7 @@ import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
+import es.logongas.ix3.web.util.exception.ExceptionHelper;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +59,8 @@ public class EstadisticasController {
     @Autowired
     private ControllerHelper controllerHelper;
     @Autowired
+    private ExceptionHelper exceptionHelper; 
+    @Autowired
     private Conversion conversion;    
 
     @RequestMapping(value = {"/{path}/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
@@ -75,7 +78,7 @@ public class EstadisticasController {
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasCentro(new EstadisticasBusinessProcess.GetEstadisticasCentroArguments(principal, dataSession, centro,anyoInicio,anyoFin));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -92,7 +95,7 @@ public class EstadisticasController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -106,7 +109,7 @@ public class EstadisticasController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -117,7 +120,7 @@ public class EstadisticasController {
             Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasPublicas(new EstadisticasBusinessProcess.GetEstadisticasPublicasArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -129,7 +132,7 @@ public class EstadisticasController {
             List<FamiliaOfertasEstadistica>  familiasOfertasEstadistica=estadisticasBusinessProcess.getEstadisticasFamiliaOfertasPublicas(new EstadisticasBusinessProcess.GetEstadisticasFamiliaOfertasPublicasArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(familiasOfertasEstadistica), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -141,7 +144,7 @@ public class EstadisticasController {
             EstadisticasPrincipal estadisticasPrincipal=estadisticasBusinessProcess.getEstadisticasPrincipal(new EstadisticasBusinessProcess.GetEstadisticasPrincipalArguments(principal, dataSession));
             controllerHelper.objectToHttpResponse(new HttpResult(estadisticasPrincipal), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }    
     

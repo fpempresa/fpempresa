@@ -19,8 +19,7 @@ package es.logongas.fpempresa.service.notification.impl;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
 import es.logongas.ix3.util.ExceptionUtil;
-import es.logongas.ix3.web.util.ExceptionNotify;
-import java.util.Enumeration;
+import es.logongas.ix3.web.util.exception.ExceptionNotify;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 

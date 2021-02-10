@@ -12,9 +12,7 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
-import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
 import es.logongas.fpempresa.businessprocess.empresa.CandidatoCRUDBusinessProcess;
-import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcessFactory;
 import es.logongas.ix3.core.BusinessException;
@@ -27,6 +25,7 @@ import es.logongas.ix3.web.json.JsonFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
 import es.logongas.ix3.web.util.MimeType;
+import es.logongas.ix3.web.util.exception.ExceptionHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +33,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -50,6 +47,8 @@ public class CandidatoController {
     private CRUDBusinessProcessFactory crudBusinessProcessFactory;
     @Autowired
     private ControllerHelper controllerHelper;
+    @Autowired
+    private ExceptionHelper exceptionHelper; 
     @Autowired
     private DataSessionFactory dataSessionFactory;
     @Autowired
@@ -69,7 +68,7 @@ public class CandidatoController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 

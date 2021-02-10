@@ -14,13 +14,13 @@ package es.logongas.fpempresa.presentacion.controller.log;
 
 import es.logongas.fpempresa.businessprocess.log.LogBusinessProcess;
 import es.logongas.fpempresa.businessprocess.log.ServerLogConfig;
-import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.web.json.JsonFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
+import es.logongas.ix3.web.util.exception.ExceptionHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +42,8 @@ public class LogController {
     @Autowired
     private ControllerHelper controllerHelper;
     @Autowired
+    private ExceptionHelper exceptionHelper;    
+    @Autowired
     private DataSessionFactory dataSessionFactory;
     @Autowired
     private JsonFactory jsonFactory;
@@ -55,7 +57,7 @@ public class LogController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -71,7 +73,7 @@ public class LogController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(serverLogConfig), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }

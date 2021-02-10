@@ -30,6 +30,7 @@ import es.logongas.ix3.web.util.MimeType;
 import es.logongas.ix3.web.json.JsonReader;
 import es.logongas.ix3.web.security.WebSessionSidStorage;
 import es.logongas.ix3.web.util.ControllerHelper;
+import es.logongas.ix3.web.util.exception.ExceptionHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,8 @@ public class UsuarioRESTController {
     @Autowired
     private ControllerHelper controllerHelper;
     @Autowired
+    private ExceptionHelper exceptionHelper; 
+    @Autowired
     private DataSessionFactory dataSessionFactory;
     @Autowired
     private JsonFactory jsonFactory;
@@ -80,7 +83,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -106,7 +109,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(usuario), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -126,7 +129,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -146,7 +149,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, foto, 200, false, null, MimeType.OCTET_STREAM), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -168,7 +171,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }
@@ -188,7 +191,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null, curriculum, 200, false, null, MimeType.PDF), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     @RequestMapping(value = {"/{path}/Usuario/enviarMailResetearContrasenya/{email:.+}"}, method = RequestMethod.POST)
@@ -199,7 +202,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.enviarMailResetearContrasenya(new UsuarioCRUDBusinessProcess.EnviarMailResetearContrasenyaArguments(principal, dataSession, email));
             controllerHelper.objectToHttpResponse(new HttpResult(email), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
 
@@ -215,7 +218,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.validarEmail(new UsuarioCRUDBusinessProcess.ValidarEmailArguments(principal, dataSession, usuario, claveValidarEmail));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }    
     
@@ -234,7 +237,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.resetearContrasenya(new UsuarioCRUDBusinessProcess.ResetearContrasenyaArguments(principal, dataSession, usuario, resetPassword.claveResetearContrasenya, resetPassword.nuevaContrasenya));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -248,7 +251,7 @@ public class UsuarioRESTController {
             usuarioCRUDBusinessProcess.enviarMensajeSoporte(new UsuarioCRUDBusinessProcess.EnviarMensajeSoporteArguments(principal, dataSession, mensajeSoporte.nombre, mensajeSoporte.correo,mensajeSoporte.mensaje));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }    
     
@@ -267,7 +270,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     
@@ -286,7 +289,7 @@ public class UsuarioRESTController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
     

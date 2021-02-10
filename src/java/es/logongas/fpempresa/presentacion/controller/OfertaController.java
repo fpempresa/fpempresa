@@ -26,6 +26,7 @@ import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
+import es.logongas.ix3.web.util.exception.ExceptionHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class OfertaController {
     @Autowired
     private ControllerHelper controllerHelper;
     @Autowired
+    private ExceptionHelper exceptionHelper; 
+    @Autowired
     private DataSessionFactory dataSessionFactory;
 
 
@@ -65,7 +68,7 @@ public class OfertaController {
 
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
-            controllerHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
 
     }    

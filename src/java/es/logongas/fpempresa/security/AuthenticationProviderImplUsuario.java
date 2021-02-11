@@ -43,7 +43,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
     @Autowired
     CRUDServiceFactory crudServiceFactory;
-
+    
     protected final Logger log = LogManager.getLogger(getClass());
 
     @Override
@@ -126,7 +126,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         
         String plainPassword = credentialImplLoginPassword.getPassword();
         if (usuarioService.checkPassword(dataSession, usuario, plainPassword)==false) {
-            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin());
+            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin() + " " + usuario.getNumFailedLogins() + " " + usuario.getLockedUntil());
             usuarioService.updateFailedLogin(dataSession, usuario);
             throw new BusinessException("La contraseña no es válida");
         }

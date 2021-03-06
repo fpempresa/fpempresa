@@ -69,7 +69,7 @@ public class ImageUtil {
 
         if (bufferedImage==null) {
             image=null;
-        } if (canWriteImageToJPEG(bufferedImage)) {
+        } else if (canWriteImageToJPEG(bufferedImage)) {
             image=bufferedImage;
         } else {
             BufferedImage bufferedImageWhiteBackground=getBufferedImageToWhiteBackground(bufferedImage);

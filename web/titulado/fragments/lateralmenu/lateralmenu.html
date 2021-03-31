@@ -31,7 +31,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 </h1> 
             <p class="form__text form__text--help hidden-xs">
                 Modifica tu currículum, busca empleo y configura tu cuenta
-            </p>          
+            </p>
+            <div class="alert alert-warning alert-dismissible" ng-show="user.titulado && user.titulado.configuracion.notificacionOferta.notificarPorEmail!==true" style="text-align: left">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Tienes configurado que <strong>NO</strong> te enviemos un correo cuando se publiquen nuevas ofertas.
+            </div>
         </div>
     </div>
     <div class="row">

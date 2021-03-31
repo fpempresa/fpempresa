@@ -46,5 +46,7 @@
         <property name="lockedUntil"/>
         <property name="numFailedLogins"/>
         
+        <property name="aceptarEnvioCorreos"/>
+
     </joined-subclass>
 </hibernate-mapping>

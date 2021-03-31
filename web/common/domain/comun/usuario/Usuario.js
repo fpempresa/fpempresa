@@ -35,6 +35,7 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                             label: 'Confirmar Contraseña',
                             message: 'No es igual a la contraseña',
                             executeInActions: ['INSERT'],
+                            stopOnFail:true,
                             rule: function () {
                                 if (this.password === this.confirmPassword) {
                                     return true;
@@ -47,6 +48,7 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                             label: "Terminos de uso y privacidad",
                             message: 'Debe aceptar los terminos de uso y la política de privacidad',
                             executeInActions: ['INSERT'],
+                            stopOnFail:true,
                             rule: function () {
                                 if (this.aceptarCondicionesPolitica === true) {
                                     return true;
@@ -56,21 +58,10 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                             }
                         },
                         {
-                            label: "Envio de correos",
-                            message: 'Debe aceptar que se envien correos electrónicos',
+                            label: "Exactitud, veracidad y ofertas",
+                            message: 'Debe aceptar que los centros educativos puedan comprobar los datos académicos así como conocer en que ofertas me he inscrito',
                             executeInActions: ['INSERT'],
-                            rule: function () {
-                                if (this.aceptarEnvioCorreos === true) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        },                      
-                        {
-                            label: "Exactitud y veracidad",
-                            message: 'Debe aceptar que los centros educativos puedan comprobar los datos académicos',
-                            executeInActions: ['INSERT'],
+                            stopOnFail:true,
                             rule: function () {
                                 if (this.tipoUsuario === 'TITULADO') {
                                     if (this.aceptarVerificarTitulo === true) {
@@ -82,8 +73,29 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                                     return true;
                                 }
                             }
+                        },
+                        {
+                            label: "Envio de correos",
+                            message: 'Si no marcas esta opción no te llegarán por correo las ofertas de empleo',
+                            executeInActions: ['INSERT'],
+                            rule: function () {
+                                if (this.tipoUsuario!=="TITULADO") {
+                                    return true;
+                                }
+                                
+                                if (this.__avisadoDebeAceptarEnvioCorreos===true) {
+                                    return true;
+                                }
+                                
+                                this.__avisadoDebeAceptarEnvioCorreos=true;
+                                
+                                if (this.aceptarEnvioCorreos === true) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
                         }
-
                     ]
                 };
 

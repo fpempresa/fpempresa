@@ -22,20 +22,17 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
-import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.mail.Attach;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
-import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
@@ -102,28 +99,10 @@ public class NotificationImpl implements Notification {
         } 
         
         if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
-            UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-
-            List<Usuario> usuarios;
-            try {
-                usuarios = usuarioCRUDService.getUsuariosFromEmpresa(dataSession, empresa.getIdEmpresa());
-            } catch (BusinessException ex) {
-                throw new RuntimeException(ex);
-            }
-            
-            if (usuarios.isEmpty()) {
-                throw new RuntimeException("No existe ningun usuario al que notificar");
-            }
-            Usuario usuario=usuarios.get(0);
-            direccionEMail=usuario.getEmail();
-            persona=usuario.getNombre()+"";
-            
-            if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
-                throw new RuntimeException("El usuario no tiene email:"+usuario.getLogin());
-            }
+            log.warn("No se ha enviado correo del candidato a la empresa " + empresa.getIdEmpresa()  + " al no existir el correo");
+            return;
         }
-        
-        
+
         mail.addTo(direccionEMail);
         mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
         mail.setHtmlBody("Hola <strong>" + StringEscapeUtils.escapeHtml4(persona) + "</strong>,<br>"
@@ -228,8 +207,8 @@ public class NotificationImpl implements Notification {
     
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
-        mailService.send(mail);
-             log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
+            mailService.send(mail);
+            log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         } else {
             log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         }    

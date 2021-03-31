@@ -91,6 +91,8 @@ public class Usuario extends User implements Principal {
     @Label("Nº de intentos fallidos")
     private int numFailedLogins;  
     
+    @Label("Aceptar envio de correos")
+    private boolean aceptarEnvioCorreos;  
     
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
@@ -378,5 +380,19 @@ public class Usuario extends User implements Principal {
     public void setNumFailedLogins(int numFailedLogins) {
         this.numFailedLogins = numFailedLogins;
     }
-    
+
+    /**
+     * @return the aceptarEnvioCorreos
+     */
+    public boolean isAceptarEnvioCorreos() {
+        return aceptarEnvioCorreos;
+    }
+
+    /**
+     * @param aceptarEnvioCorreos the aceptarEnvioCorreos to set
+     */
+    public void setAceptarEnvioCorreos(boolean aceptarEnvioCorreos) {
+        this.aceptarEnvioCorreos = aceptarEnvioCorreos;
+    }
+
 }

@@ -38,6 +38,10 @@
                         }
 
                         businessMessages.push(businessMessage);
+                        
+                        if (validator.stopOnFail===true) {
+                            break;
+                        }
                     }
 
                 }

@@ -34,19 +34,24 @@ public class TituladoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Tit
     @Override
     public Titulado insert(InsertArguments<Titulado> insertArguments) throws BusinessException {
         try {
-            Titulado titulado;
+            Titulado titulado=insertArguments.entity;
             Usuario usuario = (Usuario) insertArguments.principal;
 
             transactionManager.begin(insertArguments.dataSession);
 
             if (usuario.getTipoUsuario() == TipoUsuario.TITULADO) {
 
-                Usuario empresario = serviceFactory.getService(Usuario.class).read(insertArguments.dataSession, usuario.getIdIdentity());
-                empresario.setTitulado(insertArguments.entity);
-                empresario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-                serviceFactory.getService(Usuario.class).update(insertArguments.dataSession, empresario);
+                Usuario usuarioTitulado = serviceFactory.getService(Usuario.class).read(insertArguments.dataSession, usuario.getIdIdentity());
+                usuarioTitulado.setTitulado(insertArguments.entity);
+                usuarioTitulado.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+                serviceFactory.getService(Usuario.class).update(insertArguments.dataSession, usuarioTitulado);
+                
+                if (usuarioTitulado.isAceptarEnvioCorreos()) {
+                    titulado.getConfiguracion().getNotificacionOferta().setNotificarPorEmail(true);
+                }
+                
             }
-            titulado = serviceFactory.getService(Titulado.class).insert(insertArguments.dataSession, insertArguments.entity);
+            titulado = serviceFactory.getService(Titulado.class).insert(insertArguments.dataSession, titulado);
 
             transactionManager.commit(insertArguments.dataSession);
 

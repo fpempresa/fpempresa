@@ -97,7 +97,6 @@ public class Titulado {
         if (configuracion.getNotificacionOferta().getProvincias().isEmpty()) {
             if ((direccion!=null) && (direccion.getMunicipio()!=null) && (direccion.getMunicipio().getProvincia()!=null)) {
                 configuracion.getNotificacionOferta().getProvincias().add(direccion.getMunicipio().getProvincia());
-                configuracion.getNotificacionOferta().setNotificarPorEmail(true);
             }
         }
     }

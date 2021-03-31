@@ -43,7 +43,7 @@
         expands.add("empresa.direccion.municipio.provincia");
         expands.add("centro.direccion.municipio.provincia");
         expands.add("titulado.direccion.municipio.provincia");
-        BeanMapper beanMapper=new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>", null);
+        BeanMapper beanMapper=new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>,fechaEnvioCorreoAvisoBorrarUsuario,lockedUntil,numFailedLogins,aceptarEnvioCorreos,claveResetearContrasenya,fechaClaveResetearContrasenya", null);
         if (sid == null) {
             principal = null;
         } else {

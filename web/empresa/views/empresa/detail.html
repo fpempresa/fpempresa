@@ -118,10 +118,19 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                 </div>
                             </div> 
                         </div> 
-                        <div class="col-xs-12 col-sm-6" >
-                            <div class="alert alert-info">A este correo electrónico le llegarán los currículums de los titulados incritos en sus ofertas</div>
-                        </div>
                     </div> 
+                    <div class="row" >
+                        <div class="col-xs-9 col-xs-offset-3" >
+                            <div class="alert alert-info">A esta dirección de correo llegarán los currículums de los titulados incritos en tus ofertas</div>
+                        </div>
+                        
+                    </div> 
+                    <div class="row" ix3-visibility="model.contacto.email==''">
+                        <div class="col-xs-9 col-xs-offset-3" >
+                            <div class="alert alert-danger">Si dejas la dirección de correo vacia, no te llegarán los correos con los currículums de los titulados incritos en tus ofertas aunque siempre puedes entrar en EmpleaFP para verlos</div>
+                        </div>
+                        
+                    </div>                     
                     <div class="row" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">

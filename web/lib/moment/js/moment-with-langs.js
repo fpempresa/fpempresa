@@ -503,7 +503,22 @@
     }
 
     function daysInMonth(year, month) {
-        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+        
+        function mod(n, x) {
+            return ((n % x) + x) % x;
+        }
+        
+        if (isNaN(year) || isNaN(month)) {
+            return NaN;
+        }
+        var modMonth = mod(month, 12);
+        year += (month - modMonth) / 12;
+        result=( modMonth === 1
+            ? isLeapYear(year)
+                ? 29
+                : 28
+            : 31 - ((modMonth % 7) % 2));
+        return result;
     }
 
     function daysInYear(year) {

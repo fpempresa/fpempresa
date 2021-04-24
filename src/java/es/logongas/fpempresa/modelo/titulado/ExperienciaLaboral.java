@@ -41,12 +41,10 @@ public class ExperienciaLaboral {
     private String nombreEmpresa;
 
     @Past
-    @es.logongas.ix3.core.annotations.Date
     @Label("Fecha Inicio")
     private Date fechaInicio;
 
     @Past
-    @es.logongas.ix3.core.annotations.Date
     @Label("Fecha final")
     private Date fechaFin;
 

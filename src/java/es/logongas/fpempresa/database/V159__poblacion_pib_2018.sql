@@ -1,0 +1,57 @@
+/** La población y el PIB son de 2018 **/
+
+ALTER TABLE `provincia`
+	ADD COLUMN `pib` INT NULL AFTER `poblacion`;
+
+UPDATE `provincia` SET poblacion=388786 , pib=8235408 WHERE idProvincia=2;
+UPDATE `provincia` SET poblacion=1838819 , pib=36521398 WHERE idProvincia=3;
+UPDATE `provincia` SET poblacion=709340 , pib=13979829 WHERE idProvincia=4;
+UPDATE `provincia` SET poblacion=328868 , pib=11882941 WHERE idProvincia=1;
+UPDATE `provincia` SET poblacion=1028244 , pib=23258673 WHERE idProvincia=33;
+UPDATE `provincia` SET poblacion=158498 , pib=3252395 WHERE idProvincia=5;
+UPDATE `provincia` SET poblacion=676376 , pib=12423261 WHERE idProvincia=6;
+UPDATE `provincia` SET poblacion=1128908 , pib=32767619 WHERE idProvincia=7;
+UPDATE `provincia` SET poblacion=5609350 , pib=171350447 WHERE idProvincia=8;
+UPDATE `provincia` SET poblacion=1149628 , pib=36085689 WHERE idProvincia=48;
+UPDATE `provincia` SET poblacion=357070 , pib=10505020 WHERE idProvincia=9;
+UPDATE `provincia` SET poblacion=396487 , pib=7664977 WHERE idProvincia=10;
+UPDATE `provincia` SET poblacion=1238714 , pib=22535246 WHERE idProvincia=11;
+UPDATE `provincia` SET poblacion=580229 , pib=13737756 WHERE idProvincia=39;
+UPDATE `provincia` SET poblacion=576898 , pib=16149473 WHERE idProvincia=12;
+UPDATE `provincia` SET poblacion=499100 , pib=10689033 WHERE idProvincia=13;
+UPDATE `provincia` SET poblacion=785240 , pib=14534325 WHERE idProvincia=14;
+UPDATE `provincia` SET poblacion=1119351 , pib=26682181 WHERE idProvincia=15;
+UPDATE `provincia` SET poblacion=197222 , pib=4536392 WHERE idProvincia=16;
+UPDATE `provincia` SET poblacion=720592 , pib=24060930 WHERE idProvincia=20;
+UPDATE `provincia` SET poblacion=761947 , pib=21208782 WHERE idProvincia=17;
+UPDATE `provincia` SET poblacion=912075 , pib=16687601 WHERE idProvincia=18;
+UPDATE `provincia` SET poblacion=254308 , pib=5245815 WHERE idProvincia=19;
+UPDATE `provincia` SET poblacion=519932 , pib=10607333 WHERE idProvincia=21;
+UPDATE `provincia` SET poblacion=219345 , pib=6134249 WHERE idProvincia=22;
+UPDATE `provincia` SET poblacion=638099 , pib=11808429 WHERE idProvincia=23;
+UPDATE `provincia` SET poblacion=463746 , pib=10006588 WHERE idProvincia=24;
+UPDATE `provincia` SET poblacion=432866 , pib=12218853 WHERE idProvincia=25;
+UPDATE `provincia` SET poblacion=331327 , pib=7692177 WHERE idProvincia=27;
+UPDATE `provincia` SET poblacion=6578079 , pib=231133592 WHERE idProvincia=28;
+UPDATE `provincia` SET poblacion=1641121 , pib=31023255 WHERE idProvincia=29;
+UPDATE `provincia` SET poblacion=1478509 , pib=31198376 WHERE idProvincia=30;
+UPDATE `provincia` SET poblacion=647554 , pib=20047454 WHERE idProvincia=31;
+UPDATE `provincia` SET poblacion=309293 , pib=6813831 WHERE idProvincia=32;
+UPDATE `provincia` SET poblacion=162035 , pib=4407310 WHERE idProvincia=34;
+UPDATE `provincia` SET poblacion=1109175 , pib=23553372 WHERE idProvincia=35;
+UPDATE `provincia` SET poblacion=941772 , pib=21247944 WHERE idProvincia=36;
+UPDATE `provincia` SET poblacion=315675 , pib=8593185 WHERE idProvincia=26;
+UPDATE `provincia` SET poblacion=331473 , pib=7048640 WHERE idProvincia=37;
+UPDATE `provincia` SET poblacion=1018510 , pib=22269949 WHERE idProvincia=38;
+UPDATE `provincia` SET poblacion=153342 , pib=3418981 WHERE idProvincia=40;
+UPDATE `provincia` SET poblacion=1939887 , pib=39535345 WHERE idProvincia=41;
+UPDATE `provincia` SET poblacion=88600 , pib=2380731 WHERE idProvincia=42;
+UPDATE `provincia` SET poblacion=795902 , pib=24567640 WHERE idProvincia=43;
+UPDATE `provincia` SET poblacion=134572 , pib=3367236 WHERE idProvincia=44;
+UPDATE `provincia` SET poblacion=687391 , pib=12814575 WHERE idProvincia=45;
+UPDATE `provincia` SET poblacion=2547986 , pib=59123107 WHERE idProvincia=46;
+UPDATE `provincia` SET poblacion=519851 , pib=13998460 WHERE idProvincia=47;
+UPDATE `provincia` SET poblacion=174549 , pib=3459100 WHERE idProvincia=49;
+UPDATE `provincia` SET poblacion=954811 , pib=27348811 WHERE idProvincia=50;
+UPDATE `provincia` SET poblacion=85144 , pib=1720295 WHERE idProvincia=51;
+UPDATE `provincia` SET poblacion=86384 , pib=1582540 WHERE idProvincia=52;

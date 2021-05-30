@@ -157,6 +157,8 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 + "   familia.idFamilia,familia.descripcion,COUNT(formacionacademica.idTitulado) as valor\n"
                 + "FROM\n"
                 + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
+                + "WHERE\n"
+                + "   formacionacademica.tipoFormacionAcademica='CICLO_FORMATIVO' \n"
                 + "GROUP BY\n"
                 + "	familia.idFamilia,familia.descripcion";
 
@@ -174,6 +176,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 + "FROM\n"
                 + "   familia JOIN (ciclo  JOIN formacionacademica  ON ciclo.idCiclo=formacionacademica.idCiclo) ON familia.idFamilia=ciclo.idFamilia\n"
                 + "WHERE\n"
+                + "   formacionacademica.tipoFormacionAcademica='CICLO_FORMATIVO' AND \n"
                 + "   formacionacademica.idCentro=?\n"
                 + (anyoInicio!=null?" AND YEAR(formacionacademica.fecha)>=" + anyoInicio.intValue() + " ":"")
                 + (anyoFin!=null?" AND YEAR(formacionacademica.fecha)<=" + anyoFin.intValue() + " ":"")              
@@ -209,6 +212,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                     + "FROM \n" 
                     + "  (familia JOIN ciclo ON ciclo.idFamilia=familia.idFamilia) JOIN formacionacademica ON formacionacademica.idCiclo = ciclo.idCiclo  AND formacionacademica.idCentro = ? " 
                     + "WHERE " 
+                    + "   formacionacademica.tipoFormacionAcademica='CICLO_FORMATIVO' AND \n"
                     + "  ciclo.idFamilia = ? "
                     + (anyoInicio!=null?" AND YEAR(formacionacademica.fecha)>=" + anyoInicio.intValue() + " ":"")
                     + (anyoFin!=null?" AND YEAR(formacionacademica.fecha)<=" + anyoFin.intValue() + " ":"")                     

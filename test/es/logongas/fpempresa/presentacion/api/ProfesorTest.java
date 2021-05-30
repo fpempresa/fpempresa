@@ -9,7 +9,6 @@ import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.parsing.Parser;
 import org.junit.Test;
 import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
@@ -320,61 +319,6 @@ public class ProfesorTest {
         crudTestConfiguration.readNoContent = false;
 
         TestUtil.testCRUD(crudTestConfiguration);
-    }
-    
-    @Test
-    public void test_25_crud_certificado_titulo() {
-        GregorianCalendar gregorianCalendar=new GregorianCalendar();
-        gregorianCalendar.setTime(formacionAcademica.getFecha());
-        
-        CertificadoTitulo certificadoTitulo = new CertificadoTitulo();
-        certificadoTitulo.setAnyo(gregorianCalendar.get(GregorianCalendar.YEAR));
-        certificadoTitulo.setCentro(formacionAcademica.getCentro());
-        certificadoTitulo.setCiclo(formacionAcademica.getCiclo());
-        certificadoTitulo.setNifnie(usuarioTitulado.getTitulado().getNumeroDocumento()+","+GeneradorDatosAleatorios.getNif()+"\n"+GeneradorDatosAleatorios.getNif());
-              
-        Map<String,Object> params=new HashMap<>();
-        params.put("centro.idCentro", centro.getIdCentro());                
-        
-        
-        CRUDTestConfiguration crudTestConfiguration = new CRUDTestConfiguration();
-        crudTestConfiguration.appPath = "centro";
-        crudTestConfiguration.entityClass = CertificadoTitulo.class;
-        crudTestConfiguration.success = true;
-        crudTestConfiguration.httpStatus = 0;
-        crudTestConfiguration.cookies = cookiesProfesor;
-        crudTestConfiguration.entity = certificadoTitulo;
-        crudTestConfiguration.primaryKeyName = "idCertificadoTitulo";
-        crudTestConfiguration.paginated = true;
-        crudTestConfiguration.params = params;
-        crudTestConfiguration.readNoContent = false;
-
-        TestUtil.testCRUD(crudTestConfiguration);
-    } 
-    
-    @Test
-    public void test_26_comprobar_certificado_titulo_en_formacion() {
-        TestUtil.testRead("titulado",FormacionAcademica.class,true,0,cookiesTitulado,formacionAcademica.getIdFormacionAcademica(),null).body("certificadoTitulo", equalTo(false));
-        
-        GregorianCalendar gregorianCalendar=new GregorianCalendar();
-        gregorianCalendar.setTime(formacionAcademica.getFecha());
-        
-        CertificadoTitulo certificadoTitulo = new CertificadoTitulo();
-        certificadoTitulo.setAnyo(gregorianCalendar.get(GregorianCalendar.YEAR));
-        certificadoTitulo.setCentro(formacionAcademica.getCentro());
-        certificadoTitulo.setCiclo(formacionAcademica.getCiclo());
-        certificadoTitulo.setNifnie(usuarioTitulado.getTitulado().getNumeroDocumento()+","+GeneradorDatosAleatorios.getNif()+"\n"+GeneradorDatosAleatorios.getNif());
-        
-        System.out.println(certificadoTitulo.getNifnie());
-        
-        int idCentificadoTitulo=TestUtil.testInsert("centro",CertificadoTitulo.class,true,0,cookiesProfesor,certificadoTitulo,"idCertificadoTitulo",null);
-        
-        TestUtil.testRead("titulado",FormacionAcademica.class,true,0,cookiesTitulado,formacionAcademica.getIdFormacionAcademica(),null).body("certificadoTitulo", equalTo(true));
-        
-        TestUtil.testDelete("centro",CertificadoTitulo.class,true,0,cookiesProfesor,idCentificadoTitulo);
-        
-        TestUtil.testRead("titulado",FormacionAcademica.class,true,0,cookiesTitulado,formacionAcademica.getIdFormacionAcademica(),null).body("certificadoTitulo", equalTo(false));
-
     }
     
     @Test

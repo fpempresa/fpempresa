@@ -17,6 +17,7 @@
         <property name="implBasePackageName"       value="es.logongas.fpempresa.dao" />
     </bean>    
     <bean class="es.logongas.fpempresa.dao.estadisticas.impl.EstadisticaDAOImplHibernate"  />
+    <bean class="es.logongas.fpempresa.dao.centro.impl.CertificadoDAOImplHibernate"  />
 
     <!-- Seguridad -->
     <bean id="authenticationManager" class="es.logongas.ix3.security.authentication.impl.AuthenticationManagerImpl"  >
@@ -52,6 +53,7 @@
     <bean class="es.logongas.fpempresa.service.notification.impl.NotificationImpl"  />    
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.download.impl.DownloadServiceImpl"  />
+    <bean class="es.logongas.fpempresa.service.centro.impl.CertificadoServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.hojacalculo.impl.HojaCalculoServiceImplPOI"  />
     <bean class="es.logongas.fpempresa.service.populate.PopulateServiceImpl"  />
     <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
@@ -62,6 +64,7 @@
     
     <!-- BusinessProcess -->
     <bean class="es.logongas.fpempresa.businessprocess.download.impl.DownloadBusinessProcessImpl"  />
+    <bean class="es.logongas.fpempresa.businessprocess.centro.impl.CertificadoBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.estadisticas.impl.EstadisticasBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.log.impl.LogBusinessProcessImpl"  />
 

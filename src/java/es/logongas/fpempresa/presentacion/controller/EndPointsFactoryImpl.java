@@ -13,7 +13,6 @@
 package es.logongas.fpempresa.presentacion.controller;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
@@ -139,7 +138,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, Configuracion.class));
         endPoints.add(EndPoint.createEndPointCrud(path, NotificacionOferta.class));
         endPoints.add(EndPoint.createEndPointCrud(path, ExperienciaLaboral.class));
-        endPoints.add(EndPoint.createEndPointCrud(path, FormacionAcademica.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(FormacionAcademica.class, "certificadoTitulo>", null)));
         endPoints.add(EndPoint.createEndPointCrud(path, Idioma.class));
         endPoints.add(EndPoint.createEndPointCrud(path, NivelIdioma.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Titulado.class, null, "configuracion.notificacionOferta.provincias>")));
@@ -155,8 +154,6 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));
         endPoints.add(EndPoint.createEndPoint(path + "/Centro", "GET", new BeanMapper(Centro.class, "contacto", null)));
-        endPoints.add(EndPoint.createEndPointCrud(path, CertificadoTitulo.class));
-        endPoints.add(EndPoint.createEndPoint(path + "/CertificadoTitulo", "PUT", new BeanMapper(CertificadoTitulo.class, "centro>", null)));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
@@ -164,7 +161,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 
-        endPoints.add(EndPoint.createEndPoint(path + "/download/**", "GET", null));           
+        endPoints.add(EndPoint.createEndPoint(path + "/download/**", "GET", null));         
     }
 
     private void addEmpresaEndPoints(List<EndPoint> endPoints, String path) {

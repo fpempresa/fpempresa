@@ -15,7 +15,6 @@
  *   You should have received a copy of the GNU Affero General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package es.logongas.fpempresa.service.titulado.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,12 +24,16 @@ import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.titulado.ImportarTituladosJsonDeserializer;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.FilterOperator;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
@@ -39,7 +42,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,6 +62,37 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
     }
 
     @Override
+    public Titulado update(DataSession dataSession, Titulado titulado) throws BusinessException {
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
+
+        try {
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
+
+            Titulado tituladoOriginal = getTituladoDAO().readOriginal(dataSession, titulado.getIdTitulado());
+
+            if (titulado.getTipoDocumento() != tituladoOriginal.getTipoDocumento() || (titulado.getNumeroDocumento().equalsIgnoreCase(tituladoOriginal.getNumeroDocumento()) == false)) {
+                //Al cambiar el DNI se borrar todos los certificados de sus títulos
+                borrarTodosCertificadosEnFormacionAcademica(dataSession, titulado);
+            }
+
+            Titulado updatedTitulado = super.update(dataSession, titulado);
+
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
+
+            return updatedTitulado;
+        } finally {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                transactionManager.rollback(dataSession);
+            }
+        }
+
+    }
+
+    @Override
     public List<Titulado> getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(DataSession dataSession, Oferta oferta) {
         return getTituladoDAO().getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(dataSession, oferta);
     }
@@ -71,7 +104,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         try {
             inputStream = multipartFile.getInputStream();
         } catch (IOException ex) {
-            throw new BusinessException("Error al leer el archivo json:"+ex.getLocalizedMessage());
+            throw new BusinessException("Error al leer el archivo json:" + ex.getLocalizedMessage());
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
@@ -80,7 +113,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         try {
             listadoUsuarios = mapper.readValue(inputStream, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, Usuario.class));
         } catch (IOException ex) {
-            throw new BusinessException("Error al leer el archivo json:"+ex.getLocalizedMessage());
+            throw new BusinessException("Error al leer el archivo json:" + ex.getLocalizedMessage());
         }
         if (listadoUsuarios != null) {
             List<BusinessMessage> businessMessages = new ArrayList();
@@ -102,12 +135,18 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         }
     }
 
-    private String getEncryptedPasswordFromPlainPassword(String plainPassword) {
-        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+    private void borrarTodosCertificadosEnFormacionAcademica(DataSession dataSession, Titulado titulado) throws BusinessException{
+        CRUDService<FormacionAcademica,Integer> formacionAcademicaCRUDService = (CRUDService) serviceFactory.getService(FormacionAcademica.class);
 
-        String encryptedPassword = passwordEncryptor.encryptPassword(plainPassword);
+        Filters filters = new Filters();
+        filters.add(new Filter("titulado.idTitulado", titulado.getIdTitulado(), FilterOperator.eq));
 
-        return encryptedPassword;
+        List<FormacionAcademica> formacionesAcademicas = formacionAcademicaCRUDService.search(dataSession, filters, null, null);
+        for (FormacionAcademica formacionAcademica : formacionesAcademicas) {
+            formacionAcademica.setCertificadoTitulo(false);
+            formacionAcademicaCRUDService.update(dataSession, formacionAcademica);
+        }
+
     }
 
 }

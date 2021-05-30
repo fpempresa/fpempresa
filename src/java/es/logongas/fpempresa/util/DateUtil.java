@@ -35,9 +35,18 @@ public class DateUtil {
         return result;
     }
 
+    public static int get(Date date, Interval interval) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int part=calendar.get(interval.getField());
+        
+        return part;
+    }    
+    
     public enum Interval {
         MINUTE(Calendar.MINUTE),
-        HOUR(Calendar.HOUR),        
+        HOUR(Calendar.HOUR),
+        HOUR_OF_DAY(Calendar.HOUR_OF_DAY),        
         DAY(Calendar.DATE),
         MONTH(Calendar.MONTH),
         YEAR(Calendar.YEAR);

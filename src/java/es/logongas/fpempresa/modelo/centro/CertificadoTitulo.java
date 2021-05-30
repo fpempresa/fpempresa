@@ -1,5 +1,5 @@
-/**
- * FPempresa Copyright (C) 2015 Lorenzo González
+/*
+ * FPempresa Copyright (C) 2021 Lorenzo González
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License as published by the Free
@@ -16,157 +16,89 @@
  */
 package es.logongas.fpempresa.modelo.centro;
 
-import es.logongas.fpempresa.modelo.educacion.Ciclo;
-import es.logongas.ix3.core.annotations.Label;
-import java.util.Calendar;
-import java.util.Set;
-import java.util.TreeSet;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
+import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 
 /**
- * La certificación de un centro de que un titulado tiene el título
  *
  * @author logongas
  */
 public class CertificadoTitulo {
-
-    private int idCertificadoTitulo;
-
-    @NotNull
-    private Centro centro;
-
-    @Min(1900)
-    @Label("Año")
-    private int anyo;
-
-    @NotNull
-    private Ciclo ciclo;
-
-    @NotBlank
-    @Label("NIF/NIE")
-    private String nifnie;
     
-    @Label("Incidencias")
-    private String incidencias;    
+    private TipoDocumento tipoDocumento;
+    private String nif;
+    private String nombre;
+    private String apellidos;
+    private boolean certificadoTitulo;
 
-    public boolean isCertificadoNifNie(String nifnie) {
 
-        if (nifnie == null) {
-            return false;
-        }
-
-        if (this.getNifnies().contains(nifnie.toUpperCase())) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    public Set<String> getNifnies() {
-        Set<String> nifnies = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-
-        String[] rawNifnies = this.nifnie.split("[,\\s]");
-
-        for (String currentNifnie : rawNifnies) {
-            String realNifnie = currentNifnie.trim();
-
-            if (realNifnie.length() > 0) {
-                nifnies.add(realNifnie.toUpperCase());
-            }
-        }
-
-        return nifnies;
-    }
-
-    public CertificadoTitulo() {
-        this.anyo = Calendar.getInstance().get(Calendar.YEAR);
+    /**
+     * @return the nif
+     */
+    public String getNif() {
+        return nif;
     }
 
     /**
-     * @return the idCertificadoTitulo
+     * @param nif the nif to set
      */
-    public int getIdCertificadoTitulo() {
-        return idCertificadoTitulo;
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 
     /**
-     * @param idCertificadoTitulo the idCertificadoTitulo to set
+     * @return the nombre
      */
-    public void setIdCertificadoTitulo(int idCertificadoTitulo) {
-        this.idCertificadoTitulo = idCertificadoTitulo;
+    public String getNombre() {
+        return nombre;
     }
 
     /**
-     * @return the centro
+     * @param nombre the nombre to set
      */
-    public Centro getCentro() {
-        return centro;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
-     * @param centro the centro to set
+     * @return the apellidos
      */
-    public void setCentro(Centro centro) {
-        this.centro = centro;
+    public String getApellidos() {
+        return apellidos;
     }
 
     /**
-     * @return the anyo
+     * @param apellidos the apellidos to set
      */
-    public int getAnyo() {
-        return anyo;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     /**
-     * @param anyo the anyo to set
+     * @return the certificadoTitulo
      */
-    public void setAnyo(int anyo) {
-        this.anyo = anyo;
+    public boolean isCertificadoTitulo() {
+        return certificadoTitulo;
     }
 
     /**
-     * @return the ciclo
+     * @param certificadoTitulo the certificadoTitulo to set
      */
-    public Ciclo getCiclo() {
-        return ciclo;
+    public void setCertificadoTitulo(boolean certificadoTitulo) {
+        this.certificadoTitulo = certificadoTitulo;
     }
 
     /**
-     * @param ciclo the ciclo to set
+     * @return the tipoDocumento
      */
-    public void setCiclo(Ciclo ciclo) {
-        this.ciclo = ciclo;
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
     }
 
     /**
-     * @return the nifnie
+     * @param tipoDocumento the tipoDocumento to set
      */
-    public String getNifnie() {
-        return nifnie;
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
-
-    /**
-     * @param nifnie the nifnie to set
-     */
-    public void setNifnie(String nifnie) {
-        this.nifnie = nifnie;
-    }
-
-    /**
-     * @return the incidencias
-     */
-    public String getIncidencias() {
-        return incidencias;
-    }
-
-    /**
-     * @param incidencias the incidencias to set
-     */
-    public void setIncidencias(String incidencias) {
-        this.incidencias = incidencias;
-    }
-
+    
 }

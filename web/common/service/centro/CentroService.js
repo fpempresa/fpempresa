@@ -34,7 +34,7 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     return deferred.promise;
                 };
 
-                this.get = function (id, expand) {
+                service.get = function (id, expand) {
                     var deferred = $q.defer();
 
                     this.repository.get(id, expand).then(function (centro) {
@@ -49,6 +49,52 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
 
                     return deferred.promise;
                 };
+
+                service.getCertificadosAnyoCentro = function (idCentro, expand) {
+                    var deferred = $q.defer();
+
+                    this.repository.getCertificadosAnyoCentro(idCentro, expand).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (businessMessages) {
+                        deferred.reject(businessMessages);
+                    });
+
+                    return deferred.promise;
+                };
+                service.getCertificadosCicloCentro = function (idCentro,anyo, expand) {
+                    var deferred = $q.defer();
+
+                    this.repository.getCertificadosCicloCentro(idCentro, anyo, expand).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (businessMessages) {
+                        deferred.reject(businessMessages);
+                    });
+
+                    return deferred.promise;
+                };
+                service.getCertificadosTituloCentro = function (idCentro,anyo, idCiclo, expand) {
+                    var deferred = $q.defer();
+
+                    this.repository.getCertificadosTituloCentro(idCentro, anyo, idCiclo, expand).then(function (data) {
+                        deferred.resolve(data);
+                    }, function (businessMessages) {
+                        deferred.reject(businessMessages);
+                    });
+
+                    return deferred.promise;
+                };
+                
+                service.certificarTituloCentro = function (idCentro,anyo, idCiclo, tipoDocumento, nif,certificadoTitulo, expand) {
+                    var deferred = $q.defer();
+
+                    this.repository.certificarTituloCentro(idCentro, anyo, idCiclo, tipoDocumento, nif,certificadoTitulo, expand).then(function (data) {
+                        deferred.resolve(null);
+                    }, function (businessMessages) {
+                        deferred.reject(businessMessages);
+                    });
+
+                    return deferred.promise;
+                };                
 
             }]);
 

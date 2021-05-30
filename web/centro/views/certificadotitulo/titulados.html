@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+FPempresa Copyright (C) 2021 Lorenzo González
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div>
+            <div class="row" >
+                <div class="col-xs-12 ">            
+                    <legend class="form__title">Certificación "{{ciclo.descripcion}}" ({{anyo}})</legend>
+                </div>
+            </div> 
+            <br>
+            <div class="row" >
+                <div class="col-xs-12"> 
+                    <p class="form__text form__text--help">Vas a certificar los títulos de tu centro del ciclo de "{{ciclo.descripcion}}" en el año {{anyo}}</p>
+                </div>
+            </div>            
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <ix3-business-messages></ix3-business-messages>
+                </div>
+            </div>             
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <table class="table table-bordered">
+                        <thead>                        
+                            <tr class="data-table__head">
+                                <th style="min-width:60px;;text-align: center">Certificado</th>
+                                <th style="width:60%;text-align: center">Apellidos</th>
+                                <th style="width:30%;text-align: center">Nombre</th>
+                                <th style="min-width:60px;;text-align: center" title="NIF, NIE, Pasaporte, otro.">NIF..etc.</th>                                                               
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr ng-repeat="certificadoTitulo in models" class="data-table__row">
+                                <td style="text-align: center"><input type="checkbox" ng-click="certificarTitulo(certificadoTitulo)" ng-model="certificadoTitulo.certificadoTitulo"> </td>      
+                                <td >{{certificadoTitulo.apellidos}}</td>                                                                                                                        
+                                <td >{{certificadoTitulo.nombre}}</td>  
+                                <td >{{certificadoTitulo.nif}}<spam ng-show="certificadoTitulo.tipoDocumento!='NIF_NIE'">({{certificadoTitulo.tipoDocumento}})</spam></td>                                 
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>               
+        </div>
+    </div>
+</div>

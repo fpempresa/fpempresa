@@ -40,7 +40,7 @@ angular.module("common").directive('fpeSimpleBarChart', [function () {
                     }
 
                     while (labels.length > 0) {
-                        data.pop();
+                        labels.pop();
                     }
                     while (data.length > 0) {
                         data.pop();

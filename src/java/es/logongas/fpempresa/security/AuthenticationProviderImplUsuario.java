@@ -20,6 +20,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.security.authentication.impl.CredentialImplLoginPassword;
 import es.logongas.ix3.security.authentication.AuthenticationProvider;
@@ -99,7 +100,11 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             case CENTRO:
 
                 if ((usuario.getEstadoUsuario() == EstadoUsuario.PENDIENTE_ACEPTACION) && (usuario.getCentro() != null)) {
-                    throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" + usuario.getCentro() + "'");
+                    BusinessException businessException=new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado o rechazado en el centro '" + usuario.getCentro() + "'");
+                    businessException.getBusinessMessages().add(new BusinessMessage("Si eres la primera persona de tu centro que usa EmpleaFP , deberás ponerte en contacto con nosotros en 'soporte@empleafp.com' para que te aceptemos. "));
+                    businessException.getBusinessMessages().add(new BusinessMessage("Si ya hay otros compañeros tuyos en EmpleaFP, deberías hablar con alguno de ellos para que te acepten en el centro. "));
+                    
+                    throw businessException;
                 }
 
                 if ((usuario.getCentro() != null) && (usuario.getCentro().getEstadoCentro() != EstadoCentro.PERTENECE_A_FPEMPRESA)) {

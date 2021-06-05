@@ -55,7 +55,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <li class="lateral-menu__header">Cuenta</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/usuario/edit/' + user.idIdentity+ '$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/usuario/edit/' + user.idIdentity+ '$')}"  class="lateral-menu__item__link" ng-href="{{(user.centro?'#/usuario/edit/'+user.idIdentity:'#/pertenenciacentro')}}">Mis datos</a></li>                    
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar mi contrase&ntilde;a</a></li>
-                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}"><a class="lateral-menu__item__link" href="{{apiUrl + '../manuales/manual_centro.pdf'}}"><i class="fa fa-question-circle"></i>  Ayuda</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}"><a class="lateral-menu__item__link" href="{{apiUrl + '../manuales/centro/index.html'}}"><i class="fa fa-question-circle"></i>  Ayuda</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-10">

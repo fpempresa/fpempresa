@@ -1,4 +1,4 @@
-# Manual de EmpleaFP para Centros
+# Manual de EmpleaFP para Empresas
 
 - [Inscripción y acceso](inscripcion.md)
 - Empresa

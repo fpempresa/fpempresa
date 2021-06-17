@@ -30,6 +30,6 @@ En la imagen superior podemos ver los candidatos que ha tenido la oferta. Es dec
 Además de poder modificar dicha información simplemente cambiándola y haciendo clic en el botón actualizar, también podemos cerrar la oferta, habilitando la casilla oferta ya cerrada de modo que no podrán inscribirse más titulados/as.
 
 
-Al añadir la oferta, EmpleaFP envía un correo a todos  titulados del centro que tengan algunos de los ciclos que se ha especificado en la oferta. Los titulados deberán inscribirse en la oferta para poder ver los datos de contacto y ser ellos mismos los que se pongan en contacto con la empresa.
+Al añadir la oferta, EmpleaFP envía exclusivamente un correo a todos aquellos titulados que hayan indicado que poseen un título en el centro y que tengan algunos de los ciclos que se ha especificado en la oferta. Los titulados deberán inscribirse en la oferta para poder ver los datos de contacto y ser ellos mismos los que se pongan en contacto con la empresa.
 
 

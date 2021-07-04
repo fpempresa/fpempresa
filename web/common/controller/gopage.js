@@ -38,6 +38,9 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
             $window.location.href = getContextPath()+"/site/index.html#/";
         }               
 
+        function goBuscarOfertas() {
+            $window.location.href = getContextPath()+"/titulado/index.html#/oferta/search_todas";
+        }
 
         return {
             homeUsuario: function(usuario) {
@@ -59,6 +62,9 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
             },
             homeApp:function() {
                 goHomeApp();
+            },
+            goBuscarOfertas:function() {
+                goBuscarOfertas();
             },
             createAccount:function(tipoUsuario) {
                 if (tipoUsuario) {

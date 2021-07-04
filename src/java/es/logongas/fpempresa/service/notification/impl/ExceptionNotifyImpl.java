@@ -20,6 +20,7 @@ import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
 import es.logongas.ix3.util.ExceptionUtil;
 import es.logongas.ix3.web.util.exception.ExceptionNotify;
+import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,7 +53,24 @@ public class ExceptionNotifyImpl implements ExceptionNotify {
             sb.append(" "); 
             sb.append(httpServletRequest.getQueryString()); 
         }
-
+        sb.append("\n"); 
+        sb.append("==CABECERAS HTTP==\n"); 
+        //Cabeceras
+        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                String headerName = headerNames.nextElement();
+                Enumeration<String> headerValues=httpServletRequest.getHeaders(headerName);
+                while (headerValues.hasMoreElements()) {
+                    String headerValue=headerValues.nextElement();
+                    sb.append(headerName); 
+                    sb.append("="); 
+                    sb.append(headerValue); 
+                    sb.append("\n"); 
+                }
+            }
+        }
+       
         return sb.toString();
     }    
 }

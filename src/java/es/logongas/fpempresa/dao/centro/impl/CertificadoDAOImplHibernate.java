@@ -100,12 +100,13 @@ public class CertificadoDAOImplHibernate implements CertificadoDAO {
         Session session = (Session) dataSession.getDataBaseSessionImpl();
         
         
-        String sql = "SELECT DISTINCT\n"
+        String sql = "SELECT \n"
                 + "  Titulado.tipoDocumento AS tipoDocumento,\n"
                 + "  Titulado.numeroDocumento AS nif,\n"
                 + "  Usuario.nombre AS nombre,\n"
                 + "  Usuario.apellidos AS apellidos,\n"
-                + "  FormAcad.certificadoTitulo AS certificadoTitulo\n"
+                + "  FormAcad.certificadoTitulo AS certificadoTitulo,\n"
+                + "  FormAcad.idFormacionAcademica AS idFormacionAcademica\n"
                 + "FROM\n"
                 + "	FormacionAcademica FormAcad INNER JOIN \n"
                 + "	Titulado ON  FormAcad.idTitulado=Titulado.idTitulado INNER JOIN \n"
@@ -116,7 +117,7 @@ public class CertificadoDAOImplHibernate implements CertificadoDAO {
                 + "	FormAcad.idCiclo=? AND\n"
                 + "	tipoFormacionAcademica='CICLO_FORMATIVO'\n"
                 + "	 \n"                
-                + "ORDER BY Usuario.apellidos,Usuario.nombre";
+                + "ORDER BY Usuario.apellidos,Usuario.nombre,FormAcad.idFormacionAcademica";
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);

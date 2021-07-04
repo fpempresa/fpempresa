@@ -16,12 +16,7 @@
  */
 package es.logongas.fpempresa.service.titulado;
 
-import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
-import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
-import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
 
 /**
@@ -29,5 +24,5 @@ import es.logongas.ix3.service.CRUDService;
  * @author logongas
  */
 public interface FormacionAcademicaCRUDService extends CRUDService<FormacionAcademica, Integer>  {
-    FormacionAcademica findByCentroAnyoCicloNumeroDocumento(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo,TipoDocumento tipoDocumento, String numeroDocumento) throws BusinessException;
+
 }

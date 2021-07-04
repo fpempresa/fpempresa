@@ -24,8 +24,10 @@ import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
+import es.logongas.fpempresa.modelo.titulado.TipoFormacionAcademica;
 import es.logongas.fpempresa.service.centro.CertificadoService;
 import es.logongas.fpempresa.service.titulado.FormacionAcademicaCRUDService;
+import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDServiceFactory;
@@ -60,14 +62,46 @@ public class CertificadoServiceImpl implements CertificadoService {
     }
 
     @Override
-    public void certificarTituloCentro(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo,TipoDocumento tipoDocumento, String numeroDocumento,boolean certificadoTitulo) throws BusinessException {
+    public void certificarTituloCentro(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo,TipoDocumento tipoDocumento, String numeroDocumento,boolean certificadoTitulo, FormacionAcademica formacionAcademica) throws BusinessException {
         FormacionAcademicaCRUDService formacionAcademicaCRUDService=(FormacionAcademicaCRUDService)crudServiceFactory.getService(FormacionAcademica.class);
         
-        
-        FormacionAcademica formacionAcademica=formacionAcademicaCRUDService.findByCentroAnyoCicloNumeroDocumento(dataSession, centro, anyo, ciclo, tipoDocumento, numeroDocumento);
         if (formacionAcademica==null) {
-            throw new BusinessException("No existe la certificacion que se ha solicitado.");
+            throw new BusinessException("No existe esa formacion Académica");
         }
+        if (centro==null) {
+            throw new BusinessException("No existe ese centro");
+        }   
+        if (ciclo==null) {
+            throw new BusinessException("No existe ese ciclo");
+        } 
+        if (tipoDocumento==null) {
+            throw new BusinessException("No existe ese tipoDocumento");
+        }         
+        
+        if (formacionAcademica.getTipoFormacionAcademica()!=TipoFormacionAcademica.CICLO_FORMATIVO) {
+            throw new BusinessException("No es válido el TipoFormacionAcademica");
+        }        
+        
+        if (formacionAcademica.getCentro().getIdCentro()!=centro.getIdCentro()) {
+            throw new BusinessException("No es válido el centro");
+        }
+        
+        if (formacionAcademica.getCiclo().getIdCiclo()!=ciclo.getIdCiclo()) {
+            throw new BusinessException("No es válido el centro");
+        }        
+        
+        if (DateUtil.get(formacionAcademica.getFecha(),DateUtil.Interval.YEAR)!=anyo) {
+            throw new BusinessException("No es válido el año");
+        } 
+        
+        if (formacionAcademica.getTitulado().getTipoDocumento()!=tipoDocumento) {
+            throw new BusinessException("No es válido el TipoDocumento");
+        }    
+        
+        if (formacionAcademica.getTitulado().getNumeroDocumento().equalsIgnoreCase(numeroDocumento)==false) {
+            throw new BusinessException("No es válido el numeroDocumento");
+        }           
+        
         
         formacionAcademica.setCertificadoTitulo(certificadoTitulo);
         formacionAcademicaCRUDService.update(dataSession, formacionAcademica);

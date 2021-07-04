@@ -99,7 +99,7 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                     return deferred.promise;
                 };   
                 
-                remoteDAO.certificarTituloCentro = function (idCentro, anyo, idCiclo, tipoDocumento, nif, certificadoTitulo, expand) {
+                remoteDAO.certificarTituloCentro = function (idCentro, anyo, idCiclo, tipoDocumento, nif, certificadoTitulo, idFormacionAcademica, expand) {
                     var deferred = this.$q.defer();
                     
                     var params = {};
@@ -109,7 +109,7 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
             
                     var config = {
                         method: 'PATCH',
-                        url: this.baseUrl + '/' + this.entityName + "/" + idCentro + "/Certificado/Anyo/"+anyo+"/Ciclo/"+idCiclo+"/identificacion/"+tipoDocumento + "/" + nif+"/"+certificadoTitulo,
+                        url: this.baseUrl + '/' + this.entityName + "/" + idCentro + "/Certificado/Anyo/"+anyo+"/Ciclo/"+idCiclo+"/identificacion/"+tipoDocumento + "/" + nif+"/"+certificadoTitulo+"/"+idFormacionAcademica,
                         data: null
                     };
 

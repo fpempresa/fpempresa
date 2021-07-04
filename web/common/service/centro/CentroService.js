@@ -84,10 +84,10 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     return deferred.promise;
                 };
                 
-                service.certificarTituloCentro = function (idCentro,anyo, idCiclo, tipoDocumento, nif,certificadoTitulo, expand) {
+                service.certificarTituloCentro = function (idCentro,anyo, idCiclo, tipoDocumento, nif,certificadoTitulo, idFormacionAcademica, expand) {
                     var deferred = $q.defer();
 
-                    this.repository.certificarTituloCentro(idCentro, anyo, idCiclo, tipoDocumento, nif,certificadoTitulo, expand).then(function (data) {
+                    this.repository.certificarTituloCentro(idCentro, anyo, idCiclo, tipoDocumento, nif,certificadoTitulo, idFormacionAcademica, expand).then(function (data) {
                         deferred.resolve(null);
                     }, function (businessMessages) {
                         deferred.reject(businessMessages);

@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.centro.CertificadoAnyo;
 import es.logongas.fpempresa.modelo.centro.CertificadoCiclo;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.ix3.businessprocess.BusinessProcess;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
@@ -100,11 +101,12 @@ public interface CertificadoBusinessProcess  extends BusinessProcess {
         public TipoDocumento tipoDocumento;
         public String numeroDocumento;
         public boolean certificadoTitulo;
+        public FormacionAcademica formacionAcademica;
 
         public CertificarTituloCentroArguments() {
         }
 
-        public CertificarTituloCentroArguments(Principal principal, DataSession dataSession, Centro centro,int anyo,Ciclo ciclo,TipoDocumento tipoDocumento,String numeroDocumento,boolean certificadoTitulo) {
+        public CertificarTituloCentroArguments(Principal principal, DataSession dataSession, Centro centro,int anyo,Ciclo ciclo,TipoDocumento tipoDocumento,String numeroDocumento,boolean certificadoTitulo,FormacionAcademica formacionAcademica) {
             super(principal, dataSession);
             this.centro = centro;          
             this.anyo = anyo;          
@@ -112,6 +114,7 @@ public interface CertificadoBusinessProcess  extends BusinessProcess {
             this.tipoDocumento = tipoDocumento;          
             this.numeroDocumento = numeroDocumento;          
             this.certificadoTitulo = certificadoTitulo;          
+            this.formacionAcademica = formacionAcademica;          
         }
        
 

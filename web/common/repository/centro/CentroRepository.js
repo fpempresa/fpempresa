@@ -53,9 +53,9 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     return deferred.promise;
                 };
                 
-                repository.certificarTituloCentro = function (idCentro, anyo, idCiclo, tipoDocumento, nif, certificadoTitulo, expand) {
+                repository.certificarTituloCentro = function (idCentro, anyo, idCiclo, tipoDocumento, nif, certificadoTitulo, idFormacionAcademica, expand) {
                     var deferred = $q.defer();
-                    this.remoteDAO.certificarTituloCentro(idCentro, anyo, idCiclo, tipoDocumento, nif, certificadoTitulo, expand).then(function (data) {
+                    this.remoteDAO.certificarTituloCentro(idCentro, anyo, idCiclo, tipoDocumento, nif, certificadoTitulo, idFormacionAcademica, expand).then(function (data) {
                         deferred.resolve(data);
                     }, function (data) {
                         richDomain.extend(data);

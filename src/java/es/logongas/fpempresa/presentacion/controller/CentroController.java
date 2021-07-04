@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.centro.CertificadoAnyo;
 import es.logongas.fpempresa.modelo.centro.CertificadoCiclo;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.core.conversion.Conversion;
@@ -113,17 +114,18 @@ public class CentroController {
 
     }
     
-    @RequestMapping(value = {"/{path}/Centro/{idCentro}/Certificado/Anyo/{anyo}/Ciclo/{idCiclo}/identificacion/{tipoDocumento}/{numeroDocumento}/{certificadoTitulo}"}, method = RequestMethod.PATCH)
-    public void certificarTituloCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro, @PathVariable("anyo") int anyo, @PathVariable("idCiclo") int idCiclo,@PathVariable("tipoDocumento") TipoDocumento tipoDocumento, @PathVariable("numeroDocumento") String numeroDocumento,@PathVariable("certificadoTitulo") String sCertificadoTitulo) {
+    @RequestMapping(value = {"/{path}/Centro/{idCentro}/Certificado/Anyo/{anyo}/Ciclo/{idCiclo}/identificacion/{tipoDocumento}/{numeroDocumento}/{certificadoTitulo}/{idFormacionAcademica}"}, method = RequestMethod.PATCH)
+    public void certificarTituloCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro, @PathVariable("anyo") int anyo, @PathVariable("idCiclo") int idCiclo,@PathVariable("tipoDocumento") TipoDocumento tipoDocumento, @PathVariable("numeroDocumento") String numeroDocumento,@PathVariable("certificadoTitulo") String sCertificadoTitulo,@PathVariable("idFormacionAcademica") int idFormacionAcademica) {
 
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
             Centro centro = crudServiceFactory.getService(Centro.class).read(dataSession, idCentro);
             Ciclo ciclo = crudServiceFactory.getService(Ciclo.class).read(dataSession, idCiclo);
+            FormacionAcademica formacionAcademica = crudServiceFactory.getService(FormacionAcademica.class).read(dataSession, idFormacionAcademica);
             boolean certificadoTitulo=(Boolean)conversion.convertFromString(sCertificadoTitulo, Boolean.class);
             
-            certificadoBusinessProcess.certificarTituloCentro(new CertificadoBusinessProcess.CertificarTituloCentroArguments(principal, dataSession, centro, anyo, ciclo,tipoDocumento,numeroDocumento,certificadoTitulo));
+            certificadoBusinessProcess.certificarTituloCentro(new CertificadoBusinessProcess.CertificarTituloCentroArguments(principal, dataSession, centro, anyo, ciclo,tipoDocumento,numeroDocumento,certificadoTitulo, formacionAcademica));
             controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);

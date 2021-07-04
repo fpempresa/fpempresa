@@ -86,12 +86,4 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
         
     }
 
-    @Override
-    public FormacionAcademica findByCentroAnyoCicloNumeroDocumento(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo,TipoDocumento tipoDocumento, String numeroDocumento) throws BusinessException {
-        FormacionAcademicaDAO formacionAcademicaDAO=(FormacionAcademicaDAO)this.getDAO();
-        
-        return formacionAcademicaDAO.findByCentroAnyoCicloNumeroDocumento(dataSession, centro, anyo, ciclo, tipoDocumento, numeroDocumento);   
-    }
-
-
 }

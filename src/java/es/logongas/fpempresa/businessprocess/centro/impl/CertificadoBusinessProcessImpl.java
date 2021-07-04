@@ -54,7 +54,7 @@ public class CertificadoBusinessProcessImpl implements CertificadoBusinessProces
 
     @Override
     public void certificarTituloCentro(CertificarTituloCentroArguments certificarTituloCentroArguments) throws BusinessException {
-        certificadoService.certificarTituloCentro(certificarTituloCentroArguments.dataSession, certificarTituloCentroArguments.centro, certificarTituloCentroArguments.anyo, certificarTituloCentroArguments.ciclo, certificarTituloCentroArguments.tipoDocumento,certificarTituloCentroArguments.numeroDocumento,certificarTituloCentroArguments.certificadoTitulo);
+        certificadoService.certificarTituloCentro(certificarTituloCentroArguments.dataSession, certificarTituloCentroArguments.centro, certificarTituloCentroArguments.anyo, certificarTituloCentroArguments.ciclo, certificarTituloCentroArguments.tipoDocumento,certificarTituloCentroArguments.numeroDocumento,certificarTituloCentroArguments.certificadoTitulo,certificarTituloCentroArguments.formacionAcademica);
     }
 
     @Override

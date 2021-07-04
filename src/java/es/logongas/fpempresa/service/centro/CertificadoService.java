@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.centro.CertificadoAnyo;
 import es.logongas.fpempresa.modelo.centro.CertificadoCiclo;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
@@ -34,5 +35,5 @@ public interface CertificadoService {
     List<CertificadoAnyo> getCertificadosAnyoCentro(DataSession dataSession,Centro centro) throws BusinessException;
     List<CertificadoCiclo> getCertificadosCicloCentro(DataSession dataSession,Centro centro,int anyo) throws BusinessException;
     List<CertificadoTitulo> getCertificadosTituloCentro(DataSession dataSession,Centro centro,int anyo,Ciclo ciclo) throws BusinessException;
-    void certificarTituloCentro(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo, TipoDocumento tipoDocumento, String numeroDocumento,boolean certificadoTitulo) throws BusinessException ;
+    void certificarTituloCentro(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo, TipoDocumento tipoDocumento, String numeroDocumento,boolean certificadoTitulo, FormacionAcademica formacionAcademica) throws BusinessException ;
 }

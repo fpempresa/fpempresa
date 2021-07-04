@@ -159,7 +159,7 @@ app.controller("CentroCertificadoTituloController", ['$scope', 'serviceFactory',
         }
         
         $scope.certificarTitulo=function(certificadoTitulo) {
-            var promise = $scope.serviceCentro.certificarTituloCentro($scope.centro.idCentro, $scope.anyo, $scope.idCiclo,certificadoTitulo.tipoDocumento,certificadoTitulo.nif,certificadoTitulo.certificadoTitulo);
+            var promise = $scope.serviceCentro.certificarTituloCentro($scope.centro.idCentro, $scope.anyo, $scope.idCiclo,certificadoTitulo.tipoDocumento,certificadoTitulo.nif,certificadoTitulo.certificadoTitulo,certificadoTitulo.idFormacionAcademica);
 
             promise.then(function () {
                 

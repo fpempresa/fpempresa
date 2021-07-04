@@ -29,6 +29,7 @@ public class CertificadoTitulo {
     private String nombre;
     private String apellidos;
     private boolean certificadoTitulo;
+    private long idFormacionAcademica;
 
 
     /**
@@ -99,6 +100,20 @@ public class CertificadoTitulo {
      */
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+
+    /**
+     * @return the idFormacionAcademica
+     */
+    public long getIdFormacionAcademica() {
+        return idFormacionAcademica;
+    }
+
+    /**
+     * @param idFormacionAcademica the idFormacionAcademica to set
+     */
+    public void setIdFormacionAcademica(long idFormacionAcademica) {
+        this.idFormacionAcademica = idFormacionAcademica;
     }
     
 }

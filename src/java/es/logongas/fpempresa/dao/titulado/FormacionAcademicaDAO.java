@@ -30,6 +30,5 @@ import es.logongas.ix3.dao.GenericDAO;
  */
 public interface FormacionAcademicaDAO extends GenericDAO<FormacionAcademica, Integer> {
     
-    FormacionAcademica findByCentroAnyoCicloNumeroDocumento(DataSession dataSession, Centro centro, int anyo, Ciclo ciclo, TipoDocumento tipoDocumento, String numeroDocumento) throws BusinessException;
-    
+
 }

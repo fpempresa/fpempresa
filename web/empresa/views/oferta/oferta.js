@@ -38,7 +38,8 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
 
 app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$location', 'schemaEntities', 'serviceFactory', 'session', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, $location, schemaEntities, serviceFactory, session, dialog) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
-
+        
+        $scope.numeroCandidatos=0;
         $scope.filters = {
             $eq: {},
             $ne: {},

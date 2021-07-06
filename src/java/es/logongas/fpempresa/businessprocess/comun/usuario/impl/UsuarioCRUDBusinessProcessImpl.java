@@ -507,4 +507,11 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         usuarioCRUDService.validarEmail(validarEmailArguments.dataSession,validarEmailArguments.usuario, validarEmailArguments.claveValidarEmail);
     } 
+    
+    @Override
+    public void cancelarSuscripcion(CancelarSuscripcionArguments cancelarSuscripcionArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        usuarioCRUDService.cancelarSuscripcion(cancelarSuscripcionArguments.dataSession,cancelarSuscripcionArguments.usuario, cancelarSuscripcionArguments.publicToken);
+    }    
+    
 }

@@ -129,7 +129,16 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     return deferred.promise;
                 };
                 
-                
+                repository.cancelarSuscripcion = function (idIdentity, token) {
+                    var deferred = $q.defer();
+                    this.remoteDAO.cancelarSuscripcion(idIdentity, token).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
 
             }]);
 

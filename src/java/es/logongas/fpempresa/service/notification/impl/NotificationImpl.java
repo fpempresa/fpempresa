@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.security.publictoken.PublicTokenCancelarSubcripcion;
 import es.logongas.fpempresa.service.mail.Attach;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
@@ -30,8 +31,10 @@ import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDServiceFactory;
+import es.logongas.ix3.web.security.jwt.Jws;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -46,7 +49,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class NotificationImpl implements Notification {
     protected final Logger log = LogManager.getLogger(getClass());
     
-    final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.\n\nPodrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico " + Config.getSetting("app.correoSoporte") + ". Solicite más información dirigiéndose al correo electrónico indicado.\n\nEn virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.\n\n<a href=\"mailto:" + Config.getSetting("app.correoSoporte") + "?Subject=Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de EmpleaFP</a>";
+    final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.Podrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico " + Config.getSetting("app.correoSoporte") + ". Solicite más información dirigiéndose al correo electrónico indicado.En virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.";
+    final static String BAJA_BY_EMAIL="<a href=\"mailto:" + Config.getSetting("app.correoSoporte") + "?Subject=Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de EmpleaFP</a>";
     
     @Autowired
     MailService mailService;
@@ -58,10 +62,19 @@ public class NotificationImpl implements Notification {
     Conversion conversion;
     
     @Autowired
-    CRUDServiceFactory serviceFactory;    
+    CRUDServiceFactory serviceFactory;   
+    
+    @Autowired
+    Jws jws;      
+    
     
     @Override
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
+        byte[] secretToken=usuario.getSecretToken().getBytes(Charset.forName("utf-8"));
+        int idIdentity=usuario.getIdIdentity();
+        
+        PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(idIdentity, jws, secretToken);
+        
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
@@ -70,10 +83,10 @@ public class NotificationImpl implements Notification {
                 + "<strong>\"" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "\"</strong><br>"    
                 + "<br>"
                 + "<br>"
-                + "<br>"
-                + "<br>"
-                + "Si necesitas ayuda puedes contactar con nosotros en " + Config.getSetting("app.correoSoporte") + "."
-                + "<br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
+                + "Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br>"
+                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
+                + "<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo."
+                + "<br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString() + "\">aquí</a>."
         );
         mail.setFrom(Config.getSetting("mail.sender"));
         sendMail(mail);
@@ -116,6 +129,7 @@ public class NotificationImpl implements Notification {
                 + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para poder ampliar la información.<br><br><br><br>"
                 + "Si necesitas ayuda puedes contactar en " + Config.getSetting("app.correoSoporte") + "."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
+                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)
         );
         mail.setFrom(Config.getSetting("mail.sender"));
 
@@ -139,6 +153,7 @@ public class NotificationImpl implements Notification {
                 + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
                 + "<a href=\"" + getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)                
+                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)                
         );
         sendMail(mail);
     }
@@ -155,6 +170,7 @@ public class NotificationImpl implements Notification {
                 + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
                 + "<a href=\"" + getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)               
+                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)               
         );
         sendMail(mail);
     }
@@ -171,6 +187,7 @@ public class NotificationImpl implements Notification {
                 + StringEscapeUtils.escapeHtml4(nombre) + " ha enviado el siguiente mensaje para el soporte de " + getAppURL() + ":<br>"
                 + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(mensaje))
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)          
+                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)          
         );
         
         sendMail(mail);
@@ -188,7 +205,7 @@ public class NotificationImpl implements Notification {
         mail.addTo(usuario.getEmail());
         mail.setFrom(Config.getSetting("mail.sender"));
         mail.setSubject("Tu cuenta de EmpleaFP.com va a ser borrada por falta de uso");
-        mail.setHtmlBody(msg + "<br><br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL));
+        mail.setHtmlBody(msg + "<br><br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL));
         
         sendMail(mail);
     }  
@@ -213,7 +230,7 @@ public class NotificationImpl implements Notification {
             log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         }    
     }    
-
+    
     
     
     

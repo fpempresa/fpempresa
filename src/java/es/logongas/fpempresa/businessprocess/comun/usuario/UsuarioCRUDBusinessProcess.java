@@ -41,6 +41,7 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
     void  enviarMensajeSoporte(EnviarMensajeSoporteArguments enviarMensajeSoporteArguments) throws BusinessException;
     void  notificarUsuarioInactivo(NotificarUsuarioInactivoArguments notificarUsuarioInactivoArguments) throws BusinessException;
     void  softDelete(SoftDeleteArguments softDeleteArguments) throws BusinessException;
+    void cancelarSuscripcion(CancelarSuscripcionArguments cancelarSuscripcionArguments) throws BusinessException;    
 
     public class UpdatePasswordArguments extends BusinessProcess.BusinessProcessArguments {
 
@@ -91,6 +92,18 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
             super(principal, dataSession);
             this.usuario = usuario;
             this.claveValidarEmail = claveValidarEmail;
+        }
+    }
+
+    public class CancelarSuscripcionArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public Usuario usuario;
+        final public String publicToken;
+
+        public CancelarSuscripcionArguments(Principal principal, DataSession dataSession,Usuario usuario, String publicToken) {
+            super(principal, dataSession);
+            this.usuario = usuario;
+            this.publicToken = publicToken;
         }
     }    
     

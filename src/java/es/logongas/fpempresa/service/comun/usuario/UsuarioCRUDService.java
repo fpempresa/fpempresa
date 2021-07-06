@@ -55,4 +55,5 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     public boolean isLocked(DataSession dataSession, Usuario usuario);
     public Date getLockedUntil(DataSession dataSession, Usuario usuario);
     public void updateFailedLogin(DataSession dataSession, Usuario usuario);
+    void cancelarSuscripcion(DataSession dataSession,Usuario usuario, String publicToken) throws BusinessException;
 }

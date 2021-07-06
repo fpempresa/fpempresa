@@ -25,6 +25,7 @@ import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
+import es.logongas.fpempresa.security.publictoken.PublicTokenCancelarSubcripcion;
 import es.logongas.fpempresa.util.validators.PasswordValidator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
@@ -44,8 +45,10 @@ import es.logongas.ix3.security.model.GroupMember;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import es.logongas.ix3.web.security.jwt.Jws;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -76,6 +79,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Autowired
     ReportService reportService;
+    
+    @Autowired
+    Jws jws;    
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -318,6 +324,46 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         }
     }
 
+    @Override
+    public void cancelarSuscripcion(DataSession dataSession,Usuario usuario, String publicToken) throws BusinessException {
+        
+        if (usuario==null) {
+            throw new BusinessException("No existe el usuario");
+        }
+        byte[] secretToken=usuario.getSecretToken().getBytes(Charset.forName("utf-8"));
+
+        
+        PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion;
+                
+        try {
+            publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(publicToken, jws, secretToken);
+        } catch (Exception ex) {
+            throw new BusinessException("El token no tiene el formato adecuado");
+        }
+        
+        if (publicTokenCancelarSubcripcion.isValid()==false) {
+            throw new BusinessException("El token no es válido o ha caducado.");
+        }
+        
+        if (usuario.getIdIdentity()!=publicTokenCancelarSubcripcion.getIdIdentity()) {
+            throw new BusinessException("El token no es válido para ese usuario.");
+        }
+        
+        if (usuario.getTipoUsuario()!=TipoUsuario.TITULADO) {
+            throw new BusinessException("Esta acción solo es posible para titulados");
+        }
+        
+        if (usuario.getTitulado()==null) {
+            throw new BusinessException("El usuario aun no es un titulado");
+        }
+        
+        CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
+        Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
+        titulado.getConfiguracion().getNotificacionOferta().setNotificarPorEmail(false);
+        tituladoCRUDService.update(dataSession, titulado);
+    }    
+    
+    
     @Override
     public void resetearContrasenya(DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
         if (usuario != null) {

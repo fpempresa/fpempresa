@@ -155,7 +155,18 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
 
                     return deferred.promise;
                 };
-
+                
+                service.cancelarSuscripcion = function (idIdentity, token) {
+                    var deferred = $q.defer();
+                    this.repository.cancelarSuscripcion(idIdentity, token
+                            ).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+                
             }]);
 
     }]);

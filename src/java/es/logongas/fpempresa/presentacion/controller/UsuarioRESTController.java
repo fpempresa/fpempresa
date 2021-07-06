@@ -293,6 +293,21 @@ public class UsuarioRESTController {
         }
     }
     
+    @RequestMapping(value = {"/{path}/Usuario/cancelarSuscripcion/{idIdentity:.+}/{publicToken:.+}"}, method = RequestMethod.POST)
+    public void cancelarSuscripcion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idIdentity") int idIdentity, @PathVariable("publicToken") String publicToken) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+            CRUDService<Usuario, Integer> usuarioCrudService = crudServiceFactory.getService(Usuario.class);
+            Usuario usuario = usuarioCrudService.read(dataSession, idIdentity);
+            
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.cancelarSuscripcion(new UsuarioCRUDBusinessProcess.CancelarSuscripcionArguments(principal, dataSession, usuario, publicToken));
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+        }
+    } 
     
     public static class ResetPassword {
 

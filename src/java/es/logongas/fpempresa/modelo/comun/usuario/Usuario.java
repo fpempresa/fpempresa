@@ -92,7 +92,9 @@ public class Usuario extends User implements Principal {
     private int numFailedLogins;  
     
     @Label("Aceptar envio de correos")
-    private boolean aceptarEnvioCorreos;  
+    private boolean aceptarEnvioCorreos; 
+    
+    private String secretToken;
     
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
@@ -393,6 +395,20 @@ public class Usuario extends User implements Principal {
      */
     public void setAceptarEnvioCorreos(boolean aceptarEnvioCorreos) {
         this.aceptarEnvioCorreos = aceptarEnvioCorreos;
+    }
+
+    /**
+     * @return the secretToken
+     */
+    public String getSecretToken() {
+        return secretToken;
+    }
+
+    /**
+     * @param secretToken the secretToken to set
+     */
+    public void setSecretToken(String secretToken) {
+        this.secretToken = secretToken;
     }
 
 }

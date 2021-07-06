@@ -239,6 +239,24 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                     return deferred.promise;
                 };
                 
+                remoteDAO.cancelarSuscripcion = function (idIdentity, token) {
+                    var deferred = this.$q.defer();
+                    var config = {
+                        method: 'POST',
+                        url: this.baseUrl + '/' + this.entityName + "/cancelarSuscripcion/" + idIdentity + "/" + token
+                    };
+                    this.$http(config).success(function () {
+                        deferred.resolve(null);
+                    }).error(function (data, status) {
+                        if (status === 400) {
+                            deferred.reject(data);
+                        } else {
+                            throw new Error("Fallo al enviar la peticion de cancelar la Suscripcion:" + status + "\n" + data);
+                        }
+                    });
+                    return deferred.promise;
+                };
+                
             }]);
 
     }]);

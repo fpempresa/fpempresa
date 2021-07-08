@@ -16,7 +16,6 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
-import com.amazonaws.services.simpleworkflow.flow.annotations.Asynchronous;
 import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
@@ -32,6 +31,7 @@ import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
@@ -39,6 +39,9 @@ import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -47,11 +50,19 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> implements OfertaCRUDService {
 
+    private static final Logger logException = LogManager.getLogger(Exception.class);
+
     @Autowired
     protected CRUDServiceFactory serviceFactory;
 
     @Autowired
     Notification notification;
+
+    @Autowired
+    Executor executor;
+
+    @Autowired
+    private DataSessionFactory dataSessionFactory;
 
     private OfertaDAO getOfertaDAO() {
         return (OfertaDAO) getDAO();
@@ -110,20 +121,41 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         return getOfertaDAO().getOfertasEmpresa(dataSession, empresa);
     }
 
-    @Asynchronous
     @Override
     public void notificarOfertaATitulados(DataSession dataSession, Oferta oferta) throws BusinessException {
-        TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
-        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-        List<Titulado> tituladosSuscritos = tituladoCRUDService.getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(dataSession, oferta);
-        for (Titulado titulado : tituladosSuscritos) {
-  
-            Usuario usuario = usuarioCRUDService.getUsuarioFromTitulado(dataSession, titulado.getIdTitulado()); //TODO esto no es muy eficiente
-            if (usuario!=null) {
-                notification.nuevaOferta(usuario, oferta);
-            }
+        executor.execute(new NotificarOfertaATituladosImplRunnable(dataSessionFactory, oferta.getIdOferta()));
+    }
 
+    private class NotificarOfertaATituladosImplRunnable implements Runnable {
+
+        private final DataSessionFactory dataSessionFactory;
+        private final int idOferta;
+
+        public NotificarOfertaATituladosImplRunnable(DataSessionFactory dataSessionFactory, int idOferta) {
+            this.dataSessionFactory = dataSessionFactory;
+            this.idOferta = idOferta;
         }
+
+        @Override
+        public void run() {
+            try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+                TituladoCRUDService tituladoCRUDService = (TituladoCRUDService) serviceFactory.getService(Titulado.class);
+                OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
+                UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+
+                Oferta oferta = ofertaCRUDService.read(dataSession, idOferta);
+                List<Titulado> tituladosSuscritos = tituladoCRUDService.getTituladosSuscritosPorProvinciaOfertaYCiclosOferta(dataSession, oferta);
+                for (Titulado titulado : tituladosSuscritos) {
+                    Usuario usuario = usuarioCRUDService.getUsuarioFromTitulado(dataSession, titulado.getIdTitulado());
+                    if (usuario != null) {
+                        notification.nuevaOferta(usuario, oferta);
+                    }
+                }
+            } catch (Exception ex) {
+                logException.error(ex);
+            }
+        }
+
     }
 
 }

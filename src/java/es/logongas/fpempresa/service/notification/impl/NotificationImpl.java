@@ -47,7 +47,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author logongas
  */
 public class NotificationImpl implements Notification {
-    protected final Logger log = LogManager.getLogger(getClass());
+    private static final Logger logMail = LogManager.getLogger(Mail.class);
     
     final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.Podrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico " + Config.getSetting("app.correoSoporte") + ". Solicite más información dirigiéndose al correo electrónico indicado.En virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.";
     final static String BAJA_BY_EMAIL="<a href=\"mailto:" + Config.getSetting("app.correoSoporte") + "?Subject=Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de EmpleaFP</a>";
@@ -112,7 +112,7 @@ public class NotificationImpl implements Notification {
         } 
         
         if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
-            log.warn("No se ha enviado correo del candidato a la empresa " + empresa.getIdEmpresa()  + " al no existir el correo");
+            logMail.warn("No se ha enviado correo del candidato a la empresa " + empresa.getIdEmpresa()  + " al no existir el correo");
             return;
         }
 
@@ -225,9 +225,9 @@ public class NotificationImpl implements Notification {
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
             mailService.send(mail);
-            log.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
+            logMail.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         } else {
-            log.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
+            logMail.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
         }    
     }    
     

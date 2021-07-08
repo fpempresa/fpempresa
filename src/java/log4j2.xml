@@ -22,6 +22,12 @@
                 <TimeBasedTriggeringPolicy/>
             </Policies>     
         </RollingFile> 
+        <RollingFile name="FicheroMail" fileName="${sys:catalina.base}/logs/fpempresa_mails.log" filePattern="${sys:catalina.base}/logs/fpempresa_mails.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>     
+        </RollingFile>         
     </Appenders>
     <Loggers>
         <Root level="WARN">
@@ -44,6 +50,10 @@
         <Logger name="java.lang.Exception" level="WARN" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="FicheroExcepciones"/>      
+        </Logger> 
+        <Logger name="es.logongas.fpempresa.service.mail.Mail" level="INFO" additivity="false">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="FicheroMail"/>      
         </Logger> 
         <Logger name="es.logongas.ix3.security.authorization.BusinessSecurityException" level="WARN" additivity="false">
             <AppenderRef ref="Consola"/>

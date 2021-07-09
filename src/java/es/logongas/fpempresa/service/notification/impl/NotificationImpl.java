@@ -226,9 +226,9 @@ public class NotificationImpl implements Notification {
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
             mailService.send(mail);
-            logMail.info("Enviado correo:" + mail.getTo().get(0) + ":" + mail.getSubject() );
+            logMail.info("Enviado correo:" + mail.getSubject() + ":" + mail.getTo().get(0) );
         } else {
-            logMail.info("Correo NO enviado:" + mail.getTo().get(0) + ":" + mail.getSubject() );
+            logMail.info("Correo NO enviado:" + mail.getSubject() + ":" + mail.getTo().get(0) );
         }    
     }    
     

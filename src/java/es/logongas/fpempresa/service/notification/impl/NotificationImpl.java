@@ -77,16 +77,17 @@ public class NotificationImpl implements Notification {
         
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
-        mail.setSubject("Nueva oferta de trabajo: " + oferta.getPuesto());
-        mail.setHtmlBody("Hola " + usuario.getNombre() + ",<br>"
-                + "hay una nueva oferta de trabajo en el municipio de " + oferta.getMunicipio() + " de la empresa \"" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "\".<br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br><br>"
+        mail.setSubject("Nueva oferta de trabajo en EmpleaFP: " + oferta.getPuesto());
+        mail.setHtmlBody("<strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong><br><br>"
+                + "En <a href=\"" + getAppURL() + "\">EmpleaFP</a> hay una nueva oferta de trabajo en el municipio de " + oferta.getMunicipio() + " de la empresa \"" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "\"." 
+                + "<br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br><br>"
                 + "<strong>\"" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "\"</strong><br>"    
                 + "<br>"
                 + "<br>"
                 + "Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br>"
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
                 + "<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo."
-                + "<br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString() + "\">aquí</a>."
+                + "<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString() + "\">aquí</a>."
         );
         mail.setFrom(Config.getSetting("mail.sender"));
         sendMail(mail);
@@ -117,16 +118,16 @@ public class NotificationImpl implements Notification {
         }
 
         mail.addTo(direccionEMail);
-        mail.setSubject("Nuevo candidato para la oferta de trabajo: " + oferta.getPuesto());
-        mail.setHtmlBody("Hola <strong>" + StringEscapeUtils.escapeHtml4(persona) + "</strong>,<br>"
-                + "un nuevo candidato se ha suscrito a una de tus ofertas:<br>"
+        mail.setSubject("Nuevo candidato en EmpleaFP para tu oferta de trabajo: " + oferta.getPuesto());
+        mail.setHtmlBody("<strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong><br><br>"
+                + "En <a href=\"" + getAppURL() + "\">EmpleaFP</a> hay un nuevo candidato que se ha subscrito a una de tus ofertas:<br>"
                 + "<h4>Datos del candidato</h4>"
                 + "Nombre: " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "<br>"
                 + "Email: " + candidato.getUsuario().getEmail() + "<br><br>" 
                 + "<h4>Datos de la oferta</h4>"
                 + "Puesto: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "<br>"
                 + "Descripción: " + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion()))
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para poder ampliar la información.<br><br><br><br>"
+                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para más información.<br><br><br><br>"
                 + "Si necesitas ayuda puedes contactar en " + Config.getSetting("app.correoSoporte") + "."
                 + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
                 + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)

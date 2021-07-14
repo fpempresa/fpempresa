@@ -28,6 +28,7 @@ import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
+import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDServiceFactory;
@@ -35,6 +36,7 @@ import es.logongas.ix3.web.security.jwt.Jws;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -75,27 +77,28 @@ public class NotificationImpl implements Notification {
         
         PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(idIdentity, jws, secretToken);
         
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Nueva oferta de empleo";
+        bodyContent.parrafos="Hay una nueva oferta de empleo en el municipio de '" + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + "' de la empresa '" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "' para el puesto de '" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "'"
+                + " Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta.<br><br>"
+                + "<p style=\"font-style: italic;padding-left: 10px;color:#383838 \">" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "</p>"
+                + "<strong>Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta</strong>"
+                + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
+        bodyContent.labelButton="Acceder a EmpleaFP para inscribirte en la Oferta";
+        bodyContent.linkButton=getAppURL() + "/site/index.html#/login";
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+"<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo.<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString() + "\">aquí</a>.";
+        
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
-        mail.setSubject("Nueva oferta de trabajo en EmpleaFP: " + oferta.getPuesto());
-        mail.setHtmlBody("<strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong><br><br>"
-                + "En <a href=\"" + getAppURL() + "\">EmpleaFP</a> hay una nueva oferta de trabajo en el municipio de " + oferta.getMunicipio() + " de la empresa \"" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "\"." 
-                + "<br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br><br>"
-                + "<strong>\"" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "\"</strong><br>"    
-                + "<br>"
-                + "<br>"
-                + "Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "\">EmpleaFP</a> e <strong>inscribirte en la oferta.</strong><br>"
-                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
-                + "<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo."
-                + "<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString() + "\">aquí</a>."
-        );
+        mail.setSubject("Nueva oferta de empleo en EmpleaFP: " + oferta.getPuesto());
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         mail.setFrom(Config.getSetting("mail.sender"));
         sendMail(mail);
     }
 
     @Override
     public void nuevoCandidato(DataSession dataSession, Candidato candidato) {
-        Mail mail = new Mail();
+
         Oferta oferta = candidato.getOferta();
         if (oferta==null) {
             throw new NullPointerException("oferta is null");
@@ -116,22 +119,19 @@ public class NotificationImpl implements Notification {
             logMail.warn("No se ha enviado correo del candidato a la empresa " + empresa.getIdEmpresa()  + " al no existir el correo");
             return;
         }
+        
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Nuevo candidato";
+        bodyContent.parrafos="Un nuevo candidato llamado <strong>" + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "</strong> se acaba de inscribir en la siguiente oferta:<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "</p>Te hemos adjuntado un PDF con su currículum."
+                + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>"
+                + "<br><br>Si no deseas que se inscriban nuevos candidatos a esta oferta, entra en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> y dentro de la oferta marca la opción de 'Oferta cerrada'";                
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);;
 
+        
+        Mail mail = new Mail();
         mail.addTo(direccionEMail);
-        mail.setSubject("Nuevo candidato en EmpleaFP para tu oferta de trabajo: " + oferta.getPuesto());
-        mail.setHtmlBody("<strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong><br><br>"
-                + "En <a href=\"" + getAppURL() + "\">EmpleaFP</a> hay un nuevo candidato que se ha subscrito a una de tus ofertas:<br>"
-                + "<h4>Datos del candidato</h4>"
-                + "Nombre: " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "<br>"
-                + "Email: " + candidato.getUsuario().getEmail() + "<br><br>" 
-                + "<h4>Datos de la oferta</h4>"
-                + "Puesto: " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "<br>"
-                + "Descripción: " + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion()))
-                + "Accede a tu cuenta de <a href=\"" + getAppURL() + "\">EmpleaFP</a> para más información.<br><br><br><br>"
-                + "Si necesitas ayuda puedes contactar en " + Config.getSetting("app.correoSoporte") + "."
-                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)
-                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)
-        );
+        mail.setSubject("Nuevo candidato en EmpleaFP de la oferta: " + oferta.getPuesto());
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         mail.setFrom(Config.getSetting("mail.sender"));
 
         Map<String, Object> parameters = new HashMap<>();
@@ -145,68 +145,75 @@ public class NotificationImpl implements Notification {
 
     @Override
     public void resetearContrasenya(Usuario usuario) {
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Cambiar contraseña";
+        bodyContent.parrafos="Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">EmpleaFP</a>. Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente botón.";
+        bodyContent.labelButton="Cambiar la contraseña";
+        bodyContent.linkButton=getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya();
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
+        
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setFrom(Config.getSetting("mail.sender"));
-        mail.setSubject("Resetear contraseña en EmpleaFP");
-        mail.setHtmlBody(""
-                + "Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">EmpleaFP</a>.<br><br>"
-                + "Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente enlace e introduce tu nueva contraseña: \n"
-                + "<a href=\"" + getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya() + "\">Resetear contraseña</a>"
-                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)                
-                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)                
-        );
+        mail.setSubject("Cambiar contraseña en EmpleaFP");
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         sendMail(mail);
     }
 
     @Override
     public void validarCuenta(Usuario usuario) {
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Confirmar tu dirección de correo";
+        bodyContent.parrafos="Bienvenido " +  StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ",<br><br>"
+                + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">EmpleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional. Para poder completar tu registro es necesario que confirmes tu dirección de correo haciendo click en el siguiente botón: ";
+        bodyContent.labelButton="Confirmar tu dirección de correo";
+        bodyContent.linkButton=getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail();
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
+        
+        
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setFrom(Config.getSetting("mail.sender"));
-        mail.setSubject("Confirma tu correo para acceder a EmpleaFP");
-        mail.setHtmlBody(""
-                + "Bienvenido " + usuario.getNombre() + " " + usuario.getApellidos() + ",<br><br>"
-                + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">EmpleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional.<br> "
-                + "Para poder completar tu registro es necesario que verifiques tu dirección de correo haciendo click en el siguiente enlace: "
-                + "<a href=\"" + getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail() + "\">Verificar Email</a>"
-                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)               
-                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)               
-        );
+        mail.setSubject("Confirma tu dirección de correo para acceder a EmpleaFP");
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         sendMail(mail);
     }
 
     
     @Override
     public void mensajeSoporte( String nombre, String correo,String mensaje) {
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Petición de soporte";
+        bodyContent.parrafos=StringEscapeUtils.escapeHtml4(nombre) + " ha enviado el siguiente mensaje para el soporte de " + getAppURL() + ":<br>" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(mensaje));
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
+        
+        
         Mail mail = new Mail();
         mail.addTo(Config.getSetting("app.correoSoporte"));
         mail.setFrom(Config.getSetting("mail.sender"));
         mail.setReply(correo);
         mail.setSubject("Petición de soporte de " + nombre);
-        mail.setHtmlBody(""
-                + StringEscapeUtils.escapeHtml4(nombre) + " ha enviado el siguiente mensaje para el soporte de " + getAppURL() + ":<br>"
-                + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(mensaje))
-                + "<br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)          
-                + "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL)          
-        );
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         
         sendMail(mail);
     }
     
     @Override
     public void usuarioInactivo(Usuario usuario) {
-        String msg=
-                  " Hola " + StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ",<br>"
-                + "hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP.com</a>.<br>"
-                + "La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados de tu currículum.<br>"
-                + "<strong>Si no accedes antes de 15 días</strong> a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP.com</a>, procederemos a <strong>borrarla</strong>.";
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Tu cuenta va a ser borrada pronto";
+        bodyContent.parrafos="Hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP.com</a>. La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados de tu currículum."
+                + "<strong>Si no accedes antes de 15 días</strong> a tu cuenta de <a href='" + getAppURL() + "/site/index.html#/login'>EmpleaFP</a>, procederemos a <strong>borrarla</strong>."
+                + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
+        bodyContent.labelButton="Acceder a EmpleaFP para evitar el borrado de la cuenta";
+        bodyContent.linkButton=getAppURL() + "/site/index.html#/login";
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
         
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setFrom(Config.getSetting("mail.sender"));
-        mail.setSubject("Tu cuenta de EmpleaFP.com va a ser borrada por falta de uso");
-        mail.setHtmlBody(msg + "<br><br><br><br>"+toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL));
+        mail.setSubject("[Acción Requerida] Tu cuenta de EmpleaFP va a ser borrada por falta de uso");
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         
         sendMail(mail);
     }  
@@ -278,5 +285,133 @@ public class NotificationImpl implements Notification {
         
         return stackTrace;
     }
+    
+    
+    private String getBodyFromHTMLTemplate(BodyContent bodyContent) {
+        Date date=new Date();
+        int year=DateUtil.get(date, DateUtil.Interval.YEAR);
+        
+        
+        String body = 
+                  "<table align='center' cellpadding='0' cellspacing='0' border='0' style='width:100%;margin:0 auto;background-color:#ffffff'>\n"
+                + "    <tr>\n"
+                + "        <td style='font-size:0;'>&nbsp;</td>\n"
+                + "        <td align='center' valign='top' style='width:580px;'>\n"
+                + "            <table align='center' cellpadding='0' cellspacing='0' border='0' style='width:95%;'>\n"
+                + "                <tr>\n"
+                + "                    <td align='center'>\n"
+                + "                        <table align='center' cellpadding='0' cellspacing='0' border='0' style='width:100%;'>\n"
+                + "                            <tr>\n"
+                + "                                <td align='left' style='padding:40px 0;border-bottom:1px solid #ABABAB;'>\n"
+                + "                                    <a href='https://www.empleafp.com'  alt='logo empleafp' style='text-decoration:none;'>\n"
+                + "                                        <img src='https://www.empleafp.com/img/logos/empleafp.png' alt='logo empleafp'  border='0' width='220' style='display:block;outline:0;padding:0;border:0;width:220px;height:auto;'>\n"
+                + "                                    </a>\n"
+                + "                                </td>\n"
+                + "                            </tr>\n"
+                + "                            <tr>\n"
+                + "                                <td height='20' style='height:20px;line-height:20px;font-size:0;'>\n"
+                + "                                    &nbsp;\n"
+                + "                                </td>\n"
+                + "                            </tr>\n"
+                + "                        </table>\n"
+                + "                    </td>\n"
+                + "                </tr>\n"
+                + "                <tr>\n"
+                + "                    <td align='center'>\n"
+                + "                        <table cellpadding='0' cellspacing='0' border='0' style='width:100%;'>\n"
+                + "                            <tr>\n"
+                + "                                <td align='center'>\n"
+                + "                                    <table cellpadding='0' cellspacing='0' border='0' style='width:100%;' class='w100'>\n"
+                + "                                        <tr>\n"
+                + "                                            <td style='padding-top:20px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-weight:bold;font-size:24px;line-height:35px;color:#253858;text-align:left;'>\n"
+                + "                                                <div  style='text-decoration:none;color:#253858;font-weight:bold;' >\n"
+                + "                                                    " + bodyContent.titulo + "\n"
+                + "                                                </div>\n"
+                + "                                            </td>\n"
+                + "                                        </tr>\n"
+                + "                                    </table>\n"
+                + "                                </td>\n"
+                + "                            </tr>\n"
+                + "                            <tr>\n"
+                + "                                <td style='padding-top:40px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:16px;line-height:26px;color:#42526E;text-align:left;'>\n"
+                + "                                    " + bodyContent.parrafos + "<br><br>\n"
+                + "                                </td>\n"
+                + "                            </tr>\n";
+        
+                if ((bodyContent.linkButton!=null) || (bodyContent.labelButton!=null)) {
+                    body=body+
+                          "                            <tr>\n"
+                        + "                                <td align='center' style='padding-top:30px;'>\n"
+                        + "                                    <table cellpadding='0' cellspacing='0' border='0'>\n"
+                        + "                                        <tr>\n"
+                        + "                                            <td align='center' style='border-radius:3px;background-color:#0056B8;'>\n"
+                        + "                                                <a href='" + bodyContent.linkButton + "' target='_blank'  style='display:inline-block;border:1px solid #0056B8;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:16px;color:#ffffff;text-decoration:none;border-radius: 4px; padding:12px;'>\n"
+                        + "                                                    " + bodyContent.labelButton + "\n"
+                        + "                                                </a>\n"
+                        + "                                            </td>\n"
+                        + "                                        </tr>\n"
+                        + "                                    </table>\n"
+                        + "                                </td>\n"
+                        + "                            </tr>\n";
+                }
+                body=body+
+                  "                            <tr>\n"
+                + "                                <td style='padding-top:40px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:16px;line-height:22px;color:#42526E;text-align:left;'>\n"
+                + "                                    Atentamente,<br>el equipo de EmpleaFP.\n"
+                + "                                </td>\n"
+                + "                            </tr>\n"
+                + "                        </table>\n"
+                + "                    </td>\n"
+                + "                </tr>\n"
+                + "                <tr>\n"
+                + "                    <td align='center'>\n"
+                + "                        <table cellpadding='0' cellspacing='0' border='0' style='width:100%;'>\n"
+                + "                            <tr>\n"
+                + "                                <td align='center' style='padding-top:40px;padding-bottom:40px;'>\n"
+                + "                                    <table cellpadding='0' cellspacing='0' border='0' style='width:100%;'>\n"
+                + "                                        <tr>\n"
+                + "                                            <td align='justify' style='border-top:1px solid #ABABAB;padding-top:40px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#707070;text-align:justify;'>\n"
+                + "                                                " + bodyContent.pie + "\n"
+                + "                                            </td>\n"
+                + "                                        </tr>\n"
+                + "                                        <tr>\n"
+                + "                                            <td style='padding-top:20px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#707070;text-align:center;'>\n"
+                + "                                                <a href='https://www.empleafp.com/site/index.html#/legal/aviso-legal' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Aviso Legal</a>\n"
+                + "                                                •\n"
+                + "                                                <a href='https://www.empleafp.com/site/index.html#/legal/politica-privacidad' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Política de Privacidad</a>\n"
+                + "                                                •\n"
+                + "                                                <a href='https://www.empleafp.com/site/index.html#/legal/terminos-uso' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Términos de uso</a>\n"
+                + "                                            </td>\n"
+                + "                                        </tr>\n"
+                + "                                        <tr>\n"
+                + "                                            <td align='center' style='padding-top:10px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#707070;text-align:center;'>\n"
+                + "                                                Copyright 2013-" + year + " Asociación de Centros de Formación Profesional - FPEmpresa\n"
+                + "                                            </td>\n"
+                + "                                        </tr>\n"
+                + "                                    </table>\n"
+                + "                                </td>\n"
+                + "                            </tr>\n"
+                + "                        </table>\n"
+                + "                    </td>\n"
+                + "                </tr>\n"
+                + "            </table>\n"
+                + "        </td>\n"
+                + "        <td style='font-size:0;'>&nbsp;</td>\n"
+                + "    </tr>\n"
+                + "</table>";
+
+        return body;
+    }
+    
+    
+    private class BodyContent {
+        String titulo="";
+        String parrafos="";
+        String pie="";
+        String labelButton=null;
+        String linkButton=null;
+
+    }
+    
     
 }

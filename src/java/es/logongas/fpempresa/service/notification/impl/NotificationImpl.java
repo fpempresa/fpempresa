@@ -232,8 +232,17 @@ public class NotificationImpl implements Notification {
     
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {
-            mailService.send(mail);
-            logMail.info("Enviado correo:" + mail.getSubject() + ":" + mail.getTo().get(0) );
+            String subject=mail.getSubject();
+            String to=mail.getTo().get(0);
+            
+            try {
+                mailService.send(mail);
+                logMail.info("Enviado correo:" + subject + ":" + to);
+            } catch (Exception ex) {
+                logMail.error("!!!!!!!!!Falló al enviar el correo:'" + subject + "' a " + to + "." + ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+            
         } else {
             logMail.info("Correo NO enviado:" + mail.getSubject() + ":" + mail.getTo().get(0) );
         }    

@@ -23,6 +23,7 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.security.publictoken.PublicTokenCancelarSubcripcion;
+import es.logongas.fpempresa.security.publictoken.PublicTokenCerrarOferta;
 import es.logongas.fpempresa.service.mail.Attach;
 import es.logongas.fpempresa.service.mail.Mail;
 import es.logongas.fpempresa.service.mail.MailService;
@@ -79,9 +80,9 @@ public class NotificationImpl implements Notification {
         
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Nueva oferta de empleo";
-        bodyContent.parrafos="Hay una nueva oferta de empleo en el municipio de '" + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + "' de la empresa '" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "' para el puesto de '" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "'"
-                + " Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta.<br><br>"
-                + "<p style=\"font-style: italic;padding-left: 10px;color:#383838 \">" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "</p>"
+        bodyContent.parrafos="Hay una nueva oferta de empleo en el municipio de '" + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + "' de la empresa '" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "' para el puesto de '" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "'."
+                + "<br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta."
+                + "<br><br><p style=\"font-style: italic;padding-left: 10px;color:#383838 \">" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "</p>"
                 + "<strong>Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta</strong>"
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para inscribirte en la Oferta";
@@ -120,11 +121,16 @@ public class NotificationImpl implements Notification {
             return;
         }
         
+        byte[] secretToken=oferta.getSecretToken().getBytes(Charset.forName("utf-8"));
+        int idOferta=oferta.getIdOferta();
+        
+        PublicTokenCerrarOferta publicTokenCerrarOferta=new PublicTokenCerrarOferta(idOferta, jws, secretToken);
+        
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Nuevo candidato";
-        bodyContent.parrafos="Un nuevo candidato llamado <strong>" + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "</strong> se acaba de inscribir en la siguiente oferta:<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "</p>Te hemos adjuntado un PDF con su currículum."
-                + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>"
-                + "<br><br>Si no deseas que se inscriban nuevos candidatos a esta oferta, entra en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> y dentro de la oferta marca la opción de 'Oferta cerrada'";                
+        bodyContent.parrafos="Un nuevo candidato llamado <strong>" + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "</strong> se ha inscrito en la siguiente oferta:<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "</p>Se ha adjuntado un PDF con su currículum en este correo."
+                + "<br><br>Si desea cerrar la oferta y que de esa forma que no te lleguen nuevos correos de esta oferta, pinche <a href=\"" + getAppURL() + "/site/index.html#/cerrar-oferta/" + idOferta + "/" + publicTokenCerrarOferta.toString() + "\">aquí</a>."
+                + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);;
 
         

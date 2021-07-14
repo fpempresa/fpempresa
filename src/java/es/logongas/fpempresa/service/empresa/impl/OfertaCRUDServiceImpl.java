@@ -24,6 +24,7 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
+import es.logongas.fpempresa.security.publictoken.PublicTokenCerrarOferta;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
@@ -37,6 +38,8 @@ import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import es.logongas.ix3.web.security.jwt.Jws;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -68,6 +71,9 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         return (OfertaDAO) getDAO();
     }
 
+    @Autowired
+    Jws jws;    
+    
     @Override
     public boolean delete(DataSession dataSession, Oferta entity) throws BusinessException {
         boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
@@ -125,6 +131,40 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     public void notificarOfertaATitulados(DataSession dataSession, Oferta oferta) throws BusinessException {
         executor.execute(new NotificarOfertaATituladosImplRunnable(dataSessionFactory, oferta.getIdOferta()));
     }
+    
+    @Override
+    public void cerrarOferta(DataSession dataSession,Oferta oferta, String publicToken) throws BusinessException {
+        
+        if (oferta==null) {
+            throw new BusinessException("No existe la oferta");
+        }
+        byte[] secretToken=oferta.getSecretToken().getBytes(Charset.forName("utf-8"));
+        
+        
+        PublicTokenCerrarOferta publicTokenCerrarOferta;
+                
+        try {
+            publicTokenCerrarOferta=new PublicTokenCerrarOferta(publicToken, jws, secretToken);
+        } catch (Exception ex) {
+            throw new BusinessException("El token no tiene el formato adecuado");
+        }
+        
+        if (publicTokenCerrarOferta.isValid()==false) {
+            throw new BusinessException("El token no es válido o ha caducado.");
+        }
+        
+        if (oferta.getIdOferta()!=publicTokenCerrarOferta.getIdOferta()) {
+            throw new BusinessException("El token no es válido para esa oferta.");
+        }
+        
+        
+        
+        oferta.setCerrada(true);
+        super.update(dataSession, oferta);
+        
+    }    
+    
+    
 
     private class NotificarOfertaATituladosImplRunnable implements Runnable {
 

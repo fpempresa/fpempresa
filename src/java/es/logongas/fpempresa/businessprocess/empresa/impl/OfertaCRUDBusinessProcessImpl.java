@@ -89,4 +89,18 @@ public class OfertaCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ofert
         
     }
 
+    @Override
+    public void cerrarOferta(CerrarOfertaArguments cerrarOfertaArguments) throws BusinessException {
+        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
+
+        Oferta oferta=cerrarOfertaArguments.oferta;
+        DataSession dataSession=cerrarOfertaArguments.dataSession;
+        String publicToken=cerrarOfertaArguments.publicToken;
+        
+        ofertaCRUDService.cerrarOferta(dataSession, oferta, publicToken);
+        
+    }
+
+    
+    
 }

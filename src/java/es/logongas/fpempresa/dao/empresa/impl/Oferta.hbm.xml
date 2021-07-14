@@ -47,7 +47,9 @@
             <property name="telefono" />
             <property name="fax" />
             <property name="textoLibre" />
-        </component>        
+        </component>  
+              
+        <property name="secretToken"/>
         
     </class>
 </hibernate-mapping>

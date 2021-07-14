@@ -68,10 +68,11 @@ public class Oferta {
 
     private boolean cerrada;
 
-    @NotNull
     @Valid
     private Contacto contacto;
 
+    private String secretToken;
+    
     public Oferta() {
         this.tipoOferta = TipoOferta.LABORAL;
     }
@@ -279,6 +280,20 @@ public class Oferta {
      */
     public void setContacto(Contacto contacto) {
         this.contacto = contacto;
+    }
+
+    /**
+     * @return the secretToken
+     */
+    public String getSecretToken() {
+        return secretToken;
+    }
+
+    /**
+     * @param secretToken the secretToken to set
+     */
+    public void setSecretToken(String secretToken) {
+        this.secretToken = secretToken;
     }
 
 }

@@ -73,5 +73,20 @@ public class OfertaController {
 
     }    
     
-    
+    @RequestMapping(value = {"/{path}/Oferta/cerrarOferta/{idOferta:.+}/{publicToken:.+}"}, method = RequestMethod.POST)
+    public void cerrarOferta(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idOferta") int idOferta, @PathVariable("publicToken") String publicToken) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+            CRUDService<Oferta, Integer> ofertaCrudService = crudServiceFactory.getService(Oferta.class);
+            Oferta oferta = ofertaCrudService.read(dataSession, idOferta);
+            
+            OfertaCRUDBusinessProcess ofertaCRUDBusinessProcess = (OfertaCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Oferta.class);
+            ofertaCRUDBusinessProcess.cerrarOferta(new OfertaCRUDBusinessProcess.CerrarOfertaArguments(principal, dataSession, oferta, publicToken));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+        }
+    } 
 }

@@ -42,5 +42,7 @@ public interface OfertaCRUDService extends CRUDService<Oferta, Integer> {
     public List<Oferta> getOfertasEmpresa(DataSession dataSession, Empresa empresa) throws BusinessException;
 
     public void notificarOfertaATitulados(DataSession dataSession, Oferta oferta) throws BusinessException;
+    
+    public void cerrarOferta(DataSession dataSession,Oferta oferta, String publicToken) throws BusinessException;
 
 }

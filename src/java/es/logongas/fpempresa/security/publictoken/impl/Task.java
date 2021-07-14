@@ -21,5 +21,6 @@ package es.logongas.fpempresa.security.publictoken.impl;
  * @author logongas
  */
 public enum Task {
-    CANCELAR_SUBCRIPCION_EMAILS_TITULADO;
+    CANCELAR_SUBCRIPCION_EMAILS_TITULADO,
+    CERRAR_OFERTA;
 }

@@ -43,6 +43,7 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta, I
     public List<Oferta> getOfertasEmpresa(GetOfertasEmpresaArguments getOfertasEmpresa) throws BusinessException;
     
     public void notificacionOferta(NotificacionOfertaArguments notificacionOfertaArguments) throws BusinessException;
+    public void cerrarOferta(CerrarOfertaArguments cerrarOfertaArguments) throws BusinessException;
 
     public class GetOfertasUsuarioTituladoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
@@ -124,6 +125,19 @@ public interface OfertaCRUDBusinessProcess extends CRUDBusinessProcess<Oferta, I
             this.oferta = oferta;
         }
 
-    }    
+    }  
+    
+    public class CerrarOfertaArguments extends BusinessProcess.BusinessProcessArguments {
+
+        final public Oferta oferta;
+        final public String publicToken;
+
+        public CerrarOfertaArguments(Principal principal, DataSession dataSession, Oferta oferta, String publicToken) {
+            super(principal, dataSession);
+            this.oferta = oferta;
+            this.publicToken=publicToken;
+        }
+
+    }     
     
 }

@@ -84,7 +84,7 @@ public class OfertaCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ofert
         Page<Candidato> page=candidatoCRUDService.getCandidatosOferta(dataSession, oferta, true, false, Integer.MAX_VALUE, pageRequest);
         
         for(Candidato candidato:page.getContent()) {
-            candidatoCRUDService.notificarCandidatoAEmpresas(dataSession, candidato);
+            candidatoCRUDService.notificarAEmpresaInscritoCandidato(dataSession, candidato);
         }
         
     }

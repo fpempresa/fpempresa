@@ -45,13 +45,24 @@ public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ca
 
         return candidatoCRUDService.getNumCandidatosOferta(getNumCandidatosOferta.dataSession, getNumCandidatosOferta.oferta);
     }
-
+    
     @Override
     public Candidato insert(InsertArguments<Candidato> insertArguments) throws BusinessException {
         Candidato Candidato = super.insert(insertArguments);
         CandidatoCRUDService CandidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
-        CandidatoCRUDService.notificarCandidatoAEmpresas(insertArguments.dataSession, Candidato);
+        CandidatoCRUDService.notificarAEmpresaInscritoCandidato(insertArguments.dataSession, Candidato);
         return Candidato;
     }
 
+    @Override
+    public boolean delete(DeleteArguments<Candidato> deleteArguments) throws BusinessException {
+        
+        CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+        candidatoCRUDService.notificarAEmpresaDesinscritoCandidato(deleteArguments.dataSession, deleteArguments.entity);
+        
+        boolean resultado = super.delete(deleteArguments);
+
+        return resultado;
+    }
+    
 }

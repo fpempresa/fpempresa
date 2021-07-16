@@ -29,7 +29,8 @@ import es.logongas.ix3.service.Service;
 public interface Notification extends Service  {
     
     void nuevaOferta(Usuario usuario,Oferta oferta);
-    void nuevoCandidato(DataSession dataSession,Candidato candidato);
+    void inscritoCandidato(DataSession dataSession,Candidato candidato);
+    void desinscritoCandidato(DataSession dataSession,Candidato candidato);
     void resetearContrasenya(Usuario usuario);    
     void validarCuenta(Usuario usuario);
     void mensajeSoporte( String nombre, String correo,String mensaje);

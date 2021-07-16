@@ -98,7 +98,7 @@ public class NotificationImpl implements Notification {
     }
 
     @Override
-    public void nuevoCandidato(DataSession dataSession, Candidato candidato) {
+    public void inscritoCandidato(DataSession dataSession, Candidato candidato) {
 
         Oferta oferta = candidato.getOferta();
         if (oferta==null) {
@@ -110,10 +110,8 @@ public class NotificationImpl implements Notification {
         }
         Contacto contacto=empresa.getContacto();
         String direccionEMail=null;
-        String persona=null;
         if (contacto!=null) {
             direccionEMail=contacto.getEmail();
-            persona=contacto.getPersona()+"";
         } 
         
         if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
@@ -128,15 +126,17 @@ public class NotificationImpl implements Notification {
         
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Nuevo candidato";
-        bodyContent.parrafos="Un nuevo candidato llamado <strong>" + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "</strong> se ha inscrito en la siguiente oferta:<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "</p>Se ha adjuntado un PDF con su currículum en este correo."
-                + "<br><br>Si desea cerrar la oferta y que de esa forma que no te lleguen nuevos correos de esta oferta, pinche <a href=\"" + getAppURL() + "/site/index.html#/cerrar-oferta/" + idOferta + "/" + publicTokenCerrarOferta.toString() + "\">aquí</a>."
-                + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
-        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);;
+        bodyContent.parrafos="Un nuevo candidato llamado <strong>" + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "</strong> se ha inscrito en la siguiente oferta:" 
+                + "<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "</p>"
+                + "Se ha adjuntado un PDF con su currículum en este correo."
+                + "<br><br>Si desea cerrar la oferta y que de esa forma que no le lleguen nuevos correos de esta oferta, pinche <a href=\"" + getAppURL() + "/site/index.html#/cerrar-oferta/" + idOferta + "/" + publicTokenCerrarOferta.toString() + "\">aquí</a>."
+                + "<br><br><strong>*** No responda a este correo, ha sido enviado automáticamente ***</strong>";
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
 
         
         Mail mail = new Mail();
         mail.addTo(direccionEMail);
-        mail.setSubject("Nuevo candidato en EmpleaFP de la oferta: " + oferta.getPuesto());
+        mail.setSubject("Nuevo candidato en EmpleaFP de su oferta: " + oferta.getPuesto());
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         mail.setFrom(Config.getSetting("mail.sender"));
 
@@ -148,7 +148,50 @@ public class NotificationImpl implements Notification {
 
         sendMail(mail);
     }
+    
+    @Override
+    public void desinscritoCandidato(DataSession dataSession, Candidato candidato) {
 
+        Oferta oferta = candidato.getOferta();
+        if (oferta==null) {
+            throw new NullPointerException("oferta is null");
+        }
+        Empresa empresa=oferta.getEmpresa();
+        if (empresa==null) {
+            throw new NullPointerException("empresa is null");
+        }
+        Contacto contacto=empresa.getContacto();
+        String direccionEMail=null;
+        if (contacto!=null) {
+            direccionEMail=contacto.getEmail();
+        } 
+        
+        if ((direccionEMail==null) || (direccionEMail.trim().isEmpty())) {
+            logMail.warn("No se ha enviado correo del candidato desinscrito a la empresa al no existir el correo.idCandidato="+candidato.getIdCandidato());
+            return;
+        }
+
+        String nombreCompletoTitulado=candidato.getUsuario().getNombre() + " " + candidato.getUsuario().getApellidos();
+        
+        BodyContent bodyContent=new BodyContent();
+        bodyContent.titulo="Desinscrito candidato";
+        bodyContent.parrafos="Un candidato llamado '" + StringEscapeUtils.escapeHtml4(nombreCompletoTitulado) + "' se ha <strong>desinscrito</strong> en la siguiente oferta que usted publicó:" 
+                + "<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto())+ "</p>"
+                + "En su día desde EmpleaFP se le envió un correo con un PDF con el curriculumn del candidato."
+                + "<p style='color:#AB211C'>Si aun conserva el curriculum de '" + StringEscapeUtils.escapeHtml4(nombreCompletoTitulado) + "' deberá borrarlo así como cualquier otra información relativa al candidato</p>"
+                + "<br><br><strong>*** No responda a este correo, ha sido enviado automáticamente ***</strong>";
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
+
+        Mail mail = new Mail();
+        mail.addTo(direccionEMail);
+        mail.setSubject("Desinscrito candidato en EmpleaFP de su oferta '" + oferta.getPuesto() + "'");
+        mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
+        mail.setFrom(Config.getSetting("mail.sender"));
+
+        sendMail(mail);
+    }
+    
+    
     @Override
     public void resetearContrasenya(Usuario usuario) {
         BodyContent bodyContent=new BodyContent();
@@ -208,7 +251,7 @@ public class NotificationImpl implements Notification {
     public void usuarioInactivo(Usuario usuario) {
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Tu cuenta va a ser borrada pronto";
-        bodyContent.parrafos="Hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP.com</a>. La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados de tu currículum."
+        bodyContent.parrafos="Hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP</a>. Como sabrás EmpleaFP es la mayor bolsa de empleo de la formación profesional. La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados de tu currículum."
                 + "<strong>Si no accedes antes de 15 días</strong> a tu cuenta de <a href='" + getAppURL() + "/site/index.html#/login'>EmpleaFP</a>, procederemos a <strong>borrarla</strong>."
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para evitar el borrado de la cuenta";
@@ -300,7 +343,7 @@ public class NotificationImpl implements Notification {
         
         return stackTrace;
     }
-    
+
     
     private String getBodyFromHTMLTemplate(BodyContent bodyContent) {
         Date date=new Date();
@@ -318,8 +361,8 @@ public class NotificationImpl implements Notification {
                 + "                        <table align='center' cellpadding='0' cellspacing='0' border='0' style='width:100%;'>\n"
                 + "                            <tr>\n"
                 + "                                <td align='left' style='padding:40px 0;border-bottom:1px solid #ABABAB;'>\n"
-                + "                                    <a href='https://www.empleafp.com'  alt='logo empleafp' style='text-decoration:none;'>\n"
-                + "                                        <img src='https://www.empleafp.com/img/logos/empleafp.png' alt='logo empleafp'  border='0' width='220' style='display:block;outline:0;padding:0;border:0;width:220px;height:auto;'>\n"
+                + "                                    <a href='" + getAppURL() + "'  alt='logo empleafp' style='text-decoration:none;'>\n"
+                + "                                        <img src='" + getAppURL() + "/img/logos/empleafp.png' alt='logo empleafp'  border='0' width='220' style='display:block;outline:0;padding:0;border:0;width:220px;height:auto;'>\n"
                 + "                                    </a>\n"
                 + "                                </td>\n"
                 + "                            </tr>\n"
@@ -391,16 +434,18 @@ public class NotificationImpl implements Notification {
                 + "                                        </tr>\n"
                 + "                                        <tr>\n"
                 + "                                            <td style='padding-top:20px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#707070;text-align:center;'>\n"
-                + "                                                <a href='https://www.empleafp.com/site/index.html#/legal/aviso-legal' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Aviso Legal</a>\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#/legal/aviso-legal' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Aviso Legal</a>\n"
                 + "                                                •\n"
-                + "                                                <a href='https://www.empleafp.com/site/index.html#/legal/politica-privacidad' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Política de Privacidad</a>\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#/legal/politica-privacidad' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Política de Privacidad</a>\n"
                 + "                                                •\n"
-                + "                                                <a href='https://www.empleafp.com/site/index.html#/legal/terminos-uso' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Términos de uso</a>\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#/legal/terminos-uso' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Términos de uso</a>\n"
+                + "                                                •\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#/docs/soporte' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Soporte</a>\n"                        
                 + "                                            </td>\n"
                 + "                                        </tr>\n"
                 + "                                        <tr>\n"
                 + "                                            <td align='center' style='padding-top:10px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#707070;text-align:center;'>\n"
-                + "                                                Copyright 2013-" + year + " Asociación de Centros de Formación Profesional - FPEmpresa\n"
+                + "                                                <a href=\"" + getAppURL() + "\" style=\"color: inherit;text-decoration: inherit;\">Copyright 2013-" + year + " Asociación de Centros de Formación Profesional - FPEmpresa</a>\n"
                 + "                                            </td>\n"
                 + "                                        </tr>\n"
                 + "                                    </table>\n"

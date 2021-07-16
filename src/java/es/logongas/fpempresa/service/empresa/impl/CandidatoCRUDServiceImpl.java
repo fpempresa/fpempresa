@@ -64,9 +64,16 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
     }
 
     @Override
-    public void notificarCandidatoAEmpresas(DataSession dataSession, Candidato candidato) throws BusinessException {
+    public void notificarAEmpresaInscritoCandidato(DataSession dataSession, Candidato candidato) throws BusinessException {
         if (candidato.getOferta().getEmpresa().getCentro() == null) {
-            notification.nuevoCandidato(dataSession, candidato);
+            notification.inscritoCandidato(dataSession, candidato);
         }
     }
+    
+    @Override
+    public void notificarAEmpresaDesinscritoCandidato(DataSession dataSession, Candidato candidato) throws BusinessException {
+        if (candidato.getOferta().getEmpresa().getCentro() == null) {
+            notification.desinscritoCandidato(dataSession, candidato);
+        }
+    }    
 }

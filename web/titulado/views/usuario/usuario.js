@@ -26,18 +26,63 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 
 
 
-app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, dialog) {
+app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'goPage', function ($scope, genericControllerCrudDetail, controllerParams, dialog, goPage) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
 
         $scope.cambiarContrasenya = function () {
             dialog.create('cambiarContrasenya', $scope.model);
         };
-        
+
         $scope.borrarCuenta = function () {
-            if (confirm("¿Esta seguro que desea borrar la cuenta y todos sus datos de EmpleaFP?")) {
-                alert('Para borrar todos sus datos de EmpleaFP debe enviar un correo electronico a: \nsoporte@empleafp.com\nindicando en el asunto que desea darse de baja')
-            }
-        };        
+            sweetAlert({
+                title: "¿Estas seguro que deseas borrar tu cuenta de EmpleaFP?",
+                text: "Una vez borrada la cuenta no será posible recuperar tus datos",
+                type: 'error',
+                confirmButtonText: 'Borrar',
+                confirmButtonColor: '#d9534f',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                cancelButtonColor: '#005594',
+                focusInCancelButton:true
+            }, function (borrar) {
+                if (borrar) {
+                    setTimeout(function () {
+                        sweetAlert({
+                            title: "Confirma que deseas borrar la cuenta de EmpleaFP",
+                            text: "Una vez borrada la cuenta no será posible recuperar tus datos",
+                            type: 'warning',                            
+                            confirmButtonText: 'Confirmar',
+                            confirmButtonColor: '#d9534f',
+                            showCancelButton: true,                            
+                            cancelButtonText: 'Cancelar',
+                            cancelButtonColor: '#005594',
+                            focusInCancelButton:true
+                        }, function (borrar) {
+                            if (borrar) {
+                                $scope.$apply(function () {
+                                    $scope.id=54;
+                                    
+                                    $scope.delete().then(function (data) {
+                                        sweetAlert({
+                                            title: "Tu cuenta de EmpleaFP ha sido borrada con éxito",
+                                            type: 'success',
+                                            confirmButtonText: 'Aceptar',
+                                            confirmButtonColor: '#005594'
+                                        }, function () {
+                                            setTimeout(function () {
+                                                goPage.homeApp();
+                                            },400);
+                                        });
+                                    }, function (businessMessages) {
+                                        $scope.businessMessages = businessMessages;
+                                    });
+                                });
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        };
 
     }]);

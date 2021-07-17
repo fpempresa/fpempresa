@@ -25,7 +25,8 @@
         html: false,
         animation: true,
         allowEscapeKey: true,
-        inputType: 'text'
+        inputType: 'text',
+        focusInCancelButton:false
       };
 
 
@@ -280,6 +281,8 @@
           'timer',
           'confirmButtonColor',
           'cancelButtonText',
+          'cancelButtonColor',
+          'focusInCancelButton',
           'imageUrl',
           'imageSize',
           'html',
@@ -419,6 +422,10 @@
         $cancelButton = modal.querySelector('button.cancel'),
         $modalButtons = modal.querySelectorAll('button[tabindex]');
 
+        
+    if (params.focusInCancelButton===true) {
+        $cancelButton.focus();
+    }
 
     function handleKeyDown(event) {
       var e = event || window.event;
@@ -459,7 +466,7 @@
         if (params.confirmButtonColor) {
           setFocusStyle($targetElement, params.confirmButtonColor);
         }
-
+      
       } else {
         if (keyCode === 13) {
           if ($targetElement.tagName === "INPUT") {
@@ -701,6 +708,14 @@
       // Set box-shadow to default focused button
       setFocusStyle($confirmBtn, params.confirmButtonColor);
     }
+    
+    if (params.cancelButtonColor) {
+      // Set cancel button to selected background color
+      $cancelBtn.style.backgroundColor = params.cancelButtonColor;
+
+      // Set box-shadow to default focused button
+      setFocusStyle($cancelBtn, params.cancelButtonColor);
+    }    
 
     // Allow outside click?
     modal.setAttribute('data-allow-ouside-click', params.allowOutsideClick);

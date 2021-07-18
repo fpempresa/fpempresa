@@ -61,8 +61,6 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
                         }, function (borrar) {
                             if (borrar) {
                                 $scope.$apply(function () {
-                                    $scope.id=54;
-                                    
                                     $scope.delete().then(function (data) {
                                         sweetAlert({
                                             title: "Tu cuenta de EmpleaFP ha sido borrada con éxito",

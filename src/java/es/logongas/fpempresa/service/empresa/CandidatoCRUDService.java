@@ -38,4 +38,5 @@ public interface CandidatoCRUDService extends CRUDService<Candidato, Integer> {
     
     public void notificarAEmpresaInscritoCandidato(DataSession dataSession, Candidato candidato) throws BusinessException;
     public void notificarAEmpresaDesinscritoCandidato(DataSession dataSession, Candidato candidato) throws BusinessException;
+    public void softDelete(DataSession dataSession, Candidato candidato) throws BusinessException;
 }

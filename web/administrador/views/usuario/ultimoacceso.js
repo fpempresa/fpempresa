@@ -33,11 +33,11 @@ app.controller("UsuarioUltimoAccesoSearchController", ['$scope', 'genericControl
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 500;
         $scope.procesando=null;
-        var serviceCiclo = serviceFactory.getService("Usuario");
+        var serviceUsuario = serviceFactory.getService("Usuario");
 
 
         $scope.buttonNotificarUsuarioInactivo=function(usuario) {
-            serviceCiclo.notificarUsuarioInactivo(usuario.idIdentity).then(function () {
+            serviceUsuario.notificarUsuarioInactivo(usuario.idIdentity).then(function () {
                 notify.info("Notificado","Se han notificado al usuario");
                 $scope.search();
             }, function (businessMessages) {
@@ -46,7 +46,7 @@ app.controller("UsuarioUltimoAccesoSearchController", ['$scope', 'genericControl
         };
         
         $scope.buttonSoftDelete=function(usuario) {
-            serviceCiclo.softDelete(usuario.idIdentity).then(function () {
+            serviceUsuario.softDelete(usuario.idIdentity).then(function () {
                 notify.info("Soft Delete","Se ha borrado el usuario");
                 $scope.search();
             }, function (businessMessages) {
@@ -72,7 +72,7 @@ app.controller("UsuarioUltimoAccesoSearchController", ['$scope', 'genericControl
             var usuario=usuarios[index];
 
             $scope.procesando="Notificando al usuario " + (index+1) + " de " + usuarios.length;
-            serviceCiclo.notificarUsuarioInactivo(usuario.idIdentity).then(function () {
+            serviceUsuario.notificarUsuarioInactivo(usuario.idIdentity).then(function () {
                 $scope.notificarUsuarioInactivoAllPage(usuarios,index+1);
             }, function (businessMessages) {
                 $scope.procesando=null;
@@ -98,7 +98,7 @@ app.controller("UsuarioUltimoAccesoSearchController", ['$scope', 'genericControl
             var usuario=usuarios[index];
 
             $scope.procesando="Soft Delete del usuario " + (index+1) + " de " + usuarios.length;
-            serviceCiclo.softDelete(usuario.idIdentity).then(function () {
+            serviceUsuario.softDelete(usuario.idIdentity).then(function () {
                 $scope.softDeleteAllPage(usuarios,index+1);
             }, function (businessMessages) {
                 $scope.procesando=null;

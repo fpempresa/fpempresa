@@ -76,4 +76,9 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
             notification.desinscritoCandidato(dataSession, candidato);
         }
     }    
+
+    @Override
+    public void softDelete(DataSession dataSession, Candidato candidato) throws BusinessException {
+        getCandidatoDAO().softDelete(dataSession, candidato.getIdCandidato());
+    }
 }

@@ -17,10 +17,7 @@
 package es.logongas.fpempresa.service.titulado.impl;
 
 import es.logongas.fpempresa.dao.titulado.FormacionAcademicaDAO;
-import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
-import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.fpempresa.service.titulado.FormacionAcademicaCRUDService;
 import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.ix3.core.BusinessException;
@@ -33,6 +30,10 @@ import es.logongas.ix3.service.impl.CRUDServiceImpl;
  */
 public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<FormacionAcademica, Integer> implements FormacionAcademicaCRUDService {
 
+    private FormacionAcademicaDAO getFormacionAcademicaDAO() {
+        return (FormacionAcademicaDAO) getDAO();
+    }    
+    
     @Override
     public FormacionAcademica insert(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
 
@@ -84,6 +85,11 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
         
         return false;
         
+    }
+
+    @Override
+    public void softDelete(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
+        getFormacionAcademicaDAO().softDelete(dataSession, formacionAcademica.getIdFormacionAcademica());
     }
 
 }

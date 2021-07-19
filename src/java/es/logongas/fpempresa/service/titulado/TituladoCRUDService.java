@@ -23,7 +23,6 @@ import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.dao.DataSession;
-import java.io.IOException;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 

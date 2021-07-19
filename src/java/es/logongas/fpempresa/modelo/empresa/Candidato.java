@@ -36,6 +36,8 @@ public class Candidato {
     private boolean rechazado;
 
     private Date fecha;
+    
+    private boolean borrado;
 
     /**
      * @return the idCandidato
@@ -110,6 +112,20 @@ public class Candidato {
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void establecerFecha() {
         this.fecha = new Date();
+    }
+
+    /**
+     * @return the borrado
+     */
+    public boolean isBorrado() {
+        return borrado;
+    }
+
+    /**
+     * @param borrado the borrado to set
+     */
+    public void setBorrado(boolean borrado) {
+        this.borrado = borrado;
     }
 
 }

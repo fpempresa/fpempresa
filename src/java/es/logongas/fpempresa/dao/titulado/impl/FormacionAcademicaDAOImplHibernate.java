@@ -18,7 +18,10 @@ package es.logongas.fpempresa.dao.titulado.impl;
 
 import es.logongas.fpempresa.dao.titulado.FormacionAcademicaDAO;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -26,5 +29,18 @@ import es.logongas.ix3.dao.impl.GenericDAOImplHibernate;
  */
 public class FormacionAcademicaDAOImplHibernate extends GenericDAOImplHibernate<FormacionAcademica, Integer> implements FormacionAcademicaDAO {
 
+    @Override
+    public void softDelete(DataSession dataSession, int idFormacionAcademica)  {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
 
+        Query query = session.createSQLQuery("UPDATE FormacionAcademica SET borrado=1 WHERE idFormacionAcademica=?");
+        query.setInteger(0, idFormacionAcademica);
+
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " , idFormacionAcademica=" + idFormacionAcademica);
+        }
+    };
+    
 }

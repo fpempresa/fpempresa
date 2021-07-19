@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
+import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
@@ -31,6 +32,7 @@ import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
+import es.logongas.fpempresa.service.titulado.FormacionAcademicaCRUDService;
 import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.fpempresa.util.RandomUtil;
 import es.logongas.ix3.core.BusinessException;
@@ -81,7 +83,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     ReportService reportService;
     
     @Autowired
-    Jws jws;    
+    Jws jws;  
 
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -449,7 +451,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         }        
 
         if (usuario.getTipoUsuario() != TipoUsuario.TITULADO) { 
-            throw new RuntimeException("Solo se puede notificar a usuarios de tipo Titulado. Pero el tipo es " + usuario.getTipoUsuario() + " para el usuario " + usuario.getIdIdentity() );
+            throw new RuntimeException("Solo se puede hacer un softDelete a usuarios de tipo Titulado. Pero el tipo es " + usuario.getTipoUsuario() + " para el usuario " + usuario.getIdIdentity() );
         }
         
      
@@ -466,7 +468,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             filters.add(new Filter("usuario.idIdentity", usuario.getIdIdentity(), FilterOperator.eq));
             List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
             for (Candidato candidato : candidatos) {
-                candidatoCRUDService.delete(dataSession, candidato);
+                candidatoCRUDService.softDelete(dataSession, candidato);
             }
             
             
@@ -478,19 +480,32 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 filters.add(new Filter("titulado.idTitulado", usuario.getTitulado().getIdTitulado(), FilterOperator.eq));
                 List<ExperienciaLaboral> experienciasLaborales = experienciaLaboralCRUDService.search(dataSession, filters, null, null);
                 for (ExperienciaLaboral experienciaLaboral : experienciasLaborales) {
-                    experienciaLaboralCRUDService.delete(dataSession, experienciaLaboral);
+                    experienciaLaboral.setDescripcion("Vacio");
+                    experienciaLaboral.setNombreEmpresa("Vacio");
+                    experienciaLaboral.setPuestoTrabajo("Vacio");
+                    experienciaLaboralCRUDService.update(dataSession, experienciaLaboral);
                 } 
 
-
+                FormacionAcademicaCRUDService formacionAcademicaCRUDService = (FormacionAcademicaCRUDService)crudServiceFactory.getService(FormacionAcademica.class);
+                filters = new Filters();
+                filters.add(new Filter("titulado.idTitulado", usuario.getTitulado().getIdTitulado(), FilterOperator.eq));
+                List<FormacionAcademica> formacionesAcademicas = formacionAcademicaCRUDService.search(dataSession, filters, null, null);
+                for (FormacionAcademica formacionAcademica : formacionesAcademicas) {
+                    formacionAcademicaCRUDService.softDelete(dataSession, formacionAcademica);
+                } 
 
 
                 CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
 
                 Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
 
-                //Se cambia la fecha de nacimiento pq hay fechas errorneas y no dejaba borrar al titulado.
-                Date fechaNacimiento = DateUtil.add(titulado.getFechaNacimiento(), DateUtil.Interval.YEAR, -17);
-                titulado.setFechaNacimiento(fechaNacimiento);
+                {//Se cambia la fecha de nacimiento pq hay fechas errorneas y no dejaba borrar al titulado.
+                    Date minDate=DateUtil.add(new Date(),DateUtil.Interval.YEAR,-16);
+                    
+                    if (minDate.before(titulado.getFechaNacimiento())) {
+                        titulado.setFechaNacimiento(minDate);
+                    }
+                }
                 
                 titulado.getDireccion().setDatosDireccion("Sin dirección");
                 titulado.setNumeroDocumento("2721C3A8");
@@ -510,6 +525,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             usuario.setNombre("Nadie");
             usuario.setApellidos("Nobody");
             usuario.setEmail("nobody_" + usuario.getIdIdentity() + "_" +  random.nextInt(1000) + "@empleafp.com");
+            /******** Es importate poner una fecha MUY a futuro para que no aparezcan en la pantalla de últimos accesos **********/
             usuario.setFechaUltimoAcceso(new GregorianCalendar(2050, Calendar.JANUARY, 1).getTime());
             usuario.setFechaEnvioCorreoAvisoBorrarUsuario(null);
             usuario.setFoto(new byte[]{});
@@ -517,6 +533,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             
             String newPassword=RandomUtil.createRandomPaswword(12);
             this.updatePassword(dataSession, usuario, newPassword);
+            getUsuarioDAO().softDelete(dataSession, usuario.getIdIdentity());
 
             if (isActivePreviousTransaction == false) {
                 transactionManager.commit(dataSession);

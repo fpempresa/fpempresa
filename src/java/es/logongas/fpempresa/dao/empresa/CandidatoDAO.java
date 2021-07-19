@@ -35,4 +35,6 @@ public interface CandidatoDAO extends GenericDAO<Candidato, Integer> {
     Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest);
 
     long getNumCandidatosOferta(DataSession dataSession, Oferta oferta);
+    
+    void softDelete(DataSession dataSession, int idCandidato);
 }

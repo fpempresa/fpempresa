@@ -26,7 +26,7 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
 
 
 
-app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'goPage', function ($scope, genericControllerCrudDetail, controllerParams, dialog, goPage) {
+app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'goPage','$q', function ($scope, genericControllerCrudDetail, controllerParams, dialog, goPage, $q) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
 
@@ -61,7 +61,7 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
                         }, function (borrar) {
                             if (borrar) {
                                 $scope.$apply(function () {
-                                    $scope.delete().then(function (data) {
+                                    $scope.service.softDelete($scope.id).then(function (data) {
                                         sweetAlert({
                                             title: "Tu cuenta de EmpleaFP ha sido borrada con éxito",
                                             type: 'success',

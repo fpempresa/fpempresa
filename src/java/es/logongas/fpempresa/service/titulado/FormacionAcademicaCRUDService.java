@@ -17,6 +17,8 @@
 package es.logongas.fpempresa.service.titulado;
 
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
+import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDService;
 
 /**
@@ -24,5 +26,5 @@ import es.logongas.ix3.service.CRUDService;
  * @author logongas
  */
 public interface FormacionAcademicaCRUDService extends CRUDService<FormacionAcademica, Integer>  {
-
+    public void softDelete(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException;
 }

@@ -18,6 +18,7 @@
 package es.logongas.fpempresa.dao.comun.usuario;
 
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 import java.util.Date;
@@ -37,4 +38,6 @@ public interface UsuarioDAO extends GenericDAO<Usuario, Integer> {
     String getEncryptedPassword(DataSession dataSession, Usuario usuario);
 
     Usuario getUsuarioPorEmail(DataSession dataSession, String email);
+    
+    void softDelete(DataSession dataSession, int idIdentity);
 }

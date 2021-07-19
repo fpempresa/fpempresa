@@ -19,6 +19,7 @@
         
         <property name="rechazado" />
         
+        <property name="borrado"  />
 
 
     </class>

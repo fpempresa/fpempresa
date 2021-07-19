@@ -9,3 +9,5 @@ Por defecto se muestra el total del centro pero se puede filtrar por un año en 
 En la parte inferior de la pantalla puede verse los totales del centro:
 
 ![](titulados_totales.png)
+
+Destacar que aparece el nº titulados aunque dichos titulados hayan borrado su cuenta ya que se almacena el número total aunque se den de baja.

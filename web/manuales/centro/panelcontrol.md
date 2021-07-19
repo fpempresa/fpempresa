@@ -12,5 +12,7 @@ Por otra parte, en el área central de esta página tenemos por un lado 3 gráfi
 
 Además, en la parte superior también tendremos un resumen con el número de ofertas, titulados/as y candidatos/as existentes. Pulsando respectivamente en ir a las ofertas e ir a los titulados nos llevará directamente a esas opciones de menú.
 
+Destacar que en el nº de candidatos y titulados  aparecen incluso los que hayan borrado su cuenta ya que se almacena el número total aunque se hayan dado de baja.
+
 ![](estadisticas.png)
 

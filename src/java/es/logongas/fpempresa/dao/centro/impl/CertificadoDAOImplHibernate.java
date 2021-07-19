@@ -22,7 +22,6 @@ import es.logongas.fpempresa.modelo.centro.CertificadoAnyo;
 import es.logongas.fpempresa.modelo.centro.CertificadoCiclo;
 import es.logongas.fpempresa.modelo.centro.CertificadoTitulo;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
-import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.util.ReflectionUtil;
 import java.lang.reflect.Field;
@@ -30,7 +29,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
@@ -47,12 +45,13 @@ public class CertificadoDAOImplHibernate implements CertificadoDAO {
 
         String sql = "SELECT DISTINCT\n"
                 + "  YEAR(FormAcad.fecha) AS anyo,\n"
-                + "  (SELECT COUNT(*) FROM FormacionAcademica FA  WHERE YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO') AS numTitulosTotales,\n"
-                + "  (SELECT COUNT(*) FROM FormacionAcademica FA  WHERE YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO' AND FA.CertificadoTitulo=1) AS numTitulosCertificados\n"
+                + "  (SELECT COUNT(*) FROM FormacionAcademica FA  WHERE FA.borrado=0 AND YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO') AS numTitulosTotales,\n"
+                + "  (SELECT COUNT(*) FROM FormacionAcademica FA  WHERE FA.borrado=0 AND YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO' AND FA.CertificadoTitulo=1) AS numTitulosCertificados\n"
                 + "FROM\n"
                 + "	FormacionAcademica FormAcad  \n"
                 + "WHERE\n"
                 + "	FormAcad.idCentro=? AND\n"
+                + "	FormAcad.borrado=0 AND \n"
                 + "	tipoFormacionAcademica='CICLO_FORMATIVO' \n"
                 + "ORDER BY Anyo DESC";
 
@@ -74,14 +73,15 @@ public class CertificadoDAOImplHibernate implements CertificadoDAO {
                 + "  Ciclo.idCiclo AS idCiclo,\n"
                 + "  Ciclo.idFamilia AS idFamilia,\n"
                 + "  Ciclo.descripcion AS nombreCiclo,\n"
-                + "  (SELECT COUNT(*) FROM FormacionAcademica FA   WHERE YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCiclo=Ciclo.idCiclo AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO' ) AS numTitulosTotales,\n"
-                + "  (SELECT COUNT(*) FROM FormacionAcademica FA   WHERE YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCiclo=Ciclo.idCiclo AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO'  AND FA.CertificadoTitulo=1) AS numTitulosCertificados\n"
+                + "  (SELECT COUNT(*) FROM FormacionAcademica FA   WHERE FA.borrado=0 AND YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCiclo=Ciclo.idCiclo AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO' ) AS numTitulosTotales,\n"
+                + "  (SELECT COUNT(*) FROM FormacionAcademica FA   WHERE FA.borrado=0 AND YEAR(FA.Fecha)=YEAR(FormAcad.fecha) AND FA.idCiclo=Ciclo.idCiclo AND FA.idCentro=FormAcad.idCentro AND FA.tipoFormacionAcademica='CICLO_FORMATIVO'  AND FA.CertificadoTitulo=1) AS numTitulosCertificados\n"
                 + "FROM\n"
                 + "	FormacionAcademica FormAcad INNER JOIN \n"
                 + "	Ciclo ON FormAcad.idCiclo=Ciclo.idCiclo \n"
                 + "WHERE\n"
                 + "	FormAcad.idCentro=? AND\n"
                 + "	YEAR(FormAcad.fecha)=? AND\n"
+                + "	FormAcad.borrado=0 AND \n"
                 + "	tipoFormacionAcademica='CICLO_FORMATIVO' \n"
                 + "ORDER BY Ciclo.idFamilia,Ciclo.descripcion";
 
@@ -115,6 +115,7 @@ public class CertificadoDAOImplHibernate implements CertificadoDAO {
                 + "	FormAcad.idCentro=? AND\n"
                 + "	YEAR(FormAcad.fecha)=? AND\n"
                 + "	FormAcad.idCiclo=? AND\n"
+                + "	FormAcad.borrado=0 AND \n"
                 + "	tipoFormacionAcademica='CICLO_FORMATIVO'\n"
                 + "	 \n"                
                 + "ORDER BY Usuario.apellidos,Usuario.nombre,FormAcad.idFormacionAcademica";

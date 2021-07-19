@@ -40,7 +40,11 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         query.setString(0, encriptedPassword);
         query.setInteger(1, usuario.getIdIdentity());
 
-        query.executeUpdate();
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " idIdentity=" + usuario.getIdIdentity());
+        }
     }
 
     @Override
@@ -53,7 +57,11 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         query.setTimestamp(0, new Date());
         query.setInteger(1, usuario.getIdIdentity());
 
-        query.executeUpdate();
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " idIdentity= " + usuario.getIdIdentity());
+        }
     } 
     
     @Override
@@ -66,7 +74,11 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         query.setInteger(1, numFailedLogins);
         query.setInteger(2, usuario.getIdIdentity());
 
-        query.executeUpdate();
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " idIdentity= " + usuario.getIdIdentity());
+        }
     }
     
     @Override
@@ -81,7 +93,11 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         query.setTimestamp(0, fecha);
         query.setInteger(1, usuario.getIdIdentity());
 
-        query.executeUpdate();
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " idIdentity= " + usuario.getIdIdentity());
+        }
     }      
     
     
@@ -104,6 +120,21 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario, In
         query.setString("email", email);
         Usuario usuario = (Usuario) query.uniqueResult();
         return usuario;
+    }
+    
+    @Override
+    public void softDelete(DataSession dataSession, int idIdentity) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        Query query = session.createSQLQuery("UPDATE Usuario SET borrado=1 WHERE idIdentity=?");
+        query.setInteger(0, idIdentity);
+
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " idIdentity= " + idIdentity);
+        }
+        
     }
     
 }

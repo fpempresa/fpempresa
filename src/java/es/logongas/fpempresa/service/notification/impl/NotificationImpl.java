@@ -251,8 +251,9 @@ public class NotificationImpl implements Notification {
     public void usuarioInactivo(Usuario usuario) {
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Tu cuenta va a ser borrada pronto";
-        bodyContent.parrafos="Hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP</a>. Como sabrás EmpleaFP es la mayor bolsa de empleo de la formación profesional. La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados de tu currículum."
-                + "<strong>Si no accedes antes de 15 días</strong> a tu cuenta de <a href='" + getAppURL() + "/site/index.html#/login'>EmpleaFP</a>, procederemos a <strong>borrarla</strong>."
+        bodyContent.parrafos="Hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP</a> que como sabrás es la mayor bolsa de empleo de la formación profesional." 
+                + "<br><br>La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados."
+                + "<br><br><strong>Si no accedes antes de 15 días a tu cuenta de <a href='" + getAppURL() + "/site/index.html#/login'>EmpleaFP</a>, procederemos a borrarla</strong>."
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para evitar el borrado de la cuenta";
         bodyContent.linkButton=getAppURL() + "/site/index.html#/login";

@@ -16,11 +16,7 @@
  */
 package es.logongas.fpempresa.dao.titulado;
 
-import es.logongas.fpempresa.modelo.centro.Centro;
-import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
-import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
-import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.GenericDAO;
 
@@ -30,5 +26,5 @@ import es.logongas.ix3.dao.GenericDAO;
  */
 public interface FormacionAcademicaDAO extends GenericDAO<FormacionAcademica, Integer> {
     
-
+    void softDelete(DataSession dataSession, int idFormacionAcademica);
 }

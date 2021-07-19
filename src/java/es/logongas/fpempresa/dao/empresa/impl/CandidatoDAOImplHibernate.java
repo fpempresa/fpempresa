@@ -58,7 +58,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
 
     @Override
     public long getNumCandidatosOferta(DataSession dataSession, Oferta oferta) {
-        String hqlCount = " SELECT COUNT(candidato) FROM Candidato candidato WHERE candidato.oferta.idOferta=?";
+        String hqlCount = " SELECT COUNT(candidato) FROM Candidato candidato WHERE candidato.oferta.idOferta=? AND candidato.borrado=0";
 
         Session session = (Session) dataSession.getDataBaseSessionImpl();
 
@@ -72,7 +72,7 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
     @Override
     public Page<Candidato> getCandidatosOferta(DataSession dataSession, Oferta oferta, boolean ocultarRechazados, boolean certificados, int maxAnyoTitulo, PageRequest pageRequest) {
         String sqlPartFrom = " FROM Candidato candidato ";
-        StringBuilder sqlPartWhere = new StringBuilder(" WHERE candidato.oferta.idOferta=? ");
+        StringBuilder sqlPartWhere = new StringBuilder(" WHERE candidato.oferta.idOferta=? AND candidato.borrado=0 ");
         if (ocultarRechazados == true) {
             sqlPartWhere.append(" AND candidato.rechazado=? ");
         }
@@ -116,4 +116,18 @@ public class CandidatoDAOImplHibernate extends GenericDAOImplHibernate<Candidato
         return page;
     }
 
+    @Override
+    public void softDelete(DataSession dataSession, int idCandidato) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        Query query = session.createSQLQuery("UPDATE Candidato SET borrado=1 WHERE idCandidato=?");
+        query.setInteger(0, idCandidato);
+
+        int result=query.executeUpdate(); 
+        
+        if (result!=1) {
+            throw new RuntimeException("Se debería haber actualizado una única fila pero se han actualizado:" + result + " idCandidato=" + idCandidato);
+        }
+    }
+    
 }

@@ -49,6 +49,7 @@ public class TituladoDAOImplHibernate extends GenericDAOImplHibernate<Titulado, 
             +"		INNER JOIN formacionacademica  ON titulado.idTitulado=formacionacademica.idTitulado "
             +" WHERE "
             +"	titulado.notificarPorEmail = 1 AND "
+            +"	formacionacademica.borrado = 0 AND "
             +"	tituladoprovincianotificacion.idProvincia=? AND "
             +"	formacionacademica.idCiclo IN ( "
             +"		SELECT idCiclo "

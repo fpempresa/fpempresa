@@ -77,6 +77,7 @@ public class NotificationImpl implements Notification {
         int idIdentity=usuario.getIdIdentity();
         
         PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(idIdentity, jws, secretToken);
+        String url=getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
         
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Nueva oferta de empleo";
@@ -87,7 +88,8 @@ public class NotificationImpl implements Notification {
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para inscribirte en la Oferta";
         bodyContent.linkButton=getAppURL() + "/site/index.html#/login";
-        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+"<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo.<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString() + "\">aquí</a>.";
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+"<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo.<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + url + "\">aquí</a>."
+                + "<br>¿No te funciona el anterior enlace para dejar de recibir correos? Pega el siguiente enlace en el navegador:<br>"+url;
         
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
@@ -194,11 +196,14 @@ public class NotificationImpl implements Notification {
     
     @Override
     public void resetearContrasenya(Usuario usuario) {
+        String url=getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya();
+        
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Cambiar contraseña";
         bodyContent.parrafos="Has solicitado cambiar tu contraseña en <a href=\"" + getAppURL() + "\">EmpleaFP</a>. Para proceder al cambio de contraseña de tu cuenta haz click en el siguiente botón.";
         bodyContent.labelButton="Cambiar la contraseña";
-        bodyContent.linkButton=getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya();
+        bodyContent.linkButton=url;
+        bodyContent.belowButton="¿No te funciona el botón? Pega el siguiente enlace en el navegador:<br>"+url;
         bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
         
         Mail mail = new Mail();
@@ -211,12 +216,15 @@ public class NotificationImpl implements Notification {
 
     @Override
     public void validarCuenta(Usuario usuario) {
+        String url=getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail();
+        
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Confirmar tu dirección de correo";
         bodyContent.parrafos="Bienvenido " +  StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ",<br><br>"
                 + "Acabas de registrarte en <a href=\"" + getAppURL() + "\">EmpleaFP</a>, la mayor bolsa de trabajo específica de la Formación Profesional. Para poder completar tu registro es necesario que confirmes tu dirección de correo haciendo click en el siguiente botón: ";
         bodyContent.labelButton="Confirmar tu dirección de correo";
-        bodyContent.linkButton=getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail();
+        bodyContent.linkButton=url;
+        bodyContent.belowButton="¿No te funciona el botón? Pega el siguiente enlace en el navegador:<br>"+url;
         bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
         
         
@@ -413,6 +421,15 @@ public class NotificationImpl implements Notification {
                         + "                                </td>\n"
                         + "                            </tr>\n";
                 }
+                if (bodyContent.belowButton!=null) {
+                    body=body+
+                          "                            <tr>\n"
+                        + "                                <td style='padding-top:40px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#42526E;text-align:left;'>\n"
+                        + "                                    " + bodyContent.belowButton + "<br><br>\n"
+                        + "                                </td>\n"
+                        + "                            </tr>\n";
+                }
+                
                 body=body+
                   "                            <tr>\n"
                 + "                                <td style='padding-top:40px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:16px;line-height:22px;color:#42526E;text-align:left;'>\n"
@@ -471,6 +488,7 @@ public class NotificationImpl implements Notification {
         String pie="";
         String labelButton=null;
         String linkButton=null;
+        String belowButton=null;
 
     }
     

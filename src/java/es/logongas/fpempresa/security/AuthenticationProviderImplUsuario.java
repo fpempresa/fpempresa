@@ -147,7 +147,10 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             throw new BusinessException("La contraseña no es válida");
         }
 
-
+        
+        if (usuario.getNumFailedLogins()>0) {
+            log.warn("Login exitoso despues de " + usuario.getNumFailedLogins() + " intentos fallidos de " + credentialImplLoginPassword.getLogin());
+        }
 
         usuarioService.updateSuccessfulLogin(dataSession, usuario);
 

@@ -54,7 +54,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> implements OfertaCRUDService {
 
     private static final Logger logException = LogManager.getLogger(Exception.class);
-
+    
     @Autowired
     protected CRUDServiceFactory serviceFactory;
 
@@ -160,6 +160,9 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         
         
         oferta.setCerrada(true);
+        
+        log.info("Cerrada oferta desde el link del correo:"+ oferta.getIdOferta());
+        
         super.update(dataSession, oferta);
         
     }    

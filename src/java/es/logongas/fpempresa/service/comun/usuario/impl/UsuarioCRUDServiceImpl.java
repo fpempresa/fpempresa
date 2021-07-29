@@ -359,6 +359,8 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new BusinessException("El usuario aun no es un titulado");
         }
         
+        log.info("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+usuario.getIdIdentity());
+        
         CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
         Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
         titulado.getConfiguracion().getNotificacionOferta().setNotificarPorEmail(false);
@@ -539,6 +541,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 transactionManager.commit(dataSession);
             }
 
+            log.info("SoftDelete del titulado:"+usuario.getIdIdentity());
             
         } finally {
             if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {

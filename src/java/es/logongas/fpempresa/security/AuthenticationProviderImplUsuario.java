@@ -19,6 +19,7 @@ import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.util.validators.EMailValidator;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.DataSession;
@@ -56,15 +57,25 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         CredentialImplLoginPassword credentialImplLoginPassword = (CredentialImplLoginPassword) credential;
 
         if ((credentialImplLoginPassword.getLogin() == null) || (credentialImplLoginPassword.getLogin().trim().isEmpty())) {
-            return null;
+            log.warn("El login no puede estar vacio");
+            throw new BusinessException("El correo electrónico no puede estar vacío");
         }
-
+        if ((credentialImplLoginPassword.getPassword()== null) || (credentialImplLoginPassword.getPassword().trim().isEmpty())) {
+            log.warn("La contraseña no puede estar vacia");
+            throw new BusinessException("La contraseña no puede estar vacía");
+        }
+        
+        if (EMailValidator.isValid(credentialImplLoginPassword.getLogin())==false) {
+            log.warn("El usuario no es un correo electrónico válido : " + credentialImplLoginPassword.getLogin());
+            throw new BusinessException("El correo electrónico que acabas de usar no tiene un formato válido o simplemente no es un correo electrónico");
+        }
+        
         UsuarioCRUDService usuarioService = (UsuarioCRUDService) crudServiceFactory.getService(Usuario.class);
         Usuario usuario = usuarioService.readOriginalByNaturalKey(dataSession, credentialImplLoginPassword.getLogin());
 
         if (usuario == null) {
             log.warn("Intento fallido de login. Usuario no existe : " + credentialImplLoginPassword.getLogin());
-            throw new BusinessException("El correo no existe");
+            throw new BusinessException("El correo electrónico que acabas de indicar no existe");
         }
         
         if (usuarioService.isLocked(dataSession, usuario)==true) {

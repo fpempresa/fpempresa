@@ -214,6 +214,8 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 transactionManager.commit(dataSession);
             }
 
+            log.info("Delete del usuario:"+entity.getIdIdentity());
+            
             return success;
         } finally {
             if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
@@ -408,7 +410,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             usuario.setClaveResetearContrasenya(SecureKeyGenerator.getSecureKey());
             getUsuarioDAO().update(dataSession, usuario);
             notification.resetearContrasenya(usuario);
+            
+            log.info("Enviado correo para resetear contraseña a " + email);
         } else {
+            log.info("No existe el correo al que resetear con contraseña" + email);
             throw new BusinessException("No existe el usuario");
         }
 

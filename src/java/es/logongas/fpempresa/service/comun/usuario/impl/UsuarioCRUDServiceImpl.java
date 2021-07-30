@@ -18,6 +18,7 @@ package es.logongas.fpempresa.service.comun.usuario.impl;
 
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
@@ -420,6 +421,19 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     @Override
+    public int numUsuariosCentro(DataSession dataSession, Centro centro) throws BusinessException {
+            Filters filters = new Filters();
+            filters.add(new Filter("centro.idCentro", centro.getIdCentro(), FilterOperator.eq));
+            filters.add(new Filter("validadoEmail", true, FilterOperator.eq));
+            List<Usuario> usuarios = this.search(dataSession, filters, null, null);
+            if (usuarios!=null) {
+                return usuarios.size();
+            } else {
+                return 0;
+            } 
+    }
+
+    @Override
     public byte[] getCurriculum(DataSession dataSession, Usuario usuario) throws BusinessException {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("idIdentity", usuario.getIdIdentity());
@@ -642,6 +656,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         
         return minutesLockedAccount;
     }
-    
+
 
 }

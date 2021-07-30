@@ -17,6 +17,7 @@
  */
 package es.logongas.fpempresa.service.comun.usuario;
 
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
@@ -56,4 +57,7 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     public Date getLockedUntil(DataSession dataSession, Usuario usuario);
     public void updateFailedLogin(DataSession dataSession, Usuario usuario);
     void cancelarSuscripcion(DataSession dataSession,Usuario usuario, String publicToken) throws BusinessException;
+    
+    int numUsuariosCentro(DataSession dataSession,Centro centro) throws BusinessException;
+    
 }

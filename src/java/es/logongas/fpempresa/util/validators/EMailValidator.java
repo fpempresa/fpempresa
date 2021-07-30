@@ -16,7 +16,7 @@
  */
 package es.logongas.fpempresa.util.validators;
 
-import org.apache.commons.validator.routines.EmailValidator;
+import org.hibernate.validator.internal.constraintvalidators.EmailValidator;
 
 
 
@@ -39,7 +39,9 @@ public class EMailValidator {
     }
     
     public static  boolean isValid(String eMail) {
-        return EmailValidator.getInstance().isValid(eMail);
+        EmailValidator emailValidator=new EmailValidator();
+        emailValidator.initialize(null);
+        return emailValidator.isValid(eMail, null);
     }
     
 }

@@ -52,6 +52,7 @@ import es.logongas.ix3.web.security.jwt.Jws;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -62,6 +63,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -620,7 +622,17 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         if (numMinutesLockedAccount>0) {
             Date ahora=new Date();
             lockedUntil=DateUtil.add(ahora, DateUtil.Interval.MINUTE, numMinutesLockedAccount);
-            log.warn("Bloqueada cuenta " + usuario.getEmail() + " durante " + numMinutesLockedAccount + " minutos. Ha fallado ya " + numFailedLogins + " veces");
+            
+            String stringLockedUntil;
+            if (DateUtils.isSameDay(lockedUntil, new Date())) {
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("'las 'HH:mm:ss");
+                stringLockedUntil=simpleDateFormat.format(lockedUntil);
+            } else {
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("'el 'dd/MM/yyyy' a las 'HH:mm:ss");
+                stringLockedUntil=simpleDateFormat.format(lockedUntil);
+            }
+            
+            log.warn("Bloqueada cuenta " + usuario.getEmail() + " durante " + numMinutesLockedAccount + " minutos hasta " + stringLockedUntil + ". Ha fallado ya " + numFailedLogins + " veces");
         } else {
             lockedUntil=null;
         }

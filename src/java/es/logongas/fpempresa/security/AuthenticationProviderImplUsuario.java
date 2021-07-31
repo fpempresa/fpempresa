@@ -61,7 +61,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             throw new BusinessException("El correo electrónico no puede estar vacío");
         }
         if ((credentialImplLoginPassword.getPassword()== null) || (credentialImplLoginPassword.getPassword().trim().isEmpty())) {
-            log.warn("La contraseña no puede estar vacia");
+            log.warn("La contraseña no puede estar vacia para el usuario:" + credentialImplLoginPassword.getLogin());
             throw new BusinessException("La contraseña no puede estar vacía");
         }
         
@@ -90,6 +90,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                 stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
             }
             
+            log.warn("Intento fallido de login. La cuenta '" +  credentialImplLoginPassword.getLogin() + "' ya está bloqueada hasta " + stringLockedUntil);
             throw new BusinessException("La cuenta está bloqueada hasta " + stringLockedUntil);
         }        
         

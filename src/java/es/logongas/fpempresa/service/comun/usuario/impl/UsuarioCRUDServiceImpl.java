@@ -217,7 +217,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 transactionManager.commit(dataSession);
             }
 
-            log.info("Delete del usuario:"+entity.getIdIdentity());
+            log.warn("Delete del usuario:"+entity.getIdIdentity());
             
             return success;
         } finally {
@@ -364,7 +364,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new BusinessException("El usuario aun no es un titulado");
         }
         
-        log.info("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+usuario.getIdIdentity());
+        log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+usuario.getEmail());
         
         CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
         Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
@@ -377,10 +377,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public void resetearContrasenya(DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
         if (usuario != null) {
             if (!usuario.isValidadoEmail()) {
+                log.warn("resetearContrasenya:La cuenta que no está validada."+usuario.getEmail());
                 throw new BusinessException("La cuenta no está activada");
             }
             
             if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
+                log.warn("resetearContrasenya:El token no es válido."+usuario.getEmail());
                 throw new BusinessException("El token no es válido");
             }           
             
@@ -397,9 +399,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 
                 getUsuarioDAO().update(dataSession, usuario);
             } else {
+                log.warn("resetearContrasenya:El token ha caducado."+usuario.getEmail());
                 throw new BusinessException("El token ha caducado");
             }
         } else {
+            log.warn("resetearContrasenya:El usuario no existe");
             throw new BusinessException("El usuario no existe");
         }
     }
@@ -414,9 +418,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             getUsuarioDAO().update(dataSession, usuario);
             notification.resetearContrasenya(usuario);
             
-            log.info("Enviado correo para resetear contraseña a " + email);
+            log.warn("Enviado correo para resetear contraseña a " + email);
         } else {
-            log.info("No existe el correo al que resetear con contraseña" + email);
+            log.warn("No existe el correo al que resetear con contraseña" + email);
             throw new BusinessException("No existe el usuario");
         }
 
@@ -562,7 +566,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 transactionManager.commit(dataSession);
             }
 
-            log.info("SoftDelete del titulado:"+usuario.getIdIdentity());
+            log.warn("SoftDelete del titulado:"+usuario.getIdIdentity());
             
         } finally {
             if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {

@@ -97,10 +97,22 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         
         
         
-        if (!usuario.isValidadoEmail()) {
-            throw new BusinessException("Tu cuenta no está validada. Si no has recibido un correo para validarla, ponte en contacto con el soporte de empleaFP.");
+        if (usuario.isValidadoEmail()==false) {
+            String msgEnvioadoCorreo;
+            if (DateUtils.isSameDay(usuario.getFecha(), new Date())) {
+                msgEnvioadoCorreo="Hoy te hemos enviado un correo para validarla, comprueba que dicho correo no esté en tu carpeta de spam";
+            } else {
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
+                String fechaEnvioCorreo=simpleDateFormat.format(usuario.getFecha());
+                msgEnvioadoCorreo="El día " + fechaEnvioCorreo + " te enviamos  un correo para validarla, comprueba que dicho correo no esté en tu carpeta de spam";
+            }
+            
+            BusinessException businessException=new BusinessException("Tu dirección de correo aun no está validada.");
+            businessException.getBusinessMessages().add(new BusinessMessage(msgEnvioadoCorreo));
+            businessException.getBusinessMessages().add(new BusinessMessage("Si no está en tu carpeta de spam , escribe un correo a noreply@empleafp.com indicando que no has recibido el correo de validación."));
+            throw businessException;
         }
-           
+
         switch (usuario.getTipoUsuario()) {
             case ADMINISTRADOR:
 

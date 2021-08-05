@@ -28,11 +28,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <div class="col-xs-9 col-xs-offset-3 ">
                             <div class="form__text form__text--help">
                                 <div>El funcionamiento de las ofertas es la siguiente:</div>
-                                <ul style="padding-left: 20px;list-style-type: disc;">
-                                    <li>Al crear la oferta se enviarán correos a los titulados.</li>
-                                    <li>Cuando haya algún candidato te enviaremos un correo con su currículum.</li>
-                                    <li>Al final de esta página siempre puedes ver todos los candidatos.</li>
-                                    <li>En caso de que no desee recibir más correos de candidatos no tiene mas que cerrar la oferta en el campo que hay un poco más abajo.</li>
+                                <ul style="padding-left: 20px;padding-top:20px;list-style-type: disc;line-height: 30px;">
+                                    <li>Al crear la oferta se enviarán correos a los titulados con los datos de la oferta.</li>
+                                    <li ng-show="user.empresa.contacto.email">Cuando haya algún candidato te enviaremos automáticamente un correo con su currículum a <strong>{{user.empresa.contacto.email}}</strong></li>
+                                    <li ng-show="!user.empresa.contacto.email">Tienes configurado que <strong>NO</strong> te enviemos un correo cuando haya nuevos candidatos en la oferta</li>
                                 </ul>
                             </div>
                         </div>
@@ -68,7 +67,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                 </label>
                             </div>
                         </div> 
-                    </div>                     
+                    </div>  
+                    <div class="row"  >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <p class="form__text form__text--help">Marca esta opción para que no se puedan inscribir nuevos candidatos a esta oferta<span ng-show="user.empresa.contacto.email">  y además no recibir más correos</span></p>
+                            </div>
+                        </div> 
+                    </div>   
                     <br>
                     <legend class="form__title">Municipio del lugar de trabajo</legend>
                     <div class="row" >
@@ -151,9 +157,15 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <div class="col-xs-12  form-horizontal">
 
                             <legend class="form__title">Candidatos</legend>
-
+                            <div class="row"  >
+                                <div class="col-xs-12 form-horizontal"> 
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <p class="form__text form__text--help">Cuando haya candidatos en la oferta aquí podrás ver sus currículums</p>
+                                    </div>
+                                </div> 
+                            </div> 
                             <div class="form-group">
-                                <div class="col-sm-7 col-sm-offset-4 col-xs-12 ">
+                                <div class="col-sm-7 col-sm-offset-3 col-xs-12 ">
 
                                     <div class="panel panel-green">
                                         <div class="panel-heading">

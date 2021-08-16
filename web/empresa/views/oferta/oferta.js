@@ -88,6 +88,18 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             $scope.model.municipio = municipio;            
         };
 
+        $scope.postInsert = function() {
+            sweetAlert({
+                title: "La oferta ha sido creada con éxito",
+                text: "Se ha enviado un correo con los datos de esta oferta a los titulados",
+                type: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#005594'
+            }, function () {
+            });
+        }
+
+
         $scope.checkTodosCiclos = function (todosCiclos) {
 
             if (todosCiclos) {

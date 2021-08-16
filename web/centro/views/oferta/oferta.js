@@ -66,6 +66,17 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             $scope.searchCandidatos(0);
         };
 
+        $scope.postInsert = function() {
+            sweetAlert({
+                title: "La oferta ha sido creada con éxito",
+                text: "Se ha enviado un correo con los datos de esta oferta a los titulados de tu centro",
+                type: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#005594'
+            }, function () {
+            });
+        }
+
         $scope.searchCandidatos = function (pageNumber) {
             var query = {
                 filters: {

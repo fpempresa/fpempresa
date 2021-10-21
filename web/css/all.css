@@ -1140,7 +1140,7 @@ p {
   align-items: center;
   z-index: 90;
 }
-@media (max-width: 767px) {
+@media (max-width: 834px) {
   .c-horizontal-menu__items {
     flex-direction: column;
     position: absolute;
@@ -1176,7 +1176,7 @@ p {
   padding-left: 24px;
   padding-right: 24px;
 }
-@media (max-width: 767px) {
+@media (max-width: 834px) {
   .c-horizontal-menu__item {
     width: 100%;
     text-align: center;
@@ -1199,7 +1199,7 @@ p {
 .c-horizontal-menu__hamburger--cerrar:before {
   content: "";
 }
-@media (max-width: 767px) {
+@media (max-width: 834px) {
   .c-horizontal-menu__hamburger {
     display: block;
   }

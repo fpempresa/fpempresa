@@ -1,9 +1,9 @@
 .c-horizontal-menu {
 
-    $break-menu: getBreak(tablet)-1;
+    $break-menu: 834px;
         
         
-        
+    
     &__items {
         display:flex;
         flex-direction: row;

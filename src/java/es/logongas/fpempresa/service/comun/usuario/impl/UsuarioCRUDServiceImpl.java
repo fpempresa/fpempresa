@@ -173,11 +173,15 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         Usuario usuarioOriginal = getUsuarioDAO().readOriginal(dataSession, usuario.getIdIdentity());
 
         //REGLA NEGOCIO:Si cambiamos el EMail hay que volver a verificar la nueva dirección
-        if (!usuarioOriginal.getEmail()
-                .equals(usuario.getEmail())) {
+        if (!usuarioOriginal.getEmail().equals(usuario.getEmail())) {
+            
             usuario.setValidadoEmail(false);
             usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
-            notification.validarCuenta(usuario);
+            
+            //REGLA DE NEGOCIO: No hay que notificar si es una cuenta del estilo de empleafp porque es de los usuarios que se borran.Issue #236. Si se cambia esta linea cambiar el método. SoftDelete
+            if (usuarioOriginal.getEmail().matches("nobody_[0-9]*_[0-9]*@empleafp.com")==false) {
+                notification.validarCuenta(usuario);
+            }
         }
 
         return super.update(dataSession, usuario);
@@ -551,7 +555,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             Random random=new Random();
             usuario.setNombre("Nadie");
             usuario.setApellidos("Nobody");
-            usuario.setEmail("nobody_" + usuario.getIdIdentity() + "_" +  random.nextInt(1000) + "@empleafp.com");
+            usuario.setEmail("nobody_" + usuario.getIdIdentity() + "_" +  random.nextInt(1000) + "@empleafp.com"); //Si se cambia esta linea, cambiar el método update. Issue #236
             /******** Es importate poner una fecha MUY a futuro para que no aparezcan en la pantalla de últimos accesos **********/
             usuario.setFechaUltimoAcceso(new GregorianCalendar(2050, Calendar.JANUARY, 1).getTime());
             usuario.setFechaEnvioCorreoAvisoBorrarUsuario(null);

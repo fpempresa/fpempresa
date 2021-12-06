@@ -179,7 +179,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
             
             //REGLA DE NEGOCIO: No hay que notificar si es una cuenta del estilo de empleafp porque es de los usuarios que se borran.Issue #236. Si se cambia esta linea cambiar el método. SoftDelete
-            if (usuarioOriginal.getEmail().matches("nobody_[0-9]*_[0-9]*@empleafp.com")==false) {
+            if (usuario.getEmail().matches("nobody_[0-9]*_[0-9]*@empleafp.com")==false) {
                 notification.validarCuenta(usuario);
             }
         }

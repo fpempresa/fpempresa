@@ -470,7 +470,17 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new RuntimeException("Solo se puede notificar a usuarios de tipo Titulado. Pero el tipo es " + usuario.getTipoUsuario() + " para el usuario " + usuario.getIdIdentity() );
         }
         
-        notification.usuarioInactivo(usuario);
+        boolean needBeNotified;
+        if (usuario.isValidadoEmail()==true) {
+            needBeNotified=true;
+        } else{
+            needBeNotified=false;
+        }
+        
+
+        if (needBeNotified==true) {
+            notification.usuarioInactivo(usuario);
+        }
         getUsuarioDAO().updateFechaEnvioCorreoAvisoBorrarUsuario(dataSession, usuario);
     }
 

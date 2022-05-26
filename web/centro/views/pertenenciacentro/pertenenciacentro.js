@@ -19,17 +19,30 @@
 
 app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams', 'genericControllerCrudList', 'serviceFactory', 'goPage', 'session', function ($scope, $q, controllerParams, genericControllerCrudList, serviceFactory, goPage, session) {
         genericControllerCrudList.extendScope($scope, controllerParams);
-        $scope.page.pageSize = 20;
+        $scope.page.pageSize = 100;
 
-        $scope.filters.$gt.idCentro = 0;
+        $scope.filters.$ne.idCentro = 0;
         if ($scope.user && $scope.user.centro) {
             $scope.filters.$ne.idCentro = $scope.user.centro.idCentro; //No debe salir el propio centro al que pertenece.
         }
         $scope.filters.estadoCentro = "PERTENECE_A_FPEMPRESA";
         $scope.orderby = [
-            {fieldName: "direccion.municipio.provincia.descripcion", orderDirection: "ASC"},
+            {fieldName: "direccion.municipio.descripcion", orderDirection: "ASC"},
             {fieldName: "nombre", orderDirection: "ASC"}          
         ];
+
+        $scope.$watch("filters['direccion.municipio.provincia.idProvincia']", function (idProvincia, idProvincia) {
+            $scope.search();
+        });
+
+
+        $scope.preSearch = function (filters) {
+            if (filters['direccion.municipio.provincia.idProvincia']) {
+                filters['direccion.municipio.provincia.idProvincia'] = filters['direccion.municipio.provincia.idProvincia'].idProvincia;
+            } else {
+                filters['direccion.municipio.provincia.idProvincia']=-1
+            }
+        }
 
         $scope.buttonPertenenciaCentro = function (centro) {
             $scope.pertenenciaCentro(centro);
@@ -51,6 +64,5 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams
 
             };
         };
-        $scope.search();
 
     }]);

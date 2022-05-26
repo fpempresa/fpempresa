@@ -18,7 +18,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 <div class="row">
     <div class="col-sm-12 form__container" >
         <div>
-            <legend class="form__title">Selecciona el centro educativo de EmpleaFP al que pertenences</legend>
+            <legend class="form__title">Selecciona el centro educativo al que pertenences</legend>
 
 
             <div ng-if="user.centro === null">
@@ -28,30 +28,35 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <p class="form__text form__text--help">Actualmente perteneces al centro educativo '{{user.centro.toString()}}'. Si cambias de centro no podr&aacute;s acceder hasta que tu nuevo centro te acepte o rechace.</p> 
             </div>
 
-            <div class="alert alert-danger" >
-                <p class="">¿No aparece tu centro pero si que está asociado a FPempresa? No te preocupes.</p>
-                <p class="">Escríbenos a <strong>soporte@empleafp.com</strong> y enseguida lo damos de alta.</p> 
-            </div>
-
-
-
             <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" id="mainForm" ix3-form> 
+                <div class="row" >
+                    <div class="col-xs-12 ">
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+                                <select ng-model="filters['direccion.municipio.provincia.idProvincia']" ix3-schema-property='Centro.direccion.municipio.provincia' id="provincia" name="provincia" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  >
+                                    <option value="">-- Selecciona la provincia de tu centro --</option>
+                                </select>
+                                
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </form>
+            <br>
+            <br>
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th ix3-order-field-names="nombre" style="               ;text-align: center">Nombre</th>
-                        <th ix3-order-field-names="direccion.municipio.provincia.descripcion" style="width:      20%;text-align: center">Provincia</th>
-                        <th ix3-order-field-names="direccion.municipio.descripcion" style="width:      25%;text-align: center">Poblaci&oacute;n</th>
-                        <th style="width:      25%;text-align: center">Direccion</th>
+                        <th  style="min-width:200px;width:200px;text-align: center">Municipio</th>
+                        <th  style="               ;text-align: center">Nombre</th>
                         <th style="min-width:90px;width:90px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="centro in models" class="data-table__row">
-                        <td ><a href ng-click="buttonPertenenciaCentro(centro)">{{centro.nombre}}</a></td>
-                        <td >{{centro.direccion.municipio.provincia.descripcion}}</td>
                         <td >{{centro.direccion.municipio.descripcion}}</td>
-                        <td >{{centro.direccion.datosDireccion}}</td>      
+                        <td ><a href ng-click="buttonPertenenciaCentro(centro)">{{centro.nombre}}</a></td>     
                         <td>
                             <div style="text-align:center" >
                                 <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonPertenenciaCentro(centro)">Pertenecer</button>                                
@@ -61,7 +66,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 </tbody>
             </table> 
             
-            <div class="alert alert-danger" >
+            <div class="alert alert-danger" ng-if="models.length>0" >
                 <p class="">¿No aparece tu centro pero si que está asociado a FPempresa? No te preocupes.</p>
                 <p class="">Escríbenos a <strong>soporte@empleafp.com</strong> y enseguida lo damos de alta.</p> 
             </div>

@@ -60,7 +60,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/usuario/edit/' + user.idIdentity + '$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/usuario/edit/' + user.idIdentity + '$')}"  class="lateral-menu__item__link" ng-href="{{getUrlIfTitulado('#/usuario/edit/'+user.idIdentity)}}">Mis datos</a></li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/configuracion$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/configuracion$')}"  class="lateral-menu__item__link" ng-href="{{getUrlIfTitulado('#/configuracion')}}">Configuraci&oacute;n</a></li>
                 <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected()}"  class="lateral-menu__item__link" href ng-click="cambiarContrasenya()">Cambiar mi contrase&ntilde;a</a></li>
-                <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}"><a class="lateral-menu__item__link" href="{{apiUrl + '../manuales/titulado/index.html'}}"><i class="fa fa-question-circle"></i>  Ayuda</a></li>
+                <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected()}"><a class="lateral-menu__item__link" href="{{apiUrl + '../manuales/titulado/index.html'}}"><i class="fa fa-question-circle"></i>  Manual</a></li>
             </ul>
         </div>
         <div class="col-xs-12 col-sm-10">

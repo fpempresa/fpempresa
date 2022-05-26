@@ -19,25 +19,28 @@ along with this program.  If not, see http://www.gnu.org/licenses/
     <div class="col-sm-12 form__container" >
         <div>
             <legend class="form__title">Estadísticas de títulos</legend>
-            <ix3-business-messages style="overflow-y: scroll; overflow-x: hidden; max-height: 600px"></ix3-business-messages>
         </div>
         
-        
+        <div class="row" >
+            <div class="col-xs-12"> 
+                <p class="form__text form__text--help">De los usuarios de EmpleaFP muestra cuantos de ellos tienen un título en su centro obtenido en el año seleccionado</p>
+            </div>
+        </div> 
         <div class="row">
             <div class="col-sm-12">
-                Filtrar por año:
                 <select ng-model="anyo"  name="anyo" class="form-control" ng-options="anyoSeleccionado as anyoSeleccionado for anyoSeleccionado in anyos "  style="width:auto;display: inline-block;"   >
-                    <option value="">-- Elige Año --</option>
+                    <option value="">-- Mostrar todos los años --</option>
                 </select> 
-                <button type="button" class="btn form__button form__button--default" ng-click="buttonSearch()">Filtrar</button>
             </div>            
         </div> 
         <div class="row">
             <div class="col-sm-12">
-                <br>
+                <ix3-business-messages style="overflow-y: scroll; overflow-x: hidden; max-height: 600px"></ix3-business-messages>
             </div>            
         </div> 
         
+        <br>
+        <br>
         
         <div class="row" >
             
@@ -50,8 +53,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <table class="table table-bordered">
                     <thead>                        
                         <tr class="data-table__head">
-                            <th  style="text-align: center">Familia (N&ordm; de Títulos)</th>
-                            <th  style="text-align: center">Ciclo (N&ordm; de Títulos)</th>
+                            <th  style="width:40%;text-align: center">Familia (N&ordm; de Títulos)</th>
+                            <th  style="width:60%;text-align: center">Ciclo (N&ordm; de Títulos)</th>
                         </tr>
                     </thead>
                     <tbody>

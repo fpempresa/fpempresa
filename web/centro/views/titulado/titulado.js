@@ -20,42 +20,21 @@
 app.controller("TituladoSearchController", ['$scope', '$http', 'ix3Configuration','dialog', function ($scope, $http, ix3Configuration,dialog) {
         $scope.businessMessages = [];
         
-        $scope.fail = {};
-        $scope.apiUrl = ix3Configuration.server.api;
-        $scope.mostrarCodigosMunicipio = function () {
-            dialog.create('mostrarCodigosMunicipio');
-        };
-        
-        $scope.failImportJson = function (data) {
-            if (data && data.jqXHR) {
-                if (data.jqXHR.status === 500) {
-                    alert("Uf, esto es embarazoso pero \n ha ocurrido un error al procesar la petición:\n"+data.jqXHR.responseText);
-                } else {
-                    if (data.jqXHR.responseText) {
-                        $scope.businessMessages = JSON.parse(data.jqXHR.responseText);
-                    }
-                }
-            }
-        };
-        $scope.updateList = function () {
-            alert("El listado de Titulados se importó correctamente");
-            $scope.search();
-        };
-        
-        $scope.anyo=null;
-        $scope.anyos=[];
         var currentYear=(new Date()).getFullYear();
+        
+        $scope.anyos=[];
         for(var anyo=currentYear;anyo>=1980;anyo--) {
             $scope.anyos.push(anyo);
-        }        
+        } 
+        $scope.anyo=currentYear;
         
         
-        if ($scope.user && $scope.user.centro) {
-            $scope.centro=$scope.user.centro;
-            getEstadisticasByCentro($scope,$scope.user.centro,$scope.anyo,$scope.anyo);
-        }
-        
-
+        $scope.$watch("anyo",function(newValue,oldValue) {            
+            if ($scope.user && $scope.user.centro) {
+                $scope.centro=$scope.user.centro;
+                getEstadisticasByCentro($scope,$scope.user.centro,$scope.anyo,$scope.anyo);
+            }
+        });
         
         function getEstadisticasByCentro($scope,centro,anyoInicio,anyoFin) {
             $http({
@@ -65,9 +44,6 @@ app.controller("TituladoSearchController", ['$scope', '$http', 'ix3Configuration
                 $scope.centro.estadisticas = estadisticas.data;
             });
         } 
-        
-        $scope.buttonSearch=function() {
-            getEstadisticasByCentro($scope,$scope.user.centro,$scope.anyo,$scope.anyo);
-        }
+
         
     }]);

@@ -19,6 +19,7 @@ package es.logongas.fpempresa.modelo.comun;
 
 import es.logongas.ix3.core.annotations.Label;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.URL;
 
@@ -31,13 +32,16 @@ public class Contacto {
 
     @URL
     @Label("Página web")
+    @Size(max = 200)
     private String url;
 
     @Email
     @Label("Correo electrónico")
+    @Size(max = 200)
     private String email;
 
     @Label("Persona de contacto")
+    @Size(max = 200)
     private String persona;
 
     @Pattern(regexp = "[0-9]{9}| {0}")
@@ -49,6 +53,7 @@ public class Contacto {
     private String fax;
 
     @Label("Datos contacto")
+    @Size(max = 200)
     private String textoLibre;
 
     /**

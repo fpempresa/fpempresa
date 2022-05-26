@@ -95,7 +95,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="direccion.municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.direccion.municipio.provincia" id="direccion.municipio.provincia" name="direccion.municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'" ix3-validation >
+                                    <select ng-model="model.direccion.municipio.provincia" id="direccion.municipio.provincia" name="direccion.municipio.provincia" class="form-control" ix3-options="ix3OrderBy:'descripcion'" ix3-validation >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>
@@ -105,7 +105,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="direccion.municipio" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.direccion.municipio" id="direccion.municipio" name="direccion.municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.direccion.municipio.provincia}" >
+                                    <select ng-model="model.direccion.municipio" id="direccion.municipio" name="direccion.municipio" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.direccion.municipio.provincia}" >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>

@@ -82,7 +82,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="municipio.provincia" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.municipio.provincia" id="municipio.provincia" name="municipio.provincia" class="form-control" ix3-options="orderBy:'descripcion'" ix3-validation >
+                                    <select ng-model="model.municipio.provincia" id="municipio.provincia" name="municipio.provincia" class="form-control" ix3-options="ix3OrderBy:'descripcion'" ix3-validation >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>
@@ -92,7 +92,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="municipio" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.municipio" id="municipio" name="municipio" class="form-control" ix3-options="orderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.municipio.provincia}" >
+                                    <select ng-model="model.municipio" id="municipio" name="municipio" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  ix3-validation ix3-options-depend="{provincia:model.municipio.provincia}" >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>
@@ -125,7 +125,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="familia" class="col-sm-3  control-label" ix3-label ></label>
                                 <div class="col-sm-7">
-                                    <select ng-model="model.familia" id="familia" name="familia" class="form-control" ix3-options="orderBy:'descripcion'"  >
+                                    <select ng-model="model.familia" id="familia" name="familia" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>

@@ -30,7 +30,7 @@ import org.hibernate.validator.constraints.URL;
 public class Contacto {
 
     @URL
-    @Label("URL")
+    @Label("Página web")
     private String url;
 
     @Email

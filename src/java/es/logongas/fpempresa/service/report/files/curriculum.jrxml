@@ -218,7 +218,7 @@ where
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{datosDireccion}+" "+$F{nombreMunicipio}+"("+$F{nombreProvincia}+")"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nombreMunicipio}+" ("+$F{nombreProvincia}+")"]]></textFieldExpression>
 				</textField>
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -242,7 +242,7 @@ where
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{telefono}+($F{telefonoAlternativo}!=null?" y " +$F{telefonoAlternativo}:"")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{telefono}]]></textFieldExpression>
 				</textField>
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

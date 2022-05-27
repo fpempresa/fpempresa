@@ -39,7 +39,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         </tr>
                         <tr>
                             <td class="profile__caption"><i class="glyphicon glyphicon-earphone"></i>&nbsp;Telefono</td>
-                            <td class="profile__value">{{model.telefono}}  {{model.telefonoAlternativo}}</td>
+                            <td class="profile__value">{{model.telefono}}</td>
                         </tr>
                         <tr>
                             <td class="profile__caption"><i class="glyphicon glyphicon-credit-card"></i>&nbsp;{{model.getTipoDocumentoDescription()}}</td>
@@ -61,7 +61,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <td><span class="profile__caption"><i class="fa fa-car"></i>&nbsp;Permiso de conducción:</span>&nbsp;<span class="profile__value">{{model.permisosConducir}}</span></td>
                         </tr>  
                         <tr>
-                            <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.direccion.datosDireccion}} {{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</span></td>
+                            <td ><span class="profile__caption"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Direccion:</span>&nbsp;<span class="profile__value">{{model.direccion.municipio.toString()}} ({{model.direccion.municipio.provincia.toString()}})</span></td>
                         </tr>                         
                     </tbody>
                 </table>                    

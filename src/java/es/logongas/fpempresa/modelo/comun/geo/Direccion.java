@@ -29,7 +29,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class Direccion {
 
-    @NotBlank
     @Label("Dirección")
     @Size(min = 3, max = 255)
     private String datosDireccion;

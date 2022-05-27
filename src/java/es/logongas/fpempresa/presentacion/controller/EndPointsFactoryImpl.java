@@ -132,7 +132,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         //empresa
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class, "contacto,centro.contacto", null)));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.contacto,empresa.centro.contacto", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "borrado,rechazado,oferta.secretToken,oferta.empresa.contacto,oferta.empresa.centro.contacto", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,rechazado,oferta.secretToken,oferta.empresa.contacto,oferta.empresa.centro.contacto", null)));
 
         //titulado
         endPoints.add(EndPoint.createEndPointCrud(path, Configuracion.class));
@@ -157,7 +157,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "oferta.secretToken,borrado,rechazado,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail,usuario.tipoUsuario,usuario.titulado.configuracion,usuario.fechaUltimoAcceso,usuario.fechaEnvioCorreoAvisoBorrarUsuario,usuario.centro,usuario.email,usuario.login,usuario.titulado,usuario.fecha,usuario.claveResetearContrasenya,usuario.fechaClaveResetearContrasenya,usuario.idIdentity,usuario.empresa,usuario.estadoUsuario,usuario.name", "usuario.nombre,usuario.apellidos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,oferta.secretToken,borrado,rechazado,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail,usuario.tipoUsuario,usuario.titulado.configuracion,usuario.fechaUltimoAcceso,usuario.fechaEnvioCorreoAvisoBorrarUsuario,usuario.centro,usuario.email,usuario.login,usuario.titulado,usuario.fecha,usuario.claveResetearContrasenya,usuario.fechaClaveResetearContrasenya,usuario.idIdentity,usuario.empresa,usuario.estadoUsuario,usuario.name", "usuario.nombre,usuario.apellidos")));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 
@@ -174,7 +174,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "borrado,oferta.secretToken,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion,usuario.fechaUltimoAcceso>,usuario.fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,oferta.secretToken,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion,usuario.fechaUltimoAcceso>,usuario.fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 

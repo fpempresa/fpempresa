@@ -18,11 +18,16 @@ package es.logongas.fpempresa.service.titulado.impl;
 
 import es.logongas.fpempresa.dao.titulado.FormacionAcademicaDAO;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
+import es.logongas.fpempresa.modelo.titulado.TipoFormacionAcademica;
 import es.logongas.fpempresa.service.titulado.FormacionAcademicaCRUDService;
 import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.FilterOperator;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
+import java.util.List;
 
 /**
  *
@@ -37,6 +42,18 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
     @Override
     public FormacionAcademica insert(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
 
+        if (formacionAcademica.getTipoFormacionAcademica() == TipoFormacionAcademica.CICLO_FORMATIVO) {
+            Filters filters=new Filters();
+            filters.add(new Filter("titulado.idTitulado", formacionAcademica.getTitulado().getIdTitulado()));
+            filters.add(new Filter("tipoFormacionAcademica", TipoFormacionAcademica.CICLO_FORMATIVO));
+            
+            filters.add(new Filter("ciclo.idCiclo", formacionAcademica.getCiclo().getIdCiclo()));
+            List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaDAO().search(dataSession, filters, null, null);
+            if (formacionesAcademicas.size()>0) {
+                throw new BusinessException("Ya posees el título de '" + formacionAcademica.getCiclo().getDescripcion() + "'");
+            }
+        }
+        
         formacionAcademica.setCertificadoTitulo(false);
         return super.insert(dataSession, formacionAcademica);
     }
@@ -44,6 +61,21 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
     @Override
     public FormacionAcademica update(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
         FormacionAcademica formacionAcademicaOriginal=this.readOriginal(dataSession, formacionAcademica.getIdFormacionAcademica());
+        
+        if (formacionAcademica.getTipoFormacionAcademica() == TipoFormacionAcademica.CICLO_FORMATIVO) {
+            Filters filters=new Filters();
+            filters.add(new Filter("titulado.idTitulado", formacionAcademica.getTitulado().getIdTitulado()));
+            filters.add(new Filter("tipoFormacionAcademica", TipoFormacionAcademica.CICLO_FORMATIVO));
+
+            filters.add(new Filter("ciclo.idCiclo", formacionAcademica.getCiclo().getIdCiclo()));
+            filters.add(new Filter("idFormacionAcademica", formacionAcademicaOriginal.getIdFormacionAcademica(),FilterOperator.ne));
+            List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaDAO().search(dataSession, filters, null, null);
+            if (formacionesAcademicas.size()>0) {
+                throw new BusinessException("Ya posees el título de '" + formacionAcademica.getCiclo().getDescripcion() + "'");
+            }
+        }
+        
+        
         
         if (isChangeInforForCertificadoTitulo(formacionAcademica,formacionAcademicaOriginal)) {
             formacionAcademica.setCertificadoTitulo(false);

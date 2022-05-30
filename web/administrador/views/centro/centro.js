@@ -27,7 +27,7 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
 
-        $scope.filters.$ne.idCentro=-1; 
+        $scope.filters.$gt.idCentro=0; 
 
         $scope.search();
     }]);

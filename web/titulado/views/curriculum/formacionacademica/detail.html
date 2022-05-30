@@ -31,15 +31,28 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             </select>
                         </div>
                     </div> 
+                    
+                    <br>
+                    
                     <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.centro.direccion.municipio.provincia" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.centro.direccion.municipio.provincia" id="model.centro.direccion.municipio.provincia" name="model.centro.direccion.municipio.provincia" class="form-control"  ix3-options="ix3OrderBy:'descripcion'"   >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div>                    
+                    
+                    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group" >
                         <label for="model.centro" class="col-sm-3  control-label" ix3-label ></label>
                         <div class="col-sm-7">
-                            <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-options="ix3OrderBy:['direccion.municipio.provincia.descripcion','nombre']"  ix3-description=" value.direccion.municipio.provincia.toString()+'-'+value.toString() " >
+                            <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-options="ix3OrderBy:'nombre'" ix3-options-depend='{"direccion.municipio.provincia":model.centro.direccion.municipio.provincia}'  >
                                 <option value="">-- Elige Opcion --</option>
                             </select>
                         </div>
                     </div> 
-                    <div ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO' || model.centro.idCentro === -1" class="form-group">
+                    <div ix3-visibility="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO' || model.centro.idCentro<0" class="form-group">
                         <label for="model.otroCentro" class="col-sm-3  control-label" ix3-label ></label>
                         <div  class="col-sm-7">
                             <input ng-model="model.otroCentro" id="model.otroCentro" name="model.otroCentro" class="form-control" type="text"    />
@@ -51,6 +64,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <input ng-model="model.otroTitulo" id="model.otroTitulo" name="model.otroTitulo" class="form-control" type="text"    />
                         </div>
                     </div> 
+                    
+                    <br ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'">
+                    
                     <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
                         <label for="model.ciclo.familia" class="col-sm-3  control-label" ix3-label ></label>
                         <div class="col-sm-7">

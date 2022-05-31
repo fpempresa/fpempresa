@@ -2,7 +2,7 @@
 
 En este apartado podrás ver las estadísticas de cuantos titulados (Realmente n.º de titulos) tiene en cada familia y ciclo formativo.
 
-Por defecto se muestra el total del centro pero se puede filtrar por un año en concreto. Para ello solo debes seleccionar el año y pulsar el botón "Filtrar".
+Por defecto se muestra los del año actual pero se puede ver el de cualquier otro año o el total de todos los años.
 
 ![](titulados.png)
 

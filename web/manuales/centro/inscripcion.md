@@ -38,9 +38,13 @@ De este modo accederás al panel de gestión de profesorado, sin embargo, si es 
 
 ![](selecciona_centro.png)
 
-Si tu centro no aparece pero pero si que está asociado a FPempresa? No te preocupes. Escríbenos a **soporte@empleafp.com** y enseguida lo damos de alta.
+Selecciona la provincia de tu centro y aparecerán los centros de FPEmpresa de tu provincia.
 
-Pulsa en el nombre del Centro o en el botón pertenecer correspondiente para incorporarte como docente del mismo.
+![](selecciona_centro_con_provincia.png)
+
+Pulsa en el nombre del Centro o en el botón "Pertenecer" correspondiente para incorporarte como docente del mismo.
+
+Si tu centro no aparece pero pero si que está asociado a FPempresa? No te preocupes. Escríbenos a **soporte@empleafp.com** y enseguida lo damos de alta.
  
 Ten en cuenta que no tendrás acceso hasta que dicho centro te valide. Esto sucederá cuando otro/a profesor ya validado para tu Centro de elección acepte tu candidatura; más adelante veremos como tú podrás también validar a otros usuarios/as. Ponte en contacto con alguno de tus compañeros/as para que realicen este trámite, ya que EmpleaFP **no** envía ningún correo para avisar de esta circunstancia.
 

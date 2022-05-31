@@ -12,7 +12,7 @@ Una vez pinchado , podrás ver la siguiente pantalla para rellenar tu formación
 
 Elige de la lista el tipo de Formación que quieres añadir a tu CV. Si se trata de una formación universitaria u otra formación (cursos de idiomas, cursillos, formación para el empleo…) habrá que indicar tecleando el nombre del centro de formación, el título y la fecha de obtención.
 
-Si se trata de un Ciclo de Formación Profesional, los datos (Centro de Formación, Familia, Grado y Ciclo) estarán ya precargados y habrá que seleccionarlos de una serie de listas de selección. 
+Si se trata de un Ciclo de Formación Profesional, aparecerán los campos del centro educativo, familia, grado , ciclo, etc.
 
 ![](formacion_academica_detalle.png)
 

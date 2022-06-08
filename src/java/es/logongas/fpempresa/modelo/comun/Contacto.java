@@ -53,7 +53,7 @@ public class Contacto {
     private String fax;
 
     @Label("Datos contacto")
-    @Size(max = 200)
+    @Size(max = 1023)
     private String textoLibre;
 
     /**

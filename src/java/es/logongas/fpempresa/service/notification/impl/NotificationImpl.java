@@ -81,8 +81,10 @@ public class NotificationImpl implements Notification {
         
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Nueva oferta de empleo";
-        bodyContent.parrafos="Hay una nueva oferta de empleo en el municipio de '" + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + "' de la empresa '" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "' para el puesto de '" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "'."
-                + "<br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta."
+        bodyContent.parrafos="Hola " + StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ","
+                + "<br>tenemos una nueva oferta de empleo que puede interesarte."
+                + "<br><br>Es de la empresa " + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + " en " + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + " para el puesto de " + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "."
+                + "<br><br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta."
                 + "<br><br><p style=\"font-style: italic;padding-left: 10px;color:#383838 \">" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "</p>"
                 + "<strong>Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta</strong>"
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";

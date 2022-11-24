@@ -30,6 +30,7 @@ En esta pantalla podremos modificar nombre, apellido y cuenta de email de la per
 
 Además, también en la anterior pantalla podremos validar o rechazar los perfiles de profesores registrados en la cuenta de nuestro Centro Educativo. De este modo, si rechazamos el perfil de un docente no podrá entrar en la aplicación, mientras que si lo aceptamos podrá entrar en la aplicación y acceder a todas las funcionalidades descritas en este manual para tu centro.
 
-Atención!Cuando un nuevo profesor se de de alta en tu centro, deberá avisarte, entonces deberás entrar en esta pantalla y cambiar su estado de "Pendiente" a "Aceptado" para los casos en que desees que ese profesor gestione tambien la bolsa de empleo de tu centro. En caso contrario deberás indicar que su estado es "Rechazado".
+Atención! Cuando un nuevo profesor se de de alta en tu centro, deberá avisarte, entonces deberás entrar en esta pantalla y cambiar su estado de "Pendiente" a "Aceptado" para los casos en que desees que ese profesor gestione tambien la bolsa de empleo de tu centro. En caso contrario deberás indicar que su estado es "Rechazado".
 
+Atención! Cuando un nuevo profesor se de de alta en tu centro, , si su correo es el mismo que pusiste en el correo de los datos del centro, será automáticamente aceptado en tu centro. Pudiendo en ese caso gestionar la bolsa de empleo de tu centro.
 

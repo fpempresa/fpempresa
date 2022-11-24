@@ -138,7 +138,13 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
         updateCentroArguments.usuario.setCentro(updateCentroArguments.centro);
-        updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+        
+        if (updateCentroArguments.usuario.getEmail().equals(updateCentroArguments.centro.getContacto().getEmail())) {
+            //Si el nuevo usuario es el del correo del centro seguro que está aceptado.
+            updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        } else {
+            updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+        }
 
         return usuarioCRUDService.update(updateCentroArguments.dataSession, updateCentroArguments.usuario);
     }

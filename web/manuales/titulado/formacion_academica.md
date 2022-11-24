@@ -22,4 +22,3 @@ Volverás a la pantalla anterior donde se mostrará la nueva formación académi
 
 ![](formacion_academica_search.png)
 
-Verás que hay una columna llamada "Certificado". Cuando tu centro certifique que tienes el título, aparecerá rellenada. 

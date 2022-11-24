@@ -38,7 +38,6 @@ En esta pantalla se ven todos los candidatos que tiene la oferta.
 
 La aplicación permite filtrar los candidatos con los siguientes criterios:
 - La fecha de obtención del título
-- Mostrar sólo candidatos que tengan el título certificado por el centro
 - Ocultar los candidatos que la propia empresa ha rechazado (En la siguiente pantalla se explica).
 
 Si se pulsa sobre el nombre de un candidatos o en el botón de "Ver Currículum" se muestra el curriculum del candidato.
@@ -49,7 +48,6 @@ En esta pantalla se puede ver el currículum de un candidato.
 
 Junto con los datos del curriculum hay otra serie de información importante.
   - Podemos rechazar un candidato. La utilidad de rechazar un candidato es poder mostrar en la pantalla anterior los candidatos no rechazados para simplificar la búsqueda.
-  - La columna de "Certificado" indica que el centro educativo certifica que un alumno con ese NIF/NIE ha hecho ese título en ese año. 
 
  
 

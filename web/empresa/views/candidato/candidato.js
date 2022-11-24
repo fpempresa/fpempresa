@@ -86,6 +86,20 @@ app.controller("CandidatoSearchController", ['$scope', 'genericControllerCrudLis
             });
         };
 
+        $scope.$watch("filters.maxAnyoTitulo", function (newValue, oldValue) {
+
+            if (newValue === oldValue) {
+                return;
+            }
+            $scope.search();
+        });
+        $scope.$watch("filters.ocultarRechazados", function (newValue, oldValue) {
+
+            if (newValue === oldValue) {
+                return;
+            }
+            $scope.search();
+        });
         $scope.search();
 
     }]);

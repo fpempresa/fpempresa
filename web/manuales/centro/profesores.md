@@ -6,7 +6,7 @@ Estas funcionalidades son propias de la persona responsable de la administració
 
 Específicamente se pueden realizar las siguientes acciones:
 - Visualizar y buscar perfiles de otros usuarios del Centro Educativo
-- Crear nuevos perfiles de usuarios del Centro Educativo
+- Aceptar a los profesores
 - Editar, actualizar y borrar perfiles de usuarios del Centro Educativo
 
 
@@ -26,8 +26,9 @@ En el listado de profesores/as podremos editar los usuarios de los/as docentes r
 
 En esta pantalla podremos modificar nombre, apellido y cuenta de email de la persona seleccionada, una vez modificados para que la modificación surta efecto haremos clic en actualizar.
 
-Además, también en esta pantalla podremos validar o rechazar , los perfiles de profesores registrados en la cuenta de nuestro Centro Educativo. De este modo, si rechazamos el perfil de un docente no podrá entrar en la aplicación, mientras que si lo aceptamos podrá entrar en la aplicación y acceder a todas las funcionalidades descritas en este manual.
+## Aceptar a los profesores
 
+Además, también en la anterior pantalla podremos validar o rechazar los perfiles de profesores registrados en la cuenta de nuestro Centro Educativo. De este modo, si rechazamos el perfil de un docente no podrá entrar en la aplicación, mientras que si lo aceptamos podrá entrar en la aplicación y acceder a todas las funcionalidades descritas en este manual para tu centro.
 
 Atención!Cuando un nuevo profesor se de de alta en tu centro, deberá avisarte, entonces deberás entrar en esta pantalla y cambiar su estado de "Pendiente" a "Aceptado" para los casos en que desees que ese profesor gestione tambien la bolsa de empleo de tu centro. En caso contrario deberás indicar que su estado es "Rechazado".
 

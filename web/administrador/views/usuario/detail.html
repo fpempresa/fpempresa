@@ -154,7 +154,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="model.centro" class="col-xs-3 col-sm-6 control-label" >Nombre</label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-clear="model.tipoUsuario!=='CENTRO'" ix3-options ix3-validation ix3-options-depend='{"direccion.municipio.provincia":model.centro.direccion.municipio.provincia}' >
+                                    <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-clear="model.tipoUsuario!=='CENTRO'" ix3-options="ix3OrderBy:'nombre'" ix3-validation ix3-options-depend='{"direccion.municipio.provincia":model.centro.direccion.municipio.provincia}' >
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>

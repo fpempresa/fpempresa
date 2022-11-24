@@ -34,6 +34,7 @@ import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
+import es.logongas.ix3.dao.impl.ExceptionTranslator;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
@@ -56,7 +57,10 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
 
     @Autowired
     DAOFactory daoFactory;
-
+    
+    @Autowired
+    protected ExceptionTranslator exceptionTranslator;
+    
     private TituladoDAO getTituladoDAO() {
         return (TituladoDAO) this.getDAO();
     }
@@ -84,10 +88,52 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
             }
 
             return updatedTitulado;
-        } finally {
-            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
-                transactionManager.rollback(dataSession);
+        } catch (javax.validation.ConstraintViolationException cve) {
+            try {
+                if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                    transactionManager.rollback(dataSession);
+                }
+            } catch (Exception exc) {
+                log.error("Falló al hacer un rollback", exc);
             }
+            throw new BusinessException(exceptionTranslator.getBusinessMessages(cve));
+        } catch (org.hibernate.exception.ConstraintViolationException cve) {
+            try {
+                if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                    transactionManager.rollback(dataSession);
+                }
+            } catch (Exception exc) {
+                log.error("Falló al hacer un rollback", exc);
+            }
+            throw new BusinessException(exceptionTranslator.getBusinessMessages(cve,getEntityType()));
+        } catch (org.hibernate.exception.DataException de) {
+            try {
+                if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                    transactionManager.rollback(dataSession);
+                }
+            } catch (Exception exc) {
+                log.error("Falló al hacer un rollback", de);
+            }
+            throw new BusinessException(exceptionTranslator.getBusinessMessages(de,getEntityType()));            
+            
+        } catch (RuntimeException ex) {
+            try {
+                if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                    transactionManager.rollback(dataSession);
+                }
+            } catch (Exception exc) {
+                log.error("Falló al hacer un rollback", exc);
+            }
+            throw ex;
+        } catch (Exception ex) {
+            try {
+                if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                    transactionManager.rollback(dataSession);
+                }
+            } catch (Exception exc) {
+                log.error("Falló al hacer un rollback", exc);
+            }
+            throw new RuntimeException(ex);
         }
 
     }

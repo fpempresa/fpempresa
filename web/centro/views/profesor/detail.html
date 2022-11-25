@@ -28,7 +28,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="nombre" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation >
+                                    <input ng-model="model.nombre" type="text" class="form-control" id="nombre" name="nombre"  ix3-validation readonly>
                                 </div>
                             </div> 
                         </div>                          
@@ -36,7 +36,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="apellidos" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation >
+                                    <input ng-model="model.apellidos" type="text" class="form-control" id="apellidos" name="apellidos"  ix3-validation readonly>
                                 </div>
                             </div> 
                         </div>
@@ -46,7 +46,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="form-group">
                                 <label for="email" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
                                 <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.email" type="text" class="form-control" id="email" name="email"  ix3-validation >
+                                    <input ng-model="model.email" type="text" class="form-control" id="email" name="email"  ix3-validation readonly>
                                 </div>
                             </div> 
                         </div>
@@ -79,9 +79,16 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                         <option value="">-- Elige Opcion --</option>
                                     </select>
                                 </div>
+
                             </div> 
-                        </div> 
+                        </div>
+                        <div class="col-xs-9 col-sm-7 col-xs-offset-3 form-horizontal" ng-show="(controllerAction !== 'NEW') && (model.idIdentity!==user.idIdentity)">
+                            <span ng-show="model.estadoUsuario=='ACEPTADO'" class="form__text form__text--help">En el estado <span style="font-weight: bold">Aceptado</span> , el profesor podrá gestionar la bolsa de tu centro pudiendo hacer lo mismo que tu haces en EmpleaFP.</span>
+                            <span ng-show="model.estadoUsuario=='PENDIENTE_ACEPTACION'" class="form__text form__text--help">En el estado <span style="font-weight: bold">Pendiente</span> , el profesor está a la espera de que lo aceptes o lo rechaces.</span>
+                            <span ng-show="model.estadoUsuario=='RECHAZADO'" class="form__text form__text--help">En el estado <span style="font-weight: bold">Rechazado</span> , el profesor no podrá hacer nada en la bolsa de tu centro.</span>
+                        </div>
                     </div>
+                    <br>
                     <div class="row" >
                         <div class="col-xs-12 ">                             
                             <crud-detail-buttons class="pull-right" ></crud-detail-buttons>

@@ -41,18 +41,17 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th ix3-order-field-names="nombre,apellidos" style="text-align: center">Nombre</th>
                         <th ix3-order-field-names="email" style="width:   30%;text-align: center">Correo</th>
                         <th ix3-order-field-names="estadoUsuario" style="width:   15%;text-align: center">Estado</th>
-                        <th style="min-width:120px;width:120px;text-align: center" >Acciones</th>
+                        <th style="min-width:140px;width:140px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="usuario in models" class="data-table__row">
                         <td ><a href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a></td>
                         <td >{{usuario.email}}</td>                       
-                        <td >{{usuario.getEstadoUsuarioDescription()}}</td>                        
+                        <td ><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:#ED8936" ng-show="usuario.estadoUsuario==='PENDIENTE_ACEPTACION'"></i>&nbsp;{{usuario.getEstadoUsuarioDescription()}}</td>                        
                         <td>
                             <div style="text-align:center" >
-                                <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(usuario.idIdentity)">Borrar</button>
-                                <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(usuario.idIdentity)">Editar</button>                                
+                                <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(usuario.idIdentity)">Cambiar estado</button>                                
                             </div>
                         </td>                        
                     </tr>

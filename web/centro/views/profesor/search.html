@@ -35,6 +35,19 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             </div>
             <br>            
             <ix3-business-messages></ix3-business-messages>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <p class="form__text form__text--help">
+                        En esta pantalla se muestran los profesores que se han dado de alta en tu centro. Debes indicar quien tiene permisos para gestionar la bolsa de tu centro de forma que puedan hacer lo mismo que tu haces en EmpleaFP.
+                        <ul style="list-style-type: disc;margin-left: 20px;">
+                            <li class="form__text form__text--help">En el estado <span style="font-weight: bold">Aceptado</span> , el profesor puede gestionar la bolsa de tu centro pudiendo hacer lo mismo que tu haces en EmpleaFP.</li>
+                            <li class="form__text form__text--help">En el estado <span style="font-weight: bold">Pendiente</span> , el profesor está a la espera de que lo aceptes o lo rechaces.</li>
+                            <li class="form__text form__text--help">En el estado <span style="font-weight: bold">Rechazado</span> , el profesor no puede hacer nada en la bolsa de tu centro.</li>
+                        </ul>
+                    </p>
+
+                </div>
+            </div>
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
@@ -46,11 +59,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 </thead>
                 <tbody>
                     <tr ng-repeat="usuario in models" class="data-table__row">
-                        <td ><a href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a></td>
+                        <td >
+                            <a ng-show="(usuario.idIdentity!==user.idIdentity)" href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a>
+                            <span ng-show="(usuario.idIdentity==user.idIdentity)">{{usuario.getNombreCompleto()}}</span>
+                        </td>
                         <td >{{usuario.email}}</td>                       
-                        <td ><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:#ED8936" ng-show="usuario.estadoUsuario==='PENDIENTE_ACEPTACION'"></i>&nbsp;{{usuario.getEstadoUsuarioDescription()}}</td>                        
+                        <td ><i class="fa fa-exclamation-circle g--color-alt-5" aria-hidden="true"  ng-show="usuario.estadoUsuario==='PENDIENTE_ACEPTACION'"></i>&nbsp;{{usuario.getEstadoUsuarioDescription()}}</td>                        
                         <td>
-                            <div style="text-align:center" >
+                            <div style="text-align:center" ng-show="(usuario.idIdentity!==user.idIdentity)" >
                                 <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(usuario.idIdentity)">Cambiar estado</button>                                
                             </div>
                         </td>                        
@@ -61,7 +77,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <div class="col-sm-12">
                     <ix3-pagination></ix3-pagination>
                 </div>
-            </div>            
+            </div> 
         </div>
     </div>
 </div>

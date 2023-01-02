@@ -87,10 +87,6 @@ app.controller("UsuarioNewEditController", ['$scope', 'genericControllerCrudDeta
             
         };        
 
-        $scope.GreaterThan = function(actual, expected) {
-            return actual>expected;
-        }; 
-
     }]);
 
 app.controller("UsuarioViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {

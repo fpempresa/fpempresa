@@ -32,6 +32,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             </div>
             <br>
             <div class="row">
+                <div class="col-xs-12"> 
+                    <input ng-model="filters.$lliker['empresa.centro.nombre']" type="text" class="form-control"  id="nombreCentro" name="nombreCentro" placeholder="Centro Educativo"  > 
+                </div>             
+            </div>            
+            <br>
+            <div class="row">
                 <div class="col-xs-3"> 
                     <div  class="input-group ">
                         <input ng-model="filters.$ge.fecha" type="text" class="form-control"  id="fechaDesde" name="fechaDesde" placeholder="fecha desde" ix3-date ix3-datepicker > 
@@ -60,6 +66,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th ix3-order-field-names="idOferta" style="min-width: 60px; width: 60px;text-align: center">#</th>
                         <th ix3-order-field-names="puesto" style="width:   40%;text-align: center">Puesto</th>
                         <th ix3-order-field-names="empresa.nombreComercial" style="width:   20%;text-align: center">Empresa</th>
+                        <th ix3-order-field-names="empresa.centro.nombre" style="width:   20%;text-align: center">Centro</th>
                         <th ix3-order-field-names="familia.descripcion" style="width:   30%;text-align: center">Familia</th>
                         <th style="min-width: 70px; width: 70px;text-align: center">Candidat.</th>
                         <th style="min-width: 70px; width: 70px;text-align: center" title="Nº de titulados a la que se le notifica la oferta">Titulados</th>
@@ -72,6 +79,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td style="text-align: center"><a href ng-click="buttonView(model.idOferta)">{{model.idOferta}}</a></td>
                         <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
                         <td >{{model.empresa.nombreComercial}}</td>
+                        <td >{{model.empresa.centro.nombre}}</td>
                         <td >{{model.familia.descripcion}}</td>
                         <td >{{model.numeroCandidatos}}</td>
                         <td >{{model.numTituladosSuscritosPorProvinciaOfertaYCiclos}}</td>

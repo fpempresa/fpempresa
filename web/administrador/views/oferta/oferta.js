@@ -19,7 +19,7 @@
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addAllRoutes({
             entity: "Oferta",
-            expand: "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha"
+            expand: "municipio,municipio.provincia,familia,empresa,empresa.centro,ciclos,ciclos,fecha"
         });
     }]);
 

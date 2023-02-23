@@ -1,0 +1,63 @@
+
+.l-flex {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+
+    &--space-around {
+        justify-content: space-around;
+    }
+    &--center {
+        justify-content: center;
+    }
+    &--space-between {
+        justify-content: space-between;
+    } 
+    &--space-evenly {
+        justify-content: space-evenly;
+    }     
+
+    
+    @for $i from 1 through 12 {
+        
+        &--#{$i}-columns &__item {
+            width: 100%/3;
+            width: calc(100% / #{$i});
+        }
+    }
+    
+    
+    &--flex-direction-column {
+        flex-direction:column;
+    }
+  
+    &--flex-start {
+        justify-content:flex-start;
+    }
+    &--flex-end {
+        justify-content:flex-end;
+    }
+    &--center {
+        justify-content:center;
+    }
+    &--space-between {
+        justify-content:space-between;
+    }
+    &--space-around {
+        justify-content:space-around;
+    }
+    &--space-evenly {
+        justify-content:space-evenly;
+    }
+    
+    
+    
+    &__item {
+        
+    }
+    
+    
+   
+    
+}

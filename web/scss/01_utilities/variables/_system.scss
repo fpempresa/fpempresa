@@ -52,6 +52,33 @@ $padding-variants:(
 
 $margin-variants:map-merge($padding-variants,("auto":auto));
 
+$width-variants:(
+    "0":0px,
+    "1":4px,
+    "2":8px,
+    "3":12px,
+    "4":16px,
+    "5":20px,
+    "6":24px,
+    "7":32px,
+    "8":40px,
+    "9":48px,
+    "10":64px,
+    "11":80px,
+    "12":96px,
+    "13":128px,
+    "14":160px,
+    "15":192px,
+    "16":224px,
+    "17":256px,
+    "18":320px,
+    "19":480px,
+    "20":640px,
+    "100percent":100%,
+    "50percent":50%,
+    "25percent":25%
+);
+
 $box-shadow-variants:(
     "0":unquote("none"),
     "1":unquote("0 0 0 1px rgba(0, 0, 0, 0.05)"),

@@ -526,6 +526,92 @@ p {
   grid-row-gap: 20px;
 }
 
+.l-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.l-flex--space-around {
+  justify-content: space-around;
+}
+.l-flex--center {
+  justify-content: center;
+}
+.l-flex--space-between {
+  justify-content: space-between;
+}
+.l-flex--space-evenly {
+  justify-content: space-evenly;
+}
+.l-flex--1-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 1);
+}
+.l-flex--2-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 2);
+}
+.l-flex--3-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 3);
+}
+.l-flex--4-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 4);
+}
+.l-flex--5-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 5);
+}
+.l-flex--6-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 6);
+}
+.l-flex--7-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 7);
+}
+.l-flex--8-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 8);
+}
+.l-flex--9-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 9);
+}
+.l-flex--10-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 10);
+}
+.l-flex--11-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 11);
+}
+.l-flex--12-columns .l-flex__item {
+  width: 100%/3;
+  width: calc(100% / 12);
+}
+.l-flex--flex-direction-column {
+  flex-direction: column;
+}
+.l-flex--flex-start {
+  justify-content: flex-start;
+}
+.l-flex--flex-end {
+  justify-content: flex-end;
+}
+.l-flex--center {
+  justify-content: center;
+}
+.l-flex--space-between {
+  justify-content: space-between;
+}
+.l-flex--space-around {
+  justify-content: space-around;
+}
+.l-flex--space-evenly {
+  justify-content: space-evenly;
+}
 .l-horizontal {
   display: flex;
   flex-direction: row;
@@ -10813,4 +10899,392 @@ p {
 .g--transition-opacity {
   transition: opacity 1s ease-in-out;
   opacity: 1;
+}
+
+.g--width-0 {
+  width: 0px;
+}
+
+.g--width-1 {
+  width: 4px;
+}
+
+.g--width-2 {
+  width: 8px;
+}
+
+.g--width-3 {
+  width: 12px;
+}
+
+.g--width-4 {
+  width: 16px;
+}
+
+.g--width-5 {
+  width: 20px;
+}
+
+.g--width-6 {
+  width: 24px;
+}
+
+.g--width-7 {
+  width: 32px;
+}
+
+.g--width-8 {
+  width: 40px;
+}
+
+.g--width-9 {
+  width: 48px;
+}
+
+.g--width-10 {
+  width: 64px;
+}
+
+.g--width-11 {
+  width: 80px;
+}
+
+.g--width-12 {
+  width: 96px;
+}
+
+.g--width-13 {
+  width: 128px;
+}
+
+.g--width-14 {
+  width: 160px;
+}
+
+.g--width-15 {
+  width: 192px;
+}
+
+.g--width-16 {
+  width: 224px;
+}
+
+.g--width-17 {
+  width: 256px;
+}
+
+.g--width-18 {
+  width: 320px;
+}
+
+.g--width-19 {
+  width: 480px;
+}
+
+.g--width-20 {
+  width: 640px;
+}
+
+.g--width-100percent {
+  width: 100%;
+}
+
+.g--width-50percent {
+  width: 50%;
+}
+
+.g--width-25percent {
+  width: 25%;
+}
+
+@media (min-width: 640px) {
+  .g--width-0\@movil {
+    width: 0px;
+  }
+
+  .g--width-1\@movil {
+    width: 4px;
+  }
+
+  .g--width-2\@movil {
+    width: 8px;
+  }
+
+  .g--width-3\@movil {
+    width: 12px;
+  }
+
+  .g--width-4\@movil {
+    width: 16px;
+  }
+
+  .g--width-5\@movil {
+    width: 20px;
+  }
+
+  .g--width-6\@movil {
+    width: 24px;
+  }
+
+  .g--width-7\@movil {
+    width: 32px;
+  }
+
+  .g--width-8\@movil {
+    width: 40px;
+  }
+
+  .g--width-9\@movil {
+    width: 48px;
+  }
+
+  .g--width-10\@movil {
+    width: 64px;
+  }
+
+  .g--width-11\@movil {
+    width: 80px;
+  }
+
+  .g--width-12\@movil {
+    width: 96px;
+  }
+
+  .g--width-13\@movil {
+    width: 128px;
+  }
+
+  .g--width-14\@movil {
+    width: 160px;
+  }
+
+  .g--width-15\@movil {
+    width: 192px;
+  }
+
+  .g--width-16\@movil {
+    width: 224px;
+  }
+
+  .g--width-17\@movil {
+    width: 256px;
+  }
+
+  .g--width-18\@movil {
+    width: 320px;
+  }
+
+  .g--width-19\@movil {
+    width: 480px;
+  }
+
+  .g--width-20\@movil {
+    width: 640px;
+  }
+
+  .g--width-100percent\@movil {
+    width: 100%;
+  }
+
+  .g--width-50percent\@movil {
+    width: 50%;
+  }
+
+  .g--width-25percent\@movil {
+    width: 25%;
+  }
+}
+@media (min-width: 768px) {
+  .g--width-0\@tablet {
+    width: 0px;
+  }
+
+  .g--width-1\@tablet {
+    width: 4px;
+  }
+
+  .g--width-2\@tablet {
+    width: 8px;
+  }
+
+  .g--width-3\@tablet {
+    width: 12px;
+  }
+
+  .g--width-4\@tablet {
+    width: 16px;
+  }
+
+  .g--width-5\@tablet {
+    width: 20px;
+  }
+
+  .g--width-6\@tablet {
+    width: 24px;
+  }
+
+  .g--width-7\@tablet {
+    width: 32px;
+  }
+
+  .g--width-8\@tablet {
+    width: 40px;
+  }
+
+  .g--width-9\@tablet {
+    width: 48px;
+  }
+
+  .g--width-10\@tablet {
+    width: 64px;
+  }
+
+  .g--width-11\@tablet {
+    width: 80px;
+  }
+
+  .g--width-12\@tablet {
+    width: 96px;
+  }
+
+  .g--width-13\@tablet {
+    width: 128px;
+  }
+
+  .g--width-14\@tablet {
+    width: 160px;
+  }
+
+  .g--width-15\@tablet {
+    width: 192px;
+  }
+
+  .g--width-16\@tablet {
+    width: 224px;
+  }
+
+  .g--width-17\@tablet {
+    width: 256px;
+  }
+
+  .g--width-18\@tablet {
+    width: 320px;
+  }
+
+  .g--width-19\@tablet {
+    width: 480px;
+  }
+
+  .g--width-20\@tablet {
+    width: 640px;
+  }
+
+  .g--width-100percent\@tablet {
+    width: 100%;
+  }
+
+  .g--width-50percent\@tablet {
+    width: 50%;
+  }
+
+  .g--width-25percent\@tablet {
+    width: 25%;
+  }
+}
+@media (min-width: 1024px) {
+  .g--width-0\@desktop {
+    width: 0px;
+  }
+
+  .g--width-1\@desktop {
+    width: 4px;
+  }
+
+  .g--width-2\@desktop {
+    width: 8px;
+  }
+
+  .g--width-3\@desktop {
+    width: 12px;
+  }
+
+  .g--width-4\@desktop {
+    width: 16px;
+  }
+
+  .g--width-5\@desktop {
+    width: 20px;
+  }
+
+  .g--width-6\@desktop {
+    width: 24px;
+  }
+
+  .g--width-7\@desktop {
+    width: 32px;
+  }
+
+  .g--width-8\@desktop {
+    width: 40px;
+  }
+
+  .g--width-9\@desktop {
+    width: 48px;
+  }
+
+  .g--width-10\@desktop {
+    width: 64px;
+  }
+
+  .g--width-11\@desktop {
+    width: 80px;
+  }
+
+  .g--width-12\@desktop {
+    width: 96px;
+  }
+
+  .g--width-13\@desktop {
+    width: 128px;
+  }
+
+  .g--width-14\@desktop {
+    width: 160px;
+  }
+
+  .g--width-15\@desktop {
+    width: 192px;
+  }
+
+  .g--width-16\@desktop {
+    width: 224px;
+  }
+
+  .g--width-17\@desktop {
+    width: 256px;
+  }
+
+  .g--width-18\@desktop {
+    width: 320px;
+  }
+
+  .g--width-19\@desktop {
+    width: 480px;
+  }
+
+  .g--width-20\@desktop {
+    width: 640px;
+  }
+
+  .g--width-100percent\@desktop {
+    width: 100%;
+  }
+
+  .g--width-50percent\@desktop {
+    width: 50%;
+  }
+
+  .g--width-25percent\@desktop {
+    width: 25%;
+  }
 }

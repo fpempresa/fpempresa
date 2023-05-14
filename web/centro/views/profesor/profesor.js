@@ -24,6 +24,7 @@ app.controller("ProfesorSearchController", ['$scope', 'genericControllerCrudList
 
         $scope.filters['centro.idCentro']=$scope.user.centro.idCentro;
         $scope.filters['tipoUsuario']="CENTRO";
+        $scope.filters['estadoUsuario$ne']="RECHAZADO";
 
         $scope.updateEstadoUsuario = function (idIdentity, estadoUsuario) {
             $scope.service.updateEstadoUsuario(idIdentity, estadoUsuario).then(function (data) {

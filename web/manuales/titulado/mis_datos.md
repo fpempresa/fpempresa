@@ -5,3 +5,5 @@ En el apartado "Mis datos" podemos modificar nuestro nombre y apellidos así com
 Al cambiar la contraseña se nos va a solicitar que volvamos a introducirla una segunda vez, esto evita que la tecleemos mal y luego no podamos acceder a nuestro panel de gestión.
 
 ![](mis_datos.png)
+
+Una vez rellenado los datos  pulsa el botón "Actualizar".

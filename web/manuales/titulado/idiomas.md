@@ -15,6 +15,7 @@ Si tienes conocimientos de idiomas no acreditados siempre puedes añadir esta in
 
 ![](idiomas_detalle.png)
 
+Una vez rellenado los datos  pulsa el botón "Guardar".
 
 Una vez introducidas tu titulación de un idioma, ésta aparecerá en el listado en el que podrás editar / borrar cada una.
 

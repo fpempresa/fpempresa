@@ -16,7 +16,7 @@ Si se trata de un Ciclo de Formación Profesional, aparecerán los campos del ce
 
 ![](formacion_academica_detalle.png)
 
-Una vez rellenado los datos  pulsa el botón guardar.
+Una vez rellenado los datos  pulsa el botón "Guardar".
 
 Volverás a la pantalla anterior donde se mostrará la nueva formación académica que has añadido. Ahora tendrás la opción de editar o borrar cada una de estas formaciones pulsando en los correspondientes botones.
 

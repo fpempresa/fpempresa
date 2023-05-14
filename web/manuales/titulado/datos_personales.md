@@ -12,5 +12,5 @@ En otras competencias podemos incorporar todo tipo de conocimientos y habilidade
 
 Por último indicaremos los permisos de conducir de los que disponemos mediante su nomenclatura y separados por comas: p.ej. B, C+E, BTP..
 
-Una vez hayas completado todos los datos pulsa en el botón "Guardar". La aplicación te llevará directamente al resumen de tu perfil.
+Una vez hayas completado todos los datos pulsa en el botón "Actualizar". La aplicación te llevará directamente al resumen de tu perfil.
 

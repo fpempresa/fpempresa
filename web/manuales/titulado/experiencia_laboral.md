@@ -11,6 +11,8 @@ En la pantalla de nueva  experiencia laboral habrás de introducir el nombre de 
 
 ![](experiencia_laboral_new.png)
 
+Una vez rellenado los datos  pulsa el botón "Guardar".
+
 Ten en cuenta los siguientes consejos para completar la información:
 
   - Usa tu vida laboral o tus contratos para ajustar las fechas de forma que sean lo más precisas posible

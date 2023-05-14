@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
+import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
@@ -31,6 +32,7 @@ import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.dao.Filter;
@@ -41,6 +43,7 @@ import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import es.logongas.ix3.web.security.jwt.Jws;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -61,7 +64,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
     @Autowired
     Notification notification;
-
+    
     @Autowired
     Executor executor;
 
@@ -85,13 +88,20 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
             }
 
             CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
-
-
+            Empresa empresa=empresaCRUDService.read(dataSession, entity.getEmpresa().getIdEmpresa());
+            int numOfertasPublicadas=empresa.getNumOfertasPublicadas();
+            
+            int maxOfertasPublicadasEmpresa=Integer.parseInt(Config.getSetting("app.maxOfertasPublicadasEmpresa"));
+            if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
+                List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
+                businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
+                businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
+                throw new BusinessException(businessMessages);
+            }
             
 
             Oferta oferta=super.insert(dataSession, entity);
 
-            Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
             empresa.setNumOfertasPublicadas(empresa.getNumOfertasPublicadas()+1);
             empresaCRUDService.update(dataSession, empresa);
             

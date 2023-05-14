@@ -21,6 +21,7 @@ import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Direccion;
 import es.logongas.fpempresa.util.validators.CIFNIFValidator;
+import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
@@ -65,6 +66,9 @@ public class Empresa {
     @NotNull
     @Valid
     private Contacto contacto;
+    
+    @Label("Nº de ofertas publicadas")
+    private int numOfertasPublicadas;
 
     @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
@@ -217,6 +221,20 @@ public class Empresa {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the numOfertasPublicadas
+     */
+    public int getNumOfertasPublicadas() {
+        return numOfertasPublicadas;
+    }
+
+    /**
+     * @param numOfertasPublicadas the numOfertasPublicadas to set
+     */
+    public void setNumOfertasPublicadas(int numOfertasPublicadas) {
+        this.numOfertasPublicadas = numOfertasPublicadas;
     }
 
 }

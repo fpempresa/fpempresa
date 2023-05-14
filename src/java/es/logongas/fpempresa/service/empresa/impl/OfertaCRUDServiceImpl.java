@@ -36,6 +36,7 @@ import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import es.logongas.ix3.web.security.jwt.Jws;
@@ -73,6 +74,42 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
     @Autowired
     Jws jws;    
+
+    @Override
+    public Oferta insert(DataSession dataSession, Oferta entity) throws BusinessException {
+        
+        boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
+        try {
+            if (isActivePreviousTransaction == false) {
+                transactionManager.begin(dataSession);
+            }
+
+            CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
+
+
+            
+
+            Oferta oferta=super.insert(dataSession, entity);
+
+            Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
+            empresa.setNumOfertasPublicadas(empresa.getNumOfertasPublicadas()+1);
+            empresaCRUDService.update(dataSession, empresa);
+            
+            if (isActivePreviousTransaction == false) {
+                transactionManager.commit(dataSession);
+            }
+
+            return oferta;
+        } finally {
+            if ((transactionManager.isActive(dataSession) == true) && (isActivePreviousTransaction == false)) {
+                transactionManager.rollback(dataSession);
+            }
+        }
+
+    }
+    
+    
+    
     
     @Override
     public boolean delete(DataSession dataSession, Oferta entity) throws BusinessException {

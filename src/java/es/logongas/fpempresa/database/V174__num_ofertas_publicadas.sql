@@ -1,0 +1,1 @@
+ALTER TABLE `empresa` ADD COLUMN `numOfertasPublicadas` INT NULL DEFAULT 0 AFTER `fecha`;

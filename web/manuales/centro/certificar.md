@@ -8,7 +8,7 @@ La única utilidad de certificar es la siguiente: Permite que una empresa, cuand
 
 ![](certificado_titulo.png)
 
-En esta pantalla podemos ver para cada año, los títulos (es decir los titulados que se han indicado que tienen un título en nuestro centro) que hemos certificado y los títulos que faltan por certificar.
+En esta pantalla podemos ver para cada año, los títulos (es decir los titulados que se han indicado que tienen un título en nuestro centro) que  faltan por certificar.
 
 Si pulsamos en un año , se podrá ver , el desglose por ciclos de ese año.
 

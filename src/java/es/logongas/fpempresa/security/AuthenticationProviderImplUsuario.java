@@ -15,6 +15,7 @@
 
 package es.logongas.fpempresa.security;
 
+import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
@@ -128,7 +129,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                     BusinessException businessException=new BusinessException("No puedes entrar ya que estás a la espera de ser aceptado en el '" + usuario.getCentro() + "'");
                     int numUsuariosCentro=usuarioService.numUsuariosCentro(dataSession, usuario.getCentro());
                     if (numUsuariosCentro==1) {
-                        businessException.getBusinessMessages().add(new BusinessMessage("Como eres la primera persona de tu centro que usa EmpleaFP , debes ponerte en contacto con nosotros en 'soporte@empleafp.com' para que te aceptemos en el '" + usuario.getCentro() + "'"));
+                        businessException.getBusinessMessages().add(new BusinessMessage("Como eres la primera persona de tu centro que usa EmpleaFP , debes ponerte en contacto con nosotros en '" + Config.getSetting("app.correoSoporte") + "' para que te aceptemos en el '" + usuario.getCentro() + "'"));
                     } else if (numUsuariosCentro==2) {
                         businessException.getBusinessMessages().add(new BusinessMessage("Como ya hay un compañero de tu centro usando EmpleaFP, deberías hablar con él para que te acepte en el '" + usuario.getCentro() + "'"));
                     } else if (numUsuariosCentro>2) {

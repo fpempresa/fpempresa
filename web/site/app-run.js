@@ -24,14 +24,7 @@ app.run(['session', 'richDomain', function (session, richDomain) {
     }]);
 
 
-app.run(['$rootScope', function ($rootScope) {
-        //Está hecho tan cumplicado para evitar que hagan spam con el correo
-        var c3 = "\u0040";
-        var c5 = "fp.com";
-        var c2 = "te";
-        var c1 = "sopor";
-        var c4 = "emplea";
-
-        $rootScope.correoSoporte = c1 + c2 + c3 + c4 + c5;
+app.run(['$rootScope','ix3Configuration', function ($rootScope,ix3Configuration) {
+         $rootScope.correoSoporte =ix3Configuration.serverConfig['app.correoSoporte'];
     }]);
 

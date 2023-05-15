@@ -1,3 +1,4 @@
+<%@page import="es.logongas.fpempresa.config.Config"%>
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="es.logongas.ix3.dao.DataSession"%>
@@ -24,6 +25,8 @@
     response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT");  
 %>
 <%
+    
+    String appCorreoSoporte;
     String jsonUser;
     String error;
     
@@ -56,9 +59,13 @@
         } else {
             jsonUser = "null";
         }
+        
+        appCorreoSoporte=Config.getSetting("app.correoSoporte");
+        
         error="";
     } catch (Exception ex) {
         jsonUser = "null";
+        appCorreoSoporte="null";
 
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -79,4 +86,13 @@ var user=<%=jsonUser%>;
 //El context Path de la aplicación
 function getContextPath() {
     return "<%=request.getContextPath()%>";
+}
+
+
+function getServerConfig() {
+
+    return {
+        "app.correoSoporte":"<%=appCorreoSoporte%>"
+    }
+
 }

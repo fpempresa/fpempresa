@@ -111,6 +111,8 @@ function getIx3Configuration(ix3UserConfiguration) {
         ix3Configuration.format.date.default = ix3Configuration.format.date.default || "shortDate";
         ix3Configuration.security.defaultStatus = ix3Configuration.security.defaultStatus || 200;
 
+        ix3Configuration.serverConfig=getServerConfig();
+
         return ix3Configuration;
 }
 

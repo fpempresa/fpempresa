@@ -17,9 +17,10 @@
  */
 
 
-app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams', 'genericControllerCrudList', 'serviceFactory', 'goPage', 'session', function ($scope, $q, controllerParams, genericControllerCrudList, serviceFactory, goPage, session) {
+app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams', 'genericControllerCrudList', 'serviceFactory', 'goPage', 'session','ix3Configuration', function ($scope, $q, controllerParams, genericControllerCrudList, serviceFactory, goPage, session, ix3Configuration) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 100;
+        $scope.correoSoporte=ix3Configuration.serverConfig['app.correoSoporte'];
 
         $scope.filters.$ne.idCentro = 0;
         if ($scope.user && $scope.user.centro) {
@@ -34,7 +35,7 @@ app.controller("PertenenciaCentroController", ['$scope', '$q', 'controllerParams
         $scope.$watch("filters['direccion.municipio.provincia.idProvincia']", function (idProvincia, idProvincia) {
             $scope.search();
         });
-
+        
 
         $scope.preSearch = function (filters) {
             if (filters['direccion.municipio.provincia.idProvincia']) {

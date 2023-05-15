@@ -89,14 +89,17 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
             CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
             Empresa empresa=empresaCRUDService.read(dataSession, entity.getEmpresa().getIdEmpresa());
-            int numOfertasPublicadas=empresa.getNumOfertasPublicadas();
             
-            int maxOfertasPublicadasEmpresa=Integer.parseInt(Config.getSetting("app.maxOfertasPublicadasEmpresa"));
-            if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
-                List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
-                businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
-                businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
-                throw new BusinessException(businessMessages);
+            
+            if (empresa.getCentro()==null) {
+                int numOfertasPublicadas=empresa.getNumOfertasPublicadas();
+                int maxOfertasPublicadasEmpresa=Integer.parseInt(Config.getSetting("app.maxOfertasPublicadasEmpresa"));
+                if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
+                    List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
+                    businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
+                    businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
+                    throw new BusinessException(businessMessages);
+                }
             }
             
 

@@ -43,19 +43,16 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <thead>                        
                             <tr class="g--font-size-1l " style="border-bottom:1px solid #333333">
                                 <th class="g--marging-bottom-4" style="text-align: left">Año</th>
-                                <th style="width:100px;text-align: right">Certificados</th>
                                 <th class="g--padding-right-3" style="width:230px;text-align: right">Pendientes de certificar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat-start="certificadoAnyo in certificadosAnyos" class="g--font-size-1l ">
-                                <td class="g--padding-vertical-2" ><a href ng-click="showHideCertificadoCiclos(certificadoAnyo.anyo)"  alt="{{certificadoAnyo.anyo}}">{{certificadoAnyo.anyo}}</a></td>
-                                <td style="text-align: right">{{certificadoAnyo.numTitulosCertificados}}</td>                     
+                                <td class="g--padding-vertical-2" ><a href ng-click="showHideCertificadoCiclos(certificadoAnyo.anyo)"  alt="{{certificadoAnyo.anyo}}">{{certificadoAnyo.anyo}}</a></td>                     
                                 <td class="g--padding-right-3" style="text-align: right">{{certificadoAnyo.numTitulosTotales-certificadoAnyo.numTitulosCertificados}}</td>                                                 
                             </tr>
                             <tr ng-repeat="certificadoCiclo in certificadoAnyo.certificadoCiclos" ng-show="certificadoAnyo.show" class="" style="background-color:{{certificadoCiclo.backgroundColor}}">
-                                <td class="g--padding-left-4 g--padding-vertical-3" ><a ng-href="#/certificado/anyo/{{certificadoAnyo.anyo}}/ciclo/{{certificadoCiclo.idCiclo}}">{{certificadoCiclo.nombreCiclo}}</a></td>
-                                <td style="text-align: right">{{certificadoCiclo.numTitulosCertificados}}</td>                     
+                                <td class="g--padding-left-4 g--padding-vertical-3" ><a ng-href="#/certificado/anyo/{{certificadoAnyo.anyo}}/ciclo/{{certificadoCiclo.idCiclo}}">{{certificadoCiclo.nombreCiclo}}</a></td>                    
                                 <td class="g--padding-right-3"  style="text-align: right">{{certificadoCiclo.numTitulosTotales-certificadoCiclo.numTitulosCertificados}}</td>                                                  
                             </tr>  
                             <tr ng-repeat-end></tr>

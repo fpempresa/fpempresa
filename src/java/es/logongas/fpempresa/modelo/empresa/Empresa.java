@@ -43,13 +43,16 @@ public class Empresa {
 
     @NotBlank
     @Size(max = 200)
+    @Label("Nombre comercial")
     private String nombreComercial;
 
     @NotBlank
     @Size(max = 200)
+    @Label("Razon social")
     private String razonSocial;
 
     @Size(max = 9)
+    @Label("CIF")
     private String cif;
 
     private Date fecha;    

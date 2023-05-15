@@ -25,7 +25,7 @@ angular.module('es.logongas.ix3').provider("formValidator", [function () {
                 pattern: "El formato no es válido: '{{ngPattern}}'",
                 min: "Debe ser un valor mayor o igual a {{min}}",
                 max: "Debe ser un valor menor o igual a {{max}}",
-                url: "No tiene el formato de una URL",
+                url: "No tiene el formato válido. Recuerda que debe empezar por http:// o https://",
                 integer: "El valor '{{$value}}' no es un número"
             };
             this.addErrorMensajePattern = function (error, messajePattern) {

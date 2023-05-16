@@ -74,12 +74,7 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
                 transactionManager.begin(dataSession);
             }
 
-            Titulado tituladoOriginal = getTituladoDAO().readOriginal(dataSession, titulado.getIdTitulado());
-
-            if (titulado.getTipoDocumento() != tituladoOriginal.getTipoDocumento() || (titulado.getNumeroDocumento().equalsIgnoreCase(tituladoOriginal.getNumeroDocumento()) == false)) {
-                //Al cambiar el DNI se borrar todos los certificados de sus títulos
-                borrarTodosCertificadosEnFormacionAcademica(dataSession, titulado);
-            }
+            fireActionRule_If_CambiaDNI_Then_BorrarTodosCertificadosEnFormacionAcademica(dataSession, titulado);
 
             Titulado updatedTitulado = super.update(dataSession, titulado);
 
@@ -181,6 +176,27 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         }
     }
 
+
+
+    
+    /********************************************************************/
+    /*************************** Action Rules ***************************/
+    /********************************************************************/ 
+    
+    
+    private void fireActionRule_If_CambiaDNI_Then_BorrarTodosCertificadosEnFormacionAcademica(DataSession dataSession, Titulado titulado) throws BusinessException {
+        Titulado tituladoOriginal = getTituladoDAO().readOriginal(dataSession, titulado.getIdTitulado());
+
+        if (titulado.getTipoDocumento() != tituladoOriginal.getTipoDocumento() || (titulado.getNumeroDocumento().equalsIgnoreCase(tituladoOriginal.getNumeroDocumento()) == false)) {
+            //Al cambiar el DNI se borrar todos los certificados de sus títulos
+            borrarTodosCertificadosEnFormacionAcademica(dataSession, titulado);
+        }
+    }
+    
+    /******************************************************************/
+    /*************************** Utilidades ***************************/
+    /******************************************************************/  
+    
     private void borrarTodosCertificadosEnFormacionAcademica(DataSession dataSession, Titulado titulado) throws BusinessException{
         CRUDService<FormacionAcademica,Integer> formacionAcademicaCRUDService = (CRUDService) serviceFactory.getService(FormacionAcademica.class);
 
@@ -194,5 +210,5 @@ public class TituladoCRUDServiceImpl extends CRUDServiceImpl<Titulado, Integer> 
         }
 
     }
-
+    
 }

@@ -41,50 +41,84 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
     
     @Override
     public FormacionAcademica insert(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
-
-        if (formacionAcademica.getTipoFormacionAcademica() == TipoFormacionAcademica.CICLO_FORMATIVO) {
-            Filters filters=new Filters();
-            filters.add(new Filter("titulado.idTitulado", formacionAcademica.getTitulado().getIdTitulado()));
-            filters.add(new Filter("tipoFormacionAcademica", TipoFormacionAcademica.CICLO_FORMATIVO));
-            
-            filters.add(new Filter("ciclo.idCiclo", formacionAcademica.getCiclo().getIdCiclo()));
-            List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaDAO().search(dataSession, filters, null, null);
-            if (formacionesAcademicas.size()>0) {
-                throw new BusinessException("Ya posees el título de '" + formacionAcademica.getCiclo().getDescripcion() + "'");
-            }
-        }
+  
+        fireConstraintRule_TituloDuplicado(dataSession, formacionAcademica);
+        fireActionRule_DescertificarTitulo(dataSession, formacionAcademica);
         
-        formacionAcademica.setCertificadoTitulo(false);
         return super.insert(dataSession, formacionAcademica);
     }
 
     @Override
     public FormacionAcademica update(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
-        FormacionAcademica formacionAcademicaOriginal=this.readOriginal(dataSession, formacionAcademica.getIdFormacionAcademica());
+
         
+
+        fireConstraintRule_TituloDuplicado(dataSession, formacionAcademica);
+        fireActionRule_If_Change_Then_DescertificarTitulo(dataSession, formacionAcademica);
+        
+        
+        return super.update(dataSession, formacionAcademica);
+    }
+    
+    @Override
+    public void softDelete(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
+        getFormacionAcademicaDAO().softDelete(dataSession, formacionAcademica.getIdFormacionAcademica());
+    }
+    
+    
+    
+    /************************************************************************/
+    /*************************** Constraint Rules ***************************/
+    /************************************************************************/ 
+    
+    
+    private void fireConstraintRule_TituloDuplicado(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
+        FormacionAcademica formacionAcademicaOriginal=this.readOriginal(dataSession, formacionAcademica.getIdFormacionAcademica());
+
         if (formacionAcademica.getTipoFormacionAcademica() == TipoFormacionAcademica.CICLO_FORMATIVO) {
             Filters filters=new Filters();
             filters.add(new Filter("titulado.idTitulado", formacionAcademica.getTitulado().getIdTitulado()));
             filters.add(new Filter("tipoFormacionAcademica", TipoFormacionAcademica.CICLO_FORMATIVO));
-
             filters.add(new Filter("ciclo.idCiclo", formacionAcademica.getCiclo().getIdCiclo()));
-            filters.add(new Filter("idFormacionAcademica", formacionAcademicaOriginal.getIdFormacionAcademica(),FilterOperator.ne));
+            if (formacionAcademicaOriginal!=null) {
+                filters.add(new Filter("idFormacionAcademica", formacionAcademicaOriginal.getIdFormacionAcademica(),FilterOperator.ne));
+            }
             List<FormacionAcademica> formacionesAcademicas=getFormacionAcademicaDAO().search(dataSession, filters, null, null);
             if (formacionesAcademicas.size()>0) {
                 throw new BusinessException("Ya posees el título de '" + formacionAcademica.getCiclo().getDescripcion() + "'");
             }
         }
         
-        
+    }
+    
+    
+    /********************************************************************/
+    /*************************** Action Rules ***************************/
+    /********************************************************************/ 
+    
+    private void fireActionRule_If_Change_Then_DescertificarTitulo(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
+        FormacionAcademica formacionAcademicaOriginal=this.readOriginal(dataSession, formacionAcademica.getIdFormacionAcademica());
         
         if (isChangeInforForCertificadoTitulo(formacionAcademica,formacionAcademicaOriginal)) {
             formacionAcademica.setCertificadoTitulo(false);
         }
         
-        
-        return super.update(dataSession, formacionAcademica);
     }
+    
+    private void fireActionRule_DescertificarTitulo(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
+        formacionAcademica.setCertificadoTitulo(false);
+    }    
+    
 
+    
+    
+    
+    
+    /******************************************************************/
+    /*************************** Utilidades ***************************/
+    /******************************************************************/  
+
+    
     private boolean isChangeInforForCertificadoTitulo(FormacionAcademica formacionAcademica, FormacionAcademica formacionAcademicaOriginal) {
         if ((formacionAcademica.getCentro()==null) || (formacionAcademicaOriginal.getCentro()==null)) {
             return true;
@@ -119,9 +153,6 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
         
     }
 
-    @Override
-    public void softDelete(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
-        getFormacionAcademicaDAO().softDelete(dataSession, formacionAcademica.getIdFormacionAcademica());
-    }
+
 
 }

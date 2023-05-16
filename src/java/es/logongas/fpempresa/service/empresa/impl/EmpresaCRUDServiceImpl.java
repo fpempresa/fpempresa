@@ -50,28 +50,15 @@ public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> im
                 transactionManager.begin(dataSession);
             }
 
-            {// Borrar las ofertas de la empresa
-                OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
-                Filters filters = new Filters();
-                filters.add(new Filter("empresa.idEmpresa", entity.getIdEmpresa(), FilterOperator.eq));
-                List<Oferta> ofertas = ofertaCRUDService.search(dataSession, filters, null, null);
-                for (Oferta oferta : ofertas) {
-                    ofertaCRUDService.delete(dataSession, oferta);
-                }
-            }
-
-            {// Borrar los usuarios de la empresa
-                UsuarioCRUDService UsuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-                Filters filters = new Filters();
-                filters.add(new Filter("empresa.idEmpresa", entity.getIdEmpresa(), FilterOperator.eq));
-                List<Usuario> usuarios = UsuarioCRUDService.search(dataSession, filters, null, null);
-                for (Usuario usuario : usuarios) {
-                    UsuarioCRUDService.delete(dataSession, usuario);
-                }
-            }
+            
+            
+            fireActionRule_BorrarOfertasEmpresa(dataSession, entity);
+            fireActionRule_BorrarUsuariosEmpresa(dataSession, entity);
 
             boolean success = super.delete(dataSession, entity);
 
+            
+            
             if (isActivePreviousTransaction == false) {
                 transactionManager.commit(dataSession);
             }
@@ -83,5 +70,31 @@ public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> im
             }
         }
     }
+    
 
+    /********************************************************************/
+    /*************************** Action Rules ***************************/
+    /********************************************************************/ 
+    
+    
+    private void fireActionRule_BorrarOfertasEmpresa(DataSession dataSession, Empresa empresa) throws BusinessException  {
+        OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);
+        Filters filters = new Filters();
+        filters.add(new Filter("empresa.idEmpresa", empresa.getIdEmpresa(), FilterOperator.eq));
+        List<Oferta> ofertas = ofertaCRUDService.search(dataSession, filters, null, null);
+        for (Oferta oferta : ofertas) {
+            ofertaCRUDService.delete(dataSession, oferta);
+        }
+    }
+    
+    private void fireActionRule_BorrarUsuariosEmpresa(DataSession dataSession, Empresa empresa) throws BusinessException  {
+        UsuarioCRUDService UsuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        Filters filters = new Filters();
+        filters.add(new Filter("empresa.idEmpresa", empresa.getIdEmpresa(), FilterOperator.eq));
+        List<Usuario> usuarios = UsuarioCRUDService.search(dataSession, filters, null, null);
+        for (Usuario usuario : usuarios) {
+            UsuarioCRUDService.delete(dataSession, usuario);
+        }
+    } 
+    
 }

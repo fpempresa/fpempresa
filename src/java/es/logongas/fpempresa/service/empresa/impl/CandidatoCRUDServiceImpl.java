@@ -46,9 +46,7 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
     @Override
     public Candidato insert(DataSession dataSession, Candidato candidato) throws BusinessException {
 
-        if (getCandidatoDAO().isUsuarioCandidato(dataSession, candidato.getUsuario(), candidato.getOferta()) == true) {
-            throw new BusinessException("Ya estás inscrito en la oferta");
-        }
+        fireConstraintRule_YaInscriptoEnOferta(dataSession, candidato);
 
         return super.insert(dataSession, candidato);
     }
@@ -81,4 +79,16 @@ public class CandidatoCRUDServiceImpl extends CRUDServiceImpl<Candidato, Integer
     public void softDelete(DataSession dataSession, Candidato candidato) throws BusinessException {
         getCandidatoDAO().softDelete(dataSession, candidato.getIdCandidato());
     }
+    
+    /************************************************************************/
+    /*************************** Constraint Rules ***************************/
+    /************************************************************************/ 
+
+    
+    private void fireConstraintRule_YaInscriptoEnOferta(DataSession dataSession, Candidato candidato) throws BusinessException {
+        if (getCandidatoDAO().isUsuarioCandidato(dataSession, candidato.getUsuario(), candidato.getOferta()) == true) {
+            throw new BusinessException("Ya estás inscrito en la oferta");
+        }
+    }
+    
 }

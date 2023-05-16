@@ -21,6 +21,7 @@ import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
@@ -31,6 +32,7 @@ import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.fpempresa.service.empresa.OfertaCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.titulado.TituladoCRUDService;
+import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.dao.DataSession;
@@ -46,6 +48,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Executor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,7 +82,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     Jws jws;    
 
     @Override
-    public Oferta insert(DataSession dataSession, Oferta entity) throws BusinessException {
+    public Oferta insert(DataSession dataSession, Oferta oferta) throws BusinessException {
         
         boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
         try {
@@ -87,26 +90,16 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                 transactionManager.begin(dataSession);
             }
 
-            CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
-            Empresa empresa=empresaCRUDService.read(dataSession, entity.getEmpresa().getIdEmpresa());
             
             
-            if (empresa.getCentro()==null) {
-                int numOfertasPublicadas=empresa.getNumOfertasPublicadas();
-                int maxOfertasPublicadasEmpresa=Integer.parseInt(Config.getSetting("app.maxOfertasPublicadasEmpresa"));
-                if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
-                    List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
-                    businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
-                    businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
-                    throw new BusinessException(businessMessages);
-                }
-            }
+            fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(dataSession, oferta);
+            fireConstraintRule_NoRepetidaOferta(dataSession, oferta);
             
+            oferta=super.insert(dataSession, oferta);
+            
+            fireActionRule_IncNumOfertasPublicadasTotalEmpresa(dataSession, oferta);
 
-            Oferta oferta=super.insert(dataSession, entity);
-
-            empresa.setNumOfertasPublicadas(empresa.getNumOfertasPublicadas()+1);
-            empresaCRUDService.update(dataSession, empresa);
+            
             
             if (isActivePreviousTransaction == false) {
                 transactionManager.commit(dataSession);
@@ -120,29 +113,27 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         }
 
     }
-    
-    
-    
-    
+
     @Override
-    public boolean delete(DataSession dataSession, Oferta entity) throws BusinessException {
+    public Oferta update(DataSession dataSession, Oferta oferta) throws BusinessException {
+        
+        fireConstraintRule_NoRepetidaOferta(dataSession, oferta);
+        
+        return super.update(dataSession, oferta); 
+    }
+
+
+    @Override
+    public boolean delete(DataSession dataSession, Oferta oferta) throws BusinessException {
         boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
         try {
             if (isActivePreviousTransaction == false) {
                 transactionManager.begin(dataSession);
             }
 
-            CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+            fireActionRule_DeleteCandidatosOferta(dataSession, oferta);
 
-            Filters filters = new Filters();
-            filters.add(new Filter("oferta.idOferta", entity.getIdOferta(), FilterOperator.eq));
-
-            List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
-            for (Candidato candidato : candidatos) {
-                candidatoCRUDService.delete(dataSession, candidato);
-            }
-
-            boolean success = super.delete(dataSession, entity);
+            boolean success = super.delete(dataSession, oferta);
 
             if (isActivePreviousTransaction == false) {
                 transactionManager.commit(dataSession);
@@ -217,8 +208,109 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         
     }    
     
-    
 
+    
+    
+    /************************************************************************/
+    /*************************** Constraint Rules ***************************/
+    /************************************************************************/ 
+
+    
+    private void fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(DataSession dataSession, Oferta oferta) throws BusinessException {
+        
+        CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
+        Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
+
+        if (empresa.getCentro()!=null) {
+            //la regla no se aplica para empresas de centros
+            return;
+        }
+        
+        int numOfertasPublicadas=empresa.getNumOfertasPublicadas();
+        int maxOfertasPublicadasEmpresa=Integer.parseInt(Config.getSetting("app.maxOfertasPublicadasEmpresa"));
+        if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
+            List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
+            businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
+            businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
+            
+            BusinessException businessException=new BusinessException(businessMessages);
+            notification.exception("Alcanzado limite ofertas."+oferta.getEmpresa().getIdEmpresa(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " numOfertasPublicadas="+numOfertasPublicadas+ " maxOfertasPublicadasEmpresa="+maxOfertasPublicadasEmpresa, businessException);
+            throw businessException;
+        }
+
+    }
+    
+    private void fireConstraintRule_NoRepetidaOferta(DataSession dataSession, Oferta oferta) throws BusinessException {
+        
+        CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
+        Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
+
+        if (empresa.getCentro()!=null) {
+            //la regla no se aplica para empresas de centros
+            return;
+        }
+        if (oferta.getMunicipio()==null) {
+            //Si no hay municipio aun no se puede validar esta regla
+            return;
+        }            
+            
+        int diasPermitidosRepetirOferta = Integer.parseInt(Config.getSetting("app.diasPermitidosRepetirOferta"));
+        Date dayUntil=DateUtil.add(new Date(), DateUtil.Interval.DAY, -diasPermitidosRepetirOferta);
+
+        Filters filters = new Filters();
+        filters.add(new Filter("empresa.idEmpresa",oferta.getEmpresa().getIdEmpresa() ));
+        filters.add(new Filter("fecha",dayUntil ,FilterOperator.dge));
+        filters.add(new Filter("idOferta",oferta.getIdOferta() ,FilterOperator.ne));
+
+        List<Oferta> ofertasAnteriores = this.search(dataSession, filters, null, null);
+
+        for (Oferta ofertaAnterior:ofertasAnteriores) {
+            if ((oferta.getFamilia().getIdFamilia()==ofertaAnterior.getFamilia().getIdFamilia()) && (oferta.getMunicipio().getProvincia().getIdProvincia()==ofertaAnterior.getMunicipio().getProvincia().getIdProvincia())) {
+                Set<Ciclo> ciclos=oferta.getCiclos();
+                Set<Ciclo> ciclosAnteriores=ofertaAnterior.getCiclos();
+
+                if (existsAnyCicloEnComun(ciclos, ciclosAnteriores)) {
+                    BusinessException businessException=new BusinessException("No es posible publicar esta oferta ya que has publicado una oferta similar en los últimos "+ diasPermitidosRepetirOferta + " días.");
+                    notification.exception("Oferta no publicada al estar repetida."+ofertaAnterior.getIdOferta(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " idOferta anterior="+ofertaAnterior.getIdOferta(), businessException);
+                    throw businessException;
+                }
+            }
+        }
+
+    } 
+    
+    /********************************************************************/
+    /*************************** Action Rules ***************************/
+    /********************************************************************/ 
+    
+    
+    private void fireActionRule_IncNumOfertasPublicadasTotalEmpresa(DataSession dataSession, Oferta oferta) throws BusinessException {
+        CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
+        Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
+        empresa.setNumOfertasPublicadas(empresa.getNumOfertasPublicadas()+1);
+        empresaCRUDService.update(dataSession, empresa);  
+    }
+     
+    
+    private void fireActionRule_DeleteCandidatosOferta(DataSession dataSession, Oferta oferta) throws BusinessException {
+        CandidatoCRUDService candidatoCRUDService = (CandidatoCRUDService) serviceFactory.getService(Candidato.class);
+
+        Filters filters = new Filters();
+        filters.add(new Filter("oferta.idOferta", oferta.getIdOferta(), FilterOperator.eq));
+
+        List<Candidato> candidatos = candidatoCRUDService.search(dataSession, filters, null, null);
+        for (Candidato candidato : candidatos) {
+            candidatoCRUDService.delete(dataSession, candidato);
+        }
+    }
+    
+    
+    
+    
+    /******************************************************************/
+    /*************************** Utilidades ***************************/
+    /******************************************************************/    
+    
     private class NotificarOfertaATituladosImplRunnable implements Runnable {
 
         private final DataSessionFactory dataSessionFactory;
@@ -250,5 +342,27 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         }
 
     }
-
+    
+    
+    private boolean existsAnyCicloEnComun(Set<Ciclo> ciclosA,Set<Ciclo> ciclosB) {
+        for(Ciclo cicloA:ciclosA) {
+            if (existsCiclo(ciclosB,cicloA.getIdCiclo())) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean existsCiclo(Set<Ciclo> ciclos,int idCiclo) {
+        for(Ciclo ciclo:ciclos) {
+            if (ciclo.getIdCiclo()==idCiclo) {
+                return true;
+            }
+        }
+        
+        return false;
+    }  
+    
+    
 }

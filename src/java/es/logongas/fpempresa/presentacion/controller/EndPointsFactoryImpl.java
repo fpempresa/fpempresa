@@ -12,6 +12,7 @@
  */
 package es.logongas.fpempresa.presentacion.controller;
 
+import es.logongas.fpempresa.modelo.captcha.Captcha;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
@@ -86,12 +87,15 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         //comun        
         endPoints.add(EndPoint.createEndPointCrud(path, Municipio.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Provincia.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, Captcha.class));
 
         //educacion
         endPoints.add(EndPoint.createEndPointCrud(path, Ciclo.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Familia.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Grado.class));
         endPoints.add(EndPoint.createEndPointCrud(path, LeyEducativa.class));
+        
+        
 
     }
 
@@ -124,7 +128,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addTituladoEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         //Centro
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class, "contacto", null)));
@@ -147,7 +151,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addCentroEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
@@ -165,7 +169,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addEmpresaEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));

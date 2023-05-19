@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.service.mail.impl;
+package es.logongas.fpempresa.service.kernel.mail.impl;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -25,8 +25,7 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.model.RawMessage;
 import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
 import es.logongas.fpempresa.config.Config;
-import es.logongas.fpempresa.service.mail.Mail;
-import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.kernel.mail.Mail;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -34,13 +33,14 @@ import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
+import es.logongas.fpempresa.service.kernel.mail.MailKernelService;
 
 /**
  * Servicio de envio de EMails por AWS Simple Email Service 
  *
  * @author rhuffus
  */
-public class MailServiceImplAWS implements MailService {
+public class MailKernelServiceImplAWS implements MailKernelService {
 
     @Override
     public void send(Mail mail) {
@@ -62,16 +62,6 @@ public class MailServiceImplAWS implements MailService {
         } catch (IllegalArgumentException | IOException | MessagingException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public void setEntityType(Class t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Class getEntityType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

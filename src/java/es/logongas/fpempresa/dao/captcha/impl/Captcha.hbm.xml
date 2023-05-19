@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="es.logongas.fpempresa.modelo.captcha.Captcha" table="captcha" >
+        
+        <id name="idCaptcha" >
+            <generator class="identity" />
+        </id>
+
+        <property name="keyCaptcha" update="false" />
+        <property name="fecha" type="timestamp" update="false" />
+
+
+    </class>
+</hibernate-mapping>

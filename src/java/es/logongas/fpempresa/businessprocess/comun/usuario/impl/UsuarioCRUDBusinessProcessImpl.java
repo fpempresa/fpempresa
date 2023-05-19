@@ -17,6 +17,7 @@ import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessPr
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.service.captcha.CaptchaService;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.util.ImageUtil;
@@ -40,7 +41,10 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     static final Logger log = LogManager.getLogger(UsuarioCRUDBusinessProcessImpl.class);    
     
     @Autowired
-    Notification notification;    
+    Notification notification;
+ 
+    @Autowired    
+    CaptchaService captchaService;   
 
     @Override
     public Usuario update(UpdateArguments<Usuario> updateArguments) throws BusinessException {
@@ -56,9 +60,21 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     }
 
     @Override
-    public Usuario insert(InsertArguments<Usuario> insertArguments) throws BusinessException {
+    public Usuario insert(InsertArguments<Usuario> insertArguments) throws BusinessException {    
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         Usuario usuario = insertArguments.entity;
+        
+        {//Verificar el captcha
+            String word=usuario.getCaptchaWord();
+            String keyCaptcha=usuario.getKeyCaptcha();
+
+
+            if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
+                throw new BusinessException("El texto de la imagen no es correcto");
+            }
+
+            
+        }
         
         if (usuario!=null) {
             Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
@@ -68,6 +84,16 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         }
         
         return super.insert(insertArguments); 
+    }
+
+    @Override
+    public Usuario create(CreateArguments createArguments) throws BusinessException {
+        
+        Usuario usuario=super.create(createArguments); 
+        
+        usuario.setKeyCaptcha(captchaService.getKeyCaptcha());
+        
+        return usuario;
     }
 
     

@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.logongas.fpempresa.service.mail;
+package es.logongas.fpempresa.service.kernel.mail;
 
 import java.util.ArrayList;
 import java.util.List;

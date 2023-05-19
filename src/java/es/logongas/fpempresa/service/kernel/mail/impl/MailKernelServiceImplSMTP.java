@@ -14,23 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.service.mail.impl;
+package es.logongas.fpempresa.service.kernel.mail.impl;
 
 import es.logongas.fpempresa.config.Config;
-import es.logongas.fpempresa.service.mail.Mail;
-import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.kernel.mail.Mail;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import es.logongas.fpempresa.service.kernel.mail.MailKernelService;
 
 /**
  * Servicio e envio de EMails por SMTP
  * @author logongas
  */
-public class MailServiceImplSMTP implements MailService {
+public class MailKernelServiceImplSMTP implements MailKernelService {
 
     @Override
     public void send(Mail mail) {
@@ -59,15 +59,7 @@ public class MailServiceImplSMTP implements MailService {
             throw new RuntimeException(ex);
         }
     }
-    @Override
-    public void setEntityType(Class t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public Class getEntityType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     private class SMTPAuthenticator extends javax.mail.Authenticator {
 

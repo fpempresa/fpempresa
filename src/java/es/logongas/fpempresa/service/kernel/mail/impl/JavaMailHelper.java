@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package es.logongas.fpempresa.service.mail.impl;
+package es.logongas.fpempresa.service.kernel.mail.impl;
 
-import es.logongas.fpempresa.service.mail.Attach;
-import es.logongas.fpempresa.service.mail.Mail;
+import es.logongas.fpempresa.service.kernel.mail.Attach;
+import es.logongas.fpempresa.service.kernel.mail.Mail;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;

@@ -24,9 +24,9 @@ import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.security.publictoken.PublicTokenCancelarSubcripcion;
 import es.logongas.fpempresa.security.publictoken.PublicTokenCerrarOferta;
-import es.logongas.fpempresa.service.mail.Attach;
-import es.logongas.fpempresa.service.mail.Mail;
-import es.logongas.fpempresa.service.mail.MailService;
+import es.logongas.fpempresa.service.kernel.mail.Attach;
+import es.logongas.fpempresa.service.kernel.mail.Mail;
+import es.logongas.fpempresa.service.kernel.mail.MailKernelService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.fpempresa.util.DateUtil;
@@ -56,7 +56,7 @@ public class NotificationImpl implements Notification {
     final static String BAJA_BY_EMAIL="<a href=\"mailto:" + Config.getSetting("app.correoSoporte") + "?Subject=Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de EmpleaFP</a>";
     
     @Autowired
-    MailService mailService;
+    MailKernelService mailKernelService;
 
     @Autowired
     ReportService reportService;
@@ -296,7 +296,7 @@ public class NotificationImpl implements Notification {
             String to=mail.getTo().get(0);
             
             try {
-                mailService.send(mail);
+                mailKernelService.send(mail);
                 logMail.info("Enviado correo:" + subject + ":" + to);
             } catch (Exception ex) {
                 logMail.error("!!!!!!!!!Falló al enviar el correo:'" + subject + "' a " + to + "." + ex.getMessage());

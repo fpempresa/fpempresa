@@ -17,6 +17,7 @@
  */
 package es.logongas.fpempresa.security;
 
+import java.security.NoSuchAlgorithmException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import org.apache.commons.codec.binary.Base32;
@@ -37,10 +38,17 @@ public class SecureKeyGenerator {
             SecretKey secretKey = keyGen.generateKey();
             byte[] encoded = secretKey.getEncoded();
             return base32.encodeAsString(encoded);
-        } catch (Exception ex) {
+        } catch (NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         }
     }
-;
+    
+    
+    public static byte[] convertSecureKeyAsArrayByte(String secureKey) {
+        Base32 base32 = new Base32();
+        
+        return base32.decode(secureKey);
+    }
+
 
 }

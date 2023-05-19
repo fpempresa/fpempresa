@@ -96,6 +96,12 @@ public class Usuario extends User implements Principal {
     
     private String secretToken;
     
+    
+    private String keyCaptcha;
+    private String captchaWord;
+    
+    
+    
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
     }
@@ -409,6 +415,36 @@ public class Usuario extends User implements Principal {
      */
     public void setSecretToken(String secretToken) {
         this.secretToken = secretToken;
+    }
+
+    /**
+     * @return the keyCaptcha
+     */
+    public String getKeyCaptcha() {
+        return keyCaptcha;
+    }
+
+    /**
+     * @param keyCaptcha the keyCaptcha to set
+     */
+    public void setKeyCaptcha(String keyCaptcha) {
+        this.keyCaptcha = keyCaptcha;
+    }
+
+
+
+    /**
+     * @return the captchaWord
+     */
+    public String getCaptchaWord() {
+        return captchaWord;
+    }
+
+    /**
+     * @param captchaWord the captchaWord to set
+     */
+    public void setCaptchaWord(String captchaWord) {
+        this.captchaWord = captchaWord;
     }
 
 }

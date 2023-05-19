@@ -68,7 +68,32 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <input ng-model="model.confirmPassword" type="password" class="c-input" id="confirmPassword" name="confirmPassword"  required>
                 </div>
             </div>
-
+            
+            <br>
+            <br>
+            <div class="l-horizontal l-horizontal--2-columns">
+                <div class="l-horizontal__item g--padding-right-3" >
+                    <label  for="captchaWord" class="c-label" control-label>Escribe el texto de la siguiente imagen</label>
+                </div>
+                <div class="l-horizontal__item g--padding-left-3" >
+                    &nbsp;
+                </div>
+            </div>
+            
+            <div class="l-horizontal l-horizontal--2-columns">
+                <div class="l-horizontal__item g--padding-right-3" >
+                    <input x-ng-model="model.captchaWord" type="text" class="c-input" id="captchaWord" name="captchaWord"  required>
+                </div>
+                <div class="l-horizontal__item g--padding-left-3" >
+                    <img class="c-input" style="padding:0px" ng-src="{{ix3Configuration.server.api}}/Captcha/image?keyCaptcha={{model.keyCaptcha}}" width="250px" height="42px">
+                </div>
+            </div>
+            
+            
+            
+            <br>
+            
+            
             <label class="c-label">Protección de datos</label>
             <div  ng-if="model.tipoUsuario === 'TITULADO'">
                 <p class="c-legal-text c-legal-text--size-alt g--justify">Conforme al artículo 11 de la LOPDGDD, y 13 del RGPD, la ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA tratará los datos facilitados con la finalidad de gestionar su inscripción en la plataforma como TITULADO/CANDIDATO de formación profesional y facilitar la búsqueda de empleo otorgando la posibilidad de inscripción en ofertas laborales.</p>

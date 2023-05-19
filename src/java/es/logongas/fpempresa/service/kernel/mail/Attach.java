@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.logongas.fpempresa.service.mail;
+package es.logongas.fpempresa.service.kernel.mail;
 
 /**
  * Datos para añadir a un correo

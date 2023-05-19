@@ -49,6 +49,10 @@
         <property name="aceptarEnvioCorreos"/>
         
         <property name="secretToken"/>
+        
+        
+        <property name="keyCaptcha"   formula="('')" update="false" insert="false"   />
+        <property name="captchaWord" formula="('')" update="false" insert="false" />
 
     </joined-subclass>
 </hibernate-mapping>

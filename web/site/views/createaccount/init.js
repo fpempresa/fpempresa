@@ -16,11 +16,12 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-app.controller('CreateAccountInitController', ['$scope', '$location', '$stateParams', 'serviceFactory', 'formValidator', function ($scope, $location, $stateParams, serviceFactory, formValidator) {
+app.controller('CreateAccountInitController', ['$scope', '$location', '$stateParams', 'serviceFactory', 'formValidator','ix3Configuration', function ($scope, $location, $stateParams, serviceFactory, formValidator, ix3Configuration) {
         var usuarioService = serviceFactory.getService("Usuario");
         $scope.model = {};
         $scope.businessMessages = null;
-
+        $scope.ix3Configuration=ix3Configuration;
+        
         usuarioService.create().then(function (usuario) {
             $scope.model = usuario;
             if ($stateParams.tipoUsuario) {

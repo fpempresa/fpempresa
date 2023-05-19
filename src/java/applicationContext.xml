@@ -48,9 +48,15 @@
         <property name="maxAgeJwsMinutes"     value="15" />        
     </bean>
 
+    <!-- KernelServices -->
+    <bean class="es.logongas.fpempresa.service.kernel.mail.impl.MailKernelServiceImplAWS"  />
+    <bean class="es.logongas.fpempresa.service.kernel.captcha.impl.CaptchaKernelServiceImpl"  />
+    
+
+
     <!-- Servicios -->
     <bean class="es.logongas.fpempresa.service.report.impl.ReportServiceImplJasper"  />
-    <bean class="es.logongas.fpempresa.service.mail.impl.MailServiceImplAWS"  />
+    <bean class="es.logongas.fpempresa.service.captcha.impl.CaptchaServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.notification.impl.ExceptionNotifyImpl"  />    
     <bean class="es.logongas.fpempresa.service.notification.impl.NotificationImpl"  />    
     <bean class="es.logongas.fpempresa.service.estadisticas.impl.EstadisticasServiceImpl"  />
@@ -58,6 +64,7 @@
     <bean class="es.logongas.fpempresa.service.centro.impl.CertificadoServiceImpl"  />
     <bean class="es.logongas.fpempresa.service.hojacalculo.impl.HojaCalculoServiceImplPOI"  />
     <bean class="es.logongas.fpempresa.service.populate.PopulateServiceImpl"  />
+    
     <bean class="es.logongas.ix3.service.impl.CRUDServiceFactoryImpl" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.service" />
@@ -65,6 +72,7 @@
     </bean> 
     
     <!-- BusinessProcess -->
+    <bean class="es.logongas.fpempresa.businessprocess.captcha.impl.CaptchaBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.download.impl.DownloadBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.centro.impl.CertificadoBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.estadisticas.impl.EstadisticasBusinessProcessImpl"  />
@@ -74,7 +82,7 @@
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />
         <property name="interfaceBasePackageName"  value="es.logongas.fpempresa.businessprocess" />
         <property name="implBasePackageName"       value="es.logongas.fpempresa.businessprocess" />
-    </bean>   
+    </bean> 
     
     <!-- Capade web -->
     <bean class="es.logongas.fpempresa.presentacion.controller.EndPointsFactoryImpl" />

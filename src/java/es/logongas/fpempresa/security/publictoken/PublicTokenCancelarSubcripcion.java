@@ -33,25 +33,25 @@ public class PublicTokenCancelarSubcripcion {
     
     int idIdentity;
     Jws jws;
-    byte[] secretToken;
+    byte[] secretKey;
     String userPublicToken;
     
-    public PublicTokenCancelarSubcripcion(int idIdentity,Jws jws,byte[] secretToken) {
+    public PublicTokenCancelarSubcripcion(int idIdentity,Jws jws,byte[] secretKey) {
         this.idIdentity = idIdentity;
         this.jws=jws;
-        this.secretToken=secretToken;
+        this.secretKey=secretKey;
         this.userPublicToken=null;
     }
     
-    public PublicTokenCancelarSubcripcion(String userPublicToken,Jws jws,byte[] secretToken) {
+    public PublicTokenCancelarSubcripcion(String userPublicToken,Jws jws,byte[] secretKey) {
         this.userPublicToken=userPublicToken;
         
-        List<String> data=PublicTokenUtil.getDataFromUserPublicToken(userPublicToken, secretToken, task, jws);
+        List<String> data=PublicTokenUtil.getDataFromUserPublicToken(userPublicToken, task, jws);
         
         
         this.idIdentity = Integer.parseInt(data.get(0));
         this.jws=jws;
-        this.secretToken=secretToken;
+        this.secretKey=secretKey;
     }    
     
     
@@ -60,7 +60,7 @@ public class PublicTokenCancelarSubcripcion {
             throw new RuntimeException("No hay un userPublicToken");
         }
         
-        return PublicTokenUtil.verifyUserPublicToken(userPublicToken, secretToken, jws, maxAgeMinutes);
+        return PublicTokenUtil.verifyUserPublicToken(userPublicToken, secretKey, jws, maxAgeMinutes);
     }
     
     public int getIdIdentity() {
@@ -69,7 +69,7 @@ public class PublicTokenCancelarSubcripcion {
 
     @Override
     public String toString() {
-        return PublicTokenUtil.createUserPublicToken(getData(), secretToken, task, jws);
+        return PublicTokenUtil.createUserPublicToken(getData(), secretKey, task, jws);
     }
     
     private List<String> getData() {

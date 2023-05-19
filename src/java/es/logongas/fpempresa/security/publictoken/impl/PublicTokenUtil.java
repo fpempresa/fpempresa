@@ -28,7 +28,7 @@ public class PublicTokenUtil {
     private static final String PAYLOAD_PARTS_SEPARATOR="|";
     
     
-    static public String createUserPublicToken(List<String> data,byte[] secretToken,Task task,Jws jws) {
+    static public String createUserPublicToken(List<String> data,byte[] secretKey,Task task,Jws jws) {
         StringBuilder payload=new StringBuilder();
         
         payload.append(task.name());
@@ -46,10 +46,10 @@ public class PublicTokenUtil {
             
         }
         
-        return jws.getJwsCompactSerialization(payload.toString(), secretToken);
+        return jws.getJwsCompactSerialization(payload.toString(), secretKey);
     }
     
-    static public List<String> getDataFromUserPublicToken(String UserPublicToken,byte[] secretToken,Task task,Jws jws)  {
+    static public List<String> getDataFromUserPublicToken(String UserPublicToken,Task task,Jws jws)  {
         String payload = jws.getUnverifiedPayloadFromJwsCompactSerialization(UserPublicToken);
         
         String[] arrDatas=payload.split("\\"+PAYLOAD_PARTS_SEPARATOR);
@@ -71,8 +71,8 @@ public class PublicTokenUtil {
         return data;
     }
     
-    static public boolean verifyUserPublicToken(String userPublicToken,byte[] secretToken,Jws jws,int maxAgeMinutes) {
-        return jws.verifyJwsCompactSerialization(userPublicToken, secretToken, maxAgeMinutes);
+    static public boolean verifyUserPublicToken(String userPublicToken,byte[] secretKey,Jws jws,int maxAgeMinutes) {
+        return jws.verifyJwsCompactSerialization(userPublicToken, secretKey, maxAgeMinutes);
     }    
     
 }

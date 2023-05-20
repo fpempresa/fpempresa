@@ -62,7 +62,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             throw new BusinessException("El correo electrónico no puede estar vacío");
         }
         if ((credentialImplLoginPassword.getPassword()== null) || (credentialImplLoginPassword.getPassword().trim().isEmpty())) {
-            log.warn("La contraseña no puede estar vacia para el usuario:" + credentialImplLoginPassword.getLogin());
+            log.warn("La contraseña no puede estar vacia para el usuario:" + credentialImplLoginPassword.getLoginAnonymized());
             throw new BusinessException("La contraseña no puede estar vacía");
         }
         
@@ -91,7 +91,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                 stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
             }
             
-            log.warn("Intento fallido de login. La cuenta '" +  credentialImplLoginPassword.getLogin() + "' ya está bloqueada hasta " + stringLockedUntil);
+            log.warn("Intento fallido de login. La cuenta '" +  credentialImplLoginPassword.getLoginAnonymized()+ "' ya está bloqueada hasta " + stringLockedUntil);
             throw new BusinessException("La cuenta está bloqueada hasta " + stringLockedUntil);
         }        
         
@@ -166,14 +166,14 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         
         String plainPassword = credentialImplLoginPassword.getPassword();
         if (usuarioService.checkPassword(dataSession, usuario, plainPassword)==false) {
-            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLogin() + " " + usuario.getNumFailedLogins() + " " + usuario.getLockedUntil());
+            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLoginAnonymized()+ " " + usuario.getNumFailedLogins() + " " + usuario.getLockedUntil());
             usuarioService.updateFailedLogin(dataSession, usuario);
             throw new BusinessException("La contraseña no es válida");
         }
 
         
         if (usuario.getNumFailedLogins()>0) {
-            log.warn("Login exitoso despues de " + usuario.getNumFailedLogins() + " intentos fallidos de " + credentialImplLoginPassword.getLogin());
+            log.warn("Login exitoso despues de " + usuario.getNumFailedLogins() + " intentos fallidos de " + credentialImplLoginPassword.getLoginAnonymized());
         }
 
         usuarioService.updateSuccessfulLogin(dataSession, usuario);

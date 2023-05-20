@@ -446,5 +446,21 @@ public class Usuario extends User implements Principal {
     public void setCaptchaWord(String captchaWord) {
         this.captchaWord = captchaWord;
     }
+    
+    
+    public  String getEMailAnonymized() {
+        
+        if (email==null) {
+            return "";
+        }
+        
+        int index=email.indexOf("@");
+        
+        if (index<0) {
+            return email;
+        }
+        
+        return email.substring(0,index);
+    }
 
 }

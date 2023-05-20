@@ -368,7 +368,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new BusinessException("El usuario aun no es un titulado");
         }
         
-        log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+usuario.getEmail());
+        log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+usuario.getEMailAnonymized());
         
         CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
         Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
@@ -381,12 +381,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public void resetearContrasenya(DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
         if (usuario != null) {
             if (!usuario.isValidadoEmail()) {
-                log.warn("resetearContrasenya:La cuenta que no está validada."+usuario.getEmail());
+                log.warn("resetearContrasenya:La cuenta que no está validada."+usuario.getEMailAnonymized());
                 throw new BusinessException("La cuenta no está activada");
             }
             
             if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
-                log.warn("resetearContrasenya:El token no es válido."+usuario.getEmail());
+                log.warn("resetearContrasenya:El token no es válido."+usuario.getEMailAnonymized());
                 throw new BusinessException("El token no es válido");
             }           
             
@@ -403,7 +403,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 
                 getUsuarioDAO().update(dataSession, usuario);
             } else {
-                log.warn("resetearContrasenya:El token ha caducado."+usuario.getEmail());
+                log.warn("resetearContrasenya:El token ha caducado."+usuario.getEMailAnonymized());
                 throw new BusinessException("El token ha caducado");
             }
         } else {
@@ -422,7 +422,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             getUsuarioDAO().update(dataSession, usuario);
             notification.resetearContrasenya(usuario);
             
-            log.warn("Enviado correo para resetear contraseña a " + email);
+            log.warn("Enviado correo para resetear contraseña a " + usuario.getEMailAnonymized());
         } else {
             log.warn("No existe el correo al que resetear con contraseña" + email);
             throw new BusinessException("No existe el usuario");
@@ -650,7 +650,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 stringLockedUntil=simpleDateFormat.format(lockedUntil);
             }
             
-            log.warn("Bloqueada cuenta " + usuario.getEmail() + " durante " + numMinutesLockedAccount + " minutos hasta " + stringLockedUntil + ". Ha fallado ya " + numFailedLogins + " veces");
+            log.warn("Bloqueada cuenta " + usuario.getEMailAnonymized()+ " durante " + numMinutesLockedAccount + " minutos hasta " + stringLockedUntil + ". Ha fallado ya " + numFailedLogins + " veces");
         } else {
             lockedUntil=null;
         }

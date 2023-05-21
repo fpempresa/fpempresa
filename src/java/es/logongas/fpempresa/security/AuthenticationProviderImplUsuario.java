@@ -20,6 +20,7 @@ import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
+import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.validators.EMailValidator;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
@@ -62,12 +63,12 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
             throw new BusinessException("El correo electrónico no puede estar vacío");
         }
         if ((credentialImplLoginPassword.getPassword()== null) || (credentialImplLoginPassword.getPassword().trim().isEmpty())) {
-            log.warn("La contraseña no puede estar vacia para el usuario:" + credentialImplLoginPassword.getLoginAnonymized());
+            log.warn("La contraseña no puede estar vacia para el usuario:" + EMailUtil.getAnonymizedEMail(credentialImplLoginPassword.getLogin()));
             throw new BusinessException("La contraseña no puede estar vacía");
         }
         
         if (EMailValidator.isValid(credentialImplLoginPassword.getLogin())==false) {
-            log.warn("El usuario no es un correo electrónico válido : " + credentialImplLoginPassword.getLogin());
+            log.warn("El usuario no es un correo electrónico válido : " + EMailUtil.getAnonymizedEMail(credentialImplLoginPassword.getLogin()));
             throw new BusinessException("El correo electrónico que acabas de usar no tiene un formato válido o simplemente no es un correo electrónico");
         }
         
@@ -75,7 +76,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         Usuario usuario = usuarioService.readOriginalByNaturalKey(dataSession, credentialImplLoginPassword.getLogin());
 
         if (usuario == null) {
-            log.warn("Intento fallido de login. Usuario no existe : " + credentialImplLoginPassword.getLogin());
+            log.warn("Intento fallido de login. Usuario no existe : " + EMailUtil.getAnonymizedEMail(credentialImplLoginPassword.getLogin()));
             throw new BusinessException("El correo electrónico que acabas de indicar no existe");
         }
         
@@ -91,7 +92,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                 stringLockedUntil=simpleDateFormat.format(dateLockedUntil);
             }
             
-            log.warn("Intento fallido de login. La cuenta '" +  credentialImplLoginPassword.getLoginAnonymized()+ "' ya está bloqueada hasta " + stringLockedUntil);
+            log.warn("Intento fallido de login. La cuenta '" +  EMailUtil.getAnonymizedEMail(credentialImplLoginPassword.getLogin())+ "' ya está bloqueada hasta " + stringLockedUntil);
             throw new BusinessException("La cuenta está bloqueada hasta " + stringLockedUntil);
         }        
         
@@ -166,14 +167,14 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
         
         String plainPassword = credentialImplLoginPassword.getPassword();
         if (usuarioService.checkPassword(dataSession, usuario, plainPassword)==false) {
-            log.warn("Intento fallido de login. Contraseña erronea: " + credentialImplLoginPassword.getLoginAnonymized()+ " " + usuario.getNumFailedLogins() + " " + usuario.getLockedUntil());
+            log.warn("Intento fallido de login. Contraseña erronea: " + EMailUtil.getAnonymizedEMail(credentialImplLoginPassword.getLogin())+ " " + usuario.getNumFailedLogins() + " " + usuario.getLockedUntil());
             usuarioService.updateFailedLogin(dataSession, usuario);
             throw new BusinessException("La contraseña no es válida");
         }
 
         
         if (usuario.getNumFailedLogins()>0) {
-            log.warn("Login exitoso despues de " + usuario.getNumFailedLogins() + " intentos fallidos de " + credentialImplLoginPassword.getLoginAnonymized());
+            log.warn("Login exitoso despues de " + usuario.getNumFailedLogins() + " intentos fallidos de " + EMailUtil.getAnonymizedEMail(credentialImplLoginPassword.getLogin()));
         }
 
         usuarioService.updateSuccessfulLogin(dataSession, usuario);

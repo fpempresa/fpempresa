@@ -35,6 +35,7 @@ import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.fpempresa.service.titulado.FormacionAcademicaCRUDService;
 import es.logongas.fpempresa.util.DateUtil;
+import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.RandomUtil;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
@@ -368,7 +369,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new BusinessException("El usuario aun no es un titulado");
         }
         
-        log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+usuario.getEMailAnonymized());
+        log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
         
         CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
         Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
@@ -381,12 +382,12 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     public void resetearContrasenya(DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
         if (usuario != null) {
             if (!usuario.isValidadoEmail()) {
-                log.warn("resetearContrasenya:La cuenta que no está validada."+usuario.getEMailAnonymized());
+                log.warn("resetearContrasenya:La cuenta que no está validada."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
                 throw new BusinessException("La cuenta no está activada");
             }
             
             if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
-                log.warn("resetearContrasenya:El token no es válido."+usuario.getEMailAnonymized());
+                log.warn("resetearContrasenya:El token no es válido."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
                 throw new BusinessException("El token no es válido");
             }           
             
@@ -403,7 +404,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 
                 getUsuarioDAO().update(dataSession, usuario);
             } else {
-                log.warn("resetearContrasenya:El token ha caducado."+usuario.getEMailAnonymized());
+                log.warn("resetearContrasenya:El token ha caducado."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
                 throw new BusinessException("El token ha caducado");
             }
         } else {
@@ -422,9 +423,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             getUsuarioDAO().update(dataSession, usuario);
             notification.resetearContrasenya(usuario);
             
-            log.warn("Enviado correo para resetear contraseña a " + usuario.getEMailAnonymized());
+            log.warn("Enviado correo para resetear contraseña a " + EMailUtil.getAnonymizedEMail(usuario.getEmail()));
         } else {
-            log.warn("No existe el correo al que resetear con contraseña" + email);
+            log.warn("No existe el correo al que resetear con contraseña" + EMailUtil.getAnonymizedEMail(email));
             throw new BusinessException("No existe el usuario");
         }
 
@@ -650,7 +651,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
                 stringLockedUntil=simpleDateFormat.format(lockedUntil);
             }
             
-            log.warn("Bloqueada cuenta " + usuario.getEMailAnonymized()+ " durante " + numMinutesLockedAccount + " minutos hasta " + stringLockedUntil + ". Ha fallado ya " + numFailedLogins + " veces");
+            log.warn("Bloqueada cuenta " + EMailUtil.getAnonymizedEMail(usuario.getEmail())+ " durante " + numMinutesLockedAccount + " minutos hasta " + stringLockedUntil + ". Ha fallado ya " + numFailedLogins + " veces");
         } else {
             lockedUntil=null;
         }

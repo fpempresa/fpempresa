@@ -22,6 +22,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +39,7 @@ public class ImageUtil {
     static final Logger log = LogManager.getLogger(ImageUtil.class);
 
     public static boolean isValid(byte[] rawImage) {
-        BufferedImage bufferedImage=readImage(rawImage);
+        BufferedImage bufferedImage=getBufferedImageFromByteArray(rawImage);
 
         if (bufferedImage==null) {
             return false;
@@ -64,7 +66,7 @@ public class ImageUtil {
     public static Image getImageLogFail(byte[] rawImage,String msgFail) {
         Image image;
 
-        BufferedImage bufferedImage=readImage(rawImage);
+        BufferedImage bufferedImage=getBufferedImageFromByteArray(rawImage);
 
 
         if (bufferedImage==null) {
@@ -83,8 +85,20 @@ public class ImageUtil {
         return image;
     }
 
+    public static byte[] getByteArrayFromBufferedImage(BufferedImage bufferedImage) {
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            byte[] arrImage = byteArrayOutputStream.toByteArray();
+
+            return arrImage;
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
     
-    private static BufferedImage readImage(byte[] rawImage) {
+    
+    public static BufferedImage getBufferedImageFromByteArray(byte[] rawImage) {
         try {
         
             BufferedImage bufferedImage=ImageIO.read(new ByteArrayInputStream(rawImage));

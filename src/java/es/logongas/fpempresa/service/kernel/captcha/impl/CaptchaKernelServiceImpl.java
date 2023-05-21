@@ -30,12 +30,10 @@ import com.octo.captcha.component.word.wordgenerator.WordGenerator;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Random;
-import javax.imageio.ImageIO;
 import es.logongas.fpempresa.service.kernel.captcha.CaptchaKernelService;
+import es.logongas.fpempresa.util.ImageUtil;
 
 /**
  *
@@ -82,7 +80,7 @@ public class CaptchaKernelServiceImpl implements CaptchaKernelService {
     public byte[] getImage(String word) {
         BufferedImage image = wordToImage.getImage(word);
 
-        return getByteArrayFromBufferedImage(image);
+        return ImageUtil.getByteArrayFromBufferedImage(image);
     }
 
     
@@ -134,16 +132,6 @@ public class CaptchaKernelServiceImpl implements CaptchaKernelService {
     }
     
     
-    private byte[] getByteArrayFromBufferedImage(BufferedImage bufferedImage) {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-            byte[] arrImage = byteArrayOutputStream.toByteArray();
 
-            return arrImage;
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
 
 }

@@ -20,6 +20,7 @@ import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.captcha.Captcha;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
+import es.logongas.fpempresa.service.captcha.CatpchaAlreadyUsedException;
 import es.logongas.fpempresa.service.kernel.captcha.CaptchaKernelService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
@@ -70,7 +71,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     @Override
-    public boolean solveChallenge(DataSession dataSession,String keyCaptcha, String word) throws BusinessException {
+    public boolean solveChallenge(DataSession dataSession,String keyCaptcha, String word) throws BusinessException,CatpchaAlreadyUsedException {
         GenericDAO<Captcha,Integer> captchaDAO=daoFactory.getDAO(Captcha.class);
       
         Filters filters = new Filters();
@@ -78,7 +79,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         List<Captcha> keyCaptchas = captchaDAO.search(dataSession, filters, null, null);
         
         if (keyCaptchas.size()==1) {
-            throw new RuntimeException("El keyCaptcha ya ha sido usado:"+keyCaptcha);
+            throw new CatpchaAlreadyUsedException(keyCaptcha);
         }
         if (keyCaptchas.size()>1) {
             throw new RuntimeException("Un keyCaptcha ha sido usado más de una vez (" + keyCaptchas.size() +"):"+keyCaptcha);

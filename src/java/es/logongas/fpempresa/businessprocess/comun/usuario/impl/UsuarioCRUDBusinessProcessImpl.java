@@ -18,8 +18,10 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
+import es.logongas.fpempresa.service.captcha.CatpchaAlreadyUsedException;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
+import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.ImageUtil;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
@@ -69,10 +71,13 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             String keyCaptcha=usuario.getKeyCaptcha();
 
 
-            if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
-                throw new BusinessException("El texto de la imagen no es correcto");
+            try {
+                if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
+                    throw new BusinessException("El texto de la imagen no es correcto");
+                }
+            } catch (CatpchaAlreadyUsedException ex) {
+                throw new RuntimeException("El captcha ya estaba usado. Usuario="+usuario.getEmail()+", keyCaptcha="+ex.getKeyCaptcha());
             }
-
             
         }
         

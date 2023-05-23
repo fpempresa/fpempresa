@@ -16,18 +16,23 @@
  */
 package es.logongas.fpempresa.service.captcha;
 
-import es.logongas.fpempresa.modelo.captcha.Captcha;
-import es.logongas.ix3.core.BusinessException;
-import es.logongas.ix3.dao.DataSession;
-import es.logongas.ix3.service.Service;
-
 /**
  *
  * @author logongas
  */
-public interface CaptchaService extends Service<Captcha> {
+public class CatpchaAlreadyUsedException extends Exception {
+
+    private String keyCaptcha;
     
-    String getKeyCaptcha();
-    byte[] getImage(String keyCaptcha);
-    boolean solveChallenge (DataSession dataSession, String keyCaptcha, String word) throws BusinessException,CatpchaAlreadyUsedException;
+    
+    public CatpchaAlreadyUsedException(String keyCaptcha) {
+        super();
+        this.keyCaptcha=keyCaptcha;
+    } 
+
+    public String getKeyCaptcha() {
+        return keyCaptcha;
+    }
+    
+    
 }

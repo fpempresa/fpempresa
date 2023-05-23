@@ -30,4 +30,5 @@ public interface CaptchaService extends Service<Captcha> {
     String getKeyCaptcha();
     byte[] getImage(String keyCaptcha);
     boolean solveChallenge (DataSession dataSession, String keyCaptcha, String word) throws BusinessException,CatpchaAlreadyUsedException;
+    void storeKeyCaptcha (DataSession dataSession, String keyCaptcha) throws BusinessException;
 }

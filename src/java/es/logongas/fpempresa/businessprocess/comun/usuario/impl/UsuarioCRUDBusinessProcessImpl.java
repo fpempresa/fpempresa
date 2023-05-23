@@ -66,20 +66,21 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         Usuario usuario = insertArguments.entity;
         
-        {//Verificar el captcha
-            String word=usuario.getCaptchaWord();
-            String keyCaptcha=usuario.getKeyCaptcha();
+        
+        String word=usuario.getCaptchaWord();
+        String keyCaptcha=usuario.getKeyCaptcha();
+        
 
-
-            try {
-                if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
-                    throw new BusinessException("El texto de la imagen no es correcto");
-                }
-            } catch (CatpchaAlreadyUsedException ex) {
-                throw new RuntimeException("El captcha ya estaba usado. Usuario="+usuario.getEmail()+", keyCaptcha="+ex.getKeyCaptcha());
+        //Verificar el captcha
+        try {
+            if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
+                throw new BusinessException("El texto de la imagen no es correcto");
             }
-            
+        } catch (CatpchaAlreadyUsedException ex) {
+            throw new RuntimeException("El captcha ya estaba usado. Usuario="+usuario.getEmail()+", keyCaptcha="+ex.getKeyCaptcha());
         }
+            
+
         
         if (usuario!=null) {
             Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
@@ -88,7 +89,11 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             }
         }
         
-        return super.insert(insertArguments); 
+        Usuario newUsuario=super.insert(insertArguments); 
+        
+        captchaService.storeKeyCaptcha(insertArguments.dataSession, keyCaptcha);
+        
+        return newUsuario;
     }
 
     @Override

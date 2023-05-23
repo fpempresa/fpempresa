@@ -90,18 +90,24 @@ public class CaptchaServiceImpl implements CaptchaService {
         String originalWord=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, maxAgeMinutes);
         
         if (originalWord.equalsIgnoreCase(word)==true) {
-            Captcha captcha=new Captcha();
-            captcha.setKeyCaptcha(keyCaptcha);
-            captcha.setFecha(new Date());
-
-            captchaDAO.insert(dataSession, captcha);
-            
             return true;
         } else {
             return false;
         }
 
     }
+
+    @Override
+    public void storeKeyCaptcha(DataSession dataSession, String keyCaptcha) throws BusinessException {
+        GenericDAO<Captcha,Integer> captchaDAO=daoFactory.getDAO(Captcha.class);
+        
+        Captcha captcha=new Captcha();
+        captcha.setKeyCaptcha(keyCaptcha);
+        captcha.setFecha(new Date());
+
+        captchaDAO.insert(dataSession, captcha);
+    }
+    
     
 
     private byte[] getSecretKey() {

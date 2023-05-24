@@ -16,6 +16,7 @@
  */
 package es.logongas.fpempresa.service.empresa.impl;
 
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
@@ -41,6 +42,33 @@ public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> im
     @Autowired
     protected CRUDServiceFactory serviceFactory;
 
+    @Override
+    public Empresa insert(DataSession dataSession, Empresa empresa) throws BusinessException {
+        
+        fireActionRule_ContactoNoVacio(dataSession, empresa);
+        
+        
+        Empresa newEmpresa=super.insert(dataSession, empresa);
+        
+        
+        return newEmpresa;
+    }
+
+    @Override
+    public Empresa update(DataSession dataSession, Empresa empresa) throws BusinessException {
+        
+        fireActionRule_ContactoNoVacio(dataSession, empresa);
+        
+        Empresa newEmpresa=super.update(dataSession, empresa);
+        
+        return newEmpresa;
+    }
+
+
+
+    
+    
+    
     @Override
     public boolean delete(DataSession dataSession, Empresa entity) throws BusinessException {
         boolean isActivePreviousTransaction = transactionManager.isActive(dataSession);
@@ -76,6 +104,23 @@ public class EmpresaCRUDServiceImpl extends CRUDServiceImpl<Empresa, Integer> im
     /*************************** Action Rules ***************************/
     /********************************************************************/ 
     
+    /**
+     * Esta regla es debida al siguiente problema:
+     * https://forum.hibernate.org/viewtopic.php?p=2329518
+     * https://docs.jboss.org/hibernate/core/3.3/reference/en/html/components.html#components-dependentobjects
+     * "When reloading the containing object, Hibernate will assume that if all component columns are null, then the entire component is null. "
+     * @param dataSession
+     * @param empresa
+     * @throws BusinessException 
+     */
+    private void fireActionRule_ContactoNoVacio(DataSession dataSession, Empresa empresa) throws BusinessException  {
+        if (empresa.getContacto()==null) {
+            empresa.setContacto(new Contacto());
+        } 
+        if (empresa.getContacto().getTextoLibre()==null) {
+            empresa.getContacto().setTextoLibre("");
+        }
+    }    
     
     private void fireActionRule_BorrarOfertasEmpresa(DataSession dataSession, Empresa empresa) throws BusinessException  {
         OfertaCRUDService ofertaCRUDService = (OfertaCRUDService) serviceFactory.getService(Oferta.class);

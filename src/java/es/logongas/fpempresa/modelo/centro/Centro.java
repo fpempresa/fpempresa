@@ -121,11 +121,7 @@ public class Centro {
      * @return the contacto
      */
     public Contacto getContacto() {
-        if (contacto==null) {
-            return new Contacto();
-        } else {
-            return contacto;
-        }
+        return contacto;
     }
 
     /**

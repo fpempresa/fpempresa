@@ -39,7 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class CaptchaServiceImpl implements CaptchaService {
 
-    private static final int maxAgeMinutes=20;
+    private static final int maxAgeMinutes=60;
     
     @Autowired
     CaptchaKernelService captchaKernelService;

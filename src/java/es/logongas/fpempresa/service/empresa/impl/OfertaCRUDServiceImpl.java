@@ -253,6 +253,10 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
             //Si no hay municipio aun no se puede validar esta regla
             return;
         }            
+        if (oferta.getFamilia()==null) {
+            //Si no hay familia no se puede validar la oferta
+            return;
+        }
             
         int diasPermitidosRepetirOferta = Integer.parseInt(Config.getSetting("app.diasPermitidosRepetirOferta"));
         Date dayUntil=DateUtil.add(new Date(), DateUtil.Interval.DAY, -diasPermitidosRepetirOferta);

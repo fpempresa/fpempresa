@@ -38,6 +38,18 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <div class="col-xs-7"> 
                     <input ng-model="filters.$lliker['empresa.nombreComercial']" ng-if="(parentProperty==='tipoUsuario') && (parentId === 'EMPRESA')" type="text" class="form-control" id="nombreComercial" name="empresa.nombreComercial" placeholder="Empresa"  > 
                 </div> 
+            </div> 
+            <br>
+            <div class="row" ng-if="(parentProperty==='tipoUsuario') && (parentId === 'TITULADO')">
+                <div class="col-xs-12 col-sm-4"> 
+                    <input ng-model="filters.$lliker['titulado.formacionesAcademicas.centro.nombre']"  type="text" class="form-control" id="titulado.formacionesAcademicas.centro.nombre" name="titulado.formacionesAcademicas.centro.nombre" placeholder="Centro Educativo"  > 
+                </div> 
+                <div class="col-xs-12 col-sm-4"> 
+                    <input ng-model="filters.$lliker['titulado.formacionesAcademicas.ciclo.familia.descripcion']"  type="text" class="form-control" id="titulado.formacionesAcademicas.ciclo.familia.descripcion" name="titulado.formacionesAcademicas.ciclo.familia.descripcion" placeholder="Familia profesional"  > 
+                </div>
+                <div class="col-xs-12 col-sm-4"> 
+                    <input ng-model="filters.$lliker['titulado.formacionesAcademicas.ciclo.descripcion']"  type="text" class="form-control" id="titulado.formacionesAcademicas.ciclo.descripcion" name="titulado.formacionesAcademicas.ciclo.descripcion" placeholder="Ciclo Formativo"  > 
+                </div>
             </div>             
             <br> 
             <div class="row" >

@@ -1,0 +1,121 @@
+<!--
+FPempresa
+Copyright (C) 2020  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form class="form-horizontal" name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="model.tipoFormacionAcademica" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-3">
+                            <select ng-model="model.tipoFormacionAcademica" id="model.tipoFormacionAcademica" name="model.tipoFormacionAcademica" class="form-control" ix3-options  required>
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    
+                    <br>
+                    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.centro.direccion.municipio.provincia" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.centro.direccion.municipio.provincia" id="model.centro.direccion.municipio.provincia" name="model.centro.direccion.municipio.provincia" class="form-control"  ix3-options="ix3OrderBy:'descripcion'"   >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div>                    
+                    
+                    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group" >
+                        <label for="model.centro" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.centro" id="model.centro" name="model.centro" class="form-control" ix3-options="ix3OrderBy:'nombre'" ix3-options-depend='{"direccion.municipio.provincia":model.centro.direccion.municipio.provincia}'  >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div ix3-visibility="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO' || model.centro.idCentro<0" class="form-group">
+                        <label for="model.otroCentro" class="col-sm-3  control-label" ix3-label ></label>
+                        <div  class="col-sm-7">
+                            <input ng-model="model.otroCentro" id="model.otroCentro" name="model.otroCentro" class="form-control" type="text"    />
+                        </div>  
+                    </div>
+                    <div  ng-show="model.tipoFormacionAcademica === 'TITULO_UNIVERSITARIO' || model.tipoFormacionAcademica === 'OTRO_TITULO'" class="form-group">
+                        <label for="model.otroTitulo" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <input ng-model="model.otroTitulo" id="model.otroTitulo" name="model.otroTitulo" class="form-control" type="text"    />
+                        </div>
+                    </div> 
+                    
+                    <br ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'">
+                    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.ciclo.familia" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo.familia" id="model.ciclo.familia" name="model.ciclo.familia" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div>    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.ciclo.grado" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo.grado" id="model.ciclo.grado" name="model.ciclo.grado" class="form-control" ix3-options="orderBy:'-idGrado'"  >
+                                <option value="">-- Todos --</option>
+                            </select>
+                        </div>
+                    </div>                     
+                    
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'" class="form-group">
+                        <label for="model.ciclo" class="col-sm-3  control-label" ix3-label ></label>
+                        <div class="col-sm-7">
+                            <select ng-model="model.ciclo" id="model.ciclo" name="model.ciclo" class="form-control" ix3-options=" ix3OrderBy:'descripcion'" ix3-options-depend="{familia:model.ciclo.familia,grado:model.ciclo.grado}" ix3-options-default="{grado:[1,2,3]}" >
+                                <option value="">-- Elige Opcion --</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div ng-show="model.tipoFormacionAcademica"  class="form-group">
+                        <label for="model.fecha" class="col-sm-3  control-label" ix3-label ></label>
+                        <div  class="input-group col-sm-3">
+                            <input ng-model="model.fecha" id="model.fecha" name="model.fecha" class="form-control" type="text"  ix3-date ix3-datepicker required />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>  
+                        <div  class="col-sm-3"></div>
+                    </div>  
+                    <div ng-show="model.tipoFormacionAcademica === 'CICLO_FORMATIVO'"  class="form-group">
+                        <div  class="input-group col-sm-3 col-sm-offset-3">
+                            <input ng-model="model.formacionDual" id="model.formacionDual" name="model.formacionDual" type="checkbox"   />
+                            <span class="" ix3-label for="model.formacionDual"></span>
+                        </div>  
+                        <div  class="col-sm-3"></div>
+                    </div>  
+                    <br>                  
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <br>
+                            <crud-detail-buttons class="pull-right"></crud-detail-buttons>
+                        </div>
+                    </div>                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+                    

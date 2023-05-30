@@ -117,13 +117,21 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Candidato.class));
-        endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
 
         //Centro
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class)));
         
         endPoints.add(EndPoint.createEndPoint(path + "/download/**", "GET", null));
+        
+        
+        //curriculum titulado
+        endPoints.add(EndPoint.createEndPointCrud(path, ExperienciaLaboral.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, FormacionAcademica.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, Idioma.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, NivelIdioma.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
+        endPoints.add(EndPoint.createEndPointCrud(path, TituloIdioma.class));        
    
     }
 

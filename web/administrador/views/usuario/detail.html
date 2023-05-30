@@ -161,6 +161,27 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             </div> 
                         </div> 
                     </div> 
+                    <br>
+                    <legend class="form__title" ng-show="model.tipoUsuario === 'TITULADO'">Curriculum del Titulado</legend>
+                    <div class="row" ng-show="model.tipoUsuario === 'TITULADO'" >
+                        <div class="col-xs-12">
+                            <a   class="" ng-href="{{'#/usuario/curriculum/titulado/edit/'+model.titulado.idTitulado}}">Datos personales</a>
+                        </div>
+                          
+                    </div>
+                    <br>
+                    <div class="row" ng-show="model.tipoUsuario === 'TITULADO'" >
+                        <div class="col-xs-12 col-sm-3">
+                            <a   class="" ng-href="{{'#/usuario/curriculum/formacionacademica/search/titulado.idTitulado/'+model.titulado.idTitulado}}">Formaci&oacute;n académica</a> 
+                        </div>                        
+                        <div class="col-xs-12 col-sm-3">
+                            <a   class="" ng-href="{{'#/usuario/curriculum/experiencialaboral/search/titulado.idTitulado/'+model.titulado.idTitulado}}">Experiencia laboral</a>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                            <a   class="" ng-href="{{'#/usuario/curriculum/tituloidioma/search/titulado.idTitulado/'+model.titulado.idTitulado}}" >Idiomas</a>
+                        </div> 
+                    </div>
+                    <br>
                     <legend class="form__title" ng-show="model.tipoUsuario === 'EMPRESA'">Empresa a la que pertenece</legend>
                     <div class="row" ng-show="model.tipoUsuario === 'EMPRESA'" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">

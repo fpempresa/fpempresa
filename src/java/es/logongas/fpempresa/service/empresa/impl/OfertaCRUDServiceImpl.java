@@ -47,6 +47,7 @@ import es.logongas.ix3.web.security.jwt.Jws;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
@@ -268,18 +269,31 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
         List<Oferta> ofertasAnteriores = this.search(dataSession, filters, null, null);
 
+        
+        List<BusinessMessage> businessMessages=new ArrayList<>();
         for (Oferta ofertaAnterior:ofertasAnteriores) {
             if ((oferta.getFamilia().getIdFamilia()==ofertaAnterior.getFamilia().getIdFamilia()) && (oferta.getMunicipio().getProvincia().getIdProvincia()==ofertaAnterior.getMunicipio().getProvincia().getIdProvincia())) {
                 Set<Ciclo> ciclos=oferta.getCiclos();
                 Set<Ciclo> ciclosAnteriores=ofertaAnterior.getCiclos();
 
                 if (existsAnyCicloEnComun(ciclos, ciclosAnteriores)) {
-                    BusinessException businessException=new BusinessException("No es posible publicar esta oferta ya que has publicado una oferta similar en los últimos "+ diasPermitidosRepetirOferta + " días.");
-                    notification.exception("Oferta no publicada al estar repetida."+ofertaAnterior.getIdOferta(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " idOferta anterior="+ofertaAnterior.getIdOferta(), businessException);
-                    throw businessException;
+                    
+                    Set<Ciclo> ciclosRepetidos=getCiclosEnComun(ciclos, ciclosAnteriores);
+                    for (Ciclo cicloRepetido:ciclosRepetidos) {
+                        businessMessages.add(new BusinessMessage("Ciclo","No es posible publicar esta oferta puesto que has publicado ya una oferta con el ciclo de '" + cicloRepetido.getDescripcion() +  "' en la provincia de '" + oferta.getMunicipio().getProvincia().getDescripcion() + "' en los últimos "+ diasPermitidosRepetirOferta + " días."));
+                        notification.mensajeToAdministrador("Oferta no publicada al estar repetida."+ofertaAnterior.getIdOferta(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " idOferta anterior="+ofertaAnterior.getIdOferta() + " ciclo=" + cicloRepetido.getDescripcion());
+                    }
+                    
                 }
             }
         }
+        
+        if (businessMessages.size()>0) {
+            BusinessException businessException=new BusinessException(businessMessages);
+
+            throw businessException;            
+        }
+        
 
     } 
     
@@ -357,6 +371,19 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         
         return false;
     }
+    
+    private Set<Ciclo> getCiclosEnComun(Set<Ciclo> ciclosA,Set<Ciclo> ciclosB) {
+        Set<Ciclo> ciclosComun=new HashSet<>();
+        
+        for(Ciclo cicloA:ciclosA) {
+            if (existsCiclo(ciclosB,cicloA.getIdCiclo())) {
+                ciclosComun.add(cicloA);
+            }
+        }
+        
+        return ciclosComun;
+    }
+    
     
     private boolean existsCiclo(Set<Ciclo> ciclos,int idCiclo) {
         for(Ciclo ciclo:ciclos) {

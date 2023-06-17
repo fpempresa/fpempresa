@@ -289,6 +289,16 @@ public class NotificationImpl implements Notification {
         sendMail(mail);
     }
     
+    @Override
+    public void mensajeToAdministrador(String subject, String msg) {
+        Mail mail = new Mail();
+        mail.addTo(Config.getSetting("app.correoSoporte"));
+        mail.setFrom(Config.getSetting("mail.sender"));
+        mail.setSubject(subject);
+        mail.setTextBody(getAppURL()+"\n"+msg);
+        
+        sendMail(mail);
+    }    
     
     private void sendMail(Mail mail) {
         if (isEnabledEMailNotifications()) {

@@ -25,6 +25,7 @@ import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.ImageUtil;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
@@ -72,15 +73,17 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
 
         //Verificar el captcha
-        try {
-            if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
-                throw new BusinessException("El texto de la imagen no es correcto");
+        if (isRequiredCaptcha(usuario, insertArguments.principal)) {
+            try {
+                if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
+                    throw new BusinessException("El texto de la imagen no es correcto");
+                }
+            } catch (CatpchaAlreadyUsedException ex) {
+                throw new RuntimeException("El captcha ya estaba usado. Usuario="+usuario.getEmail()+", keyCaptcha="+ex.getKeyCaptcha());
             }
-        } catch (CatpchaAlreadyUsedException ex) {
-            throw new RuntimeException("El captcha ya estaba usado. Usuario="+usuario.getEmail()+", keyCaptcha="+ex.getKeyCaptcha());
-        }
-            
+        }    
 
+        
         
         if (usuario!=null) {
             Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
@@ -91,7 +94,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         Usuario newUsuario=super.insert(insertArguments); 
         
-        captchaService.storeKeyCaptcha(insertArguments.dataSession, keyCaptcha);
+        if (isRequiredCaptcha(usuario, insertArguments.principal)) {
+            captchaService.storeKeyCaptcha(insertArguments.dataSession, keyCaptcha);
+        }
         
         return newUsuario;
     }
@@ -101,7 +106,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         Usuario usuario=super.create(createArguments); 
         
-        usuario.setKeyCaptcha(captchaService.getKeyCaptcha());
+        if (isRequiredCaptcha(usuario, createArguments.principal)) {
+            usuario.setKeyCaptcha(captchaService.getKeyCaptcha());
+        }
         
         return usuario;
     }
@@ -554,6 +561,30 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     public void cancelarSuscripcion(CancelarSuscripcionArguments cancelarSuscripcionArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         usuarioCRUDService.cancelarSuscripcion(cancelarSuscripcionArguments.dataSession,cancelarSuscripcionArguments.usuario, cancelarSuscripcionArguments.publicToken);
-    }    
+    } 
+    
+    
+    private boolean isRequiredCaptcha(Usuario usuario,Principal principal) {
+        boolean required;
+        
+        if ((usuario==null) || (principal==null)) {
+            required=true;
+        } else {
+            if (principal instanceof Usuario) {
+                Usuario usuarioPrincipal=(Usuario)principal;
+
+                if ((usuario.getTipoUsuario()==TipoUsuario.EMPRESA) && (usuarioPrincipal.getTipoUsuario()==TipoUsuario.EMPRESA)) {
+                    required=false;
+                } else {
+                    required=true;
+                }
+            } else {
+                required=true;
+            }
+        }
+        
+        return required;
+        
+    }
     
 }

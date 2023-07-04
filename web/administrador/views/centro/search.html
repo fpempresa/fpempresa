@@ -17,13 +17,18 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 -->
 <div class="row">
     <div class="col-sm-12 form__container" >
-        <div>
+        <div ix3-form>
             <legend class="form__title">Centros</legend>
 
             <div class="row">
-                <div class="col-xs-12"> 
+                <div class="col-xs-12 col-sm-6"> 
                     <input ng-model="filters.$lliker.nombre" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del centro"  > 
-                </div>  
+                </div> 
+                <div class="col-xs-12 col-sm-6"> 
+                    <select ng-model="filters['direccion.municipio.provincia.idProvincia']" id="direccion.municipio.provincia.idProvincia" ix3-schema-property='Centro.direccion.municipio.provincia' name="direccion.municipio.provincia" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  >
+                        <option value="">-- Elige Opcion --</option>
+                    </select>
+                </div> 
             </div>
             <br>
             <div class="row" >

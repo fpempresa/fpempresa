@@ -28,7 +28,18 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
         $scope.page.pageSize = 20;
 
         $scope.filters.$gt.idCentro=0; 
+        
+        $scope.orderby = [
+            {fieldName: "nombre", orderDirection: "ASC"}          
+        ];
 
+        
+        $scope.preSearch = function (filters) {
+            if (filters['direccion.municipio.provincia.idProvincia']) {
+                filters['direccion.municipio.provincia.idProvincia'] = filters['direccion.municipio.provincia.idProvincia'].idProvincia;
+            }
+        }
+        
         $scope.search();
     }]);
 

@@ -35,6 +35,12 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
 
 app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        
+        $scope.postCreate = function () {
+            $scope.model.estadoCentro="PERTENECE_A_FPEMPRESA";
+        };
+        
     }]);
 
 app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {

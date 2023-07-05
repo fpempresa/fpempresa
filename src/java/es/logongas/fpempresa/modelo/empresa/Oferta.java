@@ -20,6 +20,8 @@ import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.geo.Municipio;
 import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
+import es.logongas.fpempresa.util.validators.NotUpperCase;
+import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.annotations.ValuesList;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
@@ -49,6 +51,8 @@ public class Oferta {
 
     @NotEmpty
     @Size(max = 200)
+    @NotUpperCase
+    @Label("Puesto")
     private String puesto;
 
     @NotEmpty

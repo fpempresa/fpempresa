@@ -109,6 +109,52 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
         };
 
+        
+        
+        function existsCiclo(ciclos,ciclo) {
+            for(var i=0;i<ciclos.length;i++) {
+                if ($scope.compareCiclo(ciclos[i],ciclo)) {
+                    return true;
+                }
+            }            
+            
+            return false;
+        }
+        
+        function equalsCiclos(ciclosA,ciclosB) {
+            if (!(Array.isArray(ciclosA) && Array.isArray(ciclosB))) {
+                return false;
+            }
+            
+            if (ciclosA.length!==ciclosB.length) {
+                return false;
+            }
+            
+            for(var i=0;i<ciclosA.length;i++) {
+                if (existsCiclo(ciclosB,ciclosA[i])===false) {
+                    return false;
+                }
+            }
+            
+            return true;
+            
+        }
+                
+        
+        $scope.$watchCollection("model.ciclos", function (newCiclos, oldCiclos) {        
+            if (newCiclos === oldCiclos) {
+                return;
+            }
+            
+            if (equalsCiclos(newCiclos,$scope.ciclos)) {
+                $scope.todosCiclos=true;
+            } else {
+                $scope.todosCiclos=false;
+            }
+
+        });
+        
+
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
 
             if (newFamilia === oldFamilia) {
@@ -133,6 +179,11 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
 
                 serviceCiclo.search(query).then(function (ciclos) {
                     $scope.ciclos = ciclos;
+                    if (equalsCiclos($scope.model.ciclos,$scope.ciclos)) {
+                        $scope.todosCiclos=true;
+                    } else {
+                        $scope.todosCiclos=false;
+                    }                
                 }, function (businessMessages) {
                     $scope.businessMessages = businessMessages;
                 });

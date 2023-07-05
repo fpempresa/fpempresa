@@ -27,7 +27,13 @@
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>     
-        </RollingFile>         
+        </RollingFile>   
+        <RollingFile name="FicheroService" fileName="${sys:catalina.base}/logs/fpempresa_service_info.log" filePattern="${sys:catalina.base}/logs/fpempresa_service_info.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>     
+        </RollingFile>               
     </Appenders>
     <Loggers>
         <Root level="WARN">
@@ -58,6 +64,10 @@
         <Logger name="es.logongas.ix3.security.authorization.BusinessSecurityException" level="WARN" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="FicheroSeguridad"/>      
-        </Logger>         
+        </Logger> 
+        <Logger name="es.logongas.ix3.service.Service" level="INFO" additivity="false">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="FicheroService"/>      
+        </Logger>       
     </Loggers>
 </Configuration>

@@ -42,6 +42,7 @@ import es.logongas.ix3.dao.FilterOperator;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
+import es.logongas.ix3.service.Service;
 import es.logongas.ix3.service.impl.CRUDServiceImpl;
 import es.logongas.ix3.web.security.jwt.Jws;
 import java.nio.charset.Charset;
@@ -62,6 +63,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> implements OfertaCRUDService {
 
     private static final Logger logException = LogManager.getLogger(Exception.class);
+    private static final Logger log = LogManager.getLogger(Service.class);
     
     @Autowired
     protected CRUDServiceFactory serviceFactory;
@@ -281,7 +283,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                     Set<Ciclo> ciclosRepetidos=getCiclosEnComun(ciclos, ciclosAnteriores);
                     for (Ciclo cicloRepetido:ciclosRepetidos) {
                         businessMessages.add(new BusinessMessage("Ciclo","No es posible publicar esta oferta puesto que has publicado ya una oferta con el ciclo de '" + cicloRepetido.getDescripcion() +  "' en la provincia de '" + oferta.getMunicipio().getProvincia().getDescripcion() + "' en los últimos "+ diasPermitidosRepetirOferta + " días."));
-                        notification.mensajeToAdministrador("Oferta no publicada al estar repetida."+ofertaAnterior.getIdOferta(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " idOferta anterior="+ofertaAnterior.getIdOferta() + " ciclo=" + cicloRepetido.getDescripcion());
+                        log.info("Oferta no publicada al estar repetida. idOferta anterior="+ofertaAnterior.getIdOferta()+ " Empresa="+oferta.getEmpresa().getIdEmpresa() + " ciclo=" + cicloRepetido.getDescripcion());
                     }
                     
                 }

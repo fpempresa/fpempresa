@@ -24,7 +24,7 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
         });
     }]);
 
-app.controller("CurriculumFormacionAcademicaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
+app.controller("CurriculumFormacionAcademicaSearchController", ['$scope', 'genericControllerCrudList','controllerParams','session', function($scope, genericControllerCrudList,controllerParams,session) {
         genericControllerCrudList.extendScope($scope, controllerParams);    
         
         $scope.orderby=[
@@ -32,6 +32,10 @@ app.controller("CurriculumFormacionAcademicaSearchController", ['$scope', 'gener
         ];
         
         $scope.search();
+        
+        $scope.postSearch=function(formacionesAcademicas) {
+            session.getUser().titulado.formacionesAcademicas=formacionesAcademicas;
+        }
     }]);
 
 

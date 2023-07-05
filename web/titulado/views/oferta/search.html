@@ -46,7 +46,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <br>
             <div class="row" >
                 <div class="col-xs-12 ">
-                    <div class="form__text form__text--help">
+                    <div class="form__text form__text--help" ng-if="inscrito===false && hasAnyCicloFP===true">
                         Recuerda que únicamente te mostramos ofertas que soliciten alguno de los títulos de FP que posees. 
                     </div>
                 </div>
@@ -58,9 +58,13 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 </div>
             </div>
             <br>
-            <div class="alert alert-info" ng-if="(models.length <= 0) && inscrito===false" role="alert">
+            <div class="alert alert-info" ng-if="(models.length <= 0) && inscrito===false && hasAnyCicloFP===true" role="alert">
                 <p>No hemos encontrado ninguna oferta para ti ya que únicamente te mostramos ofertas de los ciclos que posees. <br>Prueba a cambiar las fechas o la provincia.</p>
             </div>
+            <div class="alert alert-info" ng-if="(models.length <= 0) && inscrito===false && hasAnyCicloFP===false" role="alert">
+                <p>No puedes ver ninguna oferta ya que no has indicado que poseas un título de FP.</p>
+                <p> <a  class="c-button c-button--alt-tertiary" ng-href="{{'#/curriculum/formacionacademica/search/titulado.idTitulado/'+user.titulado.idTitulado}}">Indicar un título de FP</a></p>
+            </div>            
         </form>
         <div class="row">
             <div class="col-sm-12">      

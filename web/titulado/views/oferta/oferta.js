@@ -56,7 +56,7 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
     }]);
 
 
-app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
+app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', 'session',function ($scope, genericControllerCrudList, controllerParams, dialog, $location, session) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.inscrito = false;
         $scope.namedSearch = "getOfertasUsuarioTitulado";
@@ -78,6 +78,19 @@ app.controller("OfertaTodasSearchController", ['$scope', 'genericControllerCrudL
         ];
 
         $scope.search();
+        
+        
+        function hasAnyCicloFP(formacionesAcademicas) {
+            for (var i=0;i<formacionesAcademicas.length;i++) {
+                if (formacionesAcademicas[i].tipoFormacionAcademica==="CICLO_FORMATIVO") {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        $scope.hasAnyCicloFP=hasAnyCicloFP(session.getUser().titulado.formacionesAcademicas);
 
     }]);
 

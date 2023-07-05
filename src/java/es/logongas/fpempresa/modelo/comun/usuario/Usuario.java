@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
+import es.logongas.fpempresa.util.validators.NotUpperCase;
 import es.logongas.ix3.security.model.User;
 import es.logongas.ix3.core.annotations.Label;
 import es.logongas.ix3.core.Principal;
@@ -40,10 +41,13 @@ public class Usuario extends User implements Principal {
     private String email;
 
     @NotBlank
+    @NotUpperCase
+    @Label("Nombre")
     private String nombre;
 
     @Label("Apellidos")
     @NotBlank
+    @NotUpperCase
     private String apellidos;
 
     private byte[] foto;

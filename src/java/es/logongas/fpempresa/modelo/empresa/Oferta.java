@@ -248,14 +248,6 @@ public class Oferta {
         return true;
     }
 
-    @ConstraintRule(message = "Es necesario indicar al menos un ciclo formativo", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
-    private boolean isCicloRequerido(RuleContext ruleContext) {
-        if ((this.ciclos == null) || (this.ciclos.isEmpty())) {
-            return false;
-        }
-
-        return true;
-    }
 
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void establecerFechaCreacion() {

@@ -97,6 +97,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
             
             fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(dataSession, oferta);
             fireConstraintRule_NoRepetidaOferta(dataSession, oferta);
+            fireConstraintRule_CicloRequerido(dataSession, oferta);
             
             oferta=super.insert(dataSession, oferta);
             
@@ -121,6 +122,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     public Oferta update(DataSession dataSession, Oferta oferta) throws BusinessException {
         
         fireConstraintRule_NoRepetidaOferta(dataSession, oferta);
+        fireConstraintRule_CicloRequerido(dataSession, oferta);
         
         return super.update(dataSession, oferta); 
     }
@@ -298,7 +300,13 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         
 
     } 
-    
+    private void fireConstraintRule_CicloRequerido(DataSession dataSession, Oferta oferta) throws BusinessException {
+        
+        if ((oferta.getCiclos() == null) || (oferta.getCiclos().isEmpty())) {
+            throw new BusinessException("Es necesario indicar al menos un ciclo formativo.");
+        }
+        
+    }
     /********************************************************************/
     /*************************** Action Rules ***************************/
     /********************************************************************/ 

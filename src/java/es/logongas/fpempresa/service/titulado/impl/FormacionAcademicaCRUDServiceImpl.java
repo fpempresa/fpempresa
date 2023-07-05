@@ -44,6 +44,7 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
   
         fireConstraintRule_TituloDuplicado(dataSession, formacionAcademica);
         fireActionRule_DescertificarTitulo(dataSession, formacionAcademica);
+        fireActionRule_If_NoCicloFP_Then_SinCentroSinCiclo(dataSession, formacionAcademica);
         
         return super.insert(dataSession, formacionAcademica);
     }
@@ -55,6 +56,7 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
 
         fireConstraintRule_TituloDuplicado(dataSession, formacionAcademica);
         fireActionRule_If_Change_Then_DescertificarTitulo(dataSession, formacionAcademica);
+        fireActionRule_If_NoCicloFP_Then_SinCentroSinCiclo(dataSession, formacionAcademica);
         
         
         return super.update(dataSession, formacionAcademica);
@@ -109,7 +111,13 @@ public class FormacionAcademicaCRUDServiceImpl extends CRUDServiceImpl<Formacion
         formacionAcademica.setCertificadoTitulo(false);
     }    
     
-
+    private void fireActionRule_If_NoCicloFP_Then_SinCentroSinCiclo(DataSession dataSession, FormacionAcademica formacionAcademica) throws BusinessException {
+        if (formacionAcademica.getTipoFormacionAcademica()!=TipoFormacionAcademica.CICLO_FORMATIVO) {
+            formacionAcademica.setCentro(null);
+            formacionAcademica.setCiclo(null);
+        }
+    }
+    
     
     
     

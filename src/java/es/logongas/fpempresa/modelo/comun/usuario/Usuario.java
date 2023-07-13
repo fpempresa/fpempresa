@@ -41,13 +41,11 @@ public class Usuario extends User implements Principal {
     private String email;
 
     @NotBlank
-    @NotUpperCase
     @Label("Nombre")
     private String nombre;
 
     @Label("Apellidos")
     @NotBlank
-    @NotUpperCase
     private String apellidos;
 
     private byte[] foto;
@@ -138,6 +136,33 @@ public class Usuario extends User implements Principal {
         }
     }
 
+    @ConstraintRule(message = "No puede estar en mayúsculas.",fieldName = "Nombre", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isMayusculasNombre() {
+        if (this.nombre!=null) {
+            
+            if (this.nombre.toUpperCase().equals(this.nombre)) {
+                return false;
+            }
+            
+        }
+        
+        return true;
+    } 
+    @ConstraintRule(message = "No puede estar en mayúsculas.",fieldName = "Apellidos", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean isMayusculasApellidos() {
+        if (this.apellidos!=null) {
+            
+            if (this.apellidos.toUpperCase().equals(this.apellidos)) {
+                return false;
+            }
+            
+        }
+        
+        return true;
+    }    
+    
+    
+    
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void estableceFechaCreacion() {
         this.fecha = new Date();

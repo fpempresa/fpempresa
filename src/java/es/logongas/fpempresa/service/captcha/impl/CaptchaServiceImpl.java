@@ -20,7 +20,6 @@ import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.captcha.Captcha;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
-import es.logongas.fpempresa.service.captcha.CatpchaAlreadyUsedException;
 import es.logongas.fpempresa.service.kernel.captcha.CaptchaKernelService;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
@@ -39,7 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class CaptchaServiceImpl implements CaptchaService {
 
-    private static final int maxAgeMinutes=60;
+    private static final int MAX_AGE_MINUTES=120;
     
     @Autowired
     CaptchaKernelService captchaKernelService;
@@ -65,40 +64,53 @@ public class CaptchaServiceImpl implements CaptchaService {
     public byte[] getImage(String keyCaptcha) {
         byte[] secretKey=getSecretKey();
         
-        String word=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, maxAgeMinutes);
+        String word=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
         
         return captchaKernelService.getImage(word);
     }
 
     @Override
-    public boolean solveChallenge(DataSession dataSession,String keyCaptcha, String word) throws BusinessException,CatpchaAlreadyUsedException {
-        GenericDAO<Captcha,Integer> captchaDAO=daoFactory.getDAO(Captcha.class);
-      
-        Filters filters = new Filters();
-        filters.add(new Filter("keyCaptcha", keyCaptcha));
-        List<Captcha> keyCaptchas = captchaDAO.search(dataSession, filters, null, null);
-        
-        if (keyCaptchas.size()==1) {
-            throw new CatpchaAlreadyUsedException(keyCaptcha);
-        }
-        if (keyCaptchas.size()>1) {
-            throw new RuntimeException("Un keyCaptcha ha sido usado más de una vez (" + keyCaptchas.size() +"):"+keyCaptcha);
+    public boolean solveChallenge(DataSession dataSession,String keyCaptcha, String word) throws BusinessException {
+
+        if (existsKeyCaptcha(dataSession, keyCaptcha)) {
+            throw new RuntimeException("El keyCaptcha ya ha sido usado:"+keyCaptcha);
         }        
         
-        byte[] secretKey=getSecretKey();
         
-        String originalWord=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, maxAgeMinutes);
+        this.storeKeyCaptcha(dataSession, keyCaptcha);
+        
+        byte[] secretKey=getSecretKey();
+        String originalWord=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
         
         if (originalWord.equalsIgnoreCase(word)==true) {
             return true;
         } else {
             return false;
         }
-
     }
 
-    @Override
-    public void storeKeyCaptcha(DataSession dataSession, String keyCaptcha) throws BusinessException {
+    private boolean existsKeyCaptcha(DataSession dataSession, String keyCaptcha) throws BusinessException {
+        GenericDAO<Captcha,Integer> captchaDAO=daoFactory.getDAO(Captcha.class);
+      
+        Filters filters = new Filters();
+        filters.add(new Filter("keyCaptcha", keyCaptcha));
+        List<Captcha> keyCaptchas = captchaDAO.search(dataSession, filters, null, null);
+        
+        if (keyCaptchas.size()>1) {
+            throw new RuntimeException("Un keyCaptcha ha sido usado más de una vez (" + keyCaptchas.size() +"):"+keyCaptcha);
+        }  
+        
+        if (keyCaptchas.size()==1) {
+            return true;
+        } else {
+            return false;
+        }
+      
+        
+    }
+    
+    
+    private void storeKeyCaptcha(DataSession dataSession, String keyCaptcha) throws BusinessException {
         GenericDAO<Captcha,Integer> captchaDAO=daoFactory.getDAO(Captcha.class);
         
         Captcha captcha=new Captcha();

@@ -18,6 +18,7 @@
 
 app.controller('CreateAccountInitController', ['$scope', '$location', '$stateParams', 'serviceFactory', 'formValidator','ix3Configuration', function ($scope, $location, $stateParams, serviceFactory, formValidator, ix3Configuration) {
         var usuarioService = serviceFactory.getService("Usuario");
+        var captchaService = serviceFactory.getService("Captcha");
         $scope.model = {};
         $scope.businessMessages = null;
         $scope.ix3Configuration=ix3Configuration;
@@ -28,6 +29,7 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 //Sobreescribimos el valor si nos los pasan en la URL
                 $scope.model.tipoUsuario = $stateParams.tipoUsuario;
             }
+            $scope.loadKeyCaptcha();
 
 
         }, function (businessMessages) {
@@ -56,10 +58,20 @@ app.controller('CreateAccountInitController', ['$scope', '$location', '$statePar
                 usuarioService.insert($scope.model).then(function () {
                     $location.path("/createaccount/end/" + $scope.model.tipoUsuario);
                 }, function (businessMessages) {
+                    $scope.loadKeyCaptcha();
                     $scope.businessMessages = businessMessages;
                 });
             }
         };
 
+
+        $scope.loadKeyCaptcha=function() {
+            captchaService.getCaptcha().then(function (captcha) {
+                $scope.model.keyCaptcha=captcha.keyCaptcha;
+                $scope.model.captchaWord="";
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });            
+        }
 
     }]);

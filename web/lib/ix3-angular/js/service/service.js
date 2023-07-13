@@ -128,23 +128,28 @@
     }
 
 
-    ServiceFactory.$inject = ['extendService', '$injector'];
-    function ServiceFactory(extendService, $injector) {
+    ServiceFactory.$inject = ['extendService', '$injector','serviceClasses'];
+    function ServiceFactory(extendService, $injector, serviceClasses) {
 
-        var repositories = {
+        var services = {
         };
 
         this.getService = function (entityName) {
 
-            if (!repositories[entityName]) {
+            if (!services[entityName]) {
                 var locals = {
                     entityName: entityName
                 };
-                repositories[entityName] = $injector.instantiate(Service, locals);
+                
+                if (serviceClasses[entityName]) {
+                    services[entityName] = $injector.instantiate(serviceClasses[entityName], locals);
+                } else {
+                    services[entityName] = $injector.instantiate(Service, locals);
+                }
 
                 if (extendService[entityName]) {
                     var locals = {
-                        service: repositories[entityName]
+                        service: services[entityName]
                     };
 
                     for (var i = 0; i < extendService[entityName].length; i++) {
@@ -154,7 +159,7 @@
 
             }
 
-            return repositories[entityName];
+            return services[entityName];
         };
     }
 
@@ -163,6 +168,12 @@
     function ServiceFactoryProvider() {
 
         var extendService = {
+        };
+        var serviceClasses = {
+        };        
+
+        this.addService = function (entityName, service) {
+            serviceClasses[entityName]=service;
         };
 
         this.addExtendService = function (entityName, fn) {
@@ -174,7 +185,8 @@
 
         this.$get = ['$injector', function ($injector) {
                 var locals = {
-                    extendService: extendService
+                    extendService: extendService,
+                    serviceClasses:serviceClasses
                 };
                 return $injector.instantiate(ServiceFactory, locals);
             }];

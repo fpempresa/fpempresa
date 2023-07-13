@@ -18,10 +18,8 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
-import es.logongas.fpempresa.service.captcha.CatpchaAlreadyUsedException;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
-import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.ImageUtil;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
@@ -78,25 +76,20 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                 if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
                     throw new BusinessException("El texto de la imagen no es correcto");
                 }
-            } catch (CatpchaAlreadyUsedException ex) {
-                throw new RuntimeException("El captcha ya estaba usado. Usuario="+usuario.getEmail()+", keyCaptcha="+ex.getKeyCaptcha());
+            } catch (Exception ex) {
+                notification.exception("fallo el captcha", "Hubo un error con el captcha:\nkeyCaptcha:\n" + keyCaptcha + "word:\n"+ word, ex);
+                throw new BusinessException("El texto de la imagen no es correcto");
             }
-        }    
+        }
 
         
         
-        if (usuario!=null) {
-            Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
-            if (usuarioPrevio!=null) {
-                throw new BusinessException("Ya existe un usuario con el correo: '"+ usuario.getEmail()+"'");
-            }
+        Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
+        if (usuarioPrevio!=null) {
+            throw new BusinessException("Ya existe un usuario con el correo: '"+ usuario.getEmail()+"'");
         }
         
         Usuario newUsuario=super.insert(insertArguments); 
-        
-        if (isRequiredCaptcha(usuario, insertArguments.principal)) {
-            captchaService.storeKeyCaptcha(insertArguments.dataSession, keyCaptcha);
-        }
         
         return newUsuario;
     }
@@ -105,10 +98,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     public Usuario create(CreateArguments createArguments) throws BusinessException {
         
         Usuario usuario=super.create(createArguments); 
-        
-        if (isRequiredCaptcha(usuario, createArguments.principal)) {
-            usuario.setKeyCaptcha(captchaService.getKeyCaptcha());
-        }
         
         return usuario;
     }

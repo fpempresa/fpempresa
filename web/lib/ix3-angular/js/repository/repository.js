@@ -152,8 +152,8 @@
     }
 
 
-    RepositoryFactory.$inject = ['extendRepository', '$injector'];
-    function RepositoryFactory(extendRepository, $injector) {
+    RepositoryFactory.$inject = ['$injector', 'extendRepository', 'repositoryClasses'];
+    function RepositoryFactory($injector, extendRepository, repositoryClasses) {
 
         var repositories = {
         };
@@ -164,7 +164,12 @@
                 var locals = {
                     entityName: entityName
                 };
-                repositories[entityName] = $injector.instantiate(Repository, locals);
+                
+                if (repositoryClasses[entityName]) {
+                    repositories[entityName] = $injector.instantiate(repositoryClasses[entityName], locals);
+                } else {
+                    repositories[entityName] = $injector.instantiate(Repository, locals);
+                }
 
                 if (extendRepository[entityName]) {
                     var locals = {
@@ -188,7 +193,14 @@
 
         var extendRepository = {
         };
+        var repositoryClasses = {
+        };
 
+
+        this.addRepository = function (entityName, repository) {
+            repositoryClasses[entityName]=repository;
+        };
+        
         this.addExtendRepository = function (entityName, fn) {
             if (!extendRepository[entityName]) {
                 extendRepository[entityName] = [];
@@ -198,7 +210,8 @@
 
         this.$get = ['$injector', function ($injector) {
                 var locals = {
-                    extendRepository: extendRepository
+                    extendRepository: extendRepository,
+                    repositoryClasses:repositoryClasses
                 };
                 return $injector.instantiate(RepositoryFactory, locals);
             }];

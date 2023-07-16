@@ -19,7 +19,9 @@ package es.logongas.fpempresa.businessprocess.captcha.impl;
 import es.logongas.fpempresa.businessprocess.captcha.CaptchaBusinessProcess;
 import es.logongas.fpempresa.modelo.captcha.Captcha;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
+import es.logongas.fpempresa.util.ImageUtil;
 import es.logongas.ix3.core.BusinessException;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -35,16 +37,27 @@ public class CaptchaBusinessProcessImpl implements CaptchaBusinessProcess {
     
     @Override
     public byte[] getImage(GetImageArguments imageArguments) throws BusinessException {
-        byte[] imageCaptcha=captchaService.getImage(imageArguments.keyCaptcha);
+        byte[] imageCaptcha;
+        
+        if ((imageArguments.keyCaptcha == null) || imageArguments.keyCaptcha.trim().isEmpty()) {
+            imageCaptcha=ImageUtil.getOnePixelWhitePngImage();
+        } else {
+            imageCaptcha=captchaService.getImage(imageArguments.keyCaptcha);
+        }
 
         return imageCaptcha;
     }
     
     @Override
-    public String getKeyCaptcha(GetKeyCaptchaArguments keyCaptchaArguments) throws BusinessException {
+    public Captcha getCaptcha(GetCaptchaArguments captchaArguments) throws BusinessException {
         String keyCaptcha=captchaService.getKeyCaptcha();
 
-        return keyCaptcha;
+
+        Captcha captcha =new Captcha();
+        captcha.setFecha(new Date());
+        captcha.setKeyCaptcha(keyCaptcha);
+        
+        return captcha;
     }    
 
     @Override

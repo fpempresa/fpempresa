@@ -85,6 +85,16 @@ public class ImageUtil {
         return image;
     }
 
+    /**
+     * Obtiene una imagen de tamaño 1 pixel de color blanco
+     * @return 
+     */
+    public static byte[] getOnePixelWhitePngImage() {
+        byte[] image=new byte[] { -119,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,1,0,0,0,1,8,6,0,0,0,31,21,-60,-119,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,-120,0,0,0,11,73,68,65,84,8,-103,99,-8,15,4,0,9,-5,3,-3,-29,85,-14,-100,0,0,0,0,73,69,78,68,-82,66,96,-126 };
+
+        return image;
+    }
+    
     public static byte[] getByteArrayFromBufferedImage(BufferedImage bufferedImage) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -134,6 +144,6 @@ public class ImageUtil {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-    }    
-    
+    } 
+        
 }

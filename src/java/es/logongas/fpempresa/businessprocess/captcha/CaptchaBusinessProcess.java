@@ -28,7 +28,7 @@ import es.logongas.ix3.dao.DataSession;
  */
 public interface CaptchaBusinessProcess extends BusinessProcess<Captcha> {
     byte[] getImage(CaptchaBusinessProcess.GetImageArguments imageArguments) throws BusinessException; 
-    String getKeyCaptcha(GetKeyCaptchaArguments keyCaptchaArguments) throws BusinessException;
+    Captcha getCaptcha(GetCaptchaArguments captchaArguments) throws BusinessException;
     
     public static class GetImageArguments extends BusinessProcess.BusinessProcessArguments {
 
@@ -40,10 +40,10 @@ public interface CaptchaBusinessProcess extends BusinessProcess<Captcha> {
         }
     }
     
-    public static class GetKeyCaptchaArguments extends BusinessProcess.BusinessProcessArguments {
+    public static class GetCaptchaArguments extends BusinessProcess.BusinessProcessArguments {
 
         
-        public GetKeyCaptchaArguments(Principal principal, DataSession dataSession) {
+        public GetCaptchaArguments(Principal principal, DataSession dataSession) {
             super(principal, dataSession);            
         }
     }    

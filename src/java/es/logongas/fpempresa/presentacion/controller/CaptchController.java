@@ -76,12 +76,7 @@ public class CaptchController {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
 
 
-            String keyCaptcha = captchaBusinessProcess.getKeyCaptcha(new CaptchaBusinessProcess.GetKeyCaptchaArguments(principal, dataSession));
-
-            Captcha captcha =new Captcha();
-            captcha.setFecha(new Date());
-            captcha.setKeyCaptcha(keyCaptcha);
-            
+            Captcha captcha = captchaBusinessProcess.getCaptcha(new CaptchaBusinessProcess.GetCaptchaArguments(principal, dataSession));
             
             controllerHelper.objectToHttpResponse(new HttpResult(captcha), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {

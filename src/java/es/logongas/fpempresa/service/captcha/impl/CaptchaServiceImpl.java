@@ -72,6 +72,10 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public boolean solveChallenge(DataSession dataSession,String keyCaptcha, String word) throws BusinessException {
 
+        if ((keyCaptcha==null) || (keyCaptcha.trim().isEmpty())) {
+            throw new RuntimeException("El keyCaptcha no puede estar vacio:"+keyCaptcha);
+        }
+        
         if (existsKeyCaptcha(dataSession, keyCaptcha)) {
             throw new RuntimeException("El keyCaptcha ya ha sido usado:"+keyCaptcha);
         }        
@@ -81,8 +85,10 @@ public class CaptchaServiceImpl implements CaptchaService {
         
         byte[] secretKey=getSecretKey();
         String originalWord=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
+        String wordWithoutSpaces=word.replaceAll("[^\\x21-\\x7E]", "");
         
-        if (originalWord.equalsIgnoreCase(word)==true) {
+        
+        if (originalWord.equalsIgnoreCase(wordWithoutSpaces)==true) {
             return true;
         } else {
             return false;

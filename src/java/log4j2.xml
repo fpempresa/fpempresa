@@ -57,7 +57,7 @@
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="FicheroExcepciones"/>      
         </Logger> 
-        <Logger name="es.logongas.fpempresa.service.mail.Mail" level="INFO" additivity="false">
+        <Logger name="es.logongas.fpempresa.service.kernel.mail.Mail" level="INFO" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="FicheroMail"/>      
         </Logger> 

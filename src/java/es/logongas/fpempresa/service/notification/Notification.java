@@ -35,6 +35,6 @@ public interface Notification extends Service  {
     void validarCuenta(Usuario usuario);
     void mensajeSoporte( String nombre, String correo,String mensaje);
     void usuarioInactivo(Usuario usuario);
-    void exception(String subject, String msg, Throwable throwable);
+    void exceptionToAdministrador(String subject, String msg, Throwable throwable);
     void mensajeToAdministrador(String subject, String msg);
 }

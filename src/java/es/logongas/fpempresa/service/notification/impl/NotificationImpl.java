@@ -279,7 +279,7 @@ public class NotificationImpl implements Notification {
     }  
     
     @Override
-    public void exception(String subject, String msg, Throwable throwable) {
+    public void exceptionToAdministrador(String subject, String msg, Throwable throwable) {
         Mail mail = new Mail();
         mail.addTo(Config.getSetting("app.correoSoporte"));
         mail.setFrom(Config.getSetting("mail.sender"));

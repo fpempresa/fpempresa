@@ -239,7 +239,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
             businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
             
             BusinessException businessException=new BusinessException(businessMessages);
-            notification.exception("Alcanzado limite ofertas."+oferta.getEmpresa().getIdEmpresa(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " numOfertasPublicadas="+numOfertasPublicadas+ " maxOfertasPublicadasEmpresa="+maxOfertasPublicadasEmpresa, businessException);
+            notification.exceptionToAdministrador("Alcanzado limite ofertas."+oferta.getEmpresa().getIdEmpresa(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " numOfertasPublicadas="+numOfertasPublicadas+ " maxOfertasPublicadasEmpresa="+maxOfertasPublicadasEmpresa, businessException);
             throw businessException;
         }
 

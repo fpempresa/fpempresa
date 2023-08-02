@@ -40,7 +40,7 @@ public class ExceptionNotifyImpl implements ExceptionNotify {
         if (throwable instanceof BusinessSecurityException) {
             //No se notifican por correo las de seguridad
         } else {
-            notification.exception(className + ":"+ ExceptionUtil.getOriginalExceptionFromThrowable(throwable).getLocalizedMessage(), getHttpRequestAsString(httpServletRequest), throwable);
+            notification.exceptionToAdministrador(className + ":"+ ExceptionUtil.getOriginalExceptionFromThrowable(throwable).getLocalizedMessage(), getHttpRequestAsString(httpServletRequest), throwable);
         }
     }  
     

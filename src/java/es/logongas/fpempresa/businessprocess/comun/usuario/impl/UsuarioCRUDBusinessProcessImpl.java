@@ -77,7 +77,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                     throw new BusinessException("El texto de la imagen no es correcto");
                 }
             } catch (Exception ex) {
-                notification.exception("fallo el captcha", "Hubo un error con el captcha:\nkeyCaptcha:\n" + keyCaptcha + "word:\n"+ word, ex);
                 throw new BusinessException("El texto de la imagen no es correcto");
             }
         }

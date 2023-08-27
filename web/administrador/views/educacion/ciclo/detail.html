@@ -1,0 +1,92 @@
+<!--
+FPempresa
+Copyright (C) 2020  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Ciclo</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label for="descripcion" class="col-xs-3  control-label" ix3-label></label>
+                                <div class="col-xs-9 ">
+                                    <input ng-model="model.descripcion" type="text" class="form-control" id="descripcion" name="descripcion"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="form-group">
+                                <label for="familia" class="col-xs-3 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.familia" id="familia" name="familia" class="form-control" ix3-options="ix3OrderBy:'descripcion'" ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="form-group">
+                                <label for="grado" class="col-xs-3 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.grado" id="grado" name="grado" class="form-control" ix3-options="ix3OrderBy:'idGrado'" ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    <div class="row" >
+                        <div class="col-xs-12  form-horizontal">
+                            <div class="form-group">
+                                <label for="leyEducativa" class="col-xs-3 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <select ng-model="model.leyEducativa" id="leyEducativa" name="leyEducativa" class="form-control" ix3-options="ix3OrderBy:'descripcion'" ix3-validation >
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    
+                       
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <div class="pull-right">
+                                <fpe-cancel-button></fpe-cancel-button>
+                                <fpe-ok-button></fpe-ok-button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

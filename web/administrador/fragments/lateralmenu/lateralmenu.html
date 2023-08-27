@@ -53,6 +53,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/usuario/ultimoacceso')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/usuario/ultimoacceso')}"  class="lateral-menu__item__link" href="#/usuario/ultimoacceso">Últimos accesos</a></li>                    
                 </ul>
                 <br>
+                <br>
+                <ul class="lateral-menu__menu">
+                    <li class="lateral-menu__header">Educaci&oacute;n</li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/educacion/ciclo/[a-zA-Z]+')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/educacion/ciclo/[a-zA-Z]+')}"  class="lateral-menu__item__link" href="#/educacion/ciclo/search">Ciclos</a></li>
+                </ul>
+                <br>
                 <ul class="lateral-menu__menu">
                     <li class="lateral-menu__header">Mi cuenta</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('^/usuario/edit/' + user.idIdentity+ '$')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('^/usuario/edit/' + user.idIdentity+ '$')}"  class="lateral-menu__item__link" href="#/usuario/edit/{{user.idIdentity}}">Mis datos</a></li>

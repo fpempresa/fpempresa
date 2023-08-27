@@ -1,0 +1,89 @@
+<!--
+FPempresa
+Copyright (C) 2020  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div ix3-form>
+            <legend class="form__title">Ciclos</legend>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6"> 
+                    <input ng-model="filters.$lliker.descripcion" type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion del ciclo"  > 
+                </div> 
+                <div class="col-xs-12 col-sm-6"> 
+                    <select ng-model="filters['familia.idFamilia']" id="familia.idFamilia" ix3-schema-property='Ciclo.familia' name="familia" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  >
+                        <option value="">-- Elige la familia --</option>
+                    </select>
+                </div> 
+                
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6"> 
+                    <select ng-model="filters['grado.idGrado']" id="grado.idGrado" ix3-schema-property='Ciclo.grado' name="grado" class="form-control" ix3-options="ix3OrderBy:'idGrado'"  >
+                        <option value="">-- Elige el grado --</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6"> 
+                    <select ng-model="filters['leyEducativa.idLeyEducativa']" id="leyEducativa.idLeyEducativa" ix3-schema-property='Ciclo.leyEducativa' name="leyEducativa" class="form-control" ix3-options="ix3OrderBy:'descripcion'"  >
+                        <option value="">-- Elige la ley educativa --</option>
+                    </select>
+                </div> 
+                
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th ix3-order-field-names="descripcion"  style="min-width:  40%;text-align: center">Descripcion</th>
+                        <th ix3-order-field-names="familia.descripcion" style="width:      15%;text-align: center">Familia</th>
+                        <th ix3-order-field-names="grado.descripcion" style="width:      15%;text-align: center">Grado</th>
+                        <th ix3-order-field-names="leyEducativa.descripcion" style="width:      15%;text-align: center">Ley Educativa</th>
+
+                        <th style="width:120px;text-align: center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ciclo in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(ciclo.idCiclo)">{{ciclo.descripcion}}</a></td>
+                        <td >{{ciclo.familia.descripcion}}</td>
+                        <td >{{ciclo.grado.descripcion}}</td>
+                        <td style="text-align: left" >{{ciclo.leyEducativa.descripcion}}</td>
+                        <td >
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(ciclo.idCiclo)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(ciclo.idCiclo)">Editar</button>
+                        </td>                             
+                    </tr>
+                </tbody>
+            </table> 
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>
+
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nuevo Ciclo</button>
+        </div>
+    </div>
+</div>

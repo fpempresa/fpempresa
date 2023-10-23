@@ -67,7 +67,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th ix3-order-field-names="centro.nombre" ng-if="(parentProperty==='tipoUsuario') && (parentId === 'CENTRO')" style="text-align: center">Centro</th>
                         <th ix3-order-field-names="estadoUsuario" ng-if="(parentProperty==='tipoUsuario') && (parentId === 'CENTRO')" style="text-align: center">Estado</th>
                         <th ix3-order-field-names="empresa.nombreComercial" ng-if="(parentProperty==='tipoUsuario') && (parentId === 'EMPRESA')" style="text-align: center">Empresa</th>
-                        <th  style="width:   10%;text-align: center">Validado EMail</th>
+                        <th ix3-order-field-names="fecha" style="width:   90px;text-align: center">Fecha</th>
+                        <th  style="width:   71px;text-align: center">Validado EMail</th>
                         <th style="max-width: 120px; width: 120px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
@@ -78,6 +79,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.centro.nombre}}</td>                        
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.getEstadoUsuarioDescription()}}</td>                        
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'EMPRESA'">{{usuario.empresa.nombreComercial}}</td>                        
+                        <td  class="text-center" >{{usuario.fecha| date:'yyyy/MM/dd'}}</td>
                         <td  ng-switch    on="usuario.validadoEmail" class="text-center"><i ng-switch-default class="fa fa-square-o"></i><i ng-switch-when="true" class="fa fa-check-square-o"></i></td>
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(usuario.idIdentity)">Borrar</button>

@@ -19,6 +19,7 @@ package es.logongas.fpempresa.service.comun.usuario.impl;
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.dao.comun.usuario.UsuarioDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
@@ -436,6 +437,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             Filters filters = new Filters();
             filters.add(new Filter("centro.idCentro", centro.getIdCentro(), FilterOperator.eq));
             filters.add(new Filter("validadoEmail", true, FilterOperator.eq));
+            filters.add(new Filter("estadoUsuario", EstadoUsuario.ACEPTADO, FilterOperator.eq));
             List<Usuario> usuarios = this.search(dataSession, filters, null, null);
             if (usuarios!=null) {
                 return usuarios.size();

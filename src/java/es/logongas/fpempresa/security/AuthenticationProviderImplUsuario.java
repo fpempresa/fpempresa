@@ -129,12 +129,12 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                     
                     BusinessException businessException=new BusinessException("No puedes entrar ya que estás a la espera de ser aceptado en el '" + usuario.getCentro() + "'");
                     int numUsuariosCentro=usuarioService.numUsuariosCentro(dataSession, usuario.getCentro());
-                    if (numUsuariosCentro==1) {
+                    if (numUsuariosCentro==0) {
                         businessException.getBusinessMessages().add(new BusinessMessage("Como eres la primera persona de tu centro que usa EmpleaFP , debes ponerte en contacto con nosotros en '" + Config.getSetting("app.correoSoporte") + "' para que te aceptemos en el '" + usuario.getCentro() + "'"));
-                    } else if (numUsuariosCentro==2) {
+                    } else if (numUsuariosCentro==1) {
                         businessException.getBusinessMessages().add(new BusinessMessage("Como ya hay un compañero de tu centro usando EmpleaFP, deberías hablar con él para que te acepte en el '" + usuario.getCentro() + "'"));
-                    } else if (numUsuariosCentro>2) {
-                        businessException.getBusinessMessages().add(new BusinessMessage("Como ya hay " + (numUsuariosCentro-1) + " compañeros de tu centro usando EmpleaFP, deberías hablar con alguno de ellos para que te acepte en el '" + usuario.getCentro() + "'"));
+                    } else if (numUsuariosCentro>1) {
+                        businessException.getBusinessMessages().add(new BusinessMessage("Como ya hay " + numUsuariosCentro + " compañeros de tu centro usando EmpleaFP, deberías hablar con alguno de ellos para que te acepte en el '" + usuario.getCentro() + "'"));
                     } else {
                         throw new RuntimeException("Error de lógica:" + numUsuariosCentro + " " + usuario.getCentro());
                     }

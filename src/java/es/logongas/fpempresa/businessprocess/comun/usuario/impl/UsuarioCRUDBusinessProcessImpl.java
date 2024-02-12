@@ -14,6 +14,8 @@
 package es.logongas.fpempresa.businessprocess.comun.usuario.impl;
 
 import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
@@ -169,13 +171,28 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
         updateCentroArguments.usuario.setCentro(updateCentroArguments.centro);
-
-        if (updateCentroArguments.usuario.getEmail().equals(updateCentroArguments.centro.getContacto().getEmail())) {
-            //Si el nuevo usuario es el del correo del centro seguro que está aceptado.
-            updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        
+        String emailUsuario=updateCentroArguments.usuario.getEmail();
+        Centro centro=updateCentroArguments.centro;
+        String emailContactoCentro=null;
+        if (centro!=null) {
+            Contacto contactoCentro=updateCentroArguments.centro.getContacto();
+            if (contactoCentro!=null) {
+                emailContactoCentro=contactoCentro.getEmail();
+            }
+        }
+        
+        if ((emailUsuario!=null) && (emailUsuario.trim().isEmpty()==false) && (emailContactoCentro!=null) && (emailContactoCentro.trim().isEmpty()==false)) {
+            if (emailUsuario.equals(emailContactoCentro)) {
+                //Si el nuevo usuario es el del correo del centro seguro que está aceptado.
+                updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+            } else {
+                updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
+            }
         } else {
             updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
         }
+
 
         return usuarioCRUDService.update(updateCentroArguments.dataSession, updateCentroArguments.usuario);
     }

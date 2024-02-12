@@ -136,7 +136,7 @@ public class Usuario extends User implements Principal {
         }
     }
 
-    @ConstraintRule(message = "No puede estar en mayúsculas.",fieldName = "Nombre", groups = RuleGroupPredefined.PreInsert.class)
+    @ConstraintRule(message = "No puede estar todo en mayúsculas.",fieldName = "Nombre", groups = RuleGroupPredefined.PreInsert.class)
     private boolean isMayusculasNombre() {
         if (this.nombre!=null) {
             
@@ -148,7 +148,7 @@ public class Usuario extends User implements Principal {
         
         return true;
     } 
-    @ConstraintRule(message = "No puede estar en mayúsculas.",fieldName = "Apellidos", groups = RuleGroupPredefined.PreInsert.class)
+    @ConstraintRule(message = "No puede estar todo en mayúsculas.",fieldName = "Apellidos", groups = RuleGroupPredefined.PreInsert.class)
     private boolean isMayusculasApellidos() {
         if (this.apellidos!=null) {
             

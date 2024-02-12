@@ -30,6 +30,7 @@ import es.logongas.fpempresa.service.kernel.mail.MailKernelService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.service.report.ReportService;
 import es.logongas.fpempresa.util.DateUtil;
+import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.CRUDServiceFactory;
@@ -301,20 +302,20 @@ public class NotificationImpl implements Notification {
     }    
     
     private void sendMail(Mail mail) {
+        String subject=mail.getSubject();
+        String anonymizedMail=EMailUtil.getAnonymizedEMail(mail.getTo().get(0));        
+        
         if (isEnabledEMailNotifications()) {
-            String subject=mail.getSubject();
-            String to=mail.getTo().get(0);
-            
             try {
                 mailKernelService.send(mail);
-                logMail.info("Enviado correo:" + subject + ":" + to);
+                logMail.info("Enviado correo:" + subject + ":" + anonymizedMail);
             } catch (Exception ex) {
-                logMail.error("!!!!!!!!!Falló al enviar el correo:'" + subject + "' a " + to + "." + ex.getMessage());
+                logMail.error("!!!!!!!!!Falló al enviar el correo:'" + subject + "' a " + anonymizedMail + "." + ex.getMessage());
                 throw new RuntimeException(ex);
             }
             
         } else {
-            logMail.info("Correo NO enviado:" + mail.getSubject() + ":" + mail.getTo().get(0) );
+            logMail.info("Correo NO enviado:" + subject + ":" + anonymizedMail );
         }    
     }    
    

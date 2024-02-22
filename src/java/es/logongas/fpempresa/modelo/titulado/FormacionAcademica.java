@@ -40,7 +40,6 @@ public class FormacionAcademica {
     @NotNull
     private TipoFormacionAcademica tipoFormacionAcademica;
 
-    @ValuesList(shortLength = true)
     @Label("Centro educativo")
     private Centro centro;
 

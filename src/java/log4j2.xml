@@ -10,6 +10,12 @@
                 <TimeBasedTriggeringPolicy/>
             </Policies>
         </RollingFile>
+        <RollingFile name="FicheroJavaMelody" fileName="${sys:catalina.base}/logs/javamelody.log" filePattern="${sys:catalina.base}/logs/javamelody.%d{yyyy-w}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>        
         <RollingFile name="FicheroSeguridad" fileName="${sys:catalina.base}/logs/fpempresa_security.log" filePattern="${sys:catalina.base}/logs/fpempresa_security.%d{yyyy-w}.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %MAP{message} %throwable{short.localizedMessage}%n"/>
             <Policies>
@@ -68,6 +74,10 @@
         <Logger name="es.logongas.ix3.service.Service" level="INFO" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="FicheroService"/>      
-        </Logger>       
+        </Logger>   
+        <Logger name="net.bull.javamelody" level="WARN" additivity="false">
+            <AppenderRef ref="Consola"/>
+            <AppenderRef ref="FicheroJavaMelody"/>      
+        </Logger>            
     </Loggers>
 </Configuration>

@@ -96,7 +96,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
             
             
             fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(dataSession, oferta);
-            fireConstraintRule_NoRepetidaOferta(dataSession, oferta);
+            fireConstraintRule_NoRepetidaOferta(dataSession, oferta,null);
             fireConstraintRule_CicloRequerido(dataSession, oferta);
             
             oferta=super.insert(dataSession, oferta);
@@ -120,8 +120,10 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
     @Override
     public Oferta update(DataSession dataSession, Oferta oferta) throws BusinessException {
+        Oferta ofertaOriginal=this.readOriginal(dataSession, oferta.getIdOferta());        
         
-        fireConstraintRule_NoRepetidaOferta(dataSession, oferta);
+        
+        fireConstraintRule_NoRepetidaOferta(dataSession, oferta,ofertaOriginal);
         fireConstraintRule_CicloRequerido(dataSession, oferta);
         
         return super.update(dataSession, oferta); 
@@ -245,11 +247,11 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
     }
     
-    private void fireConstraintRule_NoRepetidaOferta(DataSession dataSession, Oferta oferta) throws BusinessException {
+    private void fireConstraintRule_NoRepetidaOferta(DataSession dataSession, Oferta oferta,Oferta ofertaOriginal) throws BusinessException {
         
         CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
         Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
-
+        
         if (empresa.getCentro()!=null) {
             //la regla no se aplica para empresas de centros
             return;
@@ -261,6 +263,13 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         if (oferta.getFamilia()==null) {
             //Si no hay familia no se puede validar la oferta
             return;
+        }
+        
+        
+        //Ciclos originales de la oferta antes de la modificación
+        Set<Ciclo> ciclosOriginalesOferta=new HashSet<>();
+        if (ofertaOriginal!=null) {
+            ciclosOriginalesOferta=ofertaOriginal.getCiclos();
         }
             
         int diasPermitidosRepetirOferta = Integer.parseInt(Config.getSetting("app.diasPermitidosRepetirOferta"));
@@ -284,8 +293,13 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                     
                     Set<Ciclo> ciclosRepetidos=getCiclosEnComun(ciclos, ciclosAnteriores);
                     for (Ciclo cicloRepetido:ciclosRepetidos) {
-                        businessMessages.add(new BusinessMessage("Ciclo","No es posible publicar esta oferta puesto que has publicado ya una oferta con el ciclo de '" + cicloRepetido.getDescripcion() +  "' en la provincia de '" + oferta.getMunicipio().getProvincia().getDescripcion() + "' en los últimos "+ diasPermitidosRepetirOferta + " días."));
-                        log.info("Oferta no publicada al estar repetida. idOferta anterior="+ofertaAnterior.getIdOferta()+ " Empresa="+oferta.getEmpresa().getIdEmpresa() + " ciclo=" + cicloRepetido.getDescripcion());
+                        
+                        //Si el ciclo ya existía originalmente en la oferta, si que se permite que esté.
+                        //Esto ocurre al modificar una oferta y en los últimos "n" días ya hay alguna otra oferta con ese ciclo.
+                        if (existsCiclo(ciclosOriginalesOferta,cicloRepetido.getIdCiclo())==false) {
+                            businessMessages.add(new BusinessMessage("Ciclo","No es posible publicar esta oferta puesto que has publicado ya una oferta con el ciclo de '" + cicloRepetido.getDescripcion() +  "' en la provincia de '" + oferta.getMunicipio().getProvincia().getDescripcion() + "' en los últimos "+ diasPermitidosRepetirOferta + " días."));
+                            log.info("Oferta no publicada al estar repetida. idOferta anterior="+ofertaAnterior.getIdOferta()+ " Empresa="+oferta.getEmpresa().getIdEmpresa() + " ciclo=" + cicloRepetido.getDescripcion());
+                        }
                     }
                     
                 }

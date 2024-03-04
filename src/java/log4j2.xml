@@ -78,6 +78,11 @@
         <Logger name="net.bull.javamelody" level="WARN" additivity="false">
             <AppenderRef ref="Consola"/>
             <AppenderRef ref="FicheroJavaMelody"/>      
-        </Logger>            
+        </Logger>  
+        <!--
+        <Logger name="es.logongas.ix3.security.model.ACE" level="DEBUG" additivity="false">
+            <AppenderRef ref="Consola"/>     
+        </Logger>    
+        -->                
     </Loggers>
 </Configuration>

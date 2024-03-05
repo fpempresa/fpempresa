@@ -82,4 +82,8 @@
         <param-name>javamelody.logger-class</param-name>
         <param-value>net.bull.javamelody.internal.common.Log4J2Logger</param-value>
     </context-param>
+    
+    <error-page>
+        <location>/error-pages/generic-error.jsp</location>
+    </error-page>    
 </web-app>

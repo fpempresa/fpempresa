@@ -38,6 +38,7 @@ import es.logongas.fpempresa.service.titulado.FormacionAcademicaCRUDService;
 import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.RandomUtil;
+import es.logongas.fpempresa.util.concurrent.EventCountInDay;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
@@ -90,6 +91,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     @Autowired
     Jws jws;  
 
+    private static EventCountInDay eventCountInDayCancelarSubscripcion=new EventCountInDay(50);
+    private static EventCountInDay eventCountInDayResetearContrasenya=new EventCountInDay(50);
+    private static EventCountInDay eventCountInDayEnviarMailResetearContrasenya=new EventCountInDay(50);    
+    
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
     }
@@ -339,79 +344,95 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
     @Override
     public void cancelarSuscripcion(DataSession dataSession,Usuario usuario, String publicToken) throws BusinessException {
-        
-        if (usuario==null) {
-            throw new BusinessException("No existe el usuario");
-        }
-        byte[] secretToken=usuario.getSecretToken().getBytes(Charset.forName("utf-8"));
-
-        
-        PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion;
-                
         try {
-            publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(publicToken, jws, secretToken);
-        } catch (Exception ex) {
-            throw new BusinessException("El token no tiene el formato adecuado");
-        }
-        
-        if (publicTokenCancelarSubcripcion.isValid()==false) {
-            throw new BusinessException("El token no es válido o ha caducado.");
-        }
-        
-        if (usuario.getIdIdentity()!=publicTokenCancelarSubcripcion.getIdIdentity()) {
-            throw new BusinessException("El token no es válido para ese usuario.");
-        }
-        
-        if (usuario.getTipoUsuario()!=TipoUsuario.TITULADO) {
-            throw new BusinessException("Esta acción solo es posible para titulados");
-        }
-        
-        if (usuario.getTitulado()==null) {
-            throw new BusinessException("El usuario aun no es un titulado");
-        }
-        
-        log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
-        
-        CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
-        Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
-        titulado.getConfiguracion().getNotificacionOferta().setNotificarPorEmail(false);
-        tituladoCRUDService.update(dataSession, titulado);
+            if (usuario==null) {
+                throw new BusinessException("No existe el usuario");
+            }
+            byte[] secretToken=usuario.getSecretToken().getBytes(Charset.forName("utf-8"));
+
+
+            PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion;
+
+            try {
+                publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(publicToken, jws, secretToken);
+            } catch (Exception ex) {
+                throw new BusinessException("El token no tiene el formato adecuado");
+            }
+
+            if (publicTokenCancelarSubcripcion.isValid()==false) {
+                throw new BusinessException("El token no es válido o ha caducado.");
+            }
+
+            if (usuario.getIdIdentity()!=publicTokenCancelarSubcripcion.getIdIdentity()) {
+                throw new BusinessException("El token no es válido para ese usuario.");
+            }
+
+            if (usuario.getTipoUsuario()!=TipoUsuario.TITULADO) {
+                throw new BusinessException("Esta acción solo es posible para titulados");
+            }
+
+            if (usuario.getTitulado()==null) {
+                throw new BusinessException("El usuario aun no es un titulado");
+            }
+
+            log.warn("No notificar por email a un titulado las nuevas ofertas desde el link del correo."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
+
+            CRUDService<Titulado,Integer> tituladoCRUDService = (CRUDService<Titulado,Integer>) crudServiceFactory.getService(Titulado.class);
+            Titulado titulado=tituladoCRUDService.read(dataSession, usuario.getTitulado().getIdTitulado());
+            titulado.getConfiguracion().getNotificacionOferta().setNotificarPorEmail(false);
+            tituladoCRUDService.update(dataSession, titulado);
+        } catch (BusinessException businessException) {
+            if (eventCountInDayCancelarSubscripcion.isSafe(new EventCountInDayNotifierImplCancelarSubscripcion(notification))) {
+                throw businessException;
+            } else {
+                throw new BusinessException("No ha sido posible cancelar la subcripción.");
+            }
+        }        
     }    
     
     
     @Override
     public void resetearContrasenya(DataSession dataSession,Usuario usuario, String claveResetearContrasenya, String nuevaContrasenya) throws BusinessException {
-        if (usuario != null) {
-            if (!usuario.isValidadoEmail()) {
-                log.warn("resetearContrasenya:La cuenta que no está validada."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
-                throw new BusinessException("La cuenta no está activada");
-            }
-            
-            if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
-                log.warn("resetearContrasenya:El token no es válido."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
-                throw new BusinessException("El token no es válido");
-            }           
-            
-            Date now = new Date();
-            int diasClaveResetearPaswordEsValida = Integer.parseInt(Config.getSetting("app.diasClaveResetearPasswordEsValida"));
-            if (now.before(DateUtil.add(usuario.getFechaClaveResetearContrasenya(), DateUtil.Interval.DAY, diasClaveResetearPaswordEsValida)))  {
-                this.updatePassword(dataSession, usuario, nuevaContrasenya);
-                usuario.setFechaClaveResetearContrasenya(null);
-                usuario.setClaveResetearContrasenya(null);
-                
-                //Tambien desbloqueamos la cuenta
-                usuario.setLockedUntil(null);
-                usuario.setNumFailedLogins(0);
-                
-                getUsuarioDAO().update(dataSession, usuario);
+        
+        try {
+            if (usuario != null) {
+                if (!usuario.isValidadoEmail()) {
+                    log.warn("resetearContrasenya:La cuenta que no está validada."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
+                    throw new BusinessException("La cuenta no está activada");
+                }
+
+                if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
+                    log.warn("resetearContrasenya:El token no es válido."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
+                    throw new BusinessException("El token no es válido");
+                }           
+
+                Date now = new Date();
+                int diasClaveResetearPaswordEsValida = Integer.parseInt(Config.getSetting("app.diasClaveResetearPasswordEsValida"));
+                if (now.before(DateUtil.add(usuario.getFechaClaveResetearContrasenya(), DateUtil.Interval.DAY, diasClaveResetearPaswordEsValida)))  {
+                    this.updatePassword(dataSession, usuario, nuevaContrasenya);
+                    usuario.setFechaClaveResetearContrasenya(null);
+                    usuario.setClaveResetearContrasenya(null);
+
+                    //Tambien desbloqueamos la cuenta
+                    usuario.setLockedUntil(null);
+                    usuario.setNumFailedLogins(0);
+
+                    getUsuarioDAO().update(dataSession, usuario);
+                } else {
+                    log.warn("resetearContrasenya:El token ha caducado."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
+                    throw new BusinessException("El token ha caducado");
+                }
             } else {
-                log.warn("resetearContrasenya:El token ha caducado."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
-                throw new BusinessException("El token ha caducado");
+                log.warn("resetearContrasenya:El usuario no existe");
+                throw new BusinessException("El usuario no existe");
             }
-        } else {
-            log.warn("resetearContrasenya:El usuario no existe");
-            throw new BusinessException("El usuario no existe");
-        }
+        } catch (BusinessException businessException) {
+            if (eventCountInDayResetearContrasenya.isSafe(new EventCountInDayNotifierImplResetearContrasenya(notification))) {
+                throw businessException;
+            } else {
+                throw new BusinessException("No ha sido posible resetear la contraseña.");
+            }
+        } 
     }
 
     @Override
@@ -427,7 +448,9 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             log.warn("Enviado correo para resetear contraseña a " + EMailUtil.getAnonymizedEMail(usuario.getEmail()));
         } else {
             log.warn("No existe el correo al que resetear con contraseña" + EMailUtil.getAnonymizedEMail(email));
-            throw new BusinessException("No existe el usuario");
+            if (eventCountInDayEnviarMailResetearContrasenya.isSafe(new EventCountInDayNotifierImplEnviarMailResetearContrasenya(notification))) {
+                throw new BusinessException("No existe el usuario");
+            }
         }
 
     }
@@ -690,5 +713,43 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         return minutesLockedAccount;
     }
 
+    private class EventCountInDayNotifierImplCancelarSubscripcion implements EventCountInDay.Notifier {
+        
+        Notification notification;
 
+        public EventCountInDayNotifierImplCancelarSubscripcion(Notification notification) {
+            this.notification = notification;
+        }
+
+        @Override
+        public void notify(int threshold,int currentValue) {
+            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Cancelar la Subscripcion."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
+        }
+    }  
+    private class EventCountInDayNotifierImplResetearContrasenya implements EventCountInDay.Notifier {
+        
+        Notification notification;
+
+        public EventCountInDayNotifierImplResetearContrasenya(Notification notification) {
+            this.notification = notification;
+        }
+
+        @Override
+        public void notify(int threshold,int currentValue) {
+            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Resetear la Contrasenya de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
+        }
+    }  
+    private class EventCountInDayNotifierImplEnviarMailResetearContrasenya implements EventCountInDay.Notifier {
+        
+        Notification notification;
+
+        public EventCountInDayNotifierImplEnviarMailResetearContrasenya(Notification notification) {
+            this.notification = notification;
+        }
+
+        @Override
+        public void notify(int threshold,int currentValue) {
+            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Enviar Mail Resetear Contrasenya de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
+        }
+    }  
 }

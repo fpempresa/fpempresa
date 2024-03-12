@@ -23,6 +23,7 @@ import es.logongas.fpempresa.service.captcha.CaptchaService;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.util.ImageUtil;
+import es.logongas.fpempresa.util.concurrent.EventCountInDay;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
@@ -49,6 +50,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     @Autowired    
     CaptchaService captchaService;   
 
+    private static final EventCountInDay eventCountInDayInsert=new EventCountInDay(100);    
+    
+    
     @Override
     public Usuario update(UpdateArguments<Usuario> updateArguments) throws BusinessException {
         Usuario principal = (Usuario) updateArguments.principal;
@@ -63,36 +67,44 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     }
 
     @Override
-    public Usuario insert(InsertArguments<Usuario> insertArguments) throws BusinessException {    
-        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-        Usuario usuario = insertArguments.entity;
-        
-        
-        String word=usuario.getCaptchaWord();
-        String keyCaptcha=usuario.getKeyCaptcha();
-        
+    public Usuario insert(InsertArguments<Usuario> insertArguments) throws BusinessException {
+        try {
+            UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+            Usuario usuario = insertArguments.entity;
 
-        //Verificar el captcha
-        if (isRequiredCaptcha(usuario, insertArguments.principal)) {
-            try {
-                if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
+
+            String word=usuario.getCaptchaWord();
+            String keyCaptcha=usuario.getKeyCaptcha();
+
+
+            //Verificar el captcha
+            if (isRequiredCaptcha(usuario, insertArguments.principal)) {
+                try {
+                    if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
+                        throw new BusinessException("El texto de la imagen no es correcto");
+                    }
+                } catch (Exception ex) {
                     throw new BusinessException("El texto de la imagen no es correcto");
                 }
-            } catch (Exception ex) {
-                throw new BusinessException("El texto de la imagen no es correcto");
+            }
+
+
+
+            Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
+            if (usuarioPrevio!=null) {
+                throw new BusinessException("Ya existe un usuario con el correo: '"+ usuario.getEmail()+"'");
+            }
+
+            Usuario newUsuario=super.insert(insertArguments); 
+
+            return newUsuario;
+        } catch (BusinessException businessException) {
+            if (eventCountInDayInsert.isSafe(new EventCountInDayNotifierImplInsert(notification))) {
+                throw businessException;
+            } else {
+                throw new BusinessException("No ha sido posible insertar el usuario");
             }
         }
-
-        
-        
-        Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
-        if (usuarioPrevio!=null) {
-            throw new BusinessException("Ya existe un usuario con el correo: '"+ usuario.getEmail()+"'");
-        }
-        
-        Usuario newUsuario=super.insert(insertArguments); 
-        
-        return newUsuario;
     }
 
     @Override
@@ -592,6 +604,21 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         return required;
         
+    }
+
+    
+    private class EventCountInDayNotifierImplInsert implements EventCountInDay.Notifier {
+        
+        Notification notification;
+
+        public EventCountInDayNotifierImplInsert(Notification notification) {
+            this.notification = notification;
+        }
+
+        @Override
+        public void notify(int threshold,int currentValue) {
+            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en inserciones de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
+        }
     }
     
 }

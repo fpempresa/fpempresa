@@ -43,7 +43,7 @@ public class FilterImplSecurityHeaders implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         
         
-        httpServletResponse.addHeader("Content-Security-Policy", "default-src 'self' 'unsafe-inline' 'unsafe-eval'");
+        httpServletResponse.addHeader("Content-Security-Policy", "default-src 'self' 'unsafe-inline' 'unsafe-eval' ; frame-src 'self' https://*.youtube-nocookie.com  ");
         httpServletResponse.addHeader("X-Frame-Options", "SAMEORIGIN");
         
         filterChain.doFilter(servletRequest, servletResponse);

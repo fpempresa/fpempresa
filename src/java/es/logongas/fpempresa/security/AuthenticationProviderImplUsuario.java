@@ -55,7 +55,7 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
     
     protected final Logger log = LogManager.getLogger(getClass());
 
-    private static final EventCountInDay eventCountInDayAuthenticate=new EventCountInDay(100);   
+    private static final EventCountInDay eventCountInDayAuthenticate=new EventCountInDay(300);   
     
     @Override
     public Principal authenticate(Credential credential, DataSession dataSession) throws BusinessException {

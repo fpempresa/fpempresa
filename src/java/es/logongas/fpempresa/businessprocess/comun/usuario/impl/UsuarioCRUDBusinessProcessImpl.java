@@ -50,7 +50,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     @Autowired    
     CaptchaService captchaService;   
 
-    private static final EventCountInDay eventCountInDayInsert=new EventCountInDay(100);    
+    private static final EventCountInDay eventCountInDayInsert=new EventCountInDay(300);    
     
     
     @Override

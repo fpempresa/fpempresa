@@ -53,8 +53,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class NotificationImpl implements Notification {
     private static final Logger logMail = LogManager.getLogger(Mail.class);
     
+    
+    final static String MAIL_DELETE_UNSUBSCRIBE= Config.getSetting("app.correoSoporte");
+    final static String SUBJECT_MAIL_DELETE_UNSUBSCRIBE="Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos";
+    
     final static String PIE_RGPD_MAIL="De conformidad con lo dispuesto en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016, informamos que los datos personales serán incluidos en un fichero titularidad y responsabilidad de ASOCIACION DE CENTROS DE FORMACION PROFESIONAL FPEMPRESA con la finalidad de posibilitar las comunicaciones a través del correo electrónico de la misma con los distintos contactos que ésta mantiene dentro del ejercicio de su actividad.Podrá ejercer los derechos de acceso, rectificación, supresión y demás derechos reconocidos en la normativa mencionada, en la siguiente dirección C/ PADRE AMIGÓ Nº 25 28025 MADRID o a través de la siguiente dirección de correo electrónico " + Config.getSetting("app.correoSoporte") + ". Solicite más información dirigiéndose al correo electrónico indicado.En virtud de la Ley 34/2002 de 11 de Julio de Servicios de la Sociedad de la Información y Correo Electrónico (LSSI-CE), este mensaje y sus archivos adjuntos pueden contener información confidencial, por lo que se informa de que su uso no autorizado está prohibido por la ley. Si ha recibido este mensaje por equivocación, por favor notifíquelo inmediatamente a través de esta misma vía y borre el mensaje original junto con sus ficheros adjuntos sin leerlo o grabarlo total o parcialmente.";
-    final static String BAJA_BY_EMAIL="<a href=\"mailto:" + Config.getSetting("app.correoSoporte") + "?Subject=Deseo%20darme%20de%20baja%20de%20EmpleaFP%20y%20que%20sean%20borrados%20todos%20mis%20datos\">Darse de baja de EmpleaFP</a>";
+    final static String BAJA_BY_EMAIL="<a href=\"mailto:" + MAIL_DELETE_UNSUBSCRIBE + "?Subject=" + SUBJECT_MAIL_DELETE_UNSUBSCRIBE + "\">Darse de baja de EmpleaFP</a>";
     
     @Autowired
     MailKernelService mailKernelService;
@@ -76,10 +80,11 @@ public class NotificationImpl implements Notification {
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
         byte[] secretToken=usuario.getSecretToken().getBytes(Charset.forName("utf-8"));
         int idIdentity=usuario.getIdIdentity();
-        
+
         PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(idIdentity, jws, secretToken);
-        String url=getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
-        
+        String urlHTMLUnsubscribe=getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
+        String urlApiPOSTUnsubscribe=getAppURL() + "/api/site/Usuario/cancelarSuscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
+
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Nueva oferta de empleo";
         bodyContent.parrafos="Hola " + StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ","
@@ -91,14 +96,15 @@ public class NotificationImpl implements Notification {
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para inscribirte en la Oferta";
         bodyContent.linkButton=getAppURL() + "/site/index.html#/login";
-        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+"<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo.<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + url + "\">aquí</a>."
-                + "<br>¿No te funciona el anterior enlace para dejar de recibir correos? Pega el siguiente enlace en el navegador:<br>"+url;
-        
+        bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+"<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo.<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + urlHTMLUnsubscribe + "\">aquí</a>."
+                + "<br>¿No te funciona el anterior enlace para dejar de recibir correos? Pega el siguiente enlace en el navegador:<br>"+urlHTMLUnsubscribe;
+
         Mail mail = new Mail();
         mail.addTo(usuario.getEmail());
         mail.setSubject("Nueva oferta de empleo en EmpleaFP: " + oferta.getPuesto());
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         mail.setFrom(Config.getSetting("mail.sender"));
+        setUnsubscribeURL(mail, urlApiPOSTUnsubscribe);
         sendMail(mail);
     }
 
@@ -144,6 +150,7 @@ public class NotificationImpl implements Notification {
         mail.setSubject("Nuevo candidato en EmpleaFP de su oferta: " + oferta.getPuesto());
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         mail.setFrom(Config.getSetting("mail.sender"));
+        setUnsubscribeMail(mail, MAIL_DELETE_UNSUBSCRIBE, SUBJECT_MAIL_DELETE_UNSUBSCRIBE);
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("idIdentity", candidato.getUsuario().getIdIdentity());
@@ -192,7 +199,8 @@ public class NotificationImpl implements Notification {
         mail.setSubject("Desinscrito candidato en EmpleaFP de su oferta '" + oferta.getPuesto() + "'");
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
         mail.setFrom(Config.getSetting("mail.sender"));
-
+        setUnsubscribeMail(mail, MAIL_DELETE_UNSUBSCRIBE, SUBJECT_MAIL_DELETE_UNSUBSCRIBE);
+        
         sendMail(mail);
     }
     
@@ -214,6 +222,8 @@ public class NotificationImpl implements Notification {
         mail.setFrom(Config.getSetting("mail.sender"));
         mail.setSubject("Cambiar contraseña en EmpleaFP");
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
+        setUnsubscribeMail(mail, MAIL_DELETE_UNSUBSCRIBE, SUBJECT_MAIL_DELETE_UNSUBSCRIBE);
+        
         sendMail(mail);
     }
 
@@ -236,6 +246,8 @@ public class NotificationImpl implements Notification {
         mail.setFrom(Config.getSetting("mail.sender"));
         mail.setSubject("Confirma tu dirección de correo para acceder a EmpleaFP");
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
+        setUnsubscribeMail(mail, MAIL_DELETE_UNSUBSCRIBE, SUBJECT_MAIL_DELETE_UNSUBSCRIBE);
+        
         sendMail(mail);
     }
 
@@ -254,6 +266,7 @@ public class NotificationImpl implements Notification {
         mail.setReply(correo);
         mail.setSubject("Petición de soporte de " + nombre);
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
+        setUnsubscribeMail(mail, MAIL_DELETE_UNSUBSCRIBE, SUBJECT_MAIL_DELETE_UNSUBSCRIBE);
         
         sendMail(mail);
     }
@@ -275,6 +288,7 @@ public class NotificationImpl implements Notification {
         mail.setFrom(Config.getSetting("mail.sender"));
         mail.setSubject("[Acción Requerida] Tu cuenta de EmpleaFP va a ser borrada por falta de uso");
         mail.setHtmlBody(getBodyFromHTMLTemplate(bodyContent));
+        setUnsubscribeMail(mail, MAIL_DELETE_UNSUBSCRIBE, SUBJECT_MAIL_DELETE_UNSUBSCRIBE);
         
         sendMail(mail);
     }  
@@ -493,6 +507,20 @@ public class NotificationImpl implements Notification {
 
         return body;
     }
+    
+    
+    private void setUnsubscribeURL(Mail mail,String url) {
+        Map<String,String> headers=new HashMap<>();
+        headers.put("List-Unsubscribe-Post","List-Unsubscribe=One-Click");
+        headers.put("List-Unsubscribe","<" + url + ">");
+        mail.setHeaders(headers);
+    }
+    private void setUnsubscribeMail(Mail mail,String email,String subject) {
+        Map<String,String> headers=new HashMap<>();
+        headers.put("List-Unsubscribe-Post","List-Unsubscribe=One-Click");
+        headers.put("List-Unsubscribe","<mailto: " + email + "?subject=" + subject +">");
+        mail.setHeaders(headers);
+    }  
     
     
     private class BodyContent {

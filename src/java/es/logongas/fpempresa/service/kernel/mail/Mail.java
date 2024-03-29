@@ -19,7 +19,9 @@
 package es.logongas.fpempresa.service.kernel.mail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -37,10 +39,12 @@ public class Mail {
 
     private String textBody;
     
-    private List<Attach> attachs=new ArrayList<Attach>();
+    private List<Attach> attachs=new ArrayList<>();
     
     private String reply;
-
+    
+    private Map<String,String> headers=new HashMap<>();
+    
     public Mail() {
         this.to = new ArrayList();
         this.reply=null;
@@ -127,4 +131,17 @@ public class Mail {
         this.reply = reply;
     }
 
+    /**
+     * @return the Headers
+     */
+    public Map<String,String> getHeaders() {
+        return headers;
+    }
+
+    /**
+     * @param headers the Headers to set
+     */
+    public void setHeaders(Map<String,String> headers) {
+        this.headers = headers;
+    } 
 }

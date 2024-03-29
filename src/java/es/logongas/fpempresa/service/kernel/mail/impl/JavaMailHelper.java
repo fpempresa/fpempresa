@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.Address;
@@ -52,6 +53,14 @@ public class JavaMailHelper {
             if (mail.getReply()!=null) {
                  message.setReplyTo(new InternetAddress[] {new InternetAddress(mail.getReply())});
             }
+            
+            Map<String,String> headers=mail.getHeaders();
+            if (headers!=null) {
+                for (Map.Entry<String,String> header:headers.entrySet()) {
+                    message.addHeader(header.getKey(),header.getValue());
+                }
+            }
+            
             
             MimeMultipart mimeMultiPart = new MimeMultipart("alternative");
             

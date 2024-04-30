@@ -117,6 +117,7 @@ public class EstadisticasServiceImpl implements EstadisticasService {
         CRUDService<Oferta, Integer> ofertaCrudService = crudServiceFactory.getService(Oferta.class);
         Filters filters=new Filters();
         filters.add(new Filter("fecha",fechaInicio , FilterOperator.dge));
+        filters.add(new Filter("cerrada",false , FilterOperator.eq));
         filters.add(new Filter("empresa.centro",true , FilterOperator.isnull));
         PageRequest pageRequest=new PageRequest(0, numOfertas);
         SearchResponse searchResponse=new SearchResponse(false);

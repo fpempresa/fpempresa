@@ -92,7 +92,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     Jws jws;  
 
     private static EventCountInDay eventCountInDayCancelarSubscripcion=new EventCountInDay(50);
-    private static EventCountInDay eventCountInDayResetearContrasenya=new EventCountInDay(50);
+    private static EventCountInDay eventCountInDayResetearContrasenya=new EventCountInDay(70);
     private static EventCountInDay eventCountInDayEnviarMailResetearContrasenya=new EventCountInDay(50);    
     
     private UsuarioDAO getUsuarioDAO() {

@@ -18,7 +18,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 <header class="c-section" ng-controller="HeaderController">
     <div class="c-section__content g--padding-horizontal-0">
         <div class="c-header-bar">
-            <a href="#/" ng-click="mainHideMenuItems()" class="c-header-bar__item">
+            <a href="#!/" ng-click="mainHideMenuItems()" class="c-header-bar__item">
                 <picture>
                     <source srcset="../img/logos/empleafp_corto.png" media="(max-width: 512px)">
                     <source srcset="../img/logos/empleafp.png" media="(max-width: 834px)">
@@ -39,10 +39,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <button  class="c-horizontal-menu__hamburger" id="buttonHamburger"></button>
                     <ul class="c-horizontal-menu__items c-horizontal-menu__items--movil-hide">
                         <li class="c-horizontal-menu__item"><a href ng-click="mainHideMenuItems();soporte()" >Soporte</a></li>
-                        <li class="c-horizontal-menu__item"><a href="#/ofertas" ng-click="mainHideMenuItems()" >Ofertas</a></li>
+                        <li class="c-horizontal-menu__item"><a href="#!/ofertas" ng-click="mainHideMenuItems()" >Ofertas</a></li>
                         <li ng-if="!user" class="c-horizontal-menu__item g--padding-horizontal-0 "><button ng-click="mainHideMenuItems();createAccount()" class="c-button  c-button--tertiary c-button--alt-secondary@tablet c-button--menu"   >Regístrate</button></li>
                         <li class="c-horizontal-menu__item g--padding-left-2  g--padding-right-0">
-                            <a ng-if="!user" href="#/login" class="c-button  c-button--tertiary c-button--secondary@tablet c-button--menu"  ng-click="mainHideMenuItems()"  >Acceder</a>
+                            <a ng-if="!user" href="#!/login" class="c-button  c-button--tertiary c-button--secondary@tablet c-button--menu"  ng-click="mainHideMenuItems()"  >Acceder</a>
                             <button ng-if="user" ng-click="mainHideMenuItems();homeUsuario()" class="c-button  c-button--alt-tertiary c-button--menu "  ><i class="fas fa-user"></i>&nbsp;{{user.name}}</button>
                         </li>
                     </ul>

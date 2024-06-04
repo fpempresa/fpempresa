@@ -24,15 +24,15 @@ app.run(['session', 'richDomain', function (session, richDomain) {
     }]);
 
 
-app.run(['$rootScope', '$location', function ($rootScope, $location) {
-        //Obligamos a ir a la página de los datos del titulado si  
-        //aun no ha puesto los datos del titulado
-        $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-            if (!$rootScope.user.titulado) {
-                $location.url("/curriculum/titulado/new");
-            }
-        });
+app.run(['$rootScope', '$location', '$transitions', function ($rootScope, $location, $transitions) {
+    //Obligamos a ir a la página de los datos del titulado si  
+    //aun no ha puesto los datos del titulado
+    $transitions.onSuccess({ },function(transition) {   
+        if (!$rootScope.user.titulado) {
+            $location.url("/curriculum/titulado/new");
+        }
+    });        
 
-    }]);
+}]);
 
 

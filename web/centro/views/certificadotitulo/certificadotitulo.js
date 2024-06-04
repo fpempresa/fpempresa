@@ -129,7 +129,7 @@ app.controller("CentroCertificadoAnyoController", ['$scope', 'serviceFactory', '
     }]);
 
 
-app.controller("CentroCertificadoTituloController", ['$scope', 'serviceFactory', '$stateParams', function ($scope, serviceFactory, $stateParams) {
+app.controller("CentroCertificadoTituloController", ['$scope', 'serviceFactory', '$stateParams','$timeout', function ($scope, serviceFactory, $stateParams, $timeout) {
 
         $scope.serviceCentro = serviceFactory.getService("Centro");
         $scope.serviceCiclo = serviceFactory.getService("Ciclo");
@@ -159,13 +159,17 @@ app.controller("CentroCertificadoTituloController", ['$scope', 'serviceFactory',
         }
         
         $scope.certificarTitulo=function(certificadoTitulo) {
-            var promise = $scope.serviceCentro.certificarTituloCentro($scope.centro.idCentro, $scope.anyo, $scope.idCiclo,certificadoTitulo.tipoDocumento,certificadoTitulo.nif,certificadoTitulo.certificadoTitulo,certificadoTitulo.idFormacionAcademica);
+            
+            $timeout(function() {
+                var promise = $scope.serviceCentro.certificarTituloCentro($scope.centro.idCentro, $scope.anyo, $scope.idCiclo,certificadoTitulo.tipoDocumento,certificadoTitulo.nif,certificadoTitulo.certificadoTitulo,certificadoTitulo.idFormacionAcademica);
 
-            promise.then(function () {
-                
-            }, function (businessMessages) {
-                $scope.businessMessages = businessMessages;
-            });
+                promise.then(function () {
+
+                }, function (businessMessages) {
+                    $scope.businessMessages = businessMessages;
+                });
+            }, 0);
+
         }
 
         $scope.loadCertificadosTituloCentro($scope.centro.idCentro, $scope.anyo, $scope.idCiclo);

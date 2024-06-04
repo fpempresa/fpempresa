@@ -16,20 +16,21 @@
 
 "use strict";
 
-angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'schemaEntities', '$q', 'langUtil', '$parse', function (serviceFactory, schemaEntities, $q, langUtil, $parse) {
+angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'schemaEntities', '$q', 'langUtil', '$parse', '$compile', function (serviceFactory, schemaEntities, $q, langUtil, $parse, $compile) {
 
 
         return {
             restrict: 'A',
+            replace: false, 
             scope: true,
-            require: ['^ix3Form', 'ngModel', '^select'],
+            terminal:true,
+            require: ['^ix3Form'],
+            priority:1000,
             compile: function (element, attributes) {
 
                 return {
                     pre: function ($scope, element, attributes, arrControllers) {
                         var ix3FormController = arrControllers[0];
-                        var ngModelController = arrControllers[1];
-                        var ngSelectController = arrControllers[2];
 
                         var filters = attributes.ix3Options;
                         var description = attributes.ix3Description;
@@ -143,9 +144,33 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
                         }
 
                         attributes.ngOptions = ngOptions;
-
+                        element.attr('ng-options', ngOptions);
+                        element.removeAttr("ix3-options");
+                        
+                        //Controlar el "Unknown" Or "Empty" <Option> de AngularJS
+                        //Ya que solo puede haber uno de los dos
+                        //y si hay ix3OptionsDepend no puede estar el "Empty" porque
+                        //el otro seguro que estará por la forma en la que funciona ix3Options
+                        if (ix3OptionsDepend) {
+                            var emptyValueOption=getEmptyValueOption(element)
+                            if (emptyValueOption!==null) {
+                                
+                                if (attributes.ngUnknowOptionText) {
+                                    throw Error("No puede estar a la vez el atributo ng-unknow-option-text y el <option>"); 
+                                }
+                                
+                                //Solo puede haber uno y debe ser UnknownOption
+                                //Pero aunque siempre está, usamos el texto que hay en <option>
+                                var text=$(emptyValueOption).text();
+                                element.attr('ng-unknow-option-text', text);
+                                $(emptyValueOption).remove();
+                            }
+                        }
+                        
+                        
                     },
                     post: function ($scope, element, attributes) {
+                        $compile(element)($scope);
                     }
                 };
             }
@@ -498,6 +523,27 @@ angular.module("es.logongas.ix3").directive('ix3Options', ['serviceFactory', 'sc
         /*********************************/        
         /*** END: set y get del modelo ***/ 
         /*********************************/
+        
+        
+        /***************************/        
+        /*** BEGIN: Empty Option ***/ 
+        /***************************/        
+        
+        function getEmptyValueOption(parentElement) {
+            var emptyValueOption = $(parentElement).find('option[value=""]');
+            if (emptyValueOption.length > 0) {
+                return emptyValueOption[0];
+            }
+            return null;
+        }
+        
+
+              
+        
+        
+        /***********************************/        
+        /*** END: set y get del modelo ***/ 
+        /***********************************/        
 
         //Clonea un objeto pero sin copiar los valores de su clave primarias y de sus claves naturales 
         function cloneObjectWithClearEntityKeys(obj, schemaProperty) {

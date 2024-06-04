@@ -26,7 +26,7 @@ app.config(['crudRoutesProvider', '$stateProvider', function (crudRoutesProvider
         });        
     }]);
 
-app.controller("ConfiguracionTituladoController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, serviceFactory) {
+app.controller("ConfiguracionTituladoController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'serviceFactory', '$timeout', function ($scope, genericControllerCrudDetail, controllerParams, serviceFactory, $timeout) {
         if ($scope.user.titulado) {
             controllerParams.id=$scope.user.titulado.idTitulado;
         }
@@ -38,14 +38,14 @@ app.controller("ConfiguracionTituladoController", ['$scope', 'genericControllerC
         };
         
         
-        $scope.checkTodasProvincias = function (todasProvincias) {
-
-            if (todasProvincias) {
-                $scope.model.configuracion.notificacionOferta.provincias = angular.copy($scope.provincias);
-            } else {
-                $scope.model.configuracion.notificacionOferta.provincias = [];
-            }
-
+        $scope.checkTodasProvincias = function () {
+            $timeout(function() {
+                if ($scope.todasProvincias) {
+                    $scope.model.configuracion.notificacionOferta.provincias = angular.copy($scope.provincias);
+                } else {
+                    $scope.model.configuracion.notificacionOferta.provincias = [];
+                }
+            }, 0);
         };
 
 

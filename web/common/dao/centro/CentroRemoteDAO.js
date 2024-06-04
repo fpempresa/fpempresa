@@ -32,13 +32,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: null
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        deferred.resolve(data);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    this.$http(config).then(function (response) {
+                        deferred.resolve(response.data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al getCertificadosAnyoCentro la entidad:" + status + "\n" + idCentro);
+                            throw new Error("Fallo al getCertificadosAnyoCentro la entidad:" + response.status + "\n" + idCentro);
                         }
                     });
 
@@ -59,13 +59,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: null
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        deferred.resolve(data);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    this.$http(config).then(function (response) {
+                        deferred.resolve(response.data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al getCertificadosCicloCentro la entidad:" + status + "\n" + idCentro + "," + anyo);
+                            throw new Error("Fallo al getCertificadosCicloCentro la entidad:" + response.status + "\n" + idCentro + "," + anyo);
                         }
                     });
 
@@ -86,13 +86,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: null
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        deferred.resolve(data);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    this.$http(config).then(function (response) {
+                        deferred.resolve(response.data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al getCertificadosTituloCentro la entidad:" + status + "\n" + idCentro + "," + anyo);
+                            throw new Error("Fallo al getCertificadosTituloCentro la entidad:" + response.status + "\n" + idCentro + "," + anyo);
                         }
                     });
 
@@ -113,13 +113,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: null
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
+                    this.$http(config).then(function (response) {
                         deferred.resolve(null);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al certificarTituloCentro la entidad:" + status + "\n" + idCentro + "," + anyo+","+nif+","+certificadoTitulo);
+                            throw new Error("Fallo al certificarTituloCentro la entidad:" + response.status + "\n" + idCentro + "," + anyo+","+nif+","+certificadoTitulo);
                         }
                     });
 

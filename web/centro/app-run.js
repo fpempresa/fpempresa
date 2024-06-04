@@ -24,14 +24,13 @@ app.run(['session', 'richDomain', function (session, richDomain) {
     }]);              
               
               
-app.run(['$rootScope', '$location', function ($rootScope, $location) {              
-        //Obligamos a ir a la página de los datos del titulado si  
-        //aun no ha puesto los datos del titulado
-        $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-            if ((($rootScope.user) && (!$rootScope.user.centro)) || ($rootScope.user.estadoUsuario==="RECHAZADO")) {
-                $location.url("/pertenenciacentro");
-            }
-        });
-    }]);
+app.run(['$rootScope', '$location', '$transitions', function ($rootScope, $location, $transitions) {             
+
+    $transitions.onSuccess({ },function(transition) {
+        if ((($rootScope.user) && (!$rootScope.user.centro)) || ($rootScope.user.estadoUsuario==="RECHAZADO")) {
+            $location.url("/pertenenciacentro");
+        }
+    });
+}]);
 
 

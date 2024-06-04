@@ -48,21 +48,21 @@
                 params: params
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al crear la entidad los datos:" + status + "\n" + data);
+                    throw new Error("Fallo al crear la entidad los datos:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -82,21 +82,21 @@
                 params: params
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página     
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al obtener la entidad:" + status + "\n" + data);
+                    throw new Error("Fallo al obtener la entidad:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -117,21 +117,21 @@
                 data: entity
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página    
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
+                    throw new Error("Fallo al insertar la entidad:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -152,21 +152,21 @@
                 data: entity
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página    
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
+                    throw new Error("Fallo al insertar la entidad:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -183,21 +183,21 @@
                 params: params
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al borrar la entidad:" + status + "\n" + data);
+                    throw new Error("Fallo al borrar la entidad:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -268,21 +268,21 @@
                 params: params
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al buscar los datos:" + status + "\n" + data);
+                    throw new Error("Fallo al buscar los datos:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -305,21 +305,21 @@
                 params: params
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un array vacio
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página   
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al obtener la entidad hija:" + status + "\n" + data);
+                    throw new Error("Fallo al obtener la entidad hija:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -340,21 +340,21 @@
                 params: params
             };
 
-            this.$http(config).success(function (data, status, headers, config) {
-                if (status === 204) {
+            this.$http(config).then(function (response) {
+                if (response.status === 204) {
                     //El 204 (no content) realmente es un null
                     deferred.resolve(null);
                 } else {
-                    deferred.resolve(data);
+                    deferred.resolve(response.data);
                 }
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else if (status === 0) {
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
+                } else if (response.status === 0) {
                     //No hacemos nada. Suele ser cuando el navegador ha cancelado la petición y estamos cambiando de página  
                     $log.info("Cancelada petición HTTP:" + config.url);
                 } else {
-                    throw new Error("Fallo al obtener los metadatos:" + status + "\n" + data);
+                    throw new Error("Fallo al obtener los metadatos:" + response.status + "\n" + response.data);
                 }
             });
 

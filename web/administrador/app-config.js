@@ -17,6 +17,7 @@
  */
 "use strict";
 
-app.config(['$uiViewScrollProvider', function($uiViewScrollProvider) {
+app.config(['$uiViewScrollProvider', '$qProvider', function($uiViewScrollProvider, $qProvider) {
     $uiViewScrollProvider.useAnchorScroll();
+    $qProvider.errorOnUnhandledRejections(false);
 }]);

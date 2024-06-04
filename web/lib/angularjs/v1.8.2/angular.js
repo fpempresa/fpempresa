@@ -32642,10 +32642,6 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
         return '?';
       };
 
-      //Añadido por Lorenzo para permitir poner texto a la opción desconocida
-      //ya que sino su texto siempre es ""
-      selectCtrl.ngUnknowOptionText=attr.ngUnknowOptionText || "";
-
       // Update the controller methods for multiple selectable options
       if (!multiple) {
 
@@ -32675,7 +32671,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
 
             option.element.setAttribute('selected', 'selected');
           } else {
-            selectCtrl.selectUnknownOrEmptyOption(value,selectCtrl.ngUnknowOptionText);
+            selectCtrl.selectUnknownOrEmptyOption(value);
           }
         };
 
@@ -35285,10 +35281,9 @@ var SelectController =
   self.hasEmptyOption = false;
   self.emptyOption = undefined;
 
-  self.renderUnknownOption = function(val,text) {
+  self.renderUnknownOption = function(val) {
     var unknownVal = self.generateUnknownOptionValue(val);
     self.unknownOption.val(unknownVal);
-    self.unknownOption.text(text);
     $element.prepend(self.unknownOption);
     setOptionSelectedStatus(self.unknownOption, true);
     $element.val(unknownVal);
@@ -35360,7 +35355,7 @@ var SelectController =
       var selectedOption = $element[0].options[$element[0].selectedIndex];
       setOptionSelectedStatus(jqLite(selectedOption), true);
     } else {
-      self.selectUnknownOrEmptyOption(value,self.ngUnknowOptionText || "--Opcion desconocida--");
+      self.selectUnknownOrEmptyOption(value);
     }
   };
 
@@ -35446,14 +35441,14 @@ var SelectController =
     return self.hasEmptyOption && $element[0].options[$element[0].selectedIndex] === self.emptyOption[0];
   };
 
-  self.selectUnknownOrEmptyOption = function(value,text) {
+  self.selectUnknownOrEmptyOption = function(value) {
     if (value == null && self.emptyOption) {
       self.removeUnknownOption();
       self.selectEmptyOption();
     } else if (self.unknownOption.parent().length) {
       self.updateUnknownOption(value);
     } else {
-      self.renderUnknownOption(value,text);
+      self.renderUnknownOption(value);
     }
   };
 

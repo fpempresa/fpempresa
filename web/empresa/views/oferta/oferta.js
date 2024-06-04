@@ -36,7 +36,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
     }]);
 
 
-app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$location', 'schemaEntities', 'serviceFactory', 'session', 'dialog', function ($scope, genericControllerCrudDetail, controllerParams, $location, schemaEntities, serviceFactory, session, dialog) {
+app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$location', 'schemaEntities', 'serviceFactory', 'session', 'dialog', '$timeout', function ($scope, genericControllerCrudDetail, controllerParams, $location, schemaEntities, serviceFactory, session, dialog, $timeout) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         
         $scope.numeroCandidatos=0;
@@ -100,13 +100,15 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
         }
 
 
-        $scope.checkTodosCiclos = function (todosCiclos) {
+        $scope.checkTodosCiclos = function () {
 
-            if (todosCiclos) {
-                $scope.model.ciclos = angular.copy($scope.ciclos);
-            } else {
-                $scope.model.ciclos = [];
-            }
+            $timeout(function() {
+                if ($scope.todosCiclos) {
+                    $scope.model.ciclos = angular.copy($scope.ciclos);
+                } else {
+                    $scope.model.ciclos = [];
+                }
+            }, 0);
 
         };
         

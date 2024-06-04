@@ -24,13 +24,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         method: 'POST',
                         url: this.baseUrl + '/' + this.entityName + "/cerrarOferta/" + idOferta + "/" + token
                     };
-                    this.$http(config).success(function () {
+                    this.$http(config).then(function (response) {
                         deferred.resolve(null);
-                    }).error(function (data, status) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al enviar la peticion de cancelar cerrar la oferta:" + status + "\n" + data);
+                            throw new Error("Fallo al enviar la peticion de cancelar cerrar la oferta:" + response.status + "\n" + response.data);
                         }
                     });
                     return deferred.promise;

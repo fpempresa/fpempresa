@@ -45,14 +45,14 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
                 }
             };
 
-            $http(config).success(function (user, status, headers, config) {
-                that.setUser(user);
-                deferred.resolve(user);
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
+            $http(config).then(function (response) {
+                that.setUser(response.data);
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
                 } else {
-                    throw new Error("Fallo al obtener los datos:" + status + "\n" + data);
+                    throw new Error("Fallo al obtener los datos:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -67,14 +67,14 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
                 url: ix3Configuration.session.url + '/session'
             };
 
-            $http(config).success(function (data, status, headers, config) {
+            $http(config).then(function (response) {
                 that.setUser(null);
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
                 } else {
-                    throw new Error("Fallo al obtener los datos:" + status + "\n" + data);
+                    throw new Error("Fallo al obtener los datos:" + response.status + "\n" + response.data);
                 }
             });
 
@@ -92,14 +92,14 @@ angular.module("es.logongas.ix3").factory("session", ['$http', 'ix3Configuration
                 }
             };
 
-            $http(config).success(function (user, status, headers, config) {
-                that.setUser(user);
-                deferred.resolve(user);
-            }).error(function (data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
+            $http(config).then(function (response) {
+                that.setUser(response.data);
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                if (response.status === 400) {
+                    deferred.reject(response.data);
                 } else {
-                    throw new Error("Fallo al obtener los datos:" + status + "\n" + data);
+                    throw new Error("Fallo al obtener los datos:" + response.status + "\n" + response.data);
                 }
             });
 

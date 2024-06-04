@@ -24,16 +24,16 @@ app.run(['session', 'richDomain', function (session, richDomain) {
     }]);              
               
               
-app.run(['$rootScope', '$location', function ($rootScope, $location) {              
-        //Obligamos a ir a la página de los datos del titulado si  
-        //aun no ha puesto los datos del titulado
-        $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
-            if (($rootScope.user) && (!$rootScope.user.empresa)) {
-                if (toState.url!=="/empresa/new") {
-                    $location.url("/empresa/new");
-                }
+app.run(['$rootScope', '$location', '$transitions', function ($rootScope, $location, $transitions) {             
+        //Obligamos a ir a la página de los datos de la empresa
+        //aun no ha puesto los datos de la empresa
+    $transitions.onSuccess({ },function(transition) {
+        if (($rootScope.user) && (!$rootScope.user.empresa)) {
+            if (transition.to().url!=="/empresa/new") {
+                $location.url("/empresa/new");
             }
-        });
-    }]);
+        }
+    });
+}]);
 
 

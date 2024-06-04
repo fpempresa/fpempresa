@@ -32,18 +32,18 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         params: params
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        if (status === 204) {
+                    this.$http(config).then(function (response) {
+                        if (response.status === 204) {
                             //El 204 (no content) realmente es un null
                             deferred.resolve(null);
                         } else {
-                            deferred.resolve(data);
+                            deferred.resolve(response.data);
                         }
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
+                            throw new Error("Fallo al insertar la entidad:" + response.status + "\n" + response.data);
                         }
                     });
 
@@ -64,18 +64,18 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         params: params
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        if (status === 204) {
+                    this.$http(config).then(function (response) {
+                        if (response.status === 204) {
                             //El 204 (no content) realmente es un null
                             deferred.resolve(null);
                         } else {
-                            deferred.resolve(data);
+                            deferred.resolve(response.data);
                         }
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al actualizar el centro:" + status + "\n" + data);
+                            throw new Error("Fallo al actualizar el centro:" + response.status + "\n" + response.data);
                         }
                     });
 
@@ -97,13 +97,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: data
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
+                    this.$http(config).then(function (response) {
                         deferred.resolve(null);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al insertar la entidad:" + status + "\n" + data);
+                            throw new Error("Fallo al insertar la entidad:" + response.status + "\n" + response.data);
                         }
                     });
 
@@ -116,13 +116,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         method: 'POST',
                         url: this.baseUrl + '/' + this.entityName + "/enviarMailResetearContrasenya/" + email
                     };
-                    this.$http(config).success(function () {
+                    this.$http(config).then(function () {
                         deferred.resolve(null);
-                    }).error(function (data, status) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al enviar la peticion de cambio de contaseña:" + status + "\n" + data);
+                            throw new Error("Fallo al enviar la peticion de cambio de contaseña:" + response.status + "\n" + response.data);
                         }
                     });
                     return deferred.promise;
@@ -134,13 +134,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         method: 'POST',
                         url: this.baseUrl + '/' + this.entityName + "/validarEmail/" + idIdentity + "/" + claveValidarEmail
                     };
-                    this.$http(config).success(function () {
+                    this.$http(config).then(function () {
                         deferred.resolve(null);
-                    }).error(function (data, status) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al enviar la peticion de cambio de contaseña:" + status + "\n" + data);
+                            throw new Error("Fallo al enviar la peticion de cambio de contaseña:" + response.status + "\n" + response.data);
                         }
                     });
                     return deferred.promise;
@@ -159,13 +159,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         url: this.baseUrl + '/' + this.entityName + "/resetearContrasenya",
                         data: data
                     };
-                    this.$http(config).success(function () {
+                    this.$http(config).then(function () {
                         deferred.resolve(null);
-                    }).error(function (data, status) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al enviar la peticion de cambio de contraseña:" + status + "\n" + data);
+                            throw new Error("Fallo al enviar la peticion de cambio de contraseña:" + response.status + "\n" + response.data);
                         }
                     });
                     return deferred.promise;
@@ -181,13 +181,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: mensajeSoporte
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
+                    this.$http(config).then(function (response) {
                         deferred.resolve(null);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo la petición al servidor:" + status + "\n" + data);
+                            throw new Error("Fallo la petición al servidor:" + response.status + "\n" + response.data);
                         }
                     });
 
@@ -204,13 +204,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: null
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        deferred.resolve(data);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    this.$http(config).then(function (response) {
+                        deferred.resolve(response.data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al notificarUsuarioInactivo la entidad:" + status + "\n" + idIdentity);
+                            throw new Error("Fallo al notificarUsuarioInactivo la entidad:" + response.status + "\n" + idIdentity);
                         }
                     });
 
@@ -226,13 +226,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         data: null
                     };
 
-                    this.$http(config).success(function (data, status, headers, config) {
-                        deferred.resolve(data);
-                    }).error(function (data, status, headers, config) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    this.$http(config).then(function (response) {
+                        deferred.resolve(response.data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al softDelete de la entidad:" + status + "\n" + idIdentity);
+                            throw new Error("Fallo al softDelete de la entidad:" + response.status + "\n" + idIdentity);
                         }
                     });
 
@@ -245,13 +245,13 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                         method: 'POST',
                         url: this.baseUrl + '/' + this.entityName + "/cancelarSuscripcion/" + idIdentity + "/" + token
                     };
-                    this.$http(config).success(function () {
+                    this.$http(config).then(function () {
                         deferred.resolve(null);
-                    }).error(function (data, status) {
-                        if (status === 400) {
-                            deferred.reject(data);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
                         } else {
-                            throw new Error("Fallo al enviar la peticion de cancelar la Suscripcion:" + status + "\n" + data);
+                            throw new Error("Fallo al enviar la peticion de cancelar la Suscripcion:" + response.status + "\n" + response.data);
                         }
                     });
                     return deferred.promise;

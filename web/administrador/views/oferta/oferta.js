@@ -37,10 +37,10 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
                 method: 'PATCH',
                 url: baseUrl + "/Oferta/" + idOferta + "/notificacionOferta"
             };
-            $http(config).success(function () {
+            $http(config).then(function () {
                 notify.info("Notificación Oferta","Correcta:" + idOferta);
-            }).error(function (data, status) {
-                notify.info("Notificación Oferta","Fallo:"+idOferta+"\n"+data);
+            }).catch(function (response) {
+                notify.info("Notificación Oferta","Fallo:"+idOferta+"\n"+response.data);
             });
         };
         
@@ -101,7 +101,7 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
     }]);
 
 
-app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory) {
+app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', 'dialog', 'schemaEntities', 'serviceFactory', '$timeout', function ($scope, genericControllerCrudDetail, controllerParams, dialog, schemaEntities, serviceFactory, $timeout) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
 
         $scope.buscarEmpresa = function () {
@@ -140,15 +140,59 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
             });
         }
         
-        $scope.checkTodosCiclos = function (todosCiclos) {
+        $scope.checkTodosCiclos = function () {
 
-            if (todosCiclos) {
-                $scope.model.ciclos = angular.copy($scope.ciclos);
-            } else {
-                $scope.model.ciclos = [];
-            }
+            $timeout(function() {
+                if ($scope.todosCiclos) {
+                    $scope.model.ciclos = angular.copy($scope.ciclos);
+                } else {
+                    $scope.model.ciclos = [];
+                }
+            }, 0);
 
         };
+        
+        function existsCiclo(ciclos,ciclo) {
+            for(var i=0;i<ciclos.length;i++) {
+                if ($scope.compareCiclo(ciclos[i],ciclo)) {
+                    return true;
+                }
+            }            
+            
+            return false;
+        }
+        
+        function equalsCiclos(ciclosA,ciclosB) {
+            if (!(Array.isArray(ciclosA) && Array.isArray(ciclosB))) {
+                return false;
+            }
+            
+            if (ciclosA.length!==ciclosB.length) {
+                return false;
+            }
+            
+            for(var i=0;i<ciclosA.length;i++) {
+                if (existsCiclo(ciclosB,ciclosA[i])===false) {
+                    return false;
+                }
+            }
+            
+            return true;
+            
+        }
+        
+        $scope.$watchCollection("model.ciclos", function (newCiclos, oldCiclos) {        
+            if (newCiclos === oldCiclos) {
+                return;
+            }
+            
+            if (equalsCiclos(newCiclos,$scope.ciclos)) {
+                $scope.todosCiclos=true;
+            } else {
+                $scope.todosCiclos=false;
+            }
+
+        });        
 
         $scope.$watch("model.familia", function (newFamilia, oldFamilia) {
 

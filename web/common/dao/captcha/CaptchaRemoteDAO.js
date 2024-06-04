@@ -35,13 +35,13 @@ angular.module("common").config(['remoteDAOFactoryProvider','$injector', functio
                     data: null
                 };
 
-                this.$http(config).success(function (data, status, headers, config) {
-                    deferred.resolve(data);
-                }).error(function (data, status, headers, config) {
-                    if (status === 400) {
-                        deferred.reject(data);
+                this.$http(config).then(function (response) {
+                    deferred.resolve(response.data);
+                }).catch(function (response) {
+                    if (response.status === 400) {
+                        deferred.reject(response.data);
                     } else {
-                        throw new Error("Fallo al getCaptcha la entidad:" + status);
+                        throw new Error("Fallo al getCaptcha la entidad:" + response.status);
                     }
                 });
 

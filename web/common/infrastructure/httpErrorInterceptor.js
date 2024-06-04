@@ -26,7 +26,7 @@ angular.module("common").config(['$httpProvider', function ($httpProvider) {
                     'responseError': function (response) {
                         if (response.status === 403) {
                             alert("La sesión ha caducado");
-                            window.location.href = getContextPath() + "/site/index.html#/login";
+                            window.location.href = getContextPath() + "/site/index.html#!/login";
                             response.data=[
                                 {
                                     propertyName:null,

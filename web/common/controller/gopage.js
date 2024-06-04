@@ -35,11 +35,11 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
             }
         }
         function goHomeApp() {
-            $window.location.href = getContextPath()+"/site/index.html#/";
+            $window.location.href = getContextPath()+"/site/index.html#!/";
         }               
 
         function goBuscarOfertas() {
-            $window.location.href = getContextPath()+"/titulado/index.html#/oferta/search_todas";
+            $window.location.href = getContextPath()+"/titulado/index.html#!/oferta/search_todas";
         }
 
         return {
@@ -68,16 +68,16 @@ angular.module("common").service("goPage", ['session', '$window', '$rootScope', 
             },
             createAccount:function(tipoUsuario) {
                 if (tipoUsuario) {
-                    $window.location.href = getContextPath() + "/site/index.html#/createaccount/init/"+tipoUsuario;
+                    $window.location.href = getContextPath() + "/site/index.html#!/createaccount/init/"+tipoUsuario;
                 } else {
-                    $window.location.href = getContextPath() + "/site/index.html#/createaccount/init";
+                    $window.location.href = getContextPath() + "/site/index.html#!/createaccount/init";
                 }
             },
             login:function() {
-                    $window.location.href = getContextPath() + "/site/index.html#/login";  
+                    $window.location.href = getContextPath() + "/site/index.html#!/login";  
             },
             soporte:function() {
-                    $window.location.href = getContextPath() + "/site/index.html#/docs/soporte";  
+                    $window.location.href = getContextPath() + "/site/index.html#!/docs/soporte";  
             },
         };
     }]);

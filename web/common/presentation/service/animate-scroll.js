@@ -21,20 +21,19 @@
 (function (undefined) {
     "use strict";
 
-    angular.module("common").run(['$rootScope', '$window', '$location', 'animateScroll', function ($rootScope, $window, $location, animateScroll) {
+    angular.module("common").run(['$transitions', 'animateScroll', function ($transitions, animateScroll) {
 
 
-            $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
+        $transitions.onSuccess({ },function(transition) {
+            if (transition.to().scroll)  {
+                animateScroll.toElement(transition.to().scroll);
+            }
                 
-                if (toState.scroll)  {
-                    animateScroll.toElement(toState.scroll);
-                }
-                
-            });
+         });
 
 
 
-        }]);
+    }]);
 
 
 /**

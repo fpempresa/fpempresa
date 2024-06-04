@@ -68,7 +68,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <div class="row" >
                         <div class="col-xs-10  col-xs-offset-2 form-horizontal">
                             <br>
-                            <spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
+                            <spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#!/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
                         </div> 
                     </div> 
                     
@@ -165,20 +165,20 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <legend class="form__title" ng-show="model.tipoUsuario === 'TITULADO'">Curriculum del Titulado</legend>
                     <div class="row" ng-show="model.tipoUsuario === 'TITULADO'" >
                         <div class="col-xs-12">
-                            <a   class="" ng-href="{{'#/usuario/curriculum/titulado/edit/'+model.titulado.idTitulado}}">Datos personales</a>
+                            <a   class="" ng-href="{{'#!/usuario/curriculum/titulado/edit/'+model.titulado.idTitulado}}">Datos personales</a>
                         </div>
                           
                     </div>
                     <br>
                     <div class="row" ng-show="model.tipoUsuario === 'TITULADO'" >
                         <div class="col-xs-12 col-sm-3">
-                            <a   class="" ng-href="{{'#/usuario/curriculum/formacionacademica/search/titulado.idTitulado/'+model.titulado.idTitulado}}">Formaci&oacute;n académica</a> 
+                            <a   class="" ng-href="{{'#!/usuario/curriculum/formacionacademica/search/titulado.idTitulado/'+model.titulado.idTitulado}}">Formaci&oacute;n académica</a> 
                         </div>                        
                         <div class="col-xs-12 col-sm-3">
-                            <a   class="" ng-href="{{'#/usuario/curriculum/experiencialaboral/search/titulado.idTitulado/'+model.titulado.idTitulado}}">Experiencia laboral</a>
+                            <a   class="" ng-href="{{'#!/usuario/curriculum/experiencialaboral/search/titulado.idTitulado/'+model.titulado.idTitulado}}">Experiencia laboral</a>
                         </div>
                         <div class="col-xs-12 col-sm-3">
-                            <a   class="" ng-href="{{'#/usuario/curriculum/tituloidioma/search/titulado.idTitulado/'+model.titulado.idTitulado}}" >Idiomas</a>
+                            <a   class="" ng-href="{{'#!/usuario/curriculum/tituloidioma/search/titulado.idTitulado/'+model.titulado.idTitulado}}" >Idiomas</a>
                         </div> 
                     </div>
                     <br>

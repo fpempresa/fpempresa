@@ -82,7 +82,7 @@ public class NotificationImpl implements Notification {
         int idIdentity=usuario.getIdIdentity();
 
         PublicTokenCancelarSubcripcion publicTokenCancelarSubcripcion=new PublicTokenCancelarSubcripcion(idIdentity, jws, secretToken);
-        String urlHTMLUnsubscribe=getAppURL() + "/site/index.html#/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
+        String urlHTMLUnsubscribe=getAppURL() + "/site/index.html#!/cancelar-suscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
         String urlApiPOSTUnsubscribe=getAppURL() + "/api/site/Usuario/cancelarSuscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
 
         BodyContent bodyContent=new BodyContent();
@@ -90,12 +90,12 @@ public class NotificationImpl implements Notification {
         bodyContent.parrafos="Hola " + StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ","
                 + "<br>tenemos una nueva oferta de empleo que puede interesarte."
                 + "<br><br>Es de la empresa <strong>'" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "'</strong> en <strong>'" + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + "'</strong> para el puesto de <strong>'" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "'</strong>."
-                + "<br><br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta."
+                + "<br><br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#!/login\">EmpleaFP</a> e inscribirte en la oferta."
                 + "<br><br><p style=\"font-style: italic;padding-left: 10px;color:#383838 \">" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "</p>"
-                + "<strong>Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#/login\">EmpleaFP</a> e inscribirte en la oferta</strong>"
+                + "<strong>Si tienes interés en la oferta,  deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#!/login\">EmpleaFP</a> e inscribirte en la oferta</strong>"
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para inscribirte en la Oferta";
-        bodyContent.linkButton=getAppURL() + "/site/index.html#/login";
+        bodyContent.linkButton=getAppURL() + "/site/index.html#!/login";
         bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+"<br><br>EmpleaFP te ha enviado este correo electrónico porque te has registrado como titulado en la web " + getAppURL() +" y has marcado que deseas recibir notificaciones de nuevas ofertas de empleo.<br><br>Para que no te volvamos a enviar correos con nuevas ofertas de empleo pincha <a href=\"" + urlHTMLUnsubscribe + "\">aquí</a>."
                 + "<br>¿No te funciona el anterior enlace para dejar de recibir correos? Pega el siguiente enlace en el navegador:<br>"+urlHTMLUnsubscribe;
 
@@ -140,7 +140,7 @@ public class NotificationImpl implements Notification {
         bodyContent.parrafos="Un nuevo candidato llamado <strong>" + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getNombre()) + " " + StringEscapeUtils.escapeHtml4(candidato.getUsuario().getApellidos()) + "</strong> se ha inscrito en la siguiente oferta:" 
                 + "<p style=\"font-style: italic;padding-left:10px\">" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "</p>"
                 + "Se ha adjuntado un PDF con su currículum en este correo."
-                + "<br><br>Si desea cerrar la oferta y que de esa forma que no le lleguen nuevos correos de esta oferta, pinche <a href=\"" + getAppURL() + "/site/index.html#/cerrar-oferta/" + idOferta + "/" + publicTokenCerrarOferta.toString() + "\">aquí</a>."
+                + "<br><br>Si desea cerrar la oferta y que de esa forma que no le lleguen nuevos correos de esta oferta, pinche <a href=\"" + getAppURL() + "/site/index.html#!/cerrar-oferta/" + idOferta + "/" + publicTokenCerrarOferta.toString() + "\">aquí</a>."
                 + "<br><br><strong>*** No responda a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
 
@@ -207,7 +207,7 @@ public class NotificationImpl implements Notification {
     
     @Override
     public void resetearContrasenya(Usuario usuario) {
-        String url=getAppURL() + "/site/index.html#/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya();
+        String url=getAppURL() + "/site/index.html#!/resetear-contrasenya/" + usuario.getIdIdentity() + "/" + usuario.getClaveResetearContrasenya();
         
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Cambiar contraseña";
@@ -229,7 +229,7 @@ public class NotificationImpl implements Notification {
 
     @Override
     public void validarCuenta(Usuario usuario) {
-        String url=getAppURL() + "/site/index.html#/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail();
+        String url=getAppURL() + "/site/index.html#!/validar-email/" + usuario.getIdIdentity() + "/" + usuario.getClaveValidacionEmail();
         
         BodyContent bodyContent=new BodyContent();
         bodyContent.titulo="Confirmar tu dirección de correo";
@@ -277,10 +277,10 @@ public class NotificationImpl implements Notification {
         bodyContent.titulo="Tu cuenta va a ser borrada pronto";
         bodyContent.parrafos="Hace tiempo que no has accedido a tu cuenta de <a href='" + getAppURL() + "'>EmpleaFP</a> que como sabrás es la mayor bolsa de empleo de la formación profesional." 
                 + "<br><br>La normativa en protección de datos nos obliga tratar en todo momento con datos actualizados."
-                + "<br><br><strong>Si no accedes antes de 15 días a tu cuenta de <a href='" + getAppURL() + "/site/index.html#/login'>EmpleaFP</a>, procederemos a borrarla</strong>."
+                + "<br><br><strong>Si no accedes antes de 15 días a tu cuenta de <a href='" + getAppURL() + "/site/index.html#!/login'>EmpleaFP</a>, procederemos a borrarla</strong>."
                 + "<br><br><strong>*** No respondas a este correo, ha sido enviado automáticamente ***</strong>";
         bodyContent.labelButton="Acceder a EmpleaFP para evitar el borrado de la cuenta";
-        bodyContent.linkButton=getAppURL() + "/site/index.html#/login";
+        bodyContent.linkButton=getAppURL() + "/site/index.html#!/login";
         bodyContent.pie=toHTMLRetornoCarro(PIE_RGPD_MAIL)+ "<br><br>"+toHTMLRetornoCarro(BAJA_BY_EMAIL);
         
         Mail mail = new Mail();
@@ -479,13 +479,13 @@ public class NotificationImpl implements Notification {
                 + "                                        </tr>\n"
                 + "                                        <tr>\n"
                 + "                                            <td style='padding-top:20px;font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;line-height:19px;color:#707070;text-align:center;'>\n"
-                + "                                                <a href='" + getAppURL() + "/site/index.html#/legal/aviso-legal' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Aviso Legal</a>\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#!/legal/aviso-legal' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Aviso Legal</a>\n"
                 + "                                                •\n"
-                + "                                                <a href='" + getAppURL() + "/site/index.html#/legal/politica-privacidad' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Política de Privacidad</a>\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#!/legal/politica-privacidad' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Política de Privacidad</a>\n"
                 + "                                                •\n"
-                + "                                                <a href='" + getAppURL() + "/site/index.html#/legal/terminos-uso' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Términos de uso</a>\n"
+                + "                                                <a href='" + getAppURL() + "/site/index.html#!/legal/terminos-uso' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Términos de uso</a>\n"
                 + "                                                •\n"
-                + "                                                <a href='" + getAppURL() + "/site/index.html#/docs/soporte' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Soporte</a>\n"                        
+                + "                                                <a href='" + getAppURL() + "/site/index.html#!/docs/soporte' style='font-family:Helvetica neue, Helvetica, Arial, Verdana, sans-serif;font-size:13px;color:#707070;text-decoration:none;'>Soporte</a>\n"                        
                 + "                                            </td>\n"
                 + "                                        </tr>\n"
                 + "                                        <tr>\n"

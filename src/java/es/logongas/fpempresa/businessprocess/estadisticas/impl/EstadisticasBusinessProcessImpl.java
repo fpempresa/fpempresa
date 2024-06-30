@@ -16,11 +16,19 @@
 package es.logongas.fpempresa.businessprocess.estadisticas.impl;
 
 import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessProcess;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.NombreEstadistica;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
 import es.logongas.ix3.core.BusinessException;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,8 +44,34 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
     EstadisticasService estadisticasService;
 
     @Override
-    public Estadisticas getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException {
-        return estadisticasService.getEstadisticasAdministrador(getEstadisticasAdministradorArguments.dataSession);
+    public Estadistica getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException {        
+        NombreEstadistica nombreEstadistica=getEstadisticasAdministradorArguments.nombreEstadistica;
+        GroupByEstadistica groupByEstadistica=getEstadisticasAdministradorArguments.groupByEstadistica;
+        Date filterDesde=getEstadisticasAdministradorArguments.filterDesde;
+        Date filterHasta=getEstadisticasAdministradorArguments.filterHasta;
+        ComunidadAutonoma filterComunidadAutonoma=getEstadisticasAdministradorArguments.filterComunidadAutonoma;
+        Provincia filterProvincia=getEstadisticasAdministradorArguments.filterProvincia;
+        Familia filterFamilia=getEstadisticasAdministradorArguments.filterFamilia;
+        Ciclo filterCiclo=getEstadisticasAdministradorArguments.filterCiclo;
+        Estadistica estadistica;
+        
+        switch (nombreEstadistica) {
+            case Ofertas:
+                estadistica=estadisticasService.getEstadisticaOfertas(getEstadisticasAdministradorArguments.dataSession,groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);                
+                break;
+            case Candidatos:
+                estadistica=estadisticasService.getEstadisticaCandidatos(getEstadisticasAdministradorArguments.dataSession,groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);                                
+                break;
+            case Empresas:
+                estadistica=estadisticasService.getEstadisticaEmpresas(getEstadisticasAdministradorArguments.dataSession,groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);                                                
+                break; 
+            default:
+                throw new RuntimeException("El valor de nombreEstadistica es desconocido:" + nombreEstadistica);
+        }
+
+        
+        return estadistica;       
+        
     }
 
     @Override

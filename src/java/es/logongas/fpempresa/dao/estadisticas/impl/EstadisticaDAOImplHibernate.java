@@ -18,12 +18,20 @@ package es.logongas.fpempresa.dao.estadisticas.impl;
 
 import es.logongas.fpempresa.dao.estadisticas.EstadisticaDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.estadisticas.CicloEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.DataValue;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
 import es.logongas.ix3.dao.DataSession;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -264,4 +272,545 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         return sumEmpresas.intValue();
     }
 
+    @Override
+    public Estadistica getEstadisticaOfertas(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String title;
+        String xLabel;
+        String yLabel="Nº de Ofertas";    
+        List<DataValue> dataValues;
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma==null)) {
+            throw new RuntimeException("No es posible que esté la provincia sin que esté la comunidad autónoma");
+        }
+        if ((filterCiclo!=null) && (filterFamilia==null)) {
+            throw new RuntimeException("No es posible que esté el ciclo sin que esté la familia");
+        }  
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma!=null)) {
+            if (filterProvincia.getComunidadAutonoma().getIdComunidadAutonoma()!=filterComunidadAutonoma.getIdComunidadAutonoma()) {
+                throw new RuntimeException("La comunidad autonoma de la provincia no coincide con la comunidad autonoma");
+            }
+        } 
+        
+        if ((filterCiclo!=null) && (filterFamilia!=null)) {
+            if (filterCiclo.getFamilia().getIdFamilia()!=filterFamilia.getIdFamilia()) {
+                throw new RuntimeException("La familia del ciclo no coincide con la familia");
+            }
+        } 
+        
+        boolean addFromCiclos=false;
+        if (filterCiclo!=null) {
+            addFromCiclos=true;
+        }
+        
+        String selectColumns;
+        String groupBy;  
+        
+        
+        switch (groupByEstadistica) {
+            case Ninguna:
+                selectColumns="COUNT(*) AS num";
+                groupBy=""; 
+                xLabel="";
+                title="Todas las ofertas";
+                break;
+            case Ubicacion:
+                if ((filterComunidadAutonoma==null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,ComunidadAutonoma.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Comunidad autónoma";
+                    title="Ofertas por comunidad";                    
+                } else if ((filterComunidadAutonoma==null) && (filterProvincia!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté la provincia y no la comunidad autónoma:"+filterComunidadAutonoma+","+filterProvincia);
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,provincia.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Provincia";
+                    title="Ofertas por provincia";                     
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todas las ofertas";                      
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterComunidadAutonoma+","+filterProvincia);
+                }
+                
+                break;
+            case CatalogoAcademico:
+                if ((filterFamilia==null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,familia.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Familia profesinal";
+                    title="Ofertas por familia profesional";                      
+                } else if ((filterFamilia==null) && (filterCiclo!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté el ciclo y no la familia:"+filterFamilia+","+filterCiclo);
+                } else if ((filterFamilia!=null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,ciclo.descripcion as g1";
+                    groupBy="GROUP BY g1";                    
+                    addFromCiclos=true;
+                    xLabel="Ciclo formativo";
+                    title="Ofertas por ciclo formativo";                      
+                } else if ((filterFamilia!=null) && (filterCiclo!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todas las ofertas";                      
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterFamilia+","+filterCiclo);
+                }                
+                
+                break;
+            default:
+                throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);
+        }
+        
+        
+        StringBuilder sbWhere=new StringBuilder();
+        if (filterDesde!=null) {
+            sbWhere.append(" AND DATE(oferta.fecha)>=DATE(?)");
+        }
+        if (filterHasta!=null) {
+            sbWhere.append(" AND DATE(oferta.fecha)<=DATE(?)");
+        }        
+        if (filterComunidadAutonoma!=null) {
+            sbWhere.append(" AND ComunidadAutonoma.idComunidadAutonoma=?");
+        }  
+        if (filterProvincia!=null) {
+            sbWhere.append(" AND provincia.idProvincia=?");
+        }         
+        if (filterFamilia!=null) {
+            sbWhere.append(" AND familia.idFamilia=?");
+        } 
+        if (filterCiclo!=null) {
+            sbWhere.append(" AND ciclo.idCiclo=?");
+        } 
+
+        String sql = 
+                "SELECT \n" +
+                selectColumns + "\n"+
+                "FROM \n" +
+                "	oferta INNER JOIN \n" +
+                "	familia ON oferta.idFamilia=familia.idFamilia INNER JOIN\n" +
+                (addFromCiclos==true?"	ofertaciclo ON oferta.idOferta=ofertaciclo.idOferta INNER JOIN\n":"") +
+                (addFromCiclos==true?"	ciclo ON ofertaciclo.idCiclo=ciclo.idCiclo INNER JOIN \n":"") +
+                "	municipio ON oferta.idMunicipio=municipio.idMunicipio INNER JOIN\n" +
+                "	provincia ON provincia.idProvincia=municipio.idProvincia INNER JOIN\n" +
+                "	ComunidadAutonoma ON ComunidadAutonoma.idComunidadAutonoma=provincia.idComunidadAutonoma\n" +
+                "	\n" +
+                "WHERE \n" +
+                "       1=1 " + sbWhere + "\n" +
+                "       " + groupBy + "\n" +
+                "ORDER BY \n" +
+                "	num DESC";
+
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int iParam=0;
+        
+        if (filterDesde!=null) {
+            sqlQuery.setDate(iParam++,filterDesde );
+        }
+        if (filterHasta!=null) {
+            sqlQuery.setDate(iParam++,filterHasta );
+        }       
+        if (filterComunidadAutonoma!=null) {
+            sqlQuery.setInteger(iParam++, filterComunidadAutonoma.getIdComunidadAutonoma());
+        }  
+        if (filterProvincia!=null) {
+            sqlQuery.setInteger(iParam++, filterProvincia.getIdProvincia());
+        }         
+        if (filterFamilia!=null) {
+            sqlQuery.setInteger(iParam++, filterFamilia.getIdFamilia());
+        } 
+        if (filterCiclo!=null) {
+            sqlQuery.setInteger(iParam++, filterCiclo.getIdCiclo());
+        } 
+
+        dataValues=getListDataValuesFromDatos(sqlQuery.list());
+        
+        Estadistica estadistica=new Estadistica(title, xLabel, yLabel, dataValues);
+        
+        return estadistica;
+    }
+
+    @Override
+    public Estadistica getEstadisticaCandidatos(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String title;
+        String xLabel;
+        String yLabel="Nº de candidatos";    
+        List<DataValue> dataValues;
+    
+    
+        if ((filterProvincia!=null) && (filterComunidadAutonoma==null)) {
+            throw new RuntimeException("No es posible que esté la provincia sin que esté la comunidad autónoma");
+        }
+        if ((filterCiclo!=null) && (filterFamilia==null)) {
+            throw new RuntimeException("No es posible que esté el ciclo sin que esté la familia");
+        }  
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma!=null)) {
+            if (filterProvincia.getComunidadAutonoma().getIdComunidadAutonoma()!=filterComunidadAutonoma.getIdComunidadAutonoma()) {
+                throw new RuntimeException("La comunidad autonoma de la provincia no coincide con la comunidad autonoma");
+            }
+        } 
+        
+        if ((filterCiclo!=null) && (filterFamilia!=null)) {
+            if (filterCiclo.getFamilia().getIdFamilia()!=filterFamilia.getIdFamilia()) {
+                throw new RuntimeException("La familia del ciclo no coincide con la familia");
+            }
+        } 
+        
+        boolean addFromCiclos=false;
+        if (filterCiclo!=null) {
+            addFromCiclos=true;
+        }
+        
+        String selectColumns;
+        String groupBy;  
+        
+        
+        switch (groupByEstadistica) {
+            case Ninguna:
+                selectColumns="COUNT(*) AS num";
+                groupBy="";
+                xLabel="";
+                title="Todos los candidatos";
+                break;                 
+            case Ubicacion:
+                
+                if ((filterComunidadAutonoma==null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,ComunidadAutonoma.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Comunidad autónoma";
+                    title="Candidatos por comunidad";                      
+                } else if ((filterComunidadAutonoma==null) && (filterProvincia!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté la provincia y no la comunidad autónoma:"+filterComunidadAutonoma+","+filterProvincia);
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,provincia.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Provincia";
+                    title="Candidatos por provincia";                     
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todos los candidatos";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterComunidadAutonoma+","+filterProvincia);
+                }
+                
+                break;
+            case CatalogoAcademico:
+                
+                if ((filterFamilia==null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,familia.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Familia profesional";
+                    title="Candidatos por familia profesional";                     
+                } else if ((filterFamilia==null) && (filterCiclo!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté el ciclo y no la familia:"+filterFamilia+","+filterCiclo);
+                } else if ((filterFamilia!=null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,ciclo.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    addFromCiclos=true;
+                    xLabel="Ciclo formativo";
+                    title="Candidatos por ciclo formativo";                     
+                } else if ((filterFamilia!=null) && (filterCiclo!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todos los candidatos";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterFamilia+","+filterCiclo);
+                }                
+                
+                break;
+            default:
+                throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);
+        }
+        
+        
+        StringBuilder sbWhere=new StringBuilder();
+        if (filterDesde!=null) {
+            sbWhere.append(" AND DATE(candidato.fecha)>=DATE(?)");
+        }
+        if (filterHasta!=null) {
+            sbWhere.append(" AND DATE(candidato.fecha)<=DATE(?)");
+        }        
+        if (filterComunidadAutonoma!=null) {
+            sbWhere.append(" AND ComunidadAutonoma.idComunidadAutonoma=?");
+        }  
+        if (filterProvincia!=null) {
+            sbWhere.append(" AND provincia.idProvincia=?");
+        }         
+        if (filterFamilia!=null) {
+            sbWhere.append(" AND familia.idFamilia=?");
+        } 
+        if (filterCiclo!=null) {
+            sbWhere.append(" AND ciclo.idCiclo=?");
+        } 
+
+        String sql = 
+                "SELECT \n" +
+                selectColumns + "\n"+
+                "FROM \n" +
+                "	candidato INNER JOIN \n" +
+                "	usuario ON usuario.idIdentity=candidato.idCandidato INNER JOIN \n" +
+                "	titulado ON titulado.idTitulado=usuario.idTitulado INNER JOIN    \n" +             
+                "	oferta ON oferta.idOferta=candidato.idOferta INNER JOIN\n" +
+                "	familia ON oferta.idFamilia=familia.idFamilia INNER JOIN\n" +
+                (addFromCiclos==true?"	ofertaciclo ON oferta.idOferta=ofertaciclo.idOferta INNER JOIN\n":"") +
+                (addFromCiclos==true?"	ciclo ON ofertaciclo.idCiclo=ciclo.idCiclo INNER JOIN \n":"") +
+                "	municipio ON municipio.idMunicipio=titulado.idMunicipio INNER JOIN\n" +
+                "	provincia ON provincia.idProvincia=municipio.idProvincia INNER JOIN\n" +
+                "	ComunidadAutonoma ON ComunidadAutonoma.idComunidadAutonoma=provincia.idComunidadAutonoma\n" +
+                "	\n" +
+                "WHERE \n" +
+                "       1=1 " + sbWhere + "\n" +
+                "       " + groupBy + "\n" +
+                "ORDER BY \n" +
+                "	num DESC";
+
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int iParam=0;
+        
+        if (filterDesde!=null) {
+            sqlQuery.setDate(iParam++,filterDesde );
+        }
+        if (filterHasta!=null) {
+            sqlQuery.setDate(iParam++,filterHasta );
+        }       
+        if (filterComunidadAutonoma!=null) {
+            sqlQuery.setInteger(iParam++, filterComunidadAutonoma.getIdComunidadAutonoma());
+        }  
+        if (filterProvincia!=null) {
+            sqlQuery.setInteger(iParam++, filterProvincia.getIdProvincia());
+        }         
+        if (filterFamilia!=null) {
+            sqlQuery.setInteger(iParam++, filterFamilia.getIdFamilia());
+        } 
+        if (filterCiclo!=null) {
+            sqlQuery.setInteger(iParam++, filterCiclo.getIdCiclo());
+        } 
+
+        dataValues=getListDataValuesFromDatos(sqlQuery.list());
+        
+        Estadistica estadistica=new Estadistica(title, xLabel, yLabel, dataValues);
+        
+        return estadistica;
+
+    }    
+    
+
+    @Override
+    public Estadistica getEstadisticaEmpresas(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String title;
+        String xLabel;
+        String yLabel="Nº de empresas";    
+        List<DataValue> dataValues;
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma==null)) {
+            throw new RuntimeException("No es posible que esté la provincia sin que esté la comunidad autónoma");
+        }
+        if ((filterCiclo!=null) && (filterFamilia==null)) {
+            throw new RuntimeException("No es posible que esté el ciclo sin que esté la familia");
+        }  
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma!=null)) {
+            if (filterProvincia.getComunidadAutonoma().getIdComunidadAutonoma()!=filterComunidadAutonoma.getIdComunidadAutonoma()) {
+                throw new RuntimeException("La comunidad autonoma de la provincia no coincide con la comunidad autonoma");
+            }
+        } 
+        
+        if ((filterCiclo!=null) && (filterFamilia!=null)) {
+            if (filterCiclo.getFamilia().getIdFamilia()!=filterFamilia.getIdFamilia()) {
+                throw new RuntimeException("La familia del ciclo no coincide con la familia");
+            }
+        } 
+        
+        boolean addFromFamilia=false;
+        if (filterFamilia!=null) {
+            addFromFamilia=true;
+        }
+        boolean addFromCiclos=false;
+        if (filterCiclo!=null) {
+            addFromCiclos=true;
+        }
+        
+        String selectColumns;
+        String groupBy;  
+        
+        
+        switch (groupByEstadistica) {
+            case Ninguna:
+                selectColumns="COUNT(*) AS num";
+                groupBy="";
+                xLabel="";
+                title="Todas las empresas";             
+                break;                
+            case Ubicacion:
+                if ((filterComunidadAutonoma==null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,ComunidadAutonoma.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Comunidad autónoma";
+                    title="Empresas por comunidad";                     
+                } else if ((filterComunidadAutonoma==null) && (filterProvincia!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté la provincia y no la comunidad autónoma:"+filterComunidadAutonoma+","+filterProvincia);
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,provincia.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Provincia";
+                    title="Empresas por provincia";                     
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todas las empresas";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterComunidadAutonoma+","+filterProvincia);
+                }
+                
+                break;
+            case CatalogoAcademico:               
+                if ((filterFamilia==null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,familia.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Familia profesional";
+                    title="Empresas por familia profesional"; 
+                    addFromFamilia=true;
+                } else if ((filterFamilia==null) && (filterCiclo!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté el ciclo y no la familia:"+filterFamilia+","+filterCiclo);
+                } else if ((filterFamilia!=null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,ciclo.descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    addFromCiclos=true;
+                    xLabel="Ciclo formativo";
+                    title="Empresas por ciclo formativo"; 
+                    addFromCiclos=true;                    
+                } else if ((filterFamilia!=null) && (filterCiclo!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todas las empresas";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterFamilia+","+filterCiclo);
+                }                
+                
+                break;
+            default:
+                throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);                                
+        }
+        
+        
+        StringBuilder sbWhere=new StringBuilder();
+        if (filterDesde!=null) {
+            sbWhere.append(" AND DATE(empresa.fecha)>=DATE(?)");
+        }
+        if (filterHasta!=null) {
+            sbWhere.append(" AND DATE(empresa.fecha)<=DATE(?)");
+        }        
+        if (filterComunidadAutonoma!=null) {
+            sbWhere.append(" AND ComunidadAutonoma.idComunidadAutonoma=?");
+        }  
+        if (filterProvincia!=null) {
+            sbWhere.append(" AND provincia.idProvincia=?");
+        }          
+        if (filterFamilia!=null) {
+            sbWhere.append(" AND familia.idFamilia=?");
+        } 
+        if (filterCiclo!=null) {
+            sbWhere.append(" AND ciclo.idCiclo=?");
+        } 
+        
+        String sql = 
+                "SELECT \n" +
+                selectColumns + "\n"+
+                "FROM \n" +
+                "	empresa INNER JOIN \n" +
+                (((addFromFamilia==true) || (addFromCiclos==true))?"	oferta ON oferta.idEmpresa=empresa.idEmpresa INNER JOIN\n":"") +
+                (((addFromFamilia==true) || (addFromCiclos==true))?"	familia ON familia.idFamilia=oferta.idFamilia INNER JOIN \n":"") + 
+                (addFromCiclos==true?"	ofertaciclo ON oferta.idOferta=ofertaciclo.idOferta INNER JOIN\n":"") +
+                (addFromCiclos==true?"	ciclo ON ofertaciclo.idCiclo=ciclo.idCiclo INNER JOIN \n":"") +                
+                "	municipio ON empresa.idMunicipio=municipio.idMunicipio INNER JOIN\n" +
+                "	provincia ON provincia.idProvincia=municipio.idProvincia INNER JOIN\n" +
+                "	ComunidadAutonoma ON ComunidadAutonoma.idComunidadAutonoma=provincia.idComunidadAutonoma\n" +
+                "	\n" +
+                "WHERE \n" +
+                "       1=1 " + sbWhere + "\n" +
+                "       " + groupBy + "\n" +
+                "ORDER BY \n" +
+                "	num DESC";
+        
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int iParam=0;
+        
+        if (filterDesde!=null) {
+            sqlQuery.setDate(iParam++,filterDesde );
+        }
+        if (filterHasta!=null) {
+            sqlQuery.setDate(iParam++,filterHasta );
+        }       
+        if (filterComunidadAutonoma!=null) {
+            sqlQuery.setInteger(iParam++, filterComunidadAutonoma.getIdComunidadAutonoma());
+        }  
+        if (filterProvincia!=null) {
+            sqlQuery.setInteger(iParam++, filterProvincia.getIdProvincia());
+        }         
+        if (filterFamilia!=null) {
+            sqlQuery.setInteger(iParam++, filterFamilia.getIdFamilia());
+        } 
+        if (filterCiclo!=null) {
+            sqlQuery.setInteger(iParam++, filterCiclo.getIdCiclo());
+        }
+        
+        dataValues=getListDataValuesFromDatos(sqlQuery.list());
+        
+        Estadistica estadistica=new Estadistica(title, xLabel, yLabel, dataValues);
+        
+        return estadistica;
+
+    }    
+    
+    
+    private List<DataValue> getListDataValuesFromDatos(List<Object[]> datos) {
+        List<DataValue> dataValues = new ArrayList<>();
+
+        for (Object rawDato : datos) {
+            String data;
+            int value;
+            if (rawDato instanceof BigInteger) {
+                data="Todo";
+                value=((BigInteger)rawDato).intValue();
+            } else {
+                Object[] dato=(Object[])rawDato;
+                value=((Number) dato[0]).intValue(); 
+
+                switch (dato.length) {
+                    case 0:
+                        data="Tod";
+                        break;
+                    case 2:
+                        data=(String) dato[1];
+                        break;
+                    case 3:
+                        data=(String) dato[1]+"-"+(String) dato[2];
+                        break;
+                    default:
+                        throw new RuntimeException("El Nº de columna no es ǘalido:"+dato.length);
+                }
+            }
+            
+            DataValue dataValue = new DataValue(data, value);
+            dataValues.add(dataValue);
+        }
+        return dataValues; 
+    }
+        
+    
 }

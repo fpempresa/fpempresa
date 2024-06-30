@@ -13,9 +13,17 @@
 package es.logongas.fpempresa.dao.estadisticas;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.estadisticas.DataValue;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
 import es.logongas.ix3.dao.DataSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,5 +52,12 @@ public interface EstadisticaDAO {
     Integer getSumCentros(DataSession dataSession);
 
     public Integer getSumEmpresas(DataSession dataSession);
+    
+    
+    Estadistica getEstadisticaOfertas(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+    Estadistica getEstadisticaCandidatos(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+    Estadistica getEstadisticaEmpresas(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+    
+    
 
 }

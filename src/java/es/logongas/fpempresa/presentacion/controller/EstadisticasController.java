@@ -18,18 +18,27 @@ package es.logongas.fpempresa.presentacion.controller;
 
 import es.logongas.fpempresa.businessprocess.estadisticas.EstadisticasBusinessProcess;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.NombreEstadistica;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
+import es.logongas.ix3.service.CRUDService;
 import es.logongas.ix3.service.CRUDServiceFactory;
 import es.logongas.ix3.web.util.ControllerHelper;
 import es.logongas.ix3.web.util.HttpResult;
 import es.logongas.ix3.web.util.exception.ExceptionHelper;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +71,9 @@ public class EstadisticasController {
     private ExceptionHelper exceptionHelper; 
     @Autowired
     private Conversion conversion;    
-
+    @Autowired
+    private ControllerUtil controllerUtil;
+    
     @RequestMapping(value = {"/{path}/Estadisticas/centro/{idCentro}"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasCentro(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCentro") int idCentro) {
 
@@ -102,12 +113,47 @@ public class EstadisticasController {
     @RequestMapping(value = {"/{path}/Estadisticas/administrador"}, method = RequestMethod.GET, produces = "application/json")
     public void getEstadisticasAdministrador(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
+        CRUDService<ComunidadAutonoma, Integer> comunidadAutonomaService = crudServiceFactory.getService(ComunidadAutonoma.class);
+        CRUDService<Provincia, Integer> provinciaService = crudServiceFactory.getService(Provincia.class);
+        CRUDService<Familia, Integer> familiaService = crudServiceFactory.getService(Familia.class);
+        CRUDService<Ciclo, Integer> cicloService = crudServiceFactory.getService(Ciclo.class);
+        
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            
+            NombreEstadistica nombreEstadistica=NombreEstadistica.valueOf(controllerHelper.getParameter(httpServletRequest, "nombreEstadistica"));
+            GroupByEstadistica groupByEstadistica=GroupByEstadistica.valueOf(controllerHelper.getParameter(httpServletRequest, "groupByEstadistica"));
+            
+            Date filterDesde=controllerUtil.getDateParameter(httpServletRequest, "desde");
+            Date filterHasta=controllerUtil.getDateParameter(httpServletRequest, "hasta");
+            
+            ComunidadAutonoma filterComunidadAutonoma=null;
+            Integer idComunidadAutonoma=controllerUtil.getIntegerParameter(httpServletRequest, "comunidadAutonoma");
+            if (idComunidadAutonoma!=null) {
+                filterComunidadAutonoma=comunidadAutonomaService.read(dataSession, idComunidadAutonoma);
+            }
+            
+            Provincia filterProvincia=null;
+            Integer idProvincia=controllerUtil.getIntegerParameter(httpServletRequest, "provincia");
+            if (idProvincia!=null) {
+                filterProvincia=provinciaService.read(dataSession, idProvincia);
+            }
+            
+            Familia filterFamilia=null;
+            Integer idFamilia=controllerUtil.getIntegerParameter(httpServletRequest, "familia");
+            if (idFamilia!=null) {
+                filterFamilia=familiaService.read(dataSession, idFamilia);
+            }
 
-            Estadisticas estadisticas = estadisticasBusinessProcess.getEstadisticasAdministrador(new EstadisticasBusinessProcess.GetEstadisticasAdministradorArguments(principal, dataSession));
+            Ciclo filterCiclo=null;
+            Integer idCiclo=controllerUtil.getIntegerParameter(httpServletRequest, "ciclo");
+            if (idCiclo!=null) {
+                filterCiclo=cicloService.read(dataSession, idCiclo);
+            }
+            
+            Estadistica estadistica = estadisticasBusinessProcess.getEstadisticasAdministrador(new EstadisticasBusinessProcess.GetEstadisticasAdministradorArguments(principal, dataSession, nombreEstadistica, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo));
 
-            controllerHelper.objectToHttpResponse(new HttpResult(estadisticas), httpServletRequest, httpServletResponse);
+            controllerHelper.objectToHttpResponse(new HttpResult(estadistica), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }

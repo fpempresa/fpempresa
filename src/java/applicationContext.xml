@@ -86,6 +86,7 @@
     
     <!-- Capade web -->
     <bean class="es.logongas.fpempresa.presentacion.controller.EndPointsFactoryImpl" />
+    <bean class="es.logongas.fpempresa.presentacion.controller.ControllerUtil" />
     
     <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5" />

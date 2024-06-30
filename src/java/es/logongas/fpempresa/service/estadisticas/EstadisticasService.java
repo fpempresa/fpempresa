@@ -17,13 +17,21 @@
 package es.logongas.fpempresa.service.estadisticas;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.estadisticas.DataValue;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.service.Service;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +50,11 @@ public interface EstadisticasService extends Service<Estadisticas> {
 
     List<FamiliaOfertasEstadistica> getEstadisticasFamiliaOfertasPublicas(DataSession dataSession) throws BusinessException;
     
-    EstadisticasPrincipal getEstadisticasPrincipal(DataSession dataSession);    
+    EstadisticasPrincipal getEstadisticasPrincipal(DataSession dataSession);
+
+
+    Estadistica getEstadisticaOfertas(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+    Estadistica getEstadisticaCandidatos(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+    Estadistica getEstadisticaEmpresas(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
     
 }

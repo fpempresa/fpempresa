@@ -19,27 +19,149 @@ app.config(['$stateProvider', 'crudRoutesProvider', function ($stateProvider, cr
         $stateProvider.state('lateralmenu.main', {
             url: "/",
             templateUrl: 'views/main/main.html',
-            controller: 'MainController'
+            controller: 'MainController',
+            resolve: crudRoutesProvider.getResolve("FormacionAcademica", "")
         });
     }]);
 
 
-MainController.$inject = ['$scope', '$http', 'ix3Configuration'];
-function MainController($scope, $http, ix3Configuration) {
+MainController.$inject = ['$scope', '$http', 'ix3Configuration','genericControllerCrudList', 'controllerParams','$timeout'];
+function MainController($scope, $http, ix3Configuration, genericControllerCrudList, controllerParams, $timeout) {
+    genericControllerCrudList.extendScope($scope, controllerParams);
     $scope.businessMessages = [];
+    $scope.groupByEstadisticaValues=[
+        {
+            codigo:"Ninguna",
+            descripcion:"Sin agrupar"
+        },
+        {
+            codigo:"Ubicacion",
+            descripcion:"Ubicación geográfica"
+        },
+        {
+            codigo:"CatalogoAcademico",
+            descripcion:"Catalogo academico"
+        }        
+    ]
+    
+    var ahora = moment();
+    var hace6meses = ahora.subtract(6, 'months');
+    
+    $scope.filters['fechaDesde']=hace6meses.toDate();
+    $scope.filters['fechaHasta']=new Date();
+    $scope.filters['groupByEstadistica']={
+            codigo:"Ubicacion",
+            descripcion:"Ubicación geográfica"
+        };
 
-    $http({
-        method: "GET",
-        url: ix3Configuration.server.api + "/Estadisticas/administrador"
-    }).then(function (chartData) {
-        $scope.chartData=chartData.data;
-        
-        
-        
-    }, function (businessMessages) {
-        $scope.businessMessages = businessMessages;
-    });
+    
 
+    function loadGraficos(nombreEstadistica, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo) {
+        return $http({
+            method: "GET",
+            url: ix3Configuration.server.api + "/Estadisticas/administrador",
+            params: {
+                nombreEstadistica:nombreEstadistica,
+                groupByEstadistica: groupByEstadistica,
+                desde:filterDesde,
+                hasta:filterHasta, 
+                comunidadAutonoma:filterComunidadAutonoma, 
+                provincia:filterProvincia, 
+                familia:filterFamilia, 
+                ciclo:filterCiclo
+            }
+        });
+    }
+
+
+    function loadDatosGraficaOfertas(groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo) {
+        var promise=loadGraficos("Ofertas", groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        
+        promise.then(function (chartData) {
+            $scope.chartOfertas=chartData.data;
+            $scope.chartOfertas.sumDataValues=sumDataValues($scope.chartOfertas.dataValues);
+            
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
+        });
+    }
+    
+    
+    function loadDatosGraficaCandidatos(groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo) {
+        var promise=loadGraficos("Candidatos", groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        
+        promise.then(function (chartData) {
+            $scope.chartCandidatos=chartData.data;
+            $scope.chartCandidatos.sumDataValues=sumDataValues($scope.chartCandidatos.dataValues);
+            
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
+        });
+    }  
+    
+    function loadDatosGraficaEmpresas(groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo) {
+        var promise=loadGraficos("Empresas", groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        
+        promise.then(function (chartData) {
+            $scope.chartEmpresas=chartData.data;
+            $scope.chartEmpresas.sumDataValues=sumDataValues($scope.chartEmpresas.dataValues);
+            
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
+        });
+    }  
+        
+
+
+    function sumDataValues(dataValues) {
+        var sumValue=0;
+        for(var i=0;i<dataValues.length;i++) {
+            sumValue=sumValue+dataValues[i].value;
+        }            
+            
+        return sumValue;
+    }
+
+    $scope.buttonMostrar=function() {
+        var groupByEstadistica;
+        var filterDesde="";
+        var filterHasta="";
+        var filterComunidadAutonoma="";
+        var filterProvincia="";
+        var filterFamilia="";
+        var filterCiclo="";
+
+        groupByEstadistica=$scope.filters['groupByEstadistica'].codigo;      
+        if ($scope.filters['fechaDesde']) {
+            filterDesde=$scope.filters['fechaDesde'].toISOString();
+        }
+        if ($scope.filters['fechaHasta']) {
+            filterHasta=$scope.filters['fechaHasta'].toISOString();
+        } 
+        if ($scope.filters['comunidadAutonoma']) {
+            filterComunidadAutonoma=$scope.filters['comunidadAutonoma'].idComunidadAutonoma;
+        }         
+        if ($scope.filters['provincia']) {
+            filterProvincia=$scope.filters['provincia'].idProvincia;
+        } 
+        if ($scope.filters['familia']) {
+            filterFamilia=$scope.filters['familia'].idFamilia;
+        } 
+        if ($scope.filters['ciclo']) {
+            filterCiclo=$scope.filters['ciclo'].idCiclo;
+        }         
+
+
+        loadDatosGraficaOfertas(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        loadDatosGraficaCandidatos(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        loadDatosGraficaEmpresas(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+
+    };
+    
+    
+    $timeout(function() {
+        $scope.buttonMostrar();
+    }, 0);
 
 }
 app.controller("MainController", MainController);

@@ -33,6 +33,37 @@ angular.module("common").directive('fpeSimpleBarChart', [function () {
                 var labels = [];
                 var data = [];
 
+                $scope.$watch("title", function (newTitle, oldTitle) {
+                    if (newTitle === oldTitle) {
+                        return;
+                    }
+                    
+                    if ($scope.chart) {
+                        $scope.chart.options.title.text=newTitle;
+                        $scope.chart.update();
+                    }
+                });
+                $scope.$watch("titleX", function (newTitleX, oldTitleX) {
+                    if (newTitleX === oldTitleX) {
+                        return;
+                    }
+                    
+                    if ($scope.chart) {
+                        $scope.chart.options.scales.xAxes[0].scaleLabel.labelString=newTitleX;
+                        $scope.chart.update();
+                    }
+                });                
+                $scope.$watch("titleY", function (newTitleY, oldTitleY) {
+                    if (newTitleY === oldTitleY) {
+                        return;
+                    }
+                    
+                    if ($scope.chart) {
+                        $scope.chart.options.scales.yAxes[0].scaleLabel.labelString=newTitleY;
+                        $scope.chart.update();
+                    }
+                });
+
                 $scope.$watch("serie", function (newSerie, oldSerie) {
 
                     if (newSerie === oldSerie) {
@@ -59,10 +90,24 @@ angular.module("common").directive('fpeSimpleBarChart', [function () {
                     var titleY = $scope.titleY;
 
 
+                    if (!title) {
+                        title="";
+                    }
+                    if (!titleX) {
+                        titleX="";
+                    }
+                    if (!titleY) {
+                        titleY="";
+                    }
+
 
                     for (var i = 0; i < $scope.serie.length; i++) {
                         labels.push($scope.serie[i].$toString);
-                        data.push($scope.serie[i].valor);
+                        if ($scope.serie[i].valor) {
+                            data.push($scope.serie[i].valor);
+                        } else if ($scope.serie[i].value) {
+                            data.push($scope.serie[i].value);
+                        }
                     }
 
 
@@ -142,6 +187,8 @@ angular.module("common").directive('fpeSimpleBarChart', [function () {
                                 }
 
                         );
+                
+                        $scope.chart=chart;
                     }
 
 

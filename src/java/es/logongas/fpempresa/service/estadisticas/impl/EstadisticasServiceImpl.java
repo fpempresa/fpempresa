@@ -20,13 +20,18 @@ import es.logongas.fpempresa.dao.empresa.OfertaDAO;
 import es.logongas.fpempresa.dao.estadisticas.EstadisticaDAO;
 import es.logongas.fpempresa.dao.titulado.TituladoDAO;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
 import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
 import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
+import es.logongas.fpempresa.modelo.estadisticas.DataValue;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
 import es.logongas.fpempresa.modelo.estadisticas.OfertaEstadistica;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.service.estadisticas.EstadisticasService;
@@ -210,4 +215,17 @@ public class EstadisticasServiceImpl implements EstadisticasService {
         
     }    
 
+    @Override
+    public Estadistica getEstadisticaOfertas(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        return estadisticaDAO.getEstadisticaOfertas(dataSession, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+    }
+    @Override
+    public Estadistica getEstadisticaCandidatos(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        return estadisticaDAO.getEstadisticaCandidatos(dataSession, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+    }
+    
+    @Override
+    public Estadistica getEstadisticaEmpresas(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        return estadisticaDAO.getEstadisticaEmpresas(dataSession, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+    }    
 }

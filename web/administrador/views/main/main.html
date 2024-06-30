@@ -27,111 +27,154 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <div class="col-xs-12 ">
                     <fieldset>
                         <legend class="form__title">Panel de control</legend>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="panel panel-red">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-shopping-cart  fa-4x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="section__text--size-high">{{chartData.numeroOfertas}}</div>
-                                                <div class="section__text--size-high">Ofertas</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#!/oferta/search">
-                                        <div class="panel-footer" style="background-color: #FFFFFF">
-                                            <span class="pull-left">Ir a las ofertas</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="panel panel-yellow">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-graduation-cap fa-4x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="section__text--size-high">{{chartData.numeroTitulosFP}}</div>
-                                                <div class="section__text--size-high">T&iacute;tulos de FP</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#!/usuario/search/tipoUsuario/TITULADO">
-                                        <div class="panel-footer" style="background-color: #FFFFFF">
-                                            <span class="pull-left">Ir a los titulados</span>
-                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="panel panel-green">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <i class="fa fa-archive fa-4x"></i>
-                                            </div>
-                                            <div class="col-xs-9 text-right">
-                                                <div class="section__text--size-high">{{chartData.numeroCandidatos}}</div>
-                                                <div class="section__text--size-high">Candidatos</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div class="panel-footer" style="background-color: #FFFFFF">
-                                            <span class="pull-left">&nbsp;</span>
-                                            <span class="pull-right">&nbsp;</span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
                     </fieldset>
                 </div>
             </div>
+            
+            
+            <div class="row">
+                <div class="col-xs-12   form-horizontal">
+                    <div class="col-xs-12 col-sm-4  form-horizontal">
+                        <div class="form-group">
+                            <label for="groupByEstadistica" class="col-xs-12 col-sm-4 control-label" >Agrupado</label>
+                            <div class="col-xs-12 col-sm-8">
+                                <select ng-model="filters['groupByEstadistica']" id="groupByEstadistica"  name="groupByEstadistica"  class="form-control"   ng-options="groupByEstadisticaValue as groupByEstadisticaValue.descripcion for groupByEstadisticaValue in groupByEstadisticaValues track by groupByEstadisticaValue.codigo"  >
+                                </select>
+                            </div>
+                        </div> 
+                    </div>                      
+                </div> 
+            </div>    
+            <div class="row">
+                <div class="col-xs-12   form-horizontal">
+                    <div class="col-xs-12 col-sm-4  form-horizontal"> 
+                        <div class="form-group">
+                            <label for="fechaDesde" class="col-xs-12 col-sm-4 control-label" >Desde</label>
+                            <div  class="input-group col-xs-12 col-sm-8">
+                                <input ng-model="filters.fechaDesde" type="text" class="form-control"  id="fechaDesde" name="fechaDesde" placeholder="fecha desde" ix3-date ix3-datepicker > 
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>                     
+                        </div>                     
+                    </div> 
+                    <div class="col-xs-12 col-sm-4  form-horizontal"> 
+                        <div class="form-group">
+                            <label for="fechaHasta" class="col-xs-12 col-sm-4 control-label" >Hasta</label>
+                            <div  class="input-group col-xs-12 col-sm-8">                    
+                                <input ng-model="filters.fechaHasta" type="text" class="form-control"  id="fechaHasta" name="fechaHasta" placeholder="fecha hasta" ix3-date ix3-datepicker > 
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div>
+            
+            <div class="row" >
+                <div class="col-xs-12   form-horizontal">
+                    <div class="col-xs-12 col-sm-4  form-horizontal">
+                        <div class="form-group">
+                            <label for="comunidadAutonoma" class="col-xs-12 col-sm-4 control-label" >Autonomía</label>
+                            <div class="col-xs-12 col-sm-8">
+                                <select ng-model="filters['comunidadAutonoma']" id="comunidadAutonoma" ix3-schema-property='FormacionAcademica.centro.direccion.municipio.provincia.comunidadAutonoma' name="comunidadAutonoma"  name="comunidadAutonoma" class="form-control" ix3-options="ix3OrderBy:'descripcion'"    >
+                                    <option value="">-- Elige Opcion --</option>
+                                </select>
+                            </div>
+                        </div> 
+                    </div> 
+                    <div class="col-xs-12 col-sm-4  form-horizontal">
+                        <div class="form-group">
+                            <label for="provincia" class="col-xs-12 col-sm-4  control-label" ix3-label ></label>
+                            <div class="col-xs-12 col-sm-8">
+                                <select ng-model="filters['provincia']" id="provincia" name="provincia" class="form-control" ix3-schema-property='FormacionAcademica.centro.direccion.municipio.provincia' ix3-options-depend="{comunidadAutonoma:filters['comunidadAutonoma']}" ix3-options="ix3OrderBy:'descripcion'"   >
+                                    <option value="">-- Elige Opcion --</option>
+                                </select>
+                            </div>
+                        </div> 
+                    </div> 
+                </div>
+            </div>   
+            
+            
+            <div class="row" >   
+                <div class="col-xs-12   form-horizontal">
+                    <div class="col-xs-12 col-sm-4  form-horizontal">
+                        <div class="form-group">
+                            <label for="familia" class="col-xs-12 col-sm-4   control-label" ix3-label ></label>
+                            <div class="col-xs-12 col-sm-8 ">
+                                <select ng-model="filters['familia']" id="familia" name="familia" class="form-control" ix3-schema-property='FormacionAcademica.ciclo.familia' ix3-options="ix3OrderBy:'descripcion'"  >
+                                    <option value="">-- Elige Opcion --</option>
+                                </select>
+                            </div>
+                        </div>  
+                    </div>      
+                    <div class="col-xs-12 col-sm-4  form-horizontal">
+                        <div class="form-group">
+                            <label for="grado" class="col-xs-12 col-sm-4  control-label" ix3-label ></label>
+                            <div class="col-xs-12 col-sm-8">
+                                <select ng-model="filters['grado']" id="grado" name="grado" class="form-control" ix3-schema-property='FormacionAcademica.ciclo.grado' ix3-options="ix3OrderBy:'descripcion'"  >
+                                    <option value="">-- Elige Opcion --</option>
+                                </select>
+                            </div>
+                        </div>                     
+                    </div>      
+
+                    <div class="col-xs-12 col-sm-4  form-horizontal">
+                        <div class="form-group">
+                            <label for="ciclo" class="col-xs-12 col-sm-4  control-label" ix3-label ></label>
+                            <div class="col-xs-12 col-sm-8">
+                                <select ng-model="filters['ciclo']" id="ciclo" name="ciclo" class="form-control" ix3-schema-property='FormacionAcademica.ciclo' ix3-options-depend="{familia:filters['familia'],grado:filters['grado']}" ix3-options="ix3OrderBy:'descripcion'" >
+                                    <option value="">-- Elige Opcion --</option>
+                                </select>
+                            </div>
+                        </div>                 
+                    </div>  
+                </div>  
+            </div>              
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <div class="form-group">
+                        <button type="button" class="btn form__button form__button--primary " ng-click="buttonMostrar()">Mostrar</button>
+                    </div>
+                </div>
+            </div> 
+            
             <div class="row" >
                 <div class="col-xs-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Ofertas por familia</h3>
+                            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;{{chartOfertas.sumDataValues | number}} ofertas</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas fpe-simple-bar-chart title=""  title-y="Nº de Ofertas" title-x="Familias profesionales" serie="chartData.ofertasPorFamilia"></canvas>
+                            <canvas fpe-simple-bar-chart title="{{chartOfertas.title}}"  title-y="{{chartOfertas.yLabel}}" title-x="{{chartOfertas.xLabel}}" serie="chartOfertas.dataValues"></canvas>
                         </div>
                     </div>                    
                 </div>
-            </div>
+            </div> 
             <div class="row" >
-                <div class="col-xs-12 ">
+                <div class="col-xs-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"> <i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;T&iacute;tulos por familia</h3>
+                            <h3 class="panel-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;&nbsp;{{chartCandidatos.sumDataValues | number}} candidatos</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas fpe-simple-bar-chart title=""  title-y="Nº de Titulados" title-x="Familias profesionales" serie="chartData.titulosFPPorFamilia" ></canvas>
+                            <canvas fpe-simple-bar-chart title="{{chartCandidatos.title}}"  title-y="{{chartCandidatos.yLabel}}" title-x="{{chartCandidatos.xLabel}}" serie="chartCandidatos.dataValues"></canvas>
                         </div>
-                    </div>                                      
+                    </div>                    
                 </div>
-            </div>  
+            </div> 
             <div class="row" >
-                <div class="col-xs-12 ">
+                <div class="col-xs-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;Candidatos por familia</h3>
+                            <h3 class="panel-title"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{chartEmpresas.sumDataValues | number}} empresas</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas fpe-simple-bar-chart title=""  title-y="Nº de Candidatos" title-x="Familias profesionales" serie="chartData.candidatosPorFamilia"  ></canvas>
+                            <canvas fpe-simple-bar-chart title="{{chartEmpresas.title}}"  title-y="{{chartEmpresas.yLabel}}" title-x="{{chartEmpresas.xLabel}}" serie="chartEmpresas.dataValues"></canvas>
                         </div>
-                    </div>                                      
+                    </div>                    
                 </div>
-            </div>              
+            </div>           
+            
+            
         </form>
     </div>
 </div>

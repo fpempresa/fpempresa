@@ -16,16 +16,24 @@
 package es.logongas.fpempresa.businessprocess.estadisticas;
 
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.comun.geo.ComunidadAutonoma;
+import es.logongas.fpempresa.modelo.comun.geo.Provincia;
+import es.logongas.fpempresa.modelo.educacion.Ciclo;
+import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
+import es.logongas.fpempresa.modelo.estadisticas.Estadistica;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
 import es.logongas.fpempresa.modelo.estadisticas.EstadisticasPrincipal;
 import es.logongas.fpempresa.modelo.estadisticas.FamiliaOfertasEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.GroupByEstadistica;
+import es.logongas.fpempresa.modelo.estadisticas.NombreEstadistica;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.ix3.businessprocess.BusinessProcess;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +42,7 @@ import java.util.List;
  */
 public interface EstadisticasBusinessProcess  extends BusinessProcess  {
 
-    Estadisticas getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException;
+    Estadistica getEstadisticasAdministrador(GetEstadisticasAdministradorArguments getEstadisticasAdministradorArguments) throws BusinessException;
     Estadisticas getEstadisticasCentro(GetEstadisticasCentroArguments getEstadisticasCentroArguments) throws BusinessException;
     Estadisticas getEstadisticasEmpresa(GetEstadisticasEmpresaArguments getEstadisticasEmpresaArguments) throws BusinessException;
     Estadisticas getEstadisticasPublicas(GetEstadisticasPublicasArguments getEstadisticasPublicasArguments) throws BusinessException;
@@ -43,11 +51,29 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
     
     public class GetEstadisticasAdministradorArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 
+        public NombreEstadistica nombreEstadistica;
+        public GroupByEstadistica groupByEstadistica;
+        public Date filterDesde;
+        public Date filterHasta;
+        public ComunidadAutonoma filterComunidadAutonoma;
+        public Provincia filterProvincia;
+        public Familia filterFamilia;
+        public Ciclo filterCiclo;
+
+        
         public GetEstadisticasAdministradorArguments() {
         }
 
-        public GetEstadisticasAdministradorArguments(Principal principal, DataSession dataSession) {
+        public GetEstadisticasAdministradorArguments(Principal principal, DataSession dataSession,NombreEstadistica nombreEstadistica,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
             super(principal, dataSession);
+            this.nombreEstadistica=nombreEstadistica;
+            this.groupByEstadistica=groupByEstadistica;
+            this.filterDesde = filterDesde;
+            this.filterHasta = filterHasta;
+            this.filterComunidadAutonoma = filterComunidadAutonoma;            
+            this.filterProvincia = filterProvincia;            
+            this.filterFamilia = filterFamilia;            
+            this.filterCiclo = filterCiclo;                      
         }
 
     }
@@ -137,6 +163,6 @@ public interface EstadisticasBusinessProcess  extends BusinessProcess  {
             super(principal, dataSession);
         }
 
-    }     
-    
+    }   
+       
 }

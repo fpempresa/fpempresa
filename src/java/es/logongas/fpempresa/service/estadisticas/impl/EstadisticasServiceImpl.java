@@ -227,5 +227,17 @@ public class EstadisticasServiceImpl implements EstadisticasService {
     @Override
     public Estadistica getEstadisticaEmpresas(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
         return estadisticaDAO.getEstadisticaEmpresas(dataSession, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+    } 
+    
+    
+    @Override
+    public Estadistica getEstadisticaCentros(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        return estadisticaDAO.getEstadisticaCentros(dataSession, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+    }
+    
+    @Override
+    public Estadistica getEstadisticaTitulados(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        return estadisticaDAO.getEstadisticaTitulados(dataSession, groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
     }    
+    
 }

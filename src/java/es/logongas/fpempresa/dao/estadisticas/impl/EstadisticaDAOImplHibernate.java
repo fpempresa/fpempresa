@@ -307,6 +307,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         
         String selectColumns;
         String groupBy;  
+        String orderBy="num DESC";
         
         
         switch (groupByEstadistica) {
@@ -363,6 +364,20 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 }                
                 
                 break;
+            case Anyos:
+                selectColumns="COUNT(*) AS num,YEAR(oferta.fecha) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año";
+                title="Ofertas por año";
+                orderBy="g1";
+                break;  
+            case Semestres:
+                selectColumns="COUNT(*) AS num,CONCAT(YEAR(oferta.fecha),\"-\",CASE WHEN MONTH(oferta.fecha) BETWEEN 1 AND 6 THEN 1 ELSE 2 END) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año-Semestre";
+                title="Titulados por año y semestre";
+                orderBy="g1";
+                break;                
             default:
                 throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);
         }
@@ -404,7 +419,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 "       1=1 " + sbWhere + "\n" +
                 "       " + groupBy + "\n" +
                 "ORDER BY \n" +
-                "	num DESC";
+                "	" + orderBy;
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         int iParam=0;
@@ -471,6 +486,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         
         String selectColumns;
         String groupBy;  
+        String orderBy="num DESC";
         
         
         switch (groupByEstadistica) {
@@ -529,6 +545,20 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 }                
                 
                 break;
+            case Anyos:
+                selectColumns="COUNT(*) AS num,YEAR(candidato.fecha) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año";
+                title="Candidatos por año";  
+                orderBy="g1";
+                break;
+            case Semestres:
+                selectColumns="COUNT(*) AS num,CONCAT(YEAR(candidato.fecha),\"-\",CASE WHEN MONTH(candidato.fecha) BETWEEN 1 AND 6 THEN 1 ELSE 2 END) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año-Semestre";
+                title="Candidatos por año y semestre";
+                orderBy="g1";
+                break;                
             default:
                 throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);
         }
@@ -573,7 +603,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 "       1=1 " + sbWhere + "\n" +
                 "       " + groupBy + "\n" +
                 "ORDER BY \n" +
-                "	num DESC";
+                "	" + orderBy;
 
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         int iParam=0;
@@ -645,6 +675,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
         
         String selectColumns;
         String groupBy;  
+        String orderBy="num DESC";
         
         
         switch (groupByEstadistica) {
@@ -703,6 +734,20 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 }                
                 
                 break;
+            case Anyos:
+                selectColumns="COUNT(*) AS num,YEAR(empresa.fecha) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año";
+                title="Empresas por año"; 
+                orderBy="g1";
+                break; 
+            case Semestres:
+                selectColumns="COUNT(*) AS num,CONCAT(YEAR(empresa.fecha),\"-\",CASE WHEN MONTH(empresa.fecha) BETWEEN 1 AND 6 THEN 1 ELSE 2 END) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año-Semestre";
+                title="Empresas por año y semestre";
+                orderBy="g1";
+                break;                
             default:
                 throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);                                
         }
@@ -745,7 +790,417 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                 "       1=1 " + sbWhere + "\n" +
                 "       " + groupBy + "\n" +
                 "ORDER BY \n" +
-                "	num DESC";
+                "	" + orderBy;
+        
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int iParam=0;
+        
+        if (filterDesde!=null) {
+            sqlQuery.setDate(iParam++,filterDesde );
+        }
+        if (filterHasta!=null) {
+            sqlQuery.setDate(iParam++,filterHasta );
+        }       
+        if (filterComunidadAutonoma!=null) {
+            sqlQuery.setInteger(iParam++, filterComunidadAutonoma.getIdComunidadAutonoma());
+        }  
+        if (filterProvincia!=null) {
+            sqlQuery.setInteger(iParam++, filterProvincia.getIdProvincia());
+        }         
+        if (filterFamilia!=null) {
+            sqlQuery.setInteger(iParam++, filterFamilia.getIdFamilia());
+        } 
+        if (filterCiclo!=null) {
+            sqlQuery.setInteger(iParam++, filterCiclo.getIdCiclo());
+        }
+        
+        dataValues=getListDataValuesFromDatos(sqlQuery.list());
+        
+        Estadistica estadistica=new Estadistica(title, xLabel, yLabel, dataValues);
+        
+        return estadistica;
+
+    }    
+    
+
+    @Override
+    public Estadistica getEstadisticaCentros(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String title;
+        String xLabel;
+        String yLabel="Nº de centros";    
+        List<DataValue> dataValues;
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma==null)) {
+            throw new RuntimeException("No es posible que esté la provincia sin que esté la comunidad autónoma");
+        }
+        if ((filterCiclo!=null) && (filterFamilia==null)) {
+            throw new RuntimeException("No es posible que esté el ciclo sin que esté la familia");
+        }  
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma!=null)) {
+            if (filterProvincia.getComunidadAutonoma().getIdComunidadAutonoma()!=filterComunidadAutonoma.getIdComunidadAutonoma()) {
+                throw new RuntimeException("La comunidad autonoma de la provincia no coincide con la comunidad autonoma");
+            }
+        } 
+        
+        if ((filterCiclo!=null) && (filterFamilia!=null)) {
+            if (filterCiclo.getFamilia().getIdFamilia()!=filterFamilia.getIdFamilia()) {
+                throw new RuntimeException("La familia del ciclo no coincide con la familia");
+            }
+        } 
+        
+        boolean addFromFamilia=false;
+        if (filterFamilia!=null) {
+            addFromFamilia=true;
+        }
+        boolean addFromCiclos=false;
+        if (filterCiclo!=null) {
+            addFromCiclos=true;
+        }
+        
+        String selectColumns;
+        String groupBy;  
+        String orderBy="num DESC";
+        
+        switch (groupByEstadistica) {
+            case Ninguna:
+                selectColumns="COUNT(*) AS num";
+                groupBy="";
+                xLabel="";
+                title="Todas los centros";             
+                break;                
+            case Ubicacion:
+                if ((filterComunidadAutonoma==null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,ComunidadAutonoma_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Comunidad autónoma";
+                    title="Centros por comunidad";                     
+                } else if ((filterComunidadAutonoma==null) && (filterProvincia!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté la provincia y no la comunidad autónoma:"+filterComunidadAutonoma+","+filterProvincia);
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,provincia_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Provincia";
+                    title="Centros por provincia";                     
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todos los centros";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterComunidadAutonoma+","+filterProvincia);
+                }
+                
+                break;
+            case CatalogoAcademico:               
+                if ((filterFamilia==null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,familia_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Familia profesional";
+                    title="Centros por familia profesional"; 
+                    addFromFamilia=true;
+                } else if ((filterFamilia==null) && (filterCiclo!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté el ciclo y no la familia:"+filterFamilia+","+filterCiclo);
+                } else if ((filterFamilia!=null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,ciclo_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    addFromCiclos=true;
+                    xLabel="Ciclo formativo";
+                    title="Centros por ciclo formativo"; 
+                    addFromCiclos=true;                    
+                } else if ((filterFamilia!=null) && (filterCiclo!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todos los Centros";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterFamilia+","+filterCiclo);
+                }                
+                
+                break;
+            case Anyos:
+                selectColumns="COUNT(*) AS num,YEAR(centros.fecha) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año";
+                title="Centros por año";
+                orderBy="g1";
+                break;
+            case Semestres:
+                selectColumns="COUNT(*) AS num,CONCAT(YEAR(centros.fecha),\"-\",CASE WHEN MONTH(centros.fecha) BETWEEN 1 AND 6 THEN 1 ELSE 2 END) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año-Semestre";
+                title="Centros por año y semestre";
+                orderBy="g1";
+                break;                
+            default:
+                throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);                                
+        }
+        
+        
+        StringBuilder sbWhere=new StringBuilder();
+        if (filterDesde!=null) {
+            sbWhere.append(" AND DATE(centros.fecha)>=DATE(?)");
+        }
+        if (filterHasta!=null) {
+            sbWhere.append(" AND DATE(centros.fecha)<=DATE(?)");
+        }        
+        if (filterComunidadAutonoma!=null) {
+            sbWhere.append(" AND centros.idComunidadAutonoma=?");
+        }  
+        if (filterProvincia!=null) {
+            sbWhere.append(" AND centros.idProvincia=?");
+        }          
+        if (filterFamilia!=null) {
+            sbWhere.append(" AND centros.idFamilia=?");
+        } 
+        if (filterCiclo!=null) {
+            sbWhere.append(" AND centros.idCiclo=?");
+        } 
+        
+        String sql = 
+            "SELECT \n" +
+                selectColumns + "\n"+
+            "FROM\n" +
+            "(\n" +
+            "SELECT DISTINCT\n" +
+            "	centro.idCentro,\n" +
+            "	comunidadautonoma.idComunidadAutonoma AS idComunidadAutonoma,\n" +
+            "	comunidadautonoma.descripcion AS comunidadautonoma_descripcion,\n" +
+            "	provincia.idProvincia AS idProvincia,\n" +
+            "	provincia.descripcion AS provincia_descripcion,\n" +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	familia.idFamilia AS idFamilia,\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	familia.descripcion AS familia_descripcion,\n":"") +
+            (addFromCiclos==true?"	ciclo.idCiclo AS idCiclo,\n":"") +
+            (addFromCiclos==true?"	ciclo.descripcion AS ciclo_descripcion,\n":"") +
+            "	(SELECT MIN(FECHA) FROM usuario WHERE usuario.idCentro=centro.idCentro) AS fecha\n" +
+            "	\n" +
+            "FROM\n" +
+            "	Centro INNER JOIN\n" +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	formacionacademica ON formacionacademica.idCentro=centro.idCentro INNER JOIN\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	ciclo ON formacionacademica.idCiclo=ciclo.idCiclo  INNER JOIN\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	familia ON familia.idFamilia=ciclo.idFamilia INNER JOIN\n":"") +
+            "	municipio ON Centro.idMunicipio=municipio.idMunicipio  INNER JOIN\n" +
+            "	provincia ON provincia.idProvincia=municipio.idProvincia  INNER JOIN\n" +
+            "	ComunidadAutonoma ON ComunidadAutonoma.idComunidadAutonoma=provincia.idComunidadAutonoma\n" +              
+            "   \n" +
+            "WHERE\n" +
+            "	centro.idCentro>0 \n" +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"   AND formacionacademica.tipoFormacionAcademica='CICLO_FORMATIVO'  \n":"") +
+            ") AS centros\n" +
+            "	\n" +
+            "WHERE \n" +
+            "       NOT (fecha IS NULL)  " + sbWhere + "\n" +
+            "       " + groupBy + "\n" +
+            "ORDER BY \n" +
+            "	" + orderBy;
+
+                
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int iParam=0;
+        
+        if (filterDesde!=null) {
+            sqlQuery.setDate(iParam++,filterDesde );
+        }
+        if (filterHasta!=null) {
+            sqlQuery.setDate(iParam++,filterHasta );
+        }       
+        if (filterComunidadAutonoma!=null) {
+            sqlQuery.setInteger(iParam++, filterComunidadAutonoma.getIdComunidadAutonoma());
+        }  
+        if (filterProvincia!=null) {
+            sqlQuery.setInteger(iParam++, filterProvincia.getIdProvincia());
+        }         
+        if (filterFamilia!=null) {
+            sqlQuery.setInteger(iParam++, filterFamilia.getIdFamilia());
+        } 
+        if (filterCiclo!=null) {
+            sqlQuery.setInteger(iParam++, filterCiclo.getIdCiclo());
+        }
+        
+        dataValues=getListDataValuesFromDatos(sqlQuery.list());
+        
+        Estadistica estadistica=new Estadistica(title, xLabel, yLabel, dataValues);
+        
+        return estadistica;
+
+    }    
+
+    @Override
+    public Estadistica getEstadisticaTitulados(DataSession dataSession,GroupByEstadistica groupByEstadistica, Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo) {
+        Session session = (Session) dataSession.getDataBaseSessionImpl();
+
+        String title;
+        String xLabel;
+        String yLabel="Nº de titulados";    
+        List<DataValue> dataValues;
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma==null)) {
+            throw new RuntimeException("No es posible que esté la provincia sin que esté la comunidad autónoma");
+        }
+        if ((filterCiclo!=null) && (filterFamilia==null)) {
+            throw new RuntimeException("No es posible que esté el ciclo sin que esté la familia");
+        }  
+        
+        if ((filterProvincia!=null) && (filterComunidadAutonoma!=null)) {
+            if (filterProvincia.getComunidadAutonoma().getIdComunidadAutonoma()!=filterComunidadAutonoma.getIdComunidadAutonoma()) {
+                throw new RuntimeException("La comunidad autonoma de la provincia no coincide con la comunidad autonoma");
+            }
+        } 
+        
+        if ((filterCiclo!=null) && (filterFamilia!=null)) {
+            if (filterCiclo.getFamilia().getIdFamilia()!=filterFamilia.getIdFamilia()) {
+                throw new RuntimeException("La familia del ciclo no coincide con la familia");
+            }
+        } 
+        
+        boolean addFromFamilia=false;
+        if (filterFamilia!=null) {
+            addFromFamilia=true;
+        }
+        boolean addFromCiclos=false;
+        if (filterCiclo!=null) {
+            addFromCiclos=true;
+        }
+        
+        String selectColumns;
+        String groupBy; 
+        String orderBy="num DESC";
+        
+        
+        switch (groupByEstadistica) {
+            case Ninguna:
+                selectColumns="COUNT(*) AS num";
+                groupBy="";
+                xLabel="";
+                title="Todos los titulados";             
+                break;                
+            case Ubicacion:
+                if ((filterComunidadAutonoma==null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,ComunidadAutonoma_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Comunidad autónoma";
+                    title="Titulados por comunidad";                     
+                } else if ((filterComunidadAutonoma==null) && (filterProvincia!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté la provincia y no la comunidad autónoma:"+filterComunidadAutonoma+","+filterProvincia);
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia==null)) {
+                    selectColumns="COUNT(*) AS num,provincia_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Provincia";
+                    title="Titulados por provincia";                     
+                } else if ((filterComunidadAutonoma!=null) && (filterProvincia!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todos los titulados";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterComunidadAutonoma+","+filterProvincia);
+                }
+                
+                break;
+            case CatalogoAcademico:               
+                if ((filterFamilia==null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,familia_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    xLabel="Familia profesional";
+                    title="Titulados por familia profesional"; 
+                    addFromFamilia=true;
+                } else if ((filterFamilia==null) && (filterCiclo!=null)) {
+                    throw new RuntimeException("Error de lógica no puede ser que esté el ciclo y no la familia:"+filterFamilia+","+filterCiclo);
+                } else if ((filterFamilia!=null) && (filterCiclo==null)) {
+                    selectColumns="COUNT(*) AS num,ciclo_descripcion as g1";
+                    groupBy="GROUP BY g1";
+                    addFromCiclos=true;
+                    xLabel="Ciclo formativo";
+                    title="Titulados por ciclo formativo"; 
+                    addFromCiclos=true;                    
+                } else if ((filterFamilia!=null) && (filterCiclo!=null)) {
+                    selectColumns="COUNT(*) AS num";
+                    groupBy="";
+                    xLabel="";
+                    title="Todos los titulados";                     
+                } else {
+                    throw new RuntimeException("Error de lógica:"+filterFamilia+","+filterCiclo);
+                }                
+                
+                break;
+            case Anyos:
+                selectColumns="COUNT(*) AS num,YEAR(titulados.fecha) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año";
+                title="Titulados por año";
+                orderBy="g1";
+                break;
+            case Semestres:
+                selectColumns="COUNT(*) AS num,CONCAT(YEAR(titulados.fecha),\"-\",CASE WHEN MONTH(titulados.fecha) BETWEEN 1 AND 6 THEN 1 ELSE 2 END) as g1";
+                groupBy="GROUP BY g1";
+                xLabel="Año-Semestre";
+                title="Titulados por año y semestre";
+                orderBy="g1";
+                break;
+            default:
+                throw new RuntimeException("groupByEstadistica desconocido:"+groupByEstadistica);                                
+        }
+        
+        
+        StringBuilder sbWhere=new StringBuilder();
+        if (filterDesde!=null) {
+            sbWhere.append(" AND DATE(titulados.fecha)>=DATE(?)");
+        }
+        if (filterHasta!=null) {
+            sbWhere.append(" AND DATE(titulados.fecha)<=DATE(?)");
+        }        
+        if (filterComunidadAutonoma!=null) {
+            sbWhere.append(" AND titulados.idComunidadAutonoma=?");
+        }  
+        if (filterProvincia!=null) {
+            sbWhere.append(" AND titulados.idProvincia=?");
+        }          
+        if (filterFamilia!=null) {
+            sbWhere.append(" AND titulados.idFamilia=?");
+        } 
+        if (filterCiclo!=null) {
+            sbWhere.append(" AND titulados.idCiclo=?");
+        } 
+        
+        String sql = 
+            "SELECT \n" +
+                selectColumns + "\n"+
+            "FROM\n" +
+            "(\n" +
+            "SELECT DISTINCT\n" +
+            "	Titulado.idTitulado,\n" +
+            "	comunidadautonoma.idComunidadAutonoma AS idComunidadAutonoma,\n" +
+            "	comunidadautonoma.descripcion AS comunidadautonoma_descripcion,\n" +
+            "	provincia.idProvincia AS idProvincia,\n" +
+            "	provincia.descripcion AS provincia_descripcion,\n" +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	familia.idFamilia AS idFamilia,\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	familia.descripcion AS familia_descripcion,\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	ciclo.idCiclo AS idCiclo,\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	ciclo.descripcion AS ciclo_descripcion,\n":"") +
+            "	usuario.fecha\n" +
+            "	\n" +
+            "FROM\n" +
+            "	Titulado INNER JOIN\n" +
+            "   usuario ON usuario.idTitulado=titulado.idTitulado INNER JOIN\n" +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	formacionacademica ON formacionacademica.idTitulado=Titulado.idTitulado INNER JOIN\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	ciclo ON formacionacademica.idCiclo=ciclo.idCiclo  INNER JOIN\n":"") +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"	familia ON familia.idFamilia=ciclo.idFamilia INNER JOIN\n":"") +
+            "	municipio ON Titulado.idMunicipio=municipio.idMunicipio  INNER JOIN\n" +
+            "	provincia ON provincia.idProvincia=municipio.idProvincia  INNER JOIN\n" +
+            "	ComunidadAutonoma ON ComunidadAutonoma.idComunidadAutonoma=provincia.idComunidadAutonoma\n" +              
+            "   \n" +
+            "WHERE\n" +
+            "  1=1\n" +
+            (((addFromFamilia==true) || (addFromCiclos==true))?"  AND formacionacademica.tipoFormacionAcademica='CICLO_FORMATIVO'  \n":"") +
+            ") AS titulados\n" +
+            "	\n" +
+            "WHERE \n" +
+            "       1=1  " + sbWhere + "\n" +
+            "       " + groupBy + "\n" +
+            "ORDER BY \n" +
+            "	" + orderBy;
         
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         int iParam=0;
@@ -796,7 +1251,7 @@ public class EstadisticaDAOImplHibernate implements EstadisticaDAO {
                         data="Tod";
                         break;
                     case 2:
-                        data=(String) dato[1];
+                        data=(String) (dato[1]+"");
                         break;
                     case 3:
                         data=(String) dato[1]+"-"+(String) dato[2];

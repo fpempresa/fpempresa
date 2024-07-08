@@ -144,7 +144,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <h3 class="panel-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;{{chartOfertas.sumDataValues | number}} ofertas</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas fpe-simple-bar-chart title="{{chartOfertas.title}}"  title-y="{{chartOfertas.yLabel}}" title-x="{{chartOfertas.xLabel}}" serie="chartOfertas.dataValues"></canvas>
+                            <canvas fpe-simple-bar-chart title=""  title-y="{{chartOfertas.yLabel}}" title-x="{{chartOfertas.xLabel}}" serie="chartOfertas.dataValues"></canvas>
                         </div>
                     </div>                    
                 </div>
@@ -156,7 +156,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <h3 class="panel-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;&nbsp;{{chartCandidatos.sumDataValues | number}} candidatos</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas fpe-simple-bar-chart title="{{chartCandidatos.title}}"  title-y="{{chartCandidatos.yLabel}}" title-x="{{chartCandidatos.xLabel}}" serie="chartCandidatos.dataValues"></canvas>
+                            <canvas fpe-simple-bar-chart title=""  title-y="{{chartCandidatos.yLabel}}" title-x="{{chartCandidatos.xLabel}}" serie="chartCandidatos.dataValues"></canvas>
                         </div>
                     </div>                    
                 </div>
@@ -168,13 +168,35 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <h3 class="panel-title"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{chartEmpresas.sumDataValues | number}} empresas</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas fpe-simple-bar-chart title="{{chartEmpresas.title}}"  title-y="{{chartEmpresas.yLabel}}" title-x="{{chartEmpresas.xLabel}}" serie="chartEmpresas.dataValues"></canvas>
+                            <canvas fpe-simple-bar-chart title=""  title-y="{{chartEmpresas.yLabel}}" title-x="{{chartEmpresas.xLabel}}" serie="chartEmpresas.dataValues"></canvas>
                         </div>
                     </div>                    
                 </div>
             </div>           
-            
-            
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{chartCentros.sumDataValues | number}} centros</h3>
+                        </div>
+                        <div class="panel-body">
+                            <canvas fpe-simple-bar-chart title=""  title-y="{{chartCentros.yLabel}}" title-x="{{chartCentros.xLabel}}" serie="chartCentros.dataValues"></canvas>
+                        </div>
+                    </div>                    
+                </div>
+            </div>            
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{chartTitulados.sumDataValues | number}} titulados</h3>
+                        </div>
+                        <div class="panel-body">
+                            <canvas fpe-simple-bar-chart title=""  title-y="{{chartTitulados.yLabel}}" title-x="{{chartTitulados.xLabel}}" serie="chartTitulados.dataValues"></canvas>
+                        </div>
+                    </div>                    
+                </div>
+            </div>            
         </form>
     </div>
 </div>

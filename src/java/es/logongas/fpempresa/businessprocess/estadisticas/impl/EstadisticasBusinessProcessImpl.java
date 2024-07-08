@@ -65,6 +65,12 @@ public class EstadisticasBusinessProcessImpl implements EstadisticasBusinessProc
             case Empresas:
                 estadistica=estadisticasService.getEstadisticaEmpresas(getEstadisticasAdministradorArguments.dataSession,groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);                                                
                 break; 
+            case Centros:
+                estadistica=estadisticasService.getEstadisticaCentros(getEstadisticasAdministradorArguments.dataSession,groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);                                
+                break;
+            case Titulados:
+                estadistica=estadisticasService.getEstadisticaTitulados(getEstadisticasAdministradorArguments.dataSession,groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);                                                
+                break;                 
             default:
                 throw new RuntimeException("El valor de nombreEstadistica es desconocido:" + nombreEstadistica);
         }

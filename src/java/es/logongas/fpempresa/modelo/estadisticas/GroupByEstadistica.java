@@ -24,8 +24,6 @@ public enum GroupByEstadistica {
     Ninguna,
     Ubicacion,
     CatalogoAcademico,
-    Meses,
-    Trimestres,
-    Semestres,
-    Anyos 
+    Anyos,
+    Semestres 
 }

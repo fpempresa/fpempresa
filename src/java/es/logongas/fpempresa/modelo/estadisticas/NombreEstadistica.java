@@ -23,7 +23,9 @@ package es.logongas.fpempresa.modelo.estadisticas;
 public enum NombreEstadistica {
     Ofertas,
     Candidatos,
-    Empresas
+    Empresas,
+    Centros,
+    Titulados
 }
     
   

@@ -58,6 +58,8 @@ public interface EstadisticaDAO {
     Estadistica getEstadisticaCandidatos(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
     Estadistica getEstadisticaEmpresas(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
     
-    
+    Estadistica getEstadisticaCentros(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+    Estadistica getEstadisticaTitulados(DataSession dataSession,GroupByEstadistica groupByEstadistica,Date filterDesde,Date filterHasta,ComunidadAutonoma filterComunidadAutonoma,Provincia filterProvincia,Familia filterFamilia,Ciclo filterCiclo);
+        
 
 }

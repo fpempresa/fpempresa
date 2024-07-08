@@ -41,7 +41,11 @@ function MainController($scope, $http, ix3Configuration, genericControllerCrudLi
         {
             codigo:"CatalogoAcademico",
             descripcion:"Catalogo academico"
-        }        
+        },
+        {
+            codigo:"Anyos",
+            descripcion:"Anualmente"
+        }       
     ]
     
     var ahora = moment();
@@ -110,8 +114,28 @@ function MainController($scope, $http, ix3Configuration, genericControllerCrudLi
             $scope.businessMessages = businessMessages;
         });
     }  
+    function loadDatosGraficaCentros(groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo) {
+        var promise=loadGraficos("Centros", groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
         
-
+        promise.then(function (chartData) {
+            $scope.chartCentros=chartData.data;
+            $scope.chartCentros.sumDataValues=sumDataValues($scope.chartCentros.dataValues);
+            
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
+        });
+    }         
+    function loadDatosGraficaTitulados(groupByEstadistica,filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo) {
+        var promise=loadGraficos("Titulados", groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        
+        promise.then(function (chartData) {
+            $scope.chartTitulados=chartData.data;
+            $scope.chartTitulados.sumDataValues=sumDataValues($scope.chartTitulados.dataValues);
+            
+        }, function (businessMessages) {
+            $scope.businessMessages = businessMessages;
+        });
+    } 
 
     function sumDataValues(dataValues) {
         var sumValue=0;
@@ -155,6 +179,8 @@ function MainController($scope, $http, ix3Configuration, genericControllerCrudLi
         loadDatosGraficaOfertas(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
         loadDatosGraficaCandidatos(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
         loadDatosGraficaEmpresas(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        loadDatosGraficaCentros(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
+        loadDatosGraficaTitulados(groupByEstadistica, filterDesde, filterHasta, filterComunidadAutonoma, filterProvincia, filterFamilia, filterCiclo);
 
     };
     

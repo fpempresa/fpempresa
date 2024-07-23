@@ -15,6 +15,7 @@
 
 package es.logongas.fpempresa.security;
 
+import es.logongas.fpempresa.businessprocess.messageuid.PermitidoReenviarCorreoValidacion;
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
@@ -108,17 +109,23 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
 
             if (usuario.isValidadoEmail()==false) {
                 String msgEnvioadoCorreo;
-                if (DateUtils.isSameDay(usuario.getFecha(), new Date())) {
+                Date fechaUltimoEnvioCorreoValidacionEmail=usuario.getFechaUltimoEnvioCorreoValidacionEmail();
+                if (fechaUltimoEnvioCorreoValidacionEmail==null) {
+                    fechaUltimoEnvioCorreoValidacionEmail=usuario.getFecha();
+                }
+                
+                if (DateUtils.isSameDay(fechaUltimoEnvioCorreoValidacionEmail, new Date())) {
                     msgEnvioadoCorreo="Hoy te hemos enviado un correo para validarla, comprueba que dicho correo no esté en tu carpeta de spam";
                 } else {
                     SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
-                    String fechaEnvioCorreo=simpleDateFormat.format(usuario.getFecha());
-                    msgEnvioadoCorreo="El día " + fechaEnvioCorreo + " te enviamos  un correo para validarla, comprueba que dicho correo no esté en tu carpeta de spam";
+                    String fechaUltimoEnvioCorreoValidacionEmailFormateado=simpleDateFormat.format(fechaUltimoEnvioCorreoValidacionEmail);
+                    msgEnvioadoCorreo="El día " + fechaUltimoEnvioCorreoValidacionEmailFormateado + " te enviamos  un correo para validarla, comprueba que dicho correo no esté en tu carpeta de spam";
                 }
 
-                BusinessException businessException=new BusinessException("Tu dirección de correo aun no está validada.");
+                BusinessException businessException=new BusinessException("Tu dirección de correo aun no está validada.",PermitidoReenviarCorreoValidacion.class);
                 businessException.getBusinessMessages().add(new BusinessMessage(msgEnvioadoCorreo));
-                businessException.getBusinessMessages().add(new BusinessMessage("Si no está en tu carpeta de spam , escribe un correo a noreply@empleafp.com indicando que no has recibido el correo de validación."));
+                businessException.getBusinessMessages().add(new BusinessMessage("A veces el correo de validación tarda unos 30 minutos en llegar"));
+                businessException.getBusinessMessages().add(new BusinessMessage("Si no está en tu carpeta de spam y ya han pasado 30 minutos, pulsa en el enlace de abajo para que te volvamos a enviar el correo de validación."));
                 throw businessException;
             }
 

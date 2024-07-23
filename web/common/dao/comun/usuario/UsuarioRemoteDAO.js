@@ -17,7 +17,7 @@
  */
 angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAOFactoryProvider) {
 
-        remoteDAOFactoryProvider.addExtendRemoteDAO("Usuario", ['remoteDAO', function (remoteDAO) {
+        remoteDAOFactoryProvider.addExtendRemoteDAO("Usuario", ['remoteDAO', '$httpParamSerializer', function (remoteDAO, $httpParamSerializer) {
                 remoteDAO.updateEstadoUsuario = function (idIdentity, estadoUsuario, expand) {
                     var deferred = this.$q.defer();
 
@@ -127,6 +127,33 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                     });
                     return deferred.promise;
                 };
+
+                remoteDAO.enviarMailValidarEMail = function (email, captchaWord, keyCaptcha) {
+                    var deferred = this.$q.defer();
+                    
+                    var url=this.baseUrl + '/' + this.entityName + "/enviarMailValidarEMail";
+                    var params={
+                            email:email,
+                            captchaWord: captchaWord,
+                            keyCaptcha:keyCaptcha
+                        }   
+                    var config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        }                      
+                    };
+                    this.$http.post(url,$httpParamSerializer(params),config).then(function () {
+                        deferred.resolve(null);
+                    }).catch(function (response) {
+                        if (response.status === 400) {
+                            deferred.reject(response.data);
+                        } else {
+                            throw new Error("Fallo al enviar la peticion de enviar mail de validación de EMail:" + response.status + "\n" + response.data);
+                        }
+                    });
+                    return deferred.promise;
+                };
+
 
                 remoteDAO.validarEmail = function (idIdentity, claveValidarEmail) {
                     var deferred = this.$q.defer();

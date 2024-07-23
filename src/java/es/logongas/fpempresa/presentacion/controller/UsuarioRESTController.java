@@ -61,6 +61,8 @@ public class UsuarioRESTController {
     @Autowired
     private ExceptionHelper exceptionHelper; 
     @Autowired
+    private ControllerUtil controllerUtil;    
+    @Autowired
     private DataSessionFactory dataSessionFactory;
     @Autowired
     private JsonFactory jsonFactory;
@@ -205,6 +207,24 @@ public class UsuarioRESTController {
             exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
+    
+    @RequestMapping(value = {"/{path}/Usuario/enviarMailValidarEMail"}, method = RequestMethod.POST)
+    public void enviarMailValidarEMail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+
+            String email=controllerUtil.getStringParameter(httpServletRequest,"email");
+            String captchaWord=controllerUtil.getStringParameter(httpServletRequest,"captchaWord");
+            String keyCaptcha=controllerUtil.getStringParameter(httpServletRequest,"keyCaptcha");
+            
+            
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+            UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
+            usuarioCRUDBusinessProcess.enviarMailValidarEMail(new UsuarioCRUDBusinessProcess.EnviarMailValidarEMailArguments(principal, dataSession, email, captchaWord, keyCaptcha));
+            controllerHelper.objectToHttpResponse(new HttpResult(email), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+        }
+    }    
 
     @RequestMapping(value = {"/{path}/Usuario/validarEmail/{idIdentity:.+}/{claveValidarEmail:.+}"}, method = RequestMethod.POST)
     public void validarEmail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idIdentity") int idIdentity, @PathVariable("claveValidarEmail") String claveValidarEmail) {

@@ -74,6 +74,17 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
                     return deferred.promise;
                 };
 
+                repository.enviarMailValidarEMail = function (email, captchaWord, keyCaptcha) {
+                    var deferred = $q.defer();
+                    this.remoteDAO.enviarMailValidarEMail(email, captchaWord, keyCaptcha).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        richDomain.extend(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+
                 repository.validarEmail = function (idIdentity, claveValidarEmail) {
                     var deferred = $q.defer();
                     this.remoteDAO.validarEmail(idIdentity, claveValidarEmail).then(function () {

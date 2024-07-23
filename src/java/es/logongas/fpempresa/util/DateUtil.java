@@ -43,6 +43,69 @@ public class DateUtil {
         return part;
     }    
     
+    public static Duration getDateInterval(Date upperDate,Date lowerDate) {
+        final double milisegundosMinuto=60*1000;
+        final double milisegundosHora=60*60*1000;        
+        final double milisegundosDia=60*60*24*1000;
+        
+        long diffInMilisegundos = upperDate.getTime() - lowerDate.getTime();
+        long diffInMinutos = Math.round((double)diffInMilisegundos/milisegundosMinuto);
+        long diffInHoras = Math.round((double)diffInMilisegundos/milisegundosHora);
+        long diffInDias = Math.round((double)diffInMilisegundos/milisegundosDia);
+        
+        if (diffInMinutos<60) {
+            return new Duration(diffInMinutos, Interval.MINUTE);
+        } else if (diffInHoras<24) {
+            return new Duration(diffInHoras, Interval.HOUR_OF_DAY);
+        } else {
+           return new Duration(diffInDias, Interval.DAY);     
+        }
+        
+    }
+    
+    
+    static public class Duration {
+        long value;
+        Interval interval;
+
+        public Duration(long value, Interval interval) {
+            this.value = value;
+            this.interval = interval;
+        }
+
+        @Override
+        public String toString() {
+            String unidades;
+            switch (this.interval) {
+                case MINUTE:
+                    unidades="minutos";
+                    if (this.value==1) {
+                        unidades="minuto";
+                    }
+                    
+                    break;
+                case HOUR_OF_DAY:
+                    unidades="horas";
+                    if (this.value==1) {
+                        unidades="hora";
+                    }                    
+                    break;
+                case DAY:
+                    unidades="dias";
+                    if (this.value==1) {
+                        unidades="dia";
+                    }                    
+                    break;
+                default:
+                    throw new RuntimeException("El tipo de intervalo es desconocido:"+this.interval);
+            }
+            
+            
+            return this.value + " " + unidades;
+        }
+  
+    }            
+            
     public enum Interval {
         MINUTE(Calendar.MINUTE),
         HOUR(Calendar.HOUR),

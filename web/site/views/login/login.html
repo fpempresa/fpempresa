@@ -36,6 +36,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 <a href="#!/enviar-mail-resetear-contrasenya" class="c-button c-button--alt-tertiary g--center g--padding-top-4"  >¿Has olvidado tu contraseña?</a>
             </div>
             <ix3-business-messages></ix3-business-messages>
+            <p class="g--padding-bottom-6"><a href="#!/enviar-mail-validacion" class="c-button c-button--alt-tertiary g--center g--padding-top-4" ng-show="businessMessages | contains:'UID === \'es.logongas.fpempresa.businessprocess.messageuid.PermitidoReenviarCorreoValidacion\''" >Volver a enviar el correo de validación</a></p>
             <p class="c-text  g--padding-top-6 ">¿No tienes cuenta en EmpleaFP? <button type="submit" class="c-button c-button--alt-tertiary "  ng-click="createAccount()">Crear un nuevo usuario</button></p>
 
 

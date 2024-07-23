@@ -145,32 +145,25 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             throw new BusinessException(passwordValidator.getBusinessMessages());
         }
         
-        
-        Boolean autoValidateEMail = (Boolean) conversion.convertFromString(Config.getSetting("app.autoValidateEMail"), Boolean.class);
-        if (autoValidateEMail == null) {
-            autoValidateEMail = false;
-        }
-
         usuario.setPassword(getEncryptedPasswordFromPlainPassword(usuario.getPassword()));
-        if (autoValidateEMail == true) {
-            usuario.setValidadoEmail(true);
-        } else {
-            usuario.setValidadoEmail(false);
-        }
+        boolean autoValidateEMail = getAutoValidateEMail();
+        usuario.setValidadoEmail(autoValidateEMail);
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
         usuario.setMemberOf(getMembersOf(dataSession, usuario));
         Usuario resultUsuario = getUsuarioDAO().insert(dataSession, usuario);
 
         if (resultUsuario != null) {
+            //La ponemos siemrpe a null una vez insertada para que nunca se pueda ver desde "fuera"
+            resultUsuario.setPassword(null);            
+            
+            
             if (autoValidateEMail == true) {
                 //No es necesario enviar el EMail de confirmación ya que auto valida el email
             } else {
-                notification.validarCuenta(usuario);
+                this.enviarMailValidarEMail(dataSession, resultUsuario);
             }
         }
 
-        //La ponemos siemrpe a null una vez insertada para que nunca se pueda ver desde "fuera"
-        resultUsuario.setPassword(null);
 
         return resultUsuario;
     }
@@ -184,11 +177,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
             
             usuario.setValidadoEmail(false);
             usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
-            
-            //REGLA DE NEGOCIO: No hay que notificar si es una cuenta del estilo de empleafp porque es de los usuarios que se borran.Issue #236. Si se cambia esta linea cambiar el método. SoftDelete
-            if (usuario.getEmail().matches("nobody_[0-9]*_[0-9]*@empleafp.com")==false) {
-                notification.validarCuenta(usuario);
-            }
+            fireActionRule_EnviarMailValidarEMail(usuario);
         }
 
         return super.update(dataSession, usuario);
@@ -685,6 +674,52 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         
     }
     
+    @Override
+    public void enviarMailValidarEMail(DataSession dataSession, Usuario usuario) throws BusinessException {
+        
+        fireActionRule_EnviarMailValidarEMail(usuario);
+        
+        super.update(dataSession, usuario);
+        
+        
+    }      
+    
+    /*********************************************************************/
+    /*************************** Action Rules ***************************/
+    /*********************************************************************/ 
+    /*** BEGIN ***/ 
+
+    
+    private void fireActionRule_EnviarMailValidarEMail(Usuario usuario) {
+        
+        //REGLA DE NEGOCIO: No hay que notificar si es una cuenta del estilo de empleafp porque es de los usuarios que se borran.Issue #236. Si se cambia esta linea cambiar el método. SoftDelete
+        if (usuario.getEmail().matches("nobody_[0-9]*_[0-9]*@empleafp.com")==false) {        
+            notification.validarCuenta(usuario);
+        }
+        
+        fireActionRule_ActualizarDatosEnviarMailValidarEMail(usuario);
+    }
+    
+    private void fireActionRule_ActualizarDatosEnviarMailValidarEMail(Usuario usuario) {
+        usuario.setFechaUltimoEnvioCorreoValidacionEmail(new Date());
+        usuario.setNumEnviosCorreoValidacionEmail(usuario.getNumEnviosCorreoValidacionEmail()+1);        
+    }    
+    
+    
+    /********************************************************************************/
+    /*************************** Funciones independientes ***************************/
+    /********************************************************************************/ 
+    /*** BEGIN ***/    
+    
+    private boolean getAutoValidateEMail() {
+        Boolean autoValidateEMail = (Boolean) conversion.convertFromString(Config.getSetting("app.autoValidateEMail"), Boolean.class);
+        if (autoValidateEMail == null) {
+            autoValidateEMail = false;
+        }
+
+        return autoValidateEMail;
+    }    
+    
     /**
      * https://en.wikipedia.org/wiki/Logistic_function
      * Los minutos de bloqueo son: 1,2,6,16,39,93,207,....
@@ -713,6 +748,11 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         return minutesLockedAccount;
     }
 
+    /*********************************************************************/
+    /*************************** Notificadores ***************************/
+    /*********************************************************************/ 
+    /*** BEGIN ***/     
+    
     private class EventCountInDayNotifierImplCancelarSubscripcion implements EventCountInDay.Notifier {
         
         Notification notification;

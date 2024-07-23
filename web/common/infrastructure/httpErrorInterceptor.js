@@ -34,6 +34,14 @@ angular.module("common").config(['$httpProvider', function ($httpProvider) {
                                 }
                             ]
                             response.status = 400;
+                        } else if (response.status === 500) {
+                            response.data=[
+                                {
+                                    propertyName:null,
+                                    message: "Ha ocurrido un fallo en la petición al servidor"
+                                }
+                            ]
+                            response.status = 400;
                         }
                         return $q.reject(response);
                     }

@@ -60,6 +60,16 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                     return deferred.promise;
                 };
 
+                service.enviarMailValidarEMail = function (email, captchaWord, keyCaptcha) {
+                    var deferred = $q.defer();
+                    this.repository.enviarMailValidarEMail(email, captchaWord, keyCaptcha).then(function () {
+                        deferred.resolve();
+                    }, function (data) {
+                        deferred.reject(data);
+                    });
+                    return deferred.promise;
+                };
+
                 service.validarEmail = function (idIdentity, claveValidarEmail) {
                     var deferred = $q.defer();
                     this.repository.validarEmail(idIdentity, claveValidarEmail

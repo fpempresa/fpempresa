@@ -16,6 +16,13 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 app.config(['$stateProvider', function ($stateProvider) {
+        
+        $stateProvider.state('enviar-mail-validacion', {
+            url: '/enviar-mail-validacion',
+            templateUrl: 'views/validar-email/enviar-mail-validacion.html',
+            controller: 'EnviarMailValidacionController'
+        });        
+        
         $stateProvider.state('validar-email', {
             url: '/validar-email/:idIdentity/:claveValidarEmail',
             templateUrl: 'views/validar-email/validar-email.html',

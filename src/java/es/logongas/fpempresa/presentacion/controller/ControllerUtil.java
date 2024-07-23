@@ -49,8 +49,13 @@ public class ControllerUtil {
         }
         
         return (Integer)conversion.convertFromString(value, Integer.class);
-    }    
+    } 
     
+    public String getStringParameter(HttpServletRequest httpServletRequest,String parameterName) {
+        String value=getParameterValue(httpServletRequest, parameterName);
+        
+        return value;
+    }     
     
     private String getParameterValue(HttpServletRequest httpServletRequest,String parameterName) {
         String value=controllerHelper.getParameter(httpServletRequest, parameterName);

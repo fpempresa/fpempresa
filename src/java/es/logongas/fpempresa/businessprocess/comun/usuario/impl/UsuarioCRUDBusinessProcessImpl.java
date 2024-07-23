@@ -14,6 +14,7 @@
 package es.logongas.fpempresa.businessprocess.comun.usuario.impl;
 
 import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
+import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
@@ -22,16 +23,21 @@ import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
+import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.fpempresa.util.ImageUtil;
 import es.logongas.fpempresa.util.concurrent.EventCountInDay;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.core.Principal;
+import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +57,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     CaptchaService captchaService;   
 
     private static final EventCountInDay eventCountInDayInsert=new EventCountInDay(300);    
+    private static final EventCountInDay eventCountInDayEnviarMailValidarEMail=new EventCountInDay(100);    
     
     
     @Override
@@ -534,6 +541,44 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     }
 
     @Override
+    public void enviarMailValidarEMail(EnviarMailValidarEMailArguments enviarMailValidarEMailArguments) throws BusinessException {
+      
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);        
+
+        DataSession dataSession=enviarMailValidarEMailArguments.dataSession;
+        String email=enviarMailValidarEMailArguments.email;
+        String word=enviarMailValidarEMailArguments.captchaWord;
+        String keyCaptcha=enviarMailValidarEMailArguments.keyCaptcha; 
+
+
+        if ((email==null) || email.trim().isEmpty()) {
+            throw new BusinessException("La dirección de correo no puede estar vacía");
+        }
+
+        if (captchaService.solveChallenge(dataSession,keyCaptcha, word)==false) {
+            throw new BusinessException("El texto de la imagen no es correcto");
+        }
+
+        try { 
+            Usuario usuario=usuarioCRUDService.readByNaturalKey(dataSession, email);
+            
+            fireConstraintRule_DebeExistirElUsuario(dataSession,usuario,email);
+            fireConstraintRule_ElUsuarioNoPuedeEstarValidado(dataSession, usuario, email);
+            fireConstraintRule_AlcanzadoLimiteEnvioCorreos(dataSession,usuario);
+            fireConstraintRule_DemasiaodProntoVolverEnviarCorreo(dataSession,usuario);
+
+            
+            usuarioCRUDService.enviarMailValidarEMail(dataSession, usuario);
+        } catch (BusinessException businessException) {
+            if (eventCountInDayEnviarMailValidarEMail.isSafe(new EventCountInDayNotifierImplEnviarMailValidarEMail(notification))) {
+                throw businessException;
+            }
+        } 
+        
+    }    
+
+    
+    @Override
     public void resetearContrasenya(ResetearContrasenyaArguments resetearContrasenyaArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         usuarioCRUDService.resetearContrasenya(resetearContrasenyaArguments.dataSession,resetearContrasenyaArguments.usuario, resetearContrasenyaArguments.claveResetearContrasenya, resetearContrasenyaArguments.nuevaContrasenya);
@@ -606,7 +651,59 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
     }
 
+    /*************************************************************/
+    /****************** Reglas de restricciones ******************/
+    /*** BEGIN ***/
+
+    private void fireConstraintRule_DebeExistirElUsuario(DataSession dataSession, Usuario usuario,String email) throws BusinessException {
+        if (usuario==null) {
+            throw new BusinessException("No existe ningún usuario con el correo '"+email+"'. Comprueba que esté bien escrito el correo. Si el correo está bien escrito, vuelve a darte de alta en EmpleaFP ya que lo normal es que no lo escribieras correctamente al darte de alta.");
+        }        
+    }    
+    private void fireConstraintRule_ElUsuarioNoPuedeEstarValidado(DataSession dataSession, Usuario usuario,String email) throws BusinessException {
+        if (usuario.isValidadoEmail()==true) {
+            throw new BusinessException("Ya está validado el correo '"+email+"'. Por lo tanto no es necesario que te enviemos el correo de validación.");
+        }        
+    } 
     
+    private void fireConstraintRule_AlcanzadoLimiteEnvioCorreos(DataSession dataSession, Usuario usuario) throws BusinessException {
+        final int LIMITE_ENVIO_CORREOS=5;
+        
+        
+        if (usuario.getNumEnviosCorreoValidacionEmail()>=LIMITE_ENVIO_CORREOS) {
+            BusinessException businessException=new BusinessException("No es posible volver a enviar el correo de validación puesto que ya te lo hemos enviado " + usuario.getNumEnviosCorreoValidacionEmail() + " veces.");
+            businessException.getBusinessMessages().add(new BusinessMessage("Debes escribir un correo a '" + Config.getSetting("app.correoSoporte") + "' solicitando que validemos tu correo."));
+            throw businessException;
+        }
+        
+    }
+    private void fireConstraintRule_DemasiaodProntoVolverEnviarCorreo(DataSession dataSession, Usuario usuario) throws BusinessException {
+        final int MINUTOS_ESPERAR_NUEVO_ENVIO_CORREO=30;
+        
+        Date fechaUltimoEnvioCorreoValidacionEMail=usuario.getFechaUltimoEnvioCorreoValidacionEmail();
+        if (fechaUltimoEnvioCorreoValidacionEMail==null) {
+            //Si nunca se ha enviado el correo seguro que no falla la validación
+            return;
+        }
+        Date fechaProximoEnvioCorreoValidacionEMail=DateUtil.add(fechaUltimoEnvioCorreoValidacionEMail, DateUtil.Interval.MINUTE, MINUTOS_ESPERAR_NUEVO_ENVIO_CORREO);
+        String horaUltimoEnvioCorreoValidacionEMailFormateada=new SimpleDateFormat("HH:mm").format(fechaUltimoEnvioCorreoValidacionEMail);
+        String horaProximoEnvioCorreoValidacionEMailFormateada=new SimpleDateFormat("HH:mm").format(fechaProximoEnvioCorreoValidacionEMail);
+
+
+        Date ahora=new Date();
+        if (ahora.before(fechaProximoEnvioCorreoValidacionEMail)) {
+            BusinessException businessException=new BusinessException("Aun no te podemos volver enviar el correo de validación puesto que ya te lo hemos enviado a las " + horaUltimoEnvioCorreoValidacionEMailFormateada);
+            businessException.getBusinessMessages().add(new BusinessMessage("Espera hasta las " + horaProximoEnvioCorreoValidacionEMailFormateada + " para volver a pedir que te lo enviemos"));
+            throw businessException;            
+        }
+        
+        
+    }
+
+    /*********************************************************************/
+    /****************** Notificaciones de EventCountDay ******************/
+    /*** BEGIN ***/
+
     private class EventCountInDayNotifierImplInsert implements EventCountInDay.Notifier {
         
         Notification notification;
@@ -621,4 +718,18 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         }
     }
     
+    
+    private class EventCountInDayNotifierImplEnviarMailValidarEMail implements EventCountInDay.Notifier {
+        
+        Notification notification;
+
+        public EventCountInDayNotifierImplEnviarMailValidarEMail(Notification notification) {
+            this.notification = notification;
+        }
+
+        @Override
+        public void notify(int threshold,int currentValue) {
+            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Enviar Mail para Validar EMail de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
+        }
+    }    
 }

@@ -35,7 +35,10 @@
         </property>    
     
         <property name="validadoEmail"/>
+        <property name="fechaUltimoEnvioCorreoValidacionEmail"/>
+        <property name="numEnviosCorreoValidacionEmail"/>
         <property name="claveValidacionEmail"/>
+
         <property name="claveResetearContrasenya"/>
         <property name="fechaClaveResetearContrasenya"/>
     

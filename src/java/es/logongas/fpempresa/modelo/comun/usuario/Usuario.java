@@ -71,7 +71,10 @@ public class Usuario extends User implements Principal {
 
     @Label("Validado Correo Electrónico")
     private boolean validadoEmail;
-
+    @Label("Fecha último envio correo validación")
+    private Date fechaUltimoEnvioCorreoValidacionEmail; 
+    @Label("Nº de envios correo validación")
+    private int numEnviosCorreoValidacionEmail;     
     private String claveValidacionEmail;
 
     private String claveResetearContrasenya;
@@ -103,7 +106,7 @@ public class Usuario extends User implements Principal {
     private String captchaWord;
     
     
-    
+     
     public Usuario() {
         this.tipoUsuario = TipoUsuario.TITULADO;
     }
@@ -328,6 +331,34 @@ public class Usuario extends User implements Principal {
      */
     public void setValidadoEmail(boolean validadoEmail) {
         this.validadoEmail = validadoEmail;
+    }
+
+    /**
+     * @return the fechaUltimoEnvioCorreoValidacionEmail
+     */
+    public Date getFechaUltimoEnvioCorreoValidacionEmail() {
+        return fechaUltimoEnvioCorreoValidacionEmail;
+    }
+
+    /**
+     * @param fechaUltimoEnvioCorreoValidacionEmail the fechaUltimoEnvioCorreoValidacionEmail to set
+     */
+    public void setFechaUltimoEnvioCorreoValidacionEmail(Date fechaUltimoEnvioCorreoValidacionEmail) {
+        this.fechaUltimoEnvioCorreoValidacionEmail = fechaUltimoEnvioCorreoValidacionEmail;
+    }
+
+    /**
+     * @return the numEnviosCorreoValidacionEmail
+     */
+    public int getNumEnviosCorreoValidacionEmail() {
+        return numEnviosCorreoValidacionEmail;
+    }
+
+    /**
+     * @param numEnviosCorreoValidacionEmail the numEnviosCorreoValidacionEmail to set
+     */
+    public void setNumEnviosCorreoValidacionEmail(int numEnviosCorreoValidacionEmail) {
+        this.numEnviosCorreoValidacionEmail = numEnviosCorreoValidacionEmail;
     }
 
     /**

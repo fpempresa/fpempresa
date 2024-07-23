@@ -54,24 +54,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                 </div>
                             </div> 
                         </div>
-                    </div>
-                    <div class="row" >
-                        <div class="col-xs-9  col-xs-offset-3 form-horizontal">
-                            <div class="checkbox">
-                                <label>
-                                    <input ng-model="model.validadoEmail" type="checkbox" id="validadoEmail" name="validadoEmail"  ix3-validation >
-                                    Validado el correo electrónico
-                                </label>
-                            </div>
-                        </div> 
-                    </div>                                         
-                    <div class="row" >
-                        <div class="col-xs-10  col-xs-offset-2 form-horizontal">
-                            <br>
-                            <spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#!/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
-                        </div> 
-                    </div> 
-                    
+                    </div>                   
                     <legend class="form__title">Fechas</legend>
                     <div class="row" >
                         <div class="col-xs-6 form-horizontal">
@@ -112,7 +95,42 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             </div> 
                         </div>  
                     </div>
+                    <legend class="form__title"  ng-show="controllerAction !== 'NEW'">Validado EMail</legend>
+                    <div class="row" ng-show="controllerAction !== 'NEW'" >
 
+                        <div class="col-xs-6 form-horizontal">
+                            <div class="form-group">
+                                <label for="fechaUltimoEnvioCorreoValidacionEmail" class="col-xs-6  control-label" ix3-label></label>
+                                <div class="col-xs-6 ">
+                                    <input ng-model="model.fechaUltimoEnvioCorreoValidacionEmail" type="text" class="form-control" id="fechaUltimoEnvioCorreoValidacionEmail" name="fechaUltimoEnvioCorreoValidacionEmail"  ix3-date="dd/MM/yyyy HH:mm:ss"  ix3-validation ng-required="false"  >
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-6 form-horizontal">
+                            <div class="form-group">
+                                <label for="numEnviosCorreoValidacionEmail" class="col-xs-6  control-label" ix3-label></label>
+                                <div class="col-xs-6 ">
+                                    <input ng-model="model.numEnviosCorreoValidacionEmail" type="text" class="form-control" id="numEnviosCorreoValidacionEmail" name="numEnviosCorreoValidacionEmail"    ix3-validation  ng-required="false" >
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" ng-show="controllerAction !== 'NEW'">
+                        <div class="col-xs-9  col-xs-offset-3 form-horizontal">
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="model.validadoEmail" type="checkbox" id="validadoEmail" name="validadoEmail"  ix3-validation >
+                                    Validado el correo electrónico
+                                </label>
+                            </div>
+                        </div> 
+                    </div>                                         
+                    <div class="row" ng-show="controllerAction !== 'NEW'">
+                        <div class="col-xs-10  col-xs-offset-2 form-horizontal">
+                            <br>
+                            <spam ix3-visibility="model.validadoEmail!==true">{{locationOrigin()}}{{getContextPath()}}/site/index.html#!/validar-email/{{model.idIdentity}}/{{model.claveValidacionEmail}}</spam>
+                        </div> 
+                    </div> 
                     <legend class="form__title"  ng-show="controllerAction !== 'NEW'">Bloqueo de cuenta</legend>
                     <div class="row" ng-show="controllerAction !== 'NEW'" >
 

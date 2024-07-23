@@ -79,7 +79,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     private void addIx3EndPoints(List<EndPoint> endPoints) {
         endPoints.add(EndPoint.createEndPoint("/$echo/**", null, null));
         endPoints.add(EndPoint.createEndPoint("/$log/**", null, null));
-        endPoints.add(EndPoint.createEndPoint("/session", null, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPoint("/session", null, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
     }
 
     private void addCommonEndPoints(List<EndPoint> endPoints, String path) {
@@ -100,8 +100,8 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addSiteEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
-        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/familiasOfertas", "GET", new BeanMapper(FamiliaOfertasEstadistica.class, null, "*")));
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
 
@@ -111,7 +111,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
     private void addAdministradorEndPoints(List<EndPoint> endPoints, String path) {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "foto,claveValidacionEmail>,secretToken,password,acl,memberOf", null)));
-        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,<password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,<password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
 
@@ -136,7 +136,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addTituladoEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         //Centro
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class, "contacto", null)));
@@ -159,8 +159,8 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addCentroEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
-        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
 
@@ -169,7 +169,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class,"numOfertasPublicadas",null)));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,oferta.secretToken,borrado,rechazado,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail,usuario.tipoUsuario,usuario.titulado.configuracion,usuario.fechaUltimoAcceso,usuario.fechaEnvioCorreoAvisoBorrarUsuario,usuario.centro,usuario.email,usuario.login,usuario.titulado,usuario.fecha,usuario.claveResetearContrasenya,usuario.fechaClaveResetearContrasenya,usuario.idIdentity,usuario.empresa,usuario.estadoUsuario,usuario.name", "usuario.nombre,usuario.apellidos,oferta.empresa.numOfertasPublicadas")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,oferta.secretToken,borrado,rechazado,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail,usuario.fechaUltimoEnvioCorreoValidacionEmail,usuario.numEnviosCorreoValidacionEmail,usuario.tipoUsuario,usuario.titulado.configuracion,usuario.fechaUltimoAcceso,usuario.fechaEnvioCorreoAvisoBorrarUsuario,usuario.centro,usuario.email,usuario.login,usuario.titulado,usuario.fecha,usuario.claveResetearContrasenya,usuario.fechaClaveResetearContrasenya,usuario.idIdentity,usuario.empresa,usuario.estadoUsuario,usuario.name", "usuario.nombre,usuario.apellidos,oferta.empresa.numOfertasPublicadas")));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 
@@ -177,8 +177,8 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
     }
 
     private void addEmpresaEndPoints(List<EndPoint> endPoints, String path) {
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
-        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Usuario.class, "keyCaptcha,captchaWord,captchaWord,foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,lockedUntil,numFailedLogins,<password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
 
@@ -186,7 +186,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class,"numOfertasPublicadas",null)));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,oferta.secretToken,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion,usuario.fechaUltimoAcceso>,usuario.fechaEnvioCorreoAvisoBorrarUsuario>,oferta.empresa.numOfertasPublicadas", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,oferta.secretToken,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.fechaUltimoEnvioCorreoValidacionEmail>,usuario.numEnviosCorreoValidacionEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion,usuario.fechaUltimoAcceso>,usuario.fechaEnvioCorreoAvisoBorrarUsuario>,oferta.empresa.numOfertasPublicadas", null)));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 

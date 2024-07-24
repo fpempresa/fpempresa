@@ -1,3 +1,4 @@
+<%@page import="java.util.Locale"%>
 <%@page import="es.logongas.fpempresa.config.Config"%>
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/javascript; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -96,3 +97,5 @@ function getServerConfig() {
     }
 
 }
+
+var serverLocale="<%=Locale.getDefault() %>";

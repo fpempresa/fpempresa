@@ -28,16 +28,18 @@ public class LocaleConfigurer implements InitializingBean {
     private String language;
     private String country;
 
-
+    static {
+        Locale.setDefault(new Locale("es"));
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         if (language != null) {
             
             if (country!=null) {
-                Locale.setDefault(new Locale(language, country));
+                //Locale.setDefault(new Locale(language, country));
             } else {
-                Locale.setDefault(new Locale(language));
+                //Locale.setDefault(new Locale(language));
             }
             
         }

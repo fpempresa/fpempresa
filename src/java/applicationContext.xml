@@ -95,4 +95,9 @@
         <property name="WaitForTasksToCompleteOnShutdown" value="true" />
     </bean>    
     
+    <!-- Startup. Beans que se ejecutan al arrancara la aplicación -->
+    <bean class="es.logongas.fpempresa.config.LocaleConfigurer">
+        <property name="defaultLocale" value="es_ES"/>
+    </bean>
+    
 </beans>

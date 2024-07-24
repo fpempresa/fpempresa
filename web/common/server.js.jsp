@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Locale"%>
 <%@page import="es.logongas.fpempresa.config.Config"%>
 <%@ page session="false" %>
@@ -99,3 +100,9 @@ function getServerConfig() {
 }
 
 var serverLocale="<%=Locale.getDefault() %>";
+<%
+    Locale[] locales = SimpleDateFormat.getAvailableLocales();
+    for(Locale locale : locales) {
+        out.println("//" + locale.getDisplayName()+"--"+locale.getLanguage()+"_"+locale.getCountry());
+    }    
+%>

@@ -25,16 +25,49 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class LocaleConfigurer implements InitializingBean {
     
-    private Locale defaultLocale;
+    private String language;
+    private String country;
 
-    public void setDefaultLocale(Locale defaultLocale) {
-        this.defaultLocale = defaultLocale;
-    }
+
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (defaultLocale != null) {
-            Locale.setDefault(defaultLocale);
+        if (language != null) {
+            
+            if (country!=null) {
+                Locale.setDefault(new Locale(language, country));
+            } else {
+                Locale.setDefault(new Locale(language));
+            }
+            
         }
+    }
+
+    /**
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * @param language the language to set
+     */
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    /**
+     * @param country the country to set
+     */
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

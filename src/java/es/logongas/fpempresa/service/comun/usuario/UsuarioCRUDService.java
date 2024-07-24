@@ -39,7 +39,7 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
 
     Usuario getUsuarioFromTitulado(DataSession dataSession, int idTitulado) throws BusinessException;
 
-    void enviarMailResetearContrasenya(DataSession dataSession, String email) throws BusinessException;
+    void enviarMailResetearContrasenya(DataSession dataSession, Usuario usuario) throws BusinessException;
 
     void validarEmail(DataSession dataSession,Usuario usuario, String claveValidacionEmail) throws BusinessException;
 

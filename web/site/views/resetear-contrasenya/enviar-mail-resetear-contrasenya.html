@@ -27,10 +27,36 @@ along with this program.  If not, see http://www.gnu.org/licenses/
         </p>
 
         <form name="mainForm" class="c-form g--center" style="width: 100%; max-width:550px" novalidate>
-            <label for="userEmail" class="c-label">Correo electrónico</label>
-            <input type="email"  ng-model="userEmail" class="c-input" name="userEmail" id="userEmail" ng-required="true" >
+            <div class="l-horizontal l-horizontal--2-columns">
+                <div class="l-horizontal__item g--padding-right-3" >
+                    <label for="userEmail" class="c-label">Tu correo electrónico</label>
+                    <input type="email"  ng-model="userEmail" class="c-input" name="userEmail" id="userEmail" ng-required="true" >
+                </div>
+                <div class="l-horizontal__item g--padding-left-3" >
+                    &nbsp;
+                </div>
+            </div>
+            
+            <br>
+            <div class="l-horizontal l-horizontal--1-columns">
+                <div class="l-horizontal__item g--padding-right-3" >
+                    <label  for="captchaWord" class="c-label" control-label>Escribe el texto de la siguiente imagen</label>
+                </div>
+            </div>
+            
+            <div class="l-horizontal l-horizontal--2-columns">
+                <div class="l-horizontal__item g--padding-right-3" >
+                    <input x-ng-model="captchaWord" type="text" class="c-input" id="captchaWord" name="captchaWord"  required>
+                </div>
+                <div class="l-horizontal__item g--padding-left-3" >
+                    <img class="c-input" style="padding:0px" ng-src="{{ix3Configuration.server.api}}/Captcha/image?keyCaptcha={{keyCaptcha}}" width="250px" height="42px">
+                </div>
+            </div>
+                        
+            
+            
             <div class="c-form__buttons">
-                <button type="button" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="cambiarContrasenya()">Enviar correo</button>
+                <button type="button" class="c-button c-button--primary" style="display:block;width: 100%" ng-click="cambiarContrasenya()">Enviar correo para cambiar tu contraseña</button>
             </div>
             <ix3-business-messages></ix3-business-messages>
 

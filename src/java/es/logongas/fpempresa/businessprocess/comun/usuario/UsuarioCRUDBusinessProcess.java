@@ -77,10 +77,15 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
     public class EnviarMailResetearContrasenyaArguments extends BusinessProcess.BusinessProcessArguments {
 
         final public String email;
+        final public String captchaWord;
+        final public String keyCaptcha;
 
-        public EnviarMailResetearContrasenyaArguments(Principal principal, DataSession dataSession, String email) {
+        public EnviarMailResetearContrasenyaArguments(Principal principal, DataSession dataSession, String email, String captchaWord, String keyCaptcha) {
             super(principal, dataSession);
             this.email = email;
+            this.captchaWord = captchaWord;
+            this.keyCaptcha = keyCaptcha;
+
         }
     }
 

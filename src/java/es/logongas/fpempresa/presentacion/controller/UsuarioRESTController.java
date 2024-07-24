@@ -196,12 +196,19 @@ public class UsuarioRESTController {
             exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
         }
     }
-    @RequestMapping(value = {"/{path}/Usuario/enviarMailResetearContrasenya/{email:.+}"}, method = RequestMethod.POST)
-    public void enviarMailResetearPassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("email") String email) {
+    @RequestMapping(value = {"/{path}/Usuario/enviarMailResetearContrasenya"}, method = RequestMethod.POST)
+    public void enviarMailResetearPassword(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            
+            String email=controllerUtil.getStringParameter(httpServletRequest,"email");
+            String captchaWord=controllerUtil.getStringParameter(httpServletRequest,"captchaWord");
+            String keyCaptcha=controllerUtil.getStringParameter(httpServletRequest,"keyCaptcha");
+            
+            
+
             Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
             UsuarioCRUDBusinessProcess usuarioCRUDBusinessProcess = (UsuarioCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Usuario.class);
-            usuarioCRUDBusinessProcess.enviarMailResetearContrasenya(new UsuarioCRUDBusinessProcess.EnviarMailResetearContrasenyaArguments(principal, dataSession, email));
+            usuarioCRUDBusinessProcess.enviarMailResetearContrasenya(new UsuarioCRUDBusinessProcess.EnviarMailResetearContrasenyaArguments(principal, dataSession, email, captchaWord, keyCaptcha));
             controllerHelper.objectToHttpResponse(new HttpResult(email), httpServletRequest, httpServletResponse);
         } catch (Exception ex) {
             exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);

@@ -58,6 +58,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 
     private static final EventCountInDay eventCountInDayInsert=new EventCountInDay(300);    
     private static final EventCountInDay eventCountInDayEnviarMailValidarEMail=new EventCountInDay(100);    
+    private static final EventCountInDay eventCountInDayEnviarMailResetearContrasenya=new EventCountInDay(50); 
     
     
     @Override
@@ -536,8 +537,35 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 
     @Override
     public void enviarMailResetearContrasenya(EnviarMailResetearContrasenyaArguments enviarMailResetearContrasenyaArguments) throws BusinessException {
-        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-        usuarioCRUDService.enviarMailResetearContrasenya(enviarMailResetearContrasenyaArguments.dataSession, enviarMailResetearContrasenyaArguments.email);
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);        
+
+        DataSession dataSession=enviarMailResetearContrasenyaArguments.dataSession;
+        String email=enviarMailResetearContrasenyaArguments.email;
+        String word=enviarMailResetearContrasenyaArguments.captchaWord;
+        String keyCaptcha=enviarMailResetearContrasenyaArguments.keyCaptcha; 
+
+
+        if ((email==null) || email.trim().isEmpty()) {
+            throw new BusinessException("La dirección de correo no puede estar vacía");
+        }
+
+        if (captchaService.solveChallenge(dataSession,keyCaptcha, word)==false) {
+            throw new BusinessException("El texto de la imagen no es correcto");
+        }
+
+        try { 
+            Usuario usuario=usuarioCRUDService.readByNaturalKey(dataSession, email);
+            
+            fireConstraintRule_DebeExistirElUsuario(dataSession,usuario,email);
+            fireConstraintRule_ElUsuarioDebeEstarValidado(dataSession,usuario);
+            
+            usuarioCRUDService.enviarMailResetearContrasenya(enviarMailResetearContrasenyaArguments.dataSession, usuario);
+        } catch (BusinessException businessException) {
+            if (eventCountInDayEnviarMailResetearContrasenya.isSafe(new EventCountInDayNotifierImplEnviarMailResetearContrasenya(notification))) {
+                throw businessException;
+            }
+        }        
+        
     }
 
     @Override
@@ -664,7 +692,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         if (usuario.isValidadoEmail()==true) {
             throw new BusinessException("Ya está validado el correo '"+email+"'. Por lo tanto no es necesario que te enviemos el correo de validación.");
         }        
-    } 
+    }
     
     private void fireConstraintRule_AlcanzadoLimiteEnvioCorreos(DataSession dataSession, Usuario usuario) throws BusinessException {
         final int LIMITE_ENVIO_CORREOS=5;
@@ -700,6 +728,12 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
     }
 
+    private void fireConstraintRule_ElUsuarioDebeEstarValidado(DataSession dataSession, Usuario usuario) throws BusinessException {
+        if (usuario.isValidadoEmail()==false) {
+            throw new BusinessException("Aun no está validado el correo '"+usuario.getEmail()+"'. Debes validar tu correo antes de poder cambiar la contraseña.");
+        }        
+    }    
+    
     /*********************************************************************/
     /****************** Notificaciones de EventCountDay ******************/
     /*** BEGIN ***/
@@ -731,5 +765,20 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         public void notify(int threshold,int currentValue) {
             notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Enviar Mail para Validar EMail de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
         }
-    }    
+    }
+
+    private class EventCountInDayNotifierImplEnviarMailResetearContrasenya implements EventCountInDay.Notifier {
+        
+        Notification notification;
+
+        public EventCountInDayNotifierImplEnviarMailResetearContrasenya(Notification notification) {
+            this.notification = notification;
+        }
+
+        @Override
+        public void notify(int threshold,int currentValue) {
+            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Enviar Mail Resetear Contrasenya de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
+        }
+    }
+    
 }

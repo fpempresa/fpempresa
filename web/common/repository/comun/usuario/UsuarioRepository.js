@@ -63,9 +63,9 @@ angular.module("common").config(['repositoryFactoryProvider', function (reposito
 
                 };
 
-                repository.enviarMailResetearContrasenya = function (email) {
+                repository.enviarMailResetearContrasenya = function (email, captchaWord, keyCaptcha) {
                     var deferred = $q.defer();
-                    this.remoteDAO.enviarMailResetearContrasenya(email).then(function () {
+                    this.remoteDAO.enviarMailResetearContrasenya(email, captchaWord, keyCaptcha).then(function () {
                         deferred.resolve();
                     }, function (data) {
                         richDomain.extend(data);

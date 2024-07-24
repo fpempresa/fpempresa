@@ -30,9 +30,19 @@
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
                 usuarioService.enviarMailValidarEMail($scope.userEmail, $scope.captchaWord, $scope.keyCaptcha).then(function () {
-                    alert("Te hemos vuelto a enviar el correo para validar tu dirección de correo.");
                     $scope.userEmail="";
                     $scope.loadKeyCaptcha();
+                    
+                    sweetAlert({
+                        title: "Te acabamos de enviar el correo.",
+                        text: "Ten en cuenta que puede tardar hasta 30 minutos en llegar el correo o puede que llegue a tu carpeta de spam",
+                        type: 'success',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#005594'
+                    }, function () {
+                    });                     
+                    
+                    
                 }, function (businessMessages) {
                     $scope.loadKeyCaptcha();
                     $scope.businessMessages = businessMessages;

@@ -18,9 +18,11 @@
 (function (undefined) {
     "use strict";
 
-    EnviarMailResetearContrasenyaController.$inject = ['$scope', 'serviceFactory', 'formValidator'];
-    function EnviarMailResetearContrasenyaController($scope, serviceFactory, formValidator) {
+    EnviarMailResetearContrasenyaController.$inject = ['$scope', 'serviceFactory', 'formValidator','ix3Configuration'];
+    function EnviarMailResetearContrasenyaController($scope, serviceFactory, formValidator, ix3Configuration) {
         $scope.businessMessages = [];
+        $scope.ix3Configuration=ix3Configuration;
+        var captchaService = serviceFactory.getService("Captcha");
 
 
 
@@ -28,15 +30,36 @@
             var usuarioService = serviceFactory.getService("Usuario");
             $scope.businessMessages = formValidator.validate($scope.mainForm, $scope.$validators);
             if ($scope.businessMessages.length === 0) {
-                usuarioService.enviarMailResetearContrasenya($scope.userEmail).then(function () {
-                    alert("Te hemos enviado un correo con la información para cambiar tu contraseña.");
+       
+                usuarioService.enviarMailResetearContrasenya($scope.userEmail, $scope.captchaWord, $scope.keyCaptcha).then(function () {                    
                     $scope.userEmail="";
+                    $scope.loadKeyCaptcha();
+                    sweetAlert({
+                        title: "Te acabamos de enviar el correo",
+                        text: "Ten en cuenta que puede tardar hasta 30 minutos en llegar el correo o puede que llegue a tu carpeta de spam",
+                        type: 'success',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#005594'
+                    }, function () {
+                    });                    
+                    
                 }, function (businessMessages) {
+                    $scope.loadKeyCaptcha();
                     $scope.businessMessages = businessMessages;
                 });
             }
         };
-
+        
+        $scope.loadKeyCaptcha=function() {
+            captchaService.getCaptcha().then(function (captcha) {
+                $scope.keyCaptcha=captcha.keyCaptcha;
+                $scope.captchaWord="";
+            }, function (businessMessages) {
+                $scope.businessMessages = businessMessages;
+            });            
+        }        
+        
+        $scope.loadKeyCaptcha();
     }
 
     angular.module("common").controller("EnviarMailResetearContrasenyaController", EnviarMailResetearContrasenyaController);

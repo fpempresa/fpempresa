@@ -40,6 +40,7 @@ import es.logongas.fpempresa.util.EMailUtil;
 import es.logongas.fpempresa.util.RandomUtil;
 import es.logongas.fpempresa.util.concurrent.EventCountInDay;
 import es.logongas.ix3.core.BusinessException;
+import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.core.conversion.Conversion;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
@@ -92,8 +93,7 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     Jws jws;  
 
     private static EventCountInDay eventCountInDayCancelarSubscripcion=new EventCountInDay(50);
-    private static EventCountInDay eventCountInDayResetearContrasenya=new EventCountInDay(70);
-    private static EventCountInDay eventCountInDayEnviarMailResetearContrasenya=new EventCountInDay(50);    
+    private static EventCountInDay eventCountInDayResetearContrasenya=new EventCountInDay(70);   
     
     private UsuarioDAO getUsuarioDAO() {
         return (UsuarioDAO) getDAO();
@@ -392,7 +392,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
 
                 if (equalsClavesSeguras(claveResetearContrasenya,usuario.getClaveResetearContrasenya())==false) {
                     log.warn("resetearContrasenya:El token no es válido."+EMailUtil.getAnonymizedEMail(usuario.getEmail()));
-                    throw new BusinessException("El token no es válido");
+                    BusinessException businessException=new BusinessException("No ha sido posible cambiar la contraseña.");
+                    businessException.getBusinessMessages().add(new BusinessMessage("Normalmente, esto ocurre porque has pedido varias veces que te enviemos el correo para cambiar la contraseña, pero únicamente el último de los correos que te hemos enviado funciona."));
+                    businessException.getBusinessMessages().add(new BusinessMessage("Puedes tener que esperar hasta 30 minutos a que llegue el último correo que te hemos enviado"));
+                    throw businessException;
                 }           
 
                 Date now = new Date();
@@ -425,23 +428,19 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
     }
 
     @Override
-    public void enviarMailResetearContrasenya(DataSession dataSession, String email) throws BusinessException {
+    public void enviarMailResetearContrasenya(DataSession dataSession, Usuario usuario) throws BusinessException {
 
-        Usuario usuario = getUsuarioDAO().getUsuarioPorEmail(dataSession, email);
-        if (usuario != null) {
-            usuario.setFechaClaveResetearContrasenya(new Date());
-            usuario.setClaveResetearContrasenya(SecureKeyGenerator.getSecureKey());
-            getUsuarioDAO().update(dataSession, usuario);
-            notification.resetearContrasenya(usuario);
-            
-            log.warn("Enviado correo para resetear contraseña a " + EMailUtil.getAnonymizedEMail(usuario.getEmail()));
-        } else {
-            log.warn("No existe el correo al que resetear con contraseña" + EMailUtil.getAnonymizedEMail(email));
-            if (eventCountInDayEnviarMailResetearContrasenya.isSafe(new EventCountInDayNotifierImplEnviarMailResetearContrasenya(notification))) {
-                throw new BusinessException("No existe el usuario");
-            }
+        if (usuario==null) {
+            throw new RuntimeException("El usuario no puede ser null");
         }
+        
+       
+        usuario.setFechaClaveResetearContrasenya(new Date());
+        usuario.setClaveResetearContrasenya(SecureKeyGenerator.getSecureKey());
+        getUsuarioDAO().update(dataSession, usuario);
+        notification.resetearContrasenya(usuario);
 
+        log.warn("Enviado correo para resetear contraseña a " + EMailUtil.getAnonymizedEMail(usuario.getEmail()));
     }
 
     @Override
@@ -777,19 +776,6 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         @Override
         public void notify(int threshold,int currentValue) {
             notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Resetear la Contrasenya de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
-        }
-    }  
-    private class EventCountInDayNotifierImplEnviarMailResetearContrasenya implements EventCountInDay.Notifier {
-        
-        Notification notification;
-
-        public EventCountInDayNotifierImplEnviarMailResetearContrasenya(Notification notification) {
-            this.notification = notification;
-        }
-
-        @Override
-        public void notify(int threshold,int currentValue) {
-            notification.mensajeToAdministrador("Alcanzado límite de fallos en BusinessExceptions en Enviar Mail Resetear Contrasenya de usuario."+currentValue, "CurrentValue="+currentValue+"\n"+"threshold="+threshold);
         }
     }  
 }

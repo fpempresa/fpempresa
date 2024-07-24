@@ -82,9 +82,9 @@ angular.module("common").config(['serviceFactoryProvider', function (serviceFact
                 };
 
 
-                service.enviarMailResetearContrasenya = function (mail) {
+                service.enviarMailResetearContrasenya = function (email, captchaWord, keyCaptcha) {
                     var deferred = $q.defer();
-                    this.repository.enviarMailResetearContrasenya(mail).then(function () {
+                    this.repository.enviarMailResetearContrasenya(email, captchaWord, keyCaptcha).then(function () {
                         deferred.resolve();
                     }, function (data) {
                         deferred.reject(data);

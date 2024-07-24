@@ -110,13 +110,20 @@ angular.module("common").config(['remoteDAOFactoryProvider', function (remoteDAO
                     return deferred.promise;
                 };
 
-                remoteDAO.enviarMailResetearContrasenya = function (email) {
+                remoteDAO.enviarMailResetearContrasenya = function (email, captchaWord, keyCaptcha) {
                     var deferred = this.$q.defer();
+                    var url=this.baseUrl + '/' + this.entityName + "/enviarMailResetearContrasenya";
+                    var params={
+                        email:email,
+                        captchaWord: captchaWord,
+                        keyCaptcha:keyCaptcha
+                    }
                     var config = {
-                        method: 'POST',
-                        url: this.baseUrl + '/' + this.entityName + "/enviarMailResetearContrasenya/" + email
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        }                      
                     };
-                    this.$http(config).then(function () {
+                    this.$http.post(url,$httpParamSerializer(params),config).then(function () {
                         deferred.resolve(null);
                     }).catch(function (response) {
                         if (response.status === 400) {

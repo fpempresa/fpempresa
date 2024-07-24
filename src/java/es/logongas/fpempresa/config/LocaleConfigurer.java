@@ -29,7 +29,7 @@ public class LocaleConfigurer implements InitializingBean {
     private String country;
 
     static {
-        Locale.setDefault(new Locale("es"));
+        //Locale.setDefault(new Locale("es"));
     }
 
     @Override

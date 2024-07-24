@@ -17,7 +17,11 @@
  */
 package es.logongas.fpempresa.modelo.titulado;
 
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.ix3.core.annotations.Label;
+import es.logongas.ix3.rule.ConstraintRule;
+import es.logongas.ix3.rule.RuleContext;
+import es.logongas.ix3.rule.RuleGroupPredefined;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -154,4 +158,21 @@ public class ExperienciaLaboral {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+    @ConstraintRule(message = "La fecha final debe ser mayor o igual que la inicial", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean isFechaFinMayorFechaInicio(RuleContext<ExperienciaLaboral> ruleContext) {
+        Date fechaInicioRule=ruleContext.getEntity().getFechaInicio();
+        Date fechaFinRule=ruleContext.getEntity().getFechaFin();
+        
+        if ((fechaInicioRule!=null) && (fechaFinRule!=null)) {
+            if (fechaInicioRule.after(fechaFinRule)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+    
 }

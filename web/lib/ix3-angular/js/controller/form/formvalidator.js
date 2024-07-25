@@ -18,7 +18,7 @@
 angular.module('es.logongas.ix3').provider("formValidator", [function () {
         function FormValidatorProvider() {
             this.errorMensajePatterns = {
-                required: "No puede estar vacio.",
+                required: "No puede estar vacío.",
                 email: "No tiene el formato de correo electrónico",
                 maxlength: "Debe tener un tamaño menor o igual a {{ngMaxlength||maxlength}}",
                 minlength: "Debe tener un tamaño mayor o igual a {{ngMinlength||minlength}}",

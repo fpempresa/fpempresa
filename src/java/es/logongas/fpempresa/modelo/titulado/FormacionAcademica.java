@@ -74,7 +74,7 @@ public class FormacionAcademica {
         return getNombreTitulo() + " en " + getNombreCentro();
     }
 
-    @AssertTrue(message = "No puede estar vacio")
+    @AssertTrue(message = "No puede estar vacío")
     @Label("Centro")
     private boolean getValidateCentro() {
         switch (tipoFormacionAcademica) {
@@ -93,7 +93,7 @@ public class FormacionAcademica {
         }
     }
 
-    @AssertTrue(message = "No puede estar vacio")
+    @AssertTrue(message = "No puede estar vacío")
     @Label("Ciclo")
     private boolean getValidateCiclo() {
         switch (tipoFormacionAcademica) {
@@ -112,7 +112,7 @@ public class FormacionAcademica {
         }
     }
 
-    @AssertTrue(message = "El nombre del centro no puede estar vacio")
+    @AssertTrue(message = "El nombre del centro no puede estar vacío")
     @Label("Nombre centro")
     private boolean getValidateOtroCentro() {
         switch (tipoFormacionAcademica) {
@@ -144,7 +144,7 @@ public class FormacionAcademica {
         }
     }
 
-    @AssertTrue(message = "El titulo no puede estar vacio")
+    @AssertTrue(message = "El titulo no puede estar vacío")
     @Label("Titulo")
     private boolean getValidateOtroTitulo() {
         switch (tipoFormacionAcademica) {

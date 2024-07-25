@@ -240,8 +240,8 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
                 businessTrue(usuario.getCentro() != null, "El centro es requerido para el usuario");
                 businessTrue(principal.getCentro().getIdCentro() == usuario.getCentro().getIdCentro(), "El centro debe ser el mismo centro que el tuyo");
             } else if (principal == null) {
-                businessTrue(usuario.getEstadoUsuario() == null, "El estado debe ser vacio");
-                businessTrue(usuario.getCentro() == null, "El centro debe ser vacio");
+                businessTrue(usuario.getEstadoUsuario() == null, "El estado debe ser vacío");
+                businessTrue(usuario.getCentro() == null, "El centro debe ser vacío");
             } else {
                 throw new BusinessSecurityException("No tienes permiso para añadir un profesor");
             }

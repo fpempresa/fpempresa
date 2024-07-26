@@ -54,6 +54,11 @@ angular.module("es.logongas.ix3").directive('ix3Validation', ['$compile','schema
                         var pattern=schemaProperty.pattern;
                         if (pattern!==null) {
                             element.attr("ng-pattern",new RegExp("^("+pattern+")$") );
+                            element.attr("ix3-pattern",pattern);//Se pone este porque sino al interpolar el mensaje sale raro la RegExp al no se un String
+                            var patternMessage=schemaProperty.patternMessage;
+                            if (patternMessage) {
+                                element.attr("ix3-pattern-message",patternMessage);
+                            }
                         }
                         
                         //Valor requirido

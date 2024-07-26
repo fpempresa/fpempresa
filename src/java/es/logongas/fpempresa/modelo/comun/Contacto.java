@@ -44,11 +44,11 @@ public class Contacto {
     @Size(max = 200)
     private String persona;
 
-    @Pattern(regexp = "[0-9]{9}| {0}")
+    @Pattern(regexp = "[0-9]{9}| {0}",message = "Debe ser un número de 9 cifras")
     @Label("Teléfono")
     private String telefono;
 
-    @Pattern(regexp = "[0-9]{9}| {0}")
+    @Pattern(regexp = "[0-9]{9}| {0}",message = "Debe ser un número de 9 cifras")
     @Label("Fax")
     private String fax;
 

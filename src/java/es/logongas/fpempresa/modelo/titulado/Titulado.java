@@ -54,10 +54,10 @@ public class Titulado {
     @Valid
     private Direccion direccion;
 
-    @Pattern(regexp = "[0-9]{9}| {0}")
+    @Pattern(regexp = "[0-9]{9}| {0}",message = "Debe ser un número de 9 cifras")
     private String telefono;
 
-    @Pattern(regexp = "[0-9]{9}| {0}")
+    @Pattern(regexp = "[0-9]{9}| {0}",message = "Debe ser un número de 9 cifras")
     @Label("Telefono alternativo")
     private String telefonoAlternativo;
 

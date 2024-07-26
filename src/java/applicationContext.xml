@@ -88,11 +88,29 @@
     <bean class="es.logongas.fpempresa.presentacion.controller.EndPointsFactoryImpl" />
     <bean class="es.logongas.fpempresa.presentacion.controller.ControllerUtil" />
     
-    <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <bean id="sendMailExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5" />
         <property name="maxPoolSize" value="30" />
         <property name="keepAliveSeconds" value="20" />
         <property name="WaitForTasksToCompleteOnShutdown" value="true" />
     </bean>    
+    
+    <!-- Tareas Programadas con Cron -->
+    <bean id="cronTaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="5"/>
+    </bean>
+    
+    <bean id="notificarUsuariosInactivosTask" class="es.logongas.fpempresa.presentacion.task.NotificarUsuariosInactivosTask"/>
+    <bean id="softDeleteUsuariosInactivosYNotificadosTask" class="es.logongas.fpempresa.presentacion.task.SoftDeleteUsuariosInactivosYNotificadosTask"/>
+    
+    <bean class="org.springframework.scheduling.config.ScheduledTaskRegistrar">
+        <property name="taskScheduler" ref="cronTaskScheduler"/>
+        <property name="cronTasks">
+            <map>
+                <entry key-ref="notificarUsuariosInactivosTask" value="0 0 9 ? * MON-FRI"/>
+                <entry key-ref="softDeleteUsuariosInactivosYNotificadosTask" value="0 30 9 ? * MON-FRI"/>               
+            </map>
+        </property>
+    </bean>
     
 </beans>

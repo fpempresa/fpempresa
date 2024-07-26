@@ -72,7 +72,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     Notification notification;
     
     @Autowired
-    Executor executor;
+    Executor sendMailExecutor;
 
     @Autowired
     private DataSessionFactory dataSessionFactory;
@@ -177,7 +177,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
     @Override
     public void notificarOfertaATitulados(DataSession dataSession, Oferta oferta) throws BusinessException {
-        executor.execute(new NotificarOfertaATituladosImplRunnable(dataSessionFactory, oferta.getIdOferta()));
+        sendMailExecutor.execute(new NotificarOfertaATituladosImplRunnable(dataSessionFactory, oferta.getIdOferta()));
     }
     
     @Override

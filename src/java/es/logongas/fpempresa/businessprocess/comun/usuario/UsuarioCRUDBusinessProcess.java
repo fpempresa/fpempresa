@@ -40,10 +40,12 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
     byte[]  getCurriculum(GetCurriculumArguments getCurriculumArguments) throws BusinessException;
     void  enviarMensajeSoporte(EnviarMensajeSoporteArguments enviarMensajeSoporteArguments) throws BusinessException;
     void  notificarUsuarioInactivo(NotificarUsuarioInactivoArguments notificarUsuarioInactivoArguments) throws BusinessException;
+    void  notificarUsuariosInactivos(NotificarUsuariosInactivosArguments notificarUsuariosInactivosArguments) throws BusinessException;
     void  softDelete(SoftDeleteArguments softDeleteArguments) throws BusinessException;
+    void  softDeleteUsuariosInactivosYNotificados(SoftDeleteUsuariosInactivosYNotificadosArguments softDeleteUsuariosInactivosYNotificadosArguments) throws BusinessException;
     void cancelarSuscripcion(CancelarSuscripcionArguments cancelarSuscripcionArguments) throws BusinessException;    
     void enviarMailValidarEMail(EnviarMailValidarEMailArguments enviarMailValidarEMailArguments) throws BusinessException;
-    
+
     public class UpdatePasswordArguments extends BusinessProcess.BusinessProcessArguments {
 
         final public Usuario usuario;
@@ -223,6 +225,13 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
         }
     }
     
+    public class NotificarUsuariosInactivosArguments extends BusinessProcess.BusinessProcessArguments {
+
+        public NotificarUsuariosInactivosArguments(Principal principal, DataSession dataSession) {
+            super(principal, dataSession);
+        }
+    }    
+    
     public class SoftDeleteArguments extends BusinessProcess.BusinessProcessArguments {
 
         final public Usuario usuario;
@@ -232,6 +241,14 @@ public interface UsuarioCRUDBusinessProcess extends CRUDBusinessProcess<Usuario,
             this.usuario = usuario;
         }
     }  
+    
+    public class SoftDeleteUsuariosInactivosYNotificadosArguments extends BusinessProcess.BusinessProcessArguments {
+
+        public SoftDeleteUsuariosInactivosYNotificadosArguments(Principal principal, DataSession dataSession) {
+            super(principal, dataSession);
+        }
+    }      
+    
     
     public class EnviarMailValidarEMailArguments extends BusinessProcess.BusinessProcessArguments {
 

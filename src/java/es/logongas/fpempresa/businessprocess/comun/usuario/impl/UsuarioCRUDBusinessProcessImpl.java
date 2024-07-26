@@ -31,6 +31,9 @@ import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.BusinessMessage;
 import es.logongas.ix3.core.Principal;
 import es.logongas.ix3.dao.DataSession;
+import es.logongas.ix3.dao.Filter;
+import es.logongas.ix3.dao.FilterOperator;
+import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.rule.ActionRule;
 import es.logongas.ix3.rule.ConstraintRule;
 import es.logongas.ix3.rule.RuleContext;
@@ -38,6 +41,7 @@ import es.logongas.ix3.rule.RuleGroupPredefined;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -635,10 +639,52 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     }
     
     @Override
+    public void notificarUsuariosInactivos(NotificarUsuariosInactivosArguments notificarUsuarioInactivoArguments) throws BusinessException {
+        DataSession dataSession=notificarUsuarioInactivoArguments.dataSession;
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+
+        
+        
+        List<Usuario> usuarios=getUsuariosInactivosPendientesNotificar(dataSession);
+        
+        String eMailSubject="Notificación de usuarios para borrar";        
+        StringBuilder eMailBody=new StringBuilder("idIdentity\tEMail\tFechaUltimoAcceso\tFechaEnvioCorreoAvisoBorrarUsuario\n"); 
+        
+        for(Usuario usuario: usuarios) {
+            eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario()+"\n");
+            //usuarioCRUDService.notificarUsuarioInactivo(dataSession, usuario);
+        }
+        
+        notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());
+        System.out.println(eMailSubject);
+        System.out.println("======================");        
+        System.out.println(eMailBody);
+    }    
+    
+    @Override
     public void softDelete(SoftDeleteArguments softDeleteArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
 
         usuarioCRUDService.softDelete(softDeleteArguments.dataSession, softDeleteArguments.usuario); 
+    }
+    @Override
+    public void softDeleteUsuariosInactivosYNotificados(SoftDeleteUsuariosInactivosYNotificadosArguments softDeleteUsuariosInactivosYNotificadosArguments) throws BusinessException {
+        DataSession dataSession=softDeleteUsuariosInactivosYNotificadosArguments.dataSession;
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        List<Usuario> usuarios=getUsuariosInactivosPendientesBorrar(dataSession);  
+        
+        String eMailSubject="Usuario a borrar";        
+        StringBuilder eMailBody=new StringBuilder("idIdentity\tEMail\tFechaUltimoAcceso\tFechaEnvioCorreoAvisoBorrarUsuario\n");        
+        
+        for(Usuario usuario: usuarios) {
+            eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario()+"\n");
+            //usuarioCRUDService.softDelete(dataSession, usuario); 
+        }
+        
+        notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());
+        System.out.println(eMailSubject);
+        System.out.println("======================");
+        System.out.println(eMailBody);        
     }
 
     @Override
@@ -653,31 +699,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         usuarioCRUDService.cancelarSuscripcion(cancelarSuscripcionArguments.dataSession,cancelarSuscripcionArguments.usuario, cancelarSuscripcionArguments.publicToken);
     } 
     
-    
-    private boolean isRequiredCaptcha(Usuario usuario,Principal principal) {
-        boolean required;
-        
-        if ((usuario==null) || (principal==null)) {
-            required=true;
-        } else {
-            if (principal instanceof Usuario) {
-                Usuario usuarioPrincipal=(Usuario)principal;
-
-                if ((usuario.getTipoUsuario()==TipoUsuario.EMPRESA) && (usuarioPrincipal.getTipoUsuario()==TipoUsuario.EMPRESA)) {
-                    required=false;
-                } else if (usuarioPrincipal.getTipoUsuario()==TipoUsuario.ADMINISTRADOR) {
-                    required=false;
-                } else {
-                    required=true;
-                }
-            } else {
-                required=true;
-            }
-        }
-        
-        return required;
-        
-    }
 
     /*************************************************************/
     /****************** Reglas de restricciones ******************/
@@ -733,6 +754,65 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             throw new BusinessException("Aun no está validado el correo '"+usuario.getEmail()+"'. Debes validar tu correo antes de poder cambiar la contraseña.");
         }        
     }    
+    
+    /***********************************************************/
+    /****************** Funciones de utilidad ******************/
+    /*** BEGIN ***/    
+    
+    List<Usuario> getUsuariosInactivosPendientesNotificar(DataSession dataSession) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        
+        Filters filters=new Filters();
+        filters.add(new Filter("tipoUsuario",TipoUsuario.TITULADO));
+        filters.add(new Filter("fechaEnvioCorreoAvisoBorrarUsuario",true,FilterOperator.isnull));
+        filters.add(new Filter("fechaUltimoAcceso",DateUtil.add(new Date(), DateUtil.Interval.YEAR, -1),FilterOperator.dle));
+        
+        List<Usuario> usuarios=usuarioCRUDService.search(dataSession, filters, null, null);
+        
+        return usuarios;
+        
+    }   
+    
+    List<Usuario> getUsuariosInactivosPendientesBorrar(DataSession dataSession) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        
+        Filters filters=new Filters();
+        filters.add(new Filter("tipoUsuario",TipoUsuario.TITULADO));
+        filters.add(new Filter("fechaEnvioCorreoAvisoBorrarUsuario",false,FilterOperator.isnull));
+        filters.add(new Filter("fechaUltimoAcceso",DateUtil.add(new Date(), DateUtil.Interval.YEAR, -1),FilterOperator.dle));
+        filters.add(new Filter("fechaEnvioCorreoAvisoBorrarUsuario",DateUtil.add(new Date(), DateUtil.Interval.DAY, -15),FilterOperator.dle));
+        
+        List<Usuario> usuarios=usuarioCRUDService.search(dataSession, filters, null, null);
+        
+        return usuarios;
+        
+    }     
+    
+    private boolean isRequiredCaptcha(Usuario usuario,Principal principal) {
+        boolean required;
+        
+        if ((usuario==null) || (principal==null)) {
+            required=true;
+        } else {
+            if (principal instanceof Usuario) {
+                Usuario usuarioPrincipal=(Usuario)principal;
+
+                if ((usuario.getTipoUsuario()==TipoUsuario.EMPRESA) && (usuarioPrincipal.getTipoUsuario()==TipoUsuario.EMPRESA)) {
+                    required=false;
+                } else if (usuarioPrincipal.getTipoUsuario()==TipoUsuario.ADMINISTRADOR) {
+                    required=false;
+                } else {
+                    required=true;
+                }
+            } else {
+                required=true;
+            }
+        }
+        
+        return required;
+        
+    }
+    
     
     /*********************************************************************/
     /****************** Notificaciones de EventCountDay ******************/

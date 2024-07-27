@@ -168,6 +168,12 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                         throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" + usuario.getEmpresa() + "'");
                     }
 
+                    if (usuario.getEmpresa()!=null) {
+                        if (usuario.getEmpresa().isDeshabilitada()==true) {
+                            throw new BusinessException("No es posible acceder a EmpleaFP");
+                        }
+                    }
+                    
                     break;
                 case TITULADO:
 

@@ -73,6 +73,11 @@ public class Empresa {
     @Label("Nº de ofertas publicadas")
     private int numOfertasPublicadas;
 
+    
+    private boolean deshabilitada;
+        
+    
+    
     @ConstraintRule(fieldName = "cif", message = "El número o la letra del CIF '${entity.cif}' no es válida", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
     private boolean validarLetraCif(RuleContext<Empresa> ruleContext) {
         
@@ -90,7 +95,19 @@ public class Empresa {
         }
     }
     
+    @ConstraintRule(fieldName = "Deshabilitada", message = "Las empresas de los centros siempre tienen que estar habilitadas", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean constraintRuleNoDeshabilitadaEmpresaCentro(RuleContext<Empresa> ruleContext) {        
+        if (ruleContext.getEntity().getCentro()!=null) {
+            if (ruleContext.getEntity().isDeshabilitada()==true) {
+                return false;
+            }
+        }
+        
+        return true;
+    }    
+    
     public Empresa() {
+        this.deshabilitada=false;
     }
 
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
@@ -238,6 +255,20 @@ public class Empresa {
      */
     public void setNumOfertasPublicadas(int numOfertasPublicadas) {
         this.numOfertasPublicadas = numOfertasPublicadas;
+    }
+
+    /**
+     * @return the deshabilitada
+     */
+    public boolean isDeshabilitada() {
+        return deshabilitada;
+    }
+
+    /**
+     * @param deshabilitada the deshabilitada to set
+     */
+    public void setDeshabilitada(boolean deshabilitada) {
+        this.deshabilitada = deshabilitada;
     }
 
 }

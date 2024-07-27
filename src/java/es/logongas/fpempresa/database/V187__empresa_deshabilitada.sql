@@ -1,0 +1,1 @@
+ALTER TABLE `empresa`          ADD COLUMN `deshabilitada` INT NOT NULL DEFAULT '0' AFTER `numOfertasPublicadas`;

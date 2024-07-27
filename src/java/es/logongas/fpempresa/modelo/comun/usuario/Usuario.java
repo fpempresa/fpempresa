@@ -164,7 +164,19 @@ public class Usuario extends User implements Principal {
         return true;
     }    
     
-    
+    @ConstraintRule(message = "No ha sido posible insertart el usuario.", groups = RuleGroupPredefined.PreInsert.class)
+    private boolean constraintRuleNoPermitidoInsertarUsuarioEmpresaDeshabilitada() {
+        
+        if (this.getTipoUsuario()==TipoUsuario.EMPRESA) {
+            if (this.getEmpresa()!=null) {
+                if (this.getEmpresa().isDeshabilitada()==true) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    } 
     
     @ActionRule(groups = RuleGroupPredefined.PreInsert.class)
     private void estableceFechaCreacion() {

@@ -142,9 +142,9 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class, "contacto", null)));
 
         //empresa
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class, "numOfertasPublicadas,contacto,centro.contacto", null)));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.contacto,empresa.centro.contacto,empresa.numOfertasPublicadas", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,rechazado,oferta.secretToken,oferta.empresa.contacto,oferta.empresa.centro.contacto,oferta.empresa.numOfertasPublicadas", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class, "numOfertasPublicadas,deshabilitada,contacto,centro.contacto", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.contacto,empresa.centro.contacto,empresa.numOfertasPublicadas,empresa.deshabilitada", "ciclos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,rechazado,oferta.secretToken,oferta.empresa.contacto,oferta.empresa.centro.contacto,oferta.empresa.numOfertasPublicadas,oferta.empresa.deshabilitada", null)));
 
         //titulado
         endPoints.add(EndPoint.createEndPointCrud(path, Configuracion.class));
@@ -167,9 +167,9 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, Centro.class));
         endPoints.add(EndPoint.createEndPoint(path + "/Centro", "GET", new BeanMapper(Centro.class, "contacto", null)));
 
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class,"numOfertasPublicadas",null)));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,oferta.secretToken,borrado,rechazado,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail,usuario.fechaUltimoEnvioCorreoValidacionEmail,usuario.numEnviosCorreoValidacionEmail,usuario.tipoUsuario,usuario.titulado.configuracion,usuario.fechaUltimoAcceso,usuario.fechaEnvioCorreoAvisoBorrarUsuario,usuario.centro,usuario.email,usuario.login,usuario.titulado,usuario.fecha,usuario.claveResetearContrasenya,usuario.fechaClaveResetearContrasenya,usuario.idIdentity,usuario.empresa,usuario.estadoUsuario,usuario.name", "usuario.nombre,usuario.apellidos,oferta.empresa.numOfertasPublicadas")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class,"numOfertasPublicadas,deshabilitada",null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas,empresa.deshabilitada", "ciclos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,oferta.secretToken,borrado,rechazado,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail,usuario.fechaUltimoEnvioCorreoValidacionEmail,usuario.numEnviosCorreoValidacionEmail,usuario.tipoUsuario,usuario.titulado.configuracion,usuario.fechaUltimoAcceso,usuario.fechaEnvioCorreoAvisoBorrarUsuario,usuario.centro,usuario.email,usuario.login,usuario.titulado,usuario.fecha,usuario.claveResetearContrasenya,usuario.fechaClaveResetearContrasenya,usuario.idIdentity,usuario.empresa,usuario.estadoUsuario,usuario.name", "usuario.nombre,usuario.apellidos,oferta.empresa.numOfertasPublicadas,oferta.empresa.deshabilitada")));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 
@@ -184,9 +184,9 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class, "contacto", null)));
 
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class,"numOfertasPublicadas",null)));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas", "ciclos")));
-        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,oferta.secretToken,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.fechaUltimoEnvioCorreoValidacionEmail>,usuario.numEnviosCorreoValidacionEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion,usuario.fechaUltimoAcceso>,usuario.fechaEnvioCorreoAvisoBorrarUsuario>,oferta.empresa.numOfertasPublicadas", null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Empresa.class,"numOfertasPublicadas,deshabilitada",null)));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas,empresa.deshabilitada", "ciclos")));
+        endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Candidato.class, "usuario.titulado.direccion.datosDireccion,borrado,oferta.secretToken,usuario.foto,usuario.claveValidacionEmail,usuario.secretToken,usuario.lockedUntil,usuario.numFailedLogins,usuario.password,usuario.acl,usuario.memberOf,usuario.validadoEmail>,usuario.fechaUltimoEnvioCorreoValidacionEmail>,usuario.numEnviosCorreoValidacionEmail>,usuario.tipoUsuario>,usuario.titulado.configuracion,usuario.fechaUltimoAcceso>,usuario.fechaEnvioCorreoAvisoBorrarUsuario>,oferta.empresa.numOfertasPublicadas,oferta.empresa.deshabilitada", null)));
 
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
 

@@ -99,6 +99,17 @@ public class Oferta {
         }
     }
 
+    @ConstraintRule(message = "No ha sido posible realizar la acción", groups = RuleGroupPredefined.PreInsertOrUpdate.class)
+    private boolean constraintRuleNoEsposibleInsertarOActualizarOfertasDeEmpresasDeshabilitadas() {
+        
+        if (this.getEmpresa()!= null) {
+            if (this.getEmpresa().isDeshabilitada()==true) {
+                return false;
+            }
+        }
+        return true;
+    }    
+    
     /**
      * @return the idOferta
      */

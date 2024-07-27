@@ -166,16 +166,25 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     
                     <legend class="form__title" >Otros</legend>
                     <div class="row"  >
-                        <div class="col-sm-12  form-horizontal">
+                        <div class="col-xs-12 col-sm-6 form-horizontal">
                             <div class="form-group">
-                                <label for="numOfertasPublicadas" class="col-xs-4  control-label" ix3-label></label>
-                                <div class="col-xs-3">
+                                <label for="numOfertasPublicadas" class="col-xs-3 col-sm-6  control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
                                     <input ng-model="model.numOfertasPublicadas" type="text" class="form-control" id="numOfertasPublicadas" name="numOfertasPublicadas"  ix3-validation>
                                 </div>
                             </div> 
                         </div>                     
                     </div> 
-                    
+                    <div class="row" >
+                        <div class="col-xs-9  col-xs-offset-3 form-horizontal">
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="model.deshabilitada" type="checkbox" id="deshabilitada" name="deshabilitada"  ix3-validation >
+                                    Deshabilitada
+                                </label>
+                            </div>
+                        </div> 
+                    </div> 
                     
                     <br>
                     <div class="row" >

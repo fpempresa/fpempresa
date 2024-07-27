@@ -33,5 +33,6 @@
         </component>
         
         <property name="numOfertasPublicadas" />
+        <property name="deshabilitada" />
     </class>
 </hibernate-mapping>

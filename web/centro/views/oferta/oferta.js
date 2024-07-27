@@ -16,20 +16,35 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 "use strict";
-app.config(['crudRoutesProvider', function (crudRoutesProvider) {
+app.config(['crudRoutesProvider','$stateProvider', function (crudRoutesProvider, $stateProvider) {
         crudRoutesProvider.addAllRoutes({
             entity: "Oferta",
             expand: "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha"
         });
+        
+        $stateProvider.state('lateralmenu.candidatos_edit_', {
+            url:'/candidatos/edit/:id',
+            templateUrl: 'views/oferta/detail.html',
+            controller: 'OfertaNewEditController',
+            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos,fecha", "EDIT"),
+            scroll:"section-candidatos"
+        });        
+        
     }]);
 
-app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', function ($scope, genericControllerCrudList, controllerParams, dialog) {
+app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', 'dialog', '$location', function ($scope, genericControllerCrudList, controllerParams, dialog, $location) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
         $scope.filters['empresa.centro.idCentro'] = $scope.user.centro.idCentro;
         $scope.orderby = [
             {fieldName: "fecha", orderDirection: "DESC"}
         ];
+        
+        $scope.buttonCandidatos = function (id) {
+            var newPath = "/candidatos/edit/"+id;
+            $location.path(newPath).search({});
+        };         
+        
         $scope.search();
     }]);
 

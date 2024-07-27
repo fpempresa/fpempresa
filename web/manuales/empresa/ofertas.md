@@ -26,7 +26,7 @@ Una vez guardada será publicada automáticamente en EmpleaFP.
 Si en su momento, en los datos de la empresa, rellenó el campo "Correo electrónico", recibirá por correo el currículum de cada uno de los candidatos de su oferta.
 
 ## Candidatos
-Desde el listado de oferta, si pulsa en el puesto de la oferta o en el botón "Editar" vuelves a ver los datos de la oferta pero ahora con los datos de los candidatos.
+Desde el listado de oferta, si pulsas en el botón "Candidatos" vuelves a ver los datos de la oferta pero ahora en la sección de los datos de los candidatos.
 
 ![](numero_candidatos.png)
 

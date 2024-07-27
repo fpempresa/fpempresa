@@ -6,7 +6,9 @@ En primer lugar, podremos buscar ofertas de trabajo publicadas por puesto de tra
 
 ![](ofertas_listado.png)
 
-También podremos editar una oferta haciendo clic en la descripción del puesto o en el botón editar correspondiente o eliminarla haciendo clic en el botón borrar.
+También podremos editar una oferta haciendo clic en la descripción del puesto o en el botón editar correspondiente o eliminarla haciendo clic en el botón borrar. 
+
+Con el botón "Candidatos" entraremos tambien en la oferta pero podremos ver directamente los candidatos
 
 Al editar una oferta podemos modificar todos los datos que la describen:
 - Empresa

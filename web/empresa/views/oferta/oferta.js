@@ -16,11 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 "use strict";
-app.config(['crudRoutesProvider', function (crudRoutesProvider) {
+app.config(['crudRoutesProvider','$stateProvider', function (crudRoutesProvider, $stateProvider) {
         crudRoutesProvider.addAllRoutes({
             entity: "Oferta",
             expand: "municipio,municipio.provincia,familia,empresa,ciclos,ciclos"
-        });
+        });  
+        
+        $stateProvider.state('lateralmenu.candidatos_edit_', {
+            url:'/candidatos/edit/:id',
+            templateUrl: 'views/oferta/detail.html',
+            controller: 'OfertaNewEditController',
+            resolve: crudRoutesProvider.getResolve("Oferta", "municipio,municipio.provincia,familia,empresa,ciclos,ciclos", "EDIT"),
+            scroll:"section-candidatos"
+        });          
+        
     }]);
 
 app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', '$location', function ($scope, genericControllerCrudList, controllerParams, $location) {
@@ -31,6 +40,11 @@ app.controller("OfertaSearchController", ['$scope', 'genericControllerCrudList',
             {fieldName: "fecha", orderDirection: "DESC"}
         ];
         $scope.filters['empresa.idEmpresa'] = $scope.user.empresa.idEmpresa;
+
+        $scope.buttonCandidatos = function (id) {
+            var newPath = "/candidatos/edit/"+id;
+            $location.path(newPath).search({});
+        }; 
 
         $scope.search();
     }]);

@@ -652,7 +652,11 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         for(Usuario usuario: usuarios) {
             eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario()+"\n");
-            //usuarioCRUDService.notificarUsuarioInactivo(dataSession, usuario);
+//            try { 
+//                usuarioCRUDService.notificarUsuarioInactivo(dataSession, usuario);
+//            } catch (Exception ex) {
+//                notification.exceptionToAdministrador("Fallo notificarUsuarioInactivo", "En el método notificarUsuariosInactivos fallo el métdo notificarUsuarioInactivo del usuario:"+ usuario.getEmail()+"", ex);
+//            }            
         }
         
         notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());
@@ -678,7 +682,11 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         for(Usuario usuario: usuarios) {
             eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario()+"\n");
-            //usuarioCRUDService.softDelete(dataSession, usuario); 
+//            try {    
+//                usuarioCRUDService.softDelete(dataSession, usuario); 
+//            } catch (Exception ex) {
+//                notification.exceptionToAdministrador("Fallo softDelete", "En el método softDeleteUsuariosInactivosYNotificados fallo el métdo softDelete del usuario:"+ usuario.getEmail()+"", ex);
+//            }
         }
         
         notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());

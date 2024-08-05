@@ -83,26 +83,21 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         try {
             UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
             Usuario usuario = insertArguments.entity;
-
-
+            DataSession dataSession=insertArguments.dataSession;
             String word=usuario.getCaptchaWord();
             String keyCaptcha=usuario.getKeyCaptcha();
 
 
             //Verificar el captcha
             if (isRequiredCaptcha(usuario, insertArguments.principal)) {
-                try {
-                    if (captchaService.solveChallenge(insertArguments.dataSession,keyCaptcha, word)==false) {
-                        throw new BusinessException("El texto de la imagen no es correcto");
-                    }
-                } catch (Exception ex) {
+                if (captchaService.solveChallenge(dataSession,keyCaptcha, word)==false) {
                     throw new BusinessException("El texto de la imagen no es correcto");
                 }
             }
 
 
 
-            Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(insertArguments.dataSession, usuario.getEmail());
+            Usuario usuarioPrevio=usuarioCRUDService.readOriginalByNaturalKey(dataSession, usuario.getEmail());
             if (usuarioPrevio!=null) {
                 throw new BusinessException("Ya existe un usuario con el correo: '"+ usuario.getEmail()+"'");
             }

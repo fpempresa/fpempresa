@@ -21,15 +21,19 @@ import es.logongas.fpempresa.modelo.captcha.Captcha;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.service.captcha.CaptchaService;
 import es.logongas.fpempresa.service.kernel.captcha.CaptchaKernelService;
+import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.dao.DAOFactory;
 import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.Filter;
 import es.logongas.ix3.dao.Filters;
 import es.logongas.ix3.dao.GenericDAO;
+import es.logongas.ix3.web.security.jwt.TokenExpiredException;
 import es.logongas.ix3.web.security.jwt.Jwe;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -49,6 +53,9 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Autowired 
     protected DAOFactory daoFactory;
     
+    @Autowired
+    Notification notification;    
+    
     Class<Captcha> entityType;
     
     @Override
@@ -62,11 +69,24 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public byte[] getImage(String keyCaptcha) {
-        byte[] secretKey=getSecretKey();
+        try {
+            byte[] secretKey=getSecretKey();
+
+            String word=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
+
+            return captchaKernelService.getImage(word);
+        } catch (Exception ex) {
+            notification.exceptionToAdministrador("Caducó el captcha en getImage", "Ha caducado el captcha pero hemos retornauna uma imagen indicando el error", ex);
+            try {
+                InputStream inputStream = CaptchaServiceImpl.class.getResourceAsStream("captchaError.png");
+                return IOUtils.toByteArray(inputStream);
+            } catch (Exception ex2) {
+                throw new RuntimeException(ex2);
+            }
+        }        
         
-        String word=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
         
-        return captchaKernelService.getImage(word);
+
     }
 
     @Override
@@ -84,7 +104,14 @@ public class CaptchaServiceImpl implements CaptchaService {
         this.storeKeyCaptcha(dataSession, keyCaptcha);
         
         byte[] secretKey=getSecretKey();
-        String originalWord=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
+        String originalWord;
+        
+        try {
+            originalWord=jwe.getPayloadFromJwsCompactSerialization(keyCaptcha, secretKey, MAX_AGE_MINUTES);
+        } catch (TokenExpiredException ex) {
+            notification.exceptionToAdministrador("Caducó el captcha en solveChallenge", "Ha caducado el captcha pero hemos avisado al usuario", ex);
+            throw new BusinessException("La imagen ha caducado, recargue la página y vuelva a intentarlo.");
+        }
         String wordWithoutSpaces=word.replaceAll("[^\\x21-\\x7E]", "");
         
         

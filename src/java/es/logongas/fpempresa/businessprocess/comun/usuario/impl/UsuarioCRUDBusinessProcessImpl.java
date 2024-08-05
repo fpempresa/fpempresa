@@ -660,9 +660,6 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         }
         
         notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());
-        System.out.println(eMailSubject);
-        System.out.println("======================");        
-        System.out.println(eMailBody);
     }    
     
     @Override
@@ -689,10 +686,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
 //            }
         }
         
-        notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());
-        System.out.println(eMailSubject);
-        System.out.println("======================");
-        System.out.println(eMailBody);        
+        notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());        
     }
 
     @Override

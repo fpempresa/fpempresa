@@ -45,9 +45,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             </div>
             <br>
             <div class="row" >
-                <div class="col-xs-12 ">
+                <div class="col-xs-12 " ng-show="models.length>0">
                     <button type="button" class="btn form__button form__button--primary " ng-click="buttonNotificarUsuarioInactivoAllPage()"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'" ><i class="fa fa-envelope"></i> Notificar a todos los usuarios de esta Página</button>
-                    <button type="button" class="btn form__button form__button--danger " ng-click="buttonSoftDeleteAllPage()" ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"  ><i class="fa fa-trash" aria-hidden="true"></i> Borrar  todos los usuarios de esta Página</button>
+                    <button type="button" class="btn form__button form__button--danger " ng-click="buttonSoftDeleteAllPage()" ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"  ><i class="fa fa-trash" aria-hidden="true"></i> Borrar todos los usuarios de esta Página</button>
                 </div>
             </div>
             <br>

@@ -666,10 +666,12 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         for(Usuario usuario: usuarios) {
             try {    
+                eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario());
                 usuarioCRUDService.softDelete(dataSession, usuario); 
-                eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario()+"\n");
+                eMailBody.append(" >> OK\n");
             } catch (Exception ex) {
-                notification.exceptionToAdministrador("Fallo softDelete", "En el método softDeleteUsuariosInactivosYNotificados fallo el métdo softDelete del usuario:"+ usuario.getEmail()+"", ex);
+                eMailBody.append(" >> ERROR !!!!!!!!!!!!!!!!!!!\n");
+                notification.exceptionToAdministrador("Fallo softDelete", "En el método softDeleteUsuariosInactivosYNotificados fallo el métdo softDelete del usuario:"+ usuario.getEmail()+"", ex);                
             }
         }
         

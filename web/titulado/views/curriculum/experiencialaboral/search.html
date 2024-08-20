@@ -26,17 +26,16 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th style="width:      50%;text-align: center">Empresa</th>
                         <th style="width:      30%;text-align: center">Puesto</th>
                         <th style="min-width:180px;text-align: center">Fechas</th>
-                        <th style="min-width:120px;text-align: center" >Acciones</th>
+                        <th style="min-width:90px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="experienciaLaboral in models" class="data-table__row">
-                        <td >{{experienciaLaboral.nombreEmpresa}}</td>
+                        <td ><a href ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">{{experienciaLaboral.nombreEmpresa}}</a></td>
                         <td >{{experienciaLaboral.puestoTrabajo}}</td>
                         <td >{{experienciaLaboral.fechaInicio| ix3Date}} - {{experienciaLaboral.fechaFin| ix3Date}}</td>
-                        <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(experienciaLaboral.idExperienciaLaboral)">Editar</button>
+                        <td  class="text-center">
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(experienciaLaboral.idExperienciaLaboral)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>                             
                     </tr>
                 </tbody>

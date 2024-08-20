@@ -80,7 +80,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <th  style="width:   20%;text-align: center">Empresa</th>
                             <th  style="width:   30%;text-align: center">Familia</th>
                             <th  style="width:   30%;text-align: center">Fecha</th>
-                            <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,10 +87,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
                             <td >{{model.empresa.nombreComercial}}</td>
                             <td >{{model.familia.descripcion}}</td>
-                            <td >{{model.fecha | date: 'dd/MM/yyyy'}}</td>
-                            <td >
-                                <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonView(model.idOferta)">Ver</button>
-                            </td>                             
+                            <td >{{model.fecha | date: 'dd/MM/yyyy'}}</td>                             
                         </tr>
                     </tbody>
                 </table> 

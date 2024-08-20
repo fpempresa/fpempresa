@@ -23,20 +23,19 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th style="min-width:30px;text-align: center">Nivel</th>
                         <th style="width:    100% ;text-align: center">Nombre</th>
+                        <th style="min-width:30px;text-align: center">Nivel</th>
                         <th style="min-width:85px;text-align: center">Fecha</th>
-                        <th style="min-width:120px;text-align: center" >Acciones</th>
+                        <th style="min-width:90px;text-align: center" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="tituloIdioma in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">{{tituloIdioma.getNombreIdioma()}}</a></td>
                         <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
-                        <td >{{tituloIdioma.getNombreIdioma()}}</td>
                         <td >{{tituloIdioma.fecha| ix3Date}}</td>
-                        <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">Editar</button>
+                        <td  class="text-center">
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>                             
                     </tr>
                 </tbody>

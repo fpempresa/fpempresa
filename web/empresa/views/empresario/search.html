@@ -26,8 +26,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <tr class="data-table__head">
                         <th ix3-order-field-names="nombre,apellidos" style="text-align: center">Nombre</th>
                         <th ix3-order-field-names="email" style="width:   15%;text-align: center">Correo</th>
-                        <th  style="width:   10%;text-align: center">Validado EMail</th>
-                        <th style="max-width: 120px; width: 120px;text-align: center">Acciones</th>
+                        <th  style="max-width: 120px; width: 120px;text-align: center">Validado EMail</th>
+                        <th style="max-width: 90px; width: 90px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,8 +35,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td ><a href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a></td>
                         <td >{{usuario.email}}</td>                       
                         <td  ng-switch    on="usuario.validadoEmail" class="text-center"><i ng-switch-default class="fa fa-square-o"></i><i ng-switch-when="true" class="fa fa-check-square-o"></i></td>
-                        <td style="text-align:center" >
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(usuario.idIdentity)">Editar</button>
+                        <td  class="text-center" >
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(usuario.idIdentity)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>                             
                     </tr>
                 </tbody>

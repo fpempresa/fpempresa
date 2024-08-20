@@ -58,7 +58,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th ix3-order-field-names="cif" style="width:   15%;text-align: center">CIF</th>
                         <th ix3-order-field-names="direccion.municipio.descripcion" style="width:   25%;text-align: center">Municipio</th>
                         <th ix3-order-field-names="fecha" style="width:   20%;text-align: center">Fecha</th>                        
-                        <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
+                        <th style="min-width: 90px; width: 90px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,9 +67,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td >{{empresa.cif}}</td>
                         <td >{{empresa.direccion.municipio.descripcion}}</td>
                         <td >{{empresa.fecha| date: 'dd/MM/yyyy'}}</td>                          
-                        <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(empresa.idEmpresa)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(empresa.idEmpresa)">Editar</button>
+                        <td class="text-center">
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(empresa.idEmpresa)"><i class="fa fa-trash" aria-hidden="true"></i></button>                                
                         </td>                             
                     </tr>
                 </tbody>

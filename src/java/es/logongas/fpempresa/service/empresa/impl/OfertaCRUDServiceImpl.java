@@ -26,6 +26,7 @@ import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
+import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.security.publictoken.PublicTokenCerrarOferta;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
@@ -98,6 +99,8 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
             fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(dataSession, oferta);
             fireConstraintRule_NoRepetidaOferta(dataSession, oferta,null);
             fireConstraintRule_CicloRequerido(dataSession, oferta);
+            
+            oferta.setSecretToken(SecureKeyGenerator.getSecureKey());
             
             oferta=super.insert(dataSession, oferta);
             
@@ -379,7 +382,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
                     }
                 }
             } catch (Exception ex) {
-                logException.error(ex);
+                logException.error("No ha sido posible enviar el correo de notifiar oferta a titulados",ex);
             }
         }
 

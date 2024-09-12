@@ -25,6 +25,8 @@ import es.logongas.ix3.dao.DataSession;
 import es.logongas.ix3.dao.DataSessionFactory;
 import es.logongas.ix3.security.authentication.AuthenticationManager;
 import java.util.Date;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +36,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SoftDeleteUsuariosInactivosYNotificadosTask  implements Runnable {
+    private static final Logger logException = LogManager.getLogger(Exception.class);    
+    
     @Autowired
     private DataSessionFactory dataSessionFactory;
     @Autowired
@@ -53,6 +57,7 @@ public class SoftDeleteUsuariosInactivosYNotificadosTask  implements Runnable {
             usuarioCRUDBusinessProcess.softDeleteUsuariosInactivosYNotificados(new UsuarioCRUDBusinessProcess.SoftDeleteUsuariosInactivosYNotificadosArguments(principal, dataSession));
             
         } catch (Exception ex) {
+            logException.error("No ha sido posible ejecutar la tarea SoftDeleteUsuariosInactivosYNotificadosTask",ex);
             notification.exceptionToAdministrador("Falló la tarea:"+this.getClass().getSimpleName()+ "--"+ex.getLocalizedMessage(), "No se ha podido ejecutar la tarea " + this.getClass().getName() + " a las " + new Date(), ex);
         }
     } 

@@ -150,8 +150,10 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         usuario.setValidadoEmail(autoValidateEMail);
         usuario.setClaveValidacionEmail(SecureKeyGenerator.getSecureKey());
         usuario.setMemberOf(getMembersOf(dataSession, usuario));
+        usuario.setSecretToken(SecureKeyGenerator.getSecureKey());
+        
         Usuario resultUsuario = getUsuarioDAO().insert(dataSession, usuario);
-
+        
         if (resultUsuario != null) {
             //La ponemos siemrpe a null una vez insertada para que nunca se pueda ver desde "fuera"
             resultUsuario.setPassword(null);            

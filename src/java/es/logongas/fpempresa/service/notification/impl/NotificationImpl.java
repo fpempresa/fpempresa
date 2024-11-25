@@ -518,7 +518,7 @@ public class NotificationImpl implements Notification {
     private void setUnsubscribeMail(Mail mail,String email,String subject) {
         Map<String,String> headers=new HashMap<>();
         headers.put("List-Unsubscribe-Post","List-Unsubscribe=One-Click");
-        headers.put("List-Unsubscribe","<mailto: " + email + "?subject=" + subject +">");
+        headers.put("List-Unsubscribe","<mailto: " + email + "?subject=_" + subject +"_>");
         mail.setHeaders(headers);
     }  
     

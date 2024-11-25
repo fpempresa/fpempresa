@@ -40,6 +40,7 @@ import es.logongas.ix3.rule.RuleContext;
 import es.logongas.ix3.rule.RuleGroupPredefined;
 import es.logongas.ix3.security.authorization.BusinessSecurityException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -663,17 +664,24 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
         String eMailSubject="SoftDeleteds";        
         StringBuilder eMailBody=new StringBuilder("idIdentity\tEMail\tFechaUltimoAcceso\tFechaEnvioCorreoAvisoBorrarUsuario\n");        
+        int numErrors=0;
+        int numOK=0;
         
         for(Usuario usuario: usuarios) {
             try {    
                 eMailBody.append(usuario.getIdIdentity()+"\t"+usuario.getEmail()+"\t"+usuario.getFechaUltimoAcceso()+"\t"+usuario.getFechaEnvioCorreoAvisoBorrarUsuario());
                 usuarioCRUDService.softDelete(dataSession, usuario); 
                 eMailBody.append(" >> OK\n");
+                numOK=numOK+1;
             } catch (Exception ex) {
+                numErrors=numErrors+1;
                 eMailBody.append(" >> ERROR !!!!!!!!!!!!!!!!!!!\n");
                 notification.exceptionToAdministrador("Fallo softDelete", "En el método softDeleteUsuariosInactivosYNotificados fallo el métdo softDelete del usuario:"+ usuario.getEmail()+"", ex);                
             }
         }
+        
+        eMailSubject=eMailSubject+ " Total usuarios="+ usuarios.size()+ "  Borrados="+ numOK + "  Errores="+numErrors;
+
         
         notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());        
     }
@@ -759,6 +767,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         filters.add(new Filter("fechaUltimoAcceso",DateUtil.add(new Date(), DateUtil.Interval.YEAR, -1),FilterOperator.dle));
         
         List<Usuario> usuarios=usuarioCRUDService.search(dataSession, filters, null, null);
+        if (usuarios==null) {
+            usuarios=new ArrayList<>();
+        }
         
         return usuarios;
         
@@ -774,6 +785,9 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         filters.add(new Filter("fechaEnvioCorreoAvisoBorrarUsuario",DateUtil.add(new Date(), DateUtil.Interval.DAY, -15),FilterOperator.dle));
         
         List<Usuario> usuarios=usuarioCRUDService.search(dataSession, filters, null, null);
+        if (usuarios==null) {
+            usuarios=new ArrayList<>();
+        }
         
         return usuarios;
         

@@ -662,7 +662,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
         List<Usuario> usuarios=getUsuariosInactivosPendientesBorrar(dataSession);  
         
-        String eMailSubject="SoftDeleteds";        
+        String eMailSubject="SoftDeleteds:";        
         StringBuilder eMailBody=new StringBuilder("idIdentity\tEMail\tFechaUltimoAcceso\tFechaEnvioCorreoAvisoBorrarUsuario\n");        
         int numErrors=0;
         int numOK=0;
@@ -680,7 +680,7 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
             }
         }
         
-        eMailSubject=eMailSubject+ " Total usuarios="+ usuarios.size()+ "  Borrados="+ numOK + "  Errores="+numErrors;
+        eMailSubject=eMailSubject + "Err="+numErrors+ ",Ok Del="+ numOK+ ",Total="+ usuarios.size();
 
         
         notification.mensajeToAdministrador(eMailSubject, eMailBody.toString());        

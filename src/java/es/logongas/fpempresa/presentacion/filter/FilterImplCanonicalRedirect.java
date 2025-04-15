@@ -51,6 +51,8 @@ public class FilterImplCanonicalRedirect implements Filter {
             virtualHosts = System.getenv(ENV_NAME_VIRTUAL_HOST);
         }
 
+        System.out.println("VIRTUAL_HOST="+virtualHosts);
+        
         if ((virtualHosts==null) || (virtualHosts.trim().isEmpty())) {
             canonicalServerName=null;
         } else {
@@ -58,8 +60,10 @@ public class FilterImplCanonicalRedirect implements Filter {
             for (int i=0;i<partes.length;i++) {
                 if (i==0) {
                     canonicalServerName=partes[i];
+                    System.out.println("canonicalServerName="+partes[i]);
                 } else {
                     redirectServerNames.add(partes[i]);
+                    System.out.println("redirectServerNames="+partes[i]);
                 }
             }
         }
@@ -96,11 +100,14 @@ public class FilterImplCanonicalRedirect implements Filter {
             String target = url.toString();            
             
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-            httpServletResponse.setHeader("Location", target);
+            //httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            //httpServletResponse.setHeader("Location", target);
+            System.out.println("Si redirect:"+serverName+" at target:"+target);
         } else {
-            filterChain.doFilter(servletRequest, servletResponse);
+            System.out.println("No redirect:"+serverName);
         }
+        
+        filterChain.doFilter(servletRequest, servletResponse);
 
     }
 

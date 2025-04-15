@@ -30,40 +30,38 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Este filtro mira si el servidor no es el canónico y lo redirige al canónico
- * Para elo se usa la variable "VIRTUAL_HOST" que tiene la lista de servidores que soporta
- * Y el canónico es el primero de ellos.
- * La variable "VIRTUAL_HOST" está porque se añade desde Docker al usar "nginxproxy"
- * Así que siempre redirige al primero de ellos
+ * Para elo se usa la variable "VIRTUAL_HOST" que tiene la lista de servidores
+ * que soporta Y el canónico es el primero de ellos. La variable "VIRTUAL_HOST"
+ * está porque se añade desde Docker al usar "nginxproxy" Así que siempre
+ * redirige al primero de ellos
+ *
  * @author logongas
  */
 public class FilterImplCanonicalRedirect implements Filter {
 
     String canonicalServerName;
-    List<String> redirectServerNames=new ArrayList<>();
-    private final static String ENV_NAME_VIRTUAL_HOST="VIRTUAL_HOST";
-    
+    List<String> redirectServerNames = new ArrayList<>();
+    private final static String ENV_NAME_VIRTUAL_HOST = "VIRTUAL_HOST";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
         String virtualHosts = System.getProperty(ENV_NAME_VIRTUAL_HOST);
 
-        if ((virtualHosts==null) || (virtualHosts.trim().isEmpty())) {
+        if ((virtualHosts == null) || (virtualHosts.trim().isEmpty())) {
             virtualHosts = System.getenv(ENV_NAME_VIRTUAL_HOST);
         }
 
-        System.out.println("VIRTUAL_HOST="+virtualHosts);
-        
-        if ((virtualHosts==null) || (virtualHosts.trim().isEmpty())) {
-            canonicalServerName=null;
+
+        if ((virtualHosts == null) || (virtualHosts.trim().isEmpty())) {
+            canonicalServerName = null;
         } else {
             String[] partes = virtualHosts.split(",");
-            for (int i=0;i<partes.length;i++) {
-                if (i==0) {
-                    canonicalServerName=partes[i];
-                    System.out.println("canonicalServerName="+partes[i]);
+            for (int i = 0; i < partes.length; i++) {
+                if (i == 0) {
+                    canonicalServerName = partes[i];
                 } else {
                     redirectServerNames.add(partes[i]);
-                    System.out.println("redirectServerNames="+partes[i]);
                 }
             }
         }
@@ -73,70 +71,94 @@ public class FilterImplCanonicalRedirect implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        
-        String scheme = httpServletRequest.getScheme();             
-        String serverName = httpServletRequest.getServerName();    
-        int serverPort = httpServletRequest.getServerPort();          
-        String requestURI = httpServletRequest.getRequestURI();   
-        String queryString = httpServletRequest.getQueryString();   
 
-        
+        String serverName = httpServletRequest.getServerName();
+
         if (isRequiredRedirect(serverName)) {
-            StringBuilder url = new StringBuilder();
-            url.append(scheme).append("://").append(getCanonicalServerName(serverName));
 
-            if ((scheme.equals("http") && serverPort != 80) ||
-                (scheme.equals("https") && serverPort != 443)) {
-                url.append(":").append(serverPort);
-            }
+            String canonicalServerName=getCanonicalServerName(serverName);
+            String target = getTarget(canonicalServerName, httpServletRequest, httpServletResponse);
+            String html = getHTMLRedirect(target);
+            sendHTML(html, httpServletRequest, httpServletResponse);
 
-            
-            
-            url.append(requestURI);
-            if (queryString != null) {
-                url.append("?").append(queryString);
-            }
-
-            String target = url.toString();            
-            
-            
-            httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-            httpServletResponse.setHeader("Location", target);
-            System.out.println("Si redirect:"+serverName+" at target:"+target);
+            System.out.println("Si redirect:" + serverName + " at target:" + target);
         } else {
-            System.out.println("No redirect:"+serverName);
+            System.out.println("No redirect:" + serverName);
             filterChain.doFilter(servletRequest, servletResponse);
         }
-        
-        
 
     }
 
     @Override
     public void destroy() {
-        
+
     }
-    
-    
+
     private boolean isRequiredRedirect(String serverName) {
-        if (canonicalServerName==null) {
+        if (canonicalServerName == null) {
             return false;
         }
-        
+
         if (redirectServerNames.contains(serverName)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     private String getCanonicalServerName(String serverName) {
-        if ((canonicalServerName==null) || (canonicalServerName.trim().isEmpty())) {
+        if ((canonicalServerName == null) || (canonicalServerName.trim().isEmpty())) {
             throw new RuntimeException("La variable canonicalServerName está vacía para " + serverName);
         }
-        
-        return canonicalServerName;
-    }    
-    
-}
 
+        return canonicalServerName;
+    }
+
+    private String getTarget(String canonicalServerName, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
+        String scheme = httpServletRequest.getScheme();
+        String serverName = httpServletRequest.getServerName();
+        int serverPort = httpServletRequest.getServerPort();
+        String requestURI = httpServletRequest.getRequestURI();
+        String queryString = httpServletRequest.getQueryString();
+        StringBuilder url = new StringBuilder();
+        url.append(scheme).append("://").append(getCanonicalServerName(serverName));
+
+        if ((scheme.equals("http") && serverPort != 80)
+                || (scheme.equals("https") && serverPort != 443)) {
+            url.append(":").append(serverPort);
+        }
+
+        url.append(requestURI);
+        if (queryString != null) {
+            url.append("?").append(queryString);
+        }
+
+        String target = url.toString();
+
+        return target;
+    }
+
+    private String getHTMLRedirect(String target) {
+        String html = "<html><head><meta http-equiv='refresh' content='0; url=" + target + "'></head><body style='background-color: #FFFFFF'>"
+                + "<br><br><br><br><br><br>"
+                + "<div style='text-align: center'><img width='128px' height='128px' src='img/loading.gif' alt='loading'/></div>"
+                + "<br><br><br><br><br><br></body></html>";
+
+        return html;
+    }
+
+    public void sendHTML(String html, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
+        try {
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("text/html");
+            httpServletResponse.getOutputStream().print(html);
+            httpServletResponse.getOutputStream().flush();
+            httpServletResponse.getOutputStream().close();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+}

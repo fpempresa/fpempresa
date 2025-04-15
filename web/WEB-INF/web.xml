@@ -34,7 +34,6 @@
         <listener-class>es.logongas.ix3.web.database.DatabaseMigrateContextListener</listener-class>
     </listener>
     
-<!--
     <filter>
         <filter-name>filterImplRedirect</filter-name>
         <filter-class>es.logongas.fpempresa.presentacion.filter.FilterImplCanonicalRedirect</filter-class>
@@ -42,8 +41,7 @@
     <filter-mapping>
         <filter-name>filterImplRedirect</filter-name>
         <url-pattern>*.html</url-pattern>
-    </filter-mapping>
--->    
+    </filter-mapping>   
     <filter>
         <filter-name>filterImplSecurityHeaders</filter-name>
         <filter-class>es.logongas.fpempresa.presentacion.filter.FilterImplSecurityHeaders</filter-class>

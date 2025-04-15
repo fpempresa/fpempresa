@@ -100,14 +100,15 @@ public class FilterImplCanonicalRedirect implements Filter {
             String target = url.toString();            
             
             
-            //httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-            //httpServletResponse.setHeader("Location", target);
+            httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            httpServletResponse.setHeader("Location", target);
             System.out.println("Si redirect:"+serverName+" at target:"+target);
         } else {
             System.out.println("No redirect:"+serverName);
+            filterChain.doFilter(servletRequest, servletResponse);
         }
         
-        filterChain.doFilter(servletRequest, servletResponse);
+        
 
     }
 

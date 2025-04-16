@@ -153,7 +153,7 @@ public class FilterImplCanonicalRedirect implements Filter {
         try {
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("text/html; charset=UTF-8");
-            httpServletResponse.getOutputStream().print(html);
+            httpServletResponse.getOutputStream().getWriter().print(html);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

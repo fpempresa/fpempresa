@@ -139,12 +139,9 @@ public class FilterImplCanonicalRedirect implements Filter {
         return target;
     }
 
-    private String getHTMLRedirect(String target) {
-        String html = "<html><head><meta http-equiv='refresh' content='0; url=" + target + "'></head><body style='background-color: #FFFFFF'>"
-                + "<br><br><br><br><br><br>"
-                + "<div style='text-align: center'><img width='128px' height='128px' src='img/loading.gif' alt='loading'/></div>"
-                + "<br><br><br><br><br><br></body></html>";
-
+    private String getHTMLRedirect(String target) {        
+        String html = "<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'><title>Redirigiendo...</title><script>window.location.href = '" + target + "';</script></head>" +
+        "<body><p>Si no eres redirigido automáticamente, haz clic <a href='" + target + "'>aquí</a>.</p></body></html>";
         return html;
     }
 

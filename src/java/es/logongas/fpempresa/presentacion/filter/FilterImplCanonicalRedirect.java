@@ -76,8 +76,7 @@ public class FilterImplCanonicalRedirect implements Filter {
 
         if (isRequiredRedirect(serverName)) {
 
-            String canonicalServerName=getCanonicalServerName(serverName);
-            String target = getTarget(canonicalServerName, httpServletRequest, httpServletResponse);
+            String target = getTarget(httpServletRequest, httpServletResponse);
             String html = getHTMLRedirect(target);
             sendHTML(html, httpServletRequest, httpServletResponse);
 
@@ -114,15 +113,19 @@ public class FilterImplCanonicalRedirect implements Filter {
         return canonicalServerName;
     }
 
-    private String getTarget(String canonicalServerName, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String getTarget(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
         String scheme = httpServletRequest.getScheme();
         String serverName = httpServletRequest.getServerName();
         int serverPort = httpServletRequest.getServerPort();
         String requestURI = httpServletRequest.getRequestURI();
         String queryString = httpServletRequest.getQueryString();
+        
+        String canonicalServerName=getCanonicalServerName(serverName);
+        
+        
         StringBuilder url = new StringBuilder();
-        url.append(scheme).append("://").append(getCanonicalServerName(serverName));
+        url.append(scheme).append("://").append(canonicalServerName);
 
         if ((scheme.equals("http") && serverPort != 80)
                 || (scheme.equals("https") && serverPort != 443)) {
@@ -149,10 +152,8 @@ public class FilterImplCanonicalRedirect implements Filter {
 
         try {
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("text/html");
+            httpServletResponse.setContentType("text/html; charset=UTF-8");
             httpServletResponse.getOutputStream().print(html);
-            httpServletResponse.getOutputStream().flush();
-            httpServletResponse.getOutputStream().close();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

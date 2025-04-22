@@ -35,6 +35,9 @@
                     </tr>
                 </tbody>
             </table> 
+            <div class="alert alert-danger" ng-if="showNoEmpresas===true" role="alert">
+                <p>No hemos encontrado ninguna empresa.<br>Puedes cerrar esta ventana y dar de alta la nueva empresa en el menú lateral de "Empresas".</p>
+            </div>
             <div class="row g--margin-bottom-0">
                 <div class="col-sm-12">
                     <ix3-pagination></ix3-pagination>

@@ -23,6 +23,7 @@
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 10;
         angular.extend($scope.filters, currentDialog.params.filters);
+        $scope.showNoEmpresas=false;
 
         $scope.orderby=[
             {fieldName:"fecha",orderDirection:"DESC"}
@@ -45,6 +46,18 @@
         
         if (currentDialog.params.initialSearch) {
             $scope.search();
+        }
+        
+        $scope.preSearch=function(filters) {
+            $scope.showNoEmpresas=false;
+        }        
+        
+        $scope.postSearch=function(models) {
+            if ((!models) || (models.length===0)) {
+                $scope.showNoEmpresas=true;
+            } else {
+                $scope.showNoEmpresas=false;
+            }
         }
 
     }

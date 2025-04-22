@@ -333,7 +333,7 @@ public class NotificationImpl implements Notification {
         String subject=mail.getSubject();
         String anonymizedMail=EMailUtil.getAnonymizedEMail(mail.getTo().get(0));        
         
-        if (true) {
+        if (isEnabledEMailNotifications()) {
             try {
                 mailKernelService.send(mail);
                 logMail.info("Enviado correo:" + subject + ":" + anonymizedMail);

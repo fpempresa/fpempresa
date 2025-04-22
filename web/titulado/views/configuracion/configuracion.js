@@ -59,8 +59,59 @@ app.controller("ConfiguracionTituladoController", ['$scope', 'genericControllerC
             ]
         }
 
+        function existsProvincia(provincias,provincia) {
+            for(var i=0;i<provincias.length;i++) {
+                if ($scope.compareProvincia(provincias[i],provincia)) {
+                    return true;
+                }
+            }            
+            
+            return false;
+        }
+        
+        function equalsProvincias(provinciasA,provinciasB) {
+            if (!(Array.isArray(provinciasA) && Array.isArray(provinciasB))) {
+                return false;
+            }
+            
+            if (provinciasA.length!==provinciasB.length) {
+                return false;
+            }
+            
+            for(var i=0;i<provinciasA.length;i++) {
+                if (existsProvincia(provinciasB,provinciasA[i])===false) {
+                    return false;
+                }
+            }
+            
+            return true;
+            
+        }
+                
+        
+        $scope.$watchCollection("model.configuracion.notificacionOferta.provincias", function (newProvincias, oldProvincias) {        
+            if (newProvincias === oldProvincias) {
+                return;
+            }
+            
+            if (equalsProvincias(newProvincias,$scope.provincias)) {
+                $scope.todasProvincias=true;
+            } else {
+                $scope.todasProvincias=false;
+            }
+
+        });
+
+
         serviceProvincia.search(query).then(function (provincias) {
             $scope.provincias = provincias;
+            
+            if (equalsProvincias($scope.model.configuracion.notificacionOferta.provincias,$scope.provincias)) {
+                $scope.todasProvincias=true;
+            } else {
+                $scope.todasProvincias=false;
+            }
+            
         }, function (businessMessages) {
             $scope.businessMessages = businessMessages;
         });

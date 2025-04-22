@@ -17,6 +17,7 @@
 package es.logongas.fpempresa.service.notification.impl;
 
 import es.logongas.fpempresa.config.Config;
+import es.logongas.fpempresa.modelo.centro.Centro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
@@ -78,6 +79,19 @@ public class NotificationImpl implements Notification {
     
     @Override
     public void nuevaOferta(Usuario usuario, Oferta oferta) {
+        Centro centro=oferta.getEmpresa().getCentro();
+        String titulo;
+        String fraseInicio;
+        
+        if (centro!=null) {
+            titulo="Nueva oferta de empleo de la bolsa de tu centro educativo";
+            fraseInicio="tienes una nueva oferta de empleo que puede interesarte.<br><br> Ha sido publicada en la bolsa del <strong>'" + StringEscapeUtils.escapeHtml4(centro.getNombre()) + "'</strong>, el centro educativo donde estudiaste.";
+        } else {
+            titulo="Nueva oferta de empleo";
+            fraseInicio="tienes una nueva oferta de empleo que puede interesarte.";
+        }
+        
+        
         byte[] secretToken=usuario.getSecretToken().getBytes(Charset.forName("utf-8"));
         int idIdentity=usuario.getIdIdentity();
 
@@ -86,9 +100,9 @@ public class NotificationImpl implements Notification {
         String urlApiPOSTUnsubscribe=getAppURL() + "/api/site/Usuario/cancelarSuscripcion/" + idIdentity + "/" + publicTokenCancelarSubcripcion.toString();
 
         BodyContent bodyContent=new BodyContent();
-        bodyContent.titulo="Nueva oferta de empleo";
+        bodyContent.titulo=titulo;
         bodyContent.parrafos="Hola " + StringEscapeUtils.escapeHtml4(usuario.getNombre()) + ","
-                + "<br>tenemos una nueva oferta de empleo que puede interesarte."
+                + "<br>" + fraseInicio
                 + "<br><br>Es de la empresa <strong>'" + StringEscapeUtils.escapeHtml4(oferta.getEmpresa()+"") + "'</strong> en <strong>'" + StringEscapeUtils.escapeHtml4(oferta.getMunicipio()+"") + "'</strong> para el puesto de <strong>'" + StringEscapeUtils.escapeHtml4(oferta.getPuesto()) + "'</strong>."
                 + "<br><br>Si tienes interés en ella, deberás entrar en <a href=\"" + getAppURL() + "/site/index.html#!/login\">EmpleaFP</a> e inscribirte en la oferta."
                 + "<br><br><p style=\"font-style: italic;padding-left: 10px;color:#383838 \">" + toHTMLRetornoCarro(StringEscapeUtils.escapeHtml4(oferta.getDescripcion())) + "</p>"
@@ -319,7 +333,7 @@ public class NotificationImpl implements Notification {
         String subject=mail.getSubject();
         String anonymizedMail=EMailUtil.getAnonymizedEMail(mail.getTo().get(0));        
         
-        if (isEnabledEMailNotifications()) {
+        if (true) {
             try {
                 mailKernelService.send(mail);
                 logMail.info("Enviado correo:" + subject + ":" + anonymizedMail);

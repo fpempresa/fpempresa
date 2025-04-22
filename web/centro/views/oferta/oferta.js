@@ -188,8 +188,8 @@ app.controller("OfertaNewEditController", ['$scope', 'genericControllerCrudDetai
                         'familia.idFamilia': newFamilia.idFamilia
                     },
                     orderby: [
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},                        
                         {fieldName: "grado", orderDirection: "DESC"},
-                        {fieldName: "leyEducativa", orderDirection: "DESC"},
                         {fieldName: "descripcion", orderDirection: "ASC"}
                     ]
                 }
@@ -243,8 +243,8 @@ app.controller("OfertaViewController", ['$scope', 'genericControllerCrudDetail',
                         'familia.idFamilia': newFamilia.idFamilia
                     },
                     orderby: [
+                        {fieldName: "leyEducativa", orderDirection: "DESC"},                        
                         {fieldName: "grado", orderDirection: "DESC"},
-                        {fieldName: "leyEducativa", orderDirection: "DESC"},
                         {fieldName: "descripcion", orderDirection: "ASC"}
                     ]
                 };

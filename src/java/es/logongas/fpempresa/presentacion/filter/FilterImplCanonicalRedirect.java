@@ -79,10 +79,7 @@ public class FilterImplCanonicalRedirect implements Filter {
             String target = getTarget(httpServletRequest, httpServletResponse);
             String html = getHTMLRedirect(target);
             sendHTML(html, httpServletRequest, httpServletResponse);
-
-            System.out.println("Si redirect:" + serverName + " at target:" + target);
         } else {
-            System.out.println("No redirect:" + serverName);
             filterChain.doFilter(servletRequest, servletResponse);
         }
 

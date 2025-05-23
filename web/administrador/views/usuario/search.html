@@ -77,7 +77,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <tr ng-repeat="usuario in models" class="data-table__row">
                         <td ><a href ng-click="buttonEdit(usuario.idIdentity)">{{usuario.getNombreCompleto()}}</a></td>
                         <td >{{usuario.email}}</td>
-                        <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.centro.nombre}}</td>                        
+                        <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'"><a href="#!/centro/edit/{{usuario.centro.idCentro}}">{{usuario.centro.nombre}}</a></td>                        
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.getEstadoUsuarioDescription()}}</td>                        
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'EMPRESA'">{{usuario.empresa.nombreComercial}}</td>                        
                         <td  class="text-center" >{{usuario.fecha| date:'yyyy/MM/dd'}}</td>

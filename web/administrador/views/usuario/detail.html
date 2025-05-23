@@ -237,7 +237,13 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         </div> 
                     </div>
                     <div class="row" >
-                        <div class="col-xs-12 ">                             
+                        <div class="col-xs-12 ">   
+                            <div class="pull-left" ng-show="(model.tipoUsuario === 'CENTRO')">
+                                <a class="btn btn-default" href="#!/centro/edit/{{model.centro.idCentro}}" >Centro</a>
+                            </div>
+                            <div class="pull-left" ng-show="(model.tipoUsuario === 'EMPRESA')">
+                                <a class="btn btn-default" href="#!/empresa/edit/{{model.empresa.idEmpresa}}" >Empresa</a>
+                            </div>                            
                             <crud-detail-buttons class="pull-right" >
                                 <button type="button" ng-show="controllerAction === 'EDIT'" class="btn form__button form__button--default" ng-click="cambiarContrasenya()" >Cambiar Contrase&ntilde;a</button>
                             </crud-detail-buttons>

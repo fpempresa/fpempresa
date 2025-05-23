@@ -79,7 +79,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td >{{usuario.email}}</td>
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'"><a href="#!/centro/edit/{{usuario.centro.idCentro}}">{{usuario.centro.nombre}}</a></td>                        
                         <td  class="text-center" ng-if="usuario.tipoUsuario === 'CENTRO'">{{usuario.getEstadoUsuarioDescription()}}</td>                        
-                        <td  class="text-center" ng-if="usuario.tipoUsuario === 'EMPRESA'">{{usuario.empresa.nombreComercial}}</td>                        
+                        <td  class="text-center" ng-if="usuario.tipoUsuario === 'EMPRESA'"><a href="#!/empresa/edit/{{usuario.empresa.idEmpresa}}">{{usuario.empresa.nombreComercial}}</a></td>                        
                         <td  class="text-center" >{{usuario.fecha| date:'yyyy/MM/dd'}}</td>
                         <td  class="text-center" >{{usuario.fechaUltimoAcceso| date:'yyyy/MM/dd'}}</td>
                         <td  ng-switch    on="usuario.validadoEmail" class="text-center"><i ng-switch-default class="fa fa-square-o"></i><i ng-switch-when="true" class="fa fa-check-square-o"></i></td>

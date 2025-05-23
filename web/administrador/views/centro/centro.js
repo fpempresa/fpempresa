@@ -49,19 +49,32 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
                         'centro.idCentro':idCentro
                     }
                 }
-            }
+            };
             
-            $state.go("lateralmenu.usuario_search_parent",parameters)
-        }
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };
         
         
         $scope.search();
     }]);
 
 
-app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','$state', function ($scope, genericControllerCrudDetail, controllerParams, $state) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
         
+        $scope.buttonProfesores=function(idCentro) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'CENTRO',
+                $filters:{
+                    $eq:{
+                        'centro.idCentro':idCentro
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };
         
         $scope.postCreate = function () {
             $scope.model.estadoCentro="PERTENECE_A_FPEMPRESA";
@@ -69,10 +82,40 @@ app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetai
         
     }]);
 
-app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','$state', function ($scope, genericControllerCrudDetail, controllerParams, $state) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        $scope.buttonProfesores=function(idCentro) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'CENTRO',
+                $filters:{
+                    $eq:{
+                        'centro.idCentro':idCentro
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };        
+        
     }]);
 
-app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function ($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','$state', function ($scope, genericControllerCrudDetail, controllerParams, $state) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        $scope.buttonProfesores=function(idCentro) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'CENTRO',
+                $filters:{
+                    $eq:{
+                        'centro.idCentro':idCentro
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };        
+        
     }]);

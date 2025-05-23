@@ -34,8 +34,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             </div> 
                         </div>
                     </div>
-                    <legend class="form__title">Direcci&oacute;n</legend>
-
                     <div class="row" >
                         <div class="col-xs-12 form-horizontal">
                             <div class="form-group">
@@ -70,29 +68,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             </div> 
                         </div> 
                     </div> 
-                    
-                    <legend class="form__title">Contacto</legend>
-
-                    <div class="row" >
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="contacto.persona" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.contacto.persona" type="text" class="form-control" id="contacto.persona" name="contacto.persona"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-6  form-horizontal">
-                            <div class="form-group">
-                                <label for="contacto.email" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
-                                <div class="col-xs-9 col-sm-6">
-                                    <input ng-model="model.contacto.email" type="text" class="form-control" id="contacto.email" name="contacto.email"  ix3-validation>
-                                </div>
-                            </div> 
-                        </div>  
-                    </div> 
-
-
                     <div class="row" >
                         <div class="col-xs-12 col-sm-6  form-horizontal">
                             <div class="form-group">
@@ -113,7 +88,42 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                 </div>
                             </div> 
                         </div>
-                    </div>                        
+                    </div>                       
+                    <br>
+                    <br>
+                    <br>
+                    <legend class="form__title">Persona de Contacto</legend>
+
+                    <div class="row" >
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="contacto.persona" class="col-xs-3 col-sm-6 control-label" >Nombre</label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.contacto.persona" type="text" class="form-control" id="contacto.persona" name="contacto.persona"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-horizontal">
+                            <div class="form-group">
+                                <label for="contacto.email" class="col-xs-3 col-sm-6 control-label" ix3-label></label>
+                                <div class="col-xs-9 col-sm-6">
+                                    <input ng-model="model.contacto.email" type="text" class="form-control" id="contacto.email" name="contacto.email"  ix3-validation>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div> 
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <p class="form__text form__text--help">
+                                    Los datos de la persona de contacto solo serán usados por EmpleaFP 
+                                    en caso de tener que ponerse en contacto con el centro por algún motivo concreto.
+                                </p>
+                            </div>
+                        </div> 
+                    </div>   
+
+                     
                     <br>
                     <div class="row" >
                         <div class="col-xs-12 ">

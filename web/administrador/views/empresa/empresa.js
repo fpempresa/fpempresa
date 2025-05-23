@@ -23,23 +23,81 @@ app.config(['crudRoutesProvider', function(crudRoutesProvider) {
         });
     }]);
 
-app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', function($scope, genericControllerCrudList,controllerParams) {
+app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList','controllerParams', '$state', function($scope, genericControllerCrudList,controllerParams, $state) {
         genericControllerCrudList.extendScope($scope, controllerParams);      
         $scope.page.pageSize=20;
+        
+        $scope.buttonRepresentantesEmpresa=function(idEmpresa) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'EMPRESA',
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };
         
         
         $scope.search();
     }]);
 
 
-app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$state', function($scope, genericControllerCrudDetail, controllerParams, $state) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        $scope.buttonRepresentantesEmpresa=function(idEmpresa) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'EMPRESA',
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };
     }]);
 
-app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$state', function($scope, genericControllerCrudDetail, controllerParams, $state) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        $scope.buttonRepresentantesEmpresa=function(idEmpresa) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'EMPRESA',
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };        
+        
     }]);
 
-app.controller("EmpresaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
+app.controller("EmpresaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$state', function($scope, genericControllerCrudDetail, controllerParams, $state) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+        
+        $scope.buttonRepresentantesEmpresa=function(idEmpresa) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'EMPRESA',
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters);
+        };        
+        
     }]);

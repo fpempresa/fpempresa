@@ -83,14 +83,20 @@
                 url: '/' + routeConfig.urlBasePath + '/search/:parentProperty/:parentId',
                 templateUrl: routeConfig.templateBasePath + '/search.html',
                 controller: routeConfig.controllerPrefix + 'SearchController',
-                resolve: this.getResolve(config.entity, config.expand)
+                resolve: this.getResolve(config.entity, config.expand),
+                params: {
+                    $filters:{}
+                }
             });
 
             $stateProvider.state(routeConfig.stateBase + "_search", {
                 url: '/' + routeConfig.urlBasePath + '/search',
                 templateUrl: routeConfig.templateBasePath + '/search.html',
                 controller: routeConfig.controllerPrefix + 'SearchController',
-                resolve: this.getResolve(config.entity, config.expand)
+                resolve: this.getResolve(config.entity, config.expand),
+                params: {
+                    $filters:{}
+                }
             });
 
         };

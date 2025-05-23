@@ -23,7 +23,7 @@ app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         });
     }]);
 
-app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams', function ($scope, genericControllerCrudList, controllerParams) {
+app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList', 'controllerParams','$state', function ($scope, genericControllerCrudList, controllerParams, $state) {
         genericControllerCrudList.extendScope($scope, controllerParams);
         $scope.page.pageSize = 20;
 
@@ -39,6 +39,21 @@ app.controller("CentroSearchController", ['$scope', 'genericControllerCrudList',
                 filters['direccion.municipio.provincia.idProvincia'] = filters['direccion.municipio.provincia.idProvincia'].idProvincia;
             }
         }
+        
+        $scope.buttonProfesores=function(idCentro) {
+            var parameters={
+                parentProperty:'tipoUsuario',
+                parentId:'CENTRO',
+                $filters:{
+                    $eq:{
+                        'centro.idCentro':idCentro
+                    }
+                }
+            }
+            
+            $state.go("lateralmenu.usuario_search_parent",parameters)
+        }
+        
         
         $scope.search();
     }]);

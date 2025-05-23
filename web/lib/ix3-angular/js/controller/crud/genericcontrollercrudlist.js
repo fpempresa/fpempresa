@@ -17,8 +17,8 @@
 
 (function () {
 
-    GenericControllerCrudList.$inject = ['serviceFactory', '$location', 'schemaEntities'];
-    function GenericControllerCrudList(serviceFactory, $location, schemaEntities) {
+    GenericControllerCrudList.$inject = ['serviceFactory', '$location', 'schemaEntities','$stateParams'];
+    function GenericControllerCrudList(serviceFactory, $location, schemaEntities,$stateParams) {
         this.extendScope = function (scope, controllerParams) {
             scope.models = {};
             scope.filters = {
@@ -34,6 +34,8 @@
                 $lliker: {},
                 $isnull: {}
             };
+            appendFiltersFromStateParams(scope.filters,$stateParams);
+            
             scope.orderby = []; //Array con objetos con las propiedades fieldName y orderDirection. La propiedad orderDirection soporta los valores "ASC" y "DESC"
             scope.distinct = false;
             scope.page = {};
@@ -168,6 +170,17 @@
             }
 
 
+            function appendFiltersFromStateParams(filters,stateParams) {
+                
+                if (stateParams && stateParams.$filters) {
+                    for (var key in filters) {
+                        if (stateParams.$filters[key]) {
+                            filters[key]=stateParams.$filters[key]
+                        }
+                    }
+                }
+                
+            }
 
         };
     }

@@ -45,7 +45,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th ix3-order-field-names="direccion.municipio.provincia.descripcion" style="width:      15%;text-align: center">Provincia</th>
                         <th ix3-order-field-names="direccion.municipio.descripcion" style="width:      20%;text-align: center">Poblaci&oacute;n</th>
                         <th ix3-order-field-names="estadoCentro" style="width:      25%;text-align: center">Estado</th>
-                        <th style="width:120px;text-align: center">Acciones</th>
+                        <th style="width:140px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,7 +56,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td style="text-align: left" >{{centro.getEstadoCentroDescription()}}</td>
                         <td >
                             <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(centro.idCentro)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(centro.idCentro)">Editar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonProfesores(centro.idCentro)">Profesores</button>
                         </td>                             
                     </tr>
                 </tbody>

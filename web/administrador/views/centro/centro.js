@@ -75,6 +75,17 @@ app.controller("CentroNewEditController", ['$scope', 'genericControllerCrudDetai
             
             $state.go("lateralmenu.usuario_search_parent",parameters);
         };
+        $scope.buttonOfertas=function(idCentro) {
+            var parameters={
+                $filters:{
+                    $eq:{
+                        'empresa.centro.idCentro':idCentro
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.oferta_search",parameters);
+        };        
         
         $scope.postCreate = function () {
             $scope.model.estadoCentro="PERTENECE_A_FPEMPRESA";
@@ -98,7 +109,17 @@ app.controller("CentroViewController", ['$scope', 'genericControllerCrudDetail',
             
             $state.go("lateralmenu.usuario_search_parent",parameters);
         };        
-        
+        $scope.buttonOfertas=function(idCentro) {
+            var parameters={
+                $filters:{
+                    $eq:{
+                        'empresa.centro.idCentro':idCentro
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.oferta_search",parameters);
+        }; 
     }]);
 
 app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams','$state', function ($scope, genericControllerCrudDetail, controllerParams, $state) {
@@ -117,5 +138,15 @@ app.controller("CentroDeleteController", ['$scope', 'genericControllerCrudDetail
             
             $state.go("lateralmenu.usuario_search_parent",parameters);
         };        
-        
+        $scope.buttonOfertas=function(idCentro) {
+            var parameters={
+                $filters:{
+                    $eq:{
+                        'empresa.centro.idCentro':idCentro
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.oferta_search",parameters);
+        }; 
     }]);

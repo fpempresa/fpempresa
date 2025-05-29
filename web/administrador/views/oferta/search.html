@@ -78,8 +78,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <tr ng-repeat="model in models" class="data-table__row">
                         <td style="text-align: center"><a href ng-click="buttonView(model.idOferta)">{{model.idOferta}}</a></td>
                         <td ><a href ng-click="buttonView(model.idOferta)">{{model.puesto}}</a></td>
-                        <td >{{model.empresa.nombreComercial}}</td>
-                        <td >{{model.empresa.centro.nombre}}</td>
+                        <td ><a href="#!/empresa/edit/{{model.empresa.idEmpresa}}">{{model.empresa.nombreComercial}}</a></td>
+                        <td ><a href="#!/centro/edit/{{model.empresa.centro.idCentro}}">{{model.empresa.centro.nombre}}</a></td>
                         <td >{{model.familia.descripcion}}</td>
                         <td >{{model.numeroCandidatos}}</td>
                         <td >{{model.numTituladosSuscritosPorProvinciaOfertaYCiclos}}</td>

@@ -41,7 +41,6 @@ app.controller("EmpresaSearchController", ['$scope', 'genericControllerCrudList'
             $state.go("lateralmenu.usuario_search_parent",parameters);
         };
         
-        
         $scope.search();
     }]);
 
@@ -62,6 +61,19 @@ app.controller("EmpresaNewEditController", ['$scope', 'genericControllerCrudDeta
             
             $state.go("lateralmenu.usuario_search_parent",parameters);
         };
+        
+        $scope.buttonOfertasEmpresa=function(idEmpresa) {
+            var parameters={
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.oferta_search",parameters);
+        };        
+        
     }]);
 
 app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$state', function($scope, genericControllerCrudDetail, controllerParams, $state) {
@@ -81,6 +93,18 @@ app.controller("EmpresaViewController", ['$scope', 'genericControllerCrudDetail'
             $state.go("lateralmenu.usuario_search_parent",parameters);
         };        
         
+        $scope.buttonOfertasEmpresa=function(idEmpresa) {
+            var parameters={
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.oferta_search",parameters);
+        };        
+        
     }]);
 
 app.controller("EmpresaDeleteController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', '$state', function($scope, genericControllerCrudDetail, controllerParams, $state) {
@@ -98,6 +122,18 @@ app.controller("EmpresaDeleteController", ['$scope', 'genericControllerCrudDetai
             };
             
             $state.go("lateralmenu.usuario_search_parent",parameters);
+        };        
+        
+        $scope.buttonOfertasEmpresa=function(idEmpresa) {
+            var parameters={
+                $filters:{
+                    $eq:{
+                        'empresa.idEmpresa':idEmpresa
+                    }
+                }
+            };
+            
+            $state.go("lateralmenu.oferta_search",parameters);
         };        
         
     }]);

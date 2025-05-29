@@ -20,6 +20,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
         <div>
             <legend class="form__title">Empresas</legend>
             <div class="row">
+                <div class="col-xs-4"> 
+                    <input ng-model="filters.$eq.idEmpresa" type="text" class="form-control" id="idEmpresa" name="idEmpresa" placeholder="Id Empresa"  > 
+                </div>             
+            </div> 
+            <br>            
+            <div class="row">
                 <div class="col-xs-8"> 
                     <input ng-model="filters.$lliker.nombreComercial" type="text" class="form-control" id="nombreComercial" name="nombre" placeholder="Nombre comercial"  > 
                 </div>
@@ -57,6 +63,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
+                        <th ix3-order-field-names="idEmpresa" style="min-width: 60px; width: 60px;text-align: center">#</th>
                         <th ix3-order-field-names="nombreComercial" style="width:   40%;text-align: center">Nombre Comercial</th>
                         <th ix3-order-field-names="cif" style="width:   15%;text-align: center">CIF</th>
                         <th ix3-order-field-names="direccion.municipio.descripcion" style="width:   25%;text-align: center">Municipio</th>
@@ -66,6 +73,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                 </thead>
                 <tbody>
                     <tr ng-repeat="empresa in models" class="data-table__row">
+                        <td style="text-align: center"><a href ng-click="buttonEdit(empresa.idEmpresa)">{{empresa.idEmpresa}}</a></td>
                         <td ><a href ng-click="buttonEdit(empresa.idEmpresa)">{{empresa.nombreComercial}}</a></td>
                         <td >{{empresa.cif}}</td>
                         <td >{{empresa.direccion.municipio.descripcion}}</td>                   

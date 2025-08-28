@@ -67,9 +67,10 @@ public class GeneradorDatosAleatorios {
         usuario.setApellidos(ape1 + " " + ape2);
         usuario.setNombre(nombre);
         usuario.setEmail(email.toLowerCase());
-        usuario.setPassword("a");
+        usuario.setPassword("Qw34$rt5qqqQ");
         usuario.setTipoUsuario(tipoUsuario);
         usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
+        usuario.setAceptarEnvioCorreos(true);
 
         return usuario;
     }

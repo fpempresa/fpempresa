@@ -38,7 +38,7 @@ public abstract class TestUtil {
     static {
 
         RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8080;
+        RestAssured.port = 7080;
         RestAssured.basePath = "/fpempresa";
     }
 

@@ -17,7 +17,7 @@
  */
 "user strict";
 
-app.controller("LateralMenuController", ['$scope', '$state', '$location', 'dialog', function ($scope, $state, $location, dialog) {
+app.controller("LateralMenuController", ['$scope', '$state', '$location', 'dialog','ix3Configuration', function ($scope, $state, $location, dialog, ix3Configuration) {
         $scope.isItemSelected = function (option) {
             if (option) {
                 var regExp = new RegExp(option);
@@ -44,5 +44,6 @@ app.controller("LateralMenuController", ['$scope', '$state', '$location', 'dialo
                 dialog.create("cambiarContrasenya", $scope.user);
             }
         };
-
+        
+        $scope.ix3Configuration=ix3Configuration;
     }]);

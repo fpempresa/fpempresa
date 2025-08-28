@@ -16,9 +16,14 @@
 package es.logongas.fpempresa.businessprocess.empresa.impl;
 
 import es.logongas.fpempresa.businessprocess.empresa.CandidatoCRUDBusinessProcess;
+import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.security.authorization.annotations.ACE;
+import es.logongas.fpempresa.security.authorization.annotations.ACEType;
+import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
+import es.logongas.fpempresa.security.authorization.annotations.PreAuthorization;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
 
@@ -29,7 +34,7 @@ import es.logongas.ix3.core.Page;
 public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Candidato, Integer> implements CandidatoCRUDBusinessProcess {
 
     @Override
-    public byte[] getFotoCandidato(FotoCandidatoArguments fotoCandidatoArguments) {
+    public byte[] getFotoCandidato(FotoCandidatoArguments fotoCandidatoArguments) throws BusinessException {
         return fotoCandidatoArguments.candidato.getUsuario().getFoto();
     }
 
@@ -63,6 +68,14 @@ public class CandidatoCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Ca
         boolean resultado = super.delete(deleteArguments);
 
         return resultado;
+    }
+
+    @Override
+    @PreAuthorization(acl={@ACE(aceType=ACEType.Allow, groupLogin = "GEmpresas",conditionalExpression = "arguments.candidato.oferta.empresa.idEmpresa==identity.empresa.idEmpresa")})
+    public byte[] getCurriculumCandidato(CurriculumCandidatoArguments curriculumCandidatoArguments) throws BusinessException {
+        UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
+        
+        return usuarioCRUDService.getCurriculum(curriculumCandidatoArguments.dataSession, curriculumCandidatoArguments.candidato.getUsuario());        
     }
     
 }

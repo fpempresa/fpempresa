@@ -72,4 +72,21 @@ public class CandidatoController {
         }
     }
 
+    @RequestMapping(value = {"/{path}/Candidato/{idCandidato}/curriculum.pdf"}, method = RequestMethod.GET, produces = "application/pdf")
+    public void downloadCurriculum(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("idCandidato") int idCandidato) throws BusinessException {
+        try (DataSession dataSession = dataSessionFactory.getDataSession()) {
+            Principal principal = controllerHelper.getPrincipal(httpServletRequest, httpServletResponse, dataSession);
+
+            CRUDService<Candidato, Integer> candidatoCrudService = crudServiceFactory.getService(Candidato.class);
+            Candidato candidato = candidatoCrudService.read(dataSession, idCandidato);
+
+            CandidatoCRUDBusinessProcess candidatoCRUDBusinessProcess = (CandidatoCRUDBusinessProcess) crudBusinessProcessFactory.getBusinessProcess(Candidato.class);
+
+            byte[] curriculum = candidatoCRUDBusinessProcess.getCurriculumCandidato(new CandidatoCRUDBusinessProcess.CurriculumCandidatoArguments(principal, dataSession, candidato));
+
+            controllerHelper.objectToHttpResponse(new HttpResult(null, curriculum, 200, false, null, MimeType.PDF), httpServletRequest, httpServletResponse);
+        } catch (Exception ex) {
+            exceptionHelper.exceptionToHttpResponse(ex, httpServletRequest, httpServletResponse);
+        }
+    }    
 }

@@ -40,7 +40,8 @@ La aplicación permite filtrar los candidatos con los siguientes criterios:
 - La fecha de obtención del título
 - Ocultar los candidatos que la propia empresa ha rechazado (En la siguiente pantalla se explica).
 
-Si se pulsa sobre el nombre de un candidatos o en el botón de "Ver Currículum" se muestra el curriculum del candidato.
+Si se pulsa sobre "Descargar PDF curriculum" se mostrará un PDF con el curriculum del candidato.
+Si se pulsa sobre el nombre de un candidatos o en el botón de "Ver Currículum" se muestrará la siguiente pantalla con el curriculum del candidato.
 
 ![](candidato.png)
 

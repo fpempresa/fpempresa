@@ -14,7 +14,6 @@ package es.logongas.fpempresa.businessprocess.empresa;
 
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
-import es.logongas.ix3.businessprocess.BusinessProcess;
 import es.logongas.ix3.businessprocess.CRUDBusinessProcess;
 import es.logongas.ix3.core.BusinessException;
 import es.logongas.ix3.core.Page;
@@ -28,7 +27,8 @@ import es.logongas.ix3.dao.DataSession;
  */
 public interface CandidatoCRUDBusinessProcess extends CRUDBusinessProcess<Candidato, Integer> {
 
-    byte[] getFotoCandidato(FotoCandidatoArguments fotoCandidatoArguments);
+    byte[] getFotoCandidato(FotoCandidatoArguments fotoCandidatoArguments) throws BusinessException;
+    byte[] getCurriculumCandidato(CurriculumCandidatoArguments curriculumCandidatoArguments) throws BusinessException;
 
     public Page<Candidato> getCandidatosOferta(GetCandidatosOfertaArguments getCandidatosOfertaArguments) throws BusinessException;
 
@@ -47,6 +47,21 @@ public interface CandidatoCRUDBusinessProcess extends CRUDBusinessProcess<Candid
             this.candidato = candidato;
         }
     }
+    
+    public class CurriculumCandidatoArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
+
+        public Candidato candidato;
+
+        public CurriculumCandidatoArguments() {
+        }
+
+        public CurriculumCandidatoArguments(Principal principal, DataSession dataSession, Candidato candidato) {
+            super(principal, dataSession);
+
+            this.candidato = candidato;
+        }
+    }    
+    
 
     public class GetCandidatosOfertaArguments extends CRUDBusinessProcess.ParametrizedSearchArguments {
 

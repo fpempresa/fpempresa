@@ -41,7 +41,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <tr class="data-table__head">
                         <th ix3-order-field-names="usuario.nombre,usuario.apellidos" style="width:   90%;text-align: center">Nombre</th>
                         <th ix3-order-field-names="fecha" style="min-width: 150px; width: 150px;text-align: center">Fecha inscripci&oacute;n</th>
-                        <th style="min-width: 120px; width: 120px;text-align: center">Acciones</th>
+                        <th style="min-width: 280px; width: 280px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <a href ng-click="verCandidato(candidato.idCandidato)">{{candidato.usuario.getNombreCompleto()}}</a>                                   
                             <p class="profile__value profile__value--cita">{{candidato.usuario.titulado.resumen}}</p></td>                            
                         <td >{{candidato.fecha| ix3Date}}</td>                            
-                        <td ><button class="btn btn-xs form__button form__button--default" type="button" ng-click="verCandidato(candidato.idCandidato)">Ver Currículum</button></td>                            
+                        <td >
+                            <a ng-href="{{ix3Configuration.server.api}}/Candidato/{{candidato.idCandidato}}/curriculum.pdf" class="btn btn-xs form__button form__button--primary" >Descargar PDF curriculum <i class="fa fa-file-pdf-o"></i></a>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="verCandidato(candidato.idCandidato)">Ver Currículum</button>     
+                        </td>                            
                     </tr>
                 </tbody>
             </table>                 

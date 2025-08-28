@@ -32,6 +32,7 @@
         <property name="defaultAuthorization" value="false" />
         <property name="authorizationProviders">
             <list>
+                <bean class="es.logongas.fpempresa.security.authorization.AuthorizationProviderImplAnnotation" />                
                 <bean class="es.logongas.ix3.security.authorization.impl.AuthorizationProviderImplIdentity" />
             </list>
         </property>

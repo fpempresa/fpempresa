@@ -20,6 +20,7 @@
 <%@page import="org.springframework.beans.factory.config.AutowireCapableBeanFactory"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
+<%@page import="es.logongas.fpempresa.presentacion.controller.endpoints.BeanMapperDefault"%>
 <%
     response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
     response.addHeader("Cache-Control", "post-check=0, pre-check=0");
@@ -48,7 +49,7 @@
         expands.add("empresa.direccion.municipio.provincia");
         expands.add("centro.direccion.municipio.provincia");
         expands.add("titulado.direccion.municipio.provincia");
-        BeanMapper beanMapper=new BeanMapper(Usuario.class, "foto,claveValidacionEmail,password,acl,memberOf,validadoEmail>,tipoUsuario>,fechaEnvioCorreoAvisoBorrarUsuario,lockedUntil,numFailedLogins,aceptarEnvioCorreos,claveResetearContrasenya,fechaClaveResetearContrasenya", "titulado.formacionesAcademicas");
+        BeanMapper beanMapper=new BeanMapper(Usuario.class, BeanMapperDefault.getPropertyNameListUsuarioDeleteProperties().toString() , "titulado.formacionesAcademicas,titulado.configuracion.notificacionOferta.provincias");
         if (sid == null) {
             principal = null;
         } else {
@@ -100,9 +101,3 @@ function getServerConfig() {
 }
 
 var serverLocale="<%=Locale.getDefault() %>";
-<%
-    Locale[] locales = SimpleDateFormat.getAvailableLocales();
-    for(Locale locale : locales) {
-        out.println("//" + locale.getDisplayName()+"--"+locale.getLanguage()+"_"+locale.getCountry());
-    }    
-%>

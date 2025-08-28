@@ -23,7 +23,26 @@ angular.module("common").config(['richDomainProvider', function (richDomain) {
                 var Titulado = {
                     getTipoDocumentoDescription: function () {
                         return schemaEntities.getSchemaProperty(this.$propertyPath + ".tipoDocumento").getValueDescription(this.tipoDocumento);
-                    }
+                    },
+                    $validators: [
+                        {
+                            label: 'Provincias',
+                            message: 'Si quieres recibir correos de ofertas, debes seleccionar alguna provincia',
+                            executeInActions: ['INSERT','UPDATE'],
+                            stopOnFail:true,
+                            rule: function () {
+                                if (this.configuracion.notificacionOferta.notificarPorEmail === true) {
+                                    if (this.configuracion.notificacionOferta.provincias.length===0) {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                } else {
+                                    return true;
+                                }
+                            }
+                        }
+                    ]                    
                 };
 
                 return function (object, propertyPath) {

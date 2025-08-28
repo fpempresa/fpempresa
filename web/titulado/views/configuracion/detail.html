@@ -18,7 +18,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 <div class="row">
     <div class="col-xs-12 form__container" >
         <div>
-            <ix3-business-messages></ix3-business-messages>
             <form name="mainForm" id="mainForm"  ix3-form>
                 <fieldset>
                     <legend class="form__title">Configuracion Notificaciones</legend>
@@ -29,7 +28,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <div class="checkbox">
                                 <label>
                                     <input ng-model="model.configuracion.notificacionOferta.notificarPorEmail" type="checkbox" >
-                                    Notificarme por correo electr&oacute;nico cuando llegue una oferta para alguno de mis t&iacute;tulos.
+                                    Notificarme por correo electr&oacute;nico cuando se publique alguna nueva oferta para alguno de mis t&iacute;tulos.
                                 </label>
                             </div>
                         </div> 
@@ -68,9 +67,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                 <fpe-ok-button></fpe-ok-button>
                             </div>
                         </div>
-                    </div>
+                    </div>                  
                 </fieldset>
             </form>
+            <br>
+            <ix3-business-messages></ix3-business-messages>
         </div>
     </div>
 </div>

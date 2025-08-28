@@ -19,7 +19,7 @@
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addEditRoute({
             entity: "Usuario",
-            expand: "centro.direccion.municipio.provincia,empresa.direccion.municipio.provincia,titulado.configuracion.notificacionOferta"
+            expand: "centro.direccion.municipio.provincia,empresa.direccion.municipio.provincia,titulado.configuracion.notificacionOferta,titulado.configuracion.notificacionOferta.provincias,titulado.formacionesAcademicas"
         });
     }]);
 

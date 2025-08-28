@@ -20,12 +20,12 @@
 app.config(['crudRoutesProvider', function (crudRoutesProvider) {
         crudRoutesProvider.addEditRoute({
             entity: "Titulado", 
-            expand: "direccion.municipio",
+            expand: "direccion.municipio,configuracion.notificacionOferta.provincias",
             crudName:"curriculum.Titulado"
         });
         crudRoutesProvider.addNewRoute({
             entity: "Titulado", 
-            expand: "direccion.municipio",
+            expand: "direccion.municipio,configuracion.notificacionOferta.provincias",
             crudName:"curriculum.Titulado"
         });        
     }]);

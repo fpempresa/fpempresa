@@ -57,7 +57,7 @@ angular.module('es.logongas.ix3.configuration').constant("ix3UserConfiguration",
     },
     session: {
         url: getContextPath() + "/api",
-        expand:"empresa,centro,titulado.direccion.municipio.provincia"
+        expand:"empresa,centro,titulado.formacionesAcademicas,titulado.direccion.municipio.provincia,titulado.configuracion.notificacionOferta.provincias"
     },
     crud: {
         parentState:"lateralmenu",

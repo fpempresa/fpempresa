@@ -24,7 +24,7 @@ import es.logongas.ix3.web.json.beanmapper.PropertyNameList;
  */
 public class BeanMapperDefault {
     
-    private static final String USUARIO_DELETE_PROPERTIES="acl,memberOf,captchaWord,claveResetearContrasenya,claveValidacionEmail,estadoUsuario,fecha,fechaClaveResetearContrasenya,fechaEnvioCorreoAvisoBorrarUsuario,fechaUltimoAcceso,fechaUltimoEnvioCorreoValidacionEmail,keyCaptcha,lockedUntil,numEnviosCorreoValidacionEmail,numFailedLogins,password,secretToken,validadoEmail,foto";
+    private static final String USUARIO_DELETE_PROPERTIES="acl,memberOf,captchaWord,claveResetearContrasenya,claveValidacionEmail,fecha,fechaClaveResetearContrasenya,fechaEnvioCorreoAvisoBorrarUsuario,fechaUltimoAcceso,fechaUltimoEnvioCorreoValidacionEmail,keyCaptcha,lockedUntil,numEnviosCorreoValidacionEmail,numFailedLogins,password,secretToken,validadoEmail,foto";
     
     public static PropertyNameList getPropertyNameListUsuarioDeleteProperties() {
         return new PropertyNameList(USUARIO_DELETE_PROPERTIES);

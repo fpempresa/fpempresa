@@ -65,7 +65,7 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fecha})]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="197"
 						y="2"

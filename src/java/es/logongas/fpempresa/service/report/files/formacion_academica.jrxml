@@ -104,9 +104,6 @@ where
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[(
 	$F{tipoFormacionAcademica}.equals("CICLO_FORMATIVO")?$F{Grado} + " en " + $F{nombreCiclo}:$F{otroTitulo}
-)+
-(
-	$F{formacionDual}.equals(new Integer(1))?" (Modalidad Dual)":""
 )]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >

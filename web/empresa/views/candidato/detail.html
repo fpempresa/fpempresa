@@ -101,8 +101,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                             <th style="min-width:140px;text-align: left">Nivel</th>
                                             <th style="width:      50%;text-align: left">Titulo</th>
                                             <th style="width:      35%;text-align: left">Centro</th>
-                                            <th style="min-width:85px;text-align: left">Fecha</th>                        
-                                            <th style="min-width:85px;text-align: center" title="Indica si la formación fu&eacute; en la modalidad de dual">Dual</th>                                            
+                                            <th style="min-width:85px;text-align: left">Fecha</th>                                                                   
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -110,8 +109,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                             <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
                                             <td >{{formacionAcademica.getNombreTitulo()}}</td>
                                             <td >{{formacionAcademica.getNombreCentro()}}</td>
-                                            <td >{{formacionAcademica.fecha| ix3Date}}</td>
-                                            <td style="text-align: center" ><img ng-show="formacionAcademica.formacionDual" title="Formación dual" ng-src="{{getContextPath()}}/img/icons/check-24x24.png"></td>                                                                    
+                                            <td >{{formacionAcademica.fecha| ix3Date}}</td>                                                                 
                                         </tr>
                                     </tbody>
                                 </table> 

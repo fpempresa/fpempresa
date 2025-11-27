@@ -241,6 +241,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
             List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
             businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
+            businessMessages.add(new BusinessMessage("No debe borrar las oferta que ya tiene publicadas ya que eso no hará que pueda publicar más ofertas."));
             businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
             
             BusinessException businessException=new BusinessException(businessMessages);

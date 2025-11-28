@@ -1,0 +1,68 @@
+<!--
+FPempresa
+Copyright (C) 2025  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+<div class="row">
+    <div class="col-sm-12 form__container" >
+        <div ix3-form>
+            <legend class="form__title">Domino Conocido</legend>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6"> 
+                    <input ng-model="filters.$lliker.dominio" type="text" class="form-control" id="dominio" name="dominio" placeholder="Dominio"  > 
+                </div> 
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 ">
+                    <button type="button" class="btn form__button form__button--primary " ng-click="buttonSearch()">Buscar</button>
+                </div>
+            </div>
+            <br>
+            <ix3-business-messages></ix3-business-messages>
+            <table class="table table-bordered">
+                <thead>                        
+                    <tr class="data-table__head">
+                        <th ix3-order-field-names="dominio"  style="min-width:  100%;text-align: center">Dominio</th>
+                        <th ix3-order-field-names="tipoDominioConocido" style="width:      150px;text-align: center">Tipo</th>
+                        <th ix3-order-field-names="fechaAlta" style="width:      120px;text-align: center">Fecha Alta</th>
+
+                        <th style="width:120px;text-align: center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="dominioConocido in models" class="data-table__row">
+                        <td ><a href ng-click="buttonEdit(dominioConocido.idDominioConocido)">{{dominioConocido.dominio}}</a></td>
+                        <td >{{dominioConocido.tipoDominioConocido}}</td>
+                        <td >{{dominioConocido.fechaAlta | date: 'dd/MM/yyyy'}}</td>
+                        <td >
+                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(dominioConocido.idDominioConocido)">Borrar</button>
+                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(dominioConocido.idDominioConocido)">Editar</button>
+                        </td>                             
+                    </tr>
+                </tbody>
+            </table> 
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ix3-pagination></ix3-pagination>
+                </div>
+            </div>
+
+            <button type="button" class="btn form__button form__button--primary" ng-click="buttonNew()">Nuevo Domino Conocido</button>
+        </div>
+    </div>
+</div>

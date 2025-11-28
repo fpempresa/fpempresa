@@ -22,6 +22,7 @@ import es.logongas.fpempresa.modelo.educacion.Familia;
 import es.logongas.fpempresa.modelo.educacion.Grado;
 import es.logongas.fpempresa.modelo.educacion.LeyEducativa;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.empresa.DominioConocido;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
@@ -133,6 +134,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, NivelIdioma.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
         endPoints.add(EndPoint.createEndPointCrud(path, TituloIdioma.class));        
+        endPoints.add(EndPoint.createEndPointCrud(path, DominioConocido.class));        
    
     }
 

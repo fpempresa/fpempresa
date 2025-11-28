@@ -14,7 +14,7 @@
     -->
     
     
-    <mapping resource="es/logongas/fpempresa/dao/captcha/impl/Captcha.hbm.xml"/>    
+    <mapping resource="es/logongas/fpempresa/dao/captcha/impl/Captcha.hbm.xml"/>
     
     
     <!-- BEGIN:Tablas Comunes -->
@@ -43,6 +43,7 @@
     <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Empresa.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Oferta.hbm.xml"/>
     <mapping resource="es/logongas/fpempresa/dao/empresa/impl/Candidato.hbm.xml"/>
+    <mapping resource="es/logongas/fpempresa/dao/empresa/impl/DominioConocido.hbm.xml"/>
     <!-- END:Tablas sobre la empresa -->
     <!-- BEGIN:Definición de la seguridad -->
     <mapping resource="es/logongas/ix3/security/dao/impl/Identity.hbm.xml"/>

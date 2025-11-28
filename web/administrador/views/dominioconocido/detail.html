@@ -1,0 +1,74 @@
+<!--
+FPempresa
+Copyright (C) 2025  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<div class="row">
+    <div class="col-xs-12 form__container" >
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <form name="mainForm" id="mainForm"  ix3-form>
+                <fieldset>
+                    <legend class="form__title">Dominio Conocido</legend>
+
+
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label for="dominio" class="col-xs-3  control-label" ix3-label></label>
+                                <div class="col-xs-9 ">
+                                    <input ng-model="model.dominio" type="text" class="form-control" id="dominio" name="dominio"  ix3-validation required>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div class="form-group">
+                                <label for="model.tipoDominioConocido" class="col-sm-3  control-label" ix3-label ></label>
+                                <div class="col-sm-3">
+                                    <select ng-model="model.tipoDominioConocido" id="model.tipoDominioConocido" name="model.tipoDominioConocido" class="form-control" ix3-options  required>
+                                        <option value="">-- Elige Opcion --</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 form-horizontal"> 
+                            <div   class="form-group">
+                                <label for="model.fechaAlta" class="col-sm-3  control-label" ix3-label ></label>
+                                <div class="col-xs-3 ">
+                                    <input ng-model="model.fechaAlta" type="text" class="form-control" id="model.fechaAlta" name="model.fechaAlta"  ix3-date="dd/MM/yyyy"  ix3-validation readonly="true">
+                                </div>
+                            </div>                      
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" >
+                        <div class="col-xs-12 ">
+                            <div class="pull-right">
+                                <fpe-cancel-button></fpe-cancel-button>
+                                <fpe-ok-button></fpe-ok-button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

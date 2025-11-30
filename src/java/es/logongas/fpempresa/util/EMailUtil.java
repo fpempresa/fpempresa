@@ -36,5 +36,21 @@ public class EMailUtil {
 
         return email.substring(0, index);
     }
+    
+    
+    public static String getDomainFromEMail(String email) {
+        if (email == null) {
+            return "";
+        }
+        
+        int at = email.indexOf('@');
+        if ((at == -1) || (at == email.length() - 1)) {
+            return "";
+        }
+
+        return email.substring(at + 1);
+        
+    }
+    
 
 }

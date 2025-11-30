@@ -96,8 +96,7 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
 
             
             
-            fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(dataSession, oferta);
-            fireConstraintRule_NoRepetidaOferta(dataSession, oferta,null);
+
             fireConstraintRule_CicloRequerido(dataSession, oferta);
             
             oferta.setSecretToken(SecureKeyGenerator.getSecureKey());
@@ -126,7 +125,6 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
         Oferta ofertaOriginal=this.readOriginal(dataSession, oferta.getIdOferta());        
         
         
-        fireConstraintRule_NoRepetidaOferta(dataSession, oferta,ofertaOriginal);
         fireConstraintRule_CicloRequerido(dataSession, oferta);
         
         return super.update(dataSession, oferta); 
@@ -225,99 +223,6 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     /*************************** Constraint Rules ***************************/
     /************************************************************************/ 
 
-    
-    private void fireConstraintRule_InsertAlcanzadoMaxOfertasPublicadasEmpresa(DataSession dataSession, Oferta oferta) throws BusinessException {
-        
-        CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
-        Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
-
-        if (empresa.getCentro()!=null) {
-            //la regla no se aplica para empresas de centros
-            return;
-        }
-        
-        int numOfertasPublicadas=empresa.getNumOfertasPublicadas();
-        int maxOfertasPublicadasEmpresa=Integer.parseInt(Config.getSetting("app.maxOfertasPublicadasEmpresa"));
-        if (numOfertasPublicadas>=maxOfertasPublicadasEmpresa) {
-            List<BusinessMessage> businessMessages=new ArrayList<BusinessMessage>();
-            businessMessages.add(new BusinessMessage("No es posible publicar más ofertas. Ha alcanzado el límite máximo."));
-            businessMessages.add(new BusinessMessage("No debe borrar las oferta que ya tiene publicadas ya que eso no hará que pueda publicar más ofertas."));
-            businessMessages.add(new BusinessMessage("Si desea publicar más ofertas, póngase en contacto con el soporte de EmpleaFP."));
-            
-            BusinessException businessException=new BusinessException(businessMessages);
-            notification.exceptionToAdministrador("Alcanzado limite ofertas."+oferta.getEmpresa().getIdEmpresa(), "Empresa="+oferta.getEmpresa().getIdEmpresa() + " numOfertasPublicadas="+numOfertasPublicadas+ " maxOfertasPublicadasEmpresa="+maxOfertasPublicadasEmpresa, businessException);
-            throw businessException;
-        }
-
-    }
-    
-    private void fireConstraintRule_NoRepetidaOferta(DataSession dataSession, Oferta oferta,Oferta ofertaOriginal) throws BusinessException {
-        
-        CRUDService<Empresa, Integer> empresaCRUDService = (CRUDService<Empresa, Integer>) serviceFactory.getService(Empresa.class);
-        Empresa empresa=empresaCRUDService.read(dataSession, oferta.getEmpresa().getIdEmpresa());
-        
-        if (empresa.getCentro()!=null) {
-            //la regla no se aplica para empresas de centros
-            return;
-        }
-        if (oferta.getMunicipio()==null) {
-            //Si no hay municipio aun no se puede validar esta regla
-            return;
-        }            
-        if (oferta.getFamilia()==null) {
-            //Si no hay familia no se puede validar la oferta
-            return;
-        }
-        
-        
-        //Ciclos originales de la oferta antes de la modificación
-        Set<Ciclo> ciclosOriginalesOferta=new HashSet<>();
-        if (ofertaOriginal!=null) {
-            ciclosOriginalesOferta=ofertaOriginal.getCiclos();
-        }
-            
-        int diasPermitidosRepetirOferta = Integer.parseInt(Config.getSetting("app.diasPermitidosRepetirOferta"));
-        Date dayUntil=DateUtil.add(new Date(), DateUtil.Interval.DAY, -diasPermitidosRepetirOferta);
-
-        Filters filters = new Filters();
-        filters.add(new Filter("empresa.idEmpresa",oferta.getEmpresa().getIdEmpresa() ));
-        filters.add(new Filter("fecha",dayUntil ,FilterOperator.dge));
-        filters.add(new Filter("idOferta",oferta.getIdOferta() ,FilterOperator.ne));
-
-        List<Oferta> ofertasAnteriores = this.search(dataSession, filters, null, null);
-
-        
-        List<BusinessMessage> businessMessages=new ArrayList<>();
-        for (Oferta ofertaAnterior:ofertasAnteriores) {
-            if ((oferta.getFamilia().getIdFamilia()==ofertaAnterior.getFamilia().getIdFamilia()) && (oferta.getMunicipio().getProvincia().getIdProvincia()==ofertaAnterior.getMunicipio().getProvincia().getIdProvincia())) {
-                Set<Ciclo> ciclos=oferta.getCiclos();
-                Set<Ciclo> ciclosAnteriores=ofertaAnterior.getCiclos();
-
-                if (existsAnyCicloEnComun(ciclos, ciclosAnteriores)) {
-                    
-                    Set<Ciclo> ciclosRepetidos=getCiclosEnComun(ciclos, ciclosAnteriores);
-                    for (Ciclo cicloRepetido:ciclosRepetidos) {
-                        
-                        //Si el ciclo ya existía originalmente en la oferta, si que se permite que esté.
-                        //Esto ocurre al modificar una oferta y en los últimos "n" días ya hay alguna otra oferta con ese ciclo.
-                        if (existsCiclo(ciclosOriginalesOferta,cicloRepetido.getIdCiclo())==false) {
-                            businessMessages.add(new BusinessMessage("Ciclo","No es posible publicar esta oferta puesto que has publicado ya una oferta con el ciclo de '" + cicloRepetido.getDescripcion() +  "' en la provincia de '" + oferta.getMunicipio().getProvincia().getDescripcion() + "' en los últimos "+ diasPermitidosRepetirOferta + " días."));
-                            log.info("Oferta no publicada al estar repetida. idOferta anterior="+ofertaAnterior.getIdOferta()+ " Empresa="+oferta.getEmpresa().getIdEmpresa() + " ciclo=" + cicloRepetido.getDescripcion());
-                        }
-                    }
-                    
-                }
-            }
-        }
-        
-        if (businessMessages.size()>0) {
-            BusinessException businessException=new BusinessException(businessMessages);
-
-            throw businessException;            
-        }
-        
-
-    } 
     private void fireConstraintRule_CicloRequerido(DataSession dataSession, Oferta oferta) throws BusinessException {
         
         if ((oferta.getCiclos() == null) || (oferta.getCiclos().isEmpty())) {
@@ -390,38 +295,9 @@ public class OfertaCRUDServiceImpl extends CRUDServiceImpl<Oferta, Integer> impl
     }
     
     
-    private boolean existsAnyCicloEnComun(Set<Ciclo> ciclosA,Set<Ciclo> ciclosB) {
-        for(Ciclo cicloA:ciclosA) {
-            if (existsCiclo(ciclosB,cicloA.getIdCiclo())) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    private Set<Ciclo> getCiclosEnComun(Set<Ciclo> ciclosA,Set<Ciclo> ciclosB) {
-        Set<Ciclo> ciclosComun=new HashSet<>();
-        
-        for(Ciclo cicloA:ciclosA) {
-            if (existsCiclo(ciclosB,cicloA.getIdCiclo())) {
-                ciclosComun.add(cicloA);
-            }
-        }
-        
-        return ciclosComun;
-    }
+
     
     
-    private boolean existsCiclo(Set<Ciclo> ciclos,int idCiclo) {
-        for(Ciclo ciclo:ciclos) {
-            if (ciclo.getIdCiclo()==idCiclo) {
-                return true;
-            }
-        }
-        
-        return false;
-    }  
-    
+
     
 }

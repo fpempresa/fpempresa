@@ -62,4 +62,6 @@ public interface UsuarioCRUDService extends CRUDService<Usuario, Integer> {
     
     void enviarMailValidarEMail(DataSession dataSession, Usuario usuario) throws BusinessException;
     
+    TipoUsuarioEmpresa getTipoUsuarioEmpresa(DataSession dataSession, Usuario usuario) throws BusinessException;
+    
 }

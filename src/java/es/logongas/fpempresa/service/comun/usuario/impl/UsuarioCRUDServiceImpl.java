@@ -23,12 +23,15 @@ import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
+import es.logongas.fpempresa.modelo.empresa.DominioConocido;
+import es.logongas.fpempresa.modelo.empresa.TipoDominioConocido;
 import es.logongas.fpempresa.modelo.titulado.ExperienciaLaboral;
 import es.logongas.fpempresa.modelo.titulado.FormacionAcademica;
 import es.logongas.fpempresa.modelo.titulado.TipoDocumento;
 import es.logongas.fpempresa.modelo.titulado.Titulado;
 import es.logongas.fpempresa.security.SecureKeyGenerator;
 import es.logongas.fpempresa.security.publictoken.PublicTokenCancelarSubcripcion;
+import es.logongas.fpempresa.service.comun.usuario.TipoUsuarioEmpresa;
 import es.logongas.fpempresa.util.validators.PasswordValidator;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.empresa.CandidatoCRUDService;
@@ -747,6 +750,47 @@ public class UsuarioCRUDServiceImpl extends CRUDServiceImpl<Usuario, Integer> im
         }
         
         return minutesLockedAccount;
+    }
+
+    @Override
+    public TipoUsuarioEmpresa getTipoUsuarioEmpresa(DataSession dataSession, Usuario usuario) throws BusinessException {
+        if (usuario==null) {
+            throw new RuntimeException("El usuario no puede ser null");
+        }
+        
+        if (usuario.getTipoUsuario()!=TipoUsuario.EMPRESA) {
+            throw new RuntimeException("El usuario debe ser de una empresa pero es de tipo:"+usuario.getTipoUsuario());
+        }
+        
+        
+        String dominio=EMailUtil.getDomainFromEMail(usuario.getEmail());
+        CRUDService<DominioConocido,Integer> dominioConocidoCRUDService = crudServiceFactory.getService(DominioConocido.class);
+        
+        Filters filters=new Filters();
+        filters.add(new Filter("dominio",dominio));
+        List<DominioConocido> dominiosConocidos=dominioConocidoCRUDService.search(dataSession, filters, null, null);
+        
+        if (dominiosConocidos.isEmpty()) {
+            return null;
+        } if (dominiosConocidos.size()>1) {
+            throw new RuntimeException("Existe más de un dominio conocido con el nombre:"+dominio);
+        } 
+        
+        DominioConocido dominioConocido=dominiosConocidos.get(0);
+        
+        if (null==dominioConocido.getTipoDominioConocido()) {
+            throw new RuntimeException("Tipo de dominio desconocido es null");
+        } 
+        
+        switch (dominioConocido.getTipoDominioConocido()) {
+            case CONFIABLE:
+                return TipoUsuarioEmpresa.CONFIABLE;
+            case INSEGURO:
+                return TipoUsuarioEmpresa.INSEGURO;
+            default:
+                throw new RuntimeException("Tipo de dominio desconocido:"+dominioConocido.getTipoDominioConocido());
+        }
+
     }
 
     /*********************************************************************/

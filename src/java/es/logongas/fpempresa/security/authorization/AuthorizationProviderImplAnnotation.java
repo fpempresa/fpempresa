@@ -169,13 +169,17 @@ public class AuthorizationProviderImplAnnotation implements AuthorizationProvide
                 } else if (aceGroupLogin.equals(identityLogin)) {
                    return true; 
                 } else {
-                    return isNameGroupInIdentity(aceGroupLogin,groupMember.getGroup().getGroupMembers());
+                    boolean isInName=isNameGroupInIdentity(aceGroupLogin,groupMember.getGroup().getGroupMembers());
+                    
+                    if (isInName==true) {
+                        return true;
+                    }
                 }
             }
             
             return false;
         } else {
-            return true;
+            return false;
         }
     }
 

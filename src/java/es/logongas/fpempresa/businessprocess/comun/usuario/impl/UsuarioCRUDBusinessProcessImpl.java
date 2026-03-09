@@ -16,6 +16,7 @@ package es.logongas.fpempresa.businessprocess.comun.usuario.impl;
 import es.logongas.fpempresa.businessprocess.comun.usuario.UsuarioCRUDBusinessProcess;
 import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.centro.Centro;
+import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.Contacto;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.TipoUsuario;
@@ -25,6 +26,7 @@ import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.util.DateUtil;
 import es.logongas.fpempresa.util.ImageUtil;
+import es.logongas.fpempresa.util.TextUtil;
 import es.logongas.fpempresa.util.concurrent.EventCountInDay;
 import es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessImpl;
 import es.logongas.ix3.core.BusinessException;
@@ -189,32 +191,19 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
     @Override
     public Usuario updateCentro(UpdateCentroArguments updateCentroArguments) throws BusinessException {
         UsuarioCRUDService usuarioCRUDService = (UsuarioCRUDService) serviceFactory.getService(Usuario.class);
-
-        updateCentroArguments.usuario.setCentro(updateCentroArguments.centro);
-        
-        String emailUsuario=updateCentroArguments.usuario.getEmail();
         Centro centro=updateCentroArguments.centro;
-        String emailContactoCentro=null;
-        if (centro!=null) {
-            Contacto contactoCentro=updateCentroArguments.centro.getContacto();
-            if (contactoCentro!=null) {
-                emailContactoCentro=contactoCentro.getEmail();
-            }
-        }
+        Usuario usuario=updateCentroArguments.usuario;
+        DataSession dataSession=updateCentroArguments.dataSession;
         
-        if ((emailUsuario!=null) && (emailUsuario.trim().isEmpty()==false) && (emailContactoCentro!=null) && (emailContactoCentro.trim().isEmpty()==false)) {
-            if (emailUsuario.equals(emailContactoCentro)) {
-                //Si el nuevo usuario es el del correo del centro seguro que está aceptado.
-                updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.ACEPTADO);
-            } else {
-                updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-            }
-        } else {
-            updateCentroArguments.usuario.setEstadoUsuario(EstadoUsuario.PENDIENTE_ACEPTACION);
-        }
+        fireConstraintRule_CentroRequerido(dataSession, centro);
+        fireConstraintRule_CentroPertenceAFPEmpresa(dataSession, centro);
+        
+        usuario.setCentro(centro);
+        EstadoUsuario nuevoEstadoUsuario=getNuevoEstadoUsuario(usuario,centro);
+        usuario.setEstadoUsuario(nuevoEstadoUsuario);
 
 
-        return usuarioCRUDService.update(updateCentroArguments.dataSession, updateCentroArguments.usuario);
+        return usuarioCRUDService.update(dataSession, usuario);
     }
 
     @ConstraintRule(message = "Error en el sistema de mensajes en 'isCheckInsertCentro'", groups = RuleGroupPredefined.PreInsert.class)
@@ -752,7 +741,23 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         if (usuario.isValidadoEmail()==false) {
             throw new BusinessException("Aun no está validado el correo '"+usuario.getEmail()+"'. Debes validar tu correo antes de poder cambiar la contraseña.");
         }        
-    }    
+    }  
+    
+    
+    private void fireConstraintRule_CentroRequerido(DataSession dataSession, Centro centro) throws BusinessException {
+        if (centro==null) {
+            throw new BusinessException("Es necesario el centro");
+        }        
+    }  
+    
+    private void fireConstraintRule_CentroPertenceAFPEmpresa(DataSession dataSession, Centro centro) throws BusinessException {
+        if (centro.getEstadoCentro()!=EstadoCentro.PERTENECE_A_FPEMPRESA) {
+            throw new BusinessException("El centro debe pertenecer a FPEmpresa.");           
+        }      
+    }     
+    
+    
+    
     
     /***********************************************************/
     /****************** Funciones de utilidad ******************/
@@ -818,6 +823,28 @@ public class UsuarioCRUDBusinessProcessImpl extends CRUDBusinessProcessImpl<Usua
         
     }
     
+    
+    private EstadoUsuario getNuevoEstadoUsuario(Usuario usuario,Centro centro) { 
+        String emailUsuario=usuario.getEmail();
+        String emailContactoCentro=null;
+        Contacto contactoCentro=centro.getContacto();
+        
+        if (contactoCentro!=null) {
+            emailContactoCentro=contactoCentro.getEmail();
+        }
+        
+        EstadoUsuario estadoUsuario=EstadoUsuario.PENDIENTE_ACEPTACION;
+        
+        if  ((TextUtil.isBlank(emailUsuario)==false) && (TextUtil.isBlank(emailContactoCentro)==false)) {
+            if (emailUsuario.equals(emailContactoCentro)) {
+                //Si el nuevo usuario es el del correo del centro seguro que está aceptado.
+                estadoUsuario=EstadoUsuario.ACEPTADO;
+            }
+        }   
+        
+        return estadoUsuario;
+        
+    }
     
     /*********************************************************************/
     /****************** Notificaciones de EventCountDay ******************/

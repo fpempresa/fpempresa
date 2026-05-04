@@ -187,11 +187,58 @@ Flyway migrations live in `src/java/es/logongas/fpempresa/database/` as `V{numbe
 
 ### Email & integrations
 
-- Email: AWS SES (`MailKernelServiceImplAWS`)
+- Email: AWS SES (`MailKernelServiceImplAWS`), fallback SMTP (`MailKernelServiceImplSMTP`)
 - Reports/PDF: JasperReports (`ReportServiceImplJasper`)
-- Email templates: Chunk Templates (`TemplateServiceImplChunk`)
+- Email templates: Chunk Templates (`TemplateServiceImplChunk`) — though email bodies are currently built programmatically in `NotificationImpl` via an inner `BodyContent` class (título, parrafos, pie, labelButton, linkButton)
 - Monitoring: JavaMelody at `/api/administrador/monitoring`
 - Scheduled tasks: `NotificarUsuariosInactivosTask` and `SoftDeleteUsuariosInactivosYNotificadosTask` run weekdays via Spring cron scheduler
+
+#### Sistema de notificaciones por correo
+
+La clase central es `NotificationImpl` (`service/notification/impl/NotificationImpl.java`). Toda la lógica de composición y envío de correos pasa por aquí. `MailKernelService.send(Mail)` es la única salida real hacia AWS SES.
+
+**Configuración relevante** (`config.properties`):
+
+| Clave | Uso |
+|---|---|
+| `app.url` | URL base para los links dentro de los correos |
+| `app.correoSoporte` | Destinatario de mensajes de soporte y errores al admin |
+| `app.enabledEMailNotifications` | `true`/`false` — deshabilitar no lanza ningún correo |
+| `mail.sender` | Dirección `From` de todos los correos |
+
+**Correos transaccionales** (disparados por acción de usuario):
+
+| Método en `Notification` | Disparado por | Destinatario | Asunto |
+|---|---|---|---|
+| `validarCuenta(Usuario)` | Registro de nueva cuenta | Usuario | "Confirma tu dirección de correo para acceder a EmpleaFP" |
+| `resetearContrasenya(Usuario)` | "Olvidé mi contraseña" | Usuario | "Cambiar contraseña en EmpleaFP" |
+| `nuevaOferta(Usuario, Oferta)` | `OfertaCRUDService` al publicar oferta | Titulados suscritos por provincia/ciclo | "Nueva oferta de empleo en EmpleaFP: {puesto}" |
+| `inscritoCandidato(DataSession, Candidato)` | `CandidatoCRUDService` al insertar candidato | Email de contacto de la empresa | "Nuevo candidato en EmpleaFP de su oferta: {puesto}" (adjunta `curriculum.pdf`) |
+| `desinscritoCandidato(DataSession, Candidato)` | `CandidatoCRUDService` al borrar candidato | Email de contacto de la empresa | "Desinscrito candidato en EmpleaFP de su oferta '{puesto}'" |
+| `mensajeSoporte(nombre, correo, mensaje)` | Formulario de soporte | `app.correoSoporte` | "Petición de soporte de {nombre}" |
+
+Notas:
+- `nuevaOferta` se envía en un hilo aparte vía `sendMailExecutor` (ThreadPoolTaskExecutor, 5-30 hilos) para no bloquear la petición HTTP.
+- `inscritoCandidato` y `desinscritoCandidato` solo se envían si la empresa **no** tiene centro asociado (`empresa.centro == null`).
+- `validarCuenta` tiene límite de 5 envíos/día y mínimo 30 minutos entre reenvíos (controlado por `EventCountInDay`).
+- `resetearContrasenya` tiene límite de 50 intentos/día.
+
+**Correos de tareas programadas** (Spring scheduler, `applicationContext.xml` líneas 99–115):
+
+| Tarea | Cron | Método | Qué hace |
+|---|---|---|---|
+| `NotificarUsuariosInactivosTask` | `0 0 9 ? * MON-FRI` | `notification.usuarioInactivo(Usuario)` | Avisa a titulados inactivos de que su cuenta será borrada. Registra `fechaEnvioCorreoAvisoBorrarUsuario`. |
+| `SoftDeleteUsuariosInactivosYNotificadosTask` | `0 30 9 ? * MON-FRI` | — | Borra (soft-delete) a los avisados hace ≥15 días. Envía resumen al admin con conteo de OK/errores. |
+
+**Correos internos al administrador** (automáticos ante errores):
+
+- `exceptionToAdministrador(url, user, Throwable)` — cualquier excepción en tareas programadas.
+- `mensajeToAdministrador(asunto, cuerpo)` — resumen del soft-delete masivo.
+- Cuando `EventCountInDay` supera el umbral (p. ej. 300 registros/día con error), se notifica al admin.
+
+**Cumplimiento RGPD**:
+- Todos los correos incluyen pie legal con entidad, dirección y opción de baja.
+- Correos promocionales (`nuevaOferta`) añaden cabeceras `List-Unsubscribe` / `List-Unsubscribe-Post` (RFC 8058) apuntando a `/api/site/Usuario/cancelarSuscripcion/{idIdentity}/{publicToken}`.
 
 ## Key conventions
 

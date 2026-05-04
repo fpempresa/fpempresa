@@ -24,7 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="idTitulado" isForPrompting="false" class="java.lang.Integer"/>
-	<queryString><![CDATA[select * from experiencialaboral where idTitulado=$P{idTitulado}]]></queryString>
+	<queryString><![CDATA[select * from experiencialaboral where idTitulado=$P{idTitulado} order by fechaInicio DESC]]></queryString>
 
 	<field name="idExperienciaLaboral" class="java.lang.Integer"/>
 	<field name="nombreEmpresa" class="java.lang.String"/>

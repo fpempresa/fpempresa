@@ -38,8 +38,9 @@ from
 	left join Grado on Ciclo.idGrado=Grado.idGrado
 	left join Municipio on Centro.idMunicipio=Municipio.idMunicipio
 	left join Provincia on Municipio.idProvincia=Provincia.idProvincia
-where 
-        FA.idTitulado=$P{idTitulado}]]></queryString>
+where
+        FA.idTitulado=$P{idTitulado}
+order by FA.fecha DESC]]></queryString>
 
 	<field name="idFormacionAcademica" class="java.lang.Integer"/>
 	<field name="tipoFormacionAcademica" class="java.lang.String"/>

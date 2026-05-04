@@ -76,6 +76,11 @@ Hay cinco tipos de usuario, cada uno con su propia aplicación Angular independi
 
 Shared AngularJS code lives in `web/common/`. The custom `ix3-angular` library (`web/lib/ix3-angular/`) is the core of the client architecture and defines a strict layered stack.
 
+> **Curriculum**: los datos del currículum del titulado se muestran en tres apps distintas. Cualquier cambio en cómo se presenta un campo del currículum debe aplicarse en los tres sitios:
+> - `web/titulado/views/curriculum/` y `web/titulado/views/main/main.html` — el titulado edita y ve su propio currículum
+> - `web/empresa/views/candidato/detail.html` — la empresa ve el currículum al revisar un candidato
+> - `web/administrador/views/usuario/curriculum/` — el administrador ve y edita el currículum de cualquier titulado
+
 REST calls go to `/api/*`. The Angular apps use `app-constant.js` (base URL config) and `server.js.jsp` (server-side JS constants).
 
 #### Estructura de pantalla
@@ -188,7 +193,13 @@ Flyway migrations live in `src/java/es/logongas/fpempresa/database/` as `V{numbe
 ### Email & integrations
 
 - Email: AWS SES (`MailKernelServiceImplAWS`), fallback SMTP (`MailKernelServiceImplSMTP`)
-- Reports/PDF: JasperReports (`ReportServiceImplJasper`)
+- Reports/PDF: JasperReports (`ReportServiceImplJasper`). El PDF del currículum se genera a partir de cuatro plantillas en `src/java/es/logongas/fpempresa/service/report/files/`:
+  - `curriculum.jrxml` — plantilla principal
+  - `formacion_academica.jrxml` — subinforme de formación académica
+  - `experiencia_laboral.jrxml` — subinforme de experiencia laboral
+  - `titulo_idioma.jrxml` — subinforme de idiomas
+
+  Cada `.jrxml` debe compilarse a su `.jasper` correspondiente antes de desplegar. **Si se modifica cualquier `.jrxml` hay que volver a compilarlo** (con Jaspersoft Studio o la herramienta Ant/CLI de JasperReports) para que el cambio tenga efecto en el PDF generado. Ambos ficheros (`.jrxml` y `.jasper`) están versionados en el repositorio.
 - Email templates: Chunk Templates (`TemplateServiceImplChunk`) — though email bodies are currently built programmatically in `NotificationImpl` via an inner `BodyContent` class (título, parrafos, pie, labelButton, linkButton)
 - Monitoring: JavaMelody at `/api/administrador/monitoring`
 - Scheduled tasks: `NotificarUsuariosInactivosTask` and `SoftDeleteUsuariosInactivosYNotificadosTask` run weekdays via Spring cron scheduler

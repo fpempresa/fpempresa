@@ -41,6 +41,25 @@ app.controller("CurriculumFormacionAcademicaSearchController", ['$scope', 'gener
 
 app.controller("CurriculumFormacionAcademicaNewEditController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {
         genericControllerCrudDetail.extendScope($scope, controllerParams);
+
+        var anioActual = new Date().getFullYear();
+        $scope.aniosDisponibles = [];
+        for (var i = anioActual; i >= anioActual - 60; i--) {
+            $scope.aniosDisponibles.push(i);
+        }
+
+        $scope.onAnioChange = function() {
+            if ($scope.anioObtencion) {
+                $scope.model.fecha = new Date($scope.anioObtencion, 0, 1).getTime();
+            } else {
+                $scope.model.fecha = null;
+            }
+        };
+
+        $scope.postGet = function() {
+            $scope.anioObtencion = $scope.model.fecha ? new Date($scope.model.fecha).getFullYear() : null;
+        };
+
     }]);
 
 app.controller("CurriculumFormacionAcademicaViewController", ['$scope', 'genericControllerCrudDetail', 'controllerParams', function($scope, genericControllerCrudDetail, controllerParams) {

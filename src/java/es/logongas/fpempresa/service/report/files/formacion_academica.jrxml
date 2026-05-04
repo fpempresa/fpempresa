@@ -87,7 +87,7 @@ where
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[new SimpleDateFormat("MMMM yyyy", new java.util.Locale("es", "ES")).format($F{fecha})]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new SimpleDateFormat("yyyy").format($F{fecha})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

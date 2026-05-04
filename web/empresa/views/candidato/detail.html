@@ -101,7 +101,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                             <th style="min-width:140px;text-align: left">Nivel</th>
                                             <th style="width:      50%;text-align: left">Titulo</th>
                                             <th style="width:      35%;text-align: left">Centro</th>
-                                            <th style="min-width:85px;text-align: left">Fecha</th>                                                                   
+                                            <th style="min-width:85px;text-align: left">Año</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,7 +109,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                                             <td >{{formacionAcademica.getTipoFormacionAcademicaDescription()}}</td>
                                             <td >{{formacionAcademica.getNombreTitulo()}}</td>
                                             <td >{{formacionAcademica.getNombreCentro()}}</td>
-                                            <td >{{formacionAcademica.fecha| ix3Date}}</td>                                                                 
+                                            <td >{{formacionAcademica.fecha | date:'yyyy'}}</td>
                                         </tr>
                                     </tbody>
                                 </table> 

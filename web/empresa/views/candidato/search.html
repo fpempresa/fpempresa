@@ -52,7 +52,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                             <p class="profile__value profile__value--cita">{{candidato.usuario.titulado.resumen}}</p></td>                            
                         <td >{{candidato.fecha| ix3Date}}</td>                            
                         <td >
-                            <link rel="prefetch" ng-attr-href="{{ix3Configuration.server.api}}/Candidato/{{candidato.idCandidato}}/curriculum.pdf">
+                            <link rel="prefetch" ng-attr-href="{{ix3Configuration.server.api + '/Candidato/' + candidato.idCandidato + '/curriculum.pdf'}}">
                             <a ng-href="{{ix3Configuration.server.api}}/Candidato/{{candidato.idCandidato}}/curriculum.pdf" class="btn btn-xs form__button form__button--primary" >Descargar PDF curriculum <i class="fa fa-file-pdf-o"></i></a>
                             <button class="btn btn-xs form__button form__button--default" type="button" ng-click="verCandidato(candidato.idCandidato)">Ver Currículum</button>     
                         </td>                            

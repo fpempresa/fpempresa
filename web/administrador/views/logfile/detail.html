@@ -1,0 +1,73 @@
+<!--
+FPempresa
+Copyright (C) 2026  Lorenzo González
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+<div class="row">
+    <div class="col-xs-12 form__container">
+        <div>
+            <ix3-business-messages></ix3-business-messages>
+            <div ng-if="logFile">
+                <fieldset>
+                    <legend class="form__title">{{logFile.nombre}}</legend>
+
+                    <div class="row">
+                        <div class="col-xs-12 form-horizontal">
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Fecha de creación:</label>
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{logFile.fechaCreacion | date: 'dd/MM/yyyy HH:mm'}}</p>
+                                </div>
+                                
+                                <label class="col-sm-3 control-label">Fecha de modificación:</label>
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{logFile.fechaModificacion | date: 'dd/MM/yyyy HH:mm'}}</p>
+                                </div>                                
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Tamaño:</label>
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{(logFile.size / 1024) | number:1}} KB</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button type="button" class="btn form__button form__button--default" onclick="history.back()">Volver</button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button type="button" class="btn form__button form__button--primary" ng-click="descargarFichero()">Descargar</button>
+                        </div>
+                    </div>
+                    <br>                    
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <textarea readonly wrap="off" ng-model="logFile.content" style="width: 100%; height: 600px; font-family: monospace; font-size: 12px; background-color: #f5f5f5; resize: both !important; white-space: nowrap; overflow: auto;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn form__button form__button--default" onclick="history.back()">Volver</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

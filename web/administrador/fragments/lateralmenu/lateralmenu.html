@@ -71,6 +71,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     <li class="lateral-menu__header">Avanzado</li>
                     <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/estadisticas/centro')}" ><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/estadisticas/centro')}"  class="lateral-menu__item__link" href="#!/estadisticas/centros">Estadísticas de Centros</a></li>
                     <li class="lateral-menu__item" ng-show="user.idIdentity==30"><a class="lateral-menu__item__link" href="{{getContextPath()}}/api/administrador/monitoring">Monitor</a></li>
+                    <li class="lateral-menu__item" ng-class="{'lateral-menu__item--selected':isItemSelected('/logfile/[a-zA-Z]+')}"><a ng-class="{'lateral-menu__item__link--selected':isItemSelected('/logfile/[a-zA-Z]+')}" class="lateral-menu__item__link" href="#!/logfile/search">Ficheros de Log</a></li>
                  </ul>
             </div>
             <div class="col-xs-12 col-sm-10">

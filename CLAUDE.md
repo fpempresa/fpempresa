@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 FPempresa (empleaFP) is a Java EE web application — a job marketplace connecting vocational training (FP) graduates with companies in Spain. Four user roles exist: `titulado` (graduate), `empresa` (company), `centro` (training center), and `administrador`.
 
+## Java version
+
+The project compiles with **Java 7**. Do not use any Java 8+ features: no lambdas, no method references, no `Stream`, no `Comparator.comparing()`, no `List.sort()`, no `Optional`, no default interface methods, no `Files.readString()`. Use anonymous inner classes instead of lambdas, and `Collections.sort()` with an explicit `Comparator`.
+
 ## Build
 
 ```bash
@@ -51,6 +55,38 @@ LESS (`web/less/`) and SCSS (`web/scss/`) compile to CSS (`web/css/`). NetBeans 
 The ix3 framework provides generic CRUD factories (`CRUDServiceFactory`, `CRUDBusinessProcessFactory`, `DAOFactory`) that auto-discover implementations by naming convention. Adding a new entity typically requires: model class → HBM XML mapping → register in `hibernate.cfg.xml` → optional service/businessprocess overrides.
 
 Spring XML configuration: `src/java/applicationContext.xml` (beans, DAOs, services, business processes, security, scheduling).
+
+### EndPointsFactoryImpl y BeanMapper
+
+**`EndPointsFactoryImpl`** (`src/java/es/logongas/fpempresa/presentacion/controller/EndPointsFactoryImpl.java`) es el **registro central de todos los endpoints HTTP** de la aplicación. Cada URL que devuelve JSON debe estar registrada aquí. Si falta, `ControllerHelper.objectToHttpResponse` lanza una `NullPointerException` al intentar obtener el `BeanMapper` del endpoint.
+
+Hay dos métodos para registrar un endpoint:
+
+```java
+// Para entidades Hibernate: registra automáticamente path/ClassName/**
+EndPoint.createEndPointCrud(path, MiEntidad.class)
+// Con BeanMapper personalizado:
+EndPoint.createEndPointCrud(path, new BeanMapper(MiEntidad.class, deleteProperties, expandProperties))
+
+// Para recursos no-Hibernate o rutas custom (GET/POST/etc. específico):
+EndPoint.createEndPoint(path + "/MiEntidad/**", "GET", new BeanMapper(MiEntidad.class, null, null))
+```
+
+Hay cinco secciones de paths (`/site`, `/administrador`, `/titulado`, `/centro`, `/empresa`). Los endpoints comunes a todos los roles se añaden en `addCommonEndPoints`. **Siempre que se añada un nuevo recurso REST hay que registrarlo aquí.**
+
+**`BeanMapper`** controla qué campos se incluyen/excluyen en la serialización JSON:
+
+```java
+new BeanMapper(Class entityClass, String deleteProperties, String expandProperties)
+```
+
+- **`deleteProperties`** — lista de propiedades a excluir, separadas por comas. Prefijos de dirección:
+  - Sin prefijo → excluir en ambas direcciones (lectura y escritura)
+  - `<campo` → excluir solo en salida (toJson, lo que el cliente recibe)
+  - `campo>` → excluir solo en entrada (fromJson, lo que el cliente envía)
+- **`expandProperties`** — relaciones a expandir (incluir el objeto completo en lugar de solo el ID), separadas por comas. `"*"` expande todas. Los mismos prefijos `<`/`>` aplican para controlar la dirección.
+
+Ejemplo: `new BeanMapper(Oferta.class, "secretToken,empresa.numOfertasPublicadas>", "ciclos")` excluye `secretToken` en ambas direcciones, excluye `empresa.numOfertasPublicadas` solo en entrada, y expande la relación `ciclos`.
 
 ### Security
 

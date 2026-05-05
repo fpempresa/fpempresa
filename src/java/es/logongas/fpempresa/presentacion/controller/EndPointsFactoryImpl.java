@@ -23,6 +23,7 @@ import es.logongas.fpempresa.modelo.educacion.Grado;
 import es.logongas.fpempresa.modelo.educacion.LeyEducativa;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.DominioConocido;
+import es.logongas.fpempresa.modelo.log.LogFile;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
@@ -116,11 +117,12 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPoint(path + "/Usuario", "POST", new BeanMapper(Usuario.class, "foto,claveValidacionEmail,secretToken,<password,acl,memberOf,validadoEmail>,fechaUltimoEnvioCorreoValidacionEmail>,numEnviosCorreoValidacionEmail>,fechaUltimoAcceso>,fechaEnvioCorreoAvisoBorrarUsuario>", null)));
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
-
+        endPoints.add(EndPoint.createEndPoint(path + "/LogFile/**", "GET", new BeanMapper(LogFile.class, null, null)));
+        
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Candidato.class));
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Oferta.class, null, "ciclos")));
-
+        
         //Centro
         endPoints.add(EndPoint.createEndPointCrud(path, new BeanMapper(Centro.class)));
         
@@ -134,8 +136,8 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
         endPoints.add(EndPoint.createEndPointCrud(path, NivelIdioma.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Titulado.class));
         endPoints.add(EndPoint.createEndPointCrud(path, TituloIdioma.class));        
-        endPoints.add(EndPoint.createEndPointCrud(path, DominioConocido.class));        
-   
+        endPoints.add(EndPoint.createEndPointCrud(path, DominioConocido.class));
+
     }
 
     private void addTituladoEndPoints(List<EndPoint> endPoints, String path) {

@@ -56,6 +56,12 @@ The ix3 framework provides generic CRUD factories (`CRUDServiceFactory`, `CRUDBu
 
 Spring XML configuration: `src/java/applicationContext.xml` (beans, DAOs, services, business processes, security, scheduling).
 
+**Custom business processes** (no CRUD, lógica específica) siguen este patrón obligatorio — ver `LogFileBusinessProcess` / `EmailBusinessProcess` como referencia:
+1. Interfaz extiende `es.logongas.ix3.businessprocess.BusinessProcess` (necesario para que el interceptor AOP de seguridad se dispare).
+2. La implementación implementa `setEntityType`/`getEntityType` (requerido por el interfaz vía `EntityType<T>`). Si no hay entidad asociada, se guarda en un campo y se devuelve tal cual.
+3. La implementación se declara como bean en `applicationContext.xml`.
+4. Se añade una migración Flyway `V{n}__ace_{nombre}.sql` con un `INSERT INTO sec_ace` de `idPermission=22` (PreExecuteBusinessProcess) para cada método, asignando el grupo autorizado.
+
 ### EndPointsFactoryImpl y BeanMapper
 
 **`EndPointsFactoryImpl`** (`src/java/es/logongas/fpempresa/presentacion/controller/EndPointsFactoryImpl.java`) es el **registro central de todos los endpoints HTTP** de la aplicación. Cada URL que devuelve JSON debe estar registrada aquí. Si falta, `ControllerHelper.objectToHttpResponse` lanza una `NullPointerException` al intentar obtener el `BeanMapper` del endpoint.
@@ -97,6 +103,27 @@ Authorization defaults to **DENY**. Two providers run in order:
 2. **`AuthorizationProviderImplIdentity`** — database-driven ACEs (Flyway migrations set these up in files named `*_ace_*.sql`).
 
 Session storage is JWT via cookie (`XSRF-TOKEN`), implemented in `WebSessionSidStorageImplJwt`.
+
+#### Cómo funciona la seguridad en la práctica
+
+Hay **dos capas independientes** de autorización que se ejecutan en orden:
+
+**Capa 1 — URL** (`FilterImplSecurity` → `AuthorizationInterceptorImplURL`): se ejecuta en cada petición HTTP antes de llegar al controller. Consulta el `authorizationManager` con el tipo de recurso `URL`, la URL de la petición (sin context path) y el método HTTP como permiso. La tabla `sec_ace` contiene los patrones (regex). Los ACEs de URL relevantes (en `V111__datos_ace_url.sql`):
+
+- `('Deny', *, 1, '/api/.*', priority=100)` — deniega todo a todos por defecto.
+- `('Allow', *, 31, '/api/administrador/.*', priority=1)` — permite cualquier método a administradores (grupo 31) en todas las URLs de `/administrador`. **Por eso no hace falta añadir un ACE de URL por cada nuevo endpoint de administrador.**
+- Patrones equivalentes para `/titulado` (grupo 32), `/centro` (grupo 33), `/empresa` (grupo 34).
+
+**Capa 2 — Business Process** (`AuthorizationInterceptorImplBusinessProcess`, AOP `@Before/@AfterReturning`): intercepta **todas las llamadas** a clases que implementan el interfaz marcador `es.logongas.ix3.businessprocess.BusinessProcess`. Consulta el `authorizationManager` con tipo de recurso `BusinessProcess`, recurso `InterfazName[.EntityType].methodName` y permiso `PreExecuteBusinessProcess` (id=22) o `PostExecuteBusinessProcess`. Si el business process no implementa `BusinessProcess`, el interceptor AOP no se dispara y la autorización no se comprueba. **Todo custom business process debe implementar `BusinessProcess`** para que la seguridad funcione. Los ACEs de BP se añaden en migraciones Flyway (`V191__ace_logfile.sql`, `V192__ace_email.sql`, …) con `idPermission=22`.
+
+> **Nota importante sobre el `@AfterReturning` (PostExecute)**: si el método devuelve `null`, el interceptor considera automáticamente que está autorizado (no llama al `authorizationManager`). Por eso los métodos que devuelven `void` o `null` solo necesitan el ACE de `PreExecuteBusinessProcess`.
+
+**Grupos de identidad relevantes** (tabla `sec_identity`):
+- 1 = todos (anónimos incluidos)
+- 31 = administrador
+- 32 = titulado
+- 33 = centro
+- 34 = empresa
 
 ### Frontend (AngularJS 1.x SPAs under `web/`)
 

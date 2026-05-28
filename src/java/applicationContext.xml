@@ -81,6 +81,7 @@
     <bean class="es.logongas.fpempresa.businessprocess.estadisticas.impl.EstadisticasBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.log.impl.LogBusinessProcessImpl"  />
     <bean class="es.logongas.fpempresa.businessprocess.log.impl.LogFileBusinessProcessImpl"  />
+    <bean class="es.logongas.fpempresa.businessprocess.email.impl.EmailBusinessProcessImpl"  />
 
     <bean class="es.logongas.ix3.businessprocess.impl.CRUDBusinessProcessFactoryImpl" >
         <property name="domainBasePackageName"     value="es.logongas.fpempresa.modelo" />

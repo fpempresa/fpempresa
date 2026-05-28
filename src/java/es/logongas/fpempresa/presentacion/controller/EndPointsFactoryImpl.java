@@ -24,6 +24,7 @@ import es.logongas.fpempresa.modelo.educacion.LeyEducativa;
 import es.logongas.fpempresa.modelo.empresa.Candidato;
 import es.logongas.fpempresa.modelo.empresa.DominioConocido;
 import es.logongas.fpempresa.modelo.log.LogFile;
+import es.logongas.fpempresa.presentacion.controller.email.SendEmailData;
 import es.logongas.fpempresa.modelo.empresa.Empresa;
 import es.logongas.fpempresa.modelo.empresa.Oferta;
 import es.logongas.fpempresa.modelo.estadisticas.Estadisticas;
@@ -118,6 +119,7 @@ public class EndPointsFactoryImpl implements EndPointsFactory {
 
         endPoints.add(EndPoint.createEndPoint(path + "/Estadisticas/**", "GET", new BeanMapper(Estadisticas.class, null, "*")));
         endPoints.add(EndPoint.createEndPoint(path + "/LogFile/**", "GET", new BeanMapper(LogFile.class, null, null)));
+        endPoints.add(EndPoint.createEndPoint(path + "/email", "POST", new BeanMapper(SendEmailData.class, null, null)));
         
         endPoints.add(EndPoint.createEndPointCrud(path, Empresa.class));
         endPoints.add(EndPoint.createEndPointCrud(path, Candidato.class));

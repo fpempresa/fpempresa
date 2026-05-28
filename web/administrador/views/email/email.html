@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <form name="mainForm" novalidate>
+                <fieldset>
+                    <legend>Enviar correo</legend>
+
+                    <ix3-businessmessages business-messages="businessMessages"></ix3-businessmessages>
+
+                    <div ng-show="enviado" class="alert alert-success">
+                        Correo enviado correctamente.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="to">Para</label>
+                        <input type="email" id="to" name="to" class="form-control" ng-model="email.to" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Asunto</label>
+                        <input type="text" id="subject" name="subject" class="form-control" ng-model="email.subject" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="body">Cuerpo</label>
+                        <textarea id="body" name="body" class="form-control" ng-model="email.body" rows="10" required></textarea>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" ng-click="enviarCorreo()">Enviar correo</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

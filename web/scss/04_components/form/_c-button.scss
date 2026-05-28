@@ -77,6 +77,10 @@
     font-weight:getFontWeight();
 }
 
+.c-button--size-extra-small {
+    font-size: getFontSize(2s);
+    padding:getPadding(0_5) getPadding(1);
+}
 
 @media  (max-width: getBreak(tablet)-1) {
     .c-button--menu {

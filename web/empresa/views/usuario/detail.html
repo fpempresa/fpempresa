@@ -72,12 +72,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                     </div>
 
                     <div class="row" >
-                        <div class="col-xs-12 ">                             
-                            <div class="pull-right" >
-                                <button type="button" ng-show="controllerAction === 'EDIT'" class="btn form__button form__button--default" ng-click="cambiarContrasenya()" >Cambiar Contrase&ntilde;a</button>
-                                <fpe-cancel-button></fpe-cancel-button>
-                                <fpe-ok-button></fpe-ok-button>
-                            </div>
+                        <div class="col-xs-12 ">       
+                            <crud-detail-buttons >
+                                <button type="button" ng-show="controllerAction === 'EDIT'" class="c-button c-button--secondary c-button--size-small" ng-click="cambiarContrasenya()" >Cambiar Contrase&ntilde;a</button>
+                            </crud-detail-buttons>                            
                         </div>
                     </div>                    
                 </fieldset>

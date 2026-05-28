@@ -40,14 +40,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <br>
             <div class="row" >
                 <div class="col-xs-12 ">
-                    <button type="button" class="btn form__button form__button--default " ng-click="buttonSearch()">Buscar</button>
+                    <button type="button" class="c-button c-button--primary c-button--size-small" ng-click="buttonSearch()">Buscar</button>
                 </div>
             </div>
             <br>
             <div class="row" >
                 <div class="col-xs-12 " ng-show="models.length>0">
-                    <button type="button" class="c-button c-button--primary c-button--size-small" ng-click="buttonNotificarUsuarioInactivoAllPage()"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'" ><i class="fa fa-envelope"></i> Notificar a todos los usuarios de esta Página</button>
-                    <button type="button" class="btn form__button form__button--danger " ng-click="buttonSoftDeleteAllPage()" ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"  ><i class="fa fa-trash" aria-hidden="true"></i> Borrar todos los usuarios de esta Página</button>
+                    <button type="button" class="c-button c-button--secondary c-button--size-small" ng-click="buttonNotificarUsuarioInactivoAllPage()"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'" ><i class="fa fa-envelope"></i> Notificar a todos los usuarios de esta Página</button>
+                    <button type="button" class="c-button c-button--danger c-button--size-small" ng-click="buttonSoftDeleteAllPage()" ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"  ><i class="fa fa-trash" aria-hidden="true"></i> Borrar todos los usuarios de esta Página</button>
                 </div>
             </div>
             <br>
@@ -70,7 +70,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th  style="text-align: left">Fecha Notificacion Borrado</th>
                         <th              style="text-align: celeftnter">Fecha Creacion</th>
                         <th                                           style="text-align: left">Nombre</th>
-                        <th style="min-width: 140px; width: 140px;text-align: center">Acciones</th>
+                        <th style="min-width: 90px; width: 90px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,8 +81,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td style="text-align: center">{{model.fechaEnvioCorreoAvisoBorrarUsuario| date: 'dd/MM/yyyy'}}</td> 
                         <td style="text-align: center">{{model.fecha| date: 'dd/MM/yyyy'}}</td> 
                         <td >{{model.nombre}}</td> 
-                        <td >
-                            <button class="btn btn-xs form__button form__button--primary" type="button" ng-click="buttonNotificarUsuarioInactivo(model)" title="Notificar que la cuenta se va a borrar"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'"><i class="fa fa-envelope"></i></button>                            
+                        <td class="text-center">
+                            <button class="c-button c-button--primary c-button--size-extra-small" type="button" ng-click="buttonNotificarUsuarioInactivo(model)" title="Notificar que la cuenta se va a borrar"  ng-show="tipoBusqueda == 'USUARIOS_NOTIFICAR'"><i class="fa fa-envelope"></i></button>                            
                             <button class="c-button c-button--danger c-button--size-extra-small" type="button" ng-click="buttonSoftDelete(model)" title="Borrar la cuenta"  ng-show="tipoBusqueda == 'USUARIOS_BORRAR'"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td> 
                     </tr>

@@ -38,7 +38,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th style="width: 120px; text-align: center">Tamaño</th>
                         <th style="width: 160px; text-align: center">Fecha de creación</th>
                         <th style="width: 160px; text-align: center">Fecha de modificación</th>
-                        <th style="width: 80px; text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,9 +46,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td style="text-align: right">{{(logFile.size / 1024) | number:1}} KB</td>
                         <td style="text-align: center">{{logFile.fechaCreacion | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td style="text-align: center">{{logFile.fechaModificacion | date: 'dd/MM/yyyy HH:mm'}}</td>
-                        <td>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="verFichero(logFile.idLogFile)">Ver</button>
-                        </td>
                     </tr>
                 </tbody>
             </table>

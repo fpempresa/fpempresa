@@ -34,9 +34,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td >{{tituloIdioma.getNivelIdiomaDescription()}}</td>
                         <td >{{tituloIdioma.getNombreIdioma()}}</td>
                         <td >{{tituloIdioma.fecha| ix3Date}}</td>
-                        <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">Editar</button>
+                        <td class="text-center">
+                            <button class="c-button c-button--primary c-button--size-extra-small" type="button" ng-click="buttonEdit(tituloIdioma.idTituloIdioma)">Editar</button>                            
+                            <button class="c-button c-button--danger c-button--size-extra-small" type="button" ng-click="buttonDelete(tituloIdioma.idTituloIdioma)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>                             
                     </tr>
                 </tbody>

@@ -705,6 +705,10 @@ p {
   cursor: pointer;
   outline: none !important;
 }
+.c-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
 
 .c-button--primary {
   color: #FFFFFF;

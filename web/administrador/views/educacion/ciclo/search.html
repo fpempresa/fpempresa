@@ -55,12 +55,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <table class="table table-bordered">
                 <thead>                        
                     <tr class="data-table__head">
-                        <th ix3-order-field-names="descripcion"  style="min-width:  40%;text-align: center">Descripcion</th>
-                        <th ix3-order-field-names="familia.descripcion" style="width:      15%;text-align: center">Familia</th>
+                        <th ix3-order-field-names="descripcion"  style="text-align: center">Descripcion</th>
+                        <th ix3-order-field-names="familia.descripcion" style="width:      25%;text-align: center">Familia</th>
                         <th ix3-order-field-names="grado.descripcion" style="width:      15%;text-align: center">Grado</th>
                         <th ix3-order-field-names="leyEducativa.descripcion" style="width:      15%;text-align: center">Ley Educativa</th>
 
-                        <th style="width:120px;text-align: center">Acciones</th>
+                        <th style="width:90px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,9 +69,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td >{{ciclo.familia.descripcion}}</td>
                         <td >{{ciclo.grado.descripcion}}</td>
                         <td style="text-align: left" >{{ciclo.leyEducativa.descripcion}}</td>
-                        <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(ciclo.idCiclo)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(ciclo.idCiclo)">Editar</button>
+                        <td class="text-center">
+                            <button class="c-button c-button--danger c-button--size-extra-small" type="button" ng-click="buttonDelete(ciclo.idCiclo)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>                             
                     </tr>
                 </tbody>

@@ -55,7 +55,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
             <div class="row" >
                 <div class="col-xs-12 ">
                     <button type="button" class="c-button c-button--primary c-button--size-small" ng-click="buttonSearch()">Buscar</button>
-                    <a ng-href="{{getContextPath()}}/api/administrador/download/nocentro/ofertas.xls?fechaInicio={{filters.$ge.fecha | date: &quot;yyyy-MM-ddTHH:mm:ss.sss'Z'&quot;}}&fechaFin={{filters.$le.fecha | date: &quot;yyyy-MM-ddTHH:mm:ss.sss'Z'&quot;}}"  class="btn form__button form__button--default" style="float:right"   >Descargar Excel</a>                                
+                    <a ng-href="{{getContextPath()}}/api/administrador/download/nocentro/ofertas.xls?fechaInicio={{filters.$ge.fecha | date: &quot;yyyy-MM-ddTHH:mm:ss.sss'Z'&quot;}}&fechaFin={{filters.$le.fecha | date: &quot;yyyy-MM-ddTHH:mm:ss.sss'Z'&quot;}}"  class="c-button c-button--secondary c-button--size-small" style="float:right"   >Descargar Excel</a>                                
                 </div>
             </div>
             <br>             
@@ -71,7 +71,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <th style="min-width: 70px; width: 70px;text-align: center">Candidat.</th>
                         <th style="min-width: 70px; width: 70px;text-align: center" title="Nº de titulados a la que se le notifica la oferta">Titulados</th>
                         <th ix3-order-field-names="fecha" style="width:   30%;text-align: center">Fecha</th>
-                        <th style="min-width: 140px; width: 140px;text-align: center">Acciones</th>
+                        <th style="min-width: 120px; width: 140px;text-align: center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,10 +84,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
                         <td >{{model.numeroCandidatos}}</td>
                         <td >{{model.numTituladosSuscritosPorProvinciaOfertaYCiclos}}</td>
                         <td >{{model.fecha| date: 'dd/MM/yyyy'}}</td>
-                        <td >
-                            <button class="btn btn-xs form__button form__button--danger" type="button" ng-click="buttonDelete(model.idOferta)">Borrar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonEdit(model.idOferta)">Editar</button>
-                            <button class="btn btn-xs form__button form__button--default" type="button" ng-click="buttonNotificar(model.idOferta)" title="Notificar a titulados de la oferta y a la empresa de los candidatos"><i class="fa fa-envelope"></i></button>
+                        <td class="text-center">
+                            <button class="c-button c-button--primary c-button--size-extra-small" type="button" ng-click="buttonEdit(model.idOferta)">Editar</button>
+                            <button class="c-button c-button--primary c-button--size-extra-small" type="button" ng-click="buttonNotificar(model.idOferta)" title="Notificar a titulados de la oferta y a la empresa de los candidatos"><i class="fa fa-envelope"></i></button>
+                            <button class="c-button c-button--danger c-button--size-extra-small" type="button" ng-click="buttonDelete(model.idOferta)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            
                         </td>                             
                     </tr>
                 </tbody>

@@ -720,6 +720,20 @@ p {
   background-color: #003B80;
 }
 
+.c-button--danger {
+  color: #FFFFFF;
+  border-width: 1px;
+  border-color: #C53030;
+  padding: 12px;
+  background-color: #C53030;
+}
+.c-button--danger:hover {
+  color: #FFFFFF;
+  border-width: 1px;
+  border-color: #9B2C2C;
+  background-color: #9B2C2C;
+}
+
 .c-button--secondary {
   color: #0056B8;
   border-width: 1px;
@@ -799,6 +813,20 @@ p {
     border-width: 1px;
     border-color: #003B80;
     background-color: #003B80;
+  }
+
+  .c-button--danger\@movil {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #C53030;
+    padding: 12px;
+    background-color: #C53030;
+  }
+  .c-button--danger\@movil:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #9B2C2C;
+    background-color: #9B2C2C;
   }
 
   .c-button--secondary\@movil {
@@ -882,6 +910,20 @@ p {
     background-color: #003B80;
   }
 
+  .c-button--danger\@tablet {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #C53030;
+    padding: 12px;
+    background-color: #C53030;
+  }
+  .c-button--danger\@tablet:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #9B2C2C;
+    background-color: #9B2C2C;
+  }
+
   .c-button--secondary\@tablet {
     color: #0056B8;
     border-width: 1px;
@@ -963,6 +1005,20 @@ p {
     background-color: #003B80;
   }
 
+  .c-button--danger\@desktop {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #C53030;
+    padding: 12px;
+    background-color: #C53030;
+  }
+  .c-button--danger\@desktop:hover {
+    color: #FFFFFF;
+    border-width: 1px;
+    border-color: #9B2C2C;
+    background-color: #9B2C2C;
+  }
+
   .c-button--secondary\@desktop {
     color: #0056B8;
     border-width: 1px;
@@ -1032,6 +1088,11 @@ p {
 .c-button--size-alt {
   font-size: 24px;
   padding: 20px;
+}
+
+.c-button--size-small {
+  font-size: 14px;
+  padding: 6px 8px;
 }
 
 .c-button--menu {
@@ -5172,6 +5233,13 @@ p {
   margin-right: 4px;
 }
 
+.g--margin-1_5 {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
 .g--margin-2 {
   margin-top: 8px;
   margin-bottom: 8px;
@@ -5325,6 +5393,13 @@ p {
     margin-bottom: 4px;
     margin-left: 4px;
     margin-right: 4px;
+  }
+
+  .g--margin-1_5\@movil {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
   }
 
   .g--margin-2\@movil {
@@ -5482,6 +5557,13 @@ p {
     margin-right: 4px;
   }
 
+  .g--margin-1_5\@tablet {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
   .g--margin-2\@tablet {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -5637,6 +5719,13 @@ p {
     margin-right: 4px;
   }
 
+  .g--margin-1_5\@desktop {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
   .g--margin-2\@desktop {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -5787,6 +5876,11 @@ p {
   margin-bottom: 4px;
 }
 
+.g--margin-vertical-1_5 {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
 .g--margin-vertical-2 {
   margin-top: 8px;
   margin-bottom: 8px;
@@ -5896,6 +5990,11 @@ p {
   .g--margin-vertical-1\@movil {
     margin-top: 4px;
     margin-bottom: 4px;
+  }
+
+  .g--margin-vertical-1_5\@movil {
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 
   .g--margin-vertical-2\@movil {
@@ -6009,6 +6108,11 @@ p {
     margin-bottom: 4px;
   }
 
+  .g--margin-vertical-1_5\@tablet {
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
   .g--margin-vertical-2\@tablet {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -6120,6 +6224,11 @@ p {
     margin-bottom: 4px;
   }
 
+  .g--margin-vertical-1_5\@desktop {
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
   .g--margin-vertical-2\@desktop {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -6228,6 +6337,11 @@ p {
 .g--margin-horizontal-1 {
   margin-left: 4px;
   margin-right: 4px;
+}
+
+.g--margin-horizontal-1_5 {
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .g--margin-horizontal-2 {
@@ -6341,6 +6455,11 @@ p {
     margin-right: 4px;
   }
 
+  .g--margin-horizontal-1_5\@movil {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
   .g--margin-horizontal-2\@movil {
     margin-left: 8px;
     margin-right: 8px;
@@ -6450,6 +6569,11 @@ p {
   .g--margin-horizontal-1\@tablet {
     margin-left: 4px;
     margin-right: 4px;
+  }
+
+  .g--margin-horizontal-1_5\@tablet {
+    margin-left: 6px;
+    margin-right: 6px;
   }
 
   .g--margin-horizontal-2\@tablet {
@@ -6563,6 +6687,11 @@ p {
     margin-right: 4px;
   }
 
+  .g--margin-horizontal-1_5\@desktop {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
   .g--margin-horizontal-2\@desktop {
     margin-left: 8px;
     margin-right: 8px;
@@ -6671,6 +6800,10 @@ p {
   margin-top: 4px;
 }
 
+.g--margin-top-1_5 {
+  margin-top: 6px;
+}
+
 .g--margin-top-2 {
   margin-top: 8px;
 }
@@ -6758,6 +6891,10 @@ p {
 
   .g--margin-top-1\@movil {
     margin-top: 4px;
+  }
+
+  .g--margin-top-1_5\@movil {
+    margin-top: 6px;
   }
 
   .g--margin-top-2\@movil {
@@ -6849,6 +6986,10 @@ p {
     margin-top: 4px;
   }
 
+  .g--margin-top-1_5\@tablet {
+    margin-top: 6px;
+  }
+
   .g--margin-top-2\@tablet {
     margin-top: 8px;
   }
@@ -6938,6 +7079,10 @@ p {
     margin-top: 4px;
   }
 
+  .g--margin-top-1_5\@desktop {
+    margin-top: 6px;
+  }
+
   .g--margin-top-2\@desktop {
     margin-top: 8px;
   }
@@ -7024,6 +7169,10 @@ p {
 
 .g--margin-bottom-1 {
   margin-bottom: 4px;
+}
+
+.g--margin-bottom-1_5 {
+  margin-bottom: 6px;
 }
 
 .g--margin-bottom-2 {
@@ -7115,6 +7264,10 @@ p {
     margin-bottom: 4px;
   }
 
+  .g--margin-bottom-1_5\@movil {
+    margin-bottom: 6px;
+  }
+
   .g--margin-bottom-2\@movil {
     margin-bottom: 8px;
   }
@@ -7202,6 +7355,10 @@ p {
 
   .g--margin-bottom-1\@tablet {
     margin-bottom: 4px;
+  }
+
+  .g--margin-bottom-1_5\@tablet {
+    margin-bottom: 6px;
   }
 
   .g--margin-bottom-2\@tablet {
@@ -7293,6 +7450,10 @@ p {
     margin-bottom: 4px;
   }
 
+  .g--margin-bottom-1_5\@desktop {
+    margin-bottom: 6px;
+  }
+
   .g--margin-bottom-2\@desktop {
     margin-bottom: 8px;
   }
@@ -7379,6 +7540,10 @@ p {
 
 .g--margin-left-1 {
   margin-left: 4px;
+}
+
+.g--margin-left-1_5 {
+  margin-left: 6px;
 }
 
 .g--margin-left-2 {
@@ -7470,6 +7635,10 @@ p {
     margin-left: 4px;
   }
 
+  .g--margin-left-1_5\@movil {
+    margin-left: 6px;
+  }
+
   .g--margin-left-2\@movil {
     margin-left: 8px;
   }
@@ -7557,6 +7726,10 @@ p {
 
   .g--margin-left-1\@tablet {
     margin-left: 4px;
+  }
+
+  .g--margin-left-1_5\@tablet {
+    margin-left: 6px;
   }
 
   .g--margin-left-2\@tablet {
@@ -7648,6 +7821,10 @@ p {
     margin-left: 4px;
   }
 
+  .g--margin-left-1_5\@desktop {
+    margin-left: 6px;
+  }
+
   .g--margin-left-2\@desktop {
     margin-left: 8px;
   }
@@ -7734,6 +7911,10 @@ p {
 
 .g--margin-right-1 {
   margin-right: 4px;
+}
+
+.g--margin-right-1_5 {
+  margin-right: 6px;
 }
 
 .g--margin-right-2 {
@@ -7825,6 +8006,10 @@ p {
     margin-right: 4px;
   }
 
+  .g--margin-right-1_5\@movil {
+    margin-right: 6px;
+  }
+
   .g--margin-right-2\@movil {
     margin-right: 8px;
   }
@@ -7914,6 +8099,10 @@ p {
     margin-right: 4px;
   }
 
+  .g--margin-right-1_5\@tablet {
+    margin-right: 6px;
+  }
+
   .g--margin-right-2\@tablet {
     margin-right: 8px;
   }
@@ -8001,6 +8190,10 @@ p {
 
   .g--margin-right-1\@desktop {
     margin-right: 4px;
+  }
+
+  .g--margin-right-1_5\@desktop {
+    margin-right: 6px;
   }
 
   .g--margin-right-2\@desktop {
@@ -8095,6 +8288,13 @@ p {
   padding-bottom: 4px;
   padding-left: 4px;
   padding-right: 4px;
+}
+
+.g--padding-1_5 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .g--padding-2 {
@@ -8245,6 +8445,13 @@ p {
     padding-right: 4px;
   }
 
+  .g--padding-1_5\@movil {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
   .g--padding-2\@movil {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -8391,6 +8598,13 @@ p {
     padding-bottom: 4px;
     padding-left: 4px;
     padding-right: 4px;
+  }
+
+  .g--padding-1_5\@tablet {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
   .g--padding-2\@tablet {
@@ -8541,6 +8755,13 @@ p {
     padding-right: 4px;
   }
 
+  .g--padding-1_5\@desktop {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
   .g--padding-2\@desktop {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -8684,6 +8905,11 @@ p {
   padding-bottom: 4px;
 }
 
+.g--padding-vertical-1_5 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
 .g--padding-vertical-2 {
   padding-top: 8px;
   padding-bottom: 8px;
@@ -8788,6 +9014,11 @@ p {
   .g--padding-vertical-1\@movil {
     padding-top: 4px;
     padding-bottom: 4px;
+  }
+
+  .g--padding-vertical-1_5\@movil {
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 
   .g--padding-vertical-2\@movil {
@@ -8896,6 +9127,11 @@ p {
     padding-bottom: 4px;
   }
 
+  .g--padding-vertical-1_5\@tablet {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
   .g--padding-vertical-2\@tablet {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -9002,6 +9238,11 @@ p {
     padding-bottom: 4px;
   }
 
+  .g--padding-vertical-1_5\@desktop {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
   .g--padding-vertical-2\@desktop {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -9105,6 +9346,11 @@ p {
 .g--padding-horizontal-1 {
   padding-left: 4px;
   padding-right: 4px;
+}
+
+.g--padding-horizontal-1_5 {
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .g--padding-horizontal-2 {
@@ -9213,6 +9459,11 @@ p {
     padding-right: 4px;
   }
 
+  .g--padding-horizontal-1_5\@movil {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
   .g--padding-horizontal-2\@movil {
     padding-left: 8px;
     padding-right: 8px;
@@ -9317,6 +9568,11 @@ p {
   .g--padding-horizontal-1\@tablet {
     padding-left: 4px;
     padding-right: 4px;
+  }
+
+  .g--padding-horizontal-1_5\@tablet {
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
   .g--padding-horizontal-2\@tablet {
@@ -9425,6 +9681,11 @@ p {
     padding-right: 4px;
   }
 
+  .g--padding-horizontal-1_5\@desktop {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
   .g--padding-horizontal-2\@desktop {
     padding-left: 8px;
     padding-right: 8px;
@@ -9528,6 +9789,10 @@ p {
   padding-top: 4px;
 }
 
+.g--padding-top-1_5 {
+  padding-top: 6px;
+}
+
 .g--padding-top-2 {
   padding-top: 8px;
 }
@@ -9611,6 +9876,10 @@ p {
 
   .g--padding-top-1\@movil {
     padding-top: 4px;
+  }
+
+  .g--padding-top-1_5\@movil {
+    padding-top: 6px;
   }
 
   .g--padding-top-2\@movil {
@@ -9698,6 +9967,10 @@ p {
     padding-top: 4px;
   }
 
+  .g--padding-top-1_5\@tablet {
+    padding-top: 6px;
+  }
+
   .g--padding-top-2\@tablet {
     padding-top: 8px;
   }
@@ -9783,6 +10056,10 @@ p {
     padding-top: 4px;
   }
 
+  .g--padding-top-1_5\@desktop {
+    padding-top: 6px;
+  }
+
   .g--padding-top-2\@desktop {
     padding-top: 8px;
   }
@@ -9865,6 +10142,10 @@ p {
 
 .g--padding-bottom-1 {
   padding-bottom: 4px;
+}
+
+.g--padding-bottom-1_5 {
+  padding-bottom: 6px;
 }
 
 .g--padding-bottom-2 {
@@ -9952,6 +10233,10 @@ p {
     padding-bottom: 4px;
   }
 
+  .g--padding-bottom-1_5\@movil {
+    padding-bottom: 6px;
+  }
+
   .g--padding-bottom-2\@movil {
     padding-bottom: 8px;
   }
@@ -10035,6 +10320,10 @@ p {
 
   .g--padding-bottom-1\@tablet {
     padding-bottom: 4px;
+  }
+
+  .g--padding-bottom-1_5\@tablet {
+    padding-bottom: 6px;
   }
 
   .g--padding-bottom-2\@tablet {
@@ -10122,6 +10411,10 @@ p {
     padding-bottom: 4px;
   }
 
+  .g--padding-bottom-1_5\@desktop {
+    padding-bottom: 6px;
+  }
+
   .g--padding-bottom-2\@desktop {
     padding-bottom: 8px;
   }
@@ -10204,6 +10497,10 @@ p {
 
 .g--padding-left-1 {
   padding-left: 4px;
+}
+
+.g--padding-left-1_5 {
+  padding-left: 6px;
 }
 
 .g--padding-left-2 {
@@ -10291,6 +10588,10 @@ p {
     padding-left: 4px;
   }
 
+  .g--padding-left-1_5\@movil {
+    padding-left: 6px;
+  }
+
   .g--padding-left-2\@movil {
     padding-left: 8px;
   }
@@ -10374,6 +10675,10 @@ p {
 
   .g--padding-left-1\@tablet {
     padding-left: 4px;
+  }
+
+  .g--padding-left-1_5\@tablet {
+    padding-left: 6px;
   }
 
   .g--padding-left-2\@tablet {
@@ -10461,6 +10766,10 @@ p {
     padding-left: 4px;
   }
 
+  .g--padding-left-1_5\@desktop {
+    padding-left: 6px;
+  }
+
   .g--padding-left-2\@desktop {
     padding-left: 8px;
   }
@@ -10543,6 +10852,10 @@ p {
 
 .g--padding-right-1 {
   padding-right: 4px;
+}
+
+.g--padding-right-1_5 {
+  padding-right: 6px;
 }
 
 .g--padding-right-2 {
@@ -10630,6 +10943,10 @@ p {
     padding-right: 4px;
   }
 
+  .g--padding-right-1_5\@movil {
+    padding-right: 6px;
+  }
+
   .g--padding-right-2\@movil {
     padding-right: 8px;
   }
@@ -10715,6 +11032,10 @@ p {
     padding-right: 4px;
   }
 
+  .g--padding-right-1_5\@tablet {
+    padding-right: 6px;
+  }
+
   .g--padding-right-2\@tablet {
     padding-right: 8px;
   }
@@ -10798,6 +11119,10 @@ p {
 
   .g--padding-right-1\@desktop {
     padding-right: 4px;
+  }
+
+  .g--padding-right-1_5\@desktop {
+    padding-right: 6px;
   }
 
   .g--padding-right-2\@desktop {

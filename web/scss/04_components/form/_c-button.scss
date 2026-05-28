@@ -64,6 +64,12 @@
     padding:getPadding(5);
 }
 
+.c-button--size-small {
+    font-size: getFontSize(1s);
+    padding:getPadding(1_5) getPadding(2);
+
+}
+
 .c-button--menu {
     font-size: getFontSize(1l);
     padding-top:getPadding(2);

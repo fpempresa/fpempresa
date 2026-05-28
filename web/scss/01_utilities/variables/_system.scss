@@ -29,6 +29,7 @@ $opacity-variants:(
 $padding-variants:(
     "0":0px,
     "1":4px,
+    "1_5":6px,
     "2":8px,
     "3":12px,
     "4":16px,
@@ -136,6 +137,11 @@ $buttons-variants:(
         "text":(getColor(blanco,1),getColor(blanco,1)),
         "border":(getColor(default,7),getColor(default,8)),
         "background":(getColor(default,7),getColor(default,8))
+    ),
+    "danger":(
+        "text":(getColor(blanco,1),getColor(blanco,1)),
+        "border":(getColor(rojo,7),getColor(rojo,8)),
+        "background":(getColor(rojo,7),getColor(rojo,8))
     ),
     "secondary":(
         "text":(getColor(default,7),getColor(default,7)),

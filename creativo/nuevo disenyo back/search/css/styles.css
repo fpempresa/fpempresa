@@ -1,0 +1,110 @@
+/* EmpleaFP · Buscador de Empresas — estilos
+   Identidad CaixaBank/EmpleaFP (azul + acento naranja) */
+:root{
+  --navy:#16447a;
+  --blue:#1f63a8;
+  --blue-d:#1a5694;
+  --link:#2a6cb0;
+  --orange:#e8841f;
+  --orange-d:#d4761a;
+  --red:#d9534f;
+  --ink:#3c4350;
+  --muted:#6b7480;
+  --line:#d7dde4;
+  --line-2:#e6eaef;
+  --field-bg:#fff;
+  --card:#ffffff;
+  --panel:#f6f8fa;
+  --shadow:0 1px 2px rgba(22,68,122,.06), 0 8px 24px rgba(22,68,122,.07);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:"Open Sans",-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+  color:var(--ink);background:#eef1f4;}
+.efp-page{max-width:980px;margin:0 auto;padding:40px 24px 60px;}
+
+/* ---- Card / cabecera ---- */
+.efp-card{
+  background:var(--card);border:1px solid var(--line-2);border-radius:10px;
+  padding:22px 24px 24px;box-shadow:var(--shadow);position:relative;
+}
+.efp-cardhead{display:flex;align-items:center;gap:12px;
+  padding-bottom:14px;margin-bottom:18px;border-bottom:2px solid var(--line-2);}
+.efp-title{margin:0;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:.2px;}
+
+/* ---- Botones ---- */
+.efp-btn{display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  font-family:inherit;font-size:13.5px;font-weight:600;line-height:1;
+  border-radius:7px;padding:9px 14px;border:1px solid transparent;
+  transition:background .15s,border-color .15s,box-shadow .15s,color .15s;white-space:nowrap;}
+.efp-btn svg{flex:none;}
+
+/* Icono cargado desde fichero SVG externo (assets/icons/*.svg) e insertado
+   en línea. El SVG usa stroke="currentColor", así hereda el color del botón. */
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none;}
+.ic svg{display:block;width:100%;height:100%;}
+.efp-btn-blue{background:var(--blue);color:#fff;}
+.efp-btn-blue:hover{background:var(--blue-d);}
+.efp-btn-orange{background:var(--orange);color:#fff;}
+.efp-btn-orange:hover{background:var(--orange-d);}
+.efp-btn-outline{background:#fff;color:var(--blue);border-color:#c3d2e2;}
+.efp-btn-outline:hover{background:#f1f6fb;border-color:var(--blue);}
+.efp-btn-outline.is-open,.efp-btn-outline.is-active{background:#eaf2fa;border-color:var(--blue);color:var(--blue-d);}
+.efp-btn-ghost{background:transparent;color:var(--muted);}
+.efp-btn-ghost:hover{color:var(--ink);background:#f0f2f5;}
+.efp-btn-sm{padding:6px 11px;font-size:12.5px;border-radius:6px;}
+.efp-btn-lg{padding:12px 22px;font-size:14.5px;border-radius:8px;box-shadow:0 2px 8px rgba(232,132,31,.28);}
+
+/* Nueva Empresa sola arriba + subbar de filtros */
+.efp-cardhead-solo .efp-btn-lg{margin-left:auto;}
+.efp-subbar{display:flex;align-items:center;gap:12px;}
+.efp-subhint{font-size:12.5px;color:var(--muted);}
+.efp-excel-r{margin-left:auto;}
+
+.efp-badge{display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+  background:var(--orange);color:#fff;font-size:11px;font-weight:700;}
+.efp-chev{display:inline-flex;transition:transform .2s;color:var(--muted);}
+.efp-filterbtn{height:42px;}
+
+/* ---- Panel plegable ---- */
+.efp-collapse{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.efp-collapse.open{max-height:640px;}
+.efp-collapse-inner{min-height:0;}
+.efp-panel{margin-top:14px;background:var(--panel);border:1px solid var(--line-2);
+  border-radius:9px;padding:18px 18px 16px;}
+
+.efp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px 16px;}
+.efp-field{display:flex;flex-direction:column;gap:5px;min-width:0;}
+.efp-field.span2{grid-column:span 2;}
+.efp-flabel{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.2px;}
+.efp-input{height:38px;border:1px solid var(--line);border-radius:7px;
+  padding:0 11px;font-family:inherit;font-size:13.5px;color:var(--ink);
+  background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;width:100%;}
+.efp-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,99,168,.12);}
+.efp-input::placeholder{color:#a7afb8;}
+.efp-panel-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;}
+
+/* ---- Tabla ---- */
+.efp-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:13.5px;}
+.efp-table thead th{background:var(--navy);color:#fff;font-weight:600;text-align:left;
+  padding:11px 14px;font-size:13px;border-right:1px solid rgba(255,255,255,.14);}
+.efp-table thead th:first-child{border-top-left-radius:7px;text-align:center;}
+.efp-table thead th:last-child{border-right:0;border-top-right-radius:7px;}
+.efp-table tbody td{padding:11px 14px;border-bottom:1px solid var(--line-2);color:var(--ink);}
+.efp-table tbody td:first-child{text-align:center;}
+.efp-table tbody tr:hover{background:#f7fafd;}
+.efp-link{color:var(--link);cursor:pointer;text-decoration:none;font-weight:600;}
+.efp-link:hover{text-decoration:underline;}
+.efp-rowact{display:flex;align-items:center;gap:7px;}
+.efp-empty{text-align:center;color:var(--muted);padding:22px;font-style:italic;}
+
+.efp-icbtn{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);transition:.15s;}
+.efp-icbtn-red{border-color:#ecc4c3;color:var(--red);}
+.efp-icbtn-red:hover{background:var(--red);color:#fff;border-color:var(--red);}
+
+.efp-pager{display:flex;gap:6px;margin-top:16px;}
+.efp-pg{min-width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:7px;
+  color:var(--link);font-family:inherit;font-size:13px;cursor:pointer;}
+.efp-pg.is-on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;}
+.efp-pg:disabled{color:#bcc4cc;cursor:default;}

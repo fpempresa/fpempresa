@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EmpleaFP · Ficha de Empresa</title>
+
+<!-- Fuente -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+<!-- Estilos -->
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div class="app">
+  <!-- ============================ SIDEBAR ============================ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><i data-icon="brand"></i></span>
+      <span>
+        <span class="brand-name">Emplea<b>FP</b></span>
+        <div class="brand-sub">Panel de administración</div>
+      </span>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">
+        <div class="nav-head">Sitios</div>
+        <a class="nav-link"><i data-icon="dash"></i>Panel de control</a>
+        <a class="nav-link"><i data-icon="building"></i>Centros</a>
+        <a class="nav-link active"><i data-icon="briefcase"></i>Empresas</a>
+        <a class="nav-link"><i data-icon="tag"></i>Ofertas</a>
+        <a class="nav-link"><i data-icon="globe"></i>Dominio Conocido</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-head">Usuarios</div>
+        <a class="nav-link"><i data-icon="shield"></i>Administradores</a>
+        <a class="nav-link"><i data-icon="user"></i>Profesores</a>
+        <a class="nav-link"><i data-icon="users"></i>Rep. Empresas</a>
+        <a class="nav-link"><i data-icon="cap"></i>Titulados</a>
+        <a class="nav-link"><i data-icon="clock"></i>Últimos accesos</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-head">Educación</div>
+        <a class="nav-link"><i data-icon="book"></i>Ciclos</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-head">Mi cuenta</div>
+        <a class="nav-link"><i data-icon="id"></i>Mis datos</a>
+        <a class="nav-link"><i data-icon="lock"></i>Cambiar mi contraseña</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-head">Avanzado</div>
+        <a class="nav-link"><i data-icon="chart"></i>Estadísticas de Centros</a>
+        <a class="nav-link"><i data-icon="activity"></i>Monitor</a>
+        <a class="nav-link"><i data-icon="file"></i>Ficheros de Log</a>
+        <a class="nav-link"><i data-icon="mail"></i>Enviar correo</a>
+      </div>
+    </nav>
+
+    <div class="user-chip">
+      <span class="user-av"><i data-icon="person"></i></span>
+      <span class="user-meta">
+        <div class="user-name">Administrador</div>
+        <div class="user-role">Sesión iniciada</div>
+      </span>
+    </div>
+  </aside>
+
+  <!-- ============================= MAIN ============================== -->
+  <main class="main">
+    <div class="main-inner">
+      <!-- Bienvenida -->
+      <header class="welcome">
+        <span class="welcome-av"><i data-icon="person"></i></span>
+        <div class="welcome-text">
+          <div class="welcome-kicker">Bienvenido</div>
+          <div class="welcome-name">Administrador</div>
+          <div class="welcome-sub">Administra el portal de EmpleaFP</div>
+        </div>
+      </header>
+
+      <!-- Ficha -->
+      <form class="form-card" onsubmit="return false">
+        <div class="form-head">
+          <h1>Empresa</h1>
+          <span class="form-date"><i data-icon="cal"></i>Alta: 08/09/2023</span>
+        </div>
+
+        <div class="form-body">
+          <!-- Empresa -->
+          <section class="section">
+            <h2 class="section-title"><i data-icon="briefcase"></i>Datos de la empresa</h2>
+            <div class="fgrid">
+              <div class="field full">
+                <label class="flabel" for="nombre">Nombre comercial<span class="req">*</span></label>
+                <input class="control" id="nombre" type="text" value="Persinas Garcíaaaaa" />
+              </div>
+              <div class="field full">
+                <label class="flabel" for="razon">Razón social</label>
+                <input class="control" id="razon" type="text" value="Persinas García" />
+              </div>
+              <div class="field small">
+                <label class="flabel" for="cif">CIF</label>
+                <input class="control" id="cif" type="text" value="12345678Z" />
+              </div>
+            </div>
+          </section>
+
+          <!-- Dirección -->
+          <section class="section">
+            <h2 class="section-title"><i data-icon="pin"></i>Dirección</h2>
+            <div class="fgrid">
+              <div class="field full">
+                <label class="flabel" for="dir">Dirección</label>
+                <input class="control" id="dir" type="text" value="Plaza del Cid s/n" />
+                <span class="hint">Tipo vía, nombre vía, número, puerta, etc.</span>
+              </div>
+              <div class="field">
+                <label class="flabel" for="prov">Provincia</label>
+                <select class="control" id="prov">
+                  <option>Valencia/València</option>
+                  <option>Alicante/Alacant</option>
+                  <option>Castellón/Castelló</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="flabel" for="muni">Municipio</label>
+                <select class="control" id="muni">
+                  <option>Valencia</option>
+                  <option>Torrent</option>
+                  <option>Gandia</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <!-- Centro al que pertenece -->
+          <section class="section">
+            <h2 class="section-title"><i data-icon="building"></i>Centro al que pertenece</h2>
+            <div class="fgrid">
+              <div class="field">
+                <label class="flabel" for="cprov">Provincia</label>
+                <select class="control placeholder" id="cprov">
+                  <option value="" selected>-- Elige opción --</option>
+                  <option>Valencia/València</option>
+                  <option>Alicante/Alacant</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="flabel" for="cnom">Nombre</label>
+                <select class="control placeholder" id="cnom">
+                  <option value="" selected>-- Elige opción --</option>
+                  <option>IES Abastos</option>
+                  <option>IES Benlliure</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <!-- Contacto -->
+          <section class="section">
+            <h2 class="section-title"><i data-icon="phone"></i>Contacto</h2>
+            <div class="fgrid">
+              <div class="field">
+                <label class="flabel" for="pers">Persona de contacto</label>
+                <input class="control" id="pers" type="text" value="Lorenzo González" />
+              </div>
+              <div class="field">
+                <label class="flabel" for="mail">Correo electrónico</label>
+                <input class="control" id="mail" type="email" value="logongas@gmail.com" />
+              </div>
+              <div class="field">
+                <label class="flabel" for="tel">Teléfono</label>
+                <input class="control" id="tel" type="tel" placeholder="Ej. 961 234 567" />
+              </div>
+              <div class="field">
+                <label class="flabel" for="web">Página web</label>
+                <input class="control" id="web" type="url" placeholder="https://" />
+              </div>
+            </div>
+          </section>
+
+          <!-- Otros -->
+          <section class="section">
+            <h2 class="section-title"><i data-icon="info"></i>Otros</h2>
+            <div class="fgrid">
+              <div class="field small">
+                <label class="flabel" for="ofertas">Nº de ofertas publicadas</label>
+                <input class="control" id="ofertas" type="text" value="4" readonly />
+              </div>
+              <div class="field" style="justify-content:flex-end;">
+                <div class="checkrow">
+                  <input type="checkbox" id="deshab" />
+                  <label for="deshab">Empresa deshabilitada</label>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Acciones -->
+        <div class="form-foot">
+          <button type="button" class="btn btn-outline"><i data-icon="users"></i>Representantes de la empresa</button>
+          <button type="button" class="btn btn-outline"><i data-icon="tag"></i>Ofertas de la empresa</button>
+          <div class="foot-right">
+            <button type="button" class="btn btn-ghost"><i data-icon="exit"></i>Salir</button>
+            <button type="submit" class="btn btn-blue"><i data-icon="save"></i>Actualizar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<!-- Carga de iconos SVG (assets/icons/*.svg) e interacciones -->
+<script src="js/icons.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

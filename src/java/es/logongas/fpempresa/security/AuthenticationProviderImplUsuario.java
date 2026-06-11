@@ -20,6 +20,7 @@ import es.logongas.fpempresa.config.Config;
 import es.logongas.fpempresa.modelo.centro.EstadoCentro;
 import es.logongas.fpempresa.modelo.comun.usuario.EstadoUsuario;
 import es.logongas.fpempresa.modelo.comun.usuario.Usuario;
+import es.logongas.fpempresa.service.comun.usuario.TipoUsuarioEmpresa;
 import es.logongas.fpempresa.service.comun.usuario.UsuarioCRUDService;
 import es.logongas.fpempresa.service.notification.Notification;
 import es.logongas.fpempresa.util.EMailUtil;
@@ -168,6 +169,10 @@ public class AuthenticationProviderImplUsuario implements AuthenticationProvider
                         throw new BusinessException("No puedes entrar ya que aun estás a la espera de ser aceptado en la empresa '" + usuario.getEmpresa() + "'");
                     }
 
+                    if (usuarioService.getTipoUsuarioEmpresa(dataSession, usuario)==TipoUsuarioEmpresa.INSEGURO) {
+                        throw new BusinessException("La cuenta está bloqueada debido al incumplimiento de los términos de uso.");
+                    }                    
+                    
                     if (usuario.getEmpresa()!=null) {
                         if (usuario.getEmpresa().isDeshabilitada()==true) {
                             throw new BusinessException("No es posible acceder a EmpleaFP");

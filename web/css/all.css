@@ -705,6 +705,9 @@ p {
   cursor: pointer;
   outline: none !important;
 }
+.c-button:hover, .c-button:focus {
+  text-decoration: none;
+}
 .c-button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
@@ -716,6 +719,9 @@ p {
   border-color: #0056B8;
   padding: 12px;
   background-color: #0056B8;
+}
+.c-button--primary:focus {
+  color: #FFFFFF;
 }
 .c-button--primary:hover {
   color: #FFFFFF;
@@ -731,6 +737,9 @@ p {
   padding: 12px;
   background-color: #C53030;
 }
+.c-button--danger:focus {
+  color: #FFFFFF;
+}
 .c-button--danger:hover {
   color: #FFFFFF;
   border-width: 1px;
@@ -745,6 +754,9 @@ p {
   padding: 12px;
   background-color: transparent;
 }
+.c-button--secondary:focus {
+  color: #0056B8;
+}
 .c-button--secondary:hover {
   color: #0056B8;
   border-width: 1px;
@@ -758,6 +770,9 @@ p {
   padding: 0px;
   background-color: transparent;
 }
+.c-button--tertiary:focus {
+  color: #0056B8;
+}
 .c-button--tertiary:hover {
   color: #003B80;
   border-width: 0px;
@@ -770,6 +785,9 @@ p {
   border-color: #ED8936;
   padding: 12px;
   background-color: #ED8936;
+}
+.c-button--alt-primary:focus {
+  color: #FFFFFF;
 }
 .c-button--alt-primary:hover {
   color: #FFFFFF;
@@ -785,6 +803,9 @@ p {
   padding: 12px;
   background-color: transparent;
 }
+.c-button--alt-secondary:focus {
+  color: #ED8936;
+}
 .c-button--alt-secondary:hover {
   color: #DD6B20;
   border-width: 1px;
@@ -797,6 +818,9 @@ p {
   border-width: 0px;
   padding: 0px;
   background-color: transparent;
+}
+.c-button--alt-tertiary:focus {
+  color: #ED8936;
 }
 .c-button--alt-tertiary:hover {
   color: #DD6B20;
@@ -812,6 +836,9 @@ p {
     padding: 12px;
     background-color: #0056B8;
   }
+  .c-button--primary\@movil:focus {
+    color: #FFFFFF;
+  }
   .c-button--primary\@movil:hover {
     color: #FFFFFF;
     border-width: 1px;
@@ -825,6 +852,9 @@ p {
     border-color: #C53030;
     padding: 12px;
     background-color: #C53030;
+  }
+  .c-button--danger\@movil:focus {
+    color: #FFFFFF;
   }
   .c-button--danger\@movil:hover {
     color: #FFFFFF;
@@ -840,6 +870,9 @@ p {
     padding: 12px;
     background-color: transparent;
   }
+  .c-button--secondary\@movil:focus {
+    color: #0056B8;
+  }
   .c-button--secondary\@movil:hover {
     color: #0056B8;
     border-width: 1px;
@@ -853,6 +886,9 @@ p {
     padding: 0px;
     background-color: transparent;
   }
+  .c-button--tertiary\@movil:focus {
+    color: #0056B8;
+  }
   .c-button--tertiary\@movil:hover {
     color: #003B80;
     border-width: 0px;
@@ -865,6 +901,9 @@ p {
     border-color: #ED8936;
     padding: 12px;
     background-color: #ED8936;
+  }
+  .c-button--alt-primary\@movil:focus {
+    color: #FFFFFF;
   }
   .c-button--alt-primary\@movil:hover {
     color: #FFFFFF;
@@ -880,6 +919,9 @@ p {
     padding: 12px;
     background-color: transparent;
   }
+  .c-button--alt-secondary\@movil:focus {
+    color: #ED8936;
+  }
   .c-button--alt-secondary\@movil:hover {
     color: #DD6B20;
     border-width: 1px;
@@ -892,6 +934,9 @@ p {
     border-width: 0px;
     padding: 0px;
     background-color: transparent;
+  }
+  .c-button--alt-tertiary\@movil:focus {
+    color: #ED8936;
   }
   .c-button--alt-tertiary\@movil:hover {
     color: #DD6B20;
@@ -907,6 +952,9 @@ p {
     padding: 12px;
     background-color: #0056B8;
   }
+  .c-button--primary\@tablet:focus {
+    color: #FFFFFF;
+  }
   .c-button--primary\@tablet:hover {
     color: #FFFFFF;
     border-width: 1px;
@@ -920,6 +968,9 @@ p {
     border-color: #C53030;
     padding: 12px;
     background-color: #C53030;
+  }
+  .c-button--danger\@tablet:focus {
+    color: #FFFFFF;
   }
   .c-button--danger\@tablet:hover {
     color: #FFFFFF;
@@ -935,6 +986,9 @@ p {
     padding: 12px;
     background-color: transparent;
   }
+  .c-button--secondary\@tablet:focus {
+    color: #0056B8;
+  }
   .c-button--secondary\@tablet:hover {
     color: #0056B8;
     border-width: 1px;
@@ -948,6 +1002,9 @@ p {
     padding: 0px;
     background-color: transparent;
   }
+  .c-button--tertiary\@tablet:focus {
+    color: #0056B8;
+  }
   .c-button--tertiary\@tablet:hover {
     color: #003B80;
     border-width: 0px;
@@ -960,6 +1017,9 @@ p {
     border-color: #ED8936;
     padding: 12px;
     background-color: #ED8936;
+  }
+  .c-button--alt-primary\@tablet:focus {
+    color: #FFFFFF;
   }
   .c-button--alt-primary\@tablet:hover {
     color: #FFFFFF;
@@ -975,6 +1035,9 @@ p {
     padding: 12px;
     background-color: transparent;
   }
+  .c-button--alt-secondary\@tablet:focus {
+    color: #ED8936;
+  }
   .c-button--alt-secondary\@tablet:hover {
     color: #DD6B20;
     border-width: 1px;
@@ -987,6 +1050,9 @@ p {
     border-width: 0px;
     padding: 0px;
     background-color: transparent;
+  }
+  .c-button--alt-tertiary\@tablet:focus {
+    color: #ED8936;
   }
   .c-button--alt-tertiary\@tablet:hover {
     color: #DD6B20;
@@ -1002,6 +1068,9 @@ p {
     padding: 12px;
     background-color: #0056B8;
   }
+  .c-button--primary\@desktop:focus {
+    color: #FFFFFF;
+  }
   .c-button--primary\@desktop:hover {
     color: #FFFFFF;
     border-width: 1px;
@@ -1015,6 +1084,9 @@ p {
     border-color: #C53030;
     padding: 12px;
     background-color: #C53030;
+  }
+  .c-button--danger\@desktop:focus {
+    color: #FFFFFF;
   }
   .c-button--danger\@desktop:hover {
     color: #FFFFFF;
@@ -1030,6 +1102,9 @@ p {
     padding: 12px;
     background-color: transparent;
   }
+  .c-button--secondary\@desktop:focus {
+    color: #0056B8;
+  }
   .c-button--secondary\@desktop:hover {
     color: #0056B8;
     border-width: 1px;
@@ -1043,6 +1118,9 @@ p {
     padding: 0px;
     background-color: transparent;
   }
+  .c-button--tertiary\@desktop:focus {
+    color: #0056B8;
+  }
   .c-button--tertiary\@desktop:hover {
     color: #003B80;
     border-width: 0px;
@@ -1055,6 +1133,9 @@ p {
     border-color: #ED8936;
     padding: 12px;
     background-color: #ED8936;
+  }
+  .c-button--alt-primary\@desktop:focus {
+    color: #FFFFFF;
   }
   .c-button--alt-primary\@desktop:hover {
     color: #FFFFFF;
@@ -1070,6 +1151,9 @@ p {
     padding: 12px;
     background-color: transparent;
   }
+  .c-button--alt-secondary\@desktop:focus {
+    color: #ED8936;
+  }
   .c-button--alt-secondary\@desktop:hover {
     color: #DD6B20;
     border-width: 1px;
@@ -1082,6 +1166,9 @@ p {
     border-width: 0px;
     padding: 0px;
     background-color: transparent;
+  }
+  .c-button--alt-tertiary\@desktop:focus {
+    color: #ED8936;
   }
   .c-button--alt-tertiary\@desktop:hover {
     color: #DD6B20;

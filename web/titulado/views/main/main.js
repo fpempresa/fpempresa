@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-app.controller('MainController', ['$scope','$http','ix3Configuration', 'genericControllerCrudDetail', 'controllerParams', 'ageCalculator', function ($scope, $http, ix3Configuration, genericControllerCrudDetail, controllerParams, ageCalculator) {
+app.controller('MainController', ['$scope','$http','$window','ix3Configuration', 'genericControllerCrudDetail', 'controllerParams', 'ageCalculator', function ($scope, $http, $window, ix3Configuration, genericControllerCrudDetail, controllerParams, ageCalculator) {
         if ($scope.user && $scope.user.titulado && $scope.user.titulado.idTitulado) {
             controllerParams.id = $scope.user.titulado.idTitulado;
         } else {
@@ -26,4 +26,8 @@ app.controller('MainController', ['$scope','$http','ix3Configuration', 'genericC
         $scope.ageCalculator = ageCalculator;
 
         $scope.businessMessages = [];
+
+        $scope.descargarCurriculum = function () {
+            $window.location.href = ix3Configuration.server.api + '/Usuario/' + $scope.user.idIdentity + '/curriculum.pdf?version=' + new Date().getTime();
+        };
     }]);

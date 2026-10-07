@@ -16,7 +16,12 @@
     cursor: pointer;
     
     outline: none!important;
-    
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
     &:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -45,7 +50,13 @@
         background-color:nth($background-colors,1);
     } @else {
         background-color:transparent;
-    }                
+    }
+
+    &:focus {
+        @if (length($text-colors)>0) {
+            color:nth($text-colors,1);
+        }
+    }
 
     &:hover {
         @if (length($text-colors)>1) {
